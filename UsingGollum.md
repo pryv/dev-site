@@ -15,7 +15,7 @@
 	1. `[sudo] gem uninstall grits`
 	2. `sftp <user>@s1.simpledata.ch:/home/wactiv/INSTALL/mojombo-grit-3fc864f/grit-2.4.1.gem`
 	3. `[sudo] gem install grit-2.4.1.gem`
-3. Cloner le repo Git de la doc dans un dossier ad-hoc (ici "wiki"): `git clone ssh://sgoumaz@s1.simpledata.ch/home/wactiv/git_repos/wiki.git wiki`
+3. Cloner le repo Git de la doc dans un dossier ad-hoc (ici "wiki"): `git clone ssh://<user>@s1.simpledata.ch/home/wactiv/git_repos/wiki.git wiki`
 4. Lancer le front-end Gollum depuis le repo: `gollum [--port <port>]`
 
 ## Note d'utilisation
