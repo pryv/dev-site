@@ -1,7 +1,6 @@
-# Index
+###### Index
 
 * [[Home]]
-* [[Register module|Register]]
-* [[Admin module|Admin]]
-* TODO: dispatch module?
-* [[Data module|Data]]
+* [[Register module]]
+* [[Admin module]]
+* [[Activity module]]
