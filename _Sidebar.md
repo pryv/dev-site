@@ -1,4 +1,4 @@
-###### Index
+**Index**
 
 * [[Home]]
 * [[Register module]]
