@@ -28,8 +28,8 @@ Gets the activity types accessible with the given token.
 
 #### Query string parameters
 
-* `include_inactive` ([[boolean|Boolean data type]]): When `true`, inactive activity types will be included in the result. Default: `false`.
-* `time_count_base` ([[timestamp|Timestamp data type]]): TODO: I forgot what this is supposed to do? Default: now.
+* `include_inactive` ([[boolean|Boolean data type]]): Optional. When `true`, inactive activity types will be included in the result. Default: `false`.
+* `time_count_base` ([[timestamp|Timestamp data type]]): Optional. TODO: I forgot what this is supposed to do? Default: now.
 
 #### Response (OK)
 
