@@ -12,7 +12,7 @@ Located at TODO:<http://register.wactiv.com>. Access is anonymous, with a captch
 
 The [[Admin module]] allows each user to manage her account information and [[data access tokens|Data access tokens]].
 
-Located at TODO:<http://*username*.wactiv.com>. Access is managed by regular username / password authentication and expiring sessions.
+Located at TODO:<http://\<username\>.wactiv.com>. Access is managed by regular username / password authentication and expiring sessions.
 
 ## TODO: Dispatch?
 
