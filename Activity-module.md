@@ -53,7 +53,7 @@ Creates a new activity type (TODO)
 
 * `id` ([[identity|Object identity data type]]): TODO
 
-#### Errors
+#### Specific errors
 
 * 400 (bad request), code `InvalidActivityTypeId`: TODO unknown parent
 * 403 (forbidden): TODO
@@ -74,7 +74,7 @@ TODO
 
 TODO
 
-#### Errors
+#### Specific errors
 
 * 400 (bad request), code `InvalidActivityTypeId`: TODO unknown parent
 * 403 (forbidden): TODO
@@ -88,7 +88,7 @@ TODO: will result in adding all activity time to the deleted item's parent. Real
 
 * `doNotMergeWithParent` ([[boolean|Boolean data type]]): Optional. TODO. Default: `false`. 
 
-#### Errors
+#### Specific errors
 
 * 403 (forbidden): TODO
 * 404 (not found): Unknown activity type id
@@ -111,7 +111,7 @@ Queries the list of events.
 * `events` (array of [[activity event|Activity event data type]]): Events ordered by time, descending (most recent first). TODO: add parameter to change sorting?
 * `serverNow`([[timestamp|Timestamp data type]]): The current server time
 
-#### Errors
+#### Specific errors
 
 * 400 (bad request), code `InvalidActivityTypeId`: TODO may happen if one of the filtered types doesn't exist
 * 400 (bad request), code `InvalidTime`: TODO
@@ -132,7 +132,7 @@ Starts the given activity.
 
 * `id` ([[identity|Object identity data type]]): TODO
 
-#### Errors
+#### Specific errors
 
 * 400 (bad request), code `InvalidActivityTypeId`: TODO
 * 403 (forbidden): TODO
@@ -148,7 +148,7 @@ Gets the currently running activity.
 * `startTime` ([[timestamp|Timestamp data type]]): TODO
 * `serverNow`([[timestamp|Timestamp data type]]): The current server time
 
-#### Errors
+#### Specific errors
 
 * 403 (forbidden): TODO
 
@@ -156,7 +156,7 @@ Gets the currently running activity.
 
 TODO: this is more consistent than `/events/<id>/stop`, as we can already stop the current activity with POST `/events`...
 
-#### Errors
+#### Specific errors
 
 * 403 (forbidden): TODO
 
@@ -168,7 +168,7 @@ TODO: added for consistency with the next request
 
 TODO: why should we need the id as parameter as in the mindmap? what's the value of this request then (why not just start a new event)?
 
-#### Errors
+#### Specific errors
 
 * 403 (forbidden): TODO
 * 404 (not found): There is no last event.
@@ -182,7 +182,7 @@ TODO (ex-"edit", renamed for consistency with types)
 * `info` ([[string|String data type]]): Optional. TODO
 * `eventData`([[event data|Event data data type]]): Optional. TODO
 
-#### Errors
+#### Specific errors
 
 * 403 (forbidden): TODO
 * 404 (not found): Unknown activity event id
@@ -198,7 +198,7 @@ TODO move an event's boundaries. Note: caller must be aware of "server now" time
 * `adaptPreviousIds` (array of ([[identity|Object identity data type]])): Optional. The preceding events' ids that will be automatically changed as a consequence of the current move. TODO: either end time or delete.
 * `adaptNextIds` (array of ([[identity|Object identity data type]])): Optional. The following events' ids that will be automatically changed as a consequence of the current move. TODO: either start time or delete.
 
-#### Errors
+#### Specific errors
 
 * 400 (bad request), code `InvalidTime`: TODO (start, end)
 * 400 (bad request), code `EventsOverlap`: TODO (list of overlapped event ids, or "too many" if more than 10)
@@ -231,6 +231,6 @@ TODO: batch upload events that were recorded by the client while offline.
 	* `errorCode`: (TODO: review this, checking consistency with regular request errors...) One of `InvalidActivityTypeId`, `InvalidTime`, `InvalidParametersFormat` (TODO: I (SG) think such errors should cause the entire request to be rejected)
 	* `errorMessage`: TODO should indicate e.g. whether start or end is invalid (review after the above is cleaned up)
 
-#### Errors
+#### Specific errors
 
 * 403 (forbidden): TODO
