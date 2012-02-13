@@ -17,10 +17,13 @@
 	3. `[sudo] gem install grit-2.4.1.gem`
 3. Cloner le repo Git de la doc dans un dossier ad-hoc (ici "wiki"): `git clone ssh://<user>@s1.simpledata.ch/home/wactiv/git_repos/wiki.git wiki`
 4. Lancer le front-end Gollum depuis le repo: `gollum [--port <port>]`
-
+   **start.sh*** lance gollum et ouvre l'url http://localhost:8123 sur mac
+   
 ## Note d'utilisation
 
 Le front-end Gollum se charge de l'édition des fichiers Markdown et des commits Git, mais les push Git sont évidemment à faire lorsque nécessaire.
+
+*PML: sur mac je rencontre un problème avec Gollum pour l'édition et des fichiers*
 
 ## Pour référence
 
