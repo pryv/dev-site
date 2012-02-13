@@ -32,12 +32,12 @@ Gets the activity types accessible with the given token.
 #### Query string parameters
 
 * `includeInactive` ([[boolean|Boolean data type]]): Optional. When `true`, inactive activity types will be included in the result. Default: `false`.
-* `timeCountBase` ([[timestamp|Timestamp data type]]): Optional. TODO: I forgot what this is supposed to do? Default: now.
+* `timeCountBase` ([[timestamp|Timestamp data type]]): Optional. If specified the returned activities types will include the **time accounting** calculated from this timestamp. If not defined the time accounting values returned will be empty. 
 
 #### Response (OK)
 
-* `types` (tree of [[activity types|Activity type data type]]): The tree of the activity types accessible with the given token. TODO: example
-* `timeCountBase` ([[timestamp|Timestamp data type]]): TODO: I forgot what this is supposed to do?
+* `types` (tree of [[activity types|Activity type data type]]): The tree of the activity types accessible with the given token. TODO exemple (with and without time accounting)
+* `timeCountBase` ([[timestamp|Timestamp data type]]): The `timeCountBase` value passed as parameters in the request.
 * `serverNow`([[timestamp|Timestamp data type]]): The current server time
 
 ### POST `/types`
@@ -60,7 +60,8 @@ Creates a new activity type (TODO)
 
 ### POST `/types/<id>/set-info`
 
-TODO: set active state, ...?
+TODO: set active state, label, color, payload.
+each parameter is optional
 
 ### POST `/types/<id>/move`
 
@@ -108,7 +109,7 @@ Queries the list of events.
 
 #### Response (OK)
 
-* `events` (array of [[activity event|Activity event data type]]): Events ordered by time, descending (most recent first). TODO: add parameter to change sorting?
+* `events` (array of [[activity event|Activity event data type]]): Events ordered by time, descending (most recent first). TODO: add parameter to change sorting!
 * `serverNow`([[timestamp|Timestamp data type]]): The current server time
 
 #### Specific errors
@@ -116,7 +117,6 @@ Queries the list of events.
 * 400 (bad request), code `InvalidActivityTypeId`: TODO may happen if one of the filtered types doesn't exist
 * 400 (bad request), code `InvalidTime`: TODO
 * 403 (forbidden): TODO
-* TODO: what are "bad format for info" and "bad format for data"? bad copy-paste? 
 
 ### POST `/events`
 
@@ -156,6 +156,10 @@ Gets the currently running activity.
 
 TODO: this is more consistent than `/events/<id>/stop`, as we can already stop the current activity with POST `/events`...
 
+#### Response (OK)
+
+TODO same as GET `/events/current`
+
 #### Specific errors
 
 * 403 (forbidden): TODO
@@ -166,7 +170,11 @@ TODO: added for consistency with the next request
 
 ### POST `/events/last/restart`
 
-TODO: why should we need the id as parameter as in the mindmap? what's the value of this request then (why not just start a new event)?
+TODO: 
+
+#### Response (OK)
+
+TODO same as GET `/events/current`
 
 #### Specific errors
 
@@ -211,12 +219,11 @@ TODO: batch upload events that were recorded by the client while offline.
 
 #### Post parameters
 
-* TODO: clarify `nowForService` (float?) delta to apply to server time for the given events. Shouldn't this be a timestamp called `clientNow`? See also start and end times for events below.
+* `clientNow` ([[timestamp|Timestamp data type]]): TODO make clear that the date reference is the client's. Used to calculate the *time delta* to apply to server time for the given events.  See also start and end times for events below.
 * `events`: Array of client-recorded events with the following structure:
-	* `typeId` ([[identity|Object identity data type]]): The event's activity type id.
+	* `typeId` ([[identity|Object identity data type]]): The event's activity type id. TODO: explain "stop" (ie "0") + same warning on ignoring other data
 	* `clientId` ([[identity|Object identity data type]]): Temporarily event id assigned by the client; used as reference in the request's response (see below).
 	* `clientStartTime` ([[timestamp|Timestamp data type]]): The event's start time as recorded by the client.
-	* `clientEndTime` ([[timestamp|Timestamp data type]]): The event's end time as recorded by the client.
 	* `info` ([[string|String data type]]): Optional. TODO
     * `eventData`([[event data|Event data data type]]): Optional. TODO
 
@@ -229,7 +236,7 @@ TODO: batch upload events that were recorded by the client while offline.
 * `rejectedEvents`: Array of event information for events that could not be added, with the following structure:
 	* `clientId` ([[identity|Object identity data type]]): Client-assigned event id for reference.
 	* `errorCode`: (TODO: review this, checking consistency with regular request errors...) One of `InvalidActivityTypeId`, `InvalidTime`, `InvalidParametersFormat` (TODO: I (SG) think such errors should cause the entire request to be rejected)
-	* `errorMessage`: TODO should indicate e.g. whether start or end is invalid (review after the above is cleaned up)
+	* `errorMessage`: TODO should indicate e.g. whether start is invalid (review after the above is cleaned up)
 
 #### Specific errors
 
