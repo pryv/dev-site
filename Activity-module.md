@@ -4,15 +4,13 @@ TODO: introductory text
 
 ## Authentication
 
-All requests to the activity module must carry a valid [[data access token|Data access tokens]] in the HTTP `Authorization` header. For example:
+All requests to the activity module must carry a valid [[data access token|Data access tokens]] at the root of the resource path. For example:
 
-    GET /types/12345 HTTP/1.1
+    GET /<data access token>/types HTTP/1.1
     Host: johndoe.wactiv.com:1234
     Date: Thu, 09 Feb 2012 17:53:58 +0000
     
-    Authorization: <data access token>
-
-TODO: I (SG) think the token should actually be passed in the URL (e.g. `/<token>/types/12345`), as it's really part of the resource state (the token identifies the user who owns the data we're accessing)... in fact, are we actually speaking of "authentication"?
+For the sake of readability, that token is omitted in the resource paths below, but it is assumed to be there. For example, GET `/types` must be understood as GET `/<data access token>/types`.
 
 
 ## Common error codes
@@ -32,7 +30,7 @@ Gets the activity types accessible with the given token.
 #### Query string parameters
 
 * `includeInactive` ([[boolean|Boolean data type]]): Optional. When `true`, inactive activity types will be included in the result. Default: `false`.
-* `timeCountBase` ([[timestamp|Timestamp data type]]): Optional. If specified the returned activities types will include the **time accounting** calculated from this timestamp. If not defined the time accounting values returned will be empty. 
+* `timeCountBase` ([[timestamp|Timestamp data type]]): Optional. If specified, the returned activities types will include the **time accounting** calculated from this timestamp; otherwise the time accounting values returned will be empty. 
 
 #### Response (OK)
 
@@ -97,6 +95,8 @@ TODO: will result in adding all activity time to the deleted item's parent. Real
 
 ## Requests for activity events
 
+TODO: add requests for mark (or note) events. Mark events will also belong to activity types like activity events.
+
 ### GET `/events`
 
 Queries the list of events.
@@ -136,6 +136,8 @@ Starts the given activity.
 
 * 400 (bad request), code `InvalidActivityTypeId`: TODO
 * 403 (forbidden): TODO
+
+### TODO: GET `/events/start` non-RESTful alternative to the above to allow simple calls via e.g. wget
 
 ### GET `/events/current`
 
