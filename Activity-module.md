@@ -1,4 +1,4 @@
-# Activity module
+# Activity module TODO: update name
 
 TODO: introductory text
 
@@ -10,226 +10,264 @@ All requests to the activity module must carry a valid [[data access token|Data 
     Host: johndoe.wactiv.com:1234
     Date: Thu, 09 Feb 2012 17:53:58 +0000
     
-For the sake of readability, that token is omitted in the resource paths below, but it is assumed to be there. For example, GET `/types` must be understood as GET `/<data access token>/types`.
+For the sake of readability, that token is omitted in the resource paths below, but it is assumed to be there. For example, GET `/states` must be understood as GET `/<data access token>/states`.
 
 
 ## Common error codes
 
 TODO: review and complete
 
-* 400 (bad request), code `InvalidParametersFormat`: The request's parameters do not follow the expected format
-* 401 (authentication): Invalid data access token (TODO: review after discussion above)
+* 400 (bad request), code `InvalidParametersFormat`: The request's parameters do not follow the expected format.
+* 403 (forbidden): The given data access token does not grant permission for this operation. TODO: link to explanation about tokens and permissions.
+* 404 (not found): Possible cases:
+	* Code `UNKNOWN_TOKEN`: The data access token can't be found.
+	* Code `UNKNOWN_CHANNEL`: The activity channel can't be found.
+	* Code `UNKNOWN_STATE`: The activity state can't be found in the given channel.
+	* Code `UNKNOWN_EVENT`: The event can't be found in the given channel.
 
 
-## Requests for activity types
+## Requests for activity channels
 
-### GET `/types`
 
-Gets the activity types accessible with the given token.
+### GET `/channels`
+
+Gets the activity channels accessible with the given token.
+
+#### Response (JSON)
+
+* `channels` (array of [[channels|Activity channel data type]]): The list of the channels accessible with the given token.
+
+
+### POST `/channels`
+
+Creates a new activity channel.
+
+#### Post parameters (JSON)
+
+* `label` ([[string|String data type]]): The label or name for the channel. 
+
+#### Response (JSON)
+
+* `id` ([[identity|Object identity data type]]): The created channel's id.
+
+
+### POST `/channels/<channel id>/set-info`
+
+TODO: set label, color, payload.
+each parameter is optional
+
+
+### DELETE `/channels/<channel id>`
+
+Irreversibly deletes the given channel with all the states and events it contains. TODO: given the criticality of this operation, make it set an expiration time to data in order to allow undo functionality?
+
+
+## Requests for activity states
+
+States always belong to an activity channel.
+
+
+### GET `/<channel id>/states` or `/<channel id>/states/<id>`
+
+Gets the states accessible with the given token, either from the root level or only descending from the given state.
+
+#### Specific path parameters
+
+* `id`([[identity|Object identity data type]]): The id of the state to use as root for the request, or nothing to return all accessible states from the root level.
 
 #### Query string parameters
 
-* `includeInactive` ([[boolean|Boolean data type]]): Optional. When `true`, inactive activity types will be included in the result. Default: `false`.
-* `timeCountBase` ([[timestamp|Timestamp data type]]): Optional. If specified, the returned activities types will include the **time accounting** calculated from this timestamp; otherwise the time accounting values returned will be empty. 
+* `includeInactive` ([[boolean|Boolean data type]]): Optional. When `true`, inactive states will be included in the result. Default: `false`.
+* `timeCountBase` ([[timestamp|Timestamp data type]]): Optional. If specified, the returned states will include the **time accounting** calculated from this timestamp; otherwise the time accounting values returned will be empty. 
 
-#### Response (OK)
+#### Response (JSON)
 
-* `types` (tree of [[activity types|Activity type data type]]): The tree of the activity types accessible with the given token. TODO exemple (with and without time accounting)
-* `timeCountBase` ([[timestamp|Timestamp data type]]): The `timeCountBase` value passed as parameters in the request.
-* `serverNow`([[timestamp|Timestamp data type]]): The current server time
+* `states` (array of [[states|Activity state data type]]): The tree of the states accessible with the given token. TODO exemple (with and without time accounting)
+* `timeCountBase` ([[timestamp|Timestamp data type]]): The `timeCountBase` value passed as parameters in the request, for reference.
+* `serverNow`([[timestamp|Timestamp data type]]): The current server time.
 
-### POST `/types`
 
-Creates a new activity type (TODO)
+### POST `/<channel id>/states` or `/<channel id>/states/<parent state id>`
 
-#### Post parameters
+Creates a new state at the root level or as a child state to the given state.
 
-* `parentId` ([[identity|Object identity data type]]): TODO
-* `label` ([[string|String data type]]): TODO
+#### Specific path parameters
 
-#### Response (OK)
+* `parentId` ([[identity|Object identity data type]]): The id of the parent state, or nothing if the new state must be created at the root of the states tree structure. 
 
-* `id` ([[identity|Object identity data type]]): TODO
+#### Post parameters (JSON)
 
-#### Specific errors
+* `label` ([[string|String data type]]): The label or name for the state. TODO, for item creation in general: should we send a full object structure instead (with optional fields of course)?
 
-* 400 (bad request), code `InvalidActivityTypeId`: TODO unknown parent
-* 403 (forbidden): TODO
+#### Response (JSON)
 
-### POST `/types/<id>/set-info`
+* `id` ([[identity|Object identity data type]]): The created state's id.
+
+
+### POST `/<channel id>/states/<state id>/set-info`
 
 TODO: set active state, label, color, payload.
 each parameter is optional
 
-### POST `/types/<id>/move`
+
+### POST `/<channel id>/states/<state id>/move`
 
 TODO
 
-#### Post parameters
+#### Post parameters (JSON)
 
 * `newParentId` ([[identity|Object identity data type]]): TODO
 
-#### Response (OK)
+#### Response (JSON)
 
 TODO
 
 #### Specific errors
 
-* 400 (bad request), code `InvalidActivityTypeId`: TODO unknown parent
-* 403 (forbidden): TODO
-* 404 (not found): Unknown activity type id
+* 400 (bad request), code `UNKNOWN_STATE_ID`: The given parent state's id is unknown.
 
-### DELETE `/types/<id>`
 
-TODO: will result in adding all activity time to the deleted item's parent. Real deletion may be set with `doNotMergeWithParent`
+### DELETE `/<channel id>/states/<state id>`
+
+Irreversibly deletes the state. TODO: will result in adding all activity time to the deleted item's parent. Real deletion may be set with `doNotMergeWithParent`
 
 #### Query string parameters
 
 * `doNotMergeWithParent` ([[boolean|Boolean data type]]): Optional. TODO. Default: `false`. 
 
-#### Specific errors
-
-* 403 (forbidden): TODO
-* 404 (not found): Unknown activity type id
-
 
 ## Requests for activity events
 
-TODO: add requests for mark (or note) events. Mark events will also belong to activity types like activity events.
+Like states, events always belong to an activity channel. Events can record state changes or simply "marks" (for punctual events not associated with a state change).
 
-### GET `/events`
+
+### GET `/<channel id>/events`
 
 Queries the list of events.
 
 #### Query string parameters
 
-* `onlyTypeIds` (array of [[identity|Object identity data type]]): Optional. TODO. Default is "all activity types".
+* `onlyStates` (array of [[identity|Object identity data type]]): Optional. If set, only events linked to those states will be returned. By default, events linked to all accessible states are returned.
 * `fromTime` ([[timestamp|Timestamp data type]]): Optional. TODO. Default is 24 hours before the current time.
 * `toTime` ([[timestamp|Timestamp data type]]): Optional. TODO. Default is the current time.
 
-#### Response (OK)
+#### Response (JSON)
 
-* `events` (array of [[activity event|Activity event data type]]): Events ordered by time, descending (most recent first). TODO: add parameter to change sorting!
-* `serverNow`([[timestamp|Timestamp data type]]): The current server time
+* `events` (array of [[activity event|Activity event data type]]): Events ordered by time (see `sortAscending` below).
+* `sortAscending` ([[boolean|Boolean data type]]): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
+* `serverNow`([[timestamp|Timestamp data type]]): The current server time.
 
 #### Specific errors
 
-* 400 (bad request), code `InvalidActivityTypeId`: TODO may happen if one of the filtered types doesn't exist
-* 400 (bad request), code `InvalidTime`: TODO
-* 403 (forbidden): TODO
+* 400 (bad request), code `UNKNOWN_STATE_ID`: TODO may happen if one of the specified states doesn't exist
+* 400 (bad request), code `INVALID_TIME`: TODO
 
-### POST `/events`
 
-Starts the given activity.
+### POST `/<channel id>/events`
 
-#### Post parameters
+Records a new event.
 
-* `typeId` ([[identity|Object identity data type]]): TODO. If zero or empty, the call will be equivalent to POST `/events/current/stop` and other parameters will be ignored.
+#### Post parameters (JSON)
+
+TODO: just send an event data type? cf. question above.
+
+* `stateId` ([[identity|Object identity data type]]): Optional. If set, the event is considered a state change event, otherwise it is considered a simple mark event. If the value is zero or empty, the call will be equivalent to POST `/<channel id>/events/stop` and other parameters will be ignored.
 * `info` ([[string|String data type]]): Optional. TODO
 * `eventData`([[event data|Event data data type]]): Optional. TODO
 
-#### Response (OK)
+#### Response (JSON)
 
-* `id` ([[identity|Object identity data type]]): TODO
+* `id` ([[identity|Object identity data type]]): The new event's id.
 
 #### Specific errors
 
-* 400 (bad request), code `InvalidActivityTypeId`: TODO
-* 403 (forbidden): TODO
+* 400 (bad request), code `UNKNOWN_STATE_ID`: The specified state cannot be found.
 
-### TODO: GET `/events/start` non-RESTful alternative to the above to allow simple calls via e.g. wget
 
-### GET `/events/current`
+### POST `/<channel id>/events/stop`
 
-Gets the currently running activity.
+This is an alias to POST `/<channel id>/events` with `stateId` set to zero or empty. See POST `/<channel id>/events` for details.
 
-#### Response (OK)
+
+### TODO: GET `/<channel id>/events/start` non-RESTful alternative to the above to allow simple calls via e.g. wget
+
+
+### GET `/<channel id>/events/last-state-change`
+
+Gets the last recorded state change event.
+
+#### Response (JSON)
 
 * `typeId` ([[identity|Object identity data type]]): TODO
 * `id` ([[identity|Object identity data type]]): TODO
-* `startTime` ([[timestamp|Timestamp data type]]): TODO
+* `time` ([[timestamp|Timestamp data type]]): TODO
 * `serverNow`([[timestamp|Timestamp data type]]): The current server time
 
-#### Specific errors
 
-* 403 (forbidden): TODO
+### POST `/<channel id>/events/restart`
 
-### POST `/events/current/stop`
+TODO: remove this? Will clients really need such a method? If they want to provide "restart" functionality, they should already have the necessary info to record the event with the generic method.
 
-TODO: this is more consistent than `/events/<id>/stop`, as we can already stop the current activity with POST `/events`...
 
-#### Response (OK)
-
-TODO same as GET `/events/current`
-
-#### Specific errors
-
-* 403 (forbidden): TODO
-
-### GET `/events/last`
-
-TODO: added for consistency with the next request
-
-### POST `/events/last/restart`
-
-TODO: 
-
-#### Response (OK)
-
-TODO same as GET `/events/current`
-
-#### Specific errors
-
-* 403 (forbidden): TODO
-* 404 (not found): There is no last event.
-
-### POST `/events/<id>/set-info`
+### POST `/<channel id>/events/<id>/set-info`
 
 TODO (ex-"edit", renamed for consistency with types)
 
-#### Post parameters
+#### Post parameters (JSON)
 
 * `info` ([[string|String data type]]): Optional. TODO
 * `eventData`([[event data|Event data data type]]): Optional. TODO
 
-#### Specific errors
 
-* 403 (forbidden): TODO
-* 404 (not found): Unknown activity event id
+### POST `/<channel id>/events/<id>/move`
 
-### POST `/events/<id>/move`
-
-TODO move an event's boundaries. Note: caller must be aware of "server now" time.
+Modifies an event's recorded time.
 
 #### Post parameters
 
-* `newStartTime` ([[timestamp|Timestamp data type]]): Optional. TODO if only the start time needs to be moved
-* `newEndTime` ([[timestamp|Timestamp data type]]): Optional. TODO if only the end time needs to be moved
-* `adaptPreviousIds` (array of ([[identity|Object identity data type]])): Optional. The preceding events' ids that will be automatically changed as a consequence of the current move. TODO: either end time or delete.
-* `adaptNextIds` (array of ([[identity|Object identity data type]])): Optional. The following events' ids that will be automatically changed as a consequence of the current move. TODO: either start time or delete.
+* `newTime` ([[timestamp|Timestamp data type]]): The new time for the event. This is a server time.
 
 #### Specific errors
 
-* 400 (bad request), code `InvalidTime`: TODO (start, end)
-* 400 (bad request), code `EventsOverlap`: TODO (list of overlapped event ids, or "too many" if more than 10)
-* 403 (forbidden): TODO
-* 404 (not found): Unknown activity event id
+* 400 (bad request), code `INVALID_TIME`: The specified new time is not valid.
 
-### POST `/events/batch`
+
+### POST `/<channel id>/events/<id>/move-period`
+
+Allows to modify multiple state change events at once by adjusting the time period from the specified state change event to the next state change event.
+
+#### Post parameters
+
+* `newStartTime` ([[timestamp|Timestamp data type]]): Optional. The new time for the event, if modified. This is a server time.
+* `nextEndTime` ([[timestamp|Timestamp data type]]): Optional. The new time for the next state change event, if modified. This is a server time.
+* `deleteOverlappedIds` (array of ([[identity|Object identity data type]])): Optional. If the new time period overlaps other events, they will be deleted; their ids must be specified here for safety.
+* `replaceWithNothing` ([[boolean|Boolean data type]])): Optional. Must be set if the new time period does not contain the original period. If `true`, state change events with state "nothing" will be added to cover parts of the original period not contained in the new period.
+
+#### Specific errors
+
+* 400 (bad request), code `INVALID_EVENT`: The event is not a state change event.
+* 400 (bad request), code `INVALID_TIME`: TODO (start, end)
+* 400 (bad request), code `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
+
+
+### POST `/<channel id>/events/batch`
 
 TODO: batch upload events that were recorded by the client while offline.
 
-#### Post parameters
+#### Post parameters (JSON)
 
 * `clientNow` ([[timestamp|Timestamp data type]]): TODO make clear that the date reference is the client's. Used to calculate the *time delta* to apply to server time for the given events.  See also start and end times for events below.
 * `events`: Array of client-recorded events with the following structure:
-	* `typeId` ([[identity|Object identity data type]]): The event's activity type id. TODO: explain "stop" (ie "0") + same warning on ignoring other data
+	* `stateId` ([[identity|Object identity data type]]): Optional. The event's state id. TODO: explain "stop" (ie "0") + same warning on ignoring other data
 	* `clientId` ([[identity|Object identity data type]]): Temporarily event id assigned by the client; used as reference in the request's response (see below).
-	* `clientStartTime` ([[timestamp|Timestamp data type]]): The event's start time as recorded by the client.
+	* `clientTime` ([[timestamp|Timestamp data type]]): The event's time as recorded by the client.
 	* `info` ([[string|String data type]]): Optional. TODO
     * `eventData`([[event data|Event data data type]]): Optional. TODO
+* `deleteOverlappedIds` (array of ([[identity|Object identity data type]])): Optional. If the specified events include state change events that overlap previously recorded state change events, the latter will be deleted; their ids must be specified here for safety.
 
-#### Response (OK)
+#### Response (JSON)
+
+TODO: review this
 
 * `addedEvents`: Array of event information for successfully added events, with the following structure:
 	* `clientId` ([[identity|Object identity data type]]): Client-assigned event id for reference.
@@ -239,7 +277,3 @@ TODO: batch upload events that were recorded by the client while offline.
 	* `clientId` ([[identity|Object identity data type]]): Client-assigned event id for reference.
 	* `errorCode`: (TODO: review this, checking consistency with regular request errors...) One of `InvalidActivityTypeId`, `InvalidTime`, `InvalidParametersFormat` (TODO: I (SG) think such errors should cause the entire request to be rejected)
 	* `errorMessage`: TODO should indicate e.g. whether start is invalid (review after the above is cleaned up)
-
-#### Specific errors
-
-* 403 (forbidden): TODO
