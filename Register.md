@@ -8,7 +8,7 @@ Checks whether the given user name already exists.
 
 #### Response (OK)
 
-* `exists` ([[boolean|Boolean data type]]): `true` if the given user name is already in use
+* `exists` (`true` or `false`): `true` if the given user name is already in use
 
 #### Specific errors
 
@@ -20,7 +20,7 @@ Initializes user creation for the given user name and information. The creation 
 
 #### Post parameters
 
-* `languageCode` ([[two-letter ISO language code|Language code data type]]): The user's preferred language. TODO: note about actual usage in service and clients.
+* `languageCode` ([two-letter ISO language code](/DataTypes#TODO)): The user's preferred language. TODO: note about actual usage in service and clients.
 * TODO
 
 TODO

@@ -1,5 +1,6 @@
-* [[Home]]
-* [[Register module]]
-* [[Admin module]]
+* [Home](/Home)
+* [Register](/Register)
+* [Admin](/Admin)
 * TODO: Dispatch module?
-* [[Activity module]]
+* [Activity](/Activity)
+* [Data types](/DataTypes)
