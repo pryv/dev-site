@@ -17,7 +17,7 @@ For the sake of readability, that token is omitted in the resource paths below, 
 
 TODO: review and complete
 
-* 400 (bad request), code `InvalidParametersFormat`: The request's parameters do not follow the expected format.
+* 400 (bad request), code `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
 * 403 (forbidden): The given data access token does not grant permission for this operation. TODO: link to explanation about tokens and permissions.
 * 404 (not found): Possible cases:
 	* Code `UNKNOWN_TOKEN`: The data access token can't be found.
@@ -44,7 +44,7 @@ Creates a new activity channel.
 
 #### Post parameters (JSON)
 
-* `label` (string): The label or name for the channel. 
+The new channel's data: see [activity channel](/DataTypes#TODO).
 
 #### Response (JSON)
 
@@ -78,7 +78,7 @@ Gets the states accessible with the given token, either from the root level or o
 #### Query string parameters
 
 * `includeInactive` (`true` or `false`): Optional. When `true`, inactive states will be included in the result. Default: `false`.
-* `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned states will include the **time accounting** calculated from this timestamp; otherwise the time accounting values returned will be empty. 
+* `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned states will include their total time count starting from this timestamp (see `timeCount` in [activity state](/DataTypes#TODO)); otherwise no time count values will be returned.
 
 #### Response (JSON)
 
@@ -93,11 +93,11 @@ Creates a new state at the root level or as a child state to the given state.
 
 #### Specific path parameters
 
-* `parentId` ([identity](/DataTypes#TODO)): The id of the parent state, or nothing if the new state must be created at the root of the states tree structure. 
+* `parentId` ([identity](/DataTypes#TODO)): Optional. The id of the parent state, if any. If not specified, the new state will be created at the root of the states tree structure. 
 
 #### Post parameters (JSON)
 
-* `label` (string): The label or name for the state. TODO, for item creation in general: should we send a full object structure instead (with optional fields of course)?
+The new state's data: see [activity state](/DataTypes#TODO).
 
 #### Response (JSON)
 
@@ -169,11 +169,8 @@ Records a new event.
 
 #### Post parameters (JSON)
 
-TODO: just send an event data type? cf. question above.
-
-* `stateId` ([identity](/DataTypes#TODO)): Optional. If set, the event is considered a state change event, otherwise it is considered a simple mark event. If the value is zero or empty, the call will be equivalent to POST `/<channel id>/events/stop` and other parameters will be ignored.
-* `info` (string): Optional. TODO
-* `eventData`([activity event data](/DataTypes#TODO)): Optional. TODO
+The new event's data: see [activity event](/DataTypes#TODO).
+Note that the event's `stateId` is set to `null`, the call will be equivalent to POST `/<channel id>/events/stop`.
 
 #### Response (JSON)
 
@@ -186,7 +183,7 @@ TODO: just send an event data type? cf. question above.
 
 ### POST `/<channel id>/events/stop`
 
-This is an alias to POST `/<channel id>/events` with `stateId` set to zero or empty. See POST `/<channel id>/events` for details.
+This is an alias to POST `/<channel id>/events` with `stateId` set to `null`. See POST `/<channel id>/events` for details.
 
 
 ### TODO: GET `/<channel id>/events/start` non-RESTful alternative to the above to allow simple calls via e.g. wget
