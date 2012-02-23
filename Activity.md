@@ -195,6 +195,7 @@ Gets the last recorded state change event.
 
 #### Response (JSON)
 
+TODO: replace with ref to data types.
 * `typeId` ([identity](/DataTypes#TODO)): TODO
 * `id` ([identity](/DataTypes#TODO)): TODO
 * `time` ([timestamp](/DataTypes#TODO)): TODO
@@ -203,6 +204,7 @@ Gets the last recorded state change event.
 
 ### POST `/<channel id>/events/restart`
 
+TODO: "restart" actually means "cancel last stop event" -> must include stateId for control
 TODO: remove this? Will clients really need such a method? If they want to provide "restart" functionality, they should already have the necessary info to record the event with the generic method.
 
 
@@ -216,9 +218,9 @@ TODO (ex-"edit", renamed for consistency with types)
 * `eventData`([activity event data](/DataTypes#TODO)): Optional. TODO
 
 
-### POST `/<channel id>/events/<id>/move`
+### POST `/<channel id>/events/<id>/move-mark`
 
-Modifies an event's recorded time.
+Modifies a mark event's recorded time. To move state change events, use `move-state-change`.
 
 #### Post parameters
 
@@ -229,7 +231,7 @@ Modifies an event's recorded time.
 * 400 (bad request), code `INVALID_TIME`: The specified new time is not valid.
 
 
-### POST `/<channel id>/events/<id>/move-period`
+### POST `/<channel id>/events/<id>/move-state-change`
 
 Allows to modify multiple state change events at once by adjusting the time period from the specified state change event to the next state change event.
 
@@ -260,11 +262,10 @@ TODO: batch upload events that were recorded by the client while offline.
 	* `clientTime` ([timestamp](/DataTypes#TODO)): The event's time as recorded by the client.
 	* `info` (string): Optional. TODO
     * `eventData`([activity event data](/DataTypes#TODO)): Optional. TODO
-* `deleteOverlappedIds` (array of ([identity](/DataTypes#TODO))): Optional. If the specified events include state change events that overlap previously recorded state change events, the latter will be deleted; their ids must be specified here for safety.
 
 #### Response (JSON)
 
-TODO: review this
+TODO: review this + reject entire request on error
 
 * `addedEvents`: Array of event information for successfully added events, with the following structure:
 	* `clientId` ([identity](/DataTypes#TODO)): Client-assigned event id for reference.
