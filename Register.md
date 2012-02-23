@@ -9,6 +9,11 @@ TODO: review and complete
 
 * 400 (bad request), code `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
 
+## Rules
+* activity id :  "/^[a-zA-Z0-9._-]{1,100}$/" // alphanum between 3 and 100 chars
+* password:   "/^[a-zA-Z0-9]{7,21}$/" // alphanum between 7 and 21 chars
+* user name: "/^[a-zA-Z0-9]]5,21}$/" // alphanum between 5 an 21 chars
+* email: "/^[^@]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/"
 
 ### GET `/<user name>/check`
 
@@ -20,35 +25,46 @@ Checks whether the given user name already exists.
 
 #### Specific errors
 
-* 400 (bad request), code `INVALID_USER_NAME`: The given name cannot be used as a user name (TODO: rules)
-
+* 400 (bad request), code `INVALID_USER_NAME`: The given name cannot be used as a user name ** @see  Rules **
 
 ### POST `/init`
 
-Initializes user creation. The creation must be confirmed with POST `/<user name>/confirm`. Unconfirmed user creations are deleted after TODO: 24 hours.
+Initializes user creation. The creation must be confirmed with POST `/<user name>/confirm`. Unconfirmed user creations are deleted after 24 hours.
 
 #### Post parameters (JSON)
 
 * `userName` (string): The user's unique name.
-* `email` (string): The user's e-mail address, unique to that user.
+* `email` (string): The user's e-mail address, unique to that user. 
 * `password` (string): The user's password for accessing administration functions.
 * `languageCode` ([two-letter ISO language code](/DataTypes#TODO)): The user's preferred language. TODO: note about actual usage in service and clients.
 
 #### Response (JSON)
 
 * `confirmationToken` (string): TODO
-* `captchaChallenge` (string): TODO: shouldn't we do like everyone else and send a confirmation e-mail instead?
-
+* `captchaChallenge` (string): TODO: a confirmation e-mail cycle may be added 
+   
 #### Specific errors
 
 * 400 (bad request), code `EXISTING_USER_NAME`: TODO
 * 400 (bad request), code `INVALID_EMAIL`: TODO
 * 400 (bad request), code `INVALID_PASSWORD`: TODO
 
+### GET `/<user name>/confirm_by_mail/<confirmationToken>`
+
+#### Response (JSON)
+
+* OK:
+
+#### Specific errors
+
+* 400 (bad request), code `NO_EXISTING_USER_NAME`: TODO
+* 400 (bad request), code `INVALID_TOKEN`: TODO
+* 400 (bad request), code `USER_ALREADY_CONFIRMED`: TODO
 
 ### POST `/<user name>/confirm`
 
-Confirms user creation for the given user. TODO: we should probably have a GET equivalent for this request (for use from email link).
+Confirms user creation for the given user. 
+No need for a GET equivalent for use from email link as we will need a ** Proxy ** web page that will convert this web page could be the same than the one where we validate the Captcha
 
 #### Post parameters (JSON)
 
