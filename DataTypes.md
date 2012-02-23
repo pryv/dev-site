@@ -4,7 +4,8 @@ TODO: introductory text
 
 ### Item identity
 
-An unsigned integer number uniquely designating the item within its scope. For example:
+To be decided in a matter that fits the best the choosen database.
+The best would be to keep human readable identifier (see slugify)
 
 * The identity of every activity channel must be unique within its owning user's data
 * The identity of every activity state or event must be unique within its containing channel
@@ -14,6 +15,8 @@ An unsigned integer number uniquely designating the item within its scope. For e
 
 A floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not matter.
 
+* PHP -> microtime()
+* 
 
 ### Two-letter ISO language code
 
@@ -32,7 +35,7 @@ TODO: example
 
 * `id` (identity, TODO: link): Read-only. The server-assigned identifier for the state.
 * `label` (string): A unique name identifying the state for users within its channel.
-*  `isActive` (`true` or `false`): Optional. Whether the state is currently in use. No events can be recorded for inactive states. Default: `true`.
+*  `isHidden` (`true` or `false`): Optional. Whether the state is currently in use or visible. Default: `true`.
 * `clientData` (item additional data, TODO: link):  Optional. Additional client data for the state.
 * `timeCount` (timestamp, TODO: link): Read-only. Only optionally returned when querying states, indicating the total time spent in that state, including sub-states, since a given reference date and time.
 * `children` (array of activity states): Optional. The state's sub-states, if any. This field cannot be set in requests creating a new state: states must be created one by one by design.
