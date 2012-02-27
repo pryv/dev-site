@@ -4,8 +4,7 @@ TODO: introductory text
 
 ### Item identity
 
-To be decided in a matter that fits the best the choosen database.
-The best would be to keep human readable identifier (see slugify)
+TODO: decide depending on the choosen database. The best would be to keep human readable identifier (see slugify). Validation rule in that case: `/^[a-zA-Z0-9._-]{1,100}$/` (alphanum between 3 and 100 chars).
 
 * The identity of every activity channel must be unique within its owning user's data
 * The identity of every activity state or event must be unique within its containing channel
@@ -15,8 +14,10 @@ The best would be to keep human readable identifier (see slugify)
 
 A floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not matter.
 
+Examples:
+
 * PHP -> microtime()
-* 
+* ...
 
 ### Two-letter ISO language code
 
@@ -61,4 +62,5 @@ TODO: "commonly used data directory" to help data reuse:
 
 * `color`
 * `url`
-* ... picture, ... (does not fit the "no media files" restriction)
+* `imageIcon` (! file size)
+* ...

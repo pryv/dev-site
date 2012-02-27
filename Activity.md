@@ -35,7 +35,8 @@ Gets the activity channels accessible with the given token.
 
 #### Response (JSON)
 
-* `channels` (array of [channels](/DataTypes#TODO)): The list of the channels accessible with the given token.
+* `channels` (array of [activity channels](/DataTypes#TODO)): The list of the channels accessible with the given token.
+* `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
 ### POST `/channels`
@@ -53,8 +54,11 @@ The new channel's data: see [activity channel](/DataTypes#TODO).
 
 ### POST `/channels/<channel id>/set-info`
 
-TODO: set label, color, payload.
-each parameter is optional
+Modifies the activity channel's attributes.
+
+#### Post parameters (JSON)
+
+New values for the channel's fields: see [activity channel](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
 
 
 ### DELETE `/channels/<channel id>`
@@ -106,21 +110,20 @@ The new state's data: see [activity state](/DataTypes#TODO).
 
 ### POST `/<channel id>/states/<state id>/set-info`
 
-TODO: set active state, label, color, payload.
-each parameter is optional
+Modifies the activity state's attributes.
+
+#### Post parameters (JSON)
+
+New values for the state's fields: see [activity state](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
 
 
 ### POST `/<channel id>/states/<state id>/move`
 
-TODO
+Relocates the activity state in the states tree structure.
 
 #### Post parameters (JSON)
 
-* `newParentId` ([identity](/DataTypes#TODO)): TODO
-
-#### Response (JSON)
-
-TODO
+* `newParentId` ([identity](/DataTypes#TODO)): The id of the state's new parent, or `null` if the state should be moved at the root of the states tree.
 
 #### Specific errors
 
@@ -153,7 +156,7 @@ Queries the list of events.
 
 #### Response (JSON)
 
-* `events` (array of [activity event](/DataTypes#TODO)): Events ordered by time (see `sortAscending` below).
+* `events` (array of [activity events](/DataTypes#TODO)): Events ordered by time (see `sortAscending` below).
 * `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
@@ -170,7 +173,7 @@ Records a new event.
 #### Post parameters (JSON)
 
 The new event's data: see [activity event](/DataTypes#TODO).
-Note that the event's `stateId` is set to `null`, the call will be equivalent to POST `/<channel id>/events/stop`.
+Note that if the event's `stateId` is set to `null`, the call will be equivalent to POST `/<channel id>/events/stop`.
 
 #### Response (JSON)
 
@@ -189,38 +192,41 @@ This is an alias to POST `/<channel id>/events` with `stateId` set to `null`. Se
 ### TODO: GET `/<channel id>/events/start` non-RESTful alternative to the above to allow simple calls via e.g. wget
 
 
-### GET `/<channel id>/events/last-state-change`
+### GET `/<channel id>/events/last-change`
 
 Gets the last recorded state change event.
 
 #### Response (JSON)
 
-TODO: replace with ref to data types.
-* `typeId` ([identity](/DataTypes#TODO)): TODO
-* `id` ([identity](/DataTypes#TODO)): TODO
-* `time` ([timestamp](/DataTypes#TODO)): TODO
-* `serverNow`([timestamp](/DataTypes#TODO)): The current server time
+* `event` ([activity event](/DataTypes#TODO)): The requested event.
+* `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
-### POST `/<channel id>/events/restart`
+### POST `/<channel id>/events/cancel-last-change`
 
-TODO: "restart" actually means "cancel last stop event" -> must include stateId for control
-TODO: remove this? Will clients really need such a method? If they want to provide "restart" functionality, they should already have the necessary info to record the event with the generic method.
+Cancels the last recorded state change event, in effect proceeding with the previously active state.
+
+#### Post parameters (JSON)
+
+* `resumeStateId` ([identity](/DataTypes#TODO)): The id of the previously active state that will be resumed, for control purpose.
+
+#### Specific errors
+
+* 400 (bad request), code `INVALID_STATE`: The specified state id does not match the previously active state.
 
 
 ### POST `/<channel id>/events/<id>/set-info`
 
-TODO (ex-"edit", renamed for consistency with types)
+Modifies the activity event's attributes.
 
 #### Post parameters (JSON)
 
-* `info` (string): Optional. TODO
-* `eventData`([activity event data](/DataTypes#TODO)): Optional. TODO
+New values for the event's fields: see [activity event](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
 
 
 ### POST `/<channel id>/events/<id>/move-mark`
 
-Modifies a mark event's recorded time. To move state change events, use `move-state-change`.
+Modifies a mark event's recorded time. To move state change events, use `move-change`.
 
 #### Post parameters
 
@@ -231,7 +237,7 @@ Modifies a mark event's recorded time. To move state change events, use `move-st
 * 400 (bad request), code `INVALID_TIME`: The specified new time is not valid.
 
 
-### POST `/<channel id>/events/<id>/move-state-change`
+### POST `/<channel id>/events/<id>/move-change`
 
 Allows to modify multiple state change events at once by adjusting the time period from the specified state change event to the next state change event.
 
@@ -251,27 +257,21 @@ Allows to modify multiple state change events at once by adjusting the time peri
 
 ### POST `/<channel id>/events/batch`
 
-TODO: batch upload events that were recorded by the client while offline.
+TODO: batch upload events that were recorded by the client while offline. If the client-recorded events overlap events on the server, the request will be rejected (see errors below); the client must sync its
 
 #### Post parameters (JSON)
 
 * `clientNow` ([timestamp](/DataTypes#TODO)): TODO make clear that the date reference is the client's. Used to calculate the *time delta* to apply to server time for the given events.  See also start and end times for events below.
-* `events`: Array of client-recorded events with the following structure:
-	* `stateId` ([identity](/DataTypes#TODO)): Optional. The event's state id. TODO: explain "stop" (ie "0") + same warning on ignoring other data
-	* `clientId` ([identity](/DataTypes#TODO)): Temporarily event id assigned by the client; used as reference in the request's response (see below).
-	* `clientTime` ([timestamp](/DataTypes#TODO)): The event's time as recorded by the client.
-	* `info` (string): Optional. TODO
-    * `eventData`([activity event data](/DataTypes#TODO)): Optional. TODO
+* `events` (array of [activity events](/DataTypes#TODO)): The client-recorded events. The `clientId` must be set for each event.
+* `deleteOverlappedIds` (array of ([identity](/DataTypes#TODO))): Optional. If periods specified by client-recorded state change events overlap existing state change events on the server, they will be deleted; their ids must be specified here for safety.
+
 
 #### Response (JSON)
 
-TODO: review this + reject entire request on error
+* `addedEvents` (array of [activity events](/DataTypes#TODO): The successfully added events, with their server-assigned ids and `clientId` for reference.
 
-* `addedEvents`: Array of event information for successfully added events, with the following structure:
-	* `clientId` ([identity](/DataTypes#TODO)): Client-assigned event id for reference.
-	* `id` ([identity](/DataTypes#TODO)): The added event's id as allocated by the server.
-	* `impactedEvents`: Array of previously recorded events impacted by the added event. TODO: clarify... for each: id, stateBefore (startTime, endTime), stateAfter (startTime, endTime)
-* `rejectedEvents`: Array of event information for events that could not be added, with the following structure:
-	* `clientId` ([identity](/DataTypes#TODO)): Client-assigned event id for reference.
-	* `errorCode`: (TODO: review this, checking consistency with regular request errors...) One of `InvalidActivityTypeId`, `InvalidTime`, `InvalidParametersFormat` (TODO: I (SG) think such errors should cause the entire request to be rejected)
-	* `errorMessage`: TODO should indicate e.g. whether start is invalid (review after the above is cleaned up)
+#### Specific errors
+
+* 400 (bad request), code `INVALID_TIME`: TODO
+* 400 (bad request), code `UNKNOWN_STATE_ID`: TODO
+* 400 (bad request), code `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
