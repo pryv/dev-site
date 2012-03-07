@@ -28,6 +28,8 @@ TODO: review and complete
 
 ## Requests for activity channels
 
+TODO: introductory text.
+
 
 ### GET `/channels`
 
@@ -68,7 +70,7 @@ Irreversibly deletes the given channel with all the states and events it contain
 
 ## Requests for activity states
 
-States always belong to an activity channel.
+TODO: introductory text (previous description moved to DataTypes page)
 
 
 ### GET `/<channel id>/states` or `/<channel id>/states/<id>`
@@ -141,8 +143,7 @@ Irreversibly deletes the state. TODO: will result in adding all activity time to
 
 ## Requests for activity events
 
-Like states, events always belong to an activity channel. Events can record state changes or simply "marks" (for punctual events not associated with a state change).
-
+TODO: introductory text (previous description moved to DataTypes page)
 
 ### GET `/<channel id>/events`
 
