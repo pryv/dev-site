@@ -10,7 +10,7 @@ Located at TODO:<http://register.wactiv.com>. Access is anonymous, with a captch
 
 ## Admin
 
-The [Admin module](/Admin) allows each user to manage her account information and [data access tokens](/DataAccessTokens).
+The [Admin module](/Admin) allows each user to manage her account information and [data access tokens](//DataTypes#TODO).
 
 Located at TODO:<http://\<username\>.wactiv.com>. Access is managed by regular username / password authentication and expiring sessions.
 
@@ -22,4 +22,4 @@ TODO: access protected by data access token?
 
 The [Activity module](/Activity) allows each data access token owner to query or manage activity data for the user that issued the token: activity channels, states and events.
 
-Location is provided by the TODO:which? module. Access is managed by [data access tokens](/DataAccessTokens).
+Location is provided by the TODO:which? module. Access is managed by [data access tokens](//DataTypes#TODO).

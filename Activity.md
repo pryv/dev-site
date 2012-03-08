@@ -4,7 +4,7 @@ TODO: introductory text
 
 ## Authentication
 
-All requests to the activity module must carry a valid [data access tokens](/DataAccessTokens) at the root of the resource path. For example:
+All requests to the activity module must carry a valid [data access token](//DataTypes#TODO) at the root of the resource path. For example:
 
     GET /<data access token>/types HTTP/1.1
     Host: johndoe.wactiv.com:1234
