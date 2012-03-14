@@ -43,7 +43,6 @@ Initializes user creation. The creation must be confirmed with POST `/<user name
 
 #### Response (JSON)
 
-* `confirmationToken` (string): TODO
 * `captchaChallenge` (string): TODO: a confirmation e-mail cycle may be added 
    
 #### Specific errors
@@ -53,11 +52,6 @@ Initializes user creation. The creation must be confirmed with POST `/<user name
 * 400 (bad request), code `INVALID_PASSWORD`: TODO (see rules above TODO: link).
 * 400 (bad request), code `INVALID_EMAIL`: TODO
 
-### GET `/<user name>/confirm_by_mail/<confirmationToken>`
-
-#### Response (JSON)
-
-* OK:
 
 #### Specific errors
 
@@ -68,12 +62,10 @@ Initializes user creation. The creation must be confirmed with POST `/<user name
 ### POST `/<user name>/confirm`
 
 Confirms user creation for the given user. 
-TODO: remove this comment: "No need for a GET equivalent for use from email link as we will need a ** Proxy ** web page that will convert this web page could be the same than the one where we validate the Captcha"
 
 #### Post parameters (JSON)
 
-* `confirmationToken` (string): TODO
-* `captchaAnswer` (string): TODO: see remark for `init` above
+* `challenge` (string): TODO: see remark for `init` above
 
 #### Response (JSON)
 
