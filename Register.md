@@ -52,13 +52,6 @@ Initializes user creation. The creation must be confirmed with POST `/<user name
 * 400 (bad request), code `INVALID_PASSWORD`: TODO (see rules above TODO: link).
 * 400 (bad request), code `INVALID_EMAIL`: TODO
 
-
-#### Specific errors
-
-* 400 (bad request), code `NO_EXISTING_USER_NAME`: TODO
-* 400 (bad request), code `INVALID_TOKEN`: TODO
-* 400 (bad request), code `USER_ALREADY_CONFIRMED`: TODO
-
 ### POST `/<user name>/confirm`
 
 Confirms user creation for the given user. 
