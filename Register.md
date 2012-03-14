@@ -66,7 +66,8 @@ Confirms user creation for the given user.
 
 #### Specific errors
 
-* 400 (bad request), code `WRONG_CHALLENGE`: TODO: see remarks above
+* 400 (bad request), code `WRONG_CHALLENGE`: the response is not the string expected.
+* 400 (bad request), code `INVALID_CHALLENGE`: the response is badly formatted.
 * 404 (not found): There is no pending user creation for the given user name.
 
 
