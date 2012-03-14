@@ -55,6 +55,7 @@ Initializes user creation. The creation must be confirmed with POST `/<user name
 ### POST `/<user name>/confirm`
 
 Confirms user creation for the given user. 
+Note: if user is already confirmed, this will send no error, just the serverIP of the use
 
 #### Post parameters (JSON)
 
@@ -73,4 +74,6 @@ Confirms user creation for the given user.
 
 ### GET `/<user name>/server`
 
-Requests the server IP for the given user. TODO: review and discuss.
+#### Response (JSON)
+
+* `serverIP`: TODO
