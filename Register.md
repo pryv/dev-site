@@ -63,7 +63,7 @@ Note: if user is already confirmed, this will send no error, just the serverIP o
 
 #### Response (JSON)
 
-* `serverIP`: TODO
+* `server`: may be an IPv4, iPv6 or a fully qualified hostname
 
 #### Specific errors
 
