@@ -6,7 +6,7 @@ branch_name=$(git symbolic-ref -q HEAD)
 branch_name=${branch_name##refs/heads/}
 branch_name=${branch_name:-HEAD}
 
-port=8123;
+port=8223;
 
 echo "launching gollum on branch:    $branch_name   \n Ctrl+C to quit"
 
