@@ -14,7 +14,7 @@ TODO: review and complete
 
 TODO: wording
 
-* User name: `/^[a-zA-Z0-9]]5,21}$/`(alphanum between 5 an 21 chars) case-insensitive.
+* User name: `/^[a-zA-Z0-9]{5,21}$/`(alphanum between 5 an 21 chars) case-insensitive.
 * Password:   `/^[a-zA-Z0-9]{7,21}$/` (alphanum between 7 and 21 chars) case-sensitive.
 
 
