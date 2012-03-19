@@ -48,22 +48,12 @@ Initializes user creation. The creation must be confirmed with POST `/<user name
    
 #### Specific errors
 
-* 400 (bad request), id `EXISTING_USER_NAME`: TODO
-* 400 (bad request), id `INVALID_USER_NAME`: The given name cannot be used as a user name (see rules above TODO: link).
-* 400 (bad request), id `INVALID_PASSWORD`: TODO (see rules above TODO: link).
-* 400 (bad request), id `INVALID_EMAIL`: TODO
 
-### GET `/<user name>/confirm_by_mail/<confirmationToken>`
-
-#### Response (JSON)
-
-* OK:
-
-#### Specific errors
-
-* 400 (bad request), id `NO_EXISTING_USER_NAME`: TODO
-* 400 (bad request), id `INVALID_TOKEN`: TODO
-* 400 (bad request), id `USER_ALREADY_CONFIRMED`: TODO
+* 400 (bad request), id `INVALID_DATA`: will be detailed with sub-errors 
+  * id `EXISTING_USER_NAME`: TODO
+  * id `INVALID_USER_NAME`: The given name cannot be used as a user name (see rules above TODO: link).
+  * id `INVALID_PASSWORD`: TODO (see rules above TODO: link).
+  * id `INVALID_EMAIL`: TODO
 
 ### POST `/<user name>/confirm`
 
