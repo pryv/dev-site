@@ -18,6 +18,7 @@ For the sake of readability, that token is omitted in the resource paths below, 
 TODO: review and complete
 
 * 400 (bad request), code `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
+* 401 (unauthorized): The data access token is missing or invalid.
 * 403 (forbidden): The given data access token does not grant permission for this operation. TODO: link to explanation about tokens and permissions.
 * 404 (not found): Possible cases:
 	* Code `UNKNOWN_TOKEN`: The data access token can't be found.
@@ -83,7 +84,7 @@ Gets the states accessible with the given token, either from the root level or o
 
 #### Query string parameters
 
-* `includeInactive` (`true` or `false`): Optional. When `true`, inactive states will be included in the result. Default: `false`.
+* `includeHidden` (`true` or `false`): Optional. When `true`, states that are currently hidden will be included in the result. Default: `false`.
 * `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned states will include their total time count starting from this timestamp (see `timeCount` in [activity state](/DataTypes#TODO)); otherwise no time count values will be returned.
 
 #### Response (JSON)
