@@ -13,7 +13,7 @@ TODO: explain authentication and sessions.
 
 TODO: review and complete
 
-* 400 (bad request), code `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
+* 400 (bad request), id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
 * 403 (forbidden): TODO
 * 404 (not found): TODO
 

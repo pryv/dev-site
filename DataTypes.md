@@ -89,6 +89,15 @@ TODO: "commonly used data directory" to help data reuse:
 * ...
 
 
+### Error
+
+Fields:
+
+* `id` (string): Identifier for the error; complements the response's HTTP error code.
+* `message` (string): A human-readable description of the error.
+* `subErrors` (array of errors): Optional. Lists the detailed causes of the main error, if any.
+
+
 ### Item identity
 
 TODO: decide depending on the choosen database. The best would be to keep human readable identifier (see slugify). Validation rule in that case: `/^[a-zA-Z0-9._-]{1,100}$/` (alphanum between 3 and 100 chars).

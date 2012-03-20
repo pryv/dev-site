@@ -17,13 +17,14 @@ For the sake of readability, that token is omitted in the resource paths below, 
 
 TODO: review and complete
 
-* 400 (bad request), code `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
+* 400 (bad request), id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
+* 401 (unauthorized): The data access token is missing or invalid.
 * 403 (forbidden): The given data access token does not grant permission for this operation. TODO: link to explanation about tokens and permissions.
 * 404 (not found): Possible cases:
-	* Code `UNKNOWN_TOKEN`: The data access token can't be found.
-	* Code `UNKNOWN_CHANNEL`: The activity channel can't be found.
-	* Code `UNKNOWN_STATE`: The activity state can't be found in the given channel.
-	* Code `UNKNOWN_EVENT`: The event can't be found in the given channel.
+	* Id `UNKNOWN_TOKEN`: The data access token can't be found.
+	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
+	* Id `UNKNOWN_STATE`: The activity state can't be found in the given channel.
+	* Id `UNKNOWN_EVENT`: The event can't be found in the given channel.
 
 
 ## Requests for activity channels
@@ -83,7 +84,7 @@ Gets the states accessible with the given token, either from the root level or o
 
 #### Query string parameters
 
-* `includeInactive` (`true` or `false`): Optional. When `true`, inactive states will be included in the result. Default: `false`.
+* `includeHidden` (`true` or `false`): Optional. When `true`, states that are currently hidden will be included in the result. Default: `false`.
 * `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned states will include their total time count starting from this timestamp (see `timeCount` in [activity state](/DataTypes#TODO)); otherwise no time count values will be returned.
 
 #### Response (JSON)
@@ -129,7 +130,7 @@ Relocates the activity state in the states tree structure.
 
 #### Specific errors
 
-* 400 (bad request), code `UNKNOWN_STATE_ID`: The given parent state's id is unknown.
+* 400 (bad request), id `UNKNOWN_STATE_ID`: The given parent state's id is unknown.
 
 
 ### DELETE `/<channel id>/states/<state id>`
@@ -163,8 +164,8 @@ Queries the list of events.
 
 #### Specific errors
 
-* 400 (bad request), code `UNKNOWN_STATE_ID`: TODO may happen if one of the specified states doesn't exist
-* 400 (bad request), code `INVALID_TIME`: TODO
+* 400 (bad request), id `UNKNOWN_STATE_ID`: TODO may happen if one of the specified states doesn't exist
+* 400 (bad request), id `INVALID_TIME`: TODO
 
 
 ### POST `/<channel id>/events`
@@ -182,7 +183,7 @@ Note that if the event's `stateId` is set to `null`, the call will be equivalent
 
 #### Specific errors
 
-* 400 (bad request), code `UNKNOWN_STATE_ID`: The specified state cannot be found.
+* 400 (bad request), id `UNKNOWN_STATE_ID`: The specified state cannot be found.
 
 
 ### POST `/<channel id>/events/stop`
@@ -213,7 +214,7 @@ Cancels the last recorded state change event, in effect proceeding with the prev
 
 #### Specific errors
 
-* 400 (bad request), code `INVALID_STATE`: The specified state id does not match the previously active state.
+* 400 (bad request), id `INVALID_STATE`: The specified state id does not match the previously active state.
 
 
 ### POST `/<channel id>/events/<id>/set-info`
@@ -235,7 +236,7 @@ Modifies a mark event's recorded time. To move state change events, use `move-ch
 
 #### Specific errors
 
-* 400 (bad request), code `INVALID_TIME`: The specified new time is not valid.
+* 400 (bad request), id `INVALID_TIME`: The specified new time is not valid.
 
 
 ### POST `/<channel id>/events/<id>/move-change`
@@ -251,9 +252,9 @@ Allows to modify multiple state change events at once by adjusting the time peri
 
 #### Specific errors
 
-* 400 (bad request), code `INVALID_EVENT`: The event is not a state change event.
-* 400 (bad request), code `INVALID_TIME`: TODO (start, end)
-* 400 (bad request), code `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
+* 400 (bad request), id `INVALID_EVENT`: The event is not a state change event.
+* 400 (bad request), id `INVALID_TIME`: TODO (start, end)
+* 400 (bad request), id `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
 ### POST `/<channel id>/events/batch`
@@ -273,6 +274,6 @@ TODO: batch upload events that were recorded by the client while offline. If the
 
 #### Specific errors
 
-* 400 (bad request), code `INVALID_TIME`: TODO
-* 400 (bad request), code `UNKNOWN_STATE_ID`: TODO
-* 400 (bad request), code `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
+* 400 (bad request), id `INVALID_TIME`: TODO
+* 400 (bad request), id `UNKNOWN_STATE_ID`: TODO
+* 400 (bad request), id `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
