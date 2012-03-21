@@ -21,14 +21,7 @@ Fields:
 
 ### Activity channel
 
-Each activity channel represents a "stream" or "type" of activity to track. For example, you may have channels tracking:
-
-* Your current working activity
-* The people you are with at the moment
-* Your geographical location and that of your relatives
-* The value of your stock exchange assets
-* Etc.
-
+Each activity channel represents a "stream" or "type" of activity to track.
 Fields:
 
 * `id` (identity, TODO: link)

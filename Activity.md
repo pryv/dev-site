@@ -56,7 +56,7 @@ The new channel's data: see [activity channel](/DataTypes#TODO).
 * `id` ([identity](/DataTypes#TODO)): The created channel's id.
 
 
-### POST `/channels/<channel id>/set-info`
+### PUT `/channels/<channel id>`
 
 Modifies the activity channel's attributes.
 
@@ -112,7 +112,7 @@ The new state's data: see [activity state](/DataTypes#TODO).
 * `id` ([identity](/DataTypes#TODO)): The created state's id.
 
 
-### POST `/<channel id>/states/<state id>/set-info`
+### PUT `/<channel id>/states/<state id>`
 
 Modifies the activity state's attributes.
 
@@ -146,6 +146,7 @@ Irreversibly deletes the state. TODO: will result in adding all activity time to
 ## Requests for activity events
 
 TODO: introductory text (previous description moved to DataTypes page)
+
 
 ### GET `/<channel id>/events`
 
@@ -218,7 +219,7 @@ Cancels the last recorded state change event, in effect proceeding with the prev
 * 400 (bad request), id `INVALID_STATE`: The specified state id does not match the previously active state.
 
 
-### POST `/<channel id>/events/<id>/set-info`
+### PUT `/<channel id>/events/<id>`
 
 Modifies the activity event's attributes.
 
@@ -256,6 +257,11 @@ Allows to modify multiple state change events at once by adjusting the time peri
 * 400 (bad request), id `INVALID_EVENT`: The event is not a state change event.
 * 400 (bad request), id `INVALID_TIME`: TODO (start, end)
 * 400 (bad request), id `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
+
+
+### DELETE `/<channel id>/events/<id>`
+
+Irreversibly deletes the event. If the deleted event is a state change event, this will cause the previously active state to remain active.
 
 
 ### POST `/<channel id>/events/batch`

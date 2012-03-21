@@ -38,7 +38,7 @@ TODO: session token
 TODO: `WRONG_CREDENTIALS`
 
 
-### GET `/info`
+### GET `/user-info`
 
 TODO: get user informations
 Requires session token.
@@ -48,7 +48,7 @@ Requires session token.
 TODO: email, display name, language, ...
 
 
-### POST `/set-info`
+### PUT `/user-info`
 
 TODO: change user information
 
@@ -74,13 +74,16 @@ Response: token string
 TODO
 
 
-### POST `/tokens/<client key?>/set-info`
+### PUT `/tokens/<client key>`
 
 TODO
 
 
-### DELETE `/tokens/<client key?>`
+### DELETE `/tokens/<client key>`
 
 TODO
 
 
+### POST `/logout`
+
+TODO
