@@ -154,7 +154,7 @@ Queries the list of events.
 
 #### Query string parameters
 
-* `onlyStates` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those states will be returned. By default, events linked to all accessible states are returned.
+* `onlyStates` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those states (including child states) will be returned. By default, events linked to all accessible states are returned.
 * `fromTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is 24 hours before the current time.
 * `toTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is the current time.
 
