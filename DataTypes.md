@@ -64,6 +64,7 @@ Fields:
 * `stateId`(identity, TODO: link):
 	* For state change events: The value must be either a valid state's id, or `null` meaning "no tracked state".
 	* For mark events: Optional. Indicates the particular state the event is associated with, if any.
+* `value`: Optional. A JSON object holding a value associated with the event. This value object's properties must be booleans, numbers, strings, or null values (no objects allowed).
 * `comment` (string): Optional. User comment or note for the event.
 * `clientData` (item additional data, TODO: link):  Optional. Additional client data for the event.
 
