@@ -20,6 +20,6 @@ TODO: access protected by data access token?
 
 ## Activity
 
-The [Activity module](/Activity) allows each data access token owner to query or manage activity data for the user that issued the token: activity channels, states and events.
+The [Activity module](/Activity) allows each data access token owner to query or manage activity data for the user that issued the token: activity channels, contexts and events.
 
 Location is provided by the TODO:which? module. Access is managed by [data access tokens](//DataTypes#TODO).
