@@ -1,4 +1,4 @@
-# Activity module TODO: update name
+# Activity module
 
 TODO: introductory text
 
@@ -21,10 +21,10 @@ TODO: review and complete
 * 401 (unauthorized), possible cases:
 	* Id `MISSING_TOKEN`: The data access token is missing.
 	* Id `UNKNOWN_TOKEN`: The specified data access token can't be found.
-* 403 (forbidden): The given data access token does not grant permission for this operation. TODO: link to explanation about tokens and permissions.
+* 403 (forbidden): The given data access token does not grant permission for this operation. See [data access tokens](//DataTypes#TODO) for more details about tokens and permissions.
 * 404 (not found), possible cases:
 	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
-	* Id `UNKNOWN_STATE`: The activity state can't be found in the given channel.
+	* Id `UNKNOWN_CONTEXT`: The activity context can't be found in the given channel.
 	* Id `UNKNOWN_EVENT`: The event can't be found in the given channel.
 
 
@@ -67,76 +67,76 @@ New values for the channel's fields: see [activity channel](/DataTypes#TODO). Al
 
 ### DELETE `/channels/<channel id>`
 
-Irreversibly deletes the given channel with all the states and events it contains. TODO: given the criticality of this operation, make it set an expiration time to data in order to allow undo functionality?
+Irreversibly deletes the given channel with all the contexts and events it contains. TODO: given the criticality of this operation, make it set an expiration time to data in order to allow undo functionality?
 
 
-## Requests for activity states
+## Requests for activity contexts
 
 TODO: introductory text (previous description moved to DataTypes page)
 
 
-### GET `/<channel id>/states` or `/<channel id>/states/<id>`
+### GET `/<channel id>/contexts` or `/<channel id>/contexts/<id>`
 
-Gets the states accessible with the given token, either from the root level or only descending from the given state.
+Gets the contexts accessible with the given token, either from the root level or only descending from the given context.
 
 #### Specific path parameters
 
-* `id`([identity](/DataTypes#TODO)): The id of the state to use as root for the request, or nothing to return all accessible states from the root level.
+* `id`([identity](/DataTypes#TODO)): The id of the context to use as root for the request, or nothing to return all accessible contexts from the root level.
 
 #### Query string parameters
 
-* `includeHidden` (`true` or `false`): Optional. When `true`, states that are currently hidden will be included in the result. Default: `false`.
-* `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned states will include their total time count starting from this timestamp (see `timeCount` in [activity state](/DataTypes#TODO)); otherwise no time count values will be returned.
+* `includeHidden` (`true` or `false`): Optional. When `true`, contexts that are currently hidden will be included in the result. Default: `false`.
+* `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned contexts will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity context](/DataTypes#TODO)); otherwise no time count values will be returned.
 
 #### Response (JSON)
 
-* `states` (array of [activity states](/DataTypes#TODO)): The tree of the states accessible with the given token. TODO exemple (with and without time accounting)
+* `contexts` (array of [activity contexts](/DataTypes#TODO)): The tree of the contexts accessible with the given token. TODO exemple (with and without time accounting)
 * `timeCountBase` ([timestamp](/DataTypes#TODO)): The `timeCountBase` value passed as parameters in the request, for reference.
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
-### POST `/<channel id>/states` or `/<channel id>/states/<parent state id>`
+### POST `/<channel id>/contexts` or `/<channel id>/contexts/<parent context id>`
 
-Creates a new state at the root level or as a child state to the given state.
+Creates a new context at the root level or as a child context to the given context.
 
 #### Specific path parameters
 
-* `parentId` ([identity](/DataTypes#TODO)): Optional. The id of the parent state, if any. If not specified, the new state will be created at the root of the states tree structure. 
+* `parentId` ([identity](/DataTypes#TODO)): Optional. The id of the parent context, if any. If not specified, the new context will be created at the root of the contexts tree structure. 
 
 #### Post parameters (JSON)
 
-The new state's data: see [activity state](/DataTypes#TODO).
+The new context's data: see [activity context](/DataTypes#TODO).
 
 #### Response (JSON)
 
-* `id` ([identity](/DataTypes#TODO)): The created state's id.
+* `id` ([identity](/DataTypes#TODO)): The created context's id.
 
 
-### PUT `/<channel id>/states/<state id>`
+### PUT `/<channel id>/contexts/<context id>`
 
-Modifies the activity state's attributes.
-
-#### Post parameters (JSON)
-
-New values for the state's fields: see [activity state](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
-
-
-### POST `/<channel id>/states/<state id>/move`
-
-Relocates the activity state in the states tree structure.
+Modifies the activity context's attributes.
 
 #### Post parameters (JSON)
 
-* `newParentId` ([identity](/DataTypes#TODO)): The id of the state's new parent, or `null` if the state should be moved at the root of the states tree.
+New values for the context's fields: see [activity context](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
+
+
+### POST `/<channel id>/contexts/<context id>/move`
+
+Relocates the activity context in the contexts tree structure.
+
+#### Post parameters (JSON)
+
+* `newParentId` ([identity](/DataTypes#TODO)): The id of the context's new parent, or `null` if the context should be moved at the root of the contexts tree.
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_STATE_ID`: The given parent state's id is unknown.
+* 400 (bad request), id `UNKNOWN_CONTEXT_ID`: The given parent context's id is unknown.
 
 
-### DELETE `/<channel id>/states/<state id>`
+### DELETE `/<channel id>/contexts/<context id>`
 
-Irreversibly deletes the state. TODO: will result in adding all activity time to the deleted item's parent. Real deletion may be set with `doNotMergeWithParent`
+Irreversibly deletes the context. TODO: will result in adding all activity events to the deleted item's parent. Real deletion may be set with `doNotMergeWithParent`
 
 #### Query string parameters
 
@@ -154,7 +154,7 @@ Queries the list of events.
 
 #### Query string parameters
 
-* `onlyStates` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those states (including child states) will be returned. By default, events linked to all accessible states are returned.
+* `onlyContexts` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those contexts (including child contexts) will be returned. By default, events linked to all accessible contexts are returned.
 * `fromTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is 24 hours before the current time.
 * `toTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is the current time.
 * `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
@@ -166,18 +166,17 @@ Queries the list of events.
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_STATE_ID`: TODO may happen if one of the specified states doesn't exist
+* 400 (bad request), id `UNKNOWN_CONTEXT_ID`: TODO may happen if one of the specified contexts doesn't exist
 * 400 (bad request), id `INVALID_TIME`: TODO
 
 
 ### POST `/<channel id>/events`
 
-Records a new event.
+Records a new event. Events recorded this way must be completed events, i.e. either period events with a known duration or mark events. To start a running period event, post a `events/start` request.
 
 #### Post parameters (JSON)
 
 The new event's data: see [activity event](/DataTypes#TODO).
-Note that if the event's `stateId` is set to `null`, the call will be equivalent to POST `/<channel id>/events/stop`.
 
 #### Response (JSON)
 
@@ -185,41 +184,46 @@ Note that if the event's `stateId` is set to `null`, the call will be equivalent
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_STATE_ID`: The specified state cannot be found.
+* 400 (bad request), id `UNKNOWN_context_ID`: The specified context cannot be found.
+
+
+### POST `/<channel id>/events/start`
+
+Starts a new period event, stopping the previously running period event if any. See POST `/<channel id>/events` for details. TODO: detail
 
 
 ### POST `/<channel id>/events/stop`
 
-This is an alias to POST `/<channel id>/events` with `stateId` set to `null`. See POST `/<channel id>/events` for details.
+Stops the previously running period event. See POST `/<channel id>/events` for details. TODO: detail
 
 
-### TODO: GET `/<channel id>/events/start` non-RESTful alternative to the above to allow simple calls via e.g. wget
+### TODO: GET `/<channel id>/events/start` and `.../stop` and `.../record` non-RESTful (TODO: remove references to "REST" for safety) alternatives to the above to allow simple calls via e.g. wget/curl
 
 
-### GET `/<channel id>/events/last-change`
+### GET `/<channel id>/events/running`
 
-Gets the last recorded state change event.
+Gets the currently running period events.
 
 #### Response (JSON)
 
-* `event` ([activity event](/DataTypes#TODO)): The requested event.
+* `events` ([activity event](/DataTypes#TODO)): The running period events.
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
-### POST `/<channel id>/events/cancel-last-change`
+### POST `/<channel id>/events/cancel-last-stop`
 
-Cancels the last recorded state change event, in effect proceeding with the previously active state.
+Cancels the last started period event (which must still be running) or stop request, in effect proceeding with the previous period event as if it had never stopped. TODO: example.
 
 #### Post parameters (JSON)
 
-* `resumeStateId` ([identity](/DataTypes#TODO)): The id of the previously active state that will be resumed, for control purpose.
+* `resumedContextId` ([identity](/DataTypes#TODO)): The id of the previously active context that will be resumed, for safety.
 
 #### Specific errors
 
-* 400 (bad request), id `INVALID_STATE`: The specified state id does not match the previously active state.
+* 400 (bad request), id `INVALID_CONTEXT`: The specified context id does not match the previously active context.
 
 
-### PUT `/<channel id>/events/<id>`
+### PUT `/<channel id>/events/<event id>`
 
 Modifies the activity event's attributes.
 
@@ -227,53 +231,39 @@ Modifies the activity event's attributes.
 
 New values for the event's fields: see [activity event](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
 
+#### Specific errors
 
-### POST `/<channel id>/events/<id>/move-mark`
+* 400 (bad request), id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it.
+* 400 (bad request), id `EVENTS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
-Modifies a mark event's recorded time. To move state change events, use `move-change`.
+
+### POST `/<channel id>/events/<event id>/move`
+
+Modifies an event's recorded time.
 
 #### Post parameters
 
 * `newTime` ([timestamp](/DataTypes#TODO)): The new time for the event. This is a server time.
+* `deleteOverlappedIds` (array of ([identity](/DataTypes#TODO))): Optional. If the new time period overlaps other events, they will be deleted if their ids are specified here for safety (otherwise an error is returned, see below).
 
 #### Specific errors
 
 * 400 (bad request), id `INVALID_TIME`: The specified new time is not valid.
+* 400 (bad request), id `EVENTS_OVERLAP`: Returned for period events, if attempting to change the event's time to a value that causes an overlap with one or more period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
-### POST `/<channel id>/events/<id>/move-change`
+### DELETE `/<channel id>/events/<event id>`
 
-Allows to modify multiple state change events at once by adjusting the time period from the specified state change event to the next state change event.
-
-#### Post parameters
-
-* `newStartTime` ([timestamp](/DataTypes#TODO)): Optional. The new time for the event, if modified. This is a server time.
-* `nextEndTime` ([timestamp](/DataTypes#TODO)): Optional. The new time for the next state change event, if modified. This is a server time.
-* `deleteOverlappedIds` (array of ([identity](/DataTypes#TODO))): Optional. If the new time period overlaps other events, they will be deleted; their ids must be specified here for safety.
-* `replaceWithNothing` (`true` or `false`)): Optional. Must be set if the new time period does not contain the original period. If `true`, state change events with state "nothing" will be added to cover parts of the original period not contained in the new period.
-
-#### Specific errors
-
-* 400 (bad request), id `INVALID_EVENT`: The event is not a state change event.
-* 400 (bad request), id `INVALID_TIME`: TODO (start, end)
-* 400 (bad request), id `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
-
-
-### DELETE `/<channel id>/events/<id>`
-
-Irreversibly deletes the event. If the deleted event is a state change event, this will cause the previously active state to remain active.
+Irreversibly deletes the event. If the deleted event is a context change event, this will cause the previously active context to remain active.
 
 
 ### POST `/<channel id>/events/batch`
 
-TODO: batch upload events that were recorded by the client while offline. If the client-recorded events overlap events on the server, the request will be rejected (see errors below); the client must sync its
+TODO: batch upload events that were recorded by the client while offline. If the client-recorded events overlap events on the server, the request will be rejected (see errors below); it is the client's responsibility to retrieve updated server data and adjust its own before uploading.
 
 #### Post parameters (JSON)
 
-* `clientNow` ([timestamp](/DataTypes#TODO)): TODO make clear that the date reference is the client's. Used to calculate the *time delta* to apply to server time for the given events.  See also start and end times for events below.
-* `events` (array of [activity events](/DataTypes#TODO)): The client-recorded events. The `clientId` must be set for each event.
-* `deleteOverlappedIds` (array of ([identity](/DataTypes#TODO))): Optional. If periods specified by client-recorded state change events overlap existing state change events on the server, they will be deleted; their ids must be specified here for safety.
-
+* `events` (array of [activity events](/DataTypes#TODO)): The client-recorded events. The `clientId` must be set for each event. Each event's time must be set in server time.
 
 #### Response (JSON)
 
@@ -282,5 +272,5 @@ TODO: batch upload events that were recorded by the client while offline. If the
 #### Specific errors
 
 * 400 (bad request), id `INVALID_TIME`: TODO
-* 400 (bad request), id `UNKNOWN_STATE_ID`: TODO
-* 400 (bad request), id `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids, or "too many" if more than 10)
+* 400 (bad request), id `UNKNOWN_CONTEXT_ID`: TODO
+* 400 (bad request), id `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids)
