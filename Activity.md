@@ -181,6 +181,7 @@ The new event's data: see [activity event](/DataTypes#TODO).
 #### Response (JSON)
 
 * `id` ([identity](/DataTypes#TODO)): The new event's id.
+* `stoppedId` ([identity](/DataTypes#TODO)): If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
 
 #### Specific errors
 
