@@ -90,7 +90,7 @@ Gets the contexts accessible with the given token, either from the root level or
 
 #### Response (JSON)
 
-* `contexts` (array of [activity contexts](/DataTypes#TODO)): The tree of the contexts accessible with the given token. TODO exemple (with and without time accounting)
+* `contexts` (array of [activity contexts](/DataTypes#TODO)): The tree of the contexts accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
 * `timeCountBase` ([timestamp](/DataTypes#TODO)): The `timeCountBase` value passed as parameters in the request, for reference.
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
@@ -184,7 +184,7 @@ The new event's data: see [activity event](/DataTypes#TODO).
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_context_ID`: The specified context cannot be found.
+* 400 (bad request), id `UNKNOWN_CONTEXT_ID`: The specified context cannot be found.
 
 
 ### POST `/<channel id>/events/start`
