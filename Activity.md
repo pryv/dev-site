@@ -131,7 +131,7 @@ Relocates the activity context in the contexts tree structure.
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_CONTEXT_ID`: The given parent context's id is unknown.
+* 400 (bad request), id `UNKNOWN_CONTEXT`: The given parent context's id is unknown.
 
 
 ### DELETE `/<channel id>/contexts/<context id>`
@@ -166,7 +166,7 @@ Queries the list of events.
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_CONTEXT_ID`: TODO may happen if one of the specified contexts doesn't exist
+* 400 (bad request), id `UNKNOWN_CONTEXT`: TODO may happen if one of the specified contexts doesn't exist
 * 400 (bad request), id `INVALID_TIME`: TODO
 
 
@@ -185,12 +185,16 @@ The new event's data: see [activity event](/DataTypes#TODO).
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_CONTEXT_ID`: The specified context cannot be found.
+* 400 (bad request), id `UNKNOWN_CONTEXT`: The specified context cannot be found.
 
 
 ### POST `/<channel id>/events/start`
 
 Starts a new period event, stopping the previously running period event if any. See POST `/<channel id>/events` for details. TODO: detail
+
+#### Specific errors
+
+* 400 (bad request), id `MISSING_CONTEXT`: The mandatory context is missing.
 
 
 ### POST `/<channel id>/events/stop`
@@ -273,5 +277,5 @@ TODO: batch upload events that were recorded by the client while offline. If the
 #### Specific errors
 
 * 400 (bad request), id `INVALID_TIME`: TODO
-* 400 (bad request), id `UNKNOWN_CONTEXT_ID`: TODO
+* 400 (bad request), id `UNKNOWN_CONTEXT`: TODO
 * 400 (bad request), id `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids)
