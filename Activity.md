@@ -195,6 +195,8 @@ Starts a new period event, stopping the previously running period event if any. 
 #### Specific errors
 
 * 400 (bad request), id `MISSING_CONTEXT`: The mandatory context is missing.
+* 400 (bad request), id `INVALID_OPERATION`: A period event cannot start if another period event already exists at a later time.
+* 400  (bad request), id `PERIODS_OVERLAP`: TODO (data: array of overlapped ids)
 
 
 ### POST `/<channel id>/events/stop`
@@ -239,7 +241,7 @@ New values for the event's fields: see [activity event](/DataTypes#TODO). All fi
 #### Specific errors
 
 * 400 (bad request), id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it.
-* 400 (bad request), id `EVENTS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
+* 400 (bad request), id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
 ### POST `/<channel id>/events/<event id>/move`
@@ -254,7 +256,7 @@ Modifies an event's recorded time.
 #### Specific errors
 
 * 400 (bad request), id `INVALID_TIME`: The specified new time is not valid.
-* 400 (bad request), id `EVENTS_OVERLAP`: Returned for period events, if attempting to change the event's time to a value that causes an overlap with one or more period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
+* 400 (bad request), id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's time to a value that causes an overlap with one or more period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
 ### DELETE `/<channel id>/events/<event id>`
@@ -278,4 +280,4 @@ TODO: batch upload events that were recorded by the client while offline. If the
 
 * 400 (bad request), id `INVALID_TIME`: TODO
 * 400 (bad request), id `UNKNOWN_CONTEXT`: TODO
-* 400 (bad request), id `EVENTS_OVERLAP`: TODO (list of unspecified overlapped event ids)
+* 400 (bad request), id `PERIODS_OVERLAP`: TODO (list of unspecified overlapped event ids)
