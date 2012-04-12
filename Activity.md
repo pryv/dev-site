@@ -203,6 +203,10 @@ Starts a new period event, stopping the previously running period event if any. 
 
 Stops the previously running period event. See POST `/<channel id>/events` for details. TODO: detail
 
+#### Response (JSON)
+
+* `stoppedId` ([identity](/DataTypes#TODO)): The id of the previously running period event that was stopped, or null if no running event was found.
+
 
 ### TODO: GET `/<channel id>/events/start` and `.../stop` and `.../record` non-RESTful (TODO: remove references to "REST" for safety) alternatives to the above to allow simple calls via e.g. wget/curl
 
@@ -238,13 +242,17 @@ Modifies the activity event's attributes.
 
 New values for the event's fields: see [activity event](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
 
+#### Response (JSON)
+
+* `stoppedId` ([identity](/DataTypes#TODO)): If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+
 #### Specific errors
 
 * 400 (bad request), id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it.
 * 400 (bad request), id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
-### POST `/<channel id>/events/<event id>/move`
+### POST `/<channel id>/events/<event id>/move` TODO: I suggest removing this; now that we switched to independent period events with durations everything should be done with the PUT request
 
 Modifies an event's recorded time.
 
@@ -261,7 +269,7 @@ Modifies an event's recorded time.
 
 ### DELETE `/<channel id>/events/<event id>`
 
-Irreversibly deletes the event. If the deleted event is a context change event, this will cause the previously active context to remain active.
+Irreversibly deletes the event.
 
 
 ### POST `/<channel id>/events/batch`
