@@ -136,11 +136,15 @@ Relocates the activity context in the contexts tree structure.
 
 ### DELETE `/<channel id>/contexts/<context id>`
 
-Irreversibly deletes the context. TODO: will result in adding all activity events to the deleted item's parent. Real deletion may be set with `doNotMergeWithParent`
+Irreversibly deletes the context and its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`.
 
 #### Query string parameters
 
-* `doNotMergeWithParent` (`true` or `false`): Optional. TODO. Default: `false`. 
+* `mergeEventsWithParent` (`true` or `false`): Required if the deleted item (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
+
+#### Specific errors
+
+* 400 (bad request), id `MISSING_PARAMETER`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
 
 
 ## Requests for activity events
