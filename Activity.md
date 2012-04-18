@@ -225,19 +225,6 @@ Gets the currently running period events.
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
-### POST `/<channel id>/events/cancel-last-stop`
-
-Cancels the last started period event (which must still be running) or stop request, in effect proceeding with the previous period event as if it had never stopped. TODO: example.
-
-#### Post parameters (JSON)
-
-* `resumedContextId` ([identity](/DataTypes#TODO)): The id of the previously active context that will be resumed, for safety.
-
-#### Specific errors
-
-* 400 (bad request), id `INVALID_CONTEXT`: The specified context id does not match the previously active context.
-
-
 ### PUT `/<channel id>/events/<event id>`
 
 Modifies the activity event's attributes.
