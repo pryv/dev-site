@@ -159,9 +159,11 @@ Queries the list of events.
 #### Query string parameters
 
 * `onlyContexts` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those contexts (including child contexts) will be returned. By default, events linked to all accessible contexts are returned.
-* `fromTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is 24 hours before the current time.
+* `fromTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is 24 hours before `toTime`, if set.
 * `toTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is the current time.
 * `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
+* `skip` (number): Optional. The number of items to skip in the results.
+* `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
 
 #### Response (JSON)
 
