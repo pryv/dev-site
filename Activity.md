@@ -127,7 +127,7 @@ Relocates the activity context in the contexts tree structure.
 
 #### Post parameters (JSON)
 
-* `newParentId` ([identity](/DataTypes#TODO)): The id of the context's new parent, or `null` if the context should be moved at the root of the contexts tree.
+* `parentId` ([identity](/DataTypes#TODO)): The id of the context's new parent, or `null` if the context should be moved at the root of the contexts tree.
 
 #### Specific errors
 
@@ -242,21 +242,6 @@ New values for the event's fields: see [activity event](/DataTypes#TODO). All fi
 
 * 400 (bad request), id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it.
 * 400 (bad request), id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
-
-
-### POST `/<channel id>/events/<event id>/move` TODO: I suggest removing this; now that we switched to independent period events with durations everything should be done with the PUT request
-
-Modifies an event's recorded time.
-
-#### Post parameters
-
-* `newTime` ([timestamp](/DataTypes#TODO)): The new time for the event. This is a server time.
-* `deleteOverlappedIds` (array of ([identity](/DataTypes#TODO))): Optional. If the new time period overlaps other events, they will be deleted if their ids are specified here for safety (otherwise an error is returned, see below).
-
-#### Specific errors
-
-* 400 (bad request), id `INVALID_TIME`: The specified new time is not valid.
-* 400 (bad request), id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's time to a value that causes an overlap with one or more period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
 ### DELETE `/<channel id>/events/<event id>`
