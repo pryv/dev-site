@@ -173,7 +173,6 @@ Queries the list of events.
 #### Specific errors
 
 * 400 (bad request), id `UNKNOWN_CONTEXT`: TODO may happen if one of the specified contexts doesn't exist
-* 400 (bad request), id `INVALID_TIME`: TODO
 
 
 ### POST `/<channel id>/events`
