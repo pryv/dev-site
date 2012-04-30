@@ -9,14 +9,14 @@ A data access token defines how a user's activity data (channels, contexts and e
 
 Fields:
 
+* `id` (string): Unique. The system-generated identifier that is actually used in requests accessing activity data.
 * `name` (string): Unique. The name identifying the token for the user. It can be the client application's name for automatically generated personal tokens, or any user-defined value for manually created tokens.
-* `tokenString` (string): Unique. The system-generated identifier that is actually used in requests accessing activity data.
 * `type` (`personal` or `shared`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`.
 * `permissions`: an array of channel permission objects as described below. Ignored for personal tokens. Shared tokens are only granted access to activity data objects listed in here.
 	* `channelId` ([identity](/DataTypes#TODO)): The accessible channel's id.
 	* `contextPermissions`: an array of context permission objects:
 		* `contextId` ([identity](/DataTypes#TODO)): The accessible context's id. A  value of `null` can be used to set permissions for the root of the contexts structure. If the context has child contexts, they will be accessible too.
-		* `type` (`read-only`, `events-write` or `full-write`): The type of access to the context's data. With `events-write`, the token's holder can see and record events for the context (and its child contexts, if any); with `full-write`, the token's holder can in addition create, modify and delete child contexts.
+		* `type` (`read-only`, `events-write` or `manage`): The type of access to the context's data. With `events-write`, the token's holder can see and record events for the context (and its child contexts, if any); with `manage`, the token's holder can in addition create, modify and delete child contexts.
 
 
 ### Activity channel
