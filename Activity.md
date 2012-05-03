@@ -18,9 +18,7 @@ All requests to the activity module must carry a valid [data access token](//Dat
 TODO: review and complete
 
 * 400 (bad request), id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
-* 401 (unauthorized), possible cases:
-	* Id `MISSING_TOKEN`: The data access token is missing.
-	* Id `INVALID_TOKEN`: The specified data access token can't be found.
+* 401 (unauthorized), id `INVALID_TOKEN`: The data access token is missing or invalid.
 * 403 (forbidden): The given data access token does not grant permission for this operation. See [data access tokens](//DataTypes#TODO) for more details about tokens and permissions.
 * 404 (not found), possible cases:
 	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
