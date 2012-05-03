@@ -53,8 +53,11 @@ TODO: explain authentication and sessions.
 TODO: review and complete
 
 * 400 (bad request), id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
-* 403 (forbidden): TODO
-* 404 (not found): TODO
+* 401 (unauthorized), id `INVALID_CREDENTIALS`: User credentials are missing or invalid.
+* 404 (not found), possible cases:
+	* Id `UNKNOWN_TOKEN`: The data access token can't be found.
+	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
+
 
 
 ## Requests
@@ -62,19 +65,15 @@ TODO: review and complete
 
 ### POST `/login`
 
-TODO: get an admin sessiontoken.
+TODO: get an admin session cookie.
 
 #### Post parameters (JSON)
 
-TODO: username, password
+TODO: userName, password
 
 #### Response (JSON)
 
-TODO: session token
-
-#### Specific errors
-
-TODO: `WRONG_CREDENTIALS`
+TODO: session cookie in `set-cookie` header.
 
 
 ### GET `/user-info`
