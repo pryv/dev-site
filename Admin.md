@@ -10,7 +10,7 @@ The administration service handles user's:
 * Channels and contexts organisation
 * Sharing management
 
-The Administration server is a part of an AAServer, which also handle activity recording. 
+The Administration server is a part of an AAServer, which also handle activity recording.
 
 [TOC]
 
@@ -19,7 +19,7 @@ They are several independants Administration/Activity servers (AAServer), they a
 
 Each of them have also dynamic hostnames, one for each user they serve: **username.rec.la**.
 
-To access a user's ressource you should use `https://username.rec.la/ressource_path`  
+To access a user's ressource you should use `https://username.rec.la/ressource_path`
 But the protocol also supports `https://xyz.wactiv.com/ressource_path?userName=username`
 
 **Note:** Arguments will override hostnames. In the following case, **username2** will be used. `https://username1.rec.la/ressource_path?userName=username2`
@@ -33,15 +33,15 @@ But the protocol also supports `https://xyz.wactiv.com/ressource_path?userName=u
 Presents the administration login page
 If you known the server *.wactiv.com (xyz) hostname, it can also be obtained with `https://xyz.wactiv.com/?userName=username`
 
-## Confirm Success 
+## Confirm Success
 ### https://xyz.rec.la/?msg=CONFIRMED
 Presents the administration login page with a registration "confirmed" message.
 
 ### https://xyz.rec.la/?msg=CONFIRMED_ALREADY
 Presents the administration login page with an "registration already confirmed" message
 
-# REST API
- 
+# HTTP API
+
 
 ## Authentication
 

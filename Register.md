@@ -1,7 +1,7 @@
 [REC●la] API: Register module
 ============
 
-The register service handles user's directory and manages user creation.   
+The register service handles user's directory and manages user creation.
 [TOC]
 
 ## Common error codes
@@ -32,7 +32,7 @@ As today only the folowing languages are availables
 ## Confirm Failed http://rec.la/Confirm.html?msg=
 
 
-# REST API
+# HTTP API
 
 ## Check if username exists
 <a name="check"/>
@@ -45,7 +45,7 @@ Checks whether the given user name already exists.
 * 200 `exists` (`true` or `false`): `true` if the given user name is already in use
 
 exemple :
-	
+
 	{"exists": "true"}
 
 #### Specific errors
@@ -53,20 +53,20 @@ exemple :
 * 400 (bad request), id `INVALID_USER_NAME`: The given name cannot be used as a user name see: [Rules](#rules).
 
 exemple :
-	
+
 	{"message": "Invalid user name",
 	  "detail": "User name must be made of 5 to 21 alphanumeric characters.",
 	      "id": "INVALID_USER_NAME"}
-	      
 
-## Register a new User: Confirmation, Step 1 / 2 
+
+## Register a new User: Confirmation, Step 1 / 2
 ### POST `/init`
 
 Initializes user creation, will be confirmed by POST `/challengeToken/confirm`, see: [Confirm](#confirm).
 
 The __challengeToken__ is sent by mail. Unconfirmed user creations are deleted after 24 hours.
 
-If your software runs on a platform on which you can trust the user identity, you may skip the confirm step. For this, please contact our devloppement team. 
+If your software runs on a platform on which you can trust the user identity, you may skip the confirm step. For this, please contact our devloppement team.
 
 #### Post parameters (JSON)
 
@@ -80,11 +80,11 @@ If your software runs on a platform on which you can trust the user identity, yo
 * 200 id `INIT_DONE` : Registration started
 
 exemple :
-	
-	{"message": "Registration started", 
+
+	{"message": "Registration started",
       "detail": "An e-mail has been sent, check your mailbox to confirm."
           "id": "INIT_DONE"}
-   
+
 #### Specific errors
 
 * 400 (bad request), id `INVALID_DATA`: with a set of errors
@@ -92,7 +92,7 @@ exemple :
 	* id `INVALID_USER_NAME`: The given name cannot be used as a user name, see: [Rules](#rules).
 	* id `INVALID_PASSWORD`: The given password does not fit password policy see: [Rules](#rules).
 	* id `INVALID_EMAIL`: The given email is not recognized as valid.
-	
+
 see: [messages translations](#mtranslation)
 
 exemple : (all requested data are empty)
@@ -102,19 +102,19 @@ exemple : (all requested data are empty)
 	      "id": "INVALID_DATA",
 	  "errors":[{"message": "Invalid user name",
 	              "detail": "User name must be made of 5 to 21 alpha...",
-	                  "id": "INVALID_USER_NAME"},                  
+	                  "id": "INVALID_USER_NAME"},
 	            {"message": "Invalid password",
 	              "detail": "Password must be between 6 and 50 characters",
-	                  "id": "INVALID_PASSWORD"},                  
+	                  "id": "INVALID_PASSWORD"},
 	            {"message": "Invalid email adress",
 	              "detail": "E-mail address format not recognized",
 	                  "id": "INVALID_EMAIL"}
 	           ]
      }
 
-<a name="confirm"/> 
-## Register a new User: Confirmation, Step 2 / 2 
-Confirms user creation for the given user. 
+<a name="confirm"/>
+## Register a new User: Confirmation, Step 2 / 2
+Confirms user creation for the given user.
 
 For now the token is sent by mail, this step is usually handeled by our web page.
 
@@ -123,12 +123,12 @@ Note: if the user is already confirmed, this will send an error, but also the se
 
 **Two methods: **
 
-* GET is designed to triggered by a single link (from an e-mail). So it does a redirect to the user web page in case of success.  
+* GET is designed to triggered by a single link (from an e-mail). So it does a redirect to the user web page in case of success.
 * POST will return JSON data.
 
 
 
-### GET `/<challenge>/confirm` 
+### GET `/<challenge>/confirm`
 
 #### Response (REDIRECT)
 
@@ -137,16 +137,16 @@ Note: if the user is already confirmed, this will send an error, but also the se
 exemple : (everything went fine)
 
 	{"server": "test1.wactiv.com", "alias": "userName.rec.la"}
-	
+
 
 #### Specific errors
 
 
-	  
-### POST `/<challenge>/confirm` 
+
+### POST `/<challenge>/confirm`
 See GET for a redirect to web site solution
 
-Confirms user creation for the given user. 
+Confirms user creation for the given user.
 
 For now the token is sent by mail, this step is usually handeled by our web page.
 
@@ -160,7 +160,7 @@ Note: if user is already confirmed, this will send an error, but also the server
 exemple : (everything went fine)
 
 	{"server": "test1.wactiv.com", "alias": "userName.rec.la"}
-	
+
 
 
 #### Specific errors
@@ -180,13 +180,13 @@ exemple : This username has already been confirmed
 
 <a name="server"/>
 ## GET the server of a userName
-This is normaly handled by DNS queries as **userName**.rec.la should point to a *XYZ*.wactiv.com server. 
+This is normaly handled by DNS queries as **userName**.rec.la should point to a *XYZ*.wactiv.com server.
 
 You may use this as a fallback in case of DNS inconsistency.
 
 Like for [Confirm](#confirm) there is two methods
 
-* GET will do a redirect 
+* GET will do a redirect
 * POST will return JSON data.
 
 ### GET `/<user name>/server`
@@ -209,7 +209,7 @@ Like for [Confirm](#confirm) there is two methods
 exemple : (everything went fine)
 
 	{"server": "test1.wactiv.com", "alias", "userName.rec.la"}
-	
+
 #### Specific errors
 
 * 400 (bad request), code `INVALID_USER_NAME`

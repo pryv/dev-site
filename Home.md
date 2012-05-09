@@ -1,6 +1,6 @@
 # wActiv API documentation
 
-The wActiv service is exposed as a HTTP REST API for web or native clients to access. The API is structured into three modules, each one accessed through its own URL and authentication scheme: [Register](/Register), [Admin](/Admin) and [Activity](/Activity). **TODO: handle data access URL dispatching via a separate "Dispatch" module??**
+The wActiv service is exposed as an HTTP API for web or native clients to access. The API is structured into three modules, each one accessed through its own URL and authentication scheme: [Register](/Register), [Admin](/Admin) and [Activity](/Activity). **TODO: handle data access URL dispatching via a separate "Dispatch" module??**
 
 ## Register
 

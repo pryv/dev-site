@@ -9,9 +9,9 @@ All requests to the activity module must carry a valid [data access token](//Dat
     GET /MyChannel/events HTTP/1.1
     Host: johndoe.wactiv.com:1234
     Date: Thu, 09 Feb 2012 17:53:58 +0000
-    
+
     Authorization: <data access token>
-    
+
 
 ## Common error codes
 
@@ -99,7 +99,7 @@ Creates a new context at the root level or as a child context to the given conte
 
 #### Specific path parameters
 
-* `parentId` ([identity](/DataTypes#TODO)): Optional. The id of the parent context, if any. If not specified, the new context will be created at the root of the contexts tree structure. 
+* `parentId` ([identity](/DataTypes#TODO)): Optional. The id of the parent context, if any. If not specified, the new context will be created at the root of the contexts tree structure.
 
 #### Post parameters (JSON)
 
@@ -211,7 +211,7 @@ Stops the previously running period event. See POST `/<channel id>/events` for d
 * `stoppedId` ([identity](/DataTypes#TODO)): The id of the previously running period event that was stopped, or null if no running event was found.
 
 
-### TODO: GET `/<channel id>/events/start` and `.../stop` and `.../record` non-RESTful (TODO: remove references to "REST" for safety) alternatives to the above to allow simple calls via e.g. wget/curl
+### TODO: GET `/<channel id>/events/start` and `.../stop` and `.../record` alternatives to the above to allow simple calls via e.g. wget/curl
 
 
 ### GET `/<channel id>/events/running`
