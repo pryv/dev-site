@@ -41,33 +41,6 @@ Gets the activity channels accessible with the given token.
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
-### POST `/channels`
-
-Creates a new activity channel.
-
-#### Post parameters (JSON)
-
-The new channel's data: see [activity channel](/DataTypes#TODO).
-
-#### Response (JSON)
-
-* `id` ([identity](/DataTypes#TODO)): The created channel's id.
-
-
-### PUT `/channels/<channel id>`
-
-Modifies the activity channel's attributes.
-
-#### Post parameters (JSON)
-
-New values for the channel's fields: see [activity channel](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
-
-
-### DELETE `/channels/<channel id>`
-
-Irreversibly deletes the given channel with all the contexts and events it contains. TODO: given the criticality of this operation, make it set an expiration time to data in order to allow undo functionality?
-
-
 ## Requests for activity contexts
 
 TODO: introductory text (previous description moved to DataTypes page)

@@ -40,6 +40,7 @@ Presents the administration login page with a registration "confirmed" message.
 ### https://xyz.rec.la/?msg=CONFIRMED_ALREADY
 Presents the administration login page with an "registration already confirmed" message
 
+
 # HTTP API
 
 
@@ -60,20 +61,29 @@ TODO: review and complete
 
 
 
-## Requests
+## Requests for session management
 
 
 ### POST `/login`
 
-TODO: get an admin session cookie.
+Opens a new admin session, authenticating with the provided credentials. TODO: possible support for OAuth/OpenID/BrowserID (for now, only local credentials are supported).
 
 #### Post parameters (JSON)
 
-TODO: userName, password
+* `userName` (string)
+* `password` (string)
 
 #### Response (JSON)
 
-TODO: session cookie in `set-cookie` header.
+If successful (HTTP code 200), the session cookie to use for the duration of the session is defined in the `set-cookie` HTTP header.
+
+
+### POST `/logout`
+
+Terminates the admin session.
+
+
+## Requests for user information
 
 
 ### GET `/user-info`
@@ -90,6 +100,7 @@ TODO: email, display name, language, ...
 
 TODO: change user information
 
+
 ### POST `/change-password`
 
 TODO: change user password
@@ -98,6 +109,60 @@ Requires session token, old password, new password.
 #### Specific errors
 
 TODO: `WRONG_PASSWORD`, `INVALID_NEW_PASSWORD`
+
+
+## Requests for activity channels
+
+TODO: introductory text.
+
+
+### GET `/channels`
+
+Gets activity channels.
+
+#### Response (JSON)
+
+* `channels` (array of [activity channels](/DataTypes#TODO)): The list of the channels accessible with the given token.
+* `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
+
+
+### POST `/channels`
+
+Creates a new activity channel.
+
+#### Post parameters (JSON)
+
+The new channel's data: see [activity channel](/DataTypes#TODO).
+
+#### Response (JSON)
+
+* `id` ([identity](/DataTypes#TODO)): The created channel's id.
+
+
+### PUT `/channels/<channel id>`
+
+Modifies the activity channel's attributes.
+
+#### Post parameters (JSON)
+
+New values for the channel's fields: see [activity channel](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
+
+
+### DELETE `/channels/<channel id>`
+
+Irreversibly deletes the given channel with all the contexts and events it contains. TODO: given the criticality of this operation, make it set an expiration time to data in order to allow undo functionality?
+
+#### Query string parameters
+
+* `deleteChannelData` (must be `true`): Required for safety if the deleted channel contains contexts or events, ignored otherwise.
+
+#### Specific errors
+
+* 400 (bad request), id `MISSING_PARAMETER`: There are contexts and/or events in the channel and the `deleteChannelData` parameter is missing.
+
+
+
+## Requests for access tokens
 
 
 ### GET `/tokens/<client key>`
@@ -118,10 +183,5 @@ TODO
 
 
 ### DELETE `/tokens/<client key>`
-
-TODO
-
-
-### POST `/logout`
 
 TODO
