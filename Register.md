@@ -40,7 +40,7 @@ As today only the folowing languages are availables
 
 
 
-# REST API
+# HTTP API
 
 
 <a name="server"/>
