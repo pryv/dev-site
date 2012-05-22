@@ -82,6 +82,10 @@ The new context's data: see [activity context](/DataTypes#TODO).
 
 * `id` ([identity](/DataTypes#TODO)): The created context's id.
 
+#### Specific errors
+
+* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling context already exists with the same name.
+
 
 ### PUT `/<channel id>/contexts/<context id>`
 
@@ -90,6 +94,10 @@ Modifies the activity context's attributes.
 #### Post parameters (JSON)
 
 New values for the context's fields: see [activity context](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
+
+#### Specific errors
+
+* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling context already exists with the same name.
 
 
 ### POST `/<channel id>/contexts/<context id>/move`
@@ -103,6 +111,7 @@ Relocates the activity context in the contexts tree structure.
 #### Specific errors
 
 * 400 (bad request), id `UNKNOWN_CONTEXT`: The given parent context's id is unknown.
+* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling context already exists with the same name.
 
 
 ### DELETE `/<channel id>/contexts/<context id>`
