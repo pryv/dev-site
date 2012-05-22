@@ -122,7 +122,7 @@ Gets activity channels.
 
 #### Response (JSON)
 
-* `channels` (array of [activity channels](/DataTypes#TODO)): The list of the channels accessible with the given token.
+* `channels` (array of [activity channels](/DataTypes#TODO)): All channels in the user's account, ordered by name.
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
@@ -165,23 +165,27 @@ Irreversibly deletes the given channel with all the contexts and events it conta
 ## Requests for access tokens
 
 
-### GET `/tokens/<client key>`
+### GET `/tokens/<name>`
 
-TODO: get or create a token associated with a client; based on client key, a new token is created or key is retrieved
+TODO: review this (it is very bad to create data with a GET request unless explicity named): get or create a token associated with a client; based on client key (name), a new token is created or key is retrieved
 Requires session token, client info (optional, used only if a token is created)
 Response: token string
 
 
 ### GET `/tokens`
 
+Gets access tokens.
+
+#### Response (JSON)
+
+* `tokens` (array of [access tokens](/DataTypes#TODO)): All access tokens in the user's account, ordered by name.
+
+
+### PUT `/tokens/<token id>`
+
 TODO
 
 
-### PUT `/tokens/<client key>`
-
-TODO
-
-
-### DELETE `/tokens/<client key>`
+### DELETE `/tokens/<token id>`
 
 TODO
