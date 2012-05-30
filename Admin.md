@@ -165,7 +165,7 @@ Irreversibly deletes the given channel with all the contexts and events it conta
 ## Requests for access tokens
 
 
-### GET `/tokens/<name>`
+### GET `/tokens/<name>` TODO: change to POST request (we potentially create data)
 
 TODO: review this (it is very bad to create data with a GET request unless explicity named): get or create a token associated with a client; based on client key (name), a new token is created or key is retrieved
 Requires session token, client info (optional, used only if a token is created)

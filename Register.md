@@ -22,7 +22,7 @@ Read this document **if you plan to write a registration client** or for your ow
 
 * 500 (internal error), code `INTERNAL_ERROR`: Something went bad on the server.
 
-<a name="mtranslation"/>
+<a name="mtranslation"></a>
 # Messages translations
 We offer key based translations files for messages.
 
@@ -31,7 +31,7 @@ As today only the folowing languages are availables
  * English: **"en"** /messages-en.js
  * French: **"fr"** /messages-fr.js
 
-<a name="rules"/>
+<a name="rules"></a>
 # User name and password rules
 
 
@@ -43,7 +43,7 @@ As today only the folowing languages are availables
 # HTTP API
 
 
-<a name="server"/>
+<a name="server"></a>
 ## GET the server of a userName
 This is normaly handled by DNS queries as **userName**.rec.la should point to a *xyz*.wactiv.com server. 
 
@@ -83,7 +83,7 @@ exemple : (everything went fine)
 
 
 ## Check if username exists
-<a name="check"/>
+<a name="check"></a>
 ### GET `/<user name>/check`
 
 Checks whether the given user name already exists.
@@ -160,7 +160,7 @@ exemple : (all requested data are empty)
 	           ]
      }
 
-<a name="confirm"/> 
+<a name="confirm"></a>
 ## Register a new User: Confirmation, Step 2 / 2 
 Confirms user creation for the given user. 
 
