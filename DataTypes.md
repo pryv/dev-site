@@ -67,8 +67,12 @@ Fields:
 	* For period events: The value must be a valid context's id. TODO: really???
 	* For mark events: Optional. Indicates the particular context the event is associated with, if any.
 * `duration`: Optional. If present, indicates that the event is a period event. Running period events have a duration set to `undefined`.
-* `value`: Optional. A JSON object holding a value associated with the event. This value object's properties must be booleans, numbers, strings, or null values (no objects allowed).
+* `value`: Optional. An object holding a value associated with the event. This value object's properties must be booleans, numbers, strings, or null values (no objects allowed).
 * `comment` (string): Optional. User comment or note for the event.
+* `attachments`: Optional. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
+	* `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
+	* `type` (string): The MIME type of the file.
+	* `size` (number): The size of the file, in bytes.
 * `clientData` (item additional data, TODO: link):  Optional. Additional client data for the event.
 
 TODO: example

@@ -17,6 +17,7 @@ All requests to the activity module must carry a valid [data access token](//Dat
 
 TODO: review and complete
 
+* 400 (bad request), id `INVALID_REQUEST_STRUCTURE: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
 * 400 (bad request), id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
 * 401 (unauthorized), id `INVALID_TOKEN`: The data access token is missing or invalid.
 * 403 (forbidden): The given data access token does not grant permission for this operation. See [data access tokens](//DataTypes#TODO) for more details about tokens and permissions.
@@ -24,6 +25,7 @@ TODO: review and complete
 	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
 	* Id `UNKNOWN_CONTEXT`: The activity context can't be found in the given channel.
 	* Id `UNKNOWN_EVENT`: The event can't be found in the given channel.
+	* Id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the given event.
 
 
 ## Requests for activity channels
@@ -159,6 +161,10 @@ Queries the list of events.
 
 Records a new event. Events recorded this way must be completed events, i.e. either period events with a known duration or mark events. To start a running period event, post a `events/start` request.
 
+In addition to the usual JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
+
+TODO: example
+
 #### Post parameters (JSON)
 
 The new event's data: see [activity event](/DataTypes#TODO).
@@ -226,7 +232,17 @@ New values for the event's fields: see [activity event](/DataTypes#TODO). All fi
 
 ### DELETE `/<channel id>/events/<event id>`
 
-Irreversibly deletes the event.
+Irreversibly deletes the event (including all its attached files, if any).
+
+
+### GET `/<channel id>/events/<event id>/<file name>`
+
+Gets the attached file.
+
+
+### DELETE `/<channel id>/events/<event id>/<file name>`
+
+Irreversibly deletes the attached file.
 
 
 ### POST `/<channel id>/events/batch`
