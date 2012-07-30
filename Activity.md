@@ -230,6 +230,13 @@ New values for the event's fields: see [activity event](/DataTypes#TODO). All fi
 * 400 (bad request), id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
+### POST `/<channel id>/events/<event id>`
+
+Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
+
+TODO: example
+
+
 ### DELETE `/<channel id>/events/<event id>`
 
 Irreversibly deletes the event (including all its attached files, if any).
