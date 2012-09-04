@@ -46,7 +46,7 @@ Presents the administration login page with an "registration already confirmed" 
 
 ## Authentication
 
-TODO: explain authentication and sessions.
+Access to admin methods is managed by sessions. To create a session, you must sucessfully authenticate with a `/login` request, which will return the session ID. Each request sent during the duration of the session must then contain the session ID in its `Authorization` header. The session is terminated when `/logout` is called or when the session times out (TODO: indicate session timeout delay).
 
 
 ## Common error codes
@@ -73,9 +73,9 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 * `userName` (string)
 * `password` (string)
 
-#### Response (JSON)
+#### Successful response: 200 (JSON)
 
-If successful (HTTP code 200), the session cookie to use for the duration of the session is defined in the `set-cookie` HTTP header.
+* `sessionID` (string): The newly created session's ID, to include in each subsequent request's `Authorization` header.
 
 
 ### POST `/logout`
