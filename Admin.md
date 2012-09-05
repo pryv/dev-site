@@ -7,7 +7,7 @@
 The administration service handles user's:
 
 * Identity and profile settings
-* Channels and contexts organisation
+* Channels and folders organisation
 * Sharing management
 
 The Administration server is a part of an AAServer, which also handle activity recording.
@@ -150,15 +150,15 @@ New values for the channel's fields: see [activity channel](/DataTypes#TODO). Al
 
 ### DELETE `/channels/<channel id>`
 
-Irreversibly deletes the given channel with all the contexts and events it contains. TODO: given the criticality of this operation, make it set an expiration time to data in order to allow undo functionality?
+Irreversibly deletes the given channel with all the folders and events it contains. TODO: given the criticality of this operation, make it set an expiration time to data in order to allow undo functionality?
 
 #### Query string parameters
 
-* `deleteChannelData` (must be `true`): Required for safety if the deleted channel contains contexts or events, ignored otherwise.
+* `deleteChannelData` (must be `true`): Required for safety if the deleted channel contains folders or events, ignored otherwise.
 
 #### Specific errors
 
-* 400 (bad request), id `MISSING_PARAMETER`: There are contexts and/or events in the channel and the `deleteChannelData` parameter is missing.
+* 400 (bad request), id `MISSING_PARAMETER`: There are folders and/or events in the channel and the `deleteChannelData` parameter is missing.
 
 
 

@@ -23,7 +23,7 @@ TODO: review and complete
 * 403 (forbidden): The given data access token does not grant permission for this operation. See [data access tokens](//DataTypes#TODO) for more details about tokens and permissions.
 * 404 (not found), possible cases:
 	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
-	* Id `UNKNOWN_CONTEXT`: The activity context can't be found in the given channel.
+	* Id `UNKNOWN_FOLDER`: The activity folder can't be found in the given channel.
 	* Id `UNKNOWN_EVENT`: The event can't be found in the given channel.
 	* Id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the given event.
 
@@ -43,82 +43,82 @@ Gets the activity channels accessible with the given token.
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
-## Requests for activity contexts
+## Requests for activity folders
 
 TODO: introductory text (previous description moved to DataTypes page)
 
 
-### GET `/<channel id>/contexts` or `/<channel id>/contexts/<id>`
+### GET `/<channel id>/folders` or `/<channel id>/folders/<id>`
 
-Gets the contexts accessible with the given token, either from the root level or only descending from the given context.
+Gets the folders accessible with the given token, either from the root level or only descending from the given folder.
 
 #### Specific path parameters
 
-* `id`([identity](/DataTypes#TODO)): The id of the context to use as root for the request, or nothing to return all accessible contexts from the root level.
+* `id`([identity](/DataTypes#TODO)): The id of the folder to use as root for the request, or nothing to return all accessible folders from the root level.
 
 #### Query string parameters
 
-* `includeHidden` (`true` or `false`): Optional. When `true`, contexts that are currently hidden will be included in the result. Default: `false`.
-* `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned contexts will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity context](/DataTypes#TODO)); otherwise no time count values will be returned.
+* `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
+* `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](/DataTypes#TODO)); otherwise no time count values will be returned.
 
 #### Response (JSON)
 
-* `contexts` (array of [activity contexts](/DataTypes#TODO)): The tree of the contexts accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
+* `folders` (array of [activity folders](/DataTypes#TODO)): The tree of the folders accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
 * `timeCountBase` ([timestamp](/DataTypes#TODO)): The `timeCountBase` value passed as parameters in the request, for reference.
 * `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
 
 
-### POST `/<channel id>/contexts` or `/<channel id>/contexts/<parent context id>`
+### POST `/<channel id>/folders` or `/<channel id>/folders/<parent folder id>`
 
-Creates a new context at the root level or as a child context to the given context.
+Creates a new folder at the root level or as a child folder to the given folder.
 
 #### Specific path parameters
 
-* `parentId` ([identity](/DataTypes#TODO)): Optional. The id of the parent context, if any. If not specified, the new context will be created at the root of the contexts tree structure.
+* `parentId` ([identity](/DataTypes#TODO)): Optional. The id of the parent folder, if any. If not specified, the new folder will be created at the root of the folders tree structure.
 
 #### Post parameters (JSON)
 
-The new context's data: see [activity context](/DataTypes#TODO).
+The new folder's data: see [activity folder](/DataTypes#TODO).
 
 #### Response (JSON)
 
-* `id` ([identity](/DataTypes#TODO)): The created context's id.
+* `id` ([identity](/DataTypes#TODO)): The created folder's id.
 
 #### Specific errors
 
-* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling context already exists with the same name.
+* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
-### PUT `/<channel id>/contexts/<context id>`
+### PUT `/<channel id>/folders/<folder id>`
 
-Modifies the activity context's attributes.
+Modifies the activity folder's attributes.
 
 #### Post parameters (JSON)
 
-New values for the context's fields: see [activity context](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
+New values for the folder's fields: see [activity folder](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
 
 #### Specific errors
 
-* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling context already exists with the same name.
+* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
-### POST `/<channel id>/contexts/<context id>/move`
+### POST `/<channel id>/folders/<folder id>/move`
 
-Relocates the activity context in the contexts tree structure.
+Relocates the activity folder in the folders tree structure.
 
 #### Post parameters (JSON)
 
-* `parentId` ([identity](/DataTypes#TODO)): The id of the context's new parent, or `null` if the context should be moved at the root of the contexts tree.
+* `parentId` ([identity](/DataTypes#TODO)): The id of the folder's new parent, or `null` if the folder should be moved at the root of the folders tree.
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_CONTEXT`: The given parent context's id is unknown.
-* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling context already exists with the same name.
+* 400 (bad request), id `UNKNOWN_FOLDER`: The given parent folder's id is unknown.
+* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
-### DELETE `/<channel id>/contexts/<context id>`
+### DELETE `/<channel id>/folders/<folder id>`
 
-Irreversibly deletes the context and its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`.
+Irreversibly deletes the folder and its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`.
 
 #### Query string parameters
 
@@ -140,7 +140,7 @@ Queries the list of events.
 
 #### Query string parameters
 
-* `onlyContexts` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those contexts (including child contexts) will be returned. By default, events linked to all accessible contexts are returned.
+* `onlyFolders` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those folders (including child folders) will be returned. By default, events linked to all accessible folders are returned.
 * `fromTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is 24 hours before `toTime`, if set.
 * `toTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is the current time.
 * `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
@@ -154,7 +154,7 @@ Queries the list of events.
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_CONTEXT`: TODO may happen if one of the specified contexts doesn't exist
+* 400 (bad request), id `UNKNOWN_FOLDER`: TODO may happen if one of the specified folders doesn't exist
 
 
 ### POST `/<channel id>/events`
@@ -176,7 +176,7 @@ The new event's data: see [activity event](/DataTypes#TODO).
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_CONTEXT`: The specified context cannot be found.
+* 400 (bad request), id `UNKNOWN_FOLDER`: The specified folder cannot be found.
 
 
 ### POST `/<channel id>/events/start`
@@ -185,7 +185,7 @@ Starts a new period event, stopping the previously running period event if any. 
 
 #### Specific errors
 
-* 400 (bad request), id `MISSING_CONTEXT`: The mandatory context is missing.
+* 400 (bad request), id `MISSING_FOLDER`: The mandatory folder is missing.
 * 400 (bad request), id `INVALID_OPERATION`: A period event cannot start if another period event already exists at a later time.
 * 400  (bad request), id `PERIODS_OVERLAP`: TODO (data: array of overlapped ids)
 
@@ -267,5 +267,5 @@ TODO: batch upload events that were recorded by the client while offline. If the
 #### Specific errors
 
 * 400 (bad request), id `INVALID_TIME`: TODO
-* 400 (bad request), id `UNKNOWN_CONTEXT`: TODO
+* 400 (bad request), id `UNKNOWN_FOLDER`: TODO
 * 400 (bad request), id `PERIODS_OVERLAP`: TODO (list of unspecified overlapped event ids)
