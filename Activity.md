@@ -39,8 +39,7 @@ Gets the activity channels accessible with the given token.
 
 #### Response (JSON)
 
-* `channels` (array of [activity channels](/DataTypes#TODO)): The list of the channels accessible with the given token.
-* `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
+An array of [activity channels](/DataTypes#TODO) containing the channels accessible with the given token.
 
 
 ## Requests for activity folders
@@ -63,9 +62,7 @@ Gets the folders accessible with the given token, either from the root level or 
 
 #### Response (JSON)
 
-* `folders` (array of [activity folders](/DataTypes#TODO)): The tree of the folders accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
-* `timeCountBase` ([timestamp](/DataTypes#TODO)): The `timeCountBase` value passed as parameters in the request, for reference.
-* `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
+An array of [activity folders](/DataTypes#TODO) containing the tree of the folders accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
 
 
 ### POST `/<channel id>/folders` or `/<channel id>/folders/<parent folder id>`
@@ -149,8 +146,7 @@ Queries the list of events.
 
 #### Response (JSON)
 
-* `events` (array of [activity events](/DataTypes#TODO)): Events ordered by time (see `sortAscending` below).
-* `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
+An array of [activity events](/DataTypes#TODO) containing the events ordered by time (see `sortAscending` below).
 
 #### Specific errors
 
@@ -208,8 +204,7 @@ Gets the currently running period events.
 
 #### Response (JSON)
 
-* `events` ([activity event](/DataTypes#TODO)): The running period events.
-* `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
+An array of [activity events](/DataTypes#TODO) containing the running period events.
 
 
 ### PUT `/<channel id>/events/<event id>`

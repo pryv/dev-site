@@ -122,8 +122,7 @@ Gets activity channels.
 
 #### Response (JSON)
 
-* `channels` (array of [activity channels](/DataTypes#TODO)): All channels in the user's account, ordered by name.
-* `serverNow`([timestamp](/DataTypes#TODO)): The current server time.
+An array of [activity channels](/DataTypes#TODO)) containing all channels in the user's account, ordered by name.
 
 
 ### POST `/channels`
@@ -178,7 +177,7 @@ Gets access tokens.
 
 #### Response (JSON)
 
-* `tokens` (array of [access tokens](/DataTypes#TODO)): All access tokens in the user's account, ordered by name.
+An array of [access tokens](/DataTypes#TODO) containing all access tokens in the user's account, ordered by name.
 
 
 ### PUT `/tokens/<token id>`
