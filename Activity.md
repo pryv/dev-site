@@ -13,6 +13,11 @@ All requests to the activity module must carry a valid [data access token](//Dat
     Authorization: <data access token>
 
 
+## Common HTTP headers
+
+* `Server-Time`: The current server time as a [timestamp](/DataTypes#TODO). Keeping reference of the server time is an absolute necessity to properly read and write event times.
+
+
 ## Common error codes
 
 TODO: review and complete

@@ -49,6 +49,11 @@ Presents the administration login page with an "registration already confirmed" 
 Access to admin methods is managed by sessions. To create a session, you must sucessfully authenticate with a `/login` request, which will return the session ID. Each request sent during the duration of the session must then contain the session ID in its `Authorization` header. The session is terminated when `/logout` is called or when the session times out (TODO: indicate session timeout delay).
 
 
+## Common HTTP headers
+
+* `Server-Time`: The current server time as a [timestamp](/DataTypes#TODO). Keeping reference of the server time is an absolute necessity to properly read and write event times.
+
+
 ## Common error codes
 
 TODO: review and complete
