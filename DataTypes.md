@@ -95,7 +95,7 @@ Fields:
 
 * `id` (identity, TODO: link): Read-only. The server-assigned identifier for the folder.
 * `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
-*  `isHidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
+* `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
 * `clientData` (item additional data, TODO: link):  Optional. Additional client data for the folder.
 * `timeCount` (timestamp, TODO: link): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time.
 * `children` (array of activity folders): Optional and read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created one by one by design.
