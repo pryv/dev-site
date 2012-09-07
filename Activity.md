@@ -40,7 +40,7 @@ TODO: introductory text.
 
 ### GET `/channels`
 
-Gets the activity channels accessible with the given token.
+Gets the activity channels accessible with the given token (and that are not in the trash).
 
 #### Response (JSON)
 
@@ -63,9 +63,10 @@ Gets the folders accessible with the given token, either from the root level or 
 #### Query string parameters
 
 * `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
+* `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
 * `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](/DataTypes#TODO)); otherwise no time count values will be returned.
 
-#### Response (JSON)
+#### Successful response: 200 (JSON)
 
 An array of [activity folders](/DataTypes#TODO) containing the tree of the folders accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
 
@@ -120,11 +121,16 @@ Relocates the activity folder in the folders tree structure.
 
 ### DELETE `/<channel id>/folders/<folder id>`
 
-Irreversibly deletes the folder and its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`.
+Trashes or deletes the given folder, depending on its current state:
+
+- If the folder is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+- If the folder is already in the trash, it will be irreversibly deleted with its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`..
 
 #### Query string parameters
 
-* `mergeEventsWithParent` (`true` or `false`): Required if the deleted item (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
+* `mergeEventsWithParent` (`true` or `false`): Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
+
+#### Successful response: 200 (JSON)
 
 #### Specific errors
 
