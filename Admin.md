@@ -125,9 +125,13 @@ TODO: introductory text.
 
 Gets activity channels.
 
-#### Response (JSON)
+#### Query string parameters
 
-An array of [activity channels](/DataTypes#TODO)) containing all channels in the user's account, ordered by name.
+* `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+
+#### Successful response: 200 (JSON)
+
+An array of [activity channels](/DataTypes#TODO)) containing all channels in the user's account matching the specified state, ordered by name.
 
 
 ### POST `/channels`
@@ -154,16 +158,12 @@ New values for the channel's fields: see [activity channel](/DataTypes#TODO). Al
 
 ### DELETE `/channels/<channel id>`
 
-Irreversibly deletes the given channel with all the folders and events it contains. TODO: given the criticality of this operation, make it set an expiration time to data in order to allow undo functionality?
+Trashes or deletes the given channel, depending on its current state:
 
-#### Query string parameters
+- If the channel is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+- If the channel is already in the trash, it will be irreversibly deleted with all the folders and events it contains.
 
-* `deleteChannelData` (must be `true`): Required for safety if the deleted channel contains folders or events, ignored otherwise.
-
-#### Specific errors
-
-* 400 (bad request), id `MISSING_PARAMETER`: There are folders and/or events in the channel and the `deleteChannelData` parameter is missing.
-
+#### Successful response: 200 (JSON)
 
 
 ## Requests for access tokens
