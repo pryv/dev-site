@@ -28,9 +28,9 @@ TODO: review and complete
 * 403 (forbidden): The given data access token does not grant permission for this operation. See [data access tokens](//DataTypes#TODO) for more details about tokens and permissions.
 * 404 (not found), possible cases:
 	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
-	* Id `UNKNOWN_FOLDER`: The activity folder can't be found in the given channel.
-	* Id `UNKNOWN_EVENT`: The event can't be found in the given channel.
-	* Id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the given event.
+	* Id `UNKNOWN_FOLDER`: The activity folder can't be found in the specified channel.
+	* Id `UNKNOWN_EVENT`: The event can't be found in the specified channel.
+	* Id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the specified event.
 
 
 ## Requests for activity channels
@@ -54,7 +54,7 @@ TODO: introductory text (previous description moved to DataTypes page)
 
 ### GET `/<channel id>/folders` or `/<channel id>/folders/<id>`
 
-Gets the folders accessible with the given token, either from the root level or only descending from the given folder.
+Gets the folders accessible with the given token, either from the root level or only descending from the specified folder.
 
 #### Specific path parameters
 
@@ -73,7 +73,7 @@ An array of [activity folders](/DataTypes#TODO) containing the tree of the folde
 
 ### POST `/<channel id>/folders` or `/<channel id>/folders/<parent folder id>`
 
-Creates a new folder at the root level or as a child folder to the given folder.
+Creates a new folder at the root level or as a child folder to the specified folder.
 
 #### Specific path parameters
 
@@ -115,13 +115,13 @@ Relocates the activity folder in the folders tree structure.
 
 #### Specific errors
 
-* 400 (bad request), id `UNKNOWN_FOLDER`: The given parent folder's id is unknown.
+* 400 (bad request), id `UNKNOWN_FOLDER`: The specified parent folder's id is unknown.
 * 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
 ### DELETE `/<channel id>/folders/<folder id>`
 
-Trashes or deletes the given folder, depending on its current state:
+Trashes or deletes the specified folder, depending on its current state:
 
 - If the folder is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
 - If the folder is already in the trash, it will be irreversibly deleted with its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`..
@@ -151,11 +151,12 @@ Queries the list of events.
 * `onlyFolders` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those folders (including child folders) will be returned. By default, events linked to all accessible folders are returned.
 * `fromTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is 24 hours before `toTime`, if set.
 * `toTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is the current time.
+* `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
 * `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 * `skip` (number): Optional. The number of items to skip in the results.
 * `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
 
-#### Response (JSON)
+#### Successful response: 200 (JSON)
 
 An array of [activity events](/DataTypes#TODO) containing the events ordered by time (see `sortAscending` below).
 
@@ -245,7 +246,12 @@ TODO: example
 
 ### DELETE `/<channel id>/events/<event id>`
 
-Irreversibly deletes the event (including all its attached files, if any).
+Trashes or deletes the specified event, depending on its current state:
+
+- If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+- If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
+
+#### Successful response: 200 (JSON)
 
 
 ### GET `/<channel id>/events/<event id>/<file name>`
