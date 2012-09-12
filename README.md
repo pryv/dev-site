@@ -1,4 +1,4 @@
-# rec∙la server API documentation
+# Pryv server API documentation
 
 Markdown sources for the server API documentation.
 

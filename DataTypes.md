@@ -40,7 +40,7 @@ Sharing is done on a per-folder basis.
 An authorization token is created and correspond to a set of folders in a unique channel.
 For exemple, user: *username* creates the authorization token *XZV6* that matches the share of folders: **A and B**. Tokens are _read and write_ or _read only_ .
 
-http://username.rec.la/events?token=XZV6 will give an access to all events within folders A,a,b,B and e.
+http://username.pryv.io/events?token=XZV6 will give an access to all events within folders A,a,b,B and e.
 
 	- Channel 1
 	  |- A

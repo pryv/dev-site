@@ -1,18 +1,18 @@
-# wActiv API documentation
+# Pryv API documentation
 
-The wActiv service is exposed as an HTTP API for web or native clients to access. The API is structured into three modules, each one accessed through its own URL and authentication scheme: [Register](/Register), [Admin](/Admin) and [Activity](/Activity). **TODO: handle data access URL dispatching via a separate "Dispatch" module??**
+The Pryv service is exposed as an HTTP API for web or native clients to access. The API is structured into three modules, each one accessed through its own URL and authentication scheme: [Register](/Register), [Admin](/Admin) and [Activity](/Activity). **TODO: handle data access URL dispatching via a separate "Dispatch" module??**
 
 ## Register
 
 The [Register module](/Register) allows the registration of new users (registered users are referred to as just "users" in this documentation).
 
-Located at TODO:<http://register.wactiv.com>. Access is anonymous, with a captcha protecting the user registration process.
+Located at TODO:<http://pryv.io>. Access is anonymous, with a captcha protecting the user registration process.
 
 ## Admin
 
 The [Admin module](/Admin) allows each user to manage her account information and [data access tokens](//DataTypes#TODO).
 
-Located at TODO:<http://\<username\>.wactiv.com>. Access is managed by regular username / password authentication and expiring sessions.
+Located at TODO:<http://\<username\>.pryv.io>. Access is managed by regular username / password authentication and expiring sessions.
 
 ## TODO: Dispatch?
 

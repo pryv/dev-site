@@ -1,16 +1,15 @@
-[REC●la] API: Register module
-============
+# Pryv Registration API
 
 The register service handles user's directory and manages user creation.   
 
-Registration of users is normaly done manualy from the [[REC●la] https://rec.la](https://rec.la) homepage.
+Registration of users is normally done manually from the [Pryv https://pryv.io](https://pryv.io) homepage.
 
 Read this document **if you plan to write a registration client** or for your own curiosity. 
 
 **Other API documents:**
 
-* [[REC●la] Activity Recording API](Admin)
-* [[REC●la] Administration API](Activity)
+* [Pryv Activity API: Administration](Admin)
+* [Pryv Activity API: Recording](Activity)
 
 
 
@@ -45,7 +44,7 @@ As today only the folowing languages are availables
 
 <a name="server"></a>
 ## GET the server of a userName
-This is normaly handled by DNS queries as **userName**.rec.la should point to a *xyz*.wactiv.com server. 
+This is normaly handled by DNS queries as **userName**.pryv.io should point to a *xyz*.pryv.net server. 
 
 You may use this as a fallback in case of DNS inconsistency.
 
@@ -59,11 +58,11 @@ Responses as redirects
 
 #### Response (JSON)
 
-* 200 to https://*xyz*.wactiv.com/?userName=.....
+* 200 to https://*xyz*.pryv.net/?userName=.....
 
 #### Specific errors
 
-* 200 to https://rec.la/?error=UNKOWN_USER_NAME
+* 200 to https://pryv.io/?error=UNKOWN_USER_NAME
 
 ### POST `/<user name>/server`
 
@@ -74,7 +73,7 @@ Responses as redirects
 
 exemple : (everything went fine)
 
-	{"server": "xyz.wactiv.com", "alias", "userName.rec.la"}
+	{"server": "xyz.pryv.net", "alias", "userName.pryv.io"}
 	
 #### Specific errors
 
@@ -184,7 +183,7 @@ Note: if the user is already confirmed, this will send an error, but also the se
 
 exemple : (everything went fine)
 
-	{"server": "test1.wactiv.com", "alias": "userName.rec.la"}
+	{"server": "test1.pryv.net", "alias": "userName.pryv.io"}
 	
 
 #### Specific errors
@@ -211,7 +210,7 @@ Note: if user is already confirmed, this will send an error, but also the server
 
 exemple : (everything went fine)
 
-	{"server": "xyz.wactiv.com", "alias": "userName.rec.la"}
+	{"server": "xyz.pryv.net", "alias": "userName.pryv.io"}
 	
 
 
@@ -226,24 +225,24 @@ exemple : This username has already been confirmed
 	{"message": "Already confirmed",
 	  "detail": "The registration for this user has already been confirmed.",
 	      "id": "ALREADY_CONFIRMED",
-	  "server": "test2.wactiv.com",
-	   "alias": "userName.rec.la"}
+	  "server": "test2.pryv.net",
+	   "alias": "userName.pryv.io"}
 
 # WEB access
 
 ## The Homepage 
-http://rec.la
+http://pryv.io
 
 ## Error fallback 
-### https://rec.la/error.html?id=NO_PENDING_CREATION
+### https://pryv.io/error.html?id=NO_PENDING_CREATION
 Confirmation failed: `GET /<challenge>/confirm`
 
-### https://rec.la/error.html?id=INVALID_CHALLENGE
+### https://pryv.io/error.html?id=INVALID_CHALLENGE
 Confirmation failed: `GET /<challenge>/confirm`
 
-### https://rec.la/error.html?id=INVALID_USER_NAME
+### https://pryv.io/error.html?id=INVALID_USER_NAME
 Server request failed: `GET /<username>/server`
 
-### https://rec.la/error.html?id=UNKOWN_USER_NAME
+### https://pryv.io/error.html?id=UNKOWN_USER_NAME
 Server request  failed: `GET /<challenge>/server`
 

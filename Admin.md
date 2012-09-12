@@ -1,8 +1,6 @@
-[REC●la] API: Administration module
-============
+# Pryv Activity API: Administration
 
-
-**TODO: Must be reviewed before any implementation.**
+**TODO: review and possibly relocate the sections below**
 
 The administration service handles user's:
 
@@ -15,29 +13,29 @@ The Administration server is a part of an AAServer, which also handle activity r
 [TOC]
 
 # HOSTNAMES
-They are several independants Administration/Activity servers (AAServer), they all have a static hostname: **xyz.wactiv.com**.
+They are several independants Administration/Activity servers (AAServer), they all have a static hostname: **xyz.pryv.net**. [TODO: I think this shouldn't be here; external people don't need to know that. Comment also applies below...]
 
-Each of them have also dynamic hostnames, one for each user they serve: **username.rec.la**.
+Each of them have also dynamic hostnames, one for each user they serve: **username.pryv.io**.
 
-To access a user's ressource you should use `https://username.rec.la/ressource_path`
-But the protocol also supports `https://xyz.wactiv.com/ressource_path?userName=username`
+To access a user's ressource you should use `https://username.pryv.io/ressource_path`
+But the protocol also supports `https://xyz.pryv.net/ressource_path?userName=username` [TODO: ??? clarify]
 
-**Note:** Arguments will override hostnames. In the following case, **username2** will be used. `https://username1.rec.la/ressource_path?userName=username2`
+**Note:** Arguments will override hostnames. In the following case, **username2** will be used. `https://username1.pryv.io/ressource_path?userName=username2`
 
-**See:** [Register module: https://rec.la/&lt;userName>/server](Register#server) API call to get the server hostname for a user.
+**See:** [Register module: https://pryv.io/<userName>/server](Register#server) API call to get the server hostname for a user.
 
 # WEB access
 
 ## Administration login page
-### https://username.rec.la
+### https://username.pryv.io
 Presents the administration login page
-If you known the server *.wactiv.com (xyz) hostname, it can also be obtained with `https://xyz.wactiv.com/?userName=username`
+If you known the server *.pryv.net (xyz) hostname, it can also be obtained with `https://xyz.pryv.net/?userName=username`
 
 ## Confirm Success
-### https://xyz.rec.la/?msg=CONFIRMED
+### https://xyz.pryv.io/?msg=CONFIRMED
 Presents the administration login page with a registration "confirmed" message.
 
-### https://xyz.rec.la/?msg=CONFIRMED_ALREADY
+### https://xyz.pryv.io/?msg=CONFIRMED_ALREADY
 Presents the administration login page with an "registration already confirmed" message
 
 

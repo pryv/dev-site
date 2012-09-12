@@ -7,7 +7,7 @@ TODO: introductory text
 All requests to the activity module must carry a valid [data access token](//DataTypes#TODO) in the HTTP `Authorization` header. For example:
 
     GET /MyChannel/events HTTP/1.1
-    Host: johndoe.wactiv.com:1234
+    Host: johndoe.pryv.io
     Date: Thu, 09 Feb 2012 17:53:58 +0000
 
     Authorization: <data access token>
