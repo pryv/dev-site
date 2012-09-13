@@ -1,6 +1,30 @@
 // can't use nib for now because of DocPad plugin settings bug
 //@import 'nib'
 
+// override GitHub's awful default margins
+h1, h2, h3, h4
+  margin: 2.4em 0 1.2em;
+h1:first-of-type
+  margin-top: 0
+h5, h6
+  margin: 1.5em 0 0.75em
+p, blockquote, ul, ol, dl, li, table, pre
+  margin: 0.75em 0;
+h2
+  border-bottom: 1px solid #000
+h3
+  border-bottom: 1px solid #CCC
+section
+  margin-top: 3.5em
+  border-top: 1px dotted #CCC
+  padding-top: 2.5em
+  &:first-child
+    margin-top: 0
+    border-top: none
+    padding-top: 0
+
+
+
 #toc
   display: none // only shown if js and enough width
   top: 0px;
