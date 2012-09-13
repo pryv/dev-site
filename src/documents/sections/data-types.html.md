@@ -63,7 +63,7 @@ http://username.pryv.io/events?token=XZV6 will give an access to all events with
 __Note: When *Slice of life* will be implemented__
 Then, we will be able to add a time frame to a set of folders, this will add the needed granularity.
 
-## Data access token
+## Token
 
 A data access token defines how a user's activity data (channels, folders and events) is accessed. Personal access tokens are transparently generated (provided the user's credentials) by the [Admin module](/Admin) when requested by client applications, but users can define additional tokens for letting other users view and possibly contribute to their account's activity data.
 
@@ -73,13 +73,13 @@ Fields:
 - `name` (string): Unique. The name identifying the token for the user. It can be the client application's name for automatically generated personal tokens, or any user-defined value for manually created tokens.
 - `type` (`personal` or `shared`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`.
 - `permissions`: an array of channel permission objects as described below. Ignored for personal tokens. Shared tokens are only granted access to activity data objects listed in here.
-	- `channelId` ([identity](/DataTypes#TODO)): The accessible channel's id.
+	- `channelId` ([identity](#TODO)): The accessible channel's id.
 	- `folderPermissions`: an array of folder permission objects:
-		- `folderId` ([identity](/DataTypes#TODO)): The accessible folder's id. A  value of `null` can be used to set permissions for the root of the folders structure. If the folder has child folders, they will be accessible too.
+		- `folderId` ([identity](#TODO)): The accessible folder's id. A  value of `null` can be used to set permissions for the root of the folders structure. If the folder has child folders, they will be accessible too.
 		- `type` (`read-only`, `events-write` or `manage`): The type of access to the folder's data. With `events-write`, the token's holder can see and record events for the folder (and its child folders, if any); with `manage`, the token's holder can in addition create, modify and delete child folders.
 
 
-## Activity channel
+## Channel
 
 Each activity channel represents a "stream" or "type" of activity to track.
 Fields:
@@ -93,7 +93,7 @@ Fields:
 TODO: example
 
 
-## Activity folder
+## Folder
 
 Activity folders are the possible states or categories you track the channel's activity events into (folders are always specific to an activity channel). Every period event belongs to one folder, while mark events can be recorded "off-folder" as well. Activity folders follow a hierarchical tree structure: every folder can contain "child" folders (sub-folders).
 
@@ -124,7 +124,7 @@ Fields:
  			|- Customer B
 
 
-## Activity event
+## Event
 
 Activity events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
 
