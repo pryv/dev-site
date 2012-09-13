@@ -1,15 +1,14 @@
 # Pryv server API documentation
 
-Markdown sources for the server API documentation.
+DocPad sources for the server API documentation website.
 
-TODO: update this README after reviewing the documentation's status and cleaning up Gollum-related files. The original README content follows:
+## Setting up the development environment
 
-This is a Gollum wiki folder (https://github.com/github/gollum).
-See UsingGollumFR.md for instructions (in French...) on using Gollum locally.
+Read, then execute `./scripts/setup-environment-dev.sh`.
 
-Note that you can of course edit the Markdown content via your favourite Markdown editor instead (TextMate, Byword,
-etc.), and git-commit by hand.
 
-About file names, as long as Gollum is used for edition (we shall switch to more URL-friendly conventions when publishing later):
-  * File names should be `PascalCase` to workaround Gollum's issue with spaces
-  * `Home` and `_Sidebar` are special Gollum names and must be kept as is
+## Using DocPad
+
+- `./scripts/docpad.sh run` runs a small server serving the generated website, keeping track of source changes (for development)
+- `./scripts/docpad.sh generate` generates the website from the source into the 'out' folder
+- `./scripts/docpad.sh clean` cleans up the 'out' folder

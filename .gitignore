@@ -1,2 +1,4 @@
 .project
 api-doc.iml
+node_modules
+out

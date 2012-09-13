@@ -1,8 +1,14 @@
+---
+sectionId: data-types
+sectionOrder: 4
+---
+
 # Data types
 
-## Introduction
+TODO: review the entire chapter
 
-### Definitions
+
+## Overview
 
 - A **channel** is an independant set of values to record. For example all the thoughts, diary and social activities (fb, twitter,... ) will be saved in the same channel.
 - **folders** are the way such value are organized in the channel, like folders and files. From the previous example the channel could be named **Notes**:
@@ -57,7 +63,7 @@ http://username.pryv.io/events?token=XZV6 will give an access to all events with
 __Note: When *Slice of life* will be implemented__
 Then, we will be able to add a time frame to a set of folders, this will add the needed granularity.
 
-### Data access token
+## Data access token
 
 A data access token defines how a user's activity data (channels, folders and events) is accessed. Personal access tokens are transparently generated (provided the user's credentials) by the [Admin module](/Admin) when requested by client applications, but users can define additional tokens for letting other users view and possibly contribute to their account's activity data.
 
@@ -73,7 +79,7 @@ Fields:
 		- `type` (`read-only`, `events-write` or `manage`): The type of access to the folder's data. With `events-write`, the token's holder can see and record events for the folder (and its child folders, if any); with `manage`, the token's holder can in addition create, modify and delete child folders.
 
 
-### Activity channel
+## Activity channel
 
 Each activity channel represents a "stream" or "type" of activity to track.
 Fields:
@@ -87,7 +93,7 @@ Fields:
 TODO: example
 
 
-### Activity folder
+## Activity folder
 
 Activity folders are the possible states or categories you track the channel's activity events into (folders are always specific to an activity channel). Every period event belongs to one folder, while mark events can be recorded "off-folder" as well. Activity folders follow a hierarchical tree structure: every folder can contain "child" folders (sub-folders).
 
@@ -118,7 +124,7 @@ Fields:
  			|- Customer B
 
 
-### Activity event
+## Activity event
 
 Activity events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
 
@@ -196,7 +202,7 @@ TODO: this set of data is absolutly NOT inline with the def: review an complete 
 						      - comment: @recla how are you doing guys?
 						      - data: author:johndoe
 
-### Item additional data
+## Item additional data
 
 A JSON object offering free storage for clients to support extra functionality. TODO: details (no media files, limited size...) and example
 
@@ -208,13 +214,16 @@ TODO: "commonly used data directory" to help data reuse:
 - ...
 
 
-### Error
+## Error
 
 Fields:
 
 - `id` (string): Identifier for the error; complements the response's HTTP error code.
 - `message` (string): A human-readable description of the error.
 - `subErrors` (array of errors): Optional. Lists the detailed causes of the main error, if any.
+
+
+## Simple types
 
 
 ### Item identity

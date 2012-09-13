@@ -1,0 +1,5 @@
+{
+  collections:
+    sections: (database) ->
+      database.createLiveChildCollection().findAll(sectionOrder: $exists: true).setComparator(sectionOrder: 1)
+}

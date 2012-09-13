@@ -1,0 +1,52 @@
+// can't use nib for now because of DocPad plugin settings bug
+//@import 'nib'
+
+#toc
+  display: none // only shown if js and enough width
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  position: fixed;
+  background: #333;
+  box-shadow: inset -5px 0 5px 0px #000;
+  width: 200px;
+  padding-top: 20px;
+  color: #fff;
+  overflow: scroll;
+
+  ul
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+  li
+    margin: 0
+    padding: 5px 10px
+    line-height: 1.2em
+
+  a
+    color: #fff;
+    text-decoration: none;
+    display: block;
+
+  .toc-h1
+    font-weight: bold
+
+  .toc-h2
+    padding-left: 20px
+    font-size: 0.9em
+
+  .toc-h3
+    padding-left: 30px
+    font-size: 0.85em
+
+  .toc-active
+    background: #336699;
+    box-shadow: inset -5px 0px 10px -5px #000;
+
+@media (min-width: 600px)
+  html.js
+    #main
+      margin-left: 200px
+    #toc
+      display: block

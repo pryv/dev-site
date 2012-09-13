@@ -1,0 +1,23 @@
+{
+  "name": "pryv-api-doc",
+  "version": "0.1.0",
+  "description": "",
+  "homepage": "api.pryv.com",
+  "keywords": [
+    "Pryv",
+    "API",
+    "documentation",
+    "docpad"
+  ],
+  "author": "Pryv team",
+  "dependencies": {
+    "docpad": "6.x",
+    "docpad-plugin-jade": "2.0.x",
+    "docpad-plugin-marked": "2.0.x",
+    "docpad-plugin-stylus": "2.0.x"
+  },
+  "engines" : {
+    "node": ">=0.4.0",
+    "docpad": "6.x"
+  }
+}
