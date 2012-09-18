@@ -13,30 +13,30 @@ TODO: introductory text
 TODO: introductory text
 
 
-### Authentication
+### Authorization
 
-All requests to the activity module must carry a valid [data access token](//DataTypes#TODO) in the HTTP `Authorization` header. For example:
+All requests to the activity module must carry a valid [data access token](#data-types-token) in the HTTP `Authorization` header. For example:
 
-    GET /MyChannel/events HTTP/1.1
-    Host: yacinthe.pryv.io
-    Date: Thu, 09 Feb 2012 17:53:58 +0000
-
-    Authorization: <data access token>
+```http
+GET /{channel-id}/events HTTP/1.1
+Host: yacinthe.pryv.io
+Authorization: {token}
+```
 
 
 ### Common HTTP headers
 
-* `Server-Time`: The current server time as a [timestamp](/DataTypes#TODO). Keeping reference of the server time is an absolute necessity to properly read and write event times.
+* `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
 
 
 ### Common error codes
 
 TODO: review and complete
 
-* 400 (bad request), id `INVALID_REQUEST_STRUCTURE: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
+* 400 (bad request), id `INVALID_REQUEST_STRUCTURE`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
 * 400 (bad request), id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
 * 401 (unauthorized), id `INVALID_TOKEN`: The data access token is missing or invalid.
-* 403 (forbidden): The given data access token does not grant permission for this operation. See [data access tokens](//DataTypes#TODO) for more details about tokens and permissions.
+* 403 (forbidden): The given data access token does not grant permission for this operation. See [data access tokens](#data-types-token) for more details about tokens and permissions.
 * 404 (not found), possible cases:
 	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
 	* Id `UNKNOWN_FOLDER`: The activity folder can't be found in the specified channel.
@@ -55,7 +55,7 @@ Gets the activity channels accessible with the given token (and that are not in 
 
 ##### Successful response: 200
 
-An array of [activity channels](/DataTypes#TODO) containing the channels accessible with the given token.
+An array of [activity channels](#data{channel-id}-types-channel) containing the channels accessible with the given token.
 
 
 ### Folders
@@ -63,53 +63,53 @@ An array of [activity channels](/DataTypes#TODO) containing the channels accessi
 TODO: introductory text
 
 
-#### GET `/<channel id>/folders` or `/<channel id>/folders/<id>`
+#### GET `/{channel-id}/folders` or `/{channel-id}/folders/{folder-id}`
 
 Gets the folders accessible with the given token, either from the root level or only descending from the specified folder.
 
 ##### Specific path parameters
 
-* `id`([identity](/DataTypes#TODO)): The id of the folder to use as root for the request, or nothing to return all accessible folders from the root level.
+* `id`([identity](#data-types-identity)): The id of the folder to use as root for the request, or nothing to return all accessible folders from the root level.
 
 ##### Query string parameters
 
 * `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
 * `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-* `timeCountBase` ([timestamp](/DataTypes#TODO)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](/DataTypes#TODO)); otherwise no time count values will be returned.
+* `timeCountBase` ([timestamp](#data-types-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-types-folder)); otherwise no time count values will be returned.
 
 ##### Successful response: 200
 
-An array of [activity folders](/DataTypes#TODO) containing the tree of the folders accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
+An array of [activity folders](#data-types-folder) containing the tree of the folders accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
 
 
-#### POST `/<channel id>/folders` or `/<channel id>/folders/<parent folder id>`
+#### POST `/{channel-id}/folders` or `/{channel-id}/folders/{parent-folder-id}`
 
 Creates a new folder at the root level or as a child folder to the specified folder.
 
 ##### Specific path parameters
 
-* `parentId` ([identity](/DataTypes#TODO)): Optional. The id of the parent folder, if any. If not specified, the new folder will be created at the root of the folders tree structure.
+* `parentId` ([identity](#data-types-identity)): Optional. The id of the parent folder, if any. If not specified, the new folder will be created at the root of the folders tree structure.
 
 ##### Body parameters
 
-The new folder's data: see [activity folder](/DataTypes#TODO).
+The new folder's data: see [activity folder](#data-types-folder).
 
 ##### Successful response: 201
 
-* `id` ([identity](/DataTypes#TODO)): The created folder's id.
+* `id` ([identity](#data-types-identity)): The created folder's id.
 
 ##### Specific errors
 
 * 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
-#### PUT `/<channel id>/folders/<folder id>`
+#### PUT `/{channel-id}/folders/{folder-id}`
 
 Modifies the activity folder's attributes.
 
 ##### Body parameters
 
-New values for the folder's fields: see [activity folder](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
+New values for the folder's fields: see [activity folder](#data-types-folder). All fields are optional, and only modified values must be included. TODO: example
 
 ##### Successful response: 200
 
@@ -118,13 +118,13 @@ New values for the folder's fields: see [activity folder](/DataTypes#TODO). All 
 * 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
-#### POST `/<channel id>/folders/<folder id>/move`
+#### POST `/{channel-id}/folders/{folder-id}/move`
 
 Relocates the activity folder in the folders tree structure.
 
 ##### Body parameters
 
-* `parentId` ([identity](/DataTypes#TODO)): The id of the folder's new parent, or `null` if the folder should be moved at the root of the folders tree.
+* `parentId` ([identity](#data-types-identity)): The id of the folder's new parent, or `null` if the folder should be moved at the root of the folders tree.
 
 ##### Successful response: 200
 
@@ -134,7 +134,7 @@ Relocates the activity folder in the folders tree structure.
 * 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
-#### DELETE `/<channel id>/folders/<folder id>`
+#### DELETE `/{channel-id}/folders/{folder-id}`
 
 Trashes or deletes the specified folder, depending on its current state:
 
@@ -157,15 +157,15 @@ Trashes or deletes the specified folder, depending on its current state:
 TODO: introductory text (previous description moved to DataTypes page)
 
 
-#### GET `/<channel id>/events`
+#### GET `/{channel-id}/events`
 
 Queries the list of events.
 
 ##### Query string parameters
 
-* `onlyFolders` (array of [identity](/DataTypes#TODO)): Optional. If set, only events linked to those folders (including child folders) will be returned. By default, events linked to all accessible folders are returned.
-* `fromTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is 24 hours before `toTime`, if set.
-* `toTime` ([timestamp](/DataTypes#TODO)): Optional. TODO. Default is the current time.
+* `onlyFolders` (array of [identity](#data-types-identity)): Optional. If set, only events linked to those folders (including child folders) will be returned. By default, events linked to all accessible folders are returned.
+* `fromTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
+* `toTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is the current time.
 * `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
 * `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 * `skip` (number): Optional. The number of items to skip in the results.
@@ -173,14 +173,14 @@ Queries the list of events.
 
 ##### Successful response: 200
 
-An array of [activity events](/DataTypes#TODO) containing the events ordered by time (see `sortAscending` below).
+An array of [activity events](#data-types-event) containing the events ordered by time (see `sortAscending` below).
 
 ##### Specific errors
 
 * 400 (bad request), id `UNKNOWN_FOLDER`: TODO may happen if one of the specified folders doesn't exist
 
 
-#### POST `/<channel id>/events`
+#### POST `/{channel-id}/events`
 
 Records a new event. Events recorded this way must be completed events, i.e. either period events with a known duration or mark events. To start a running period event, post a `events/start` request.
 
@@ -190,21 +190,21 @@ TODO: example
 
 ##### Body parameters
 
-The new event's data: see [activity event](/DataTypes#TODO).
+The new event's data: see [activity event](#data-types-event).
 
 ##### Successful response: 201
 
-* `id` ([identity](/DataTypes#TODO)): The new event's id.
-* `stoppedId` ([identity](/DataTypes#TODO)): If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+* `id` ([identity](#data-types-identity)): The new event's id.
+* `stoppedId` ([identity](#data-types-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
 
 ##### Specific errors
 
 * 400 (bad request), id `UNKNOWN_FOLDER`: The specified folder cannot be found.
 
 
-#### POST `/<channel id>/events/start`
+#### POST `/{channel-id}/events/start`
 
-Starts a new period event, stopping the previously running period event if any. See POST `/<channel id>/events` for details. TODO: detail
+Starts a new period event, stopping the previously running period event if any. See POST `/{channel-id}/events` for details. TODO: detail
 
 ##### Successful response: 201
 
@@ -215,38 +215,38 @@ Starts a new period event, stopping the previously running period event if any. 
 * 400  (bad request), id `PERIODS_OVERLAP`: TODO (data: array of overlapped ids)
 
 
-#### POST `/<channel id>/events/stop`
+#### POST `/{channel-id}/events/stop`
 
-Stops the previously running period event. See POST `/<channel id>/events` for details. TODO: detail
+Stops the previously running period event. See POST `/{channel-id}/events` for details. TODO: detail
 
 ##### Successful response: 200
 
-* `stoppedId` ([identity](/DataTypes#TODO)): The id of the previously running period event that was stopped, or null if no running event was found.
+* `stoppedId` ([identity](#data-types-identity)): The id of the previously running period event that was stopped, or null if no running event was found.
 
 
-#### TODO: GET `/<channel id>/events/start` and `.../stop` and `.../record` alternatives to the above to allow simple calls via e.g. wget/curl
+#### TODO: GET `/{channel-id}/events/start` and `.../stop` and `.../record` alternatives to the above to allow simple calls via e.g. wget/curl
 
 
-#### GET `/<channel id>/events/running`
+#### GET `/{channel-id}/events/running`
 
 Gets the currently running period events.
 
 ##### Successful response: 200
 
-An array of [activity events](/DataTypes#TODO) containing the running period events.
+An array of [activity events](#data-types-event) containing the running period events.
 
 
-#### PUT `/<channel id>/events/<event id>`
+#### PUT `/{channel-id}/events/{event-id}`
 
 Modifies the activity event's attributes.
 
 ##### Body parameters
 
-New values for the event's fields: see [activity event](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
+New values for the event's fields: see [activity event](#data-types-event). All fields are optional, and only modified values must be included. TODO: example
 
 ##### Successful response: 200
 
-* `stoppedId` ([identity](/DataTypes#TODO)): If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+* `stoppedId` ([identity](#data-types-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
 
 ##### Specific errors
 
@@ -254,7 +254,7 @@ New values for the event's fields: see [activity event](/DataTypes#TODO). All fi
 * 400 (bad request), id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
-#### POST `/<channel id>/events/<event id>`
+#### POST `/{channel-id}/events/{event-id}`
 
 Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
 
@@ -263,7 +263,7 @@ TODO: example
 ##### Successful response: 200
 
 
-#### DELETE `/<channel id>/events/<event id>`
+#### DELETE `/{channel-id}/events/{event-id}`
 
 Trashes or deletes the specified event, depending on its current state:
 
@@ -273,32 +273,32 @@ Trashes or deletes the specified event, depending on its current state:
 ##### Successful response: 200
 
 
-#### GET `/<channel id>/events/<event id>/<file name>`
+#### GET `/{channel-id}/events/{event-id}/{file-name}`
 
 Gets the attached file.
 
 ##### Successful response: 200
 
 
-#### DELETE `/<channel id>/events/<event id>/<file name>`
+#### DELETE `/{channel-id}/events/{event-id}/{file-name}`
 
 Irreversibly deletes the attached file.
 
 ##### Successful response: 200
 
 
-#### POST `/<channel id>/events/batch`
+#### POST `/{channel-id}/events/batch`
 
 TODO: this is currently unimplemented and may stay that way.
 Batch upload events that were recorded by the client while offline. If the client-recorded events overlap events on the server, the request will be rejected (see errors below); it is the client's responsibility to retrieve updated server data and adjust its own before uploading.
 
 ##### Body parameters
 
-* `events` (array of [activity events](/DataTypes#TODO)): The client-recorded events. The `clientId` must be set for each event. Each event's time must be set in server time.
+* `events` (array of [activity events](#data-types-event)): The client-recorded events. The `clientId` must be set for each event. Each event's time must be set in server time.
 
 ##### Successful response: 200
 
-* `addedEvents` (array of [activity events](/DataTypes#TODO): The successfully added events, with their server-assigned ids and `clientId` for reference.
+* `addedEvents` (array of [activity events](#data-types-event): The successfully added events, with their server-assigned ids and `clientId` for reference.
 
 ##### Specific errors
 
@@ -332,7 +332,7 @@ But the protocol also supports `https://xyz.pryv.net/ressource_path?userName=use
 
 **Note:** Arguments will override hostnames. In the following case, **username2** will be used. `https://username1.pryv.io/ressource_path?userName=username2`
 
-**See:** [Register module: https://pryv.io/<userName>/server](Register#server) API call to get the server hostname for a user.
+**See:** [Register module: https://pryv.io/{user-name}/server](Register#server) API call to get the server hostname for a user.
 
 ### WEB access
 
@@ -354,7 +354,7 @@ Access to admin methods is managed by sessions. To create a session, you must su
 
 ### Common HTTP headers
 
-* `Server-Time`: The current server time as a [timestamp](/DataTypes#TODO). Keeping reference of the server time is an absolute necessity to properly read and write event times.
+* `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
 
 
 ### Common error codes
@@ -436,7 +436,7 @@ Gets activity channels.
 
 ##### Successful response: 200
 
-An array of [activity channels](/DataTypes#TODO)) containing all channels in the user's account matching the specified state, ordered by name.
+An array of [activity channels](#data-types-channel)) containing all channels in the user's account matching the specified state, ordered by name.
 
 
 #### POST `/channels`
@@ -445,23 +445,23 @@ Creates a new activity channel.
 
 ##### Body parameters
 
-The new channel's data: see [activity channel](/DataTypes#TODO).
+The new channel's data: see [activity channel](#data-types-channel).
 
 ##### Successful response: 201
 
-* `id` ([identity](/DataTypes#TODO)): The created channel's id.
+* `id` ([identity](#data-types-identity)): The created channel's id.
 
 
-#### PUT `/channels/<channel id>`
+#### PUT `/channels/{channel-id}`
 
 Modifies the activity channel's attributes.
 
 ##### Body parameters
 
-New values for the channel's fields: see [activity channel](/DataTypes#TODO). All fields are optional, and only modified values must be included. TODO: example
+New values for the channel's fields: see [activity channel](#data-types-channel). All fields are optional, and only modified values must be included. TODO: example
 
 
-#### DELETE `/channels/<channel id>`
+#### DELETE `/channels/{channel-id}`
 
 Trashes or deletes the given channel, depending on its current state:
 
@@ -476,7 +476,7 @@ Trashes or deletes the given channel, depending on its current state:
 TODO: introductory text
 
 
-#### GET `/tokens/<name>` TODO: change to POST request (we potentially create data)
+#### GET `/tokens/{name}` TODO: change to POST request (we potentially create data)
 
 TODO: review this (it is very bad to create data with a GET request unless explicity named): get or create a token associated with a client; based on client key (name), a new token is created or key is retrieved
 Requires session token, client info (optional, used only if a token is created)
@@ -489,14 +489,14 @@ Gets access tokens.
 
 ##### Successful response: 200
 
-An array of [access tokens](/DataTypes#TODO) containing all access tokens in the user's account, ordered by name.
+An array of [access tokens](#data-types-token) containing all access tokens in the user's account, ordered by name.
 
 
-#### PUT `/tokens/<token id>`
+#### PUT `/tokens/{token-id}`
 
 TODO
 
 
-#### DELETE `/tokens/<token id>`
+#### DELETE `/tokens/{token-id}`
 
 TODO

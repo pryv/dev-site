@@ -18,8 +18,8 @@ Read this document **if you plan to write a registration client** or for your ow
 
 * 500 (internal error), code `INTERNAL_ERROR`: Something went bad on the server.
 
-<a name="mtranslation"></a>
-### Messages translations
+
+### <a id="registration-translations"></a>Messages translations
 We offer key based translations files for messages.
 
 As today only the folowing languages are availables
@@ -27,8 +27,8 @@ As today only the folowing languages are availables
  * English: **"en"** /messages-en.js
  * French: **"fr"** /messages-fr.js
 
-<a name="rules"></a>
-### User name and password rules
+
+### <a id="registration-rules"></a>User name and password rules
 
 
 * User name: `/^[a-zA-Z0-9]{5,21}$/`(alphanumeric between 5 an 21 chars) case-insensitive.
@@ -39,19 +39,18 @@ As today only the folowing languages are availables
 ## HTTP API
 
 
-<a name="server"></a>
-### GET the server of a userName
+### <a id="registration-server"></a>GET the server of a userName
 This is normaly handled by DNS queries as **userName**.pryv.io should point to a *xyz*.pryv.net server.
 
 You may use this as a fallback in case of DNS inconsistency.
 
-Like for [Confirm](#confirm) there is two methods
+Like for [Confirm](#registration-confirm) there is two methods
 
 * GET will do a redirect
 * POST will return JSON data.
 
 
-#### GET `/<user name>/server`
+#### GET `/{user-name}/server`
 Responses as redirects
 
 ##### Response (JSON)
@@ -63,7 +62,7 @@ Responses as redirects
 * 200 to https://pryv.io/?error=UNKOWN_USER_NAME
 
 
-#### POST `/<user name>/server`
+#### POST `/{user-name}/server`
 
 
 ##### Response (JSON)
@@ -81,8 +80,8 @@ exemple : (everything went fine)
 
 
 ### Check if username exists
-<a name="check"></a>
-#### GET `/<user name>/check`
+
+#### <a id="registration-check"></a>GET `/{user-name}/check`
 
 Checks whether the given user name already exists.
 
@@ -96,7 +95,7 @@ exemple :
 
 ##### Specific errors
 
-* 400 (bad request), id `INVALID_USER_NAME`: The given name cannot be used as a user name see: [Rules](#rules).
+* 400 (bad request), id `INVALID_USER_NAME`: The given name cannot be used as a user name see: [Rules](#registration-rules).
 
 exemple :
 
@@ -108,7 +107,7 @@ exemple :
 ### Register a new User: Confirmation, Step 1 / 2
 #### POST `/init`
 
-Initializes user creation, will be confirmed by POST `/challengeToken/confirm`, see: [Confirm](#confirm).
+Initializes user creation, will be confirmed by POST `/challengeToken/confirm`, see: [Confirm](#registration-confirm).
 
 The __challengeToken__ is sent by mail. Unconfirmed user creations are deleted after 24 hours.
 
@@ -134,12 +133,12 @@ exemple :
 ##### Specific errors
 
 * 400 (bad request), id `INVALID_DATA`: with a set of errors
-	* id `EXISTING_USER_NAME`: The requested userName is alerady used. You may check avalability with `GET /<user name>/check`, see: [Check](#check).
-	* id `INVALID_USER_NAME`: The given name cannot be used as a user name, see: [Rules](#rules).
-	* id `INVALID_PASSWORD`: The given password does not fit password policy see: [Rules](#rules).
+	* id `EXISTING_USER_NAME`: The requested userName is alerady used. You may check avalability with `GET /{user-name}/check`, see: [Check](#registration-check).
+	* id `INVALID_USER_NAME`: The given name cannot be used as a user name, see: [Rules](#registration-rules).
+	* id `INVALID_PASSWORD`: The given password does not fit password policy see: [Rules](#registration-rules).
 	* id `INVALID_EMAIL`: The given email is not recognized as valid.
 
-see: [messages translations](#mtranslation)
+see: [messages translations](#registration-translations)
 
 exemple : (all requested data are empty)
 
@@ -158,8 +157,8 @@ exemple : (all requested data are empty)
 	           ]
      }
 
-<a name="confirm"></a>
-### Register a new User: Confirmation, Step 2 / 2
+
+### <a id="registration-confirm"></a>Register a new User: Confirmation, Step 2 / 2
 Confirms user creation for the given user.
 
 For now the token is sent by mail, this step is usually handeled by our web page.
@@ -174,7 +173,7 @@ Note: if the user is already confirmed, this will send an error, but also the se
 
 
 
-#### GET `/<challenge>/confirm`
+#### GET `/{challenge}/confirm`
 
 ##### Response (REDIRECT)
 
@@ -185,7 +184,7 @@ exemple : (everything went fine)
 	{"server": "test1.pryv.net", "alias": "userName.pryv.io"}
 
 
-#### POST `/<challenge>/confirm`
+#### POST `/{challenge}/confirm`
 See GET for a redirect to web site solution
 
 Confirms user creation for the given user.
@@ -230,14 +229,14 @@ http://pryv.io
 
 ### Error fallback
 #### https://pryv.io/error.html?id=NO_PENDING_CREATION
-Confirmation failed: `GET /<challenge>/confirm`
+Confirmation failed: `GET /{challenge}/confirm`
 
 #### https://pryv.io/error.html?id=INVALID_CHALLENGE
-Confirmation failed: `GET /<challenge>/confirm`
+Confirmation failed: `GET /{challenge}/confirm`
 
 #### https://pryv.io/error.html?id=INVALID_USER_NAME
-Server request failed: `GET /<username>/server`
+Server request failed: `GET /{username}/server`
 
 #### https://pryv.io/error.html?id=UNKOWN_USER_NAME
-Server request  failed: `GET /<challenge>/server`
+Server request  failed: `GET /{challenge}/server`
 

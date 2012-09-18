@@ -63,7 +63,7 @@ http://username.pryv.io/events?token=XZV6 will give an access to all events with
 __Note: When *Slice of life* will be implemented__
 Then, we will be able to add a time frame to a set of folders, this will add the needed granularity.
 
-## Token
+## <a id="data-types-token"></a>Token
 
 A data access token defines how a user's activity data (channels, folders and events) is accessed. Personal access tokens are transparently generated (provided the user's credentials) by the [Admin module](/Admin) when requested by client applications, but users can define additional tokens for letting other users view and possibly contribute to their account's activity data.
 
@@ -73,37 +73,37 @@ Fields:
 - `name` (string): Unique. The name identifying the token for the user. It can be the client application's name for automatically generated personal tokens, or any user-defined value for manually created tokens.
 - `type` (`personal` or `shared`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`.
 - `permissions`: an array of channel permission objects as described below. Ignored for personal tokens. Shared tokens are only granted access to activity data objects listed in here.
-	- `channelId` ([identity](#TODO)): The accessible channel's id.
+	- `channelId` ([identity](#data-types-identity)): The accessible channel's id.
 	- `folderPermissions`: an array of folder permission objects:
-		- `folderId` ([identity](#TODO)): The accessible folder's id. A  value of `null` can be used to set permissions for the root of the folders structure. If the folder has child folders, they will be accessible too.
+		- `folderId` ([identity](#data-types-identity)): The accessible folder's id. A  value of `null` can be used to set permissions for the root of the folders structure. If the folder has child folders, they will be accessible too.
 		- `type` (`read-only`, `events-write` or `manage`): The type of access to the folder's data. With `events-write`, the token's holder can see and record events for the folder (and its child folders, if any); with `manage`, the token's holder can in addition create, modify and delete child folders.
 
 
-## Channel
+## <a id="data-types-channel"></a>Channel
 
 Each activity channel represents a "stream" or "type" of activity to track.
 Fields:
 
-- `id` (identity, TODO: link)
+- `id` ([identity](#data-types-identity))
 - `name` (string): A unique name identifying the channel for users.
 - `strictMode` (boolean): If `true`, the system will ensure that timed events in this channel never overlap; if `false`, overlapping will be allowed. TODO: I [SGO] suggest we only implement strict mode for a start.
-- `clientData` (item additional data, TODO: link): Additional client data for the channel.
-- `timeCount` (timestamp, TODO: link): Read-only. Only optionally returned when querying channels, indicating the total time tracked in that channel since a given reference date and time.
+- `clientData` ([item additional data](#data-types-additional-data)): Additional client data for the channel.
+- `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying channels, indicating the total time tracked in that channel since a given reference date and time.
 
 TODO: example
 
 
-## Folder
+## <a id="data-types-folder"></a>Folder
 
 Activity folders are the possible states or categories you track the channel's activity events into (folders are always specific to an activity channel). Every period event belongs to one folder, while mark events can be recorded "off-folder" as well. Activity folders follow a hierarchical tree structure: every folder can contain "child" folders (sub-folders).
 
 Fields:
 
-* `id` (identity, TODO: link): Read-only. The server-assigned identifier for the folder.
+* `id` ([identity](#data-types-identity)): Read-only. The server-assigned identifier for the folder.
 * `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
 * `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
-* `clientData` (item additional data, TODO: link):  Optional. Additional client data for the folder.
-* `timeCount` (timestamp, TODO: link): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time.
+* `clientData` ([item additional data](#data-types-additional-data)):  Optional. Additional client data for the folder.
+* `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time.
 * `children` (array of activity folders): Optional and read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created one by one by design.
 
 #### Example of channel & folders for activities
@@ -124,7 +124,7 @@ Fields:
  			|- Customer B
 
 
-## Event
+## <a id="data-types-event"></a>Event
 
 Activity events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
 
@@ -135,10 +135,10 @@ Differentiating them is simple: period events carry a duration, while mark event
 
 Fields:
 
-- `id` (identity, TODO: link): Read-only. The server-assigned identifier for the event.
-- `time` (timestamp): The event's time. (When it happend or started)
+- `id` ([identity](#data-types-identity)): Read-only. The server-assigned identifier for the event.
+- `time` ([timestamp](#data-types-timestamp)): The event's time. (When it happend or started)
 - `clientId` (string): A client-assigned identifier for the event when created offline, for temporary reference. Only used in batch event creation requests (TODO: link).
-- `folderId`(identity, TODO: link):
+- `folderId`([identity](#data-types-identity)):
 	* For period events: The value must be a valid folder's id. TODO: really???
 	* For mark events: Optional. Indicates the particular folder the event is associated with, if any.
 - `duration`: Optional. If present, indicates that the event is a period event. Running period events have a duration set to `undefined`.
@@ -148,7 +148,7 @@ Fields:
 	- `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
 	- `type` (string): The MIME type of the file.
 	- `size` (number): The size of the file, in bytes.
-- `clientData` (a complex data structure, that will be processed by the client software., TODO: link):  Optional. Additional client data for the event.
+- `clientData` ([additional item data](#data-types-additional-data)):  Optional. Additional client data for the event.
 
 *Technical note:* Why the _duration_ is not set in the _value_ part of the event?
 Because activties events needs a fast processing of durations and intervals, duration is a field that can be trusted (ie with no customisation possible). La logique métier a besoin de la duréé.
@@ -202,7 +202,7 @@ TODO: this set of data is absolutly NOT inline with the def: review an complete 
 						      - comment: @recla how are you doing guys?
 						      - data: author:johndoe
 
-## Item additional data
+## <a id="data-types-additional-data"></a>Item additional data
 
 A JSON object offering free storage for clients to support extra functionality. TODO: details (no media files, limited size...) and example
 
@@ -214,7 +214,7 @@ TODO: "commonly used data directory" to help data reuse:
 - ...
 
 
-## Error
+## <a id="data-types-error"></a>Error
 
 Fields:
 
@@ -226,7 +226,7 @@ Fields:
 ## Simple types
 
 
-### Item identity
+### <a id="data-types-identity"></a>Item identity
 
 TODO: decide depending on the choosen database. The best would be to keep human readable identifier (see slugify). Validation rule in that case: `/^[a-zA-Z0-9._-]{1,100}$/` (alphanum between 3 and 100 chars).
 
@@ -234,7 +234,7 @@ TODO: decide depending on the choosen database. The best would be to keep human 
 - The identity of every activity folder or event must be unique within its containing channel
 
 
-### Timestamp
+### <a id="data-types-timestamp"></a>Timestamp
 
 A floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not matter.
 
@@ -244,6 +244,6 @@ Examples:
 - ...
 
 
-### Two-letter ISO language code
+### <a id="data-types-language-code"></a>Two-letter ISO language code
 
 A two-letter string specifying a language following the ISO 639-1 standard (see [the related Wikipedia definition](http://en.wikipedia.org/wiki/ISO_639-1)).

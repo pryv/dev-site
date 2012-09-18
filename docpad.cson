@@ -1,4 +1,9 @@
 {
+  plugins:
+    marked:
+      markedOptions:
+        gfm: true
+        sanitize: false
   collections:
     sections: (database) ->
       database.createLiveChildCollection().findAll(sectionOrder: $exists: true).setComparator(sectionOrder: 1)
