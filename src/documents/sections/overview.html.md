@@ -15,6 +15,7 @@ The Pryv API is structured into two services, each with its own domain name:
 - The [activity](#activity) service manages all the activity data for users as well as account settings. It is accessed on `https://{username}.pryv.io`; the actual server this maps to depends on each user's choice of data storage location. The recording and management of activity data (events and their organization into folders and tags) is protected by [data access tokens](#data-types-token) to allow easy sharing. On the other hand, the administration of a user's settings, including sharing permissions (via data access tokens) and management of activity channels is protected by personal authentication and expiring sessions.
 - The [registration](#registration) service manages the registration of new users (registered users are referred to as just "users" in this documentation). It runs on `https://pryv.io`. Access is anonymous, with a captcha protecting the user registration process. [TODO: review]
 
+[TODO: add simple schema here]
 
 ## Calling API methods
 
@@ -25,11 +26,19 @@ Most of the API follows REST principles, meaning each item has its own unique re
 - PUT to modify the item
 - DELETE to delete the item (note that logical deletion, or trashing, is supported for items like events, folders and channels)
 
+Here's an example API request:
+```http
+GET /{channel-id}/events HTTP/1.1
+Host: {user-name}.pryv.io
+Authorization: {token}
+```
+
+Note that the [activity](#activity) service also supports calling API methods via [Socket.IO](http://socket.io).
+
 
 ## Data format
 
-The API uses JSON for serializing data. For example, an event can look like:
-
+The API uses JSON for serializing data. Here's what an event can look like:
 ```json
 {
   "id": "5051941d04b8ffd00500000d",
@@ -46,3 +55,11 @@ The API uses JSON for serializing data. For example, an event can look like:
 ## Errors
 
 When an error occurs, the API returns a 4xx or 5xx status code, with the response body usually containing an [error](#data-types-error) object detailing the cause.
+
+Here's an example "401 Unauthorized" error response:
+```json
+{
+  "id": "INVALID_TOKEN",
+  "message": "Cannot find token 'bad-token'."
+}
+```

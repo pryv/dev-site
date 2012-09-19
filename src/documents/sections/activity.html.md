@@ -8,133 +8,189 @@ sectionOrder: 2
 TODO: introductory text
 
 
-## Activity data
+### Socket.IO support
+
+The activity service supports real-time interaction with Socket.IO, both by accepting equivalent messages for all API methods and by emitting data change notification messages.
+
+
+#### Calling API methods
+
+Every method in the activity service can be called by sending a corresponding Socket.IO `command` message, providing a data object specifying the command (or method) and possible parameters, and a callback function for the response:
+```javascript
+socket.emit('command', {id: '{id}', params: {/*parameters*/}}, function (error, data) {
+  // handle response here
+});
+```
+
+Command ids are indicated for each API method below and are modeled after the equivalent URL path. For example, here's how you could call `GET /{channel-id}/events`:
+ ```javascript
+var cmdData = {
+  id: '{channel-id}.events.get',
+  params: {
+    sortAscending: true
+  }
+};
+socket.emit('command', cmdData, function (error, data) {
+  // handle response
+});
+ ```
+
+
+#### Receiving data change notifications
+
+You can be notified of changes to channels, folders and events by subscribing to the corresponding messages `channelsChanged`, `foldersChanged` and `eventsChanged`. For example:
+```javascript
+socket.on('eventsChanged', function() {
+  // retrieve latest changes and update views
+});
+```
+
+## <a id="activity-activity"></a>Activity data
 
 TODO: introductory text
 
 
 ### Authorization
 
-All requests to the activity module must carry a valid [data access token](#data-types-token) in the HTTP `Authorization` header. For example:
+All requests for retrieving and manipulating activity data must carry a valid [data access token](#data-types-token) in the HTTP `Authorization` header. (You get the token itself either by retrieving it in the [administration](#activity-admin-tokens) or from sharing.)
 
+Here's what a proper request looks like:
 ```http
 GET /{channel-id}/events HTTP/1.1
 Host: yacinthe.pryv.io
-Authorization: {token}
+Authorization: {valid-token}
 ```
 
 
 ### Common HTTP headers
 
-* `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
+Some headers are included in every response to authorized requests:
+
+- `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
 
 
-### Common error codes
+### Common errors
 
-TODO: review and complete
+Here are errors commonly returned for requests:
 
-* 400 (bad request), id `INVALID_REQUEST_STRUCTURE`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
-* 400 (bad request), id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
-* 401 (unauthorized), id `INVALID_TOKEN`: The data access token is missing or invalid.
-* 403 (forbidden): The given data access token does not grant permission for this operation. See [data access tokens](#data-types-token) for more details about tokens and permissions.
-* 404 (not found), possible cases:
-	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
-	* Id `UNKNOWN_FOLDER`: The activity folder can't be found in the specified channel.
-	* Id `UNKNOWN_EVENT`: The event can't be found in the specified channel.
-	* Id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the specified event.
+- `400 Bad Request`, id `INVALID_REQUEST_STRUCTURE`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
+- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
+- `401 Unauthorized`, id `INVALID_TOKEN`: The data access token is missing or invalid.
+- `403 Forbidden`: The given data access token does not grant permission for this operation. See [data access tokens](#data-types-token) for more details about tokens and permissions.
+- `404 Not Found`, possible cases:
+	- Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
+	- Id `UNKNOWN_FOLDER`: The activity folder can't be found in the specified channel.
+	- Id `UNKNOWN_EVENT`: The event can't be found in the specified channel.
+	- Id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the specified event.
 
 
 ### Channels
 
-TODO: introductory text.
+For retrieving [channels](#data-types-channel). Manipulating channels is done in the [administration](#activity-admin-channels).
 
 
 #### GET `/channels`
 
+*Socket.IO command id: `channels.get`*
+
 Gets the activity channels accessible with the given token (and that are not in the trash).
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
-An array of [activity channels](#data{channel-id}-types-channel) containing the channels accessible with the given token.
+An array of [activity channels](#data-types-channel) containing the channels accessible with the given token.
 
 
 ### Folders
 
-TODO: introductory text
+Methods to retrieve and manipulate [folders](#data-types-folder).
 
 
-#### GET `/{channel-id}/folders` or `/{channel-id}/folders/{folder-id}`
+#### GET `/{channel-id}/folders[/{parent-folder-id}]`
 
-Gets the folders accessible with the given token, either from the root level or only descending from the specified folder.
+*Socket.IO command id: `{channel-id}.folders.get`*
+
+Gets the folders accessible with the given token, either from the root level or only descending from the specified parent folder.
 
 ##### Specific path parameters
 
-* `id`([identity](#data-types-identity)): The id of the folder to use as root for the request, or nothing to return all accessible folders from the root level.
+- `id` ([identity](#data-types-identity)): The id of the parent folder to use as root for the request, or nothing to return all accessible folders from the root level.
 
 ##### Query string parameters
 
-* `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
-* `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-* `timeCountBase` ([timestamp](#data-types-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-types-folder)); otherwise no time count values will be returned.
+- `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
+- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+- `timeCountBase` ([timestamp](#data-types-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-types-folder)); otherwise no time count values will be returned.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
-An array of [activity folders](#data-types-folder) containing the tree of the folders accessible with the given token, sorted by name. TODO exemple (with and without time accounting)
+An array of [activity folders](#data-types-folder) containing the tree of the folders accessible with the given token, sorted by name.
+
+TODO: example (with and without time accounting)
 
 
-#### POST `/{channel-id}/folders` or `/{channel-id}/folders/{parent-folder-id}`
+#### POST `/{channel-id}/folders[/{parent-folder-id}]`
+
+*Socket.IO command id: `{channel-id}.folders.create`*
 
 Creates a new folder at the root level or as a child folder to the specified folder.
 
 ##### Specific path parameters
 
-* `parentId` ([identity](#data-types-identity)): Optional. The id of the parent folder, if any. If not specified, the new folder will be created at the root of the folders tree structure.
+- `parentId` ([identity](#data-types-identity)): Optional. The id of the parent folder, if any. If not specified, the new folder will be created at the root of the folders tree structure.
 
 ##### Body parameters
 
 The new folder's data: see [activity folder](#data-types-folder).
 
-##### Successful response: 201
+##### Successful response: `201 Created`
 
-* `id` ([identity](#data-types-identity)): The created folder's id.
+- `id` ([identity](#data-types-identity)): The created folder's id.
 
 ##### Specific errors
 
-* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
 #### PUT `/{channel-id}/folders/{folder-id}`
+
+*Socket.IO command id: `{channel-id}.folders.update`*
 
 Modifies the activity folder's attributes.
 
 ##### Body parameters
 
-New values for the folder's fields: see [activity folder](#data-types-folder). All fields are optional, and only modified values must be included. TODO: example
+New values for the folder's fields: see [activity folder](#data-types-folder). All fields are optional, and only modified values must be included.
 
-##### Successful response: 200
+TODO: example
+
+##### Successful response: `200 OK`
 
 ##### Specific errors
 
-* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
 #### POST `/{channel-id}/folders/{folder-id}/move`
+
+*Socket.IO command id: `{channel-id}.folders.update`* [TODO: review after possible changes to API regarding folders tree structure]
 
 Relocates the activity folder in the folders tree structure.
 
 ##### Body parameters
 
-* `parentId` ([identity](#data-types-identity)): The id of the folder's new parent, or `null` if the folder should be moved at the root of the folders tree.
+- `parentId` ([identity](#data-types-identity)): The id of the folder's new parent, or `null` if the folder should be moved at the root of the folders tree.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 ##### Specific errors
 
-* 400 (bad request), id `UNKNOWN_FOLDER`: The specified parent folder's id is unknown.
-* 400 (bad request), id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified parent folder's id is unknown.
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
 #### DELETE `/{channel-id}/folders/{folder-id}`
+
+*Socket.IO command id: `{channel-id}.folders.delete`*
 
 Trashes or deletes the specified folder, depending on its current state:
 
@@ -143,44 +199,48 @@ Trashes or deletes the specified folder, depending on its current state:
 
 ##### Query string parameters
 
-* `mergeEventsWithParent` (`true` or `false`): Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
+- `mergeEventsWithParent` (`true` or `false`): Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 ##### Specific errors
 
-* 400 (bad request), id `MISSING_PARAMETER`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
+- `400 Bad Request`, id `MISSING_PARAMETER`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
 
 
 ### Events
 
-TODO: introductory text (previous description moved to DataTypes page)
+Methods to retrieve and manipulate [events](#data-types-event).
 
 
 #### GET `/{channel-id}/events`
+
+*Socket.IO command id: `{channel-id}.events.get`*
 
 Queries the list of events.
 
 ##### Query string parameters
 
-* `onlyFolders` (array of [identity](#data-types-identity)): Optional. If set, only events linked to those folders (including child folders) will be returned. By default, events linked to all accessible folders are returned.
-* `fromTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
-* `toTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is the current time.
-* `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-* `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
-* `skip` (number): Optional. The number of items to skip in the results.
-* `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
+- `onlyFolders` (array of [identity](#data-types-identity)): Optional. If set, only events linked to those folders (including child folders) will be returned. By default, events linked to all accessible folders are returned.
+- `fromTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
+- `toTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is the current time.
+- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+- `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
+- `skip` (number): Optional. The number of items to skip in the results.
+- `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 An array of [activity events](#data-types-event) containing the events ordered by time (see `sortAscending` below).
 
 ##### Specific errors
 
-* 400 (bad request), id `UNKNOWN_FOLDER`: TODO may happen if one of the specified folders doesn't exist
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: TODO may happen if one of the specified folders doesn't exist
 
 
 #### POST `/{channel-id}/events`
+
+*Socket.IO command id: `{channel-id}.events.create`*
 
 Records a new event. Events recorded this way must be completed events, i.e. either period events with a known duration or mark events. To start a running period event, post a `events/start` request.
 
@@ -192,36 +252,40 @@ TODO: example
 
 The new event's data: see [activity event](#data-types-event).
 
-##### Successful response: 201
+##### Successful response: `201 Created`
 
-* `id` ([identity](#data-types-identity)): The new event's id.
-* `stoppedId` ([identity](#data-types-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+- `id` ([identity](#data-types-identity)): The new event's id.
+- `stoppedId` ([identity](#data-types-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
 
 ##### Specific errors
 
-* 400 (bad request), id `UNKNOWN_FOLDER`: The specified folder cannot be found.
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified folder cannot be found.
 
 
 #### POST `/{channel-id}/events/start`
 
+*Socket.IO command id: `{channel-id}.events.start`*
+
 Starts a new period event, stopping the previously running period event if any. See POST `/{channel-id}/events` for details. TODO: detail
 
-##### Successful response: 201
+##### Successful response: `201 Created`
 
 ##### Specific errors
 
-* 400 (bad request), id `MISSING_FOLDER`: The mandatory folder is missing.
-* 400 (bad request), id `INVALID_OPERATION`: A period event cannot start if another period event already exists at a later time.
-* 400  (bad request), id `PERIODS_OVERLAP`: TODO (data: array of overlapped ids)
+- `400 Bad Request`, id `MISSING_FOLDER`: The mandatory folder is missing.
+- `400 Bad Request`, id `INVALID_OPERATION`: A period event cannot start if another period event already exists at a later time.
+- `400 Bad request`, id `PERIODS_OVERLAP`: TODO (data: array of overlapped ids)
 
 
 #### POST `/{channel-id}/events/stop`
 
+*Socket.IO command id: `{channel-id}.events.stop`*
+
 Stops the previously running period event. See POST `/{channel-id}/events` for details. TODO: detail
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
-* `stoppedId` ([identity](#data-types-identity)): The id of the previously running period event that was stopped, or null if no running event was found.
+- `stoppedId` ([identity](#data-types-identity)): The id of the previously running period event that was stopped, or null if no running event was found.
 
 
 #### TODO: GET `/{channel-id}/events/start` and `.../stop` and `.../record` alternatives to the above to allow simple calls via e.g. wget/curl
@@ -229,14 +293,18 @@ Stops the previously running period event. See POST `/{channel-id}/events` for d
 
 #### GET `/{channel-id}/events/running`
 
+*Socket.IO command id: `{channel-id}.events.getRunning`*
+
 Gets the currently running period events.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 An array of [activity events](#data-types-event) containing the running period events.
 
 
 #### PUT `/{channel-id}/events/{event-id}`
+
+*Socket.IO command id: `{channel-id}.events.update`*
 
 Modifies the activity event's attributes.
 
@@ -244,14 +312,14 @@ Modifies the activity event's attributes.
 
 New values for the event's fields: see [activity event](#data-types-event). All fields are optional, and only modified values must be included. TODO: example
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
-* `stoppedId` ([identity](#data-types-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+- `stoppedId` ([identity](#data-types-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
 
 ##### Specific errors
 
-* 400 (bad request), id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it.
-* 400 (bad request), id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
+- `400 Bad Request`, id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it.
+- `400 Bad Request`, id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
 
 #### POST `/{channel-id}/events/{event-id}`
@@ -260,31 +328,35 @@ Adds one or more file attachments to the event. This request expects standard mu
 
 TODO: example
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 
 #### DELETE `/{channel-id}/events/{event-id}`
+
+*Socket.IO command id: `{channel-id}.events.delete`*
 
 Trashes or deletes the specified event, depending on its current state:
 
 - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
 - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 
 #### GET `/{channel-id}/events/{event-id}/{file-name}`
 
 Gets the attached file.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 
 #### DELETE `/{channel-id}/events/{event-id}/{file-name}`
 
+*Socket.IO command id: `{channel-id}.events.deleteAttachedFile`*
+
 Irreversibly deletes the attached file.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 
 #### POST `/{channel-id}/events/batch`
@@ -294,29 +366,29 @@ Batch upload events that were recorded by the client while offline. If the clien
 
 ##### Body parameters
 
-* `events` (array of [activity events](#data-types-event)): The client-recorded events. The `clientId` must be set for each event. Each event's time must be set in server time.
+- `events` (array of [activity events](#data-types-event)): The client-recorded events. The `clientId` must be set for each event. Each event's time must be set in server time.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
-* `addedEvents` (array of [activity events](#data-types-event): The successfully added events, with their server-assigned ids and `clientId` for reference.
+- `addedEvents` (array of [activity events](#data-types-event): The successfully added events, with their server-assigned ids and `clientId` for reference.
 
 ##### Specific errors
 
-* 400 (bad request), id `INVALID_TIME`: TODO
-* 400 (bad request), id `UNKNOWN_FOLDER`: TODO
-* 400 (bad request), id `PERIODS_OVERLAP`: TODO (list of unspecified overlapped event ids)
+- `400 Bad Request`, id `INVALID_TIME`: TODO
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: TODO
+- `400 Bad Request`, id `PERIODS_OVERLAP`: TODO (list of unspecified overlapped event ids)
 
 
 
-## Administration
+## <a id="activity-admin"></a>Administration
 
 **TODO: review (there are mistakes) and possibly relocate the sections below**
 
 The administration service handles user's:
 
-* Identity and profile settings
-* Channels and folders organisation
-* Sharing management
+- Identity and profile settings
+- Channels and folders organisation
+- Sharing management
 
 The Administration server is a part of an AAServer, which also handle activity recording.
 
@@ -347,29 +419,29 @@ But the protocol also supports `https://xyz.pryv.net/ressource_path?userName=use
 `https://xyz.pryv.io/?msg=CONFIRMED_ALREADY` presents the administration login page with an "registration already confirmed" message.
 
 
-### Authentication
+### Authorization
 
-Access to admin methods is managed by sessions. To create a session, you must sucessfully authenticate with a `/login` request, which will return the session ID. Each request sent during the duration of the session must then contain the session ID in its `Authorization` header. The session is terminated when `/logout` is called or when the session times out (TODO: indicate session timeout delay).
+Access to admin methods is managed by sessions. To create a session, you must successfully authenticate with a `/login` request, which will return the session ID. Each request sent during the duration of the session must then contain the session ID in its `Authorization` header. The session is terminated when `/logout` is called or when the session times out (TODO: indicate session timeout delay).
 
 
 ### Common HTTP headers
 
-* `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
+- `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
 
 
 ### Common error codes
 
 TODO: review and complete
 
-* 400 (bad request), id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
-* 401 (unauthorized), id `INVALID_CREDENTIALS`: User credentials are missing or invalid.
-* 404 (not found), possible cases:
-	* Id `UNKNOWN_TOKEN`: The data access token can't be found.
-	* Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
+- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
+- 401 (unauthorized), id `INVALID_CREDENTIALS`: User credentials are missing or invalid.
+- 404 (not found), possible cases:
+	- Id `UNKNOWN_TOKEN`: The data access token can't be found.
+	- Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
 
 
 
-### Session management
+### <a id="activity-admin-session"></a>Session management
 
 
 #### POST `/login`
@@ -378,22 +450,22 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 
 ##### Body parameters
 
-* `userName` (string)
-* `password` (string)
+- `userName` (string)
+- `password` (string)
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
-* `sessionID` (string): The newly created session's ID, to include in each subsequent request's `Authorization` header.
+- `sessionID` (string): The newly created session's ID, to include in each subsequent request's `Authorization` header.
 
 
 #### POST `/logout`
 
 Terminates the admin session.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 
-### User information
+### <a id="activity-admin-user"></a>User information
 
 
 #### GET `/user-info`
@@ -401,7 +473,7 @@ Terminates the admin session.
 TODO: get user informations
 Requires session token.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 TODO: email, display name, language, ...
 
@@ -421,7 +493,7 @@ Requires session token, old password, new password.
 TODO: `WRONG_PASSWORD`, `INVALID_NEW_PASSWORD`
 
 
-### Channels
+### <a id="activity-admin-channels"></a>Channels
 
 TODO: introductory text.
 
@@ -432,9 +504,9 @@ Gets activity channels.
 
 ##### Query string parameters
 
-* `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 An array of [activity channels](#data-types-channel)) containing all channels in the user's account matching the specified state, ordered by name.
 
@@ -447,9 +519,9 @@ Creates a new activity channel.
 
 The new channel's data: see [activity channel](#data-types-channel).
 
-##### Successful response: 201
+##### Successful response: `201 Created`
 
-* `id` ([identity](#data-types-identity)): The created channel's id.
+- `id` ([identity](#data-types-identity)): The created channel's id.
 
 
 #### PUT `/channels/{channel-id}`
@@ -468,10 +540,10 @@ Trashes or deletes the given channel, depending on its current state:
 - If the channel is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
 - If the channel is already in the trash, it will be irreversibly deleted with all the folders and events it contains.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 
-### Tokens
+### <a id="activity-admin-tokens"></a>Tokens
 
 TODO: introductory text
 
@@ -487,7 +559,7 @@ Response: token string
 
 Gets access tokens.
 
-##### Successful response: 200
+##### Successful response: `200 OK`
 
 An array of [access tokens](#data-types-token) containing all access tokens in the user's account, ordered by name.
 
