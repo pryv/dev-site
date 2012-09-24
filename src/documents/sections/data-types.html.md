@@ -144,11 +144,13 @@ Fields:
 - `duration`: Optional. If present, indicates that the event is a period event. Running period events have a duration set to `undefined`.
 - `value`: (json structure) Optional - A processable and recognizable typed value. This may be a mathematical value (mass, duration, money, length, position, .. ) ex: [www.qudt.org](http://www.qudt.org/), but also a picture or or file. There is a special document about the kind of value: project/value-type.md
 - `comment` (string): Optional. User comment or note for the event.
-- `attachments`: Optional. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
+- `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
 	- `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
 	- `type` (string): The MIME type of the file.
 	- `size` (number): The size of the file, in bytes.
 - `clientData` ([additional item data](#data-types-additional-data)):  Optional. Additional client data for the event.
+- `trashed` (boolean): Optional. `true` if the event is in the trash.
+- `modified` ([timestamp](#data-types-timestamp)): Read-only. The time the event was last modified.
 
 *Technical note:* Why the _duration_ is not set in the _value_ part of the event?
 Because activties events needs a fast processing of durations and intervals, duration is a field that can be trusted (ie with no customisation possible). La logique métier a besoin de la duréé.

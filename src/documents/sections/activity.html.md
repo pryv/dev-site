@@ -228,6 +228,7 @@ Queries the list of events.
 - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 - `skip` (number): Optional. The number of items to skip in the results.
 - `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
+- `modifiedSince` ([timestamp](#data-types-timestamp)): Optional. If specified, only events modified since that time will be returned.
 
 ##### Successful response: `200 OK`
 
