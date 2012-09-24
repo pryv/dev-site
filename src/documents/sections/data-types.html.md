@@ -69,7 +69,7 @@ A data access token defines how a user's activity data (channels, folders and ev
 
 Fields:
 
-- `id` (string): Unique. The system-generated identifier that is actually used in requests accessing activity data.
+- `id` (string): Unique, read-only. The server-assigned identifier for the token. This is used to specify the token in requests with token authorization.
 - `name` (string): Unique. The name identifying the token for the user. It can be the client application's name for automatically generated personal tokens, or any user-defined value for manually created tokens.
 - `type` (`personal` or `shared`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`.
 - `permissions`: an array of channel permission objects as described below. Ignored for personal tokens. Shared tokens are only granted access to activity data objects listed in here.
@@ -84,11 +84,12 @@ Fields:
 Each activity channel represents a "stream" or "type" of activity to track.
 Fields:
 
-- `id` ([identity](#data-types-identity))
-- `name` (string): A unique name identifying the channel for users.
-- `strictMode` (boolean): If `true`, the system will ensure that timed events in this channel never overlap; if `false`, overlapping will be allowed. TODO: I [SGO] suggest we only implement strict mode for a start.
-- `clientData` ([item additional data](#data-types-additional-data)): Additional client data for the channel.
-- `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying channels, indicating the total time tracked in that channel since a given reference date and time.
+- `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the channel.
+- `name` (string): Unique. The name identifying the channel for users.
+- `strictMode` (boolean): Optional. If `true`, the system will ensure that timed events in this channel never overlap; if `false`, overlapping will be allowed. **This will be implemented later: currently all channels are considered "strict".**
+- `clientData` ([item additional data](#data-types-additional-data)): Optional. Additional client data for the channel.
+- `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying channels, indicating the total time tracked in that channel since a given reference date and time. **This will be implemented later.**
+- `trashed` (boolean): Optional. `true` if the channel is in the trash.
 
 TODO: example
 
@@ -99,12 +100,13 @@ Activity folders are the possible states or categories you track the channel's a
 
 Fields:
 
-* `id` ([identity](#data-types-identity)): Read-only. The server-assigned identifier for the folder.
-* `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
-* `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
-* `clientData` ([item additional data](#data-types-additional-data)):  Optional. Additional client data for the folder.
-* `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time.
-* `children` (array of activity folders): Optional and read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created one by one by design.
+- `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the folder.
+- `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
+- `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
+- `clientData` ([item additional data](#data-types-additional-data)):  Optional. Additional client data for the folder.
+- `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time. **This will be implemented later.**
+- `children` (array of activity folders): Read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created individually by design.
+- `trashed` (boolean): Optional. `true` if the folder is in the trash.
 
 #### Example of channel & folders for activities
 
@@ -128,21 +130,21 @@ Fields:
 
 Activity events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
 
-* Period events are used to track everything with a duration, like time spent drafting a project proposal, meeting with the customer or staying at a particular location.
-* Mark events are used to track everything else, like a note, a log message, a GPS location, a temperature measurement, or a stock market asset value.
+- Period events are used to track everything with a duration, like time spent drafting a project proposal, meeting with the customer or staying at a particular location.
+- Mark events are used to track everything else, like a note, a log message, a GPS location, a temperature measurement, or a stock market asset value.
 
 Differentiating them is simple: period events carry a duration, while mark events do not. Like folders, events always belong to an activity channel.
 
 Fields:
 
-- `id` ([identity](#data-types-identity)): Read-only. The server-assigned identifier for the event.
-- `time` ([timestamp](#data-types-timestamp)): The event's time. (When it happend or started)
-- `clientId` (string): A client-assigned identifier for the event when created offline, for temporary reference. Only used in batch event creation requests (TODO: link).
-- `folderId`([identity](#data-types-identity)):
-	* For period events: The value must be a valid folder's id. TODO: really???
-	* For mark events: Optional. Indicates the particular folder the event is associated with, if any.
-- `duration`: Optional. If present, indicates that the event is a period event. Running period events have a duration set to `undefined`.
-- `value`: (json structure) Optional - A processable and recognizable typed value. This may be a mathematical value (mass, duration, money, length, position, .. ) ex: [www.qudt.org](http://www.qudt.org/), but also a picture or or file. There is a special document about the kind of value: project/value-type.md
+- `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the event.
+- `time` ([timestamp](#data-types-timestamp)): The event's time. For period events, this is the time the event started.
+- `clientId` (string): A client-assigned identifier for the event when created offline, for temporary reference. Only used in batch event creation requests. [TODO: currently not implemented; linked to batch creation request.]
+- `folderId`([identity](#data-types-identity)): Optional. Indicates the particular folder the event is associated with, if any.
+- `duration` ([timestamp](#data-types-timestamp) difference): Optional. If present, indicates that the event is a period event. Running period events have a duration set to `null`. (We use a dedicated field for duration - instead of using the `value` field - as we need specific processing of event durations, intervals and overlapping.)
+- `value` (object): Optional. The value associated with the event, if any. This may be a mathematical value (e.g. mass, money, length, position, etc.), or a link to a page, a picture or an attached file. To facilitate interoperability, event values are expected to have the following structure:
+	- `type` (TODO: value type): The value's type in the form `{type}:{unit}`, for example `mass:kg`. [TODO: link to the value types directory when ready.]
+	- `value` (boolean, number, string or `null`): The actual value in the specified type.
 - `comment` (string): Optional. User comment or note for the event.
 - `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
 	- `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
@@ -151,9 +153,6 @@ Fields:
 - `clientData` ([additional item data](#data-types-additional-data)):  Optional. Additional client data for the event.
 - `trashed` (boolean): Optional. `true` if the event is in the trash.
 - `modified` ([timestamp](#data-types-timestamp)): Read-only. The time the event was last modified.
-
-*Technical note:* Why the _duration_ is not set in the _value_ part of the event?
-Because activties events needs a fast processing of durations and intervals, duration is a field that can be trusted (ie with no customisation possible). La logique métier a besoin de la duréé.
 
 ### exemples
 TODO: this set of data is absolutly NOT inline with the def: review an complete the
@@ -240,10 +239,11 @@ TODO: decide depending on the choosen database. The best would be to keep human 
 
 A floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not matter.
 
-Examples:
+Here are some examples of getting a valid timestamp in various environments:
 
-- PHP -> microtime()
-- ...
+- JavaScript: `Date.now() / 1000`
+- PHP (5+): `microtime(true)`
+- TODO: more examples
 
 
 ### <a id="data-types-language-code"></a>Two-letter ISO language code
