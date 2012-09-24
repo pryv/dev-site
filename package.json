@@ -1,6 +1,7 @@
 {
   "name": "pryv-api-doc",
   "version": "0.1.0",
+  "private": true,
   "description": "",
   "homepage": "api.pryv.com",
   "keywords": [

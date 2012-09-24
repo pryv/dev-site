@@ -33,7 +33,7 @@ Host: {user-name}.pryv.io
 Authorization: {token}
 ```
 
-Note that the [activity](#activity) service also supports calling API methods via [Socket.IO](http://socket.io).
+Note that the [activity](#activity) service also supports [calling API methods via Socket.IO](#activity-activity-socketio).
 
 
 ## Data format

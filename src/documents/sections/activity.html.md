@@ -8,9 +8,9 @@ sectionOrder: 2
 TODO: introductory text
 
 
-### Socket.IO support
+### <a id="activity-activity-socketio"></a>Socket.IO support
 
-The activity service supports real-time interaction with Socket.IO, both by accepting equivalent messages for all API methods and by emitting data change notification messages.
+The activity service supports real-time interaction with [Socket.IO](http://socket.io), both by accepting equivalent messages for most API methods and by emitting data change notification messages. (Code examples below are in Javascript.)
 
 
 #### Calling API methods
