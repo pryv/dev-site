@@ -549,27 +549,33 @@ Trashes or deletes the given channel, depending on its current state:
 TODO: introductory text
 
 
-#### GET `/tokens/{name}` TODO: change to POST request (we potentially create data)
+#### POST `/tokens/get-mine`
 
-TODO: review this (it is very bad to create data with a GET request unless explicity named): get or create a token associated with a client; based on client key (name), a new token is created or key is retrieved
-Requires session token, client info (optional, used only if a token is created)
-Response: token string
+Gets the identifier of the personal token your app should use when accessing the user's data on her behalf. The token is retrieved or created if it is the first time your app requests it.
+
+##### Body parameters
+
+- `applicationId` (string): A URL-friendly name uniquely identifying your app. The name you provide is always slugified before use (see [how](https://github.com/dodo/node-slug/blob/master/src/slug.coffee) - CoffeeScript code).
+
+##### Successful response: `200 OK`
+
+- `id` ([identity](#data-types-identity)): Your app's dedicated personal [token](#data-types-token) identifier.
 
 
 #### GET `/tokens`
 
-Gets access tokens.
+Gets all accessible access tokens, which are the shared tokens. (Your private app token identifier is retrieved with `POST /tokens/get-mine`.)
 
 ##### Successful response: `200 OK`
 
-An array of [access tokens](#data-types-token) containing all access tokens in the user's account, ordered by name.
+An array of [access tokens](#data-types-token) containing all accessible access tokens in the user's account, ordered by name.
 
 
 #### PUT `/tokens/{token-id}`
 
-TODO
+Modifies the specified shared token. TODO.
 
 
 #### DELETE `/tokens/{token-id}`
 
-TODO
+Deletes the specified shared token. TODO.
