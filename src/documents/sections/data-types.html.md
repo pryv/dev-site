@@ -105,7 +105,7 @@ Fields:
 - `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
 - `clientData` ([item additional data](#data-types-additional-data)):  Optional. Additional client data for the folder.
 - `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time. **This will be implemented later.**
-- `children` (array of activity folders): Read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created individually by design.
+- `children` (array of folders): Read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created individually by design.
 - `trashed` (boolean): Optional. `true` if the folder is in the trash.
 
 #### Example of channel & folders for activities
@@ -237,7 +237,7 @@ TODO: decide depending on the choosen database. The best would be to keep human 
 
 ### <a id="data-types-timestamp"></a>Timestamp
 
-A floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not matter.
+A positive floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not matter.
 
 Here are some examples of getting a valid timestamp in various environments:
 

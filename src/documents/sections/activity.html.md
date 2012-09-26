@@ -422,7 +422,14 @@ But the protocol also supports `https://xyz.pryv.net/ressource_path?userName=use
 
 ### Authorization
 
-Access to admin methods is managed by sessions. To create a session, you must successfully authenticate with a `/login` request, which will return the session ID. Each request sent during the duration of the session must then contain the session ID in its `Authorization` header. The session is terminated when `/logout` is called or when the session times out (TODO: indicate session timeout delay).
+Access to admin methods is managed by sessions. To create a session, you must successfully authenticate with a `/admin/login` request, which will return the session ID. Each request sent during the duration of the session must then contain the session ID in its `Authorization` header. The session is terminated when `/admin/logout` is called or when the session times out (TODO: indicate session timeout delay).
+
+Here's what an admin request (with a session open) looks like:
+```http
+GET /admin/channels HTTP/1.1
+Host: cassis.pryv.io
+Authorization: {session-id}
+```
 
 
 ### Common HTTP headers
@@ -445,7 +452,7 @@ TODO: review and complete
 ### <a id="activity-admin-session"></a>Session management
 
 
-#### POST `/login`
+#### POST `/admin/login`
 
 Opens a new admin session, authenticating with the provided credentials. TODO: possible support for OAuth/OpenID/BrowserID (for now, only local credentials are supported).
 
@@ -459,7 +466,7 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 - `sessionID` (string): The newly created session's ID, to include in each subsequent request's `Authorization` header.
 
 
-#### POST `/logout`
+#### POST `/admin/logout`
 
 Terminates the admin session.
 
@@ -469,7 +476,7 @@ Terminates the admin session.
 ### <a id="activity-admin-user"></a>User information
 
 
-#### GET `/user-info`
+#### GET `/admin/user-info`
 
 TODO: get user informations
 Requires session token.
@@ -479,12 +486,12 @@ Requires session token.
 TODO: email, display name, language, ...
 
 
-#### PUT `/user-info`
+#### PUT `/admin/user-info`
 
 TODO: change user information
 
 
-#### POST `/change-password`
+#### POST `/admin/change-password`
 
 TODO: change user password
 Requires session token, old password, new password.
@@ -499,7 +506,7 @@ TODO: `WRONG_PASSWORD`, `INVALID_NEW_PASSWORD`
 TODO: introductory text.
 
 
-#### GET `/channels`
+#### GET `/admin/channels`
 
 Gets activity channels.
 
@@ -512,7 +519,7 @@ Gets activity channels.
 An array of [activity channels](#data-types-channel)) containing all channels in the user's account matching the specified state, ordered by name.
 
 
-#### POST `/channels`
+#### POST `/admin/channels`
 
 Creates a new activity channel.
 
@@ -525,7 +532,7 @@ The new channel's data: see [activity channel](#data-types-channel).
 - `id` ([identity](#data-types-identity)): The created channel's id.
 
 
-#### PUT `/channels/{channel-id}`
+#### PUT `/admin/channels/{channel-id}`
 
 Modifies the activity channel's attributes.
 
@@ -533,8 +540,10 @@ Modifies the activity channel's attributes.
 
 New values for the channel's fields: see [activity channel](#data-types-channel). All fields are optional, and only modified values must be included. TODO: example
 
+##### Successful response: `200 OK`
 
-#### DELETE `/channels/{channel-id}`
+
+#### DELETE `/admin/channels/{channel-id}`
 
 Trashes or deletes the given channel, depending on its current state:
 
@@ -549,9 +558,9 @@ Trashes or deletes the given channel, depending on its current state:
 TODO: introductory text
 
 
-#### POST `/tokens/get-mine`
+#### POST `/admin/get-my-token`
 
-Gets the identifier of the personal token your app should use when accessing the user's data on her behalf. The token is retrieved or created if it is the first time your app requests it.
+Gets the identifier of the personal token your app should use when accessing the user's data on her behalf. The token is created if it is the first time your app requests it.
 
 ##### Body parameters
 
@@ -562,20 +571,20 @@ Gets the identifier of the personal token your app should use when accessing the
 - `id` ([identity](#data-types-identity)): Your app's dedicated personal [token](#data-types-token) identifier.
 
 
-#### GET `/tokens`
+#### GET `/admin/tokens`
 
-Gets all accessible access tokens, which are the shared tokens. (Your private app token identifier is retrieved with `POST /tokens/get-mine`.)
+Gets all accessible access tokens, which are the shared tokens. (Your private app token identifier is retrieved with `POST /admin/get-my-token`.)
 
 ##### Successful response: `200 OK`
 
 An array of [access tokens](#data-types-token) containing all accessible access tokens in the user's account, ordered by name.
 
 
-#### PUT `/tokens/{token-id}`
+#### PUT `/admin/tokens/{token-id}`
 
 Modifies the specified shared token. TODO.
 
 
-#### DELETE `/tokens/{token-id}`
+#### DELETE `/admin/tokens/{token-id}`
 
 Deletes the specified shared token. TODO.
