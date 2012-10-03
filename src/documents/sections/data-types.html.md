@@ -81,6 +81,8 @@ Fields:
 
 ## <a id="data-types-channel"></a>Channel
 
+A channel is a Bucket where event are stored "flat".
+
 Each activity channel represents a "stream" or "type" of activity to track.
 Fields:
 
