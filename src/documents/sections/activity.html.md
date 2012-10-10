@@ -105,18 +105,15 @@ An array of [activity channels](#data-types-channel) containing the channels acc
 Methods to retrieve and manipulate [folders](#data-types-folder).
 
 
-#### GET `/{channel-id}/folders[/{parent-folder-id}]`
+#### GET `/{channel-id}/folders`
 
 *Socket.IO command id: `{channel-id}.folders.get`*
 
-Gets the folders accessible with the given token, either from the root level or only descending from the specified parent folder.
-
-##### Specific path parameters
-
-- `id` ([identity](#data-types-identity)): The id of the parent folder to use as root for the request, or nothing to return all accessible folders from the root level.
+Gets the folders accessible with the given token, either from the root level or only descending from a specified parent folder.
 
 ##### Query string parameters
 
+- `parentId` ([identity](#data-types-identity)): The id of the parent folder to use as root for the request, or nothing to return all accessible folders from the root level.
 - `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
 - `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
 - `timeCountBase` ([timestamp](#data-types-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-types-folder)); otherwise no time count values will be returned.
@@ -128,15 +125,11 @@ An array of [activity folders](#data-types-folder) containing the tree of the fo
 TODO: example (with and without time accounting)
 
 
-#### POST `/{channel-id}/folders[/{parent-folder-id}]`
+#### POST `/{channel-id}/folders`
 
 *Socket.IO command id: `{channel-id}.folders.create`*
 
 Creates a new folder at the root level or as a child folder to the specified folder.
-
-##### Specific path parameters
-
-- `parentId` ([identity](#data-types-identity)): Optional. The id of the parent folder, if any. If not specified, the new folder will be created at the root of the folders tree structure.
 
 ##### Body parameters
 
@@ -162,23 +155,6 @@ Modifies the activity folder's attributes.
 New values for the folder's fields: see [activity folder](#data-types-folder). All fields are optional, and only modified values must be included.
 
 TODO: example
-
-##### Successful response: `200 OK`
-
-##### Specific errors
-
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
-
-
-#### POST `/{channel-id}/folders/{folder-id}/move`
-
-*Socket.IO command id: `{channel-id}.folders.update`* [TODO: review after possible changes to API regarding folders tree structure]
-
-Relocates the activity folder in the folders tree structure.
-
-##### Body parameters
-
-- `parentId` ([identity](#data-types-identity)): The id of the folder's new parent, or `null` if the folder should be moved at the root of the folders tree.
 
 ##### Successful response: `200 OK`
 

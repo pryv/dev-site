@@ -81,9 +81,7 @@ Fields:
 
 ## <a id="data-types-channel"></a>Channel
 
-A channel is a Bucket where event are stored "flat".
-
-Each activity channel represents a "stream" or "type" of activity to track.
+Each activity channel represents a "stream" or "type" of activity to track, acting as a storage bucket for related events.
 Fields:
 
 - `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the channel.
@@ -104,6 +102,7 @@ Fields:
 
 - `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the folder.
 - `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
+- `parentId` ([identity](#data-types-identity)): Optional. The identifier of the folder's parent, if any. A value of `null` indicates that the folder has no parent (i.e. root folder).
 - `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
 - `clientData` ([item additional data](#data-types-additional-data)):  Optional. Additional client data for the folder.
 - `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time. **This will be implemented later.**
