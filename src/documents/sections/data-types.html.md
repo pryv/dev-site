@@ -1,77 +1,22 @@
 ---
 sectionId: data-types
-sectionOrder: 4
+sectionOrder: 5
 ---
 
 # Data types
 
-TODO: review the entire chapter
+TODO: introductory text.
 
-
-## Overview
-
-- A **channel** is an independant set of values to record. For example all the thoughts, diary and social activities (fb, twitter,... ) will be saved in the same channel.
-- **folders** are the way such value are organized in the channel, like folders and files. From the previous example the channel could be named **Notes**:
-*This organisation will vary depending on every user customisation.*
-
-		Notes (channel)
-		  |- Diary
-		  |  |- My Life <- One, will note everything that happen in his life
-		  |  |- Thought <- Texts and Voice recording from various *thoughts*
-		  |
-		  |- Social activities
-		  	 |- Facebook  <- Automatically grabbed by facebookApp
-		  	 |- Twitter <- Copy of the all tweets
-
-- **Tags** (not yet fully implemented) are made to classify events into subtypes. Useful for filtering events in a channel.
-
-	Exemple:
-  - for Notes a classification such as *Essentials*, *Important* could be used to the filter all the Notes.
-  - for Activities tags such as *Prospection*, *Meeting*, *Developpement* and *Support* will help summing all the time spent for propspection in all projects.
-
-
-- **Events** are the atomic representation of an event, a thought, a position.
- They are associated with a folder and may be tagged for filtering.
-
-#### How the folder hierarchy works
-
-A developer can create an app and decide where (in the folder hierarchy) the user events created through this app will be saved.
-
-A developer can create a new channel and new folders within the channel if he wants, but the basic idea is to reuse the existing hierarchy if possible. For instance, if a developer creates an app to save pictures, there may already be a channel called « pictures ». The developer could simply create a folder inside the channel « pictures » or directly save the events inside the channel itself.
-
-If several developers decide to save their user events in the same folder, each developer will have access to the content of this folder even if it was input through a different app.
-
-### Sharing is made by token
-Sharing is done on a per-folder basis.
-An authorization token is created and correspond to a set of folders in a unique channel.
-For exemple, user: *username* creates the authorization token *XZV6* that matches the share of folders: **A and B**. Tokens are _read and write_ or _read only_ .
-
-http://username.pryv.io/events?token=XZV6 will give an access to all events within folders A,a,b,B and e.
-
-	- Channel 1
-	  |- A
-	  |  |- a
-	  |  |- b
-	  |
-	  |- B
-	  |  |- e
-	  |
-	  |- C
-	     |- f
-	     |- g
-
-__Note: When *Slice of life* will be implemented__
-Then, we will be able to add a time frame to a set of folders, this will add the needed granularity.
 
 ## <a id="data-types-token"></a>Token
 
-A data access token defines how a user's activity data (channels, folders and events) is accessed. Personal access tokens are transparently generated (provided the user's credentials) by the [Admin module](/Admin) when requested by client applications, but users can define additional tokens for letting other users view and possibly contribute to their account's activity data.
+A data access token defines how a user's activity data (channels, folders and events) is accessed. Personal access tokens are transparently generated (provided the user's credentials) in the [administration](#admin) when requested by client applications, but users can define additional tokens for letting other users view and possibly contribute to their activity data.
 
 Fields:
 
 - `id` (string): Unique, read-only. The server-assigned identifier for the token. This is used to specify the token in requests with token authorization.
 - `name` (string): Unique. The name identifying the token for the user. It can be the client application's name for automatically generated personal tokens, or any user-defined value for manually created tokens.
-- `type` (`personal` or `shared`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`.
+- `type` (`personal` or `shared`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`. Note that personal tokens are not open for viewing and management by third party apps by default - if you need to manage personal tokens, please get in touch with us (TODO: link).
 - `permissions`: an array of channel permission objects as described below. Ignored for personal tokens. Shared tokens are only granted access to activity data objects listed in here.
 	- `channelId` ([identity](#data-types-identity)): The accessible channel's id.
 	- `folderPermissions`: an array of folder permission objects:

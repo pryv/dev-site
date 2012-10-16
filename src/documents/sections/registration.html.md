@@ -1,6 +1,6 @@
 ---
 sectionId: registration
-sectionOrder: 3
+# commented out to exclude registration from the default doc: sectionOrder: 3
 ---
 
 # Registration service
