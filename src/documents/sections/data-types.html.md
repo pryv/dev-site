@@ -16,7 +16,7 @@ Fields:
 
 - `id` (string): Unique, read-only. The server-assigned identifier for the token. This is used to specify the token in requests with token authorization.
 - `name` (string): Unique. The name identifying the token for the user. It can be the client application's name for automatically generated personal tokens, or any user-defined value for manually created tokens.
-- `type` (`"personal"` or `"shared"`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`. Note that personal tokens are not open for viewing and management by third party apps by default - if you need to manage personal tokens, please get in touch with us (TODO: link).
+- `type` (`"personal"` or `"shared"`): Optional. Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`. Default: `"shared"`. Note that personal tokens are not open for viewing and management by third party apps by default - if you need to manage personal tokens, please get in touch with us (TODO: link).
 - `permissions`: an array of channel permission objects as described below. Ignored for personal tokens. Shared tokens are only granted access to activity data objects listed in here.
 	- `channelId` ([identity](#data-types-identity)): The accessible channel's id.
 	- `folderPermissions`: an array of folder permission objects:
