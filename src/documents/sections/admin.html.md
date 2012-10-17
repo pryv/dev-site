@@ -114,14 +114,35 @@ Gets all accessible access tokens, which are the shared tokens. (Your private ap
 An array of [access tokens](#data-types-token) containing all accessible access tokens in the user's account, ordered by name.
 
 
+### POST `/admin/tokens`
+
+Creates a new shared access token.
+
+#### Body parameters
+
+The new token's data: see [access token](#data-types-token).
+
+#### Successful response: `201 Created`
+
+- `id` ([identity](#data-types-identity)): The created token's id.
+
+
 ### PUT `/admin/tokens/{token-id}`
 
-Modifies the specified shared token. TODO.
+Modifies the specified shared token.
+
+#### Body parameters
+
+New values for the token's fields: see [access token](#data-types-token). All fields are optional, and only modified values must be included. TODO: example
+
+#### Successful response: `200 OK`
 
 
 ### DELETE `/admin/tokens/{token-id}`
 
-Deletes the specified shared token. TODO.
+Deletes the specified shared token.
+
+#### Successful response: `200 OK`
 
 
 ## <a id="admin-channels"></a>Channels
