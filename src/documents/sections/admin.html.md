@@ -48,6 +48,8 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 
 - `userName` (string)
 - `password` (string)
+- `appId` (string): A URL-friendly name uniquely identifying your app. The value you provide is in any case slugified before use (see [how](https://github.com/dodo/node-slug/blob/master/src/slug.coffee)).
+
 
 #### Successful response: `200 OK`
 
@@ -87,6 +89,39 @@ Requires session token, old password, new password.
 #### Specific errors
 
 TODO: `WRONG_PASSWORD`, `INVALID_NEW_PASSWORD`
+
+
+## <a id="admin-tokens"></a>Tokens
+
+TODO: introductory text
+
+
+### POST `/admin/get-my-token`
+
+Gets the identifier of the personal token your app should use when accessing the user's data on her behalf. The token is created if it is the first time your app requests it.
+
+#### Successful response: `200 OK`
+
+- `id` ([identity](#data-types-identity)): Your app's dedicated personal [token](#data-types-token) identifier.
+
+
+### GET `/admin/tokens`
+
+Gets all accessible access tokens, which are the shared tokens. (Your private app token identifier is retrieved with `POST /admin/get-my-token`.)
+
+#### Successful response: `200 OK`
+
+An array of [access tokens](#data-types-token) containing all accessible access tokens in the user's account, ordered by name.
+
+
+### PUT `/admin/tokens/{token-id}`
+
+Modifies the specified shared token. TODO.
+
+
+### DELETE `/admin/tokens/{token-id}`
+
+Deletes the specified shared token. TODO.
 
 
 ## <a id="admin-channels"></a>Channels
@@ -139,40 +174,3 @@ Trashes or deletes the given channel, depending on its current state:
 - If the channel is already in the trash, it will be irreversibly deleted with all the folders and events it contains.
 
 #### Successful response: `200 OK`
-
-
-## <a id="admin-tokens"></a>Tokens
-
-TODO: introductory text
-
-
-### POST `/admin/get-my-token`
-
-Gets the identifier of the personal token your app should use when accessing the user's data on her behalf. The token is created if it is the first time your app requests it.
-
-#### Body parameters
-
-- `applicationId` (string): A URL-friendly name uniquely identifying your app. The name you provide is always slugified before use (see [how](https://github.com/dodo/node-slug/blob/master/src/slug.coffee) - CoffeeScript code).
-
-#### Successful response: `200 OK`
-
-- `id` ([identity](#data-types-identity)): Your app's dedicated personal [token](#data-types-token) identifier.
-
-
-### GET `/admin/tokens`
-
-Gets all accessible access tokens, which are the shared tokens. (Your private app token identifier is retrieved with `POST /admin/get-my-token`.)
-
-#### Successful response: `200 OK`
-
-An array of [access tokens](#data-types-token) containing all accessible access tokens in the user's account, ordered by name.
-
-
-### PUT `/admin/tokens/{token-id}`
-
-Modifies the specified shared token. TODO.
-
-
-### DELETE `/admin/tokens/{token-id}`
-
-Deletes the specified shared token. TODO.
