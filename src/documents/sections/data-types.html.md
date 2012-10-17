@@ -16,12 +16,14 @@ Fields:
 
 - `id` (string): Unique, read-only. The server-assigned identifier for the token. This is used to specify the token in requests with token authorization.
 - `name` (string): Unique. The name identifying the token for the user. It can be the client application's name for automatically generated personal tokens, or any user-defined value for manually created tokens.
-- `type` (`personal` or `shared`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`. Note that personal tokens are not open for viewing and management by third party apps by default - if you need to manage personal tokens, please get in touch with us (TODO: link).
+- `type` (`"personal"` or `"shared"`): Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`. Note that personal tokens are not open for viewing and management by third party apps by default - if you need to manage personal tokens, please get in touch with us (TODO: link).
 - `permissions`: an array of channel permission objects as described below. Ignored for personal tokens. Shared tokens are only granted access to activity data objects listed in here.
 	- `channelId` ([identity](#data-types-identity)): The accessible channel's id.
 	- `folderPermissions`: an array of folder permission objects:
 		- `folderId` ([identity](#data-types-identity)): The accessible folder's id. A  value of `null` can be used to set permissions for the root of the folders structure. If the folder has child folders, they will be accessible too.
-		- `type` (`read-only`, `events-write` or `manage`): The type of access to the folder's data. With `events-write`, the token's holder can see and record events for the folder (and its child folders, if any); with `manage`, the token's holder can in addition create, modify and delete child folders.
+		- `type` (`"read"`, `"contribute"` or `"manage"`): The type of access to the folder's data. With `"contribute"`, the token's holder can see and record events for the folder (and its child folders, if any); with `"manage"`, the token's holder can in addition create, modify and delete child folders.
+
+TODO: example
 
 
 ## <a id="data-types-channel"></a>Channel
@@ -54,22 +56,32 @@ Fields:
 - `children` (array of folders): Read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created individually by design.
 - `trashed` (boolean): Optional. `true` if the folder is in the trash.
 
-#### Example of channel & folders for activities
+### Example
 
- 	Activities (channel)
- 		|- Sport
- 		|  |- Jogging <- entered on the mobile phone
- 		|  |- Bicycle
- 		|
- 		|- Jobs
- 			|- SimpleData
- 			|  |- FirstList
- 			|  |- Diagmission
- 			|  |- Pryv'it
- 			|
- 			|- FreeLance
- 			|- Customer A
- 			|- Customer B
+A folder structure for activities:
+
+```javascript
+[
+  { "name": "Sport", "id": "sport", "parentId": null,
+    "children": [
+      { "name": "Jogging", "id": "jogging", "parentId": "sport", "children": [] },
+      { "name": "Bicycling", "id": "bicycling", "parentId": "sport", "children": [] }
+  ]},
+  { "name": "Work", "id": "work", "parentId": null,
+    "children": [
+      { "name": "Noble Works Co.", "id": "noble-works","parentId": "work", "children": [
+          { "name": "Last Be First", "id": "last-be-first","parentId": "noble-works", "children": [] },
+          { "name": "Big Tree", "id": "big-tree","parentId": "noble-works", "children": [] },
+          { "name": "Inner Light", "id": "inner-light","parentId": "noble-works", "children": [] }
+      ]},
+      { "name": "Freelancing", "id": "freelancing","parentId": "work", "children": [
+          { "name": "Funky Veggies", "id": "funky-veggies","parentId": "freelancing", "children": [] },
+          { "name": "Jojo Lapin & sons", "id": "jojo-lapin","parentId": "freelancing", "children": [] }
+      ]}
+    ]
+  }
+];
+```
 
 
 ## <a id="data-types-event"></a>Event
@@ -100,54 +112,25 @@ Fields:
 - `trashed` (boolean): Optional. `true` if the event is in the trash.
 - `modified` ([timestamp](#data-types-timestamp)): Read-only. The time the event was last modified.
 
-### exemples
-TODO: this set of data is absolutly NOT inline with the def: review an complete the
+### Example
 
-#### A set of events for the -Activities- channel**
- 		- 12.06.2012 17:12:30 - folder:Pryv'it
- 							  - tag: setup
- 							  - duration: 17:00:00
- 							  - value:
- 							  - comment: phonecall Frederic
- 							  - data:
+TODO: review after tags are implemented.
 
-		- 13.06.2012 09:00:00 - folder: FirstList
-							  - tag: prospection
-					          - duration: 4:00:00
-					          - value:
-					          - comment: went to Lyon for a meeting
-			                  - data:
+```javascript
+[
+  { "time" : 1350365877.359, "comment" : "Some pics", "id" : "event_0", "folderId" : null,
+    "attachments" : {
+      "Gina" : { "fileName" : "gina.jpeg", "type" : "image/jpeg", "size" : 1236701 },
+      "Enzo" : { "fileName" : "enzo.jpeg", "type" : "image/jpeg", "size" : 1127465 }},
+      "modified" : 1350463077.359 },
+  { "time" : 1350369477.359, "duration" : 7140, "comment": "A period of work",
+    "id" : "event_1", "folderId" : "free-veggies", "modified" : 1350369477.359 },
+  { "time" : 1350373077.359, "comment" : "A position", "id" : "event_2", "folderId" : null,
+    "value": { "type": "position:WGS84", "value": "40.714728, -73.998672, 12" },
+    "modified" : 1350373077.359 }
+]
+```
 
- 		- 13.06.2012 09:32:00 - folder: FirstList
- 							  - tag: prospection, expense report
- 							  - duration: 0
- 							  - value: money:CHF:68.90
- 							  - comment: fuel on the way to Lyon
- 							  - data: picture:ABDGVHGSH126.jpg
- 							  		type: receipt
-
-#### A set of events for the -Notes- channel**
-
-		- 12.06.2012 17:12:30 - folder:Thought
-							  - tag:
-							  - duration: 0
-							  - value:
-							  - comment: To be, or not to be; that is the question;
-							  - data:
-
-		- 13.06.2012 09:00:00 - folder: Facebook
-							  - tag: important
-							  - duration: 0
-							  - value: 0
-							  - comment: went to the pool with friend
-							  - data: <DATA EXTRACTED FROM FB TIMELINE>
-
-		- 13.06.2012 09:32:00 - folder: Twitter
-						      - tag:
-						      - duration: 0
-						      - value:
-						      - comment: @recla how are you doing guys?
-						      - data: author:johndoe
 
 ## <a id="data-types-additional-data"></a>Item additional data
 
