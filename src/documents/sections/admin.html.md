@@ -145,6 +145,51 @@ Deletes the specified shared token.
 #### Successful response: `200 OK`
 
 
+## <a id="admin-bookmarks"></a>Bookmarks
+
+TODO: introductory text
+
+
+### GET `/admin/bookmarks`
+
+Gets all of the user's sharing bookmarks.
+
+#### Successful response: `200 OK`
+
+An array of [bookmarks](#data-types-bookmark) containing all sharing bookmarks in the user's account, ordered by name.
+
+
+### POST `/admin/bookmarks`
+
+Creates a new sharing bookmark.
+
+#### Body parameters
+
+The new bookmark's data: see [bookmark](#data-types-bookmark).
+
+#### Successful response: `201 Created`
+
+- `id` ([identity](#data-types-identity)): The created bookmark's id.
+
+
+### PUT `/admin/bookmarks/{bookmark-id}`
+
+Modifies the specified sharing bookmark.
+
+#### Body parameters
+
+New values for the bookmark's fields: see [bookmark](#data-types-bookmark). All fields are optional, and only modified values must be included. TODO: example
+
+#### Successful response: `200 OK`
+
+
+### DELETE `/admin/bookmarks/{bookmark-id}`
+
+Deletes the specified sharing bookmark.
+
+#### Successful response: `200 OK`
+
+
 ## <a id="admin-channels"></a>Channels
 
 TODO: introductory text.

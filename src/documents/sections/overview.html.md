@@ -37,12 +37,17 @@ Apps access a user's activity data by presenting the API with a **data access to
 
 A **shared token** grants permissions to a specified set of the user's data: channel(s), and within those channels, folder(s), tag(s) and/or a limited time frame can be defined to filter events. Tokens allow sharing in a variety of ways, such as:
 
-- in-app: the user chooses to share some events with another Pryv user, which is notified and can select to view (and possibly contribute to) the shared data or integrate it with her own
+- in-app: the user chooses to share some events with another Pryv user, which is notified and can select to view (and possibly contribute to) the shared data or integrate it with her own (add it to her sharing bookmarks).
 - URL copy-paste: the user choose to share data with another person (possibly not a Pryv user), and copies the full URL containing the token into an e-mail or chat message. The other person can open the URL and access the web app to view (and possibly contribute to) the shared data.
+
+Users can store tokens shared by other users by adding them to their **sharing bookmarks**.
 
 For the present time, tokens are not personal. They act exactly like digital keys: if you have the token and the name of the user it belongs to, you can access the data it exposes.
 
-For more details see tokens [management](#admin-tokens) and [data structure](#data-types-token).
+For more details see:
+
+- Tokens [management](#admin-tokens) and [data structure](#data-types-token)
+- Bookmarks [management](#admin-bookmarks) and [data structure](#data-types-bookmark)
 
 
 ## What's the URL?

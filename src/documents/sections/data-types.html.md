@@ -26,6 +26,20 @@ Fields:
 TODO: example
 
 
+## <a id="data-types-bookmark"></a>Bookmark
+
+Sharing bookmarks allow the user to store tokens shared with her by other users.
+
+Fields:
+
+- `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the bookmark.
+- `name` (string): Unique. A name identifying the bookmark for the user.
+- `userName` (string): The name of the shared token's owner user. Not modifiable after creation.
+- `tokenId` [identity](#data-types-identity): The identifier of the shared token itself. Not modifiable after creation.
+
+TODO: example
+
+
 ## <a id="data-types-channel"></a>Channel
 
 Each activity channel represents a "stream" or "type" of activity to track, acting as a storage bucket for related events.
