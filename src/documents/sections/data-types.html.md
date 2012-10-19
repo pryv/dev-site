@@ -34,7 +34,7 @@ Fields:
 
 - `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the bookmark.
 - `name` (string): Unique. A name identifying the bookmark for the user.
-- `userName` (string): The name of the shared token's owner user. Not modifiable after creation.
+- `url` (string): The url pointing to the shared token's owning user's server. Not modifiable after creation.
 - `tokenId` [identity](#data-types-identity): The identifier of the shared token itself. Not modifiable after creation.
 
 TODO: example
