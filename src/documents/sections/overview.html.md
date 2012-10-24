@@ -12,8 +12,8 @@ The API is the HTTP programming interface to Pryv, which allows you to integrate
 
 There are two different uses for the API:
 
-- Most apps will want to interact with [Pryv activity data](#activity). Recording and managing of activity data (events and their organization into folders and tags) is protected by [data access tokens](#data-types-token) to allow easy [sharing](#overview-sharing).
-- Some apps may need to access [user account administration](#admin), which includes the management of data sharing (via data access tokens) and activity channels (in addition to the user account itself). Administration is protected by personal authentication and expiring sessions.
+- Most apps will want to interact with [Pryv activity data](#activity). Recording and managing of activity data (events and their organization into folders and tags) is protected by [accesses](#data-types-access) to allow easy [sharing](#overview-sharing).
+- Some apps may need to access [user account administration](#admin), which includes the management of data sharing (via accesses) and activity channels (in addition to the user account itself). Administration is protected by personal authentication and expiring sessions.
 
 [TODO: add simple schema here]
 
@@ -33,20 +33,20 @@ See the standard channels, folders and tags (TODO: link) we encourage you to use
 
 [TODO: schema?]
 
-Apps access a user's activity data by presenting the API with a **data access token** (or just "token" here). A token can be *personal* or *shared*. A personal token is assigned to an app (provided the user's credentials) and used by that app to access the user's data on her behalf (i.e. with full permissions). But end-users don't have to know about personal tokens; end-users care about sharing, which is managed via shared tokens.
+Apps access a user's activity data by presenting the API with an **access token**, that identifies a specific **access** to the data. An access can be *personal* or *shared*. A personal access is assigned to an app (provided the user's credentials) and its token is used by that app to access the user's data on her behalf (i.e. with full permissions). Personal accesses aren't shared, however; sharing is managed via shared accesses.
 
-A **shared token** grants permissions to a specified set of the user's data: channel(s), and within those channels, folder(s), tag(s) and/or a limited time frame can be defined to filter events. Tokens allow sharing in a variety of ways, such as:
+A **shared access** grants permissions to a specified set of the user's data: channel(s), and within those channels, folder(s), tag(s) and/or a limited time frame can be defined to filter events. Accesses allow sharing in a variety of ways, such as:
 
-- in-app: the user chooses to share some events with another Pryv user, which is notified and can select to view (and possibly contribute to) the shared data or integrate it with her own (add it to her sharing bookmarks).
-- URL copy-paste: the user choose to share data with another person (possibly not a Pryv user), and copies the full URL containing the token into an e-mail or chat message. The other person can open the URL and access the web app to view (and possibly contribute to) the shared data.
+- in-app: the user chooses to share some events with another Pryv user, which is notified and can select to view (and possibly contribute to) the shared data and/or integrate it with her own (add it to her sharing bookmarks).
+- URL copy-paste: the user choose to share data with another person (possibly not a Pryv user), and copies the full URL containing the access token into an e-mail or chat message. The other person can open the URL and access the web app to view (and possibly contribute to) the shared data.
 
-Users can store tokens shared by other users by adding them to their **sharing bookmarks**.
+Users can store access tokens shared by other users by adding them to their **sharing bookmarks**.
 
-For the present time, tokens are not personal. They act exactly like digital keys: if you have the token and the name of the user it belongs to, you can access the data it exposes.
+For the present time, accesses are not personal. Access tokens act exactly like digital keys: if you have the token and the name of the user with the access it identifies, you can access the data.
 
 For more details see:
 
-- Tokens [management](#admin-tokens) and [data structure](#data-types-token)
+- Accesses [management](#admin-accesses) and [data structure](#data-types-access)
 - Bookmarks [management](#admin-bookmarks) and [data structure](#data-types-bookmark)
 
 
@@ -68,10 +68,10 @@ Here's an example API request:
 ```http
 GET /{channel-id}/events HTTP/1.1
 Host: {user-name}.pryv.io
-Authorization: {token}
+Authorization: {access-token}
 ```
 
-Note that the API also supports Socket.IO, for both calling API methods and receiving live notifications of changes to activity data. See [our dedicated section](#socketio).
+Note that the API also supports Socket.IO, for both calling API methods and receiving live notifications of changes to activity data. See [the dedicated section](#socketio).
 
 
 ## Data format
@@ -97,7 +97,7 @@ When an error occurs, the API returns a 4xx or 5xx status code, with the respons
 Here's an example "401 Unauthorized" error response:
 ```json
 {
-  "id": "INVALID_TOKEN",
-  "message": "Cannot find token 'bad-token'."
+  "id": "INVALID_ACCESS_TOKEN",
+  "message": "Cannot find access with token 'bad-token'."
 }
 ```

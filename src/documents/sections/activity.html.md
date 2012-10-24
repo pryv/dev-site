@@ -10,13 +10,13 @@ TODO: introductory text
 
 ## Authorization
 
-All requests for retrieving and manipulating activity data must carry a valid [data access token](#data-types-token) in the HTTP `Authorization` header. (You get the token itself either by retrieving it in the [administration](#admin-tokens) or from sharing.)
+All requests for retrieving and manipulating activity data must carry a valid [access token](#data-types-access) in the HTTP `Authorization` header. (You get the token itself either by retrieving it in the [administration](#admin-accesses) or from sharing.)
 
 Here's what a proper request looks like:
 ```http
 GET /{channel-id}/events HTTP/1.1
 Host: yacinthe.pryv.io
-Authorization: {valid-token}
+Authorization: {access-token}
 ```
 
 
@@ -33,8 +33,8 @@ Here are errors commonly returned for requests:
 
 - `400 Bad Request`, id `INVALID_REQUEST_STRUCTURE`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
 - `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
-- `401 Unauthorized`, id `INVALID_TOKEN`: The data access token is missing or invalid.
-- `403 Forbidden`: The given data access token does not grant permission for this operation. See [data access tokens](#data-types-token) for more details about tokens and permissions.
+- `401 Unauthorized`, id `INVALID_ACCESS_TOKEN`: The data access token is missing or invalid.
+- `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-types-access) for more details about accesses and permissions.
 - `404 Not Found`, possible cases:
 	- Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
 	- Id `UNKNOWN_FOLDER`: The activity folder can't be found in the specified channel.
@@ -51,11 +51,11 @@ For retrieving [channels](#data-types-channel). Manipulating channels is done in
 
 *Socket.IO command id: `channels.get`*
 
-Gets the activity channels accessible with the given token (and that are not in the trash).
+Gets the accessible activity channels (excluding those in the trash).
 
 #### Successful response: `200 OK`
 
-An array of [activity channels](#data-types-channel) containing the channels accessible with the given token.
+An array of [activity channels](#data-types-channel) containing the accessible channels.
 
 
 ## Folders
@@ -67,7 +67,7 @@ Methods to retrieve and manipulate [folders](#data-types-folder).
 
 *Socket.IO command id: `{channel-id}.folders.get`*
 
-Gets the folders accessible with the given token, either from the root level or only descending from a specified parent folder.
+Gets the accessible folders, either from the root level or only descending from a specified parent folder.
 
 #### Query string parameters
 
@@ -78,7 +78,7 @@ Gets the folders accessible with the given token, either from the root level or 
 
 #### Successful response: `200 OK`
 
-An array of [activity folders](#data-types-folder) containing the tree of the folders accessible with the given token, sorted by name.
+An array of [activity folders](#data-types-folder) containing the tree of the accessible folders, sorted by name.
 
 TODO: example (with and without time accounting)
 
@@ -151,7 +151,7 @@ Methods to retrieve and manipulate [events](#data-types-event).
 
 *Socket.IO command id: `{channel-id}.events.get`*
 
-Queries the list of events.
+Queries accessible events.
 
 #### Query string parameters
 
@@ -166,7 +166,7 @@ Queries the list of events.
 
 #### Successful response: `200 OK`
 
-An array of [activity events](#data-types-event) containing the events ordered by time (see `sortAscending` below).
+An array of [activity events](#data-types-event) containing the accessible events ordered by time (see `sortAscending` above).
 
 #### Specific errors
 

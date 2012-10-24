@@ -5,7 +5,7 @@ sectionOrder: 3
 
 # Administration methods
 
-Administration methods allow to manage the user's [account information](#admin-user), [activity channels](#admin-channels) and [sharing](#admin-tokens) (via access tokens).
+Administration methods allow to manage the user's [account information](#admin-user), [activity channels](#admin-channels) and [sharing](#admin-accesses) (via accesses).
 
 
 ## Authorization
@@ -25,14 +25,14 @@ Authorization: {session-id}
 - `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
 
 
-## Common error codes
+## Common errors
 
 TODO: review and complete
 
 - `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
 - 401 (unauthorized), id `INVALID_CREDENTIALS`: User credentials are missing or invalid.
 - 404 (not found), possible cases:
-	- Id `UNKNOWN_TOKEN`: The data access token can't be found.
+	- Id `UNKNOWN_ACCESS`: The data access can't be found.
 	- Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
 
 
@@ -91,56 +91,56 @@ Requires session token, old password, new password.
 TODO: `WRONG_PASSWORD`, `INVALID_NEW_PASSWORD`
 
 
-## <a id="admin-tokens"></a>Tokens
+## <a id="admin-accesses"></a>Accesses
 
 TODO: introductory text
 
 
-### POST `/admin/get-my-token`
+### POST `/admin/get-app-token`
 
-Gets the identifier of the personal token your app should use when accessing the user's data on her behalf. The token is created if it is the first time your app requests it.
-
-#### Successful response: `200 OK`
-
-- `id` ([identity](#data-types-identity)): Your app's dedicated personal [token](#data-types-token) identifier.
-
-
-### GET `/admin/tokens`
-
-Gets all accessible access tokens, which are the shared tokens. (Your private app token identifier is retrieved with `POST /admin/get-my-token`.)
+Gets the token of the personal access your app must use when accessing the user's data on her behalf. The access is created if it is the first time your app (identified by its id when logging in) requests it.
 
 #### Successful response: `200 OK`
 
-An array of [access tokens](#data-types-token) containing all accessible access tokens in the user's account, ordered by name.
+- `id` ([identity](#data-types-identity)): Your app's dedicated personal [access](#data-types-access) token.
 
 
-### POST `/admin/tokens`
+### GET `/admin/accesses`
 
-Creates a new shared access token.
+Gets all manageable accesses, which are the shared accesses. (Your app's own access token is retrieved with `POST /admin/get-app-token`.)
+
+#### Successful response: `200 OK`
+
+An array of [accesses](#data-types-access) containing all manageable accesses in the user's account, ordered by name.
+
+
+### POST `/admin/accesses`
+
+Creates a new shared access.
 
 #### Body parameters
 
-The new token's data: see [access token](#data-types-token).
+The new access's data: see [access](#data-types-access).
 
 #### Successful response: `201 Created`
 
-- `id` ([identity](#data-types-identity)): The created token's id.
+- `token` ([identity](#data-types-identity)): The created access's token.
 
 
-### PUT `/admin/tokens/{token-id}`
+### PUT `/admin/accesses/{token}`
 
-Modifies the specified shared token.
+Modifies the specified shared access.
 
 #### Body parameters
 
-New values for the token's fields: see [access token](#data-types-token). All fields are optional, and only modified values must be included. TODO: example
+New values for the access's fields: see [access](#data-types-access). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
 
 
-### DELETE `/admin/tokens/{token-id}`
+### DELETE `/admin/accesses/{token}`
 
-Deletes the specified shared token.
+Deletes the specified shared access.
 
 #### Successful response: `200 OK`
 

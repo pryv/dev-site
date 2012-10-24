@@ -8,34 +8,34 @@ sectionOrder: 5
 TODO: introductory text.
 
 
-## <a id="data-types-token"></a>Token
+## <a id="data-types-access"></a>Access
 
-A data access token defines how a user's activity data (channels, folders and events) is accessed. Personal access tokens are transparently generated (provided the user's credentials) in the [administration](#admin) when requested by client applications, but users can define additional tokens for letting other users view and possibly contribute to their activity data.
+An access defines a set of permissions on a user's activity data (channels, folders and events). Personal accesses are automatically generated, per app, in the [administration](#admin), but shared accesses can be freely defined for letting other users view and possibly contribute to their activity data. (See [how sharing works](#overview-sharing).)
 
 Fields:
 
-- `id` (string): Unique, read-only. The server-assigned identifier for the token. This is used to specify the token in requests with token authorization.
-- `name` (string): Unique. The name identifying the token for the user. It can be the client application's name for automatically generated personal tokens, or any user-defined value for manually created tokens.
-- `type` (`"personal"` or `"shared"`): Optional. Personal tokens have full access to data, while shared tokens are only granted access to data defined in field `permissions`. Default: `"shared"`. Note that personal tokens are not open for viewing and management by third party apps by default - if you need to manage personal tokens, please get in touch with us (TODO: link).
-- `permissions`: an array of channel permission objects as described below. Ignored for personal tokens. Shared tokens are only granted access to activity data objects listed in here.
+- `token` (string): Unique, read-only. The server-assigned token for the access. This is used to identify the access in requests to activity data.
+- `name` (string): Unique. The name identifying the access for the user. It can be the client application's name for automatically generated personal accesses, or any user-defined value for manually created accesses.
+- `type` (`"personal"` or `"shared"`): Optional. Personal accesses have full access to data, while shared accesses are only granted access to data defined in field `permissions`. Default: `"shared"`. Note that personal accesses are not open for viewing and management by third party apps by default - if you need to manage personal accesses, please get in touch with us (TODO: link).
+- `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
 	- `channelId` ([identity](#data-types-identity)): The accessible channel's id.
 	- `folderPermissions`: an array of folder permission objects:
 		- `folderId` ([identity](#data-types-identity)): The accessible folder's id. A  value of `null` can be used to set permissions for the root of the folders structure. If the folder has child folders, they will be accessible too.
-		- `type` (`"read"`, `"contribute"` or `"manage"`): The type of access to the folder's data. With `"contribute"`, the token's holder can see and record events for the folder (and its child folders, if any); with `"manage"`, the token's holder can in addition create, modify and delete child folders.
+		- `type` (`"read"`, `"contribute"` or `"manage"`): The type of access to the folder's data. With `"contribute"`, the access's token holder(s) can see and record events for the folder (and its child folders, if any); with `"manage"`, the access's token holder(s) can in addition create, modify and delete child folders.
 
 TODO: example
 
 
 ## <a id="data-types-bookmark"></a>Bookmark
 
-Sharing bookmarks allow the user to store tokens shared with her by other users.
+Sharing bookmarks allow the user to keep track of accesses shared with her by other users.
 
 Fields:
 
 - `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the bookmark.
 - `name` (string): Unique. A name identifying the bookmark for the user.
-- `url` (string): The url pointing to the shared token's owning user's server. Not modifiable after creation.
-- `tokenId` [identity](#data-types-identity): The identifier of the shared token itself. Not modifiable after creation.
+- `url` (string): The url pointing to the shared access's owning user's server. Not modifiable after creation.
+- `accessToken` [identity](#data-types-identity): The token of the shared access itself. Not modifiable after creation.
 
 TODO: example
 
