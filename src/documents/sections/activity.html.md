@@ -24,13 +24,6 @@ GET /{channel-id}/events?auth={access-token} HTTP/1.1
 Host: yacinthe.pryv.io
 ```
 
-## Common HTTP headers
-
-Some headers are included in every response to authorized requests:
-
-- `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
-
-
 ## Common errors
 
 Here are errors commonly returned for requests:

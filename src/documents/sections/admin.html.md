@@ -20,11 +20,6 @@ Authorization: {session-id}
 ```
 
 
-## Common HTTP headers
-
-- `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
-
-
 ## Common errors
 
 TODO: review and complete
