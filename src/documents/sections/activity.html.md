@@ -55,90 +55,6 @@ Gets the accessible activity channels (excluding those in the trash).
 An array of [activity channels](#data-types-channel) containing the accessible channels.
 
 
-## Folders
-
-Methods to retrieve and manipulate [folders](#data-types-folder).
-
-
-### GET `/{channel-id}/folders`
-
-*Socket.IO command id: `{channel-id}.folders.get`*
-
-Gets the accessible folders, either from the root level or only descending from a specified parent folder.
-
-#### Query string parameters
-
-- `parentId` ([identity](#data-types-identity)): The id of the parent folder to use as root for the request, or nothing to return all accessible folders from the root level.
-- `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
-- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-- `timeCountBase` ([timestamp](#data-types-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-types-folder)); otherwise no time count values will be returned.
-
-#### Successful response: `200 OK`
-
-An array of [activity folders](#data-types-folder) containing the tree of the accessible folders, sorted by name.
-
-TODO: example (with and without time accounting)
-
-
-### POST `/{channel-id}/folders`
-
-*Socket.IO command id: `{channel-id}.folders.create`*
-
-Creates a new folder at the root level or as a child folder to the specified folder.
-
-#### Body parameters
-
-The new folder's data: see [activity folder](#data-types-folder).
-
-#### Successful response: `201 Created`
-
-- `id` ([identity](#data-types-identity)): The created folder's id.
-
-#### Specific errors
-
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
-
-
-### PUT `/{channel-id}/folders/{folder-id}`
-
-*Socket.IO command id: `{channel-id}.folders.update`*
-
-Modifies the activity folder's attributes.
-
-#### Body parameters
-
-New values for the folder's fields: see [activity folder](#data-types-folder). All fields are optional, and only modified values must be included.
-
-TODO: example
-
-#### Successful response: `200 OK`
-
-#### Specific errors
-
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified parent folder's id is unknown.
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
-
-
-### DELETE `/{channel-id}/folders/{folder-id}`
-
-*Socket.IO command id: `{channel-id}.folders.delete`*
-
-Trashes or deletes the specified folder, depending on its current state:
-
-- If the folder is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
-- If the folder is already in the trash, it will be irreversibly deleted with its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`..
-
-#### Query string parameters
-
-- `mergeEventsWithParent` (`true` or `false`): Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
-
-#### Successful response: `200 OK`
-
-#### Specific errors
-
-- `400 Bad Request`, id `MISSING_PARAMETER`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
-
-
 ## Events
 
 Methods to retrieve and manipulate [events](#data-types-event).
@@ -152,13 +68,13 @@ Queries accessible events.
 
 #### Query string parameters
 
-- `onlyFolders` (array of [identity](#data-types-identity)): Optional. If set, only events linked to those folders (including child folders) will be returned. By default, events linked to all accessible folders are returned.
 - `fromTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
 - `toTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is the current time.
-- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+- `onlyFolders` (array of [identity](#data-types-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
 - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 - `skip` (number): Optional. The number of items to skip in the results.
 - `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
+- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
 - `modifiedSince` ([timestamp](#data-types-timestamp)): Optional. If specified, only events modified since that time will be returned.
 
 #### Successful response: `200 OK`
@@ -309,3 +225,87 @@ Batch upload events that were recorded by the client while offline. If the clien
 - `400 Bad Request`, id `INVALID_TIME`: TODO
 - `400 Bad Request`, id `UNKNOWN_FOLDER`: TODO
 - `400 Bad Request`, id `PERIODS_OVERLAP`: TODO (list of unspecified overlapped event ids)
+
+
+## Folders
+
+Methods to retrieve and manipulate [folders](#data-types-folder).
+
+
+### GET `/{channel-id}/folders`
+
+*Socket.IO command id: `{channel-id}.folders.get`*
+
+Gets the accessible folders, either from the root level or only descending from a specified parent folder.
+
+#### Query string parameters
+
+- `parentId` ([identity](#data-types-identity)): Optional. The id of the parent folder to use as root for the request. Default: `null` (returns all accessible folders from the root level).
+- `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
+- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+- `timeCountBase` ([timestamp](#data-types-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-types-folder)); otherwise no time count values will be returned.
+
+#### Successful response: `200 OK`
+
+An array of [activity folders](#data-types-folder) containing the tree of the accessible folders, sorted by name.
+
+TODO: example (with and without time accounting)
+
+
+### POST `/{channel-id}/folders`
+
+*Socket.IO command id: `{channel-id}.folders.create`*
+
+Creates a new folder at the root level or as a child folder to the specified folder.
+
+#### Body parameters
+
+The new folder's data: see [activity folder](#data-types-folder).
+
+#### Successful response: `201 Created`
+
+- `id` ([identity](#data-types-identity)): The created folder's id.
+
+#### Specific errors
+
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
+
+
+### PUT `/{channel-id}/folders/{folder-id}`
+
+*Socket.IO command id: `{channel-id}.folders.update`*
+
+Modifies the activity folder's attributes.
+
+#### Body parameters
+
+New values for the folder's fields: see [activity folder](#data-types-folder). All fields are optional, and only modified values must be included.
+
+TODO: example
+
+#### Successful response: `200 OK`
+
+#### Specific errors
+
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified parent folder's id is unknown.
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
+
+
+### DELETE `/{channel-id}/folders/{folder-id}`
+
+*Socket.IO command id: `{channel-id}.folders.delete`*
+
+Trashes or deletes the specified folder, depending on its current state:
+
+- If the folder is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+- If the folder is already in the trash, it will be irreversibly deleted with its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`..
+
+#### Query string parameters
+
+- `mergeEventsWithParent` (`true` or `false`): Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
+
+#### Successful response: `200 OK`
+
+#### Specific errors
+
+- `400 Bad Request`, id `MISSING_PARAMETER`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.

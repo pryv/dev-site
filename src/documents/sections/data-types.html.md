@@ -55,49 +55,6 @@ Fields:
 TODO: example
 
 
-## <a id="data-types-folder"></a>Folder
-
-Activity folders are the possible states or categories you track the channel's activity events into (folders are always specific to an activity channel). Every period event belongs to one folder, while mark events can be recorded "off-folder" as well. Activity folders follow a hierarchical tree structure: every folder can contain "child" folders (sub-folders).
-
-Fields:
-
-- `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the folder.
-- `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
-- `parentId` ([identity](#data-types-identity)): Optional. The identifier of the folder's parent, if any. A value of `null` indicates that the folder has no parent (i.e. root folder).
-- `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
-- `clientData` ([item additional data](#data-types-additional-data)):  Optional. Additional client data for the folder.
-- `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time. **This will be implemented later.**
-- `children` (array of folders): Read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created individually by design.
-- `trashed` (boolean): Optional. `true` if the folder is in the trash.
-
-### Example
-
-A folder structure for activities:
-
-```javascript
-[
-  { "name": "Sport", "id": "sport", "parentId": null,
-    "children": [
-      { "name": "Jogging", "id": "jogging", "parentId": "sport", "children": [] },
-      { "name": "Bicycling", "id": "bicycling", "parentId": "sport", "children": [] }
-  ]},
-  { "name": "Work", "id": "work", "parentId": null,
-    "children": [
-      { "name": "Noble Works Co.", "id": "noble-works","parentId": "work", "children": [
-          { "name": "Last Be First", "id": "last-be-first","parentId": "noble-works", "children": [] },
-          { "name": "Big Tree", "id": "big-tree","parentId": "noble-works", "children": [] },
-          { "name": "Inner Light", "id": "inner-light","parentId": "noble-works", "children": [] }
-      ]},
-      { "name": "Freelancing", "id": "freelancing","parentId": "work", "children": [
-          { "name": "Funky Veggies", "id": "funky-veggies","parentId": "freelancing", "children": [] },
-          { "name": "Jojo Lapin & sons", "id": "jojo-lapin","parentId": "freelancing", "children": [] }
-      ]}
-    ]
-  }
-];
-```
-
-
 ## <a id="data-types-event"></a>Event
 
 Activity events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
@@ -143,6 +100,49 @@ TODO: review after tags are implemented.
     "value": { "type": "position:WGS84", "value": "40.714728, -73.998672, 12" },
     "modified" : 1350373077.359 }
 ]
+```
+
+
+## <a id="data-types-folder"></a>Folder
+
+Activity folders are the possible states or categories you track the channel's activity events into (folders are always specific to an activity channel). Every period event belongs to one folder, while mark events can be recorded "off-folder" as well. Activity folders follow a hierarchical tree structure: every folder can contain "child" folders (sub-folders).
+
+Fields:
+
+- `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the folder.
+- `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
+- `parentId` ([identity](#data-types-identity)): Optional. The identifier of the folder's parent, if any. A value of `null` indicates that the folder has no parent (i.e. root folder).
+- `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
+- `clientData` ([item additional data](#data-types-additional-data)):  Optional. Additional client data for the folder.
+- `timeCount` ([timestamp](#data-types-timestamp)): Read-only. Only optionally returned when querying folders, indicating the total time spent in that folder, including sub-folders, since a given reference date and time. **This will be implemented later.**
+- `children` (array of folders): Read-only. The folder's sub-folders, if any. This field cannot be set in requests creating a new folders: folders are created individually by design.
+- `trashed` (boolean): Optional. `true` if the folder is in the trash.
+
+### Example
+
+A folder structure for activities:
+
+```javascript
+[
+  { "name": "Sport", "id": "sport", "parentId": null,
+    "children": [
+      { "name": "Jogging", "id": "jogging", "parentId": "sport", "children": [] },
+      { "name": "Bicycling", "id": "bicycling", "parentId": "sport", "children": [] }
+  ]},
+  { "name": "Work", "id": "work", "parentId": null,
+    "children": [
+      { "name": "Noble Works Co.", "id": "noble-works","parentId": "work", "children": [
+          { "name": "Last Be First", "id": "last-be-first","parentId": "noble-works", "children": [] },
+          { "name": "Big Tree", "id": "big-tree","parentId": "noble-works", "children": [] },
+          { "name": "Inner Light", "id": "inner-light","parentId": "noble-works", "children": [] }
+      ]},
+      { "name": "Freelancing", "id": "freelancing","parentId": "work", "children": [
+          { "name": "Funky Veggies", "id": "funky-veggies","parentId": "freelancing", "children": [] },
+          { "name": "Jojo Lapin & sons", "id": "jojo-lapin","parentId": "freelancing", "children": [] }
+      ]}
+    ]
+  }
+];
 ```
 
 
