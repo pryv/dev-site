@@ -121,6 +121,10 @@ The new access's data: see [access](#data-types-access).
 
 - `token` ([identity](#data-types-identity)): The created access's token.
 
+#### Specific errors
+
+- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
+
 
 ### PUT `/admin/accesses/{token}`
 
@@ -214,6 +218,10 @@ The new channel's data: see [activity channel](#data-types-channel).
 #### Successful response: `201 Created`
 
 - `id` ([identity](#data-types-identity)): The created channel's id.
+
+#### Specific errors
+
+- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
 
 ### PUT `/admin/channels/{channel-id}`

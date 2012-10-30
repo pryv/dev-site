@@ -14,7 +14,7 @@ An access defines a set of permissions on a user's activity data (channels, fold
 
 Fields:
 
-- `token` (string): Unique, read-only. The server-assigned token for the access. This is used to identify the access in requests to activity data.
+- `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access.
 - `name` (string): Unique. The name identifying the access for the user. It can be the client application's name for automatically generated personal accesses, or any user-defined value for manually created accesses.
 - `type` (`"personal"` or `"shared"`): Optional. Personal accesses have full access to data, while shared accesses are only granted access to data defined in field `permissions`. Default: `"shared"`. Note that personal accesses are not open for viewing and management by third party apps by default - if you need to manage personal accesses, please get in touch with us (TODO: link).
 - `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
@@ -45,7 +45,7 @@ TODO: example
 Each activity channel represents a "stream" or "type" of activity to track, acting as a storage bucket for related events.
 Fields:
 
-- `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the channel.
+- `id` ([identity](#data-types-identity)): Unique, read-only (except at creation). The identifier for the channel. Automatically generated if not set when creating the channel.
 - `name` (string): Unique. The name identifying the channel for users.
 - `strictMode` (boolean): Optional. If `true`, the system will ensure that timed events in this channel never overlap; if `false`, overlapping will be allowed. **This will be implemented later: currently all channels are considered "strict".**
 - `clientData` ([item additional data](#data-types-additional-data)): Optional. Additional client data for the channel.
@@ -109,7 +109,7 @@ Activity folders are the possible states or categories you track the channel's a
 
 Fields:
 
-- `id` ([identity](#data-types-identity)): Unique, read-only. The server-assigned identifier for the folder.
+- `id` ([identity](#data-types-identity)): Unique, read-only (except at creation). The identifier for the folder. Automatically generated if not set when creating the folder.
 - `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
 - `parentId` ([identity](#data-types-identity)): Optional. The identifier of the folder's parent, if any. A value of `null` indicates that the folder has no parent (i.e. root folder).
 - `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.

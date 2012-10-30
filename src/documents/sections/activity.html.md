@@ -269,6 +269,7 @@ The new folder's data: see [activity folder](#data-types-folder).
 #### Specific errors
 
 - `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
+- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
 
 ### PUT `/{channel-id}/folders/{folder-id}`
