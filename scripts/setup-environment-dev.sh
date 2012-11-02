@@ -38,11 +38,17 @@ Installing Node modules from 'package.json' if necessary...
 "
 npm install
 
+if [ ! -d out ]
+then
+  echo "
+Setting up 'out' folder for publishing to pryv.github.com...
+"
+  git clone git@github.com:pryv/pryv.github.com.git out
+fi
+
 echo "
 
 
-If no errors were listed above, the app setup is complete.
-
-To start the app (example - check the code for the list of config options):
-    node source/app.js --database.name <name> --http.httpPort <port>
+If no errors were listed above, the setup is complete.
+See the README for more info on writing and publishing the doc.
 "
