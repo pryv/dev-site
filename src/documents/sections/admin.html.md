@@ -171,7 +171,7 @@ The new bookmark's data: see [bookmark](#data-types-bookmark).
 - `id` ([identity](#data-types-identity)): The created bookmark's id.
 
 
-### PUT `/admin/bookmarks/{bookmark-id}`
+### PUT `/admin/bookmarks/{bookmark id}`
 
 Modifies the specified sharing bookmark.
 
@@ -182,7 +182,7 @@ New values for the bookmark's fields: see [bookmark](#data-types-bookmark). All 
 #### Successful response: `200 OK`
 
 
-### DELETE `/admin/bookmarks/{bookmark-id}`
+### DELETE `/admin/bookmarks/{bookmark id}`
 
 Deletes the specified sharing bookmark.
 
@@ -224,7 +224,7 @@ The new channel's data: see [activity channel](#data-types-channel).
 - `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
 
-### PUT `/admin/channels/{channel-id}`
+### PUT `/admin/channels/{channel id}`
 
 Modifies the activity channel's attributes.
 
@@ -235,7 +235,7 @@ New values for the channel's fields: see [activity channel](#data-types-channel)
 #### Successful response: `200 OK`
 
 
-### DELETE `/admin/channels/{channel-id}`
+### DELETE `/admin/channels/{channel id}`
 
 Trashes or deletes the given channel, depending on its current state:
 
