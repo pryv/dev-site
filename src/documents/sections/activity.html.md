@@ -249,6 +249,10 @@ Gets the accessible folders, either from the root level or only descending from 
 
 An array of [activity folders](#data-types-folder) containing the tree of the accessible folders, sorted by name.
 
+#### Specific errors
+
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified parent folder can't be found.
+
 TODO: example (with and without time accounting)
 
 

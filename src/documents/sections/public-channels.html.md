@@ -7,14 +7,17 @@ sectionOrder: 99
 
 *TODO: this should be a separate page. Wait till the final dev site structure is defined.*
 
-Public channels are channels of general interest (like news or weather) that can be integrated into users' Pryv view to add context to their own events (or just browsed independantly as-is). Unlike Pryv users' data and because they are public and read-only, public channels can be hosted anywhere – that means you can create your own public channel for users to enrich their Pryv experience. The public channels directory within Pryv lists all the channels that were registered to us and validated, but users are free to add channels from any URL.
-
 This section describes the public channel API, both for those of you who want to implement it for publishing their own channels and for those who want to integrate public channels into their app. The public channel API itself is a small subset of the Pryv API.
+
+
+## Overview
+
+### Public channels?
+
+Public channels are channels of general interest (like news or weather) that can be integrated into users' Pryv view to add context to their own events (or just browsed independantly as-is). Unlike Pryv users' data and because they are public and read-only, public channels don't have to run on Pryv servers – anyone is free to create and run a public channel for users to enrich their Pryv experience. The public channels directory within Pryv lists all the channels that were registered to us and validated, but users are free to add channels from any URL.
 
 TODO: add link(s) to example public channel implementation(s), and possibly a simple tutorial.
 
-
-## General stuff
 
 ### ***.pryv.io** URLs
 
@@ -26,7 +29,7 @@ Public channels are not limited to ***.pryv.io** URLs; they can be published any
 As you can expect, there is no authorization mechanism for accessing public channels. There's no need either to encrypt public channels with TLS (HTTPS), but we don't enforce any restriction there.
 
 
-## HTTP headers
+### HTTP headers
 
 The following headers must be included in every response:
 
@@ -34,24 +37,19 @@ The following headers must be included in every response:
 - `Server-Time`: The current server time as a [timestamp](#data-types-timestamp), which must of course be consistent with the times of events in the channel.
 
 
-## Common errors
+### Data
 
-Here are errors commonly returned for requests:
-
-- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
-- `404 Not Found`, possible cases:
-	- Id `UNKNOWN_FOLDER`: The activity folder can't be found in the specified channel.
-	- Id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the specified event.
+The JSON data exchanged is the same as in the Pryv API: see [events](#data-types-event), [folders](#data-types-folder) and [errors](#data-types-error) there.
 
 
 ## Events
 
-Methods to retrieve [events](#data-types-event). The events on public channels are the same as those in the Pryv API.
+At a minimum, public channels publish [events](#data-types-event).
 
 
 ### GET `{channel base path}/events`
 
-Queries the channel's events. This is the only method that must be implemented for every public channel.
+Queries the channel's events. This is the only method that must be implemented in every public channel.
 
 #### Query string parameters
 
@@ -67,21 +65,26 @@ Queries the channel's events. This is the only method that must be implemented f
 
 An array of [activity events](#data-types-event) containing the accessible events ordered by time (see `sortAscending` above).
 
-#### Specific errors
+#### Errors
 
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: TODO may happen if one of the specified folders doesn't exist
+- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format (e.g. missing required parameter, wrong type of data, etc.)
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: One (or more) of the specified folders doesn't exist.
 
 
 ### GET `{channel base path}/events/{event-id}/{file-name}`
 
-Gets the attached file. This method must be implemented if some of your public channel's events contain attachments.
+Gets the attached file. This method does not have to be implemented if the public channel's events never contain attachments; in that case a `404 Not Found` response is returned.
 
 #### Successful response: `200 OK`
+
+#### Errors
+
+- `404 Not Found`, id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the specified event.
 
 
 ## Folders
 
-[Folders](#data-types-folder) provide an organization structure for channels that need it; implementing folders in public channels is by no means mandatory. The folders on public channels are the same as those in the Pryv API.
+[Folders](#data-types-folder) provide an organization structure for channels that need it. Implementing folders in public channels is by no means mandatory; public channels with no need for folders just return a `404 Not Found` response for the method below.
 
 
 ### GET `{channel base path}/folders`
@@ -95,5 +98,10 @@ Gets the channel's folders, either from the root level or only descending from a
 #### Successful response: `200 OK`
 
 An array of [activity folders](#data-types-folder) containing the tree of the folders, sorted by name.
+
+#### Errors
+
+- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format (e.g. missing required parameter, wrong type of data, etc.)
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified parent folder can't be found.
 
 TODO: example
