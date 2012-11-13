@@ -45,17 +45,27 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 - `password` (string)
 - `appId` (string): A URL-friendly name uniquely identifying your app. The value you provide is in any case slugified before use (see [how](https://github.com/dodo/node-slug/blob/master/src/slug.coffee)).
 
-
 #### Successful response: `200 OK`
 
 - `sessionID` (string): The newly created session's ID, to include in each subsequent request's `Authorization` header.
 
+#### cURL example
+
+```bash 
+$ curl -i -H "Content-Type: application/json" -X POST -d '{"userName":"{userName}","password":"{password}","appId":"{appId}"}' https://{userName}.pryv.io/admin/login
+```
 
 ### POST `/admin/logout`
 
 Terminates the admin session.
 
 #### Successful response: `200 OK`
+
+#### cURL example
+
+```bash
+curl -i -H "Content-Type: application/json" -H "Authorization: {session id}" -X POST -d "{}" https://{userName}.pryv.io/admin/logout
+```
 
 
 ## <a id="admin-user"></a>User information
@@ -70,10 +80,24 @@ Requires session token.
 
 TODO: email, display name, language, ...
 
+#### Successful response: `200 OK`
+
+#### cURL example
+
+```bash
+curl -i -H "Content-Type: application/json" -H "Authorization: {session id}" https://{userName}.pryv.io/admin/user-info
+```
+
 
 ### PUT `/admin/user-info`
 
 TODO: change user information
+
+#### cURL example
+
+```bash
+
+```
 
 
 ### POST `/admin/change-password`
@@ -84,6 +108,12 @@ Requires session token, old password, new password.
 #### Specific errors
 
 TODO: `WRONG_PASSWORD`, `INVALID_NEW_PASSWORD`
+
+#### cURL example
+
+```bash
+
+```
 
 
 ## <a id="admin-accesses"></a>Accesses
@@ -99,6 +129,11 @@ Gets the token of the personal access your app must use when accessing the user'
 
 - `id` ([identity](#data-types-identity)): Your app's dedicated personal [access](#data-types-access) token.
 
+#### cURL example
+
+```bash
+$ curl -i -H "Authorization: {session id}" -X POST https://{userName}.pryv.io/admin/get-app-token
+```
 
 ### GET `/admin/accesses`
 
@@ -107,6 +142,12 @@ Gets all manageable accesses, which are the shared accesses. (Your app's own acc
 #### Successful response: `200 OK`
 
 An array of [accesses](#data-types-access) containing all manageable accesses in the user's account, ordered by name.
+
+#### cURL example
+
+```bash
+$ curl -i -H "Authorization: {session id}" https://{userName}.pryv.io/admin/accesses
+```
 
 
 ### POST `/admin/accesses`
@@ -125,6 +166,12 @@ The new access's data: see [access](#data-types-access).
 
 - `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
 
+#### cURL example
+
+```bash
+
+```
+
 
 ### PUT `/admin/accesses/{token}`
 
@@ -136,12 +183,24 @@ New values for the access's fields: see [access](#data-types-access). All fields
 
 #### Successful response: `200 OK`
 
+#### cURL example
+
+```bash
+
+```
+
 
 ### DELETE `/admin/accesses/{token}`
 
 Deletes the specified shared access.
 
 #### Successful response: `200 OK`
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ## <a id="admin-bookmarks"></a>Bookmarks
@@ -157,6 +216,12 @@ Gets all of the user's sharing bookmarks.
 
 An array of [bookmarks](#data-types-bookmark) containing all sharing bookmarks in the user's account, ordered by name.
 
+#### cURL example
+
+```bash 
+
+```
+
 
 ### POST `/admin/bookmarks`
 
@@ -170,6 +235,12 @@ The new bookmark's data: see [bookmark](#data-types-bookmark).
 
 - `id` ([identity](#data-types-identity)): The created bookmark's id.
 
+#### cURL example
+
+```bash 
+
+```
+
 
 ### PUT `/admin/bookmarks/{bookmark id}`
 
@@ -181,12 +252,24 @@ New values for the bookmark's fields: see [bookmark](#data-types-bookmark). All 
 
 #### Successful response: `200 OK`
 
+#### cURL example
+
+```bash 
+
+```
+
 
 ### DELETE `/admin/bookmarks/{bookmark id}`
 
 Deletes the specified sharing bookmark.
 
 #### Successful response: `200 OK`
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ## <a id="admin-channels"></a>Channels
@@ -207,6 +290,13 @@ Gets activity channels.
 An array of [activity channels](#data-types-channel)) containing all channels in the user's account matching the specified state, ordered by name.
 
 
+#### cURL example
+
+```bash 
+
+```
+
+
 ### POST `/admin/channels`
 
 Creates a new activity channel.
@@ -224,6 +314,13 @@ The new channel's data: see [activity channel](#data-types-channel).
 - `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
 
+#### cURL example
+
+```bash 
+
+```
+
+
 ### PUT `/admin/channels/{channel id}`
 
 Modifies the activity channel's attributes.
@@ -234,6 +331,12 @@ New values for the channel's fields: see [activity channel](#data-types-channel)
 
 #### Successful response: `200 OK`
 
+#### cURL example
+
+```bash 
+
+```
+
 
 ### DELETE `/admin/channels/{channel id}`
 
@@ -243,3 +346,11 @@ Trashes or deletes the given channel, depending on its current state:
 - If the channel is already in the trash, it will be irreversibly deleted with all the folders and events it contains.
 
 #### Successful response: `200 OK`
+
+#### cURL example
+
+```bash 
+
+```
+
+

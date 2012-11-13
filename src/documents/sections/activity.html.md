@@ -54,6 +54,12 @@ Gets the accessible activity channels (excluding those in the trash).
 
 An array of [activity channels](#data-types-channel) containing the accessible channels.
 
+#### cURL example
+
+```bash 
+$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" https://{userName}.pryv.io/channels?auth={access-token}
+```
+
 
 ## Events
 
@@ -85,6 +91,12 @@ An array of [activity events](#data-types-event) containing the accessible event
 
 - `400 Bad Request`, id `UNKNOWN_FOLDER`: TODO may happen if one of the specified folders doesn't exist
 
+#### cURL example
+
+```bash 
+$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" https://{userName}.pryv.io/{channel id}/events?auth={access-token}
+```
+
 
 ### POST `/{channel id}/events`
 
@@ -109,6 +121,12 @@ The new event's data: see [activity event](#data-types-event).
 
 - `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified folder cannot be found.
 
+#### cURL example
+
+```bash 
+$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"folderId":"{folder id}"}' https://{userName}.pryv.io/{channel id}/events?auth={access-token}
+```
+
 
 ### POST `/{channel id}/events/start`
 
@@ -124,6 +142,12 @@ Starts a new period event, stopping the previously running period event if any. 
 - `400 Bad Request`, id `INVALID_OPERATION`: A period event cannot start if another period event already exists at a later time.
 - `400 Bad request`, id `PERIODS_OVERLAP`: TODO (data: array of overlapped ids)
 
+#### cURL example
+
+```bash 
+$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"folderId":"{folder id}"}' https://{userName}.pryv.io/{channel id}/events/start?auth={access-token}
+```
+
 
 ### POST `/{channel id}/events/stop`
 
@@ -134,6 +158,12 @@ Stops the previously running period event. See POST `/{channel id}/events` for d
 #### Successful response: `200 OK`
 
 - `stoppedId` ([identity](#data-types-identity)): The id of the previously running period event that was stopped, or null if no running event was found.
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ### TODO: GET `/{channel id}/events/start` and `.../stop` and `.../record` alternatives to the above to allow simple calls via e.g. wget/curl
@@ -148,6 +178,12 @@ Gets the currently running period events.
 #### Successful response: `200 OK`
 
 An array of [activity events](#data-types-event) containing the running period events.
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ### PUT `/{channel id}/events/{event id}`
@@ -169,6 +205,12 @@ New values for the event's fields: see [activity event](#data-types-event). All 
 - `400 Bad Request`, id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it.
 - `400 Bad Request`, id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
 
+#### cURL example
+
+```bash 
+
+```
+
 
 ### POST `/{channel id}/events/{event id}`
 
@@ -177,6 +219,12 @@ Adds one or more file attachments to the event. This request expects standard mu
 TODO: example
 
 #### Successful response: `200 OK`
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ### DELETE `/{channel id}/events/{event id}`
@@ -190,12 +238,25 @@ Trashes or deletes the specified event, depending on its current state:
 
 #### Successful response: `200 OK`
 
+#### cURL example
+
+```bash 
+
+```
+
 
 ### GET `/{channel id}/events/{event id}/{file name}`
 
 Gets the attached file.
 
 #### Successful response: `200 OK`
+
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ### DELETE `/{channel id}/events/{event id}/{file name}`
@@ -205,6 +266,13 @@ Gets the attached file.
 Irreversibly deletes the attached file.
 
 #### Successful response: `200 OK`
+
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ### POST `/{channel id}/events/batch`
@@ -225,6 +293,13 @@ Batch upload events that were recorded by the client while offline. If the clien
 - `400 Bad Request`, id `INVALID_TIME`: TODO
 - `400 Bad Request`, id `UNKNOWN_FOLDER`: TODO
 - `400 Bad Request`, id `PERIODS_OVERLAP`: TODO (list of unspecified overlapped event ids)
+
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ## Folders
@@ -256,6 +331,13 @@ An array of [activity folders](#data-types-folder) containing the tree of the ac
 TODO: example (with and without time accounting)
 
 
+#### cURL example
+
+```bash 
+
+```
+
+
 ### POST `/{channel id}/folders`
 
 *Socket.IO command id: `{channel id}.folders.create`*
@@ -274,6 +356,13 @@ The new folder's data: see [activity folder](#data-types-folder).
 
 - `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 - `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
+
+
+#### cURL example
+
+```bash 
+
+```
 
 
 ### PUT `/{channel id}/folders/{folder id}`
@@ -296,6 +385,13 @@ TODO: example
 - `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 
 
+#### cURL example
+
+```bash 
+
+```
+
+
 ### DELETE `/{channel id}/folders/{folder id}`
 
 *Socket.IO command id: `{channel id}.folders.delete`*
@@ -314,3 +410,11 @@ Trashes or deletes the specified folder, depending on its current state:
 #### Specific errors
 
 - `400 Bad Request`, id `MISSING_PARAMETER`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
+
+#### cURL example
+
+```bash 
+
+```
+
+
