@@ -19,9 +19,12 @@ Fields:
 - `type` (`"personal"` or `"shared"`): Optional. Personal accesses have full access to data, while shared accesses are only granted access to data defined in field `permissions`. Default: `"shared"`. Note that personal accesses are not open for viewing and management by third party apps by default - if you need to manage personal accesses, please get in touch with us (TODO: link).
 - `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
 	- `channelId` ([identity](#data-types-identity)): The accessible channel's id.
+	- `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the channel. With `"contribute"`, the access's token holder(s) can see and record events in the channel; with `"manage"`, the access's token holder(s) can in addition modify the channel itself. This can be overridden if specific folder permissions are defined (see below).
 	- `folderPermissions`: an array of folder permission objects:
-		- `folderId` ([identity](#data-types-identity)): The accessible folder's id. A  value of `null` can be used to set permissions for the root of the folders structure. If the folder has child folders, they will be accessible too.
-		- `type` (`"read"`, `"contribute"` or `"manage"`): The type of access to the folder's data. With `"contribute"`, the access's token holder(s) can see and record events for the folder (and its child folders, if any); with `"manage"`, the access's token holder(s) can in addition create, modify and delete child folders.
+		- `folderId` ([identity](#data-types-identity)): The accessible folder's id. If the folder has child folders, they will be accessible too. A  value of `null` can be used to set permissions for events that have no folder assigned.
+		- `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the folder. With `"contribute"`, the access's token holder(s) can see and record events for the folder (and its child folders, if any); with `"manage"`, the access's token holder(s) can in addition create, modify and delete child folders.
+
+A note about permissions: if the access defines conflicting permission levels (e.g. a channel set to "manage" but a folder within it set to "contribute"), only the highest level is considered.
 
 TODO: example
 
