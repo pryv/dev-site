@@ -52,7 +52,7 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 #### cURL example
 
 ```bash 
-$ curl -i -H "Content-Type: application/json" -X POST -d '{"userName":"{userName}","password":"{password}","appId":"{appId}"}' https://{userName}.pryv.io/admin/login
+curl -i -H "Content-Type: application/json" -X POST -d '{"userName":"{username}","password":"{password}","appId":"{appId}"}' https://{username}.pryv.io/admin/login
 ```
 
 ### POST `/admin/logout`
@@ -64,7 +64,7 @@ Terminates the admin session.
 #### cURL example
 
 ```bash
-curl -i -H "Content-Type: application/json" -H "Authorization: {session id}" -X POST -d "{}" https://{userName}.pryv.io/admin/logout
+curl -i -H "Content-Type: application/json" -H "Authorization: {session-id}" -X POST -d "{}" https://{username}.pryv.io/admin/logout
 ```
 
 
@@ -85,7 +85,7 @@ TODO: email, display name, language, ...
 #### cURL example
 
 ```bash
-curl -i -H "Content-Type: application/json" -H "Authorization: {session id}" https://{userName}.pryv.io/admin/user-info
+curl -i -H "Authorization: {session-id}" https://{username}.pryv.io/admin/user-info
 ```
 
 
@@ -132,7 +132,7 @@ Gets the token of the personal access your app must use when accessing the user'
 #### cURL example
 
 ```bash
-$ curl -i -H "Authorization: {session id}" -X POST https://{userName}.pryv.io/admin/get-app-token
+curl -i -H "Authorization: {session-id}" -X POST https://{username}.pryv.io/admin/get-app-token
 ```
 
 ### GET `/admin/accesses`
@@ -146,7 +146,7 @@ An array of [accesses](#data-types-access) containing all manageable accesses in
 #### cURL example
 
 ```bash
-$ curl -i -H "Authorization: {session id}" https://{userName}.pryv.io/admin/accesses
+curl -i -H "Authorization: {session-id}" https://{username}.pryv.io/admin/accesses
 ```
 
 

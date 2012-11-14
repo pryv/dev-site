@@ -61,7 +61,7 @@ An array of [activity channels](#data-types-channel)) containing the accessible 
 #### cURL example
 
 ```bash 
-$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" https://{userName}.pryv.io/channels?auth={access-token}
+curl -i https://{username}.pryv.io/channels?auth={access-token}
 ```
 
 
@@ -156,7 +156,7 @@ An array of [activity events](#data-types-event) containing the accessible event
 #### cURL example
 
 ```bash 
-$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" https://{userName}.pryv.io/{channel-id}/events?auth={access-token}
+curl -i https://{username}.pryv.io/{channel-id}/events?auth={access-token}
 ```
 
 
@@ -186,7 +186,7 @@ The new event's data: see [activity event](#data-types-event).
 #### cURL example
 
 ```bash 
-$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{userName}.pryv.io/{channel-id}/events?auth={access-token}
+curl -i -H "Content-Type: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{username}.pryv.io/{channel-id}/events?auth={access-token}
 ```
 
 
@@ -207,7 +207,7 @@ Starts a new period event, stopping the previously running period event if any. 
 #### cURL example
 
 ```bash 
-$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{userName}.pryv.io/{channel-id}/events/start?auth={access-token}
+curl -i -H "Content-Type: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{username}.pryv.io/{channel-id}/events/start?auth={access-token}
 ```
 
 
