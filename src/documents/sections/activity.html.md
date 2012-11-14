@@ -14,13 +14,13 @@ All requests for retrieving and manipulating activity data must carry a valid [a
 
 Here's what a proper request looks like:
 ```http
-GET /{channel id}/events HTTP/1.1
+GET /{channel-id}/events HTTP/1.1
 Host: yacinthe.pryv.io
 Authorization: {access-token}
 ```
 Or, alternatively, passing the access token in the query string:
 ```http
-GET /{channel id}/events?auth={access-token} HTTP/1.1
+GET /{channel-id}/events?auth={access-token} HTTP/1.1
 Host: yacinthe.pryv.io
 ```
 
@@ -41,7 +41,7 @@ Here are errors commonly returned for requests:
 
 ## Channels
 
-For retrieving [channels](#data-types-channel). Manipulating channels is done in the [administration](#admin-channels).
+For retrieving and manipulating [channels](#data-types-channel).
 
 
 ### GET `/channels`
@@ -50,9 +50,13 @@ For retrieving [channels](#data-types-channel). Manipulating channels is done in
 
 Gets the accessible activity channels (excluding those in the trash).
 
+#### Query string parameters
+
+- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+
 #### Successful response: `200 OK`
 
-An array of [activity channels](#data-types-channel) containing the accessible channels.
+An array of [activity channels](#data-types-channel)) containing the accessible channels in the user's account matching the specified state, ordered by name.
 
 #### cURL example
 
@@ -61,14 +65,72 @@ $ curl -i -H "Content-Type: application/json" -H "Accept: application/json" http
 ```
 
 
+### POST `/admin/channels`
+
+Creates a new activity channel. Only personal accesses allow creating new channels.
+
+#### Body parameters
+
+The new channel's data: see [activity channel](#data-types-channel).
+
+#### Successful response: `201 Created`
+
+- `id` ([identity](#data-types-identity)): The created channel's id.
+
+#### Specific errors
+
+- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
+
+#### cURL example
+
+```bash 
+
+```
+
+
+### PUT `/admin/channels/{channel-id}`
+
+Modifies the activity channel's attributes.
+
+#### Body parameters
+
+New values for the channel's fields: see [activity channel](#data-types-channel). All fields are optional, and only modified values must be included. TODO: example
+
+#### Successful response: `200 OK`
+
+#### cURL example
+
+```bash 
+
+```
+
+
+### DELETE `/admin/channels/{channel-id}`
+
+Trashes or deletes the given channel, depending on its current state:
+
+- If the channel is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+- If the channel is already in the trash, it will be irreversibly deleted with all the folders and events it contains.
+
+Only personal accesses allow deleting channels.
+
+#### Successful response: `200 OK`
+
+#### cURL example
+
+```bash 
+
+```
+
+
 ## Events
 
 Methods to retrieve and manipulate [events](#data-types-event).
 
 
-### GET `/{channel id}/events`
+### GET `/{channel-id}/events`
 
-*Socket.IO command id: `{channel id}.events.get`*
+*Socket.IO command id: `{channel-id}.events.get`*
 
 Queries accessible events.
 
@@ -94,13 +156,13 @@ An array of [activity events](#data-types-event) containing the accessible event
 #### cURL example
 
 ```bash 
-$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" https://{userName}.pryv.io/{channel id}/events?auth={access-token}
+$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" https://{userName}.pryv.io/{channel-id}/events?auth={access-token}
 ```
 
 
-### POST `/{channel id}/events`
+### POST `/{channel-id}/events`
 
-*Socket.IO command id: `{channel id}.events.create`*
+*Socket.IO command id: `{channel-id}.events.create`*
 
 Records a new event. Events recorded this way must be completed events, i.e. either period events with a known duration or mark events. To start a running period event, post a `events/start` request.
 
@@ -124,15 +186,15 @@ The new event's data: see [activity event](#data-types-event).
 #### cURL example
 
 ```bash 
-$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"folderId":"{folder id}"}' https://{userName}.pryv.io/{channel id}/events?auth={access-token}
+$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{userName}.pryv.io/{channel-id}/events?auth={access-token}
 ```
 
 
-### POST `/{channel id}/events/start`
+### POST `/{channel-id}/events/start`
 
-*Socket.IO command id: `{channel id}.events.start`*
+*Socket.IO command id: `{channel-id}.events.start`*
 
-Starts a new period event, stopping the previously running period event if any. See POST `/{channel id}/events` for details. TODO: detail
+Starts a new period event, stopping the previously running period event if any. See POST `/{channel-id}/events` for details. TODO: detail
 
 #### Successful response: `201 Created`
 
@@ -145,15 +207,15 @@ Starts a new period event, stopping the previously running period event if any. 
 #### cURL example
 
 ```bash 
-$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"folderId":"{folder id}"}' https://{userName}.pryv.io/{channel id}/events/start?auth={access-token}
+$ curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{userName}.pryv.io/{channel-id}/events/start?auth={access-token}
 ```
 
 
-### POST `/{channel id}/events/stop`
+### POST `/{channel-id}/events/stop`
 
-*Socket.IO command id: `{channel id}.events.stop`*
+*Socket.IO command id: `{channel-id}.events.stop`*
 
-Stops the previously running period event. See POST `/{channel id}/events` for details. TODO: detail
+Stops the previously running period event. See POST `/{channel-id}/events` for details. TODO: detail
 
 #### Successful response: `200 OK`
 
@@ -166,12 +228,12 @@ Stops the previously running period event. See POST `/{channel id}/events` for d
 ```
 
 
-### TODO: GET `/{channel id}/events/start` and `.../stop` and `.../record` alternatives to the above to allow simple calls via e.g. wget/curl
+### TODO: GET `/{channel-id}/events/start` and `.../stop` and `.../record` alternatives to the above to allow simple calls via e.g. wget/curl
 
 
-### GET `/{channel id}/events/running`
+### GET `/{channel-id}/events/running`
 
-*Socket.IO command id: `{channel id}.events.getRunning`*
+*Socket.IO command id: `{channel-id}.events.getRunning`*
 
 Gets the currently running period events.
 
@@ -186,9 +248,9 @@ An array of [activity events](#data-types-event) containing the running period e
 ```
 
 
-### PUT `/{channel id}/events/{event id}`
+### PUT `/{channel-id}/events/{event-id}`
 
-*Socket.IO command id: `{channel id}.events.update`*
+*Socket.IO command id: `{channel-id}.events.update`*
 
 Modifies the activity event's attributes.
 
@@ -212,7 +274,7 @@ New values for the event's fields: see [activity event](#data-types-event). All 
 ```
 
 
-### POST `/{channel id}/events/{event id}`
+### POST `/{channel-id}/events/{event-id}`
 
 Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
 
@@ -227,9 +289,9 @@ TODO: example
 ```
 
 
-### DELETE `/{channel id}/events/{event id}`
+### DELETE `/{channel-id}/events/{event-id}`
 
-*Socket.IO command id: `{channel id}.events.delete`*
+*Socket.IO command id: `{channel-id}.events.delete`*
 
 Trashes or deletes the specified event, depending on its current state:
 
@@ -245,7 +307,7 @@ Trashes or deletes the specified event, depending on its current state:
 ```
 
 
-### GET `/{channel id}/events/{event id}/{file name}`
+### GET `/{channel-id}/events/{event-id}/{file name}`
 
 Gets the attached file.
 
@@ -259,9 +321,9 @@ Gets the attached file.
 ```
 
 
-### DELETE `/{channel id}/events/{event id}/{file name}`
+### DELETE `/{channel-id}/events/{event-id}/{file name}`
 
-*Socket.IO command id: `{channel id}.events.deleteAttachedFile`*
+*Socket.IO command id: `{channel-id}.events.deleteAttachedFile`*
 
 Irreversibly deletes the attached file.
 
@@ -275,7 +337,7 @@ Irreversibly deletes the attached file.
 ```
 
 
-### POST `/{channel id}/events/batch`
+### POST `/{channel-id}/events/batch`
 
 TODO: this is currently unimplemented and may stay that way.
 Batch upload events that were recorded by the client while offline. If the client-recorded events overlap events on the server, the request will be rejected (see errors below); it is the client's responsibility to retrieve updated server data and adjust its own before uploading.
@@ -307,9 +369,9 @@ Batch upload events that were recorded by the client while offline. If the clien
 Methods to retrieve and manipulate [folders](#data-types-folder).
 
 
-### GET `/{channel id}/folders`
+### GET `/{channel-id}/folders`
 
-*Socket.IO command id: `{channel id}.folders.get`*
+*Socket.IO command id: `{channel-id}.folders.get`*
 
 Gets the accessible folders, either from the root level or only descending from a specified parent folder.
 
@@ -338,9 +400,9 @@ TODO: example (with and without time accounting)
 ```
 
 
-### POST `/{channel id}/folders`
+### POST `/{channel-id}/folders`
 
-*Socket.IO command id: `{channel id}.folders.create`*
+*Socket.IO command id: `{channel-id}.folders.create`*
 
 Creates a new folder at the root level or as a child folder to the specified folder.
 
@@ -365,9 +427,9 @@ The new folder's data: see [activity folder](#data-types-folder).
 ```
 
 
-### PUT `/{channel id}/folders/{folder id}`
+### PUT `/{channel-id}/folders/{folder-id}`
 
-*Socket.IO command id: `{channel id}.folders.update`*
+*Socket.IO command id: `{channel-id}.folders.update`*
 
 Modifies the activity folder's attributes.
 
@@ -392,9 +454,9 @@ TODO: example
 ```
 
 
-### DELETE `/{channel id}/folders/{folder id}`
+### DELETE `/{channel-id}/folders/{folder-id}`
 
-*Socket.IO command id: `{channel id}.folders.delete`*
+*Socket.IO command id: `{channel-id}.folders.delete`*
 
 Trashes or deletes the specified folder, depending on its current state:
 

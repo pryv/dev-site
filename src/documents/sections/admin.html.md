@@ -25,8 +25,8 @@ Authorization: {session-id}
 TODO: review and complete
 
 - `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
-- 401 (unauthorized), id `INVALID_CREDENTIALS`: User credentials are missing or invalid.
-- 404 (not found), possible cases:
+- `401 Unauthorized`, id `INVALID_CREDENTIALS`: User credentials are missing or invalid.
+- `404 Not Found`, possible cases:
 	- Id `UNKNOWN_ACCESS`: The data access can't be found.
 	- Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
 
@@ -242,7 +242,7 @@ The new bookmark's data: see [bookmark](#data-types-bookmark).
 ```
 
 
-### PUT `/admin/bookmarks/{bookmark id}`
+### PUT `/admin/bookmarks/{bookmark-id}`
 
 Modifies the specified sharing bookmark.
 
@@ -259,7 +259,7 @@ New values for the bookmark's fields: see [bookmark](#data-types-bookmark). All 
 ```
 
 
-### DELETE `/admin/bookmarks/{bookmark id}`
+### DELETE `/admin/bookmarks/{bookmark-id}`
 
 Deletes the specified sharing bookmark.
 
@@ -270,87 +270,3 @@ Deletes the specified sharing bookmark.
 ```bash 
 
 ```
-
-
-## <a id="admin-channels"></a>Channels
-
-TODO: introductory text.
-
-
-### GET `/admin/channels`
-
-Gets activity channels.
-
-#### Query string parameters
-
-- `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-
-#### Successful response: `200 OK`
-
-An array of [activity channels](#data-types-channel)) containing all channels in the user's account matching the specified state, ordered by name.
-
-
-#### cURL example
-
-```bash 
-
-```
-
-
-### POST `/admin/channels`
-
-Creates a new activity channel.
-
-#### Body parameters
-
-The new channel's data: see [activity channel](#data-types-channel).
-
-#### Successful response: `201 Created`
-
-- `id` ([identity](#data-types-identity)): The created channel's id.
-
-#### Specific errors
-
-- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
-
-
-#### cURL example
-
-```bash 
-
-```
-
-
-### PUT `/admin/channels/{channel id}`
-
-Modifies the activity channel's attributes.
-
-#### Body parameters
-
-New values for the channel's fields: see [activity channel](#data-types-channel). All fields are optional, and only modified values must be included. TODO: example
-
-#### Successful response: `200 OK`
-
-#### cURL example
-
-```bash 
-
-```
-
-
-### DELETE `/admin/channels/{channel id}`
-
-Trashes or deletes the given channel, depending on its current state:
-
-- If the channel is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
-- If the channel is already in the trash, it will be irreversibly deleted with all the folders and events it contains.
-
-#### Successful response: `200 OK`
-
-#### cURL example
-
-```bash 
-
-```
-
-
