@@ -29,13 +29,19 @@ Activity data is, at the core, just **events**: pieces of data attached to momen
 Note that as an open system, to provide true interoperability, Pryv does not set or enforce "ownership" of data per app. Provided the necessary permissions, data stored by a given app can be accessed and manipulated by any other app.
 See the standard channels, folders and tags (TODO: link) we encourage you to use when appropriate if you want your app to integrate nicely within the user's Pryv experience.
 
-### <a id="overview-sharing"></a>How sharing works
+### <a id="overview-sharing"></a>Accesses and sharing
 
 [TODO: schema?]
 
-Apps access a user's activity data by presenting the API with an **access token**, that identifies a specific **access** to the data. An access can be *personal* or *shared*. A personal access is assigned to an app (provided the user's credentials) and its token is used by that app to access the user's data on her behalf (i.e. with full permissions). Personal accesses aren't shared, however; sharing is managed via shared accesses.
+Apps access a user's activity data by presenting the API with an **access token**, that identifies a specific **access** to the data. An access can be *shared*, associated to an *app* or *personal*.
 
-A **shared access** grants permissions to a specified set of the user's data: channel(s), and within those channels, folder(s), tag(s) and/or a limited time frame can be defined to filter events. Accesses allow sharing in a variety of ways, such as:
+- **Shared** accesses can be freely defined for letting other users view and possibly contribute to their activity data. They only grant access to a specific set of the user's data (see details below).
+- **App** accesses are assigned to most apps to access the user's data on her behalf. They also only grant access to a specific set of data, determined by the app's needs.
+- **Personal** accesses are reserved to trusted apps. They grant full access to the user's data.
+
+Note that only trusted apps can view and manage app and personal accesses. To register your app as trusted, please get in touch with us (TODO: email or link).
+
+A **shared access** grants permissions to one or more of the user's channel(s), and further permissions within those channels, like on folder(s), tag(s) and/or a limited time frame, can be defined to filter events. Accesses allow sharing in a variety of ways, such as:
 
 - in-app: the user chooses to share some events with another Pryv user, which is notified and can select to view (and possibly contribute to) the shared data and/or integrate it with her own (add it to her sharing bookmarks).
 - URL copy-paste: the user choose to share data with another person (possibly not a Pryv user), and copies the full URL containing the access token into an e-mail or chat message. The other person can open the URL and access the web app to view (and possibly contribute to) the shared data.

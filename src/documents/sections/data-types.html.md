@@ -10,13 +10,13 @@ TODO: introductory text.
 
 ## <a id="data-types-access"></a>Access
 
-An access defines a set of permissions on a user's activity data (channels, folders and events). Personal accesses are automatically generated, per app, in the [administration](#admin), but shared accesses can be freely defined for letting other users view and possibly contribute to their activity data. (See [how sharing works](#overview-sharing).)
+An access defines a set of permissions on a user's activity data (channels, folders and events). (See [how sharing works](#overview-sharing).)
 
 Fields:
 
 - `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access.
 - `name` (string): Unique. The name identifying the access for the user. It can be the client application's name for automatically generated personal accesses, or any user-defined value for manually created accesses.
-- `type` (`"personal"` or `"shared"`): Optional. Personal accesses have full access to data, while shared accesses are only granted access to data defined in field `permissions`. Default: `"shared"`. Note that personal accesses are not open for viewing and management by third party apps by default - if you need to manage personal accesses, please get in touch with us (TODO: link).
+- `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type – or usage – of the access. Default: `"shared"`.
 - `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
 	- `channelId` ([identity](#data-types-identity)): The accessible channel's id.
 	- `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the channel. With `"contribute"`, the access's token holder(s) can see and record events in the channel; with `"manage"`, the access's token holder(s) can in addition modify the channel itself. This is overridden if specific folder permissions are defined (see below).
