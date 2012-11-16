@@ -10,13 +10,18 @@ Administration methods allow to manage the user's [account information](#admin-u
 
 ## Authorization
 
-Access to admin methods is managed by sessions. To create a session, you must successfully authenticate with a `/admin/login` request, which will return the session ID. Each request sent during the duration of the session must then contain the session ID in its `Authorization` header. The session is terminated when `/admin/logout` is called or when the session times out (TODO: indicate session timeout delay).
+Access to admin methods is managed by sessions. To create a session, you must successfully authenticate with a `/admin/login` request, which will return the session ID. Each request sent during the duration of the session must then contain the session ID in its `Authorization` header or, alternatively, in the query string's `auth` parameter. The session is terminated when `/admin/logout` is called or when the session times out (TODO: indicate session timeout delay).
 
 Here's what an admin request (with a session open) looks like:
 ```http
-GET /admin/channels HTTP/1.1
+GET /admin/accesses HTTP/1.1
 Host: cassis.pryv.io
 Authorization: {session-id}
+```
+Or, alternatively, passing the access token in the query string:
+```http
+GET /admin/accesses?auth={session-id} HTTP/1.1
+Host: cassis.pryv.io
 ```
 
 
