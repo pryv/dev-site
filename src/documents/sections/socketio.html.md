@@ -47,9 +47,14 @@ socket.emit('command', cmdData, function (error, data) {
 
 ### Receiving data change notifications
 
-You can be notified of changes to channels, folders and events by subscribing to the corresponding messages `channelsChanged`, `foldersChanged` and `eventsChanged`. For example:
+You can be notified of changes to channels, folders and events by subscribing to the corresponding messages `channelsChanged`, `eventsChanged` and `foldersChanged`. For the latter two, the message is passed a parameters object with a `channelId` property to help you refresh only what's necessary.
+For example:
 ```javascript
-socket.on('eventsChanged', function() {
-  // retrieve latest changes and update views
+socket.on('channelsChanged', function() { // no scope parameter for channels
+  // ... (retrieve latest changes and update)
+});
+socket.on('eventsChanged', function(scope) {
+  // scope.channelId contains the related channel id
+  // ... (retrieve latest changes and update)
 });
 ```
