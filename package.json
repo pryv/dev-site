@@ -1,11 +1,12 @@
 {
-  "name": "pryv-api-doc",
-  "version": "0.1.0",
+  "name": "pryv-dev-site",
+  "version": "0.2.0",
   "private": true,
   "description": "",
-  "homepage": "api.pryv.com",
+  "homepage": "dev.pryv.com",
   "keywords": [
     "Pryv",
+    "developers",
     "API",
     "documentation",
     "docpad"

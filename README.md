@@ -1,6 +1,6 @@
-# Pryv server API documentation
+# Pryv developers website
 
-DocPad sources for the server API documentation website. **This website will ultimately become our full 'developers' website**.
+DocPad sources for the developers website: API reference, recommendations, guides, etc.
 
 
 ## Writing documentation
