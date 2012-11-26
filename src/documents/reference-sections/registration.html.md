@@ -39,8 +39,8 @@ As today only the folowing languages are availables
 ## HTTP API
 
 
-### <a id="registration-server"></a>GET the server of a userName
-This is normaly handled by DNS queries as **userName**.pryv.io should point to a *xyz*.pryv.net server.
+### <a id="registration-server"></a>GET the server of a username
+This is normaly handled by DNS queries as **username**.pryv.io should point to a *xyz*.pryv.net server.
 
 You may use this as a fallback in case of DNS inconsistency.
 
@@ -55,7 +55,7 @@ Responses as redirects
 
 ##### Response (JSON)
 
-* 200 to https://*xyz*.pryv.net/?userName=.....
+* 200 to https://*xyz*.pryv.net/?username=.....
 
 ##### Specific errors
 
@@ -71,7 +71,7 @@ Responses as redirects
 
 exemple : (everything went fine)
 
-	{"server": "xyz.pryv.net", "alias", "userName.pryv.io"}
+	{"server": "xyz.pryv.net", "alias", "username.pryv.io"}
 
 ##### Specific errors
 
@@ -115,7 +115,7 @@ If your software runs on a platform on which you can trust the user identity, yo
 
 ##### Post parameters (JSON)
 
-* `userName` (string): The user's unique name.
+* `username` (string): The user's unique name.
 * `password` (string): The user's password for accessing administration functions.
 * `email` (string): The user's e-mail address, unique to that user.
 * `languageCode` ([two-letter ISO language code](/DataTypes#TODO)): The user's preferred language. TODO: note about actual usage in service and clients.
@@ -133,7 +133,7 @@ exemple :
 ##### Specific errors
 
 * 400 (bad request), id `INVALID_DATA`: with a set of errors
-	* id `EXISTING_USER_NAME`: The requested userName is alerady used. You may check avalability with `GET /{user-name}/check`, see: [Check](#registration-check).
+	* id `EXISTING_USER_NAME`: The requested username is alerady used. You may check avalability with `GET /{user-name}/check`, see: [Check](#registration-check).
 	* id `INVALID_USER_NAME`: The given name cannot be used as a user name, see: [Rules](#registration-rules).
 	* id `INVALID_PASSWORD`: The given password does not fit password policy see: [Rules](#registration-rules).
 	* id `INVALID_EMAIL`: The given email is not recognized as valid.
@@ -181,7 +181,7 @@ Note: if the user is already confirmed, this will send an error, but also the se
 
 exemple : (everything went fine)
 
-	{"server": "test1.pryv.net", "alias": "userName.pryv.io"}
+	{"server": "test1.pryv.net", "alias": "username.pryv.io"}
 
 
 #### POST `/{challenge}/confirm`
@@ -203,7 +203,7 @@ Note: if user is already confirmed, this will send an error, but also the server
 
 exemple : (everything went fine)
 
-	{"server": "xyz.pryv.net", "alias": "userName.pryv.io"}
+	{"server": "xyz.pryv.net", "alias": "username.pryv.io"}
 
 ##### Specific errors
 
@@ -217,7 +217,7 @@ exemple : This username has already been confirmed
 	  "detail": "The registration for this user has already been confirmed.",
 	      "id": "ALREADY_CONFIRMED",
 	  "server": "test2.pryv.net",
-	   "alias": "userName.pryv.io"}
+	   "alias": "username.pryv.io"}
 
 
 ## WEB access

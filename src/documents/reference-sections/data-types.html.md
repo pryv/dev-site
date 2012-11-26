@@ -77,7 +77,7 @@ Fields:
 - `value` (object): Optional. The value associated with the event, if any. This may be a mathematical value (e.g. mass, money, length, position, etc.), or a link to a page, a picture or an attached file. To facilitate interoperability, event values are expected to have the following structure:
 	- `type` (TODO: value type): The value's type in the form `{type}:{unit}`, for example `mass:kg`. [TODO: link to the value types directory when ready.]
 	- `value` (boolean, number, string or `null`): The actual value in the specified type.
-- `comment` (string): Optional. User comment or note for the event.
+- `description` (string): Optional. User description or comment for the event.
 - `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
 	- `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
 	- `type` (string): The MIME type of the file.
@@ -92,14 +92,14 @@ TODO: review after tags are implemented.
 
 ```javascript
 [
-  { "time" : 1350365877.359, "comment" : "Some pics", "id" : "event_0", "folderId" : null,
+  { "time" : 1350365877.359, "description" : "Some pics", "id" : "event_0", "folderId" : null,
     "attachments" : {
       "Gina" : { "fileName" : "gina.jpeg", "type" : "image/jpeg", "size" : 1236701 },
       "Enzo" : { "fileName" : "enzo.jpeg", "type" : "image/jpeg", "size" : 1127465 }},
       "modified" : 1350463077.359 },
-  { "time" : 1350369477.359, "duration" : 7140, "comment": "A period of work",
+  { "time" : 1350369477.359, "duration" : 7140, "description": "A period of work",
     "id" : "event_1", "folderId" : "free-veggies", "modified" : 1350369477.359 },
-  { "time" : 1350373077.359, "comment" : "A position", "id" : "event_2", "folderId" : null,
+  { "time" : 1350373077.359, "description" : "A position", "id" : "event_2", "folderId" : null,
     "value": { "type": "position:WGS84", "value": "40.714728, -73.998672, 12" },
     "modified" : 1350373077.359 }
 ]
