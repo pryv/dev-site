@@ -16,29 +16,32 @@ html.no-js(lang='en')
     script(src='scripts/modernizr.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js')
     script(src='scripts/jquery.toc.min.js')
-    script(src='http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.1/bootstrap.min.js")
 
   body
     #main
       header#pageHeader
         //- TODO
-
+      h2 Go back to:
+      ul
+        li: a(href='index.html') Index page
+        li: a(href='reference.html') API reference
+        li: a(href='standard-structure.html') Standard data structure: default and recommended channels and folders
+      h2 Value Types Directory
       - var valueTypeFiles = getCollection('valueTypes').toJSON()
-      - var specialCases = []
-      mixin recursive(data)
-        ul.nav.nav-list
-          - for (var compName in data)
-            - var subData = data[compName]
-            - if(typeof subData === 'object')
-              li.nav-header
-                | !{compName} 
-                |:
-                mixin recursive(subData)
-            - else
-              li
-                | !{compName}  
-                |:
-                | !{subData}  
+      -//mixin recursive(data)
+        -//ul.nav.nav-list
+          - //for (var compName in data)
+            - //var subData = data[compName]
+            - //if(typeof subData === 'object')
+              -//li.nav-header
+                -//|!{compName} 
+                -//|:
+                -//mixin recursive(subData)
+            - //else
+              -//li
+                -//|!{compName}
+                -//|:
+                -//|!{subData} 
 
       #value_types
         - each valueTypeFile in valueTypeFiles
@@ -48,35 +51,55 @@ html.no-js(lang='en')
           - for(var typeName in types)
             - var typeObject = types[typeName]
             h3= typeName
+            div= typeObject.description
+            - var headers = []
+            if (typeObject.default)
+              - for(var defaultValue in typeObject.default)
+                - headers.push(defaultValue)
             - for (var subName in typeObject.sub)
               - var subObject = typeObject.sub[subName]
-              - var toDecompose = {name: subName, decompose:[]}
-              table.table
-                thead
+                - for(var subTypeName in subObject)
+                  - headers.push(subTypeName)
+            - headers = headers.filter(function(el,i,a){if(i==a.indexOf(el))return 1;return 0})
+            table.table
+              thead
+                tr
+                  -// name column.
+                  th(width='12%') name
+                  - each header in headers
+                    -// other custom columns.
+                    th= header
+              tbody
+                - for (var subName in typeObject.sub)
+                  - var subObject = typeObject.sub[subName]
+                  - var toDecompose = []
                   tr
-                    th name
-                    - for(var subTypeName in subObject)
-                        th= subTypeName
-                tbody
-                  tr
-                    td= subName
-                    - for(var subTypeName in subObject)
-                      - var subTypeContent = subObject[subTypeName]
+                    -// name column.
+                    td
+                      |!{typeName}
+                      |:
+                      |!{subName}
+                    - each header in headers
+                      -// other custom columns.
+                      - var subTypeContent = subObject[header]
+                      - if(!subTypeContent)
+                        - subTypeContent = typeObject.default[header]
                       - if(typeof subTypeContent === 'object')
-                        - toDecompose.decompose.push(subTypeName)
-                        td object (see description below)
+                        - toDecompose.push(header)
+                        td see row below
                       - else
                         td= subTypeContent
-              - specialCases.push(toDecompose) 
-            - each sp in specialCases
-              - if (sp.decompose.length)
-                h4= sp.name
-                - each obj in sp.decompose
-                  h5= obj
-                    | :
-                  - var moreToDecompose = typeObject.sub[sp.name][obj]
-                  mixin recursive(moreToDecompose)
-            - specialCases = []
+                    - if (toDecompose.length)
+                      - each decomp in toDecompose
+                        - var toDecompText = decomp 
+                        - toDecompText += ': ' + JSON.stringify(subObject[decomp])
+                        tr 
+                          td
+                            |!{typeName}
+                            |:
+                            |!{subName}
+                          td(colspan=headers.length)
+                            |!{toDecompText}
 
 
     #toc
