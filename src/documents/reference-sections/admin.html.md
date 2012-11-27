@@ -46,7 +46,7 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 
 #### Body parameters
 
-- `userName` (string)
+- `username` (string)
 - `password` (string)
 - `appId` (string): A URL-friendly name uniquely identifying your app. The value you provide is in any case slugified before use (see [how](https://github.com/dodo/node-slug/blob/master/src/slug.coffee)).
 
@@ -56,8 +56,8 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 
 #### cURL example
 
-```bash 
-curl -i -H "Content-Type: application/json" -X POST -d '{"userName":"{username}","password":"{password}","appId":"{appId}"}' https://{username}.pryv.io/admin/login
+```bash
+curl -i -H "Content-Type: application/json" -X POST -d '{"username":"{username}","password":"{password}","appId":"{appId}"}' https://{username}.pryv.io/admin/login
 ```
 
 ### POST `/admin/logout`
@@ -203,7 +203,7 @@ Deletes the specified shared access.
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -223,7 +223,7 @@ An array of [bookmarks](#data-types-bookmark) containing all sharing bookmarks i
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -242,7 +242,7 @@ The new bookmark's data: see [bookmark](#data-types-bookmark).
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -259,7 +259,7 @@ New values for the bookmark's fields: see [bookmark](#data-types-bookmark). All 
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -272,6 +272,6 @@ Deletes the specified sharing bookmark.
 
 #### cURL example
 
-```bash 
+```bash
 
 ```

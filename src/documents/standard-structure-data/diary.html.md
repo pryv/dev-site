@@ -1,62 +1,62 @@
 ---
-structureId: diary 
+structureId: diary
 structureOrder: 2
 ---
 
 # Default Channels and Folders
 
-## ```diary``` Channel 
+## ```diary``` Channel
 
 The diary channel aggregates all the thoughts and notes of a user, including her social activities.
 
-### ```notes``` Folder 
+### ```notes``` Folder
 
 For all text notes.
 
 #### Examples:
 
 1. Simple text note:
-```json 
+```json
 {
   value: {
     type: "note:TEXT",
     value: "I like cheese"
   },
-  comment: "",
+  description: "",
   date: "20110512 12:12:12",
   duration: null,
   tags: [],
-  attach: null 
+  attach: null
 }
 ```
 
 2. Html note with  an attached picture ```sunset.jpg```:
-```json      
+```json
 {
   value: {
     type: "note:HTML",
     value: "<p><img src="sunset.jpg" /> My nice poem goes here</p>"
   },
-  comment: "",
+  description: "",
   date: "20110512 12:12:12",
   duration: null,
   tags: [],
-  attach: "sunset.jpg" 
+  attach: "sunset.jpg"
 }
 ```
 
-### ```social``` Folder 
+### ```social``` Folder
 
 For all social content. Events are usually saved in the subfolder corresponding to the concerned social network.
 
-### ```social/facebook``` Folder  
+### ```social/facebook``` Folder
 
 For all facebook events.
 
 #### Examples:
 
 1. A facebook post with attached picture ```zz.jpg```:
-```json      
+```json
 {
   value: {
     type: "note:facebook",
@@ -65,11 +65,11 @@ For all facebook events.
       value: "blah blah <b>blah</b> <img src=zz.jpg>"
     }
   },
-  comment: "",
+  description: "",
   date: "20110512 12:12:12",
   duration: null,
   tags: [],
-  attach: "zz.jpg" 
+  attach: "zz.jpg"
 }
 ```
 
@@ -79,66 +79,66 @@ For all facebook events.
   value: {
     type: "relation:facebook",
     value: {
-      fbid:"8912819d21", 
-      name:"Toby", 
-      class:"friend", 
+      fbid:"8912819d21",
+      name:"Toby",
+      class:"friend",
       avatar:"pict1.jpg"
     }
   },
-  comment: "",
+  description: "",
   date: "20110512 12:12:12",
   duration: null,
   tags: [],
-  attach: "pict1.jpg" 
+  attach: "pict1.jpg"
 }
 ```
 
-### ```social/twitter``` Folder 
+### ```social/twitter``` Folder
 
 For all twitter-related events.
 
 #### Examples:
 
 1. A tweet:
-```json         
+```json
 {
   value: {
     type: "note:tweet",
     value: {
-      from:"pryv", 
+      from:"pryv",
       content:"Blah blah .. love Pryv .. so cool for you!"
-    }  
+    }
   },
-  comment: "",
+  description: "",
   date: "20110512 12:12:12",
   duration: null,
   tags: [],
-  attach: null 
+  attach: null
 }
 ```
 
-### ```social/twitter/followers``` Folder 
+### ```social/twitter/followers``` Folder
 
 To keep track of the user's number of followers at a given time.
 
 #### Examples:
 
 1. Number of followers:
-```json         
+```json
 {
   value: {
     type: "dimensionless",
-    value: 45 
+    value: 45
   },
-  comment: "followers",
+  description: "followers",
   date: "20110512 12:12:12",
   duration: null,
   tags: [],
-  attach: null 
+  attach: null
 }
 ```
 
-### ```social/conversation``` Folder 
+### ```social/conversation``` Folder
 
 In this folder, the user can keep track of her discussions on the phone, on skype, etc.
 
@@ -150,15 +150,15 @@ In this folder, the user can keep track of her discussions on the phone, on skyp
     type: "call:tel",
     value: [{tel:"+41.765766535"}]
   },
-  comment: "",
+  description: "",
   date: "20110512 12:12:12",
   duration: 360000,
   tags: ["person:tom"],
-  attach: null 
+  attach: null
 }
 ```
 
-### ```position``` Folder 
+### ```position``` Folder
 
 A user can save geolocation data in this folder.
 
