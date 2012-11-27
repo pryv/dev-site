@@ -1,4 +1,5 @@
 ---
+doc: reference
 sectionId: public-channels
 sectionOrder: 99
 ---

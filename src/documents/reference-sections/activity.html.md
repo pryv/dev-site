@@ -1,4 +1,5 @@
 ---
+doc: reference
 sectionId: activity
 sectionOrder: 2
 ---
@@ -60,7 +61,7 @@ An array of [activity channels](#data-types-channel)) containing the accessible 
 
 #### cURL example
 
-```bash 
+```bash
 curl -i https://{username}.pryv.io/channels?auth={access-token}
 ```
 
@@ -83,7 +84,7 @@ The new channel's data: see [activity channel](#data-types-channel).
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -100,7 +101,7 @@ New values for the channel's fields: see [activity channel](#data-types-channel)
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -118,7 +119,7 @@ Only personal accesses allow deleting channels.
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -155,7 +156,7 @@ An array of [activity events](#data-types-event) containing the accessible event
 
 #### cURL example
 
-```bash 
+```bash
 curl -i https://{username}.pryv.io/{channel-id}/events?auth={access-token}
 ```
 
@@ -185,7 +186,7 @@ The new event's data: see [activity event](#data-types-event).
 
 #### cURL example
 
-```bash 
+```bash
 curl -i -H "Content-Type: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{username}.pryv.io/{channel-id}/events?auth={access-token}
 ```
 
@@ -206,7 +207,7 @@ Starts a new period event, stopping the previously running period event if any. 
 
 #### cURL example
 
-```bash 
+```bash
 curl -i -H "Content-Type: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{username}.pryv.io/{channel-id}/events/start?auth={access-token}
 ```
 
@@ -223,7 +224,7 @@ Stops the previously running period event. See POST `/{channel-id}/events` for d
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -243,7 +244,7 @@ An array of [activity events](#data-types-event) containing the running period e
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -269,7 +270,7 @@ New values for the event's fields: see [activity event](#data-types-event). All 
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -284,7 +285,7 @@ TODO: example
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -302,7 +303,7 @@ Trashes or deletes the specified event, depending on its current state:
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -316,7 +317,7 @@ Gets the attached file.
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -332,7 +333,7 @@ Irreversibly deletes the attached file.
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -359,7 +360,7 @@ Batch upload events that were recorded by the client while offline. If the clien
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -395,7 +396,7 @@ TODO: example (with and without time accounting)
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -422,7 +423,7 @@ The new folder's data: see [activity folder](#data-types-folder).
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -449,7 +450,7 @@ TODO: example
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 
@@ -475,7 +476,7 @@ Trashes or deletes the specified folder, depending on its current state:
 
 #### cURL example
 
-```bash 
+```bash
 
 ```
 

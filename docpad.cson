@@ -5,8 +5,10 @@
         gfm: true
         sanitize: false
   collections:
+    overviewSections: (database) ->
+      database.createLiveChildCollection().findAll(doc: 'overview').setComparator(sectionOrder: 1)
     referenceSections: (database) ->
-      database.createLiveChildCollection().findAll(sectionOrder: $exists: true).setComparator(sectionOrder: 1)
+      database.createLiveChildCollection().findAll(doc: 'reference').setComparator(sectionOrder: 1)
     standardStructureData: (database) ->
       database.createLiveChildCollection().findAll(structureOrder: $exists: true).setComparator(structureOrder: 1)
     valueTypes: (database) ->

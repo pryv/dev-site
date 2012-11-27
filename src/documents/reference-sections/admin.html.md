@@ -1,4 +1,5 @@
 ---
+doc: reference
 sectionId: admin
 sectionOrder: 3
 ---
