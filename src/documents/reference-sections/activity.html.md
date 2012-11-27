@@ -481,3 +481,74 @@ Trashes or deletes the specified folder, depending on its current state:
 ```
 
 
+## <a id="activity-accesses"></a>Accesses
+
+While full access management is reserved for trusted apps via [methods in the administration](#admin-accesses), any app can retrieve and manage shared accesses depending on its own permissions. All methods here only deal with shared accesses whose permissions are a subset of that linked to the token used for the requests. (You'll get a `403 Forbidden` error if trying to touch other types of accesses, or shared accesses with greater permissions.)
+
+
+### GET `/admin/accesses`
+
+Gets all manageable shared accesses.
+
+#### Successful response: `200 OK`
+
+An array of [accesses](#data-types-access) containing all manageable shared accesses in the user's account, ordered by name.
+
+#### cURL example
+
+```bash
+curl -i -H "Authorization: {access-token}" https://{username}.pryv.io/accesses
+```
+
+
+### POST `/accesses`
+
+Creates a new shared access. You can only create accesses whose permissions are a subset of those linked to your own access token.
+
+#### Body parameters
+
+The new access's data: see [access](#data-types-access).
+
+#### Successful response: `201 Created`
+
+- `token` ([identity](#data-types-identity)): The created access's token.
+
+#### Specific errors
+
+- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
+
+#### cURL example
+
+```bash
+
+```
+
+
+### PUT `/admin/accesses/{token}`
+
+Modifies the specified shared access. You can only modify accesses whose permissions are a subset of those linked to your own access token.
+
+#### Body parameters
+
+New values for the access's fields: see [access](#data-types-access). All fields are optional, and only modified values must be included. TODO: example
+
+#### Successful response: `200 OK`
+
+#### cURL example
+
+```bash
+
+```
+
+
+### DELETE `/admin/accesses/{token}`
+
+Deletes the specified shared access. You can only delete accesses whose permissions are a subset of those linked to your own access token.
+
+#### Successful response: `200 OK`
+
+#### cURL example
+
+```bash
+
+```
