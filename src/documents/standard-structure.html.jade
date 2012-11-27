@@ -9,22 +9,138 @@ html.no-js(lang='en')
     title Pryv API standard data structure
     meta(name='description', content='TODO')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='prettify.min.css')
     link(rel='stylesheet', type='text/css', href='github.css')
     link(rel='stylesheet', type='text/css', href='highlight.css')
     link(rel='stylesheet', type='text/css', href='style.css')
     script(src='scripts/modernizr.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js')
     script(src='scripts/jquery.toc.min.js')
+    script(src='scripts/prettify.js')
 
   body
     #main
       header#pageHeader
 
-      - var structures = getCollection('standardStructureData').toJSON()
-
       #structures
-        each structure in structures
-          section(id='#{structure.structureId}')!= structure.contentRendered
+
+        h2 Documentation
+        ul
+          li: a(href='index.html') Index page
+          li: a(href='reference.html') API reference
+          li: a(href='value-types.html') Value types directory 
+
+        h2 Standard Data Structures
+        div In this section, we present all the channels and folders we recommend to use in Pryv. Where appropriate, we also present fictional elements to illustrate how and where you could create your own channels and folders.
+        h3 Conventions 
+        div
+          ul
+            li 
+              code recommended
+              |  in this document, whenever this keyword is used, it means that the concerned channel or folder is predefined and known to Pryv. Its 
+              code id
+              |  is reserved and can be used to access it. We advise you to use the 
+              code recommended
+              |  channels and folders as much as possible, unless the specific needs of your app requires a dedicated channel/folder that doesn't correspond to any presented here.
+            li 
+              code example
+              |  in this document, this keyword is used to represent channels and folders that are given here as examples of elements you could create to fit your app's purposes. They are not predefined in Pryv and thus have no fixed 
+              code id
+              |.
+            li 
+              code id
+              |  this property exists for all channels and folders and represents their unique identifier. In this document, in cases where the channel/folder is given as an example, the 
+              code id
+              |  property is not provided as it could be anything.
+
+
+
+        - // For iterating on and displaying subfolders.
+        mixin iterateSubfolders(container, firstFolder)
+          - each folder in container.folders
+            // Prepend folder name with its path.
+            - folder.name = container.name + '/' + folder.name
+            tr
+              td
+                - if (folder.id)
+                  code recommended
+                - else
+                  code example
+                  - folder.id = ''
+              - for (var propId in firstFolder)
+                - if (propId !== 'eventExamples' && propId !== 'folders')
+                  td= folder[propId]
+            mixin iterateSubfolders(folder, firstFolder)
+
+        - // Constant to know if a channel has some examples. 
+        - var noExamples = true
+
+        - // For iterating and displaying examples.
+        mixin displayExamples(container)
+          - var examples = container.eventExamples
+          - if (examples && examples.length)
+            - noExamples = false
+            div Events saved in !{container.name}
+            - each example in examples
+              - var exampleString = JSON.stringify(example, null, 4)
+              pre= exampleString
+          - var folders = container.folders
+            - each folder in folders
+              mixin displayExamples(folder)
+          
+
+        - var structureFiles = getCollection('standardStructureData').toJSON()
+        - each structureFile in structureFiles
+          - var content = JSON.parse(structureFile.body)
+          - var version = content.version.version
+          - var channels = content['channels']
+          - each channel in channels
+            h3 !{channel.name} Channel 
+            div#info.well
+              div= channel.description
+              div This channel is:  
+                - if (channel.id)
+                  code recommended
+                - else
+                  code example
+                  - channel.id = ''
+
+            h4 Folders
+            - if (channel.folders.length)
+              - var firstFolder = channel.folders[0]
+              table
+                thead
+                  tr
+                    th 
+                    - for (var propId in firstFolder)
+                      - if (propId !== 'eventExamples' && propId !== 'folders')
+                        th= propId
+                tbody
+                  - each folder in channel.folders
+                    tr
+                      td
+                        - if (folder.id)
+                          code recommended
+                        - else
+                          code example
+                          - folder.id = ''
+                      - for (var propId in firstFolder)
+                        - if (propId !== 'eventExamples' && propId !== 'folders')
+                          td= folder[propId]
+                    mixin iterateSubfolders(folder, firstFolder)
+            - else
+              div no folders in this channel for now.
+
+            - // Make event examples visibility optional.
+            h4 
+              a(onclick='javascript:$("'+channel.name+'").toggle()') Examples of Events
+            #{channel.name}(style='display:none;')
+              - noExamples = true
+              mixin displayExamples(channel)
+              - if (noExamples)
+                |No examples for this channel.
+
 
     #toc
       //- content generated by TOC plugin (see below)
@@ -32,7 +148,7 @@ html.no-js(lang='en')
     script
       jQuery(document).ready(function($) {
         $('#toc').toc({
-          'selectors': 'h1,h2,h3',
+          'selectors': 'h2,h3',
           'container': '#structures',
           'smoothScrolling': false,
           'prefix': 'toc',

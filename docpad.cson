@@ -8,7 +8,7 @@
     referenceSections: (database) ->
       database.createLiveChildCollection().findAll(sectionOrder: $exists: true).setComparator(sectionOrder: 1)
     standardStructureData: (database) ->
-      database.createLiveChildCollection().findAll(structureOrder: $exists: true).setComparator(structureOrder: 1)
+      database.createLiveChildCollection().findAll(standardStructOrder: $exists: true).setComparator(standardStructOrder: 1)
     valueTypes: (database) ->
       database.createLiveChildCollection().findAll(valueTypesOrder: $exists: true).setComparator(valueTypesOrder: 1)
 }
