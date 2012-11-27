@@ -21,29 +21,34 @@ html.no-js(lang='en')
     #main
       header#pageHeader
         //- TODO
-      h2 Go back to:
-      ul
-        li: a(href='index.html') Index page
-        li: a(href='reference.html') API reference
-        li: a(href='standard-structure.html') Standard data structure: default and recommended channels and folders
-      h2 Value Types Directory
-      - var valueTypeFiles = getCollection('valueTypes').toJSON()
-      -//mixin recursive(data)
-        -//ul.nav.nav-list
-          - //for (var compName in data)
-            - //var subData = data[compName]
-            - //if(typeof subData === 'object')
-              -//li.nav-header
-                -//|!{compName} 
-                -//|:
-                -//mixin recursive(subData)
-            - //else
-              -//li
-                -//|!{compName}
-                -//|:
-                -//|!{subData} 
-
       #value_types
+
+        h2 Documentation
+        ul
+          li: a(href='index.html') Index page
+          li: a(href='reference.html') API reference
+          li: a(href='standard-structure.html') Standard data structure: default and recommended channels and folders
+        h2 Useful links
+        ul
+          li: a(href='http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8') Inspiration for describing types 
+          li: a(href='https://developers.facebook.com/docs/reference/api/event/') Facebook documentation on events
+        h2 Value Types Directory
+         - var valueTypeFiles = getCollection('valueTypes').toJSON()
+        -//mixin recursive(data)
+          -//ul.nav.nav-list
+            - //for (var compName in data)
+              - //var subData = data[compName]
+              - //if(typeof subData === 'object')
+                -//li.nav-header
+                  -//|!{compName} 
+                  -//|:
+                  -//mixin recursive(subData)
+              - //else
+                -//li
+                  -//|!{compName}
+                  -//|:
+                  -//|!{subData} 
+
         - each valueTypeFile in valueTypeFiles
           - var content = JSON.parse(valueTypeFile.body)
           - var version = content.version.version
@@ -108,7 +113,7 @@ html.no-js(lang='en')
     script
       jQuery(document).ready(function($) {
         $('#toc').toc({
-          'selectors': 'h1,h2,h3',
+          'selectors': 'h2,h3',
           'container': '#value_types',
           'smoothScrolling': false,
           'prefix': 'toc',
