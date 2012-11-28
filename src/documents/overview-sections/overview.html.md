@@ -13,8 +13,8 @@ The API is the HTTP programming interface to Pryv, which allows you to integrate
 
 There are two different uses for the API:
 
-- Most apps will want to interact with [Pryv activity data](#activity). Recording and managing of activity data (events and their organization into folders and tags) is protected by [accesses](#data-types-access) to allow easy [sharing](#sharing).
-- Some apps may need to access [user account administration](#admin), which includes the management of data sharing (via accesses) and activity channels (in addition to the user account itself). Administration is protected by personal authentication and expiring sessions.
+- Most apps will want to interact with [Pryv activity data](reference.html#activity). Recording and managing of activity data (events and their organization into folders and tags) is protected by [accesses](reference.html#data-types-access) to allow easy [sharing](#sharing).
+- Some apps may need to access [user account administration](reference.html#admin), which includes the management of data sharing (via accesses) and activity channels (in addition to the user account itself). Administration is protected by personal authentication and expiring sessions.
 
 [TODO: add simple schema here]
 
@@ -53,5 +53,5 @@ For the present time, accesses are not personal. Access tokens act exactly like 
 
 For more details see:
 
-- Accesses [management](#admin-accesses) and [data structure](#data-types-access)
-- Bookmarks [management](#admin-bookmarks) and [data structure](#data-types-bookmark)
+- Accesses [management](reference.html#admin-accesses) and [data structure](reference.html#data-types-access)
+- Bookmarks [management](reference.html#admin-bookmarks) and [data structure](reference.html#data-types-bookmark)
