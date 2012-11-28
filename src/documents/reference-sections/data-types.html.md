@@ -1,4 +1,5 @@
 ---
+doc: reference
 sectionId: data-types
 sectionOrder: 5
 ---
@@ -10,7 +11,7 @@ TODO: introductory text.
 
 ## <a id="data-types-access"></a>Access
 
-An access defines a set of permissions on a user's activity data (channels, folders and events). (See [how sharing works](#overview-sharing).)
+An access defines a set of permissions on a user's activity data (channels, folders and events). (See [how sharing works](overview.html#sharing).)
 
 Fields:
 

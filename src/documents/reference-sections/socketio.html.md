@@ -1,4 +1,5 @@
 ---
+doc: reference
 sectionId: socketio
 sectionOrder: 4
 ---
@@ -13,7 +14,7 @@ The activity service supports real-time interaction with [Socket.IO](http://sock
 In order to use Socket.IO, your app must first load the appropriate Socket.IO client library. For a Javascript web app, that's the `socket.io.js` file served by the activity server at the following URL: ```https://{username}.pryv.io/socket.io/socket.io.js```. (For other languages see the related section on the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki).)
 
 The second step is to initialize the connection. Here's the URL you need to use:
-``` 
+```
 https://{username}.pryv.io:443/{username}?auth={accessToken}&resource=/{username}
 ```
 For example, in Javascript do:

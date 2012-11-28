@@ -1,6 +1,6 @@
 ---
+# commented out to exclude registration from the reference: #doc: reference
 sectionId: registration
-# commented out to exclude registration from the default doc: sectionOrder: 3
 ---
 
 # Registration service
