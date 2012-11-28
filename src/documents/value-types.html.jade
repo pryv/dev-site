@@ -31,23 +31,9 @@ html.no-js(lang='en')
         h2 Useful links
         ul
           li: a(href='http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8') Inspiration for describing types 
-          li: a(href='https://developers.facebook.com/docs/reference/api/event/') Facebook documentation on events
+          li: a(href='https://developers.facebook.com/docs/reference/api/post/') Facebook documentation on posts
         h2 Value Types Directory
-         - var valueTypeFiles = getCollection('valueTypes').toJSON()
-        -//mixin recursive(data)
-          -//ul.nav.nav-list
-            - //for (var compName in data)
-              - //var subData = data[compName]
-              - //if(typeof subData === 'object')
-                -//li.nav-header
-                  -//|!{compName} 
-                  -//|:
-                  -//mixin recursive(subData)
-              - //else
-                -//li
-                  -//|!{compName}
-                  -//|:
-                  -//|!{subData} 
+        - var valueTypeFiles = getCollection('valueTypes').toJSON()
 
         - each valueTypeFile in valueTypeFiles
           - var content = JSON.parse(valueTypeFile.body)
@@ -72,39 +58,33 @@ html.no-js(lang='en')
                   -// name column.
                   th(width='12%') name
                   - each header in headers
-                    -// other custom columns.
-                    th= header
+                    - if (header !== 'properties')
+                      -// other custom columns.
+                      th= header
               tbody
                 - for (var subName in typeObject.sub)
                   - var subObject = typeObject.sub[subName]
-                  - var toDecompose = []
                   tr
                     -// name column.
-                    td
-                      |!{typeName}
-                      |:
-                      |!{subName}
+                    td(rowspan=2, style='vertical-align:middle;')!{typeName}:!{subName}
                     - each header in headers
                       -// other custom columns.
                       - var subTypeContent = subObject[header]
                       - if(!subTypeContent)
                         - subTypeContent = typeObject.default[header]
-                      - if(typeof subTypeContent === 'object')
-                        - toDecompose.push(header)
-                        td see row below
-                      - else
+                      - if(header !== 'properties')
                         td= subTypeContent
-                    - if (toDecompose.length)
-                      - each decomp in toDecompose
-                        - var toDecompText = decomp 
-                        - toDecompText += ': ' + JSON.stringify(subObject[decomp])
-                        tr 
-                          td
-                            |!{typeName}
-                            |:
-                            |!{subName}
-                          td(colspan=headers.length)
-                            |!{toDecompText}
+                    - // Handle properties in a separate row.
+                    tr 
+                      td(colspan=headers.length)
+                        - if (!subObject['properties'])
+                          b properties:
+                          |  -
+                        - else
+                          - var propText = JSON.stringify(subObject['properties'], null, 4)
+                          b properties:
+                          br
+                          pre= propText
 
 
     #toc
