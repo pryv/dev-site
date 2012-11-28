@@ -10,7 +10,7 @@
     referenceSections: (database) ->
       database.createLiveChildCollection().findAll(doc: 'reference').setComparator(sectionOrder: 1)
     standardStructureData: (database) ->
-      database.createLiveChildCollection().findAll(standardStructOrder: $exists: true).setComparator(standardStructOrder: 1)
-    valueTypes: (database) ->
-      database.createLiveChildCollection().findAll(valueTypesOrder: $exists: true).setComparator(valueTypesOrder: 1)
+      database.createLiveChildCollection().findAll(doc: 'standard-structure').setComparator(standardStructOrder: 1)
+    valueTypeSections: (database) ->
+      database.createLiveChildCollection().findAll(doc: 'value-types').setComparator(valueTypesOrder: 1)
 }

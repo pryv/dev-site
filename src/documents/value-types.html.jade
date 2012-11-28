@@ -20,21 +20,19 @@ html.no-js(lang='en')
   body
     #main
       header#pageHeader
-        //- TODO
+        a(href='index.html') Home
+
       #value_types
 
-        h2 Documentation
-        ul
-          li: a(href='index.html') Index page
-          li: a(href='reference.html') API reference
-          li: a(href='standard-structure.html') Standard data structure: default and recommended channels and folders
+        h1 Value Types Directory
+
         h2 Useful links
         ul
           li: a(href='http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8') Inspiration for describing types 
           li: a(href='https://developers.facebook.com/docs/reference/api/post/') Facebook documentation on posts
-        h2 Value Types Directory
-        - var valueTypeFiles = getCollection('valueTypes').toJSON()
+        - var valueTypeFiles = getCollection('valueTypeSections').toJSON()
 
+        h2 Value Types
         - each valueTypeFile in valueTypeFiles
           - var content = JSON.parse(valueTypeFile.body)
           - var version = content.version.version
