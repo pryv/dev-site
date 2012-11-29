@@ -17,7 +17,7 @@ Fields:
 
 - `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access.
 - `name` (string): Unique. The name identifying the access for the user. It can be the client application's name for automatically generated personal accesses, or any user-defined value for manually created accesses.
-- `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type – or usage – of the access. Default: `"shared"`.
+- `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
 - `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
 	- `channelId` ([identity](#data-structure-identity)): The accessible channel's id.
 	- `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the channel. With `"contribute"`, the access's token holder(s) can see and record events in the channel; with `"manage"`, the access's token holder(s) can in addition modify the channel itself. This is overridden if specific folder permissions are defined (see below).
@@ -72,12 +72,12 @@ Fields:
 
 - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
 - `time` ([timestamp](#data-structure-timestamp)): The event's time. For period events, this is the time the event started.
-- `clientId` (string): A client-assigned identifier for the event when created offline, for temporary reference. Only used in batch event creation requests. [TODO: currently not implemented; linked to batch creation request.]
+- `duration` ([timestamp](#data-structure-timestamp) difference): Optional. If present, indicates that the event is a period event. Running period events have a duration set to `null`. (We use a dedicated field for duration — instead of using the `value` field — as we do specific processing of event durations, intervals and overlapping.)
+- `type` (object): The type of the event. See the [value types directory](value-types.html) for a list of standard types.
+	- `class` (string): The type's class. Events in the same class are considered comparable and convertible.
+	- `format` (string): The type's format. Depending on the class, it may indicate a measurement unit, a currency, a string format, an object structure, etc. Together with `class`, it indicates how to handle the event's `value`, if any.
+- `value` (any type): Optional. The value associated with the event, if any. Depending on the `type`, this may be a mathematical value (e.g. mass, money, length, position, etc.), a link to a page, location coordinates, etc.
 - `folderId`([identity](#data-structure-identity)): Optional. Indicates the particular folder the event is associated with, if any.
-- `duration` ([timestamp](#data-structure-timestamp) difference): Optional. If present, indicates that the event is a period event. Running period events have a duration set to `null`. (We use a dedicated field for duration - instead of using the `value` field - as we need specific processing of event durations, intervals and overlapping.)
-- `value` (object): Optional. The value associated with the event, if any. This may be a mathematical value (e.g. mass, money, length, position, etc.), or a link to a page, a picture or an attached file. To facilitate interoperability, event values are expected to have the following structure:
-	- `type` (TODO: value type): The value's type in the form `{type}:{unit}`, for example `mass:kg`. [TODO: link to the value types directory when ready.]
-	- `value` (boolean, number, string or `null`): The actual value in the specified type.
 - `description` (string): Optional. User description or comment for the event.
 - `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
 	- `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
