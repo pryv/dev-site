@@ -52,12 +52,12 @@ The API uses JSON for serializing data. Here's what an event can look like:
 The following headers are included in every response:
 
 - `API-Version`: The version of the API in the form `{major}.{minor}.{revision}`.
-- `Server-Time`: The current server time as a [timestamp](#data-types-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
+- `Server-Time`: The current server time as a [timestamp](#data-structure-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
 
 
 ## Errors
 
-When an error occurs, the API returns a 4xx or 5xx status code, with the response body usually containing an [error](#data-types-error) object detailing the cause.
+When an error occurs, the API returns a 4xx or 5xx status code, with the response body usually containing an [error](#data-structure-error) object detailing the cause.
 
 Here's an example "401 Unauthorized" error response:
 ```json

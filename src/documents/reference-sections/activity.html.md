@@ -11,7 +11,7 @@ TODO: introductory text
 
 ## Authorization
 
-All requests for retrieving and manipulating activity data must carry a valid [access token](#data-types-access) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter.  (You get the token itself either by retrieving it in the [administration](#admin-accesses) or from sharing.)
+All requests for retrieving and manipulating activity data must carry a valid [access token](#data-structure-access) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter.  (You get the token itself either by retrieving it in the [administration](#admin-accesses) or from sharing.)
 
 Here's what a proper request looks like:
 ```http
@@ -32,7 +32,7 @@ Here are errors commonly returned for requests:
 - `400 Bad Request`, id `INVALID_REQUEST_STRUCTURE`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
 - `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
 - `401 Unauthorized`, id `INVALID_ACCESS_TOKEN`: The data access token is missing or invalid.
-- `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-types-access) for more details about accesses and permissions.
+- `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
 - `404 Not Found`, possible cases:
 	- Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
 	- Id `UNKNOWN_FOLDER`: The activity folder can't be found in the specified channel.
@@ -42,7 +42,7 @@ Here are errors commonly returned for requests:
 
 ## Channels
 
-For retrieving and manipulating [channels](#data-types-channel).
+For retrieving and manipulating [channels](#data-structure-channel).
 
 
 ### GET `/channels`
@@ -57,7 +57,7 @@ Gets the accessible activity channels (excluding those in the trash).
 
 #### Successful response: `200 OK`
 
-An array of [activity channels](#data-types-channel)) containing the accessible channels in the user's account matching the specified state, ordered by name.
+An array of [activity channels](#data-structure-channel)) containing the accessible channels in the user's account matching the specified state, ordered by name.
 
 #### cURL example
 
@@ -72,11 +72,11 @@ Creates a new activity channel. Only personal accesses allow creating new channe
 
 #### Body parameters
 
-The new channel's data: see [activity channel](#data-types-channel).
+The new channel's data: see [activity channel](#data-structure-channel).
 
 #### Successful response: `201 Created`
 
-- `id` ([identity](#data-types-identity)): The created channel's id.
+- `id` ([identity](#data-structure-identity)): The created channel's id.
 
 #### Specific errors
 
@@ -95,7 +95,7 @@ Modifies the activity channel's attributes.
 
 #### Body parameters
 
-New values for the channel's fields: see [activity channel](#data-types-channel). All fields are optional, and only modified values must be included. TODO: example
+New values for the channel's fields: see [activity channel](#data-structure-channel). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
 
@@ -126,7 +126,7 @@ Only personal accesses allow deleting channels.
 
 ## Events
 
-Methods to retrieve and manipulate [events](#data-types-event).
+Methods to retrieve and manipulate [events](#data-structure-event).
 
 
 ### GET `/{channel-id}/events`
@@ -137,18 +137,18 @@ Queries accessible events.
 
 #### Query string parameters
 
-- `fromTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
-- `toTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is the current time.
-- `onlyFolders` (array of [identity](#data-types-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
+- `fromTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
+- `toTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is the current time.
+- `onlyFolders` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
 - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 - `skip` (number): Optional. The number of items to skip in the results.
 - `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
 - `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-- `modifiedSince` ([timestamp](#data-types-timestamp)): Optional. If specified, only events modified since that time will be returned.
+- `modifiedSince` ([timestamp](#data-structure-timestamp)): Optional. If specified, only events modified since that time will be returned.
 
 #### Successful response: `200 OK`
 
-An array of [activity events](#data-types-event) containing the accessible events ordered by time (see `sortAscending` above).
+An array of [activity events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
 
 #### Specific errors
 
@@ -173,12 +173,12 @@ TODO: example
 
 #### Body parameters
 
-The new event's data: see [activity event](#data-types-event).
+The new event's data: see [activity event](#data-structure-event).
 
 #### Successful response: `201 Created`
 
-- `id` ([identity](#data-types-identity)): The new event's id.
-- `stoppedId` ([identity](#data-types-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+- `id` ([identity](#data-structure-identity)): The new event's id.
+- `stoppedId` ([identity](#data-structure-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
 
 #### Specific errors
 
@@ -220,7 +220,7 @@ Stops the previously running period event. See POST `/{channel-id}/events` for d
 
 #### Successful response: `200 OK`
 
-- `stoppedId` ([identity](#data-types-identity)): The id of the previously running period event that was stopped, or null if no running event was found.
+- `stoppedId` ([identity](#data-structure-identity)): The id of the previously running period event that was stopped, or null if no running event was found.
 
 #### cURL example
 
@@ -240,7 +240,7 @@ Gets the currently running period events.
 
 #### Successful response: `200 OK`
 
-An array of [activity events](#data-types-event) containing the running period events.
+An array of [activity events](#data-structure-event) containing the running period events.
 
 #### cURL example
 
@@ -257,11 +257,11 @@ Modifies the activity event's attributes.
 
 #### Body parameters
 
-New values for the event's fields: see [activity event](#data-types-event). All fields are optional, and only modified values must be included. TODO: example
+New values for the event's fields: see [activity event](#data-structure-event). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
 
-- `stoppedId` ([identity](#data-types-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+- `stoppedId` ([identity](#data-structure-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
 
 #### Specific errors
 
@@ -345,11 +345,11 @@ Batch upload events that were recorded by the client while offline. If the clien
 
 #### Body parameters
 
-- `events` (array of [activity events](#data-types-event)): The client-recorded events. The `clientId` must be set for each event. Each event's time must be set in server time.
+- `events` (array of [activity events](#data-structure-event)): The client-recorded events. The `clientId` must be set for each event. Each event's time must be set in server time.
 
 #### Successful response: `200 OK`
 
-- `addedEvents` (array of [activity events](#data-types-event): The successfully added events, with their server-assigned ids and `clientId` for reference.
+- `addedEvents` (array of [activity events](#data-structure-event): The successfully added events, with their server-assigned ids and `clientId` for reference.
 
 #### Specific errors
 
@@ -367,7 +367,7 @@ Batch upload events that were recorded by the client while offline. If the clien
 
 ## Folders
 
-Methods to retrieve and manipulate [folders](#data-types-folder).
+Methods to retrieve and manipulate [folders](#data-structure-folder).
 
 
 ### GET `/{channel-id}/folders`
@@ -378,14 +378,14 @@ Gets the accessible folders, either from the root level or only descending from 
 
 #### Query string parameters
 
-- `parentId` ([identity](#data-types-identity)): Optional. The id of the parent folder to use as root for the request. Default: `null` (returns all accessible folders from the root level).
+- `parentId` ([identity](#data-structure-identity)): Optional. The id of the parent folder to use as root for the request. Default: `null` (returns all accessible folders from the root level).
 - `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
 - `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-- `timeCountBase` ([timestamp](#data-types-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-types-folder)); otherwise no time count values will be returned.
+- `timeCountBase` ([timestamp](#data-structure-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-structure-folder)); otherwise no time count values will be returned.
 
 #### Successful response: `200 OK`
 
-An array of [activity folders](#data-types-folder) containing the tree of the accessible folders, sorted by name.
+An array of [activity folders](#data-structure-folder) containing the tree of the accessible folders, sorted by name.
 
 #### Specific errors
 
@@ -409,11 +409,11 @@ Creates a new folder at the root level or as a child folder to the specified fol
 
 #### Body parameters
 
-The new folder's data: see [activity folder](#data-types-folder).
+The new folder's data: see [activity folder](#data-structure-folder).
 
 #### Successful response: `201 Created`
 
-- `id` ([identity](#data-types-identity)): The created folder's id.
+- `id` ([identity](#data-structure-identity)): The created folder's id.
 
 #### Specific errors
 
@@ -436,7 +436,7 @@ Modifies the activity folder's attributes.
 
 #### Body parameters
 
-New values for the folder's fields: see [activity folder](#data-types-folder). All fields are optional, and only modified values must be included.
+New values for the folder's fields: see [activity folder](#data-structure-folder). All fields are optional, and only modified values must be included.
 
 TODO: example
 
@@ -492,7 +492,7 @@ Gets all manageable shared accesses.
 
 #### Successful response: `200 OK`
 
-An array of [accesses](#data-types-access) containing all manageable shared accesses in the user's account, ordered by name.
+An array of [accesses](#data-structure-access) containing all manageable shared accesses in the user's account, ordered by name.
 
 #### cURL example
 
@@ -507,11 +507,11 @@ Creates a new shared access. You can only create accesses whose permissions are 
 
 #### Body parameters
 
-The new access's data: see [access](#data-types-access).
+The new access's data: see [access](#data-structure-access).
 
 #### Successful response: `201 Created`
 
-- `token` ([identity](#data-types-identity)): The created access's token.
+- `token` ([identity](#data-structure-identity)): The created access's token.
 
 #### Specific errors
 
@@ -530,7 +530,7 @@ Modifies the specified shared access. You can only modify accesses whose permiss
 
 #### Body parameters
 
-New values for the access's fields: see [access](#data-types-access). All fields are optional, and only modified values must be included. TODO: example
+New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
 

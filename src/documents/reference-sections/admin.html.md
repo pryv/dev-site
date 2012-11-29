@@ -133,7 +133,7 @@ Gets the token of the personal access your app must use when accessing the user'
 
 #### Successful response: `200 OK`
 
-- `id` ([identity](#data-types-identity)): Your app's dedicated personal [access](#data-types-access) token.
+- `id` ([identity](#data-structure-identity)): Your app's dedicated personal [access](#data-structure-access) token.
 
 #### cURL example
 
@@ -147,7 +147,7 @@ Gets all manageable accesses, which are the shared accesses. (Your app's own acc
 
 #### Successful response: `200 OK`
 
-An array of [accesses](#data-types-access) containing all manageable accesses in the user's account, ordered by name.
+An array of [accesses](#data-structure-access) containing all manageable accesses in the user's account, ordered by name.
 
 #### cURL example
 
@@ -162,11 +162,11 @@ Creates a new shared access.
 
 #### Body parameters
 
-The new access's data: see [access](#data-types-access).
+The new access's data: see [access](#data-structure-access).
 
 #### Successful response: `201 Created`
 
-- `token` ([identity](#data-types-identity)): The created access's token.
+- `token` ([identity](#data-structure-identity)): The created access's token.
 
 #### Specific errors
 
@@ -185,7 +185,7 @@ Modifies the specified shared access.
 
 #### Body parameters
 
-New values for the access's fields: see [access](#data-types-access). All fields are optional, and only modified values must be included. TODO: example
+New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
 
@@ -220,7 +220,7 @@ Gets all of the user's sharing bookmarks.
 
 #### Successful response: `200 OK`
 
-An array of [bookmarks](#data-types-bookmark) containing all sharing bookmarks in the user's account, ordered by name.
+An array of [bookmarks](#data-structure-bookmark) containing all sharing bookmarks in the user's account, ordered by name.
 
 #### cURL example
 
@@ -235,11 +235,11 @@ Creates a new sharing bookmark.
 
 #### Body parameters
 
-The new bookmark's data: see [bookmark](#data-types-bookmark).
+The new bookmark's data: see [bookmark](#data-structure-bookmark).
 
 #### Successful response: `201 Created`
 
-- `id` ([identity](#data-types-identity)): The created bookmark's id.
+- `id` ([identity](#data-structure-identity)): The created bookmark's id.
 
 #### cURL example
 
@@ -254,7 +254,7 @@ Modifies the specified sharing bookmark.
 
 #### Body parameters
 
-New values for the bookmark's fields: see [bookmark](#data-types-bookmark). All fields are optional, and only modified values must be included. TODO: example
+New values for the bookmark's fields: see [bookmark](#data-structure-bookmark). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
 

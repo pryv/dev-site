@@ -35,17 +35,17 @@ As you can expect, there is no authorization mechanism for accessing public chan
 The following headers must be included in every response:
 
 - `API-Version`: The version of the public channel API in the form `{major}.{minor}.{revision}`. (TODO: indicate documented version somewhere.)
-- `Server-Time`: The current server time as a [timestamp](#data-types-timestamp), which must of course be consistent with the times of events in the channel.
+- `Server-Time`: The current server time as a [timestamp](#data-structure-timestamp), which must of course be consistent with the times of events in the channel.
 
 
 ### Data
 
-The JSON data exchanged is the same as in the Pryv API: see [events](#data-types-event), [folders](#data-types-folder) and [errors](#data-types-error) there.
+The JSON data exchanged is the same as in the Pryv API: see [events](#data-structure-event), [folders](#data-structure-folder) and [errors](#data-structure-error) there.
 
 
 ## Events
 
-At a minimum, public channels publish [events](#data-types-event).
+At a minimum, public channels publish [events](#data-structure-event).
 
 
 ### GET `{channel base path}/events`
@@ -54,17 +54,17 @@ Queries the channel's events. This is the only method that must be implemented i
 
 #### Query string parameters
 
-- `fromTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
-- `toTime` ([timestamp](#data-types-timestamp)): Optional. TODO. Default is the current time.
-- `onlyFolders` (array of [identity](#data-types-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
+- `fromTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
+- `toTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is the current time.
+- `onlyFolders` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
 - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 - `skip` (number): Optional. The number of items to skip in the results.
 - `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
-- `modifiedSince` ([timestamp](#data-types-timestamp)): Optional. If specified, only events modified since that time will be returned.
+- `modifiedSince` ([timestamp](#data-structure-timestamp)): Optional. If specified, only events modified since that time will be returned.
 
 #### Successful response: `200 OK`
 
-An array of [activity events](#data-types-event) containing the accessible events ordered by time (see `sortAscending` above).
+An array of [activity events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
 
 #### Errors
 
@@ -85,7 +85,7 @@ Gets the attached file. This method does not have to be implemented if the publi
 
 ## Folders
 
-[Folders](#data-types-folder) provide an organization structure for channels that need it. Implementing folders in public channels is by no means mandatory; public channels with no need for folders just return a `404 Not Found` response for the method below.
+[Folders](#data-structure-folder) provide an organization structure for channels that need it. Implementing folders in public channels is by no means mandatory; public channels with no need for folders just return a `404 Not Found` response for the method below.
 
 
 ### GET `{channel base path}/folders`
@@ -94,11 +94,11 @@ Gets the channel's folders, either from the root level or only descending from a
 
 #### Query string parameters
 
-- `parentId` ([identity](#data-types-identity)): Optional. The id of the parent folder to use as root for the request. Default: `null` (returns all folders from the root level).
+- `parentId` ([identity](#data-structure-identity)): Optional. The id of the parent folder to use as root for the request. Default: `null` (returns all folders from the root level).
 
 #### Successful response: `200 OK`
 
-An array of [activity folders](#data-types-folder) containing the tree of the folders, sorted by name.
+An array of [activity folders](#data-structure-folder) containing the tree of the folders, sorted by name.
 
 #### Errors
 
