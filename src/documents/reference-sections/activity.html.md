@@ -66,7 +66,7 @@ curl -i https://{username}.pryv.io/channels?auth={access-token}
 ```
 
 
-### POST `/admin/channels`
+### POST `/channels`
 
 Creates a new activity channel. Only personal accesses allow creating new channels.
 
@@ -89,7 +89,7 @@ The new channel's data: see [activity channel](#data-types-channel).
 ```
 
 
-### PUT `/admin/channels/{channel-id}`
+### PUT `/channels/{channel-id}`
 
 Modifies the activity channel's attributes.
 
@@ -106,7 +106,7 @@ New values for the channel's fields: see [activity channel](#data-types-channel)
 ```
 
 
-### DELETE `/admin/channels/{channel-id}`
+### DELETE `/channels/{channel-id}`
 
 Trashes or deletes the given channel, depending on its current state:
 
@@ -486,7 +486,7 @@ Trashes or deletes the specified folder, depending on its current state:
 While full access management is reserved for trusted apps via [methods in the administration](#admin-accesses), any app can retrieve and manage shared accesses depending on its own permissions. All methods here only deal with shared accesses whose permissions are a subset of that linked to the token used for the requests. (You'll get a `403 Forbidden` error if trying to touch other types of accesses, or shared accesses with greater permissions.)
 
 
-### GET `/admin/accesses`
+### GET `/accesses`
 
 Gets all manageable shared accesses.
 
@@ -524,7 +524,7 @@ The new access's data: see [access](#data-types-access).
 ```
 
 
-### PUT `/admin/accesses/{token}`
+### PUT `/accesses/{token}`
 
 Modifies the specified shared access. You can only modify accesses whose permissions are a subset of those linked to your own access token.
 
@@ -541,7 +541,7 @@ New values for the access's fields: see [access](#data-types-access). All fields
 ```
 
 
-### DELETE `/admin/accesses/{token}`
+### DELETE `/accesses/{token}`
 
 Deletes the specified shared access. You can only delete accesses whose permissions are a subset of those linked to your own access token.
 
