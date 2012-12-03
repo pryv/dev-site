@@ -9,6 +9,7 @@ html.no-js(lang='en')
     title Pryv developers home
     meta(name='description', content='TODO')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='bootstrap.min.css')
     link(rel='stylesheet', type='text/css', href='github.css')
     link(rel='stylesheet', type='text/css', href='highlight.css')
     link(rel='stylesheet', type='text/css', href='style.css')
@@ -30,5 +31,22 @@ html.no-js(lang='en')
           li: a(href='reference.html') API reference
           li: a(href='value-types.html') Value types directory
           li: a(href='standard-structure.html') Standard data structure: default and recommended channels and folders
-        | It's bare-bones stuff but should be enough to get you going, with our support of course
-        | (just <a href="mailto:developers@pryv.com">contact us</a> if you need help).
+        div It's bare-bones stuff but should be enough to get you going, with our support of course
+          | (just <a href="mailto:developers@pryv.com">contact us</a> if you need help).
+        br
+        .well.well-small
+          form#ss-form(action="https://docs.google.com/a/pryv.com/spreadsheet/formResponse?formkey=dHlkcUFzV1pJNzYtaW5fZVNleV9JcXc6MQ&amp;ifq",method="POST")
+            br
+            div.errorbox-good
+              div.ss-item.ss-text
+                div.ss-form-entry
+                  label.ss-q-title(for="entry_0")
+                    b Notify me when changes occur
+                  label.ss-q-help(for="entry_0") You'll receive an email when the API is updated or important changes occur in Pryv.
+                  input.ss-q-short#entry_0(type="text",name="entry.0.single",value="",placeholder="email@ddress")
+                  br
+            input(type="hidden",name="pageNumber",value="0")
+            input(type="hidden",name="backupCache",value="")
+            div.ss-item.ss-navigate
+              div.ss-form-entry
+                input.btn.btn-primary(type="submit",name="submit",value="Submit")
