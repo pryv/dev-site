@@ -71,6 +71,7 @@ Differentiating them is simple: period events carry a duration, while mark event
 Fields:
 
 - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
+- `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
 - `time` ([timestamp](#data-structure-timestamp)): The event's time. For period events, this is the time the event started.
 - `duration` ([timestamp](#data-structure-timestamp) difference): Optional. If present, indicates that the event is a period event. Running period events have a duration set to `null`. (We use a dedicated field for duration — instead of using the `value` field — as we do specific processing of event durations, intervals and overlapping.)
 - `type` (object): The type of the event. See the [value types directory](value-types.html) for a list of standard types.
@@ -114,6 +115,7 @@ Activity folders are the possible states or categories you track the channel's a
 Fields:
 
 - `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the folder. Automatically generated if not set when creating the folder.
+- `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
 - `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
 - `parentId` ([identity](#data-structure-identity)): Optional. The identifier of the folder's parent, if any. A value of `null` indicates that the folder has no parent (i.e. root folder).
 - `hidden` (`true` or `false`): Optional. Whether the folder is currently in use or visible. Default: `true`.
