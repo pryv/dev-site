@@ -6,7 +6,7 @@ doctype 5
 html.no-js(lang='en')
   head
     meta(charset='UTF-8')
-    title Pryv API value types directory
+    title Pryv API event types directory
     meta(name='description', content='TODO')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', type='text/css', href='bootstrap.min.css')
@@ -33,68 +33,109 @@ html.no-js(lang='en')
       header#pageHeader
         a(href='index.html') Home
 
-      #value_types
+      #sections
 
-        h1 Value Types Directory
+        section#about
+          h1 Event types directory
+          :markdown
+            This is the reference for the standard event types we recommend and handle (or will
+            handle) in the PrYv apps. You are free to use any type in your app, but for the sake of
+            interoperability we heavily recommend that you stick to the standard types listed here,
+            and <a href="mailto:developers@pryv.com">get in touch with us</a> to improve the
+            directory if you don't find what you need.
 
-        h2 Useful links
-        ul
-          li: a(href='http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8') Inspiration for describing types 
-          li: a(href='https://developers.facebook.com/docs/reference/api/post/') Facebook documentation on posts
-        - var valueTypeFiles = getCollection('valueTypeSections').toJSON()
+            ## What's an event type?
 
-        h2 Value Types
-        - each valueTypeFile in valueTypeFiles
-          - var content = JSON.parse(valueTypeFile.body)
-          - var version = content.version.version
-          - var types = content['data-types']
-          - for(var typeName in types)
-            - var typeObject = types[typeName]
-            h3= typeName
-            div= typeObject.description
-            - var headers = []
-            if (typeObject.default)
-              - for(var defaultValue in typeObject.default)
-                - headers.push(defaultValue)
-            - for (var subName in typeObject.sub)
-              - var subObject = typeObject.sub[subName]
-                - for(var subTypeName in subObject)
-                  - headers.push(subTypeName)
-            - headers = headers.filter(function(el,i,a){if(i==a.indexOf(el))return 1;return 0})
-            table.table
-              thead
-                tr
-                  -// name column.
-                  th(width='12%') name
-                  - each header in headers
-                    - if (header !== 'properties')
-                      -// other custom columns.
-                      th= header
-              tbody
-                - for (var subName in typeObject.sub)
-                  - var subObject = typeObject.sub[subName]
+            Each event has a `type` property that indicates how to handle its `value` (if any).
+            The type itself is a combination of a **class** and a **format** (see also the [event
+            data structure in the API reference](reference.html#data-structure-event)):
+
+            - The type's class (`type.class`) specifies the "nature" or "kind" of data represented
+              by the event. Events of the same class are assumed to be comparable and convertible,
+              and will likely be displayed similarly.
+            - The type's format (`type.format`) specifies how the data is structured. For example, a
+              text note may just be a single string value, while an HTML note may be a more complex
+              object structure.
+
+            Class and format are always specified in lowercase.
+
+            **Shorthand notation**: we usually refer to types with the notation
+            "**{class}:{format}**" (e.g. "note:html").
+
+            ## Format specification
+
+            For each of the type described below, the event value's structure is specified using
+            JSON-schema (see the
+            [JSON-schema specification](http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8)).
+
+            TODO: remove or move elsewhere:
+            [Facebook documentation on posts](https://developers.facebook.com/docs/reference/api/post/)
+
+            ## JSON file
+
+            This directory is available as a [JSON file](value-types/value-types.json) for automated
+            processing. We use it in our API for validating event values (for standard types).
+
+            ## Submitting new types to the directory
+
+            We can't pretend to cover every useful case; if you'd like the directory to include
+            other types, please just <a href="mailto:developers@pryv.com">send us an e-mail</a> with
+            your proposal.
+
+        section#value-types
+          h1 Event types
+
+          - var valueTypeFiles = getCollection('valueTypeSections').toJSON()
+          - each valueTypeFile in valueTypeFiles
+            - var content = JSON.parse(valueTypeFile.body)
+            - var version = content.version.version
+            - var types = content['data-types']
+            - for(var typeName in types)
+              - var typeObject = types[typeName]
+              h2= typeName
+              div= typeObject.description
+              - var headers = []
+              if (typeObject.default)
+                - for(var defaultValue in typeObject.default)
+                  - headers.push(defaultValue)
+              - for (var subName in typeObject.sub)
+                - var subObject = typeObject.sub[subName]
+                  - for(var subTypeName in subObject)
+                    - headers.push(subTypeName)
+              - headers = headers.filter(function(el,i,a){if(i==a.indexOf(el))return 1;return 0})
+              table.table
+                thead
                   tr
                     -// name column.
-                    td(rowspan=2, style='vertical-align:middle;')!{typeName}:!{subName}
+                    th(width='12%') name
                     - each header in headers
-                      -// other custom columns.
-                      - var subTypeContent = subObject[header]
-                      - if(!subTypeContent)
-                        - subTypeContent = typeObject.default[header]
-                      - if(header !== 'properties')
-                        td= subTypeContent
-                    - // Handle properties in a separate row.
-                    tr 
-                      td(colspan=headers.length)
-                        - if (!subObject['properties'])
-                          b properties:
-                          |  -
-                        - else
-                          - var propText = JSON.stringify(subObject['properties'], null, 4)
-                          b properties:
-                          br
-                          pre= propText
-
+                      - if (header !== 'properties')
+                        -// other custom columns.
+                        th= header
+                tbody
+                  - for (var subName in typeObject.sub)
+                    - var subObject = typeObject.sub[subName]
+                    tr
+                      -// name column.
+                      td(rowspan=2, style='vertical-align:middle;')!{typeName}:!{subName}
+                      - each header in headers
+                        -// other custom columns.
+                        - var subTypeContent = subObject[header]
+                        - if(!subTypeContent)
+                          - subTypeContent = typeObject.default[header]
+                        - if(header !== 'properties')
+                          td= subTypeContent
+                      - // Handle properties in a separate row.
+                      tr
+                        td(colspan=headers.length)
+                          - if (!subObject['properties'])
+                            b properties:
+                            |  -
+                          - else
+                            - var propText = JSON.stringify(subObject['properties'], null, 4)
+                            b properties:
+                            br
+                            pre= propText
 
     #toc
       //- content generated by TOC plugin (see below)
@@ -102,8 +143,8 @@ html.no-js(lang='en')
     script
       jQuery(document).ready(function($) {
         $('#toc').toc({
-          'selectors': 'h2,h3',
-          'container': '#value_types',
+          'selectors': 'h1,h2',
+          'container': '#sections',
           'smoothScrolling': false,
           'prefix': 'toc',
           'onHighlight': function(el) {},

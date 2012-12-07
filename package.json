@@ -17,7 +17,8 @@
     "docpad-plugin-jade": "2.0.x",
     "docpad-plugin-marked": "2.0.x",
     "docpad-plugin-stylus": "2.0.x",
-    "docpad-plugin-highlightjs": "0.1.x"
+    "docpad-plugin-highlightjs": "0.1.x",
+    "marked": "0.2.x"
   },
   "engines": {
     "node": ">=0.4.0",
