@@ -32,20 +32,32 @@ html.no-js(lang='en')
   body
     #main
       header#pageHeader
-        h1 Welcome developers
         //- TODO
 
       .temp
-        | This is the future site for Pryv developers. It's obviously a work-in-progress; here's what
-        | we currently have:
-        ul
-          li: a(href='overview.html') Quick overview
-          li: a(href='reference.html') API reference
-          li: a(href='value-types.html') Event types directory
-          li: a(href='standard-structure.html') Standard data structure: default and recommended channels and folders
-        div It's bare-bones stuff but should be enough to get you going, with our support of course
-          | (just <a href="mailto:developers@pryv.com">contact us</a> if you need help).
-        br
+        :markdown
+          # Welcome developers
+
+          This is the future site for Pryv developers. It's obviously a work-in-progress; here's what
+          we currently have:
+
+          - [Quick overview](overview.html)
+          - [API reference](reference.html)
+          - [Event types directory](value-types.html)
+          - [Standard data structure](standard-structure.html): default and recommended channels and folders
+
+          It's bare-bones stuff but should be enough to get you going, with our support of course
+          (just <a href="mailto:developers@pryv.com">contact us</a> if you need help).
+
+          ## A quick word on the API URL
+
+          Due to the stage of development we're in, the frequent changes and the confidential number
+          of developers working with us, we recommend everyone to use our staging API at
+          `https://{username}.rec.la`, which matches the information on the present site.
+          (The production API on `pryv.io` is updated much less often.)
+
+        hr
+
         .well.well-small
           form#ss-form(action="https://docs.google.com/a/pryv.com/spreadsheet/formResponse?formkey=dHlkcUFzV1pJNzYtaW5fZVNleV9JcXc6MQ&amp;ifq",method="POST")
             br
