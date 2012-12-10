@@ -11,6 +11,6 @@
       database.createLiveChildCollection().findAll(doc: 'reference').setComparator(sectionOrder: 1)
     standardStructureData: (database) ->
       database.createLiveChildCollection().findAll(doc: 'standard-structure').setComparator(standardStructOrder: 1)
-    valueTypeSections: (database) ->
-      database.createLiveChildCollection().findAll(doc: 'value-types').setComparator(valueTypesOrder: 1)
+    eventTypesDocs: (database) ->
+      database.createLiveChildCollection().findAll(doc: 'event-types').setComparator(eventTypesOrder: 1)
 }

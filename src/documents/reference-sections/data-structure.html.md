@@ -74,7 +74,7 @@ Fields:
 - `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
 - `time` ([timestamp](#data-structure-timestamp)): The event's time. For period events, this is the time the event started.
 - `duration` ([timestamp](#data-structure-timestamp) difference): Optional. If present, indicates that the event is a period event. Running period events have a duration set to `null`. (We use a dedicated field for duration — instead of using the `value` field — as we do specific processing of event durations, intervals and overlapping.)
-- `type` (object): The type of the event. See the [event types directory](value-types.html) for a list of standard types.
+- `type` (object): The type of the event. See the [event types directory](event-types.html) for a list of standard types.
 	- `class` (string): The type's class. Events in the same class are considered comparable and convertible.
 	- `format` (string): The type's format. Depending on the class, it may indicate a measurement unit, a currency, a string format, an object structure, etc. Together with `class`, it indicates how to handle the event's `value`, if any.
 - `value` (any type): Optional. The value associated with the event, if any. Depending on the `type`, this may be a mathematical value (e.g. mass, money, length, position, etc.), a link to a page, location coordinates, etc.

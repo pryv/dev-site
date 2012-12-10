@@ -1,7 +1,7 @@
 ---
-doc: value-types
-valueTypeId: basic
-valueTypesOrder: 1
+doc: event-types
+eventTypesId: basic
+eventTypesOrder: 1
 ---
 {
   "version": {
@@ -56,7 +56,7 @@ valueTypesOrder: 1
       },
       "formats": {
         "generic": {
-          "description": "For general items that need no particular handling."
+          "description": "For general items that demand no particular handling."
         }
       }
     },
