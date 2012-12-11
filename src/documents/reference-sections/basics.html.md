@@ -39,10 +39,8 @@ The API uses JSON for serializing data. Here's what an event can look like:
   "id": "5051941d04b8ffd00500000d",
   "time": 1347864935.964,
   "folderId": "5058370ade44feaa03000015",
-  "value": {
-    "type": "position:WGS84",
-    "value" : "40.714728, -73.998672, 12"
-  }
+  "type": { "class": "position", "format": "wgs84" },
+  "value": { "location": { "lat": 40.714728, "lng": -73.998672, 12 } },
 }
 ```
 

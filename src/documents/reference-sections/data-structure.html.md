@@ -15,7 +15,7 @@ An access defines a set of permissions on a user's activity data (channels, fold
 
 Fields:
 
-- `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access.
+- `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; URL-encoded if necessary.
 - `name` (string): Unique. The name identifying the access for the user. It can be the client application's name for automatically generated personal accesses, or any user-defined value for manually created accesses.
 - `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
 - `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
@@ -49,7 +49,7 @@ TODO: example
 Each activity channel represents a "stream" or "type" of activity to track, acting as a storage bucket for related events.
 Fields:
 
-- `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the channel. Automatically generated if not set when creating the channel.
+- `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the channel. Automatically generated if not set when creating the channel; URL-encoded if necessary.
 - `name` (string): Unique. The name identifying the channel for users.
 - `strictMode` (boolean): Optional. If `true`, the system will ensure that timed events in this channel never overlap; if `false`, overlapping will be allowed. **This will be implemented later: currently all channels are considered "strict".**
 - `clientData` ([item additional data](#data-structure-additional-data)): Optional. Additional client data for the channel.
@@ -94,15 +94,19 @@ TODO: review after tags are implemented.
 
 ```javascript
 [
-  { "time" : 1350365877.359, "description" : "Some pics", "id" : "event_0", "folderId" : null,
+  { "time": 1350365877.359, "description" : "Some pics", "id" : "event_0", "folderId" : null,
+    "type": { "class": "picture", "format": "attached" },
     "attachments" : {
-      "Gina" : { "fileName" : "gina.jpeg", "type" : "image/jpeg", "size" : 1236701 },
-      "Enzo" : { "fileName" : "enzo.jpeg", "type" : "image/jpeg", "size" : 1127465 }},
+      "Gina": { "fileName": "gina.jpeg", "type": "image/jpeg", "size": 1236701 },
+      "Enzo": { "fileName": "enzo.jpeg", "type": "image/jpeg", "size": 1127465 }},
       "modified" : 1350463077.359 },
   { "time" : 1350369477.359, "duration" : 7140, "description": "A period of work",
-    "id" : "event_1", "folderId" : "free-veggies", "modified" : 1350369477.359 },
+    "id" : "event_1", "folderId" : "free-veggies",
+    "type": { "class": "activity", "format": "pryv" },
+    "modified" : 1350369477.359 },
   { "time" : 1350373077.359, "description" : "A position", "id" : "event_2", "folderId" : null,
-    "value": { "type": "position:WGS84", "value": "40.714728, -73.998672, 12" },
+    "type": { "class": "position", "format": "wgs84" },
+    "value": { "location": { "lat": 40.714728, "lng": -73.998672, 12 } },
     "modified" : 1350373077.359 }
 ]
 ```
@@ -114,7 +118,7 @@ Activity folders are the possible states or categories you track the channel's a
 
 Fields:
 
-- `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the folder. Automatically generated if not set when creating the folder.
+- `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the folder. Automatically generated if not set when creating the folder; URL-encoded if necessary.
 - `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
 - `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
 - `parentId` ([identity](#data-structure-identity)): Optional. The identifier of the folder's parent, if any. A value of `null` indicates that the folder has no parent (i.e. root folder).
