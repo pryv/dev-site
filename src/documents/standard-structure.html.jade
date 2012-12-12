@@ -37,64 +37,60 @@ html.no-js(lang='en')
         section#about
           h1 Standard data structure
           :markdown
-            In this section, we present all the channels and folders we recommend to use in Pryv.
-            Where appropriate, we also present fictional elements to illustrate how and where you
-            could create your own channels and folders.
+            This page lists the standard channels and folders we recommend to use in Pryv, for the
+            sake of integration into Pryv apps and general interoperability.
+            Where appropriate, you'll also find examples to illustrate their use.
 
-            We use the following conventions to describe the structure:
+            **Warnings:**
 
-            - **Recommended** means that the concerned channel or folder is predefined and known
-            to Pryv. Its `id` is reserved and can be used to access it. We advise you to use
-            **recommended** channels and folders as much as possible, unless the specific needs of
-            your app requires a dedicated channel/folder that doesn't correspond to any presented
-            here.
-            - **Example** is used to represent channels and folders that are given here as
-            examples of elements you could create to fit your app's purposes. They are not
-            predefined in Pryv and thus have no fixed `id`.
+            - The event structure used in examples is obsolete. Please refer to the [API
+            reference](reference.html#data-structure-event) for up-to-date info in the meantime.
+            - The channels and folders descriptions must be reviewed for relevance and consistency.
 
-            **Warning: the event structure used in examples needs an update. Please refer to the [API
-            reference](reference.html#data-structure-event) for up-to-date info in the meantime.**
+            ## Standard items and examples
+
+            **Standard** items are standard channels and folders whose `id` is reserved and
+            specifically handled by Pryv apps. You should always use them if applicable (if not see
+            below about submitting new items to the list).
+
+            **Examples** illustrate what kind of items you may find in the standard channels and
+            folders, to better understand their purpose. (The `id` of those examples is irrelevant
+            here and isn't mentioned.)
+
+            ## Submitting new items to the list
+
+            We can't pretend to cover every useful case; if you can't find a suitable item here and
+            your app handles data that's potentially reusable elsewhere, please
+            <a href="mailto:developers@pryv.com">send us an e-mail</a> explaining your needs.
+
+            ## JSON file
+
+            This list is also available as a [JSON file](standard-structure/channels-folders.json).
 
         section#structure
-          h1 Channels and folders
-          p Recommended channels and folders are identified by their <code>id</code>.
+          h1 Standard channels and folders
+          p Standard items are identified by their <code>id</code>.
 
-          - // For iterating on and displaying subfolders.
-          mixin iterateSubfolders(container, firstFolder)
-            - each folder in container.folders
-              // Prepend folder name with its path.
-              - folder.name = container.name + '/' + folder.name
-              tr
-                td
-                  - if (folder.id)
-                    strong recommended
-                  - else
-                    strong example
-                    - folder.id = ''
-                - for (var propId in firstFolder)
-                  - if (propId !== 'eventExamples' && propId !== 'folders')
-                    td
-                      - if (propId === 'id')
-                        code= folder[propId]
-                      - else
-                        | !{folder[propId]}
-              mixin iterateSubfolders(folder, firstFolder)
+          mixin renderFolders(folders)
+            if (folders && folders.length)
+              ul
+                - each folder in folders
+                  li
+                    - if (folder.id)
+                      | <code>!{folder.id}</code>: <strong>standard</strong>;
+                      | default name (EN): "!{folder.name}"
+                    - else
+                      | "!{folder.name}": <strong>example</strong>
+                    br
+                    | #{folder.description}
+                    mixin renderFolders(folder.folders)
 
-          - // Constant to know if a channel has some examples.
-          - var noExamples = true
-
-          - // For iterating and displaying examples.
-          mixin displayExamples(container)
-            - var examples = container.eventExamples
-            - if (examples && examples.length)
-              - noExamples = false
-              div Events saved in !{container.name}
-              - each example in examples
-                - var exampleString = JSON.stringify(example, null, 4)
-                pre= exampleString
-            - var folders = container.folders
-              - each folder in folders
-                mixin displayExamples(folder)
+          mixin renderEventExamples(events)
+            - if (events && events.length)
+              each event in events
+                pre= JSON.stringify(event, null, 2)
+            - else
+              | No examples... yet.
 
           - var structureFiles = getCollection('standardStructureData').toJSON()
           - each structureFile in structureFiles
@@ -110,50 +106,20 @@ html.no-js(lang='en')
                     | "!{channel.name}" channel
                 p.info
                   - if (channel.id)
-                    | <strong>Recommended</strong> channel. Default name (EN): "!{channel.name}".
+                    | <strong>Standard</strong> channel. Default name (EN): "!{channel.name}".
                   - else
                     | <strong>Example</strong> channel.
                     - channel.id = ''
                 p.description= channel.description
 
-                h3 Folders
                 - if (channel.folders.length)
-                  - var firstFolder = channel.folders[0]
-                  table
-                    thead
-                      tr
-                        th
-                        - for (var propId in firstFolder)
-                          - if (propId !== 'eventExamples' && propId !== 'folders')
-                            th= propId
-                    tbody
-                      - each folder in channel.folders
-                        tr
-                          td
-                            - if (folder.id)
-                              strong recommended
-                            - else
-                              strong example
-                              - folder.id = ''
-                          - for (var propId in firstFolder)
-                            - if (propId !== 'eventExamples' && propId !== 'folders')
-                              td
-                                - if (propId === 'id')
-                                  code= folder[propId]
-                                - else
-                                  | !{folder[propId]}
-                        mixin iterateSubfolders(folder, firstFolder)
-                - else
-                  div no folders in this channel for now.
+                  h3 Folders
+                  mixin renderFolders(channel.folders)
 
               - // Make event examples visibility optional.
-              h3
-                a(onclick='javascript:$("#events-'+channel.id+'").toggle()') Examples of Events
+              h3: a(onclick='javascript:$("#events-'+channel.id+'").toggle()') Event examples
               div(id='events-#{channel.id}', style='display:none;')
-                - noExamples = true
-                mixin displayExamples(channel)
-                - if (noExamples)
-                  |No examples for this channel.
+                mixin renderEventExamples(channel.eventExamples)
 
 
     #toc
