@@ -170,6 +170,8 @@ The new access's data: see [access](#data-structure-access).
 
 #### Specific errors
 
+- `400 Bad Request`, id `ITEM_ID_ALREADY_EXISTS`: An access already exists with the same token.
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: An access already exists with the same name.
 - `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
 
 #### cURL example
@@ -188,6 +190,10 @@ Modifies the specified shared access.
 New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
+
+#### Specific errors
+
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: An access already exists with the same name.
 
 #### cURL example
 

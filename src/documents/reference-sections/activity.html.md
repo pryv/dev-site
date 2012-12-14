@@ -81,6 +81,8 @@ The new channel's data: see [activity channel](#data-structure-channel).
 #### Specific errors
 
 - `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
+- `400 Bad Request`, id `ITEM_ID_ALREADY_EXISTS`: A channel already exists with the same id.
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A channel already exists with the same name.
 
 #### cURL example
 
@@ -98,6 +100,10 @@ Modifies the activity channel's attributes.
 New values for the channel's fields: see [activity channel](#data-structure-channel). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
+
+#### Specific errors
+
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A channel already exists with the same name.
 
 #### cURL example
 
@@ -417,6 +423,7 @@ The new folder's data: see [activity folder](#data-structure-folder).
 
 #### Specific errors
 
+- `400 Bad Request`, id `ITEM_ID_ALREADY_EXISTS`: A folder already exists with the same id.
 - `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
 - `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
