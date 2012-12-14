@@ -78,7 +78,7 @@ Fields:
 	- `class` (string): The type's class. Events in the same class are considered comparable and convertible.
 	- `format` (string): The type's format. Depending on the class, it may indicate a measurement unit, a currency, a string format, an object structure, etc. Together with `class`, it indicates how to handle the event's `value`, if any.
 - `value` (any type): Optional. The value associated with the event, if any. Depending on the `type`, this may be a mathematical value (e.g. mass, money, length, position, etc.), a link to a page, location coordinates, etc.
-- `folderId`([identity](#data-structure-identity)): Optional. Indicates the particular folder the event is associated with, if any.
+- `folderId`([identity](#data-structure-identity)): Optional but always present in read items. Indicates the particular folder the event is associated with; `null` if no folder is assigned.
 - `description` (string): Optional. User description or comment for the event.
 - `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
 	- `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
