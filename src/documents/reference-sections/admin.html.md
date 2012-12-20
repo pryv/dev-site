@@ -6,7 +6,9 @@ sectionOrder: 3
 
 # Administration methods
 
-Administration methods allow to manage the user's [account information](#admin-user), [activity channels](#admin-channels) and [sharing](#admin-accesses) (via accesses).
+**Administration is only allowed for trusted apps**; to register your app as trusted, please [get in touch with us](mailto:developers@pryv.com).
+
+Administration methods allow managing the user's [account information](#admin-user), [activity channels](#admin-channels) and [sharing](#admin-accesses) (via accesses).
 
 
 ## Authorization

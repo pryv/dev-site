@@ -40,7 +40,7 @@ Apps access a user's activity data by presenting the API with an **access token*
 - **App** accesses are assigned to most apps to access the user's data on her behalf. They also only grant access to a specific set of data, determined by the app's needs.
 - **Personal** accesses are reserved to trusted apps. They grant full access to the user's data.
 
-Note that only trusted apps can view and manage app and personal accesses. To register your app as trusted, please get in touch with us (TODO: email or link).
+Note that only trusted apps can view and manage app and personal accesses. To register your app as trusted, please [get in touch with us](mailto:developers@pryv.com).
 
 A **shared access** grants permissions to one or more of the user's channel(s), and further permissions within those channels, like on folder(s), tag(s) and/or a limited time frame, can be defined to filter events. Accesses allow sharing in a variety of ways, such as:
 
