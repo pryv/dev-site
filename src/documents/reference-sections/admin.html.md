@@ -129,20 +129,6 @@ TODO: `WRONG_PASSWORD`, `INVALID_NEW_PASSWORD`
 TODO: introductory text
 
 
-### POST `/admin/get-app-token`
-
-Gets the token of the personal access your app must use when accessing the user's data on her behalf. The access is created if it is the first time your app (identified by its id when logging in) requests it.
-
-#### Successful response: `200 OK`
-
-- `id` ([identity](#data-structure-identity)): Your app's dedicated personal [access](#data-structure-access) token.
-
-#### cURL example
-
-```bash
-curl -i -H "Authorization: {session-id}" -X POST https://{username}.pryv.io/admin/get-app-token
-```
-
 ### GET `/admin/accesses`
 
 Gets all manageable accesses, which are the shared accesses. (Your app's own access token is retrieved with `POST /admin/get-app-token`.)
@@ -164,7 +150,7 @@ Creates a new shared access.
 
 #### Body parameters
 
-The new access's data: see [access](#data-structure-access).
+The new access's data: see [access](#data-structure-access). Additionally, if a `defaultName` property is set on the new access' channel / folder permission objects, the corresponding channels / folders will be created with that name.
 
 #### Successful response: `201 Created`
 
@@ -209,6 +195,33 @@ New values for the access's fields: see [access](#data-structure-access). All fi
 Deletes the specified shared access.
 
 #### Successful response: `200 OK`
+
+#### cURL example
+
+```bash
+
+```
+
+
+### POST `/admin/accesses/check-app`
+
+For the app authorization process. Checks if the app requesting authorization already has access with the same permissions, and returns details of the requested permissions' channels and folders (for display) if not.
+
+#### Body parameters
+
+- `requestingAppId` (string): The id of the app requesting authorization.
+- `requestedPermissions`: An array of channel permission request objects, which are identical to channel permission objects of [accesses](#data-structure-access) with the difference that each channel / folder permission object must have a `defaultName` property specifying the name the channel / folder should be created with later (in POST `/admin/accesses`) if missing.
+
+#### Successful response: `200 OK`
+
+If no matching access already exists:
+
+- `checkedPermissions`: A updated copy of the `requestedPermissions` array passed in the request, with the `defaultName` property replaced by `name` for each existing channel / folder (set to the actual name of the item). (For missing channels / folders the `defaultName` property is left untouched.)
+- `mismatchingAccessToken` ([identity](#data-structure-identity)): Set if an access already exists for the requesting app, but with different permissions than those requested.
+
+If a matching access already exists:
+
+- `matchingAccessToken` ([identity](#data-structure-identity)): The requesting app's existing [access](#data-structure-access) token.
 
 #### cURL example
 
