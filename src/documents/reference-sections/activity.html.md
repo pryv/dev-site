@@ -346,23 +346,29 @@ Irreversibly deletes the attached file.
 
 ### POST `/{channel-id}/events/batch`
 
-TODO: this is currently unimplemented and may stay that way.
-Batch upload events that were recorded by the client while offline. If the client-recorded events overlap events on the server, the request will be rejected (see errors below); it is the client's responsibility to retrieve updated server data and adjust its own before uploading.
+Batch upload events that were recorded by the client while offline. The submitted events are added in-order, with results returned individually for each (see response below).
 
 #### Body parameters
 
-- `events` (array of [activity events](#data-structure-event)): The client-recorded events. The `clientId` must be set for each event. Each event's time must be set in server time.
+An array of client-recorded [activity events](#data-structure-event). Each event must have a unique `clientId` defined, and its time must be set in server time.
 
 #### Successful response: `200 OK`
 
-- `addedEvents` (array of [activity events](#data-structure-event): The successfully added events, with their server-assigned ids and `clientId` for reference.
+An object with one property per event submitted holding the result for that event. Each property's name is the submitted event's client id, and its value contains:
 
-#### Specific errors
+- If the event was successful created, an object with the `id` of the event, and possibly the `stoppedId` of the running period event that was stopped as a result. (For details, see POST `/{channel-id}/events`.)
+- If there was an error creating the event: an object with an `error` property holding the encountered [error](#data-structure-error).
 
-- `400 Bad Request`, id `INVALID_TIME`: TODO
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: TODO
-- `400 Bad Request`, id `PERIODS_OVERLAP`: TODO (list of unspecified overlapped event ids)
-
+Example:
+```json
+{
+	"client_id_1": {"id": "TTMyhYEZriJ"},
+	"client_id_2": {"error": {
+		"id": "UNKNOWN_FOLDER",
+		"message": "Folder 'bad-folder-id' is unknown."
+	}}
+}
+```
 
 #### cURL example
 

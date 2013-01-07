@@ -272,8 +272,12 @@ eventTypesOrder: 1
           "description": "An HTML-formatted note.",
           "maxLength": "4194304"
         },
+        "txt": {
+          "description": "A plain-text note.",
+          "maxLength": "4194304"
+        },
         "webclip": {
-          "description": "An HTML-formatted note with a url.",
+          "description": "An HTML-formatted note associated to its source URL.",
           "type": "object",
           "properties": {
             "url": {
@@ -282,15 +286,11 @@ eventTypesOrder: 1
               "pattern": "^(https?)://.+$"
             },
             "content": {
-            	"description": "An HTML-formatted string.",
-            	"type": "string",
-            	"maxLength": "4194304"
+              "description": "An HTML-formatted string.",
+              "type": "string",
+              "maxLength": "4194304"
             }
-		   }
-        },
-        "txt": {
-          "description": "A plain-text note.",
-          "maxLength": "4194304"
+          }
         }
       }
     },
