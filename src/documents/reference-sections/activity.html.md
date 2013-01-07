@@ -189,6 +189,7 @@ The new event's data: see [activity event](#data-structure-event).
 #### Specific errors
 
 - `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified folder cannot be found.
+- `400 Bad Request`, id `INVALID_OPERATION`: The channel or specified folder is in the trash, and we prevent the recording of new events into trashed channels / folders.
 
 #### cURL example
 
