@@ -159,7 +159,7 @@ The new access's data: see [access](#data-structure-access). Additionally, if a 
 #### Specific errors
 
 - `400 Bad Request`, id `ITEM_ID_ALREADY_EXISTS`: An access already exists with the same token.
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: An access already exists with the same name.
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: An access already exists with the same name and type.
 - `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
 
 #### cURL example
@@ -181,7 +181,7 @@ New values for the access's fields: see [access](#data-structure-access). All fi
 
 #### Specific errors
 
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: An access already exists with the same name.
+- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: An access already exists with the same name and type.
 
 #### cURL example
 
