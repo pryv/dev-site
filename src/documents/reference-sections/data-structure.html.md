@@ -51,7 +51,7 @@ Fields:
 
 - `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the channel. Automatically generated if not set when creating the channel; URL-encoded if necessary.
 - `name` (string): Unique. The name identifying the channel for users.
-- `strictMode` (boolean): Optional. If `true`, the system will ensure that timed events in this channel never overlap; if `false`, overlapping will be allowed. **This will be implemented later: currently all channels are considered "strict".**
+- `enforceNoEventsOverlap` (boolean): Optional. If specified and `true`, the system will ensure that period events in this channel never overlap.
 - `clientData` ([item additional data](#data-structure-additional-data)): Optional. Additional client data for the channel.
 - `timeCount` ([timestamp](#data-structure-timestamp)): Read-only. Only optionally returned when querying channels, indicating the total time tracked in that channel since a given reference date and time. **This will be implemented later.**
 - `trashed` (boolean): Optional. `true` if the channel is in the trash.

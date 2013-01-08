@@ -184,12 +184,13 @@ The new event's data: see [activity event](#data-structure-event).
 #### Successful response: `201 Created`
 
 - `id` ([identity](#data-structure-identity)): The new event's id.
-- `stoppedId` ([identity](#data-structure-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+- `stoppedId` ([identity](#data-structure-identity)): Only in channels with `enforceNoEventsOverlap`. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
 
 #### Specific errors
 
 - `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified folder cannot be found.
 - `400 Bad Request`, id `INVALID_OPERATION`: The channel or specified folder is in the trash, and we prevent the recording of new events into trashed channels / folders.
+- `400 Bad request`, id `PERIODS_OVERLAP`: Only in channels with `enforceNoEventsOverlap`: the new event overlaps existing period events. The error's `data` contains the list of overlapped event ids.
 
 #### cURL example
 
@@ -202,15 +203,17 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"folderId":"{folder-id}
 
 *Socket.IO command id: `{channel-id}.events.start`*
 
-Starts a new period event, stopping the previously running period event if any. See POST `/{channel-id}/events` for details. TODO: detail
+Starts a new period event. In channels with `enforceNoEventsOverlap`, also stops the previously running period event if any. See POST `/{channel-id}/events` for details. TODO: detail
+
+#### Body parameters
+
+See POST `{channel-id}/events`.
 
 #### Successful response: `201 Created`
 
 #### Specific errors
 
-- `400 Bad Request`, id `MISSING_FOLDER`: The mandatory folder is missing.
-- `400 Bad Request`, id `INVALID_OPERATION`: A period event cannot start if another period event already exists at a later time.
-- `400 Bad request`, id `PERIODS_OVERLAP`: TODO (data: array of overlapped ids)
+See POST `/{channel-id}/events`.
 
 #### cURL example
 
@@ -223,11 +226,22 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"folderId":"{folder-id}
 
 *Socket.IO command id: `{channel-id}.events.stop`*
 
-Stops the previously running period event. See POST `/{channel-id}/events` for details. TODO: detail
+Stops a previously running period event. In channels with `enforceNoEventsOverlap`, which guarantee that only one event is running at any given time, that event is automatically determined; for regular channels, the event to stop must be specified.
+
+#### Body parameters
+
+- `id` ([identity](#data-structure-identity)): The id of the event to stop. Optional in channels with `enforceNoEventsOverlap`.
+- `time` ([timestamp](#data-structure-timestamp)): Optional. The stop time. Default: now.
 
 #### Successful response: `200 OK`
 
 - `stoppedId` ([identity](#data-structure-identity)): The id of the previously running period event that was stopped, or null if no running event was found.
+
+#### Specific errors
+
+- `400 Bad Request`, id `UNKNOWN_EVENT`: The specified event cannot be found.
+- `400 Bad Request`, id `INVALID_OPERATION`: The specified event is not a running period event.
+- `400 Bad Request`, id `MISSING_PARAMETER`: No event was specified and the channel does not `enforceNoEventsOverlap` (so that there can be more than one running event).
 
 #### cURL example
 
