@@ -212,18 +212,18 @@ eventTypesOrder: 1
           "properties": {
             "id": {
               "type": "string",
-              "required": "true"
+              "required": true
             },
             "from": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
-                  "required": "true"
+                  "required": true
                 },
                 "id": {
                   "type": "string",
-                  "required": "true"
+                  "required": true
                 }
               }
             },
@@ -282,7 +282,7 @@ eventTypesOrder: 1
           "properties": {
             "url": {
               "type": "string",
-              "required": "true",
+              "required": true,
               "pattern": "^(https?)://.+$"
             },
             "content": {
@@ -314,25 +314,25 @@ eventTypesOrder: 1
           "properties": {
             "resolution": {
               "type": "number",
-              "required": "false"
+              "required": false
             },
             "location": {
               "type": "object",
               "properties": {
                 "lat": {
                   "type": "number",
-                  "required": "true"
+                  "required": true
                 },
                 "lng": {
                   "type": "number",
-                  "required": "true"
+                  "required": true
                 }
               },
-              "required": "true"
+              "required": true
             },
             "elevation": {
               "type": "number",
-              "required": "false"
+              "required": false
             }
           }
         }
