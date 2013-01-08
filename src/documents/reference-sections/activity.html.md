@@ -351,7 +351,7 @@ Batch upload events that were recorded by the client while offline. The submitte
 
 #### Body parameters
 
-An array of client-recorded [activity events](#data-structure-event). Each event must have a unique `clientId` defined, and its time must be set in server time.
+An array of client-recorded [activity events](#data-structure-event). In addition to the regular properties, each event must have a unique `tempRefId` defined (as it's temporary it must only be unique within the request). Also, make sure that the events' `time` is set in server time (as for single event requests).
 
 #### Successful response: `200 OK`
 
@@ -363,8 +363,8 @@ An object with one property per event submitted holding the result for that even
 Example:
 ```json
 {
-	"client_id_1": {"id": "TTMyhYEZriJ"},
-	"client_id_2": {"error": {
+	"temp_ref_id_1": {"id": "TTMyhYEZriJ"},
+	"temp_ref_id_2": {"error": {
 		"id": "UNKNOWN_FOLDER",
 		"message": "Folder 'bad-folder-id' is unknown."
 	}}
