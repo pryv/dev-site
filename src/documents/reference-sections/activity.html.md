@@ -30,7 +30,7 @@ Host: yacinthe.pryv.io
 Here are errors commonly returned for requests:
 
 - `400 Bad Request`, id `INVALID_REQUEST_STRUCTURE`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
-- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
+- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
 - `401 Unauthorized`, id `INVALID_ACCESS_TOKEN`: The data access token is missing or invalid.
 - `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
 - `404 Not Found`, possible cases:
@@ -158,7 +158,7 @@ An array of [activity events](#data-structure-event) containing the accessible e
 
 #### Specific errors
 
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: TODO may happen if one of the specified folders doesn't exist
+- `400 Bad Request`, id `UNKNOWN_FOLDER`: one (or more) of the specified folders does not exist. The unknown folders' ids are listed as an array in the error's `data.unknownIds`.
 
 #### cURL example
 
@@ -189,8 +189,8 @@ The new event's data: see [activity event](#data-structure-event).
 #### Specific errors
 
 - `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified folder cannot be found.
-- `400 Bad Request`, id `INVALID_OPERATION`: The channel or specified folder is in the trash, and we prevent the recording of new events into trashed channels / folders.
-- `400 Bad request`, id `PERIODS_OVERLAP`: Only in channels with `enforceNoEventsOverlap`: the new event overlaps existing period events. The error's `data` contains the list of overlapped event ids.
+- `400 Bad Request`, id `INVALID_OPERATION`: The channel or specified folder is in the trash, and we prevent the recording of new events into trashed channels / folders. The error's `data.trashed` property indicates either `"channel"` or `"folder"`.
+- `400 Bad request`, id `PERIODS_OVERLAP`: Only in channels with `enforceNoEventsOverlap`: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
 #### cURL example
 
@@ -286,8 +286,8 @@ New values for the event's fields: see [activity event](#data-structure-event). 
 
 #### Specific errors
 
-- `400 Bad Request`, id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it.
-- `400 Bad Request`, id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). TODO format (list of unspecified overlapped event ids, or "too many" if more than 10)
+- `400 Bad Request`, id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it. The error's `data.conflictingPeriodId` provides the id of the closest conflicting event.
+- `400 Bad Request`, id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
 #### cURL example
 

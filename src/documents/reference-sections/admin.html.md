@@ -32,7 +32,7 @@ Host: cassis.pryv.io
 
 TODO: review and complete
 
-- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format.
+- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
 - `401 Unauthorized`, id `INVALID_CREDENTIALS`: User credentials are missing or invalid.
 - `404 Not Found`, possible cases:
 	- Id `UNKNOWN_ACCESS`: The data access can't be found.
