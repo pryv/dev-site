@@ -79,6 +79,7 @@ Fields:
 	- `format` (string): The type's format. Depending on the class, it may indicate a measurement unit, a currency, a string format, an object structure, etc. Together with `class`, it indicates how to handle the event's `value`, if any.
 - `value` (any type): Optional. The value associated with the event, if any. Depending on the `type`, this may be a mathematical value (e.g. mass, money, length, position, etc.), a link to a page, location coordinates, etc.
 - `folderId`([identity](#data-structure-identity)): Optional but always present in read items. Indicates the particular folder the event is associated with; `null` if no folder is assigned.
+- `tags` (array of strings): Optional but always present in read items. The tags associated with the event.
 - `description` (string): Optional. User description or comment for the event.
 - `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
 	- `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
@@ -90,11 +91,10 @@ Fields:
 
 ### Example
 
-TODO: review after tags are implemented.
-
 ```javascript
 [
   { "time": 1350365877.359, "description" : "Some pics", "id" : "event_0", "folderId" : null,
+    "tags": ["foraging", "funny"],
     "type": { "class": "picture", "format": "attached" },
     "attachments" : {
       "Gina": { "fileName": "gina.jpeg", "type": "image/jpeg", "size": 1236701 },
@@ -102,9 +102,11 @@ TODO: review after tags are implemented.
       "modified" : 1350463077.359 },
   { "time" : 1350369477.359, "duration" : 7140, "description": "A period of work",
     "id" : "event_1", "folderId" : "free-veggies",
+    "tags": ["proposal"],
     "type": { "class": "activity", "format": "pryv" },
     "modified" : 1350369477.359 },
   { "time" : 1350373077.359, "description" : "A position", "id" : "event_2", "folderId" : null,
+    "tags": [],
     "type": { "class": "position", "format": "wgs84" },
     "value": { "location": { "lat": 40.714728, "lng": -73.998672, 12 } },
     "modified" : 1350373077.359 }

@@ -1,4 +1,4 @@
----
+open ---
 doc: reference
 sectionId: activity
 sectionOrder: 2
@@ -146,6 +146,7 @@ Queries accessible events.
 - `fromTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
 - `toTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is the current time.
 - `onlyFolders` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
+- `tags` (array of strings): Optional. If set, only events assigned to all of the listed tags will be returned.
 - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 - `skip` (number): Optional. The number of items to skip in the results.
 - `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
