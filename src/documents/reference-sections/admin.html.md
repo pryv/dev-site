@@ -216,8 +216,9 @@ For the app authorization process. Checks if the app requesting authorization al
 
 If no matching access already exists:
 
-- `checkedPermissions`: A updated copy of the `requestedPermissions` array passed in the request, with the `defaultName` property replaced by `name` for each existing channel / folder (set to the actual name of the item). (For missing channels / folders the `defaultName` property is left untouched.)
+- `checkedPermissions`: A updated copy of the `requestedPermissions` array passed in the request, with the `defaultName` property replaced by `name` for each existing channel / folder (set to the actual name of the item). (For missing channels / folders the `defaultName` property is left untouched.) If channels / folders already exist with the same name but a different `id`, an `existingId` property is added to help with fixing the requested permissions (in such cases the response also has an `error` property to signal the issue; see below).
 - `mismatchingAccessToken` ([identity](#data-structure-identity)): Set if an access already exists for the requesting app, but with different permissions than those requested.
+- `error` ([error](#data-structure-error)): If there is a duplicate issue with some channels / folders requested for creation (see `checkedPermissions`), this is set to an `ITEM_NAME_ALREADY_EXISTS` error.
 
 If a matching access already exists:
 

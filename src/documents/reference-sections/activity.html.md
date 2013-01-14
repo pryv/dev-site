@@ -1,4 +1,4 @@
-open ---
+---
 doc: reference
 sectionId: activity
 sectionOrder: 2

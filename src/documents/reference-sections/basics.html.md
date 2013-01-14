@@ -9,7 +9,9 @@ sectionOrder: 1
 
 ## What's the URL?
 
-Because Pryv potentially stores each user's data in a different location according to the user's choice, the API's base URL is unique for each user: `https://{username}.pryv.io` (where `{username}` is the name of the user whose data you want to access).
+`https://{username}.pryv.io` (where `{username}` is the name of the user whose data you want to access)
+
+Because Pryv potentially stores each user's data in a different location according to the user's choice, the API's base URL is unique for each user.
 
 
 ## Calling API methods
