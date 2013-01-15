@@ -68,8 +68,8 @@ An array of [activity events](#data-structure-event) containing the accessible e
 
 #### Errors
 
-- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format (e.g. missing required parameter, wrong type of data, etc.)
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: One (or more) of the specified folders doesn't exist.
+- `400 Bad Request`, id `invalid-parameters-format`: The request's parameters do not follow the expected format (e.g. missing required parameter, wrong type of data, etc.)
+- `400 Bad Request`, id `unknown-folder`: One (or more) of the specified folders doesn't exist.
 
 
 ### GET `{channel base path}/events/{event-id}/{file-name}`
@@ -80,7 +80,7 @@ Gets the attached file. This method does not have to be implemented if the publi
 
 #### Errors
 
-- `404 Not Found`, id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the specified event.
+- `404 Not Found`, id `unknown-attachment`: The attached file can't be found for the specified event.
 
 
 ## Folders
@@ -102,7 +102,7 @@ An array of [activity folders](#data-structure-folder) containing the tree of th
 
 #### Errors
 
-- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format (e.g. missing required parameter, wrong type of data, etc.)
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified parent folder can't be found.
+- `400 Bad Request`, id `invalid-parameters-format`: The request's parameters do not follow the expected format (e.g. missing required parameter, wrong type of data, etc.)
+- `400 Bad Request`, id `unknown-folder`: The specified parent folder can't be found.
 
 TODO: example

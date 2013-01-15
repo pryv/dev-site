@@ -62,7 +62,7 @@ When an error occurs, the API returns a 4xx or 5xx status code, with the respons
 Here's an example "401 Unauthorized" error response:
 ```json
 {
-  "id": "INVALID_ACCESS_TOKEN",
+  "id": "invalid-access-token",
   "message": "Cannot find access with token 'bad-token'."
 }
 ```

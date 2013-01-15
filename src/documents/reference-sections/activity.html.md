@@ -29,15 +29,15 @@ Host: yacinthe.pryv.io
 
 Here are errors commonly returned for requests:
 
-- `400 Bad Request`, id `INVALID_REQUEST_STRUCTURE`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
-- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
-- `401 Unauthorized`, id `INVALID_ACCESS_TOKEN`: The data access token is missing or invalid.
+- `400 Bad Request`, id `invalid-request-structure`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
+- `400 Bad Request`, id `invalid-parameters-format`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
+- `401 Unauthorized`, id `invalid-access-token`: The data access token is missing or invalid.
 - `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
 - `404 Not Found`, possible cases:
-	- Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
-	- Id `UNKNOWN_FOLDER`: The activity folder can't be found in the specified channel.
-	- Id `UNKNOWN_EVENT`: The event can't be found in the specified channel.
-	- Id `UNKNOWN_ATTACHMENT`: The attached file can't be found for the specified event.
+	- Id `unknown-channel`: The activity channel can't be found.
+	- Id `unknown-folder`: The activity folder can't be found in the specified channel.
+	- Id `unknown-event`: The event can't be found in the specified channel.
+	- Id `unknown-attachment`: The attached file can't be found for the specified event.
 
 
 ## Channels
@@ -80,9 +80,9 @@ The new channel's data: see [activity channel](#data-structure-channel).
 
 #### Specific errors
 
-- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
-- `400 Bad Request`, id `ITEM_ID_ALREADY_EXISTS`: A channel already exists with the same id.
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A channel already exists with the same name.
+- `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
+- `400 Bad Request`, id `item-id-already-exists`: A channel already exists with the same id.
+- `400 Bad Request`, id `item-name-already-exists`: A channel already exists with the same name.
 
 #### cURL example
 
@@ -103,7 +103,7 @@ New values for the channel's fields: see [activity channel](#data-structure-chan
 
 #### Specific errors
 
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A channel already exists with the same name.
+- `400 Bad Request`, id `item-name-already-exists`: A channel already exists with the same name.
 
 #### cURL example
 
@@ -159,7 +159,7 @@ An array of [activity events](#data-structure-event) containing the accessible e
 
 #### Specific errors
 
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: one (or more) of the specified folders does not exist. The unknown folders' ids are listed as an array in the error's `data.unknownIds`.
+- `400 Bad Request`, id `unknown-folder`: one (or more) of the specified folders does not exist. The unknown folders' ids are listed as an array in the error's `data.unknownIds`.
 
 #### cURL example
 
@@ -189,9 +189,9 @@ The new event's data: see [activity event](#data-structure-event).
 
 #### Specific errors
 
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified folder cannot be found.
-- `400 Bad Request`, id `INVALID_OPERATION`: The channel or specified folder is in the trash, and we prevent the recording of new events into trashed channels / folders. The error's `data.trashed` property indicates either `"channel"` or `"folder"`.
-- `400 Bad request`, id `PERIODS_OVERLAP`: Only in channels with `enforceNoEventsOverlap`: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+- `400 Bad Request`, id `unknown-folder`: The specified folder cannot be found.
+- `400 Bad Request`, id `invalid-operation`: The channel or specified folder is in the trash, and we prevent the recording of new events into trashed channels / folders. The error's `data.trashed` property indicates either `"channel"` or `"folder"`.
+- `400 Bad request`, id `periods-overlap`: Only in channels with `enforceNoEventsOverlap`: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
 #### cURL example
 
@@ -240,9 +240,9 @@ Stops a previously running period event. In channels with `enforceNoEventsOverla
 
 #### Specific errors
 
-- `400 Bad Request`, id `UNKNOWN_EVENT`: The specified event cannot be found.
-- `400 Bad Request`, id `INVALID_OPERATION`: The specified event is not a running period event.
-- `400 Bad Request`, id `MISSING_PARAMETER`: No event was specified and the channel does not `enforceNoEventsOverlap` (so that there can be more than one running event).
+- `400 Bad Request`, id `unknown-event`: The specified event cannot be found.
+- `400 Bad Request`, id `invalid-operation`: The specified event is not a running period event.
+- `400 Bad Request`, id `missing-parameter`: No event was specified and the channel does not `enforceNoEventsOverlap` (so that there can be more than one running event).
 
 #### cURL example
 
@@ -287,8 +287,8 @@ New values for the event's fields: see [activity event](#data-structure-event). 
 
 #### Specific errors
 
-- `400 Bad Request`, id `INVALID_OPERATION`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it. The error's `data.conflictingPeriodId` provides the id of the closest conflicting event.
-- `400 Bad Request`, id `PERIODS_OVERLAP`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+- `400 Bad Request`, id `invalid-operation`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it. The error's `data.conflictingPeriodId` provides the id of the closest conflicting event.
+- `400 Bad Request`, id `periods-overlap`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
 #### cURL example
 
@@ -380,7 +380,7 @@ Example:
 {
 	"temp_ref_id_1": {"id": "TTMyhYEZriJ"},
 	"temp_ref_id_2": {"error": {
-		"id": "UNKNOWN_FOLDER",
+		"id": "unknown-folder",
 		"message": "Folder 'bad-folder-id' is unknown."
 	}}
 }
@@ -417,7 +417,7 @@ An array of [activity folders](#data-structure-folder) containing the tree of th
 
 #### Specific errors
 
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified parent folder can't be found.
+- `400 Bad Request`, id `unknown-folder`: The specified parent folder can't be found.
 
 TODO: example (with and without time accounting)
 
@@ -445,9 +445,9 @@ The new folder's data: see [activity folder](#data-structure-folder).
 
 #### Specific errors
 
-- `400 Bad Request`, id `ITEM_ID_ALREADY_EXISTS`: A folder already exists with the same id.
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
-- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
+- `400 Bad Request`, id `item-id-already-exists`: A folder already exists with the same id.
+- `400 Bad Request`, id `item-name-already-exists`: A sibling folder already exists with the same name.
+- `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
 
 #### cURL example
@@ -473,8 +473,8 @@ TODO: example
 
 #### Specific errors
 
-- `400 Bad Request`, id `UNKNOWN_FOLDER`: The specified parent folder's id is unknown.
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: A sibling folder already exists with the same name.
+- `400 Bad Request`, id `unknown-folder`: The specified parent folder's id is unknown.
+- `400 Bad Request`, id `item-name-already-exists`: A sibling folder already exists with the same name.
 
 
 #### cURL example
@@ -501,7 +501,7 @@ Trashes or deletes the specified folder, depending on its current state:
 
 #### Specific errors
 
-- `400 Bad Request`, id `MISSING_PARAMETER`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
+- `400 Bad Request`, id `missing-parameter`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
 
 #### cURL example
 
@@ -544,7 +544,7 @@ The new access's data: see [access](#data-structure-access).
 
 #### Specific errors
 
-- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
+- `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
 
 #### cURL example
 

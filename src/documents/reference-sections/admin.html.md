@@ -32,11 +32,11 @@ Host: cassis.pryv.io
 
 TODO: review and complete
 
-- `400 Bad Request`, id `INVALID_PARAMETERS_FORMAT`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
-- `401 Unauthorized`, id `INVALID_CREDENTIALS`: User credentials are missing or invalid.
+- `400 Bad Request`, id `invalid-parameters-format`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
+- `401 Unauthorized`, id `invalid-credentials`: User credentials are missing or invalid.
 - `404 Not Found`, possible cases:
-	- Id `UNKNOWN_ACCESS`: The data access can't be found.
-	- Id `UNKNOWN_CHANNEL`: The activity channel can't be found.
+	- Id `unknown-access`: The data access can't be found.
+	- Id `unknown-bookmark`: The access bookmark can't be found.
 
 
 
@@ -158,9 +158,9 @@ The new access's data: see [access](#data-structure-access). Additionally, if a 
 
 #### Specific errors
 
-- `400 Bad Request`, id `ITEM_ID_ALREADY_EXISTS`: An access already exists with the same token.
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: An access already exists with the same name and type.
-- `400 Bad Request`, id `INVALID_ITEM_ID`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
+- `400 Bad Request`, id `item-id-already-exists`: An access already exists with the same token.
+- `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type.
+- `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
 
 #### cURL example
 
@@ -181,7 +181,7 @@ New values for the access's fields: see [access](#data-structure-access). All fi
 
 #### Specific errors
 
-- `400 Bad Request`, id `ITEM_NAME_ALREADY_EXISTS`: An access already exists with the same name and type.
+- `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type.
 
 #### cURL example
 
@@ -218,7 +218,7 @@ If no matching access already exists:
 
 - `checkedPermissions`: A updated copy of the `requestedPermissions` array passed in the request, with the `defaultName` property replaced by `name` for each existing channel / folder (set to the actual name of the item). (For missing channels / folders the `defaultName` property is left untouched.) If channels / folders already exist with the same name but a different `id`, an `existingId` property is added to help with fixing the requested permissions (in such cases the response also has an `error` property to signal the issue; see below).
 - `mismatchingAccessToken` ([identity](#data-structure-identity)): Set if an access already exists for the requesting app, but with different permissions than those requested.
-- `error` ([error](#data-structure-error)): If there is a duplicate issue with some channels / folders requested for creation (see `checkedPermissions`), this is set to an `ITEM_NAME_ALREADY_EXISTS` error.
+- `error` ([error](#data-structure-error)): If there is a duplicate issue with some channels / folders requested for creation (see `checkedPermissions`), this is set to an `item-name-already-exists` error.
 
 If a matching access already exists:
 
