@@ -32,13 +32,17 @@ Here are errors commonly returned for requests:
 - `400 Bad Request`, id `invalid-request-structure`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
 - `400 Bad Request`, id `invalid-parameters-format`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
 - `401 Unauthorized`, id `invalid-access-token`: The data access token is missing or invalid.
-- `402 Payment Required`, id `user-intervention-required`: The user's account can no longer accept new data, according to its chosen plan and status. The user must log into Pryv to fix her account.
 - `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
 - `404 Not Found`, possible cases:
 	- Id `unknown-channel`: The activity channel can't be found.
 	- Id `unknown-folder`: The activity folder can't be found in the specified channel.
 	- Id `unknown-event`: The event can't be found in the specified channel.
 	- Id `unknown-attachment`: The attached file can't be found for the specified event.
+
+And a couple of others, related to the status of the user's account:
+
+- `301 Moved`, id `user-account-relocated`: The user has relocated her account to another Pryv server. Both the `Location` header and the error's `data` contain the equivalent URL pointing to the physical server now hosting the user's account. Note that this error can only occur between the moment the account is relocated and the moment your DNS is updated with the new server. So we're stretching the HTTP convention a little, in that the returned URL should not be used permanently (only until `{username}.pryv.io` points to the correct server again). You can decide whether you keep it for the duration of the session (if you have such a thing), for N hours, etc. (TODO: review and detail more if needed)
+- `402 Payment Required`, id `user-intervention-required`: We cannot serve the request at the moment, because the user's account has exceeded the limits of its plan. The user must log into Pryv to fix her account.
 
 
 ## Channels
