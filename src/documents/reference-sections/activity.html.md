@@ -32,6 +32,7 @@ Here are errors commonly returned for requests:
 - `400 Bad Request`, id `invalid-request-structure`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
 - `400 Bad Request`, id `invalid-parameters-format`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
 - `401 Unauthorized`, id `invalid-access-token`: The data access token is missing or invalid.
+- `402 Payment Required`, id `user-intervention-required`: The user's account can no longer accept new data, according to its chosen plan and status. The user must log into Pryv to fix her account.
 - `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
 - `404 Not Found`, possible cases:
 	- Id `unknown-channel`: The activity channel can't be found.
