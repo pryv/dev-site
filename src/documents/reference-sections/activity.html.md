@@ -148,7 +148,7 @@ Queries accessible events.
 
 #### Query string parameters
 
-- `fromTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
+- `fromTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
 - `toTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is the current time.
 - `onlyFolders` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
 - `tags` (array of strings): Optional. If set, only events assigned to all of the listed tags will be returned.
