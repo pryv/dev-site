@@ -15,7 +15,6 @@ html.no-js(lang='en')
     link(rel='stylesheet', type='text/css', href='style.css')
     script(src='scripts/modernizr.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js')
-    script(src='scripts/jquery.toc.min.js')
 
     script
       var _gaq = _gaq || [];
@@ -56,9 +55,18 @@ html.no-js(lang='en')
           `https://{username}.rec.la`, which matches the information on the present site.
           (The production API on `pryv.io` is updated much less often.)
 
-        hr
+          ## News
 
-        .well.well-small
+          You can follow the latest updates on [our temporary developers blog](http://dev-blog.pryv.com),
+          or subscribe to the [newsfeed](http://dev-blog.pryv.com/feed).
+
+          Yes we've ditched e-mail for notifications for now, and we're interested in knowing how
+          you'd prefer being notified of news (just RSS? Twitter? e-mail?):
+          <a href="mailto:developers@pryv.com">tell us</a>. Thanks in advance.
+
+        //-hr
+
+        //-.well.well-small
           form#ss-form(action="https://docs.google.com/a/pryv.com/spreadsheet/formResponse?formkey=dHlkcUFzV1pJNzYtaW5fZVNleV9JcXc6MQ&amp;ifq",method="POST")
             br
             div.errorbox-good
