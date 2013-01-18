@@ -47,7 +47,7 @@ And a couple of others, related to the status of the user's account:
 
 ## Channels
 
-For retrieving and manipulating [channels](#data-structure-channel).
+Methods for retrieving and manipulating [channels](#data-structure-channel).
 
 
 ### GET `/channels`
@@ -77,7 +77,10 @@ Creates a new activity channel. Only personal accesses allow creating new channe
 
 #### Body parameters
 
-The new channel's data: see [activity channel](#data-structure-channel).
+The new channel's data: see [activity channel](#data-structure-channel). This can be as simple as:
+```json
+{ "name": "Undercover Activities" }
+```
 
 #### Successful response: `201 Created`
 
@@ -102,7 +105,10 @@ Modifies the activity channel's attributes.
 
 #### Body parameters
 
-New values for the channel's fields: see [activity channel](#data-structure-channel). All fields are optional, and only modified values must be included. TODO: example
+New values for the channel's fields: see [activity channel](#data-structure-channel). All fields are optional, and only modified values must be included. For example:
+```json
+{ "clientData": { "new-or-updated-client-specific-metadata": 42 } }
+```
 
 #### Successful response: `200 OK`
 
@@ -148,8 +154,8 @@ Queries accessible events.
 
 #### Query string parameters
 
-- `fromTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
-- `toTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is the current time.
+- `fromTime` ([timestamp](#data-structure-timestamp)): Optional. The start time of the timeframe you want to retrieve events for. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
+- `toTime` ([timestamp](#data-structure-timestamp)): Optional. The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
 - `onlyFolders` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
 - `tags` (array of strings): Optional. If set, only events assigned to all of the listed tags will be returned.
 - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
