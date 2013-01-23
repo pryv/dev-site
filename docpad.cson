@@ -13,6 +13,6 @@
       database.createLiveChildCollection().findAll(doc: 'standard-structure').setComparator(standardStructOrder: 1)
     eventTypesDocs: (database) ->
       database.createLiveChildCollection().findAll(doc: 'event-types').setComparator(eventTypesOrder: 1)
-    sdkAccessSections: (database) ->
-      database.createLiveChildCollection().findAll(doc: 'sdk-access').setComparator(sectionOrder: 1)
+    appAccessSections: (database) ->
+      database.createLiveChildCollection().findAll(doc: 'app-access').setComparator(sectionOrder: 1)
 }

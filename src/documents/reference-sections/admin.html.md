@@ -6,7 +6,7 @@ sectionOrder: 3
 
 # Administration methods
 
-**Administration is only allowed for trusted apps**; to register your app as trusted, please [get in touch with us](mailto:developers@pryv.com). If you simply need to get authorization tokens for your app users' see: [access SDKs](sdk-access.html).
+**Administration is only allowed for trusted apps**; to register your app as trusted, please [get in touch with us](mailto:developers@pryv.com). If you're only interested in obtaining access tokens for your app, see the [app access documentation](app-access.html) instead.
 
 Administration methods allow managing the user's [account information](#admin-user), [activity channels](#admin-channels) and [sharing](#admin-accesses) (via accesses).
 

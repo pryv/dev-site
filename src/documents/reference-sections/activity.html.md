@@ -11,7 +11,7 @@ TODO: introductory text
 
 ## Authorization
 
-All requests for retrieving and manipulating activity data must carry a valid [access token](#data-structure-access) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter.  (You get the token by using one of the [access SDKs](sdk-access.html), by retrieving it in the [administration](#admin-accesses) or from sharing.)
+All requests for retrieving and manipulating activity data must carry a valid [access token](#data-structure-access) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter.  (You get the token by using one of the [access SDKs](app-access.html), by retrieving it in the [administration](#admin-accesses) or from sharing.)
 
 Here's what a proper request looks like:
 ```http
