@@ -6,32 +6,101 @@ sectionOrder: 2
 
 # Web app (Javascript)
 
-(Please make sure you got the [initial requirements](#intro-initial-requirements) ready.)
+Obtaining an access token for your web app.
 
-Obtaining an access token for your web app is done by using our web app access SDK:
 
-- Staging version (recommended at the moment):
-```html
-<script type="text/javascript" src="https://sw.rec.la:2443/access/v0/pryv-access-sdk.js"></script>
-```
-- Production version:
-```html
-<script type="text/javascript" src="https://sw.pryv.io/access/v0/pryv-access-sdk.js"></script>
-```
-or the optimized CloudFront cache:
-```html
-<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v0/pryv-access-sdk.js"></script>
-```
+## What you need
 
-## Choices
+* make sure you got the [initial requirements](#intro-initial-requirements) ready.
+* include the following script in your page:
+	- Staging version (recommended at the moment):
+	```html
+	<script type="text/javascript" src="https://sw.rec.la:2443/access/v0/pryv-access-sdk.js"></script>
+	```
+	- Production version:
+	```html
+	<script type="text/javascript" src="https://sw.pryv.io/access/v0/pryv-access-sdk.js"></script>
+	```
+	- or the optimized CloudFront cache:
+	```html
+	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v0/pryv-access-sdk.js"></script>
+	```
+* construct a `settings` JSON object
+* call `pryvAccess.setup(settings)`
 
-**TODO: review this section entirely**
+For a more fleshed-out example look at the source code of [https://sw.rec.la:2443/access/demo.html](https://sw.rec.la:2443/access/demo.html).
 
-*Note!!:* Prefered method for a better user experience is `auto`
+<a name"webapp.test"></a>Or make your own tests from the page:
+[https://sw.rec.la:2443/access/test.html](https://sw.rec.la:2443/access/test.html)
 
-### <a name="returnURL"></a> 1-  Popup or returnURL ??
 
-During the authentication process, we need to open a PrYv access web page in a separate window. This is onde in order to secure personal user's information.
+### Exemple: Minimalistic
+
+This app requests a "contribute" access to the "diary" channel, using the PrYv button and a popup for sign-in.
+
+**TODO: review this code**
+
+	```html
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<title>Minimalistic example</title>
+	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v0/pryv-access-sdk.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+	
+		function callMeWithCredentials(username, appToken, languageCode) {
+			alert("SUCCESS! username:" + username + " appToken:" + 
+					appToken + " language:" + languageCode);
+		}
+	
+		var requestedPermissions = [{"channelId" : "diary",
+	                                     "level" : "contribute"}];
+	
+	    pryvAccess.setup({
+	        requestingAppId : 'Minimalistic Exemple For SDK Access',
+	        requestedPermissions : requestedPermissions,
+	        returnURL: 'auto#',
+	        spanButtonID : 'pryvButton',
+	        callbacks : callMeWithCredentials
+	    });
+	
+	    </script>
+		<span id='pryvButton'></span>
+	</body>
+	</html>
+	```
+
+## pryvAccess.setup(settings)
+
+
+The **settings** object supports the following parameters:
+
+  - `requestingAppId` (string): Unique. Given by PrYv identifier for this app. It will be the key for the requested set of permission after user agreement.
+  - `languageCode`(2 characters ISO 639-1 Code): Optional. If known the current language used by the user. This will influence the signin and register interface language.
+  - `requestedPermissions` (object): The requested set of permissions to access user's channels & folders.
+  - `returnURL` (url or 'auto<extra>'): Optional. If you don't want (or can't have) the popup signin-process and prefer set a returnURL. This URL will be called at the en of the SIGNIN process.This provides a better user experience on mobile devices. Details: [settings.returnURL](#webapp.returnURL)
+  - `spanButtonID` (string) Optional. The id of a `<span />` element in the DOM of your web page. Details: [settings.spanButtonID](#webapp.spanButtonID)
+  - `callbacks` (functionS): called on each step of the sign-in process. Most of them are optional if you decided to rely on PrYv signin Button. All are optional excepted "accepted". Details: [settings.callbacks](#webapp.callbacks)
+    - `initialization` (function()): When the initialization process is started. You may display a "loading" animation or for the user.
+    - `needSignin` (function(popupUrl,pollUrl,pollRateMs)): Optional. Triggered when the user need to be redirected to PrYv Signin or register from.
+    	- param `popupUrl` (string): The URL to open in it's own window and to present to the user.
+    	- param `pollUrl` (string): The URL to poll regularly in the background to grab the result of the sigin process.
+    	- param `pollRateMs` (int): The minimum interval in milliseconds between to polling.
+    - `accepted` (function(username,appToken)): **Mandatory**. Called when the signin process succeed and the permissions requested a granted.
+    - `refused` (function(reason)): called when the user refuse to grant the requested permissions.
+        - param `reason`(string): Technical information on how the user refused (not to be displayed).
+    - `error` (function(pryvError)): called when an error interupting the signup process occured.
+        - param `pryvError` (object): `{id: .., message: .., detail: ..}`
+
+
+
+### <a name="webapp.returnURL"></a> settings.returnURL : Popup or URL Callback
+
+
+During the authentication process, we need to open a PrYv access web page in a separate window. This is in order to secure personal user's information.  
+
 This window can be opened in:
 
  - A popup, leaving the actual window open behind. This should be more comfortable on desktop browsers.
@@ -65,8 +134,7 @@ EXEMPLES
 * with `https://mysite.com/page.php?mycustom=1` as source URL.
   - **self&** -> `https://mysite.com/page.php?mycustom=1&prYvk...`
 
-Make your own tests from the page:
-[https://sw.rec.la:2443/access/test.html](https://sw.rec.la:2443/access/test.html)
+Make your own tests from the [test page](webapp.test).
 
 #### * Custom
 
@@ -77,7 +145,7 @@ Set the return URL to your own page such as
 **Attention!!** The url submitted *must* end with a `?`, a `#` or a `&`
 Returned status will be appended to this URL.
 
-**Exemples:**
+#### Exemples of return URL
 
 ACCEPTED
 
@@ -95,84 +163,17 @@ ERROR
 	prYvkey=GSbdasjgdv&prYvstatus=ERROR&prYvid=INTERNAL_ERROR&prYvmessage=...
 
 
-### 2- PrYv or custom signin Button
+### <a name="webapp.spanButtonID"></a> settings.spanButtonID : Rely on PrYv standard Button
 TODO
 
-### 3- Custom handling of the signin process
+### <a name="webapp.callbacks"></a> settings.callbacks Custom handling of the signin process
 TODO
 
-## pryvAccess.setup(settings)
 
-To use the sdk you need *pryv-access-sdk.js*
-For staging developpement you should use: `https://sw.rec.la:2443/access/v0/pryv-access-sdk.js`
-And add in your `<head></head>`
 
-For production use the pryv.io version
+## Other Examples
 
-	<script type="text/javascript" src="https://sw.pryv.io/access/v0/pryv-access-sdk.js"></script>
-
-or to optimze page loading cloudfront cached version:
-
-	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v0/pryv-access-sdk.js"></script>
-
-Then you can create you **settings** object with the following parameters:
-
-  - `requestingAppId` (string): Unique. Given by PrYv identifier for this app. It will be the key for the requested set of permission after user agreement.
-  - `languageCode`(2 characters ISO 639-1 Code): Optional. If known the current language used by the user. This will influence the signin and register interface language.
-  - `requestedPermissions` (object): The requested set of permissions to access user's channels & folders.
-  - `returnURL` (url or 'auto<extra>'): Optional. If you don't want (or can't have) the popup signin-process and prefer set a returnURL. This URL will be called at the en of the SIGNIN process.This provides a better user experience on mobile devices: see [Popup or returnURL](#returnURL)
-  - `spanButtonID` (string) Optional. The id of a `<span />` element in the DOM of your web page.
-  - `callbacks` (functionS): called on each step of the sign-in process. Most of them are optional if you decided to rely on PrYv signin Button. All are optional excepted "accepted".
-    - `initialization` (function()): When the initialization process is started. You may display a "loading" animation or for the user.
-    - `needSignin` (function(popupUrl,pollUrl,pollRateMs)): Optional. Triggered when the user need to be redirected to PrYv Signin or register from.
-    	- param `popupUrl` (string): The URL to open in it's own window and to present to the user.
-    	- param `pollUrl` (string): The URL to poll regularly in the background to grab the result of the sigin process.
-    	- param `pollRateMs` (int): The minimum interval in milliseconds between to polling.
-    - `accepted` (function(username,appToken)): **Mandatory**. Called when the signin process succeed and the permissions requested a granted.
-    - `refused` (function(reason)): called when the user refuse to grant the requested permissions.
-        - param `reason`(string): Technical information on how the user refused (not to be displayed).
-    - `error` (function(pryvError)): called when an error interupting the signup process occured.
-        - param `pryvError` (object): `{id: .., message: .., detail: ..}`
-
-## Examples
-
-### Minimalistic
-
-This app requests a "contribute" access to the "diary" channel, using the PrYv button and a popup for sign-in.
-
-**TODO: review this code**
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-<title>Minimalistic example</title>
-<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v0/pryv-access-sdk.js"></script>
-</head>
-<body>
-	<script type="text/javascript">
-
-	function callMeWithCredentials(username, appToken) {
-		alert("SUCCESS! username:" + username + " appToken:" + appToken);
-	}
-
-	var requestedPermissions = [{"channelId" : "diary",
-                                     "level" : "contribute"}];
-
-    pryvAccess.setup({
-        requestingAppId : 'Minimalistic Exemple For SDK Access',
-        requestedPermissions : requestedPermissions,
-        returnURL: 'auto#',
-        spanButtonID : 'pryvButton',
-        callbacks : callMeWithCredentials
-    });
-
-    </script>
-	<span id='pryvButton'></span>
-</body>
-</html>
-```
 
 ### Full
 
-For a more fleshed-out example look at the source code of [https://sw.rec.la:2443/access/demo.html](https://sw.rec.la:2443/access/demo.html).
+
