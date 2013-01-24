@@ -162,14 +162,21 @@ ERROR
 		https://www.mysite.com/end-of-pryvAccess-process.php?
 	prYvkey=GSbdasjgdv&prYvstatus=ERROR&prYvid=INTERNAL_ERROR&prYvmessage=...
 
-
 ### <a name="webapp.spanButtonID"></a> settings.spanButtonID : Rely on PrYv standard Button
 TODO
 
 ### <a name="webapp.callbacks"></a> settings.callbacks Custom handling of the signin process
 TODO
 
+## pryvAccess.popupLogin()
+Once setup is done, you can trigger the populLogin window from your own button.  
+Note: Trigger it from a user-click event.
 
+## pryvAccess.logout()
+Once setup is done, and user logged in. Erase current credential and restart setup with the same settings.
+
+## pryvAccess.retry()
+If a user refused to grant access, restart the setup process with the same settings. 
 
 ## Other Examples
 
