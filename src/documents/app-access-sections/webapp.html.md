@@ -30,7 +30,7 @@ Obtaining an access token for your web app.
 
 For a more fleshed-out example look at the source code of [https://sw.rec.la:2443/access/demo.html](https://sw.rec.la:2443/access/demo.html).
 
-<a name"webapp.test"></a>Or make your own tests from the page:
+<a name="webapp.test"></a>Or make your own tests from the page:
 [https://sw.rec.la:2443/access/test.html](https://sw.rec.la:2443/access/test.html)
 
 
