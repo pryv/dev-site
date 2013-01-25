@@ -11,5 +11,5 @@ Implementing the authorization process and obtaining an access token all by your
 
 ## Sequence diagram
 
-![Sequence Diagram](app-access-custom-sequence.png)
+![Sequence Diagram](app-access-files/custom-sequence.png)
 
