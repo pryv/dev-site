@@ -160,7 +160,7 @@ The new access's data: see [access](#data-structure-access). Additionally, if a 
 #### Specific errors
 
 - `400 Bad Request`, id `item-id-already-exists`: An access already exists with the same token.
-- `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type.
+- `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type (and device name, for app accesses).
 - `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
 
 #### cURL example
@@ -182,7 +182,7 @@ New values for the access's fields: see [access](#data-structure-access). All fi
 
 #### Specific errors
 
-- `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type.
+- `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type (and device name, for app accesses).
 
 #### cURL example
 
@@ -206,11 +206,12 @@ Deletes the specified shared access.
 
 ### POST `/admin/accesses/check-app`
 
-For the app authorization process. Checks if the app requesting authorization already has access with the same permissions, and returns details of the requested permissions' channels and folders (for display) if not.
+For the app authorization process. Checks if the app requesting authorization already has access with the same permissions (and on the same device, if applicable), and returns details of the requested permissions' channels and folders (for display) if not.
 
 #### Body parameters
 
 - `requestingAppId` (string): The id of the app requesting authorization.
+- `deviceName` (string): Optional. The name of the device running the app requesting authorization, if applicable.
 - `requestedPermissions`: An array of channel permission request objects, which are identical to channel permission objects of [accesses](#data-structure-access) with the difference that each channel / folder permission object must have a `defaultName` property specifying the name the channel / folder should be created with later (in POST `/admin/accesses`) if missing.
 
 #### Successful response: `200 OK`

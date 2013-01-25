@@ -16,8 +16,9 @@ An access defines a set of permissions on a user's activity data (channels, fold
 Fields:
 
 - `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; URL-encoded if necessary.
-- `name` (string): Unique *per type*. The name identifying the access for the user. It can be the client application's name for automatically generated personal accesses, or any user-defined value for manually created accesses.
 - `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
+- `name` (string): Unique *per type and device name (if defined)*. The name identifying the access for the user. (Note that for personal and app access, the name is used as a technical identifier and not shown as-is to the user.)
+- `deviceName` (string): Optional. Unique *per type and name (if defined)*. For app accesses only. The name of the client device running the app, if applicable.
 - `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
 	- `channelId` ([identity](#data-structure-identity)): The accessible channel's id.
 	- `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the channel. With `"contribute"`, the access's token holder(s) can see and record events in the channel; with `"manage"`, the access's token holder(s) can in addition modify the channel itself. This is overridden if specific folder permissions are defined (see below).
