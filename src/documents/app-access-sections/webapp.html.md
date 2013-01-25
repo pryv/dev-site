@@ -88,7 +88,7 @@ The **settings** object supports the following parameters:
     	- param `popupUrl` (string): The URL to open in it's own window and to present to the user.
     	- param `pollUrl` (string): The URL to poll regularly in the background to grab the result of the sigin process.
     	- param `pollRateMs` (int): The minimum interval in milliseconds between to polling.
-    - `accepted` (function(username,appToken)): **Mandatory**. Called when the signin process succeed and the permissions requested a granted.
+    - `accepted` (function(username,appToken,languageCode)): **Mandatory**. Called when the signin process succeed and the permissions requested a granted. It's also triggered after a logout action with `(false,false,false)` as parameters.
     - `refused` (function(reason)): called when the user refuse to grant the requested permissions.
         - param `reason`(string): Technical information on how the user refused (not to be displayed).
     - `error` (function(pryvError)): called when an error interupting the signup process occured.
@@ -174,6 +174,8 @@ Note: Trigger it from a user-click event.
 
 ## pryvAccess.logout()
 Once setup is done, and user logged in. Erase current credential and restart setup with the same settings.
+
+**logout()** will trigger a `settings.callbacks.success(false,false,false);`
 
 ## pryvAccess.retry()
 If a user refused to grant access, restart the setup process with the same settings. 
