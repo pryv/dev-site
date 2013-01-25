@@ -57,6 +57,7 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 #### Successful response: `200 OK`
 
 - `sessionID` (string): The newly created session's ID, to include in each subsequent request's `Authorization` header.
+- `preferredLanguage` ([language code](#data-structure-language-code)): The user's preferred language.
 
 #### cURL example
 
