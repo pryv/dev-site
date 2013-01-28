@@ -46,7 +46,7 @@ TODO: review and complete
 
 ### POST `/admin/login`
 
-Opens a new admin session, authenticating with the provided credentials. TODO: possible support for OAuth/OpenID/BrowserID (for now, only local credentials are supported).
+Opens a new admin session, authenticating with the provided credentials. (See also POST `/admin/login/persona`.)
 
 #### Body parameters
 
@@ -64,6 +64,31 @@ Opens a new admin session, authenticating with the provided credentials. TODO: p
 ```bash
 curl -i -H "Content-Type: application/json" -X POST -d '{"username":"{username}","password":"{password}","appId":"{appId}"}' https://{username}.pryv.io/admin/login
 ```
+
+
+### POST `/admin/login/persona`
+
+Opens a new admin session, authenticating with the provided [Mozilla Persona](https://developer.mozilla.org/en-US/docs/Persona) email and assertion.
+
+#### Body parameters
+
+- `email` (string): The user's email.
+- `assertion` (string): The Persona identity assertion (generated client-side) to be verified.
+- `appId` (string): A URL-friendly name uniquely identifying your app.
+
+TODO: refactor the following as it duplicates the content for POST `/admin/login`.
+
+#### Successful response: `200 OK`
+
+- `sessionID` (string): The newly created session's ID, to include in each subsequent request's `Authorization` header.
+- `preferredLanguage` ([language code](#data-structure-language-code)): The user's preferred language.
+
+#### cURL example
+
+```bash
+
+```
+
 
 ### POST `/admin/logout`
 
