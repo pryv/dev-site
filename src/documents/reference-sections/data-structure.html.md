@@ -71,6 +71,8 @@ Differentiating them is simple: period events carry a duration, while mark event
 
 Fields:
 
+TODO assuming some of these fields are (cannot be?) required for event creation, document the optionality.
+
 - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
 - `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
 - `time` ([timestamp](#data-structure-timestamp)): The event's time. For period events, this is the time the event started.

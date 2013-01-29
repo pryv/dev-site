@@ -8,6 +8,8 @@ sectionOrder: 1
 
 Get an access token.
 
+TODO what is an access token and why do I need it?
+
 ## <a id="intro-initial-requirements"></a>Initial requirements
 
 ### 1. Get a Pryv app id for your app

@@ -15,6 +15,7 @@ There are two different uses for the API:
 
 - Most apps will want to interact with [Pryv activity data](reference.html#activity). Recording and managing of activity data (events and their organization into folders and tags) is protected by [accesses](reference.html#data-structure-access) to allow easy [sharing](#sharing).
 - Some apps may need to access [user account administration](reference.html#admin), which includes the management of data sharing (via accesses) and activity channels (in addition to the user account itself). Administration is protected by personal authentication and expiring sessions, and is reserved for trusted apps.
+TODO access id retrieval also part of admin interface?
 
 [TODO: add simple schema here]
 
