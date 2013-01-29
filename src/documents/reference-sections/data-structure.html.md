@@ -71,7 +71,7 @@ Differentiating them is simple: period events carry a duration, while mark event
 
 Fields:
 
-TODO assuming some of these fields are (cannot be?) required for event creation, document the optionality.
+TODO clarify 'read-only', mark optional in a clear way so reader can quickly test out event creation without being intimidated at the number of fields they have to figure out, confirm all optional fields identified. ('id' being non-optional feels a bit strange.)
 
 - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
 - `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
