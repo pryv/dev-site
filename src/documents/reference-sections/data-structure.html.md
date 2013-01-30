@@ -26,7 +26,7 @@ TODO: example
 
 ## <a id="data-structure-event"></a>Event
 
-Activity events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
+events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
 
 - Period events are used to track everything with a duration, like time spent drafting a project proposal, meeting with the customer or staying at a particular location.
 - Mark events are used to track everything else, like a note, a log message, a GPS location, a temperature measurement, or a stock market asset value.
@@ -84,7 +84,7 @@ SGO: "read-only" = server-assigned, never set or modified by client. "optional":
 
 ## <a id="data-structure-folder"></a>Folder
 
-Activity folders are the possible states or categories you track the channel's activity events into (folders are always specific to an activity channel). Every period event belongs to one folder, while mark events can be recorded "off-folder" as well. Activity folders follow a hierarchical tree structure: every folder can contain "child" folders (sub-folders).
+Activity folders are the possible states or categories you track the channel's events into (folders are always specific to an activity channel). Every period event belongs to one folder, while mark events can be recorded "off-folder" as well. Activity folders follow a hierarchical tree structure: every folder can contain "child" folders (sub-folders).
 
 Fields:
 

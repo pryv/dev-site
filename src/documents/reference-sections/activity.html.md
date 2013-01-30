@@ -168,7 +168,7 @@ Queries accessible events.
 
 #### Successful response: `200 OK`
 
-An array of [activity events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
+An array of [events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
 
 #### Specific errors
 
@@ -193,7 +193,7 @@ TODO: example
 
 #### Body parameters
 
-The new event's data: see [activity event](#data-structure-event).
+The new event's data: see [Event](#data-structure-event).
 
 #### Successful response: `201 Created`
 
@@ -275,7 +275,7 @@ Gets the currently running period events.
 
 #### Successful response: `200 OK`
 
-An array of [activity events](#data-structure-event) containing the running period events.
+An array of [events](#data-structure-event) containing the running period events.
 
 #### cURL example
 
@@ -288,11 +288,11 @@ An array of [activity events](#data-structure-event) containing the running peri
 
 *Socket.IO command id: `{channel-id}.events.update`*
 
-Modifies the activity event's attributes.
+Modifies the event's attributes.
 
 #### Body parameters
 
-New values for the event's fields: see [activity event](#data-structure-event). All fields are optional, and only modified values must be included. TODO: example
+New values for the event's fields: see [event](#data-structure-event). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
 
@@ -379,7 +379,7 @@ Batch upload events that were recorded by the client while offline. The submitte
 
 #### Body parameters
 
-An array of client-recorded [activity events](#data-structure-event). In addition to the regular properties, each event must have a unique `tempRefId` defined (as it's temporary it must only be unique within the request). Also, make sure that the events' `time` is set in server time (as for single event requests).
+An array of client-recorded [events](#data-structure-event). In addition to the regular properties, each event must have a unique `tempRefId` defined (as it's temporary it must only be unique within the request). Also, make sure that the events' `time` is set in server time (as for single event requests).
 
 #### Successful response: `200 OK`
 
