@@ -9,7 +9,9 @@ sectionOrder: 2
 TODO: introductory text
 
 
-## Authorization
+## Preliminary information
+
+### Authorization
 
 All requests for retrieving and manipulating activity data must carry a valid [access token](#data-structure-access) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter.  (You get the token by using one of the [access SDKs](app-access.html), by retrieving it in the [administration](#admin-accesses) or from sharing.)
 
@@ -25,7 +27,7 @@ GET /{channel-id}/events?auth={access-token} HTTP/1.1
 Host: yacinthe.pryv.io
 ```
 
-## Common errors
+### Common errors
 
 Here are errors commonly returned for requests:
 

@@ -7,23 +7,16 @@ sectionOrder: 1
 # Basics
 
 
-## What's the URL?
-
-`https://{username}.pryv.io` (where `{username}` is the name of the user whose data you want to access)
-
-Because Pryv potentially stores each user's data in a different location according to the user's choice, the API's base URL is unique for each user.
-
-
-## Calling API methods
+## API style
 
 Most of the API follows REST principles, meaning each item has its own unique resource URL and can be read or modified via HTTP verbs:
 
 - GET to read the item(s)
-- POST to create a new item
-- PUT to modify the item
+- POST to create a new item, with a JSON message in the request body
+- PUT to modify the item, with a JSON message in the request body
 - DELETE to delete the item (note that logical deletion, or trashing, is supported for items like events, folders and channels)
 
-Here's an example API request:
+Example API request:
 ```http
 GET /{channel-id}/events HTTP/1.1
 Host: {user-name}.pryv.io
@@ -33,9 +26,18 @@ Authorization: {access-token}
 Note that the API also supports Socket.IO, for both calling API methods and receiving live notifications of changes to activity data. See [the dedicated section](#socketio).
 
 
+## Base URL
+
+`https://{username}.pryv.io` (where `{username}` is the name of the user whose data you want to access)
+
+Because Pryv potentially stores each user's data in a different location according to the user's choice, the API's base URL is unique for each user.
+
+
 ## Data format
 
-The API uses JSON for serializing data. Here's what an event can look like:
+The API exchanges data with the client in JSON. 
+
+Example event:
 ```json
 {
   "id": "5051941d04b8ffd00500000d",
@@ -53,7 +55,7 @@ The following headers are included in every response:
 
 - `API-Version`: The version of the API in the form `{major}.{minor}.{revision}`.
 - `Server-Time`: The current server time as a [timestamp](#data-structure-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
-
+- `Authorization`: The access token representing your app.
 
 ## Errors
 

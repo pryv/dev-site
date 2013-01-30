@@ -9,42 +9,6 @@ sectionOrder: 5
 This section describes the structure of the different types of objects and values exchanged in the API.
 
 
-## <a id="data-structure-access"></a>Access
-
-An access defines a set of permissions on a user's activity data (channels, folders and events). (See [how sharing works](overview.html#sharing).)
-
-Fields:
-
-- `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; URL-encoded if necessary.
-- `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
-- `name` (string): Unique *per type and device name (if defined)*. The name identifying the access for the user. (Note that for personal and app access, the name is used as a technical identifier and not shown as-is to the user.)
-- `deviceName` (string): Optional. Unique *per type and name (if defined)*. For app accesses only. The name of the client device running the app, if applicable.
-- `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
-	- `channelId` ([identity](#data-structure-identity)): The accessible channel's id.
-	- `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the channel. With `"contribute"`, the access's token holder(s) can see and record events in the channel; with `"manage"`, the access's token holder(s) can in addition modify the channel itself. This is overridden if specific folder permissions are defined (see below).
-	- `folderPermissions`: Optional. An array of folder permission objects to define specific per-folder permissions. If defined, only the folders listed here will be accessible.
-		- `folderId` ([identity](#data-structure-identity)): The accessible folder's id. If the folder has child folders, they will be accessible too. A  value of `null` can be used to set permissions for events that have no folder assigned.
-		- `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the folder. With `"contribute"`, the access's token holder(s) can see and record events for the folder (and its child folders, if any); with `"manage"`, the access's token holder(s) can in addition create, modify and delete child folders.
-
-A note about permissions: if the access defines conflicting permission levels (e.g. a folder set to "manage" but a child folder within it set to "contribute"), only the highest level is considered.
-
-TODO: example
-
-
-## <a id="data-structure-bookmark"></a>Bookmark
-
-Sharing bookmarks allow the user to keep track of accesses shared with her by other users.
-
-Fields:
-
-- `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the bookmark.
-- `name` (string): Unique. A name identifying the bookmark for the user.
-- `url` (string): The url pointing to the shared access's owning user's server. Not modifiable after creation.
-- `accessToken` [identity](#data-structure-identity): The token of the shared access itself. Not modifiable after creation.
-
-TODO: example
-
-
 ## <a id="data-structure-channel"></a>Channel
 
 Each activity channel represents a "stream" or "type" of activity to track, acting as a storage bucket for related events.
@@ -160,6 +124,42 @@ A folder structure for activities:
   }
 ];
 ```
+
+## <a id="data-structure-access"></a>Access
+
+An access defines a set of permissions on a user's activity data (channels, folders and events). (See [how sharing works](overview.html#sharing).)
+
+Fields:
+
+- `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; URL-encoded if necessary.
+- `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
+- `name` (string): Unique *per type and device name (if defined)*. The name identifying the access for the user. (Note that for personal and app access, the name is used as a technical identifier and not shown as-is to the user.)
+- `deviceName` (string): Optional. Unique *per type and name (if defined)*. For app accesses only. The name of the client device running the app, if applicable.
+- `permissions`: an array of channel permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
+  - `channelId` ([identity](#data-structure-identity)): The accessible channel's id.
+  - `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the channel. With `"contribute"`, the access's token holder(s) can see and record events in the channel; with `"manage"`, the access's token holder(s) can in addition modify the channel itself. This is overridden if specific folder permissions are defined (see below).
+  - `folderPermissions`: Optional. An array of folder permission objects to define specific per-folder permissions. If defined, only the folders listed here will be accessible.
+    - `folderId` ([identity](#data-structure-identity)): The accessible folder's id. If the folder has child folders, they will be accessible too. A  value of `null` can be used to set permissions for events that have no folder assigned.
+    - `level` (`"read"`, `"contribute"` or `"manage"`): The level of access to the folder. With `"contribute"`, the access's token holder(s) can see and record events for the folder (and its child folders, if any); with `"manage"`, the access's token holder(s) can in addition create, modify and delete child folders.
+
+A note about permissions: if the access defines conflicting permission levels (e.g. a folder set to "manage" but a child folder within it set to "contribute"), only the highest level is considered.
+
+TODO: example
+
+
+## <a id="data-structure-bookmark"></a>Bookmark
+
+Sharing bookmarks allow the user to keep track of accesses shared with her by other users.
+
+Fields:
+
+- `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the bookmark.
+- `name` (string): Unique. A name identifying the bookmark for the user.
+- `url` (string): The url pointing to the shared access's owning user's server. Not modifiable after creation.
+- `accessToken` [identity](#data-structure-identity): The token of the shared access itself. Not modifiable after creation.
+
+TODO: example
+
 
 
 ## <a id="data-structure-additional-data"></a>Item additional data
