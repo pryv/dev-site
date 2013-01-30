@@ -6,7 +6,7 @@ doctype 5
 html.no-js(lang='en')
   head
     meta(charset='UTF-8')
-    title Pryv API event types directory
+    title Pryv API event types
     meta(name='description', content='TODO')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', type='text/css', href='bootstrap.min.css')
@@ -36,7 +36,7 @@ html.no-js(lang='en')
       #sections
 
         section#about
-          h1 Event types directory
+          h1 Event types
           :markdown
             This is the reference for the standard event types we recommend and handle (or will
             handle) in the Pryv apps. You are free to use any type in your app, but for the sake of
@@ -44,7 +44,7 @@ html.no-js(lang='en')
             and <a href="mailto:developers@pryv.com">get in touch with us</a> to complete the
             directory if you don't find what you need.
 
-            ## What's an event type?
+            ## Description
 
             Each event has a `type` property that indicates how to handle its `value` (if any).
             The type itself is a combination of a **class** and a **format** (see also the [event
@@ -82,8 +82,8 @@ html.no-js(lang='en')
             other types, please just <a href="mailto:developers@pryv.com">send us an e-mail</a> with
             your proposal.
 
-        section#event-types
-          h1 Event types
+        section#directory
+          h1 Event type directory
 
           - var docs = getCollection('eventTypesDocs').toJSON()
           - each doc in docs
