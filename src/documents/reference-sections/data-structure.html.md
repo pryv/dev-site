@@ -72,6 +72,7 @@ Differentiating them is simple: period events carry a duration, while mark event
 Fields:
 
 TODO clarify 'read-only', mark optional in a clear way so reader can quickly test out event creation without being intimidated at the number of fields they have to figure out, confirm all optional fields identified. ('id' being non-optional feels a bit strange.)
+SGO: "read-only" = server-assigned, never set or modified by client. "optional": field may not be present (`id` is always present as soon as an item is saved; because it is read-only it must not be set at creation though). I agree stuff like data structure should be reformatted for quick visual parsing at the end (e.g. using tables, or at least coloured labels for stuff like "optional"), but we've consciously chosen low-formatting, quick-to-edit bullet lists for the moment.
 
 - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
 - `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
