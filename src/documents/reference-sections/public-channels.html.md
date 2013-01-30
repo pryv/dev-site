@@ -65,7 +65,7 @@ Queries the channel's events. This is the only method that must be implemented i
 
 #### Successful response: `200 OK`
 
-An array of [activity events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
+An array of [events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
 
 #### Errors
 
