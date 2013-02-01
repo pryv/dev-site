@@ -592,3 +592,46 @@ Deletes the specified shared access. You can only delete accesses whose permissi
 ```bash
 
 ```
+
+
+## <a id="activity-profile-app"></a>App profile
+
+The app profile is a simple key-value store available for your app to keep user settings. It is exposed as a plain object with free structure. The adding/updating/deleting of settings is designed in the expectation that each setting is a key at the profile object's root, but you can structure your profile differently if you wish.
+
+
+### GET `/profile/app`
+
+Gets your app profile settings.
+
+#### Successful response: `200 OK`
+
+An object containing your app's current profile settings. The method always returns an object (which will be empty if your app never defined any setting).
+
+#### cURL example
+
+```bash
+
+```
+
+
+### PUT `/profile/app`
+
+Adds, updates or delete settings.
+
+- To add or update a setting, just set its value; for example: `{"keyToAddOrUpdate": "value"}`
+- To delete a field, set its value to `null`; for example: `{"keyToDelete": null}`
+
+Settings you don't specify in the update are left untouched.
+
+#### Body parameters
+
+An object with the desired changes to the settings (see above).
+
+#### Successful response: `200 OK`
+
+#### cURL example
+
+```bash
+
+```
+
