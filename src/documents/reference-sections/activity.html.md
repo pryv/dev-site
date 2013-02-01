@@ -598,6 +598,8 @@ Deletes the specified shared access. You can only delete accesses whose permissi
 
 The app profile is a simple key-value store available for your app to keep user settings. It is exposed as a plain object with free structure. The adding/updating/deleting of settings is designed in the expectation that each setting is a key at the profile object's root, but you can structure your profile differently if you wish.
 
+The app profile can only be used if authentified with an app access token.
+
 
 ### GET `/profile/app`
 
