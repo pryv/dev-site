@@ -637,3 +637,24 @@ An object with the desired changes to the settings (see above).
 
 ```
 
+
+## <a id="activity-profile-public"></a>Public profile
+
+The public profile is a simple read-only object exposing publicly shared user information (e.g. avatar image) for use in your app.
+
+
+### GET `/profile/public`
+
+Gets the user's public profile info.
+
+#### Successful response: `200 OK`
+
+An object containing the user's current public profile information.
+
+#### cURL example
+
+```bash
+
+```
+
+
