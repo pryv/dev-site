@@ -326,3 +326,13 @@ Deletes the specified sharing bookmark.
 ```bash
 
 ```
+
+
+## <a id="admin-profile-sets"></a>Profile sets
+
+TODO: for usage see [activity app profile](#activity-profile-app).
+
+### GET `/profile/public`: TODO
+### PUT `/profile/public`: TODO
+### GET `/profile/private`: TODO
+### PUT `/profile/private`: TODO
