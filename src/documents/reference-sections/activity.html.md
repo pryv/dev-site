@@ -264,9 +264,6 @@ Stops a previously running period event. In channels with `enforceNoEventsOverla
 ```
 
 
-### TODO: GET `/{channel-id}/events/start` and `.../stop` and `.../record` alternatives to the above to allow simple calls via e.g. wget/curl
-
-
 ### GET `/{channel-id}/events/running`
 
 *Socket.IO command id: `{channel-id}.events.getRunning`*
