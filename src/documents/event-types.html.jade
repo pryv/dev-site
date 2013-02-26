@@ -100,62 +100,62 @@ html.no-js(lang='en')
                     default
                       | !{value}
 
-          - var docs = getCollection('eventTypesDocs').toJSON()
-          each doc in docs
-            - var content = JSON.parse(doc.body)
-            - var version = content.version.version
-            - var classes = content.classes
-            for className in Object.keys(classes)
-              - var classDef = classes[className]
-              h2 <code>!{className}</code> class
-              .description= classDef.description
-              - var headers = []
-              - classDef.default = classDef.default || {}
-              for defaultValue in classDef.default
-                - headers.push(defaultValue)
-              for formatName in Object.keys(classDef.formats)
-                - var formatDef = classDef.formats[formatName]
-                  for formatField in Object.keys(formatDef)
-                    - headers.push(formatField)
-              - headers = headers.filter(function(el,i,a){if(i==a.indexOf(el))return 1;return 0})
-              - headers.sort()
-              table.table
-                thead
+          - var file = getFilesAtPath('./event-types/event-types.json').models[0]
+          - console.log(file.attributes.source)
+          - var content = JSON.parse(file.attributes.source)
+          - var version = content.version.version
+          - var classes = content.classes
+          for className in Object.keys(classes)
+            - var classDef = classes[className]
+            h2 <code>!{className}</code> class
+            .description= classDef.description
+            - var headers = []
+            - classDef.default = classDef.default || {}
+            for defaultValue in classDef.default
+              - headers.push(defaultValue)
+            for formatName in Object.keys(classDef.formats)
+              - var formatDef = classDef.formats[formatName]
+                for formatField in Object.keys(formatDef)
+                  - headers.push(formatField)
+            - headers = headers.filter(function(el,i,a){if(i==a.indexOf(el))return 1;return 0})
+            - headers.sort()
+            table.table
+              thead
+                tr
+                  -// format id column.
+                  th format
+                  each header in headers
+                    if header !== 'properties' && header !== 'example'
+                      -// other custom columns.
+                      th= header
+              tbody
+                for formatName in Object.keys(classDef.formats)
+                  - var formatDef = classDef.formats[formatName]
+                  - var properties = formatDef['properties']
+                  - var example = formatDef['example']
+                  - var rowSpan = 1 + (properties ? 1 : 0) + (example ? 1 : 0)
+                  - var colSpan = headers.length - (properties ? 1 : 0) - (example ? 1 : 0)
                   tr
                     -// format id column.
-                    th format
+                    td(rowspan=rowSpan) <code>!{formatName}</code>
                     each header in headers
+                      -// other custom columns.
+                      - var value = formatDef[header] || classDef.default[header]
                       if header !== 'properties' && header !== 'example'
-                        -// other custom columns.
-                        th= header
-                tbody
-                  for formatName in Object.keys(classDef.formats)
-                    - var formatDef = classDef.formats[formatName]
-                    - var properties = formatDef['properties']
-                    - var example = formatDef['example']
-                    - var rowSpan = 1 + (properties ? 1 : 0) + (example ? 1 : 0)
-                    - var colSpan = headers.length - (properties ? 1 : 0) - (example ? 1 : 0)
-                    tr
-                      -// format id column.
-                      td(rowspan=rowSpan) <code>!{formatName}</code>
-                      each header in headers
-                        -// other custom columns.
-                        - var value = formatDef[header] || classDef.default[header]
-                        if header !== 'properties' && header !== 'example'
-                          if header === 'pattern'
-                            td <code>!{value}</code>
-                          else
-                            td= value
-                      if properties
-                        tr
-                          td(colspan=colSpan)
-                            strong properties
-                            mixin renderProperties(properties, true)
-                      if example
-                        tr
-                          td(colspan=colSpan)
-                            strong example
-                            pre.example= JSON.stringify(example, null, 2)
+                        if header === 'pattern'
+                          td <code>!{value}</code>
+                        else
+                          td= value
+                    if properties
+                      tr
+                        td(colspan=colSpan)
+                          strong properties
+                          mixin renderProperties(properties, true)
+                    if example
+                      tr
+                        td(colspan=colSpan)
+                          strong example
+                          pre.example= JSON.stringify(example, null, 2)
 
     #toc
       //- content generated by TOC plugin (see below)
