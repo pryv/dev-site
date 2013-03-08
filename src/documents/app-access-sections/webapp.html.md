@@ -13,22 +13,22 @@ Obtaining an access token for your web app.
 
 * make sure you got the [initial requirements](#intro-initial-requirements) ready.
 * include the following script in your page:
-	- Staging version (recommended at the moment):
+	- Staging version (recommended at the moment):  
 	```html
-	<script type="text/javascript" src="https://sw.rec.la:2443/access/v0/pryv-access-sdk.js"></script>
+	<script type="text/javascript" src="https://sw.rec.la:2443/access/v1/pryv-sdk.js"></script>
 	```
 	- Production version:
 	```html
-	<script type="text/javascript" src="https://sw.pryv.io/access/v0/pryv-access-sdk.js"></script>
+	<script type="text/javascript" src="https://sw.pryv.io/access/v1/pryv-sdk.js"></script>
 	```
 	- or the optimized CloudFront cache:
 	```html
-	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v0/pryv-access-sdk.js"></script>
+	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v1/pryv-sdk.js"></script>
 	```
 * construct a `settings` JSON object
-* call `pryvAccess.setup(settings)`
+* call `Pryv.Access.setup(settings)`
 
-For a more fleshed-out example look at the source code of [https://sw.rec.la:2443/access/demo.html](https://sw.rec.la:2443/access/demo.html).
+For a more fleshed-out example look at the source code of [https://sw.rec.la/access/demo.html](https://sw.rec.la:2443/access/demo.html).
 
 <a name="webapp.test"></a>Or make your own tests from the page:
 [https://sw.rec.la:2443/access/test.html](https://sw.rec.la:2443/access/test.html)
@@ -45,7 +45,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 	<html>
 	<head>
 	<title>Minimalistic example</title>
-	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v0/pryv-access-sdk.js"></script>
+	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v1/pryv-sdk-sdk.js"></script>
 	</head>
 	<body>
 		<script type="text/javascript">
@@ -58,7 +58,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 		var requestedPermissions = [{"channelId" : "diary",
 	                                     "level" : "contribute"}];
 	
-	    pryvAccess.setup({
+	    Pryv.Access.setup({
 	        requestingAppId : 'Minimalistic Exemple For SDK Access',
 	        requestedPermissions : requestedPermissions,
 	        returnURL: 'auto#',
@@ -72,7 +72,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 	</html>
 	```
 
-## pryvAccess.setup(settings)
+## Pryv.Access.setup(settings)
 
 
 The **settings** object supports the following parameters:
@@ -140,7 +140,7 @@ Make your own tests from the [test page](webapp.test).
 
 Set the return URL to your own page such as
 
-	https://www.mysite.com/end-of-pryvAccess-process.php?
+	https://www.mysite.com/end-of-Pryv.Access-process.php?
 
 **Attention!!** The url submitted *must* end with a `?`, a `#` or a `&`
 Returned status will be appended to this URL.
@@ -149,17 +149,17 @@ Returned status will be appended to this URL.
 
 ACCEPTED
 
-		https://www.mysite.com/end-of-pryvAccess-process.php?
+		https://www.mysite.com/end-of-Pryv.Access-process.php?
 	prYvkey=GSbdasjgdv&prYvstatus=ACCEPTED&prYvusername=yacinthe&prYvtoken=VVhjDJDDG
 
 REFUSED
 
-		https://www.mysite.com/end-of-pryvAccess-process.php?
+		https://www.mysite.com/end-of-Pryv.Access-process.php?
 	prYvkey=GSbdasjgdv&prYvstatus=REFUSED&prYvmessage=refused+by+user
 
 ERROR
 
-		https://www.mysite.com/end-of-pryvAccess-process.php?
+		https://www.mysite.com/end-of-Pryv.Access-process.php?
 	prYvkey=GSbdasjgdv&prYvstatus=ERROR&prYvid=INTERNAL_ERROR&prYvmessage=...
 
 ### <a name="webapp.spanButtonID"></a> settings.spanButtonID : Rely on PrYv standard Button
@@ -168,16 +168,16 @@ TODO
 ### <a name="webapp.callbacks"></a> settings.callbacks Custom handling of the signin process
 TODO
 
-## pryvAccess.popupLogin()
+## Pryv.Access.popupLogin()
 Once setup is done, you can trigger the populLogin window from your own button.  
 Note: Trigger it from a user-click event.
 
-## pryvAccess.logout()
+## Pryv.Access.logout()
 Once setup is done, and user logged in. Erase current credential and restart setup with the same settings.
 
 **logout()** will trigger a `settings.callbacks.success(false,false,false);`
 
-## pryvAccess.retry()
+## Pryv.Access.retry()
 If a user refused to grant access, restart the setup process with the same settings. 
 
 ## Other Examples
