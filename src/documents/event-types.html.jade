@@ -101,7 +101,6 @@ html.no-js(lang='en')
                       | !{value}
 
           - var file = getFilesAtPath('./event-types/event-types.json').models[0]
-          - console.log(file.attributes.source)
           - var content = JSON.parse(file.attributes.source)
           - var version = content.version.version
           - var classes = content.classes

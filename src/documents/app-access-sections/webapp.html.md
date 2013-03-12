@@ -56,6 +56,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 		}
 	
 		var requestedPermissions = [{"channelId" : "diary",
+									"defaultName" : "Diary", // this name is localized
 	                                     "level" : "contribute"}];
 	
 	    Pryv.Access.setup({
