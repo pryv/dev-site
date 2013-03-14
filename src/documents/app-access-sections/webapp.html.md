@@ -34,13 +34,14 @@ For a more fleshed-out example look at the source code of [https://sw.rec.la/acc
 [https://sw.rec.la:2443/access/test.html](https://sw.rec.la:2443/access/test.html)
 
 
-### Exemple: Minimalistic
+### Example: Minimalistic
 
 This app requests a "contribute" access to the "diary" channel, using the PrYv button and a popup for sign-in.
 
 **TODO: review this code**
 
-	```html
+```html
+
 	<!DOCTYPE html>
 	<html>
 	<head>
@@ -60,7 +61,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 	                                     "level" : "contribute"}];
 	
 	    Pryv.Access.setup({
-	        requestingAppId : 'Minimalistic Exemple For SDK Access',
+	        requestingAppId : 'pryv-mini-example',
 	        requestedPermissions : requestedPermissions,
 	        returnURL: 'auto#',
 	        spanButtonID : 'pryvButton',
@@ -71,7 +72,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 		<span id='pryvButton'></span>
 	</body>
 	</html>
-	```
+```
 
 ## Pryv.Access.setup(settings)
 
@@ -124,7 +125,7 @@ When the user returns to this same page, the pryv-access-sdk will parse `prYv` p
   - **&lt;trailer>**: one of `?`, a `#` or a `&`
   - **[extra_parms]**: Use this space (uri_encoded) as a custom payload for the returning user.
 
-EXEMPLES
+EXAMPLES
 
 * with `https://mysite.com/page.php` as source URL.
   - **self#** -> `https://mysite.com/page.php#prYvkey=JDJKhadja&prYvstatus=...`
@@ -146,7 +147,7 @@ Set the return URL to your own page such as
 **Attention!!** The url submitted *must* end with a `?`, a `#` or a `&`
 Returned status will be appended to this URL.
 
-#### Exemples of return URL
+#### Examples of return URL
 
 ACCEPTED
 
