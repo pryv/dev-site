@@ -26,6 +26,11 @@ Read, then execute `./scripts/setup-environment-dev.sh`.
 Note: last time I checked DocPad does not cleanup obsolete files, so in case you remove some resources please make sure you don't leave garbage in the generated site.
 
 
+## Automatically updating the API version from a nearby `api-server` repo
+
+`scripts/update-api-version.bash` (assumes `../api-server/package.json` to exist from the present repo's root)
+
+
 ## Publishing
 
 The website is published with GitHub pages on <http://pryv.github.com>. To update it, after making sure your changes in the sources are committed and the generated website files are up-to-date (see the instructions on generating the files with DocPad above), simply:

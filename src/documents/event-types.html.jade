@@ -33,6 +33,12 @@ html.no-js(lang='en')
       header#pageHeader
         a(href='index.html') Home
 
+      -// load JSON file
+      - var file = getFilesAtPath('./event-types/event-types.json').models[0]
+      - var content = JSON.parse(file.attributes.source)
+
+      .version Directory version: <strong>#{content.version}</strong>
+
       #sections
 
         section#about
@@ -100,9 +106,6 @@ html.no-js(lang='en')
                     default
                       | !{value}
 
-          - var file = getFilesAtPath('./event-types/event-types.json').models[0]
-          - var content = JSON.parse(file.attributes.source)
-          - var version = content.version.version
           - var classes = content.classes
           for className in Object.keys(classes)
             - var classDef = classes[className]
