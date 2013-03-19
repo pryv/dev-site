@@ -7,22 +7,22 @@
 scriptsFolder=$(cd $(dirname "$0"); pwd)
 cd $scriptsFolder/..
 
-PACKAGE_PATH=../api-server/package.json
+SOURCE_PATH=../api-server/package.json
+TARGET_PATH=src/documents/reference.html.jade
 
-if [ ! -f $PACKAGE_PATH ]
+if [ ! -f $SOURCE_PATH ]
 then
-  echo >&2 "Expected $PACKAGE_PATH to exist from repo root"
+  echo >&2 "Expected $SOURCE_PATH to exist from repo root"
   exit 1
 fi
 
 # fetch version from api-server repo
-VERSION=`sed -n 's/.*"version": "\(.*\)".*/\1/p' $PACKAGE_PATH`
+VERSION=`sed -n 's/.*"version": "\(.*\)".*/\1/p' $SOURCE_PATH`
 # replace in-file
-TARGET_PATH=src/documents/reference.html.jade
 sed -i .bak "/.*var apiVersion = .*/ s/'.*'/'$VERSION'/" $TARGET_PATH
 # remove sed mandatory backup (haven't found a way to avoid the backup)
 rm $TARGET_PATH.bak
 
 echo "
-Successfully set version to $VERSION in $TARGET_PATH, using $PACKAGE_PATH as reference.
+Successfully set version to $VERSION in $TARGET_PATH (using $SOURCE_PATH as reference).
 "
