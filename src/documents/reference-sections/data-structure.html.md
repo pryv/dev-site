@@ -8,6 +8,11 @@ sectionOrder: 5
 
 This section describes the structure of the different types of objects and values exchanged in the API.
 
+Notes:
+
+- "Read-only" = server-assigned, never set or modified by clients
+- We should and will reformat items structure for quick visual parsing (e.g. using tables, or at least coloured labels for stuff like "optional")—for the moment we've consciously chosen low-formatting, quick-to-edit bullet lists
+
 
 ## <a id="data-structure-channel"></a>Channel
 
@@ -26,7 +31,7 @@ TODO: example
 
 ## <a id="data-structure-event"></a>Event
 
-events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
+Events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
 
 - Period events are used to track everything with a duration, like time spent drafting a project proposal, meeting with the customer or staying at a particular location.
 - Mark events are used to track everything else, like a note, a log message, a GPS location, a temperature measurement, or a stock market asset value.
@@ -34,9 +39,6 @@ events can be period events, which are associated with a period of time, or mark
 Differentiating them is simple: period events carry a duration, while mark events do not. Like folders, events always belong to an activity channel.
 
 Fields:
-
-TODO clarify 'read-only', mark optional in a clear way so reader can quickly test out event creation without being intimidated at the number of fields they have to figure out, confirm all optional fields identified. ('id' being non-optional feels a bit strange.)
-SGO: "read-only" = server-assigned, never set or modified by client. "optional": field may not be present (`id` is always present as soon as an item is saved; because it is read-only it must not be set at creation though). I agree stuff like data structure should be reformatted for quick visual parsing at the end (e.g. using tables, or at least coloured labels for stuff like "optional"), but we've consciously chosen low-formatting, quick-to-edit bullet lists for the moment.
 
 - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
 - `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
