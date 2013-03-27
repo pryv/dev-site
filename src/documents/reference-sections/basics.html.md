@@ -35,7 +35,7 @@ Because Pryv potentially stores each user's data in a different location accordi
 
 ## Data format
 
-The API exchanges data with the client in JSON. 
+The API exchanges data with the client in JSON.
 
 Example event:
 ```json
@@ -48,6 +48,16 @@ Example event:
 }
 ```
 
+## Alternative request method
+
+Because we can't fathom out the crazy rationale behind [HTTP access control (CORS) rules](https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS), we offer web apps an alternative way to place POST, PUT and DELETE requests in the API by using `application/x-www-form-urlencoded` POST requests with the following fields (all optional):
+
+- `_method`: The HTTP override method to use (usually `PUT` or `DELETE`; `POST` is used if not set).
+- `_auth`: The `Authorization` header value (alternative to sending the header itself).
+- `_json`: Considered as the JSON request body if set (overriding all other body content, if any).
+
+This is intended for web apps only; if your app isn't running in browsers you should use regular requests.
+
 
 ## Common HTTP headers
 
@@ -55,7 +65,6 @@ The following headers are included in every response:
 
 - `API-Version`: The version of the API in the form `{major}.{minor}.{revision}`.
 - `Server-Time`: The current server time as a [timestamp](#data-structure-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
-- `Authorization`: The access token representing your app.
 
 ## Errors
 
