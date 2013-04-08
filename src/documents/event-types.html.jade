@@ -70,12 +70,18 @@ html.no-js(lang='en')
 
             ## Format specification
 
-            For each of the type described below, the event value's structure is specified using
+            For each of the types described below, the event value's structure is specified using
             JSON-schema (see the
             [JSON-schema specification](http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8)).
 
-            TODO: remove or move elsewhere:
-            [Facebook documentation on posts](https://developers.facebook.com/docs/reference/api/post/)
+            Notes:
+
+            - A "null" value type means that the event has no `value` property (usually because the
+              event's core properties are sufficient to carry the necessary information).
+            - Any value type other than "null" implies that the event must have a `value` property
+              of the specified JSON-schema type.
+            - If the value is an object, its (sub-)properties are assumed to be optional unless
+              otherwise specified by JSON-schema's "required" field.
 
             ## JSON file
 
@@ -113,8 +119,8 @@ html.no-js(lang='en')
             .description= classDef.description
             - var headers = []
             - classDef.default = classDef.default || {}
-            for defaultValue in classDef.default
-              - headers.push(defaultValue)
+            for defaultField in Object.keys(classDef.default)
+              - headers.push(defaultField)
             for formatName in Object.keys(classDef.formats)
               - var formatDef = classDef.formats[formatName]
                 for formatField in Object.keys(formatDef)
