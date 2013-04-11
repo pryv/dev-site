@@ -318,7 +318,13 @@ TODO: example
 #### cURL example
 
 ```bash
+curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F 'file=@-' https://$USERNAME.rec.la/$CHANNEL/events?auth=$TOKEN < $FILENAME 
+```
 
+This next one will send the correct filename
+
+```bash
+curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F "file=@$FILENAME" https://$USERNAME.rec.la/$CHANNEL/events?auth=$TOKEN
 ```
 
 
