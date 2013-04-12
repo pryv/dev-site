@@ -19,7 +19,7 @@ Notes:
 Each activity channel represents a "stream" or "type" of activity to track, acting as a storage bucket for related events.
 Fields:
 
-- `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the channel. Automatically generated if not set when creating the channel; URL-encoded if necessary.
+- `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the channel. Automatically generated if not set when creating the channel; **slugified if necessary**.
 - `name` (string): Unique. The name identifying the channel for users.
 - `enforceNoEventsOverlap` (boolean): Optional. If specified and `true`, the system will ensure that period events in this channel never overlap.
 - `clientData` ([item additional data](#data-structure-additional-data)): Optional. Additional client data for the channel.
@@ -90,7 +90,7 @@ Activity folders are the possible states or categories you track the channel's e
 
 Fields:
 
-- `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the folder. Automatically generated if not set when creating the folder; URL-encoded if necessary.
+- `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the folder. Automatically generated if not set when creating the folder; **slugified if necessary**.
 - `channelId` ([identity](#data-structure-identity)): Read-only. The id of the belonging channel.
 - `name` (string): A name identifying the folder for users. The name must be unique among the folder's siblings in the folders tree structure.
 - `parentId` ([identity](#data-structure-identity)): Optional. The identifier of the folder's parent, if any. A value of `null` indicates that the folder has no parent (i.e. root folder).
@@ -133,7 +133,7 @@ An access defines a set of permissions on a user's activity data (channels, fold
 
 Fields:
 
-- `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; URL-encoded if necessary.
+- `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; **slugified if necessary**.
 - `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
 - `name` (string): Unique *per type and device name (if defined)*. The name identifying the access for the user. (Note that for personal and app access, the name is used as a technical identifier and not shown as-is to the user.)
 - `deviceName` (string): Optional. Unique *per type and name (if defined)*. For app accesses only. The name of the client device running the app, if applicable.
