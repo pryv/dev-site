@@ -41,9 +41,9 @@ npm install
 if [ ! -d out ]
 then
   echo "
-Setting up 'out' folder for publishing to pryv.github.com...
+Setting up 'out' folder for publishing to pryv.github.io...
 "
-  git clone git@github.com:pryv/pryv.github.com.git out
+  git clone git@github.com:pryv/pryv.github.io.git out
 fi
 
 echo "

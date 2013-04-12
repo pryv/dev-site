@@ -33,8 +33,8 @@ Note: last time I checked DocPad does not cleanup obsolete files, so in case you
 
 ## Publishing
 
-The website is published with GitHub pages on <http://pryv.github.com>. To update it, after making sure your changes in the sources are committed and the generated website files are up-to-date (see the instructions on generating the files with DocPad above), simply:
+The website is published with GitHub pages on <http://pryv.github.io>. To update it, after making sure your changes in the sources are committed and the generated website files are up-to-date (see the instructions on generating the files with DocPad above), simply:
 
-1. Go to the `out` folder (which is a working copy of our 'pryv.github.com' repo)
+1. Go to the `out` folder (which is a working copy of our 'pryv.github.io' repo)
 2. Commit the changes to the generated files
 3. Push (to 'master': `git push`)
