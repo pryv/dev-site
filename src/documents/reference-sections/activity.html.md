@@ -318,7 +318,7 @@ TODO: example
 #### cURL example
 
 ```bash
-curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F 'file=@-' https://$USERNAME.rec.la/$CHANNEL/events?auth=$TOKEN < $FILENAME 
+curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F 'file=@-' https://$USERNAME.rec.la/$CHANNEL/events?auth=$TOKEN < $FILENAME
 ```
 
 This next one will send the correct filename
@@ -330,7 +330,7 @@ curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F "file=@$
 
 ### DELETE `/{channel-id}/events/{event-id}`
 
-*Socket.IO command id: `{channel-id}.events.delete`*
+*Socket.IO command id: `{channel-id}.events.del`*
 
 Trashes or deletes the specified event, depending on its current state:
 
@@ -502,7 +502,7 @@ TODO: example
 
 ### DELETE `/{channel-id}/folders/{folder-id}`
 
-*Socket.IO command id: `{channel-id}.folders.delete`*
+*Socket.IO command id: `{channel-id}.folders.del`*
 
 Trashes or deletes the specified folder, depending on its current state:
 
