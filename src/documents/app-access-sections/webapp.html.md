@@ -46,7 +46,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 	<html>
 	<head>
 	<title>Minimalistic example</title>
-	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v1/pryv-sdk-sdk.js"></script>
+	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v1/pryv-sdk.js"></script>
 	</head>
 	<body>
 		<script type="text/javascript">
@@ -65,7 +65,20 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 	        requestedPermissions : requestedPermissions,
 	        returnURL: 'auto#',
 	        spanButtonID : 'pryvButton',
-	        callbacks : callMeWithCredentials
+	        callbacks : {
+              initialization : function() { },
+              needSignin : function(popupUrl, pollUrl, pollRateMs) { },
+              accepted : function(username, appToken, languageCode) {
+                console.log("** SUCCESS! username:" + username + 
+                            " appToken:" + appToken + 
+                            " lang:" + languageCode);
+              },
+              refused: function(reason) {
+                 console.log("** REFUSED! " + reason);
+              },
+              error: function(code, message) {
+                console.log("** ERROR! " + code + " " + message);
+           }
 	    });
 	
 	    </script>
