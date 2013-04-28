@@ -8,7 +8,6 @@ sectionOrder: 2
 
 Obtaining an access token for your web app.
 
-
 ## What you need
 
 * make sure you got the [initial requirements](#intro-initial-requirements) ready.
@@ -19,11 +18,11 @@ Obtaining an access token for your web app.
 	```
 	- Production version:
 	```html
-	<script type="text/javascript" src="https://sw.pryv.io/access/v1/pryv-sdk.js"></script>
+	<script type="text/javascript" src="https://sw.pryv.me/access/v1/pryv-sdk.js"></script>
 	```
 	- or the optimized CloudFront cache:
 	```html
-	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v1/pryv-sdk.js"></script>
+	<script type="text/javascript" src="//d3gblc8a9weyfb.cloudfront.net/access/v1/pryv-sdk.js"></script>
 	```
 * construct a `settings` JSON object
 * call `Pryv.Access.setup(settings)`
@@ -46,7 +45,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 	<html>
 	<head>
 	<title>Minimalistic example</title>
-	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/sdk-access-webapp/v1/pryv-sdk.js"></script>
+	<script type="text/javascript" src="//d3gblc8a9weyfb.cloudfront.net/access/v1/pryv-sdk.js"></script>
 	</head>
 	<body>
 		<script type="text/javascript">
