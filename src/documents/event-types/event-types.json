@@ -58,6 +58,32 @@
         }
       }
     },
+	"encrypted": {
+		"description": "Client-side encrypted event. The payload, once decrypted gives an object containing the regular: { type : { class: \"..\", format: \"..\"}, value :\"..\"}",
+		"default" : {
+			"type": "object",
+			"properties" : {
+				"credentialId" : {
+					"type": "string",
+					"description": "The id of the credentials to use in an eventual keychain." 
+					},
+				"hint": {
+					"type": "string",
+					"description": "A textual hint to find out which key was used"
+				},
+				"payload" : {
+					"type": "string",
+					"description": "Encoded data.",
+					"required": true
+				}
+			}
+		},
+		"aes-text-base64" : {
+			"description": "AES encrypted payload, with a <em>text</em> key and a <em>base64<em> payload."
+		},
+		"aes-hexa-base64" : {
+			"description": "AES encrypted payload, with an <em>hexadecimal</em> key and a <em>base64<em> payload."}
+    },
     "file": {
       "description": "To record a file, or a group of files. A fallback type for data with no specific handling in Pryv.",
       "formats": {
