@@ -15,20 +15,18 @@ There are two different uses for the API:
 
 - Access activity data: Most apps will want to interact with [Pryv activity data](reference.html#activity). Recording and managing of activity data (events and their organization into folders and tags) is protected by [accesses](reference.html#data-structure-access) to allow easy [sharing](#sharing).
 
-- Administration: Some apps may need to use the administration API to provide [user account administration](reference.html#admin). Administration is protected by personal authentication and expiring sessions, and is reserved for trusted apps. 
-
-	Examples of user account administrations are:
-	- management of the user account
-	- management of data sharing (via accesses) and activity channels
-
-[TODO extract administration API to separate docset]
+- Administration: Some apps may need to use the administration API to provide user account administration. Administration is protected by personal authentication and sessions, and is reserved for trusted apps.
 
 [TODO: add simple schema here]
 
+
 ## <a id="activity-data"></a>Activity data
 
+
 ### Definition
-Activity data are timestamped pieces of typed data, or **events**. Some example events are: thoughts, audio notes, photos, geographical coordinates, etc. (see the [event type directory](event-types.html#directory)). 
+
+Activity data are timestamped pieces of typed data, or **events**. Some example events are: thoughts, audio notes, photos, geographical coordinates, etc. (see the [event type directory](event-types.html#directory)).
+
 
 ### Detailed information
 
@@ -44,14 +42,18 @@ To allow Pryv apps to play nicely together and help users organize those events,
 Note that as an open system, to provide true interoperability, Pryv does not set or enforce "ownership" of data per app. Provided the necessary permissions, data stored by a given app can be accessed and manipulated by any other app.
 See the [standard channels, folders and tags](standard-structure.html) we encourage you to use when appropriate if you want your app to integrate nicely within the user's Pryv experience.
 
+
 ## <a id="sharing"></a>Access / sharing
 
 [TODO: schema?]
 
 ### Overview
+
 Apps access a user's activity data by presenting the API with an **access token**, meaning a specific instance of **access** to the data has been granted. An access can be *shared*, associated to an *app* or *personal*.
 
+
 ### Types of access
+
 - **Shared** accesses can be freely defined for letting other users view and possibly contribute to their activity data. They only grant access to a specific set of the user's data (see details below).
 
 	A **shared access** grants permissions to one or more of the user's channel(s), and further permissions within those channels, like on folder(s), tag(s) and/or a limited time frame, can be defined to filter events. Accesses allow sharing in a variety of ways, such as:
@@ -65,12 +67,14 @@ Apps access a user's activity data by presenting the API with an **access token*
 
 Note that only trusted apps can view and manage app and personal accesses. To register your app as trusted, please [get in touch with us](mailto:developers@pryv.com).
 
+
 ### Other details
-Users can store access tokens shared by other users by adding them to their **sharing bookmarks**.
+
+Users can store access tokens shared by other users by adding them to their **sharing bookmarks** (part of the administration; available to trusted apps only).
 
 For the present time, accesses are not personal. Access tokens act exactly like digital keys: if you have the token and the name of the user with the access it identifies, you can access the data.
 
-For more details see the API reference:
+For more details see the API reference (TODO: fix admin links):
 
-- Accesses [management](reference.html#admin-accesses) and [data structure](reference.html#data-structure-access)
-- Bookmarks [management](reference.html#admin-bookmarks) and [data structure](reference.html#data-structure-bookmark)
+- Accesses [data structure](reference.html#data-structure-access) and [management](reference.html#admin-accesses)
+- Bookmarks [data structure](reference.html#data-structure-bookmark) and [management](reference.html#admin-bookmarks)

@@ -4,7 +4,7 @@ sectionId: activity
 sectionOrder: 2
 ---
 
-# Activity methods
+# API methods
 
 TODO: introductory text
 
@@ -13,7 +13,7 @@ TODO: introductory text
 
 ### Authorization
 
-All requests for retrieving and manipulating activity data must carry a valid [access token](#data-structure-access) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter.  (You get the token by using one of the [access SDKs](app-access.html), by retrieving it in the [administration](#admin-accesses) or from sharing.)
+All requests for retrieving and manipulating activity data must carry a valid [access token](#data-structure-access) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter.  (You get the token by using one of the [access SDKs](app-access.html) or from sharing.)
 
 Here's what a proper request looks like:
 ```http
@@ -528,7 +528,7 @@ Trashes or deletes the specified folder, depending on its current state:
 
 ## <a id="activity-accesses"></a>Accesses
 
-While full access management is reserved for trusted apps via [methods in the administration](#admin-accesses), any app can retrieve and manage shared accesses depending on its own permissions. All methods here only deal with shared accesses whose permissions are a subset of that linked to the token used for the requests. (You'll get a `403 Forbidden` error if trying to touch other types of accesses, or shared accesses with greater permissions.)
+While full access management is reserved for trusted apps, any app can retrieve and manage shared accesses depending on its own permissions. All methods here only deal with shared accesses whose permissions are a subset of that linked to the token used for the requests. (You'll get a `403 Forbidden` error if trying to touch other types of accesses, or shared accesses with greater permissions.)
 
 
 ### GET `/accesses`

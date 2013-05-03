@@ -1,5 +1,5 @@
 ---
-doc: reference
+# commented out to exclude registration from the reference: doc: reference
 sectionId: admin
 sectionOrder: 3
 ---
