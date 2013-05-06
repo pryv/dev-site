@@ -116,7 +116,7 @@ html.no-js(lang='en')
           for className in Object.keys(classes)
             - var classDef = classes[className]
             h2 <code>!{className}</code> class
-            .description= classDef.description
+            .description !{classDef.description}
             - var headers = []
             - classDef.default = classDef.default || {}
             for defaultField in Object.keys(classDef.default)
@@ -139,7 +139,7 @@ html.no-js(lang='en')
               tbody
                 for formatName in Object.keys(classDef.formats)
                   - var formatDef = classDef.formats[formatName]
-                  - var properties = formatDef['properties']
+                  - var properties = formatDef['properties'] || classDef.default['properties']
                   - var example = formatDef['example']
                   - var rowSpan = 1 + (properties ? 1 : 0) + (example ? 1 : 0)
                   - var colSpan = headers.length - (properties ? 1 : 0) - (example ? 1 : 0)
@@ -153,7 +153,7 @@ html.no-js(lang='en')
                         if header === 'pattern'
                           td <code>!{value}</code>
                         else
-                          td= value
+                          td !{value}
                     if properties
                       tr
                         td(colspan=colSpan)
