@@ -172,14 +172,14 @@ An object (key-value map) for client apps to store additional data about the con
 
 When the containing item is updated, additional data fields can be added, updated and removed as follows:
 
-- To add or update a field, just set its value; for example: `{ "clientData": { "keyToAddOrUpdate": "value"}}`
-- To delete a field, set its value to `null`; for example: `{ "clientData": { "keyToDelete": null}}`
+- To add or update a field, just set its value; for example: `{"clientData": {"keyToAddOrUpdate": "value"}}`
+- To delete a field, set its value to `null`; for example: `{"clientData": {"keyToDelete": null}}`
 
 Fields you don't specify in the update are left untouched.
 
 ### Naming convention
 
-The convention is that each app names the keys it uses with an `"{app-id}_"` prefix. For example, an app named "Riki" would store its data in fields such as `"riki_key": "(some value)"`.
+The convention is that each app names the keys it uses with an `"{app-id}:"` prefix. For example, an app with id "riki" would store its data in fields such as `"riki:key": "some value"`.
 
 
 ## <a id="data-structure-error"></a>Error
