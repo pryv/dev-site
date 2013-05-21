@@ -35,7 +35,7 @@ html.no-js(lang='en')
 
       -// load JSON file
       - var directoryFile = 'event-types/event-types.json'
-      - var content = JSON.parse(getFilesAtPath(directoryFile).models[0].attributes.source)
+      - var content = require('files/' + directoryFile)
 
       .version Directory version: <strong>#{content.version}</strong>
 

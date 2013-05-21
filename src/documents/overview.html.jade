@@ -34,7 +34,7 @@ html.no-js(lang='en')
         a(href='index.html') Home
         //- TODO
 
-      - var sections = getCollection('overviewSections').toJSON()
+      - var sections = getDatabase().findAll({doc: 'overview'}).setComparator({sectionOrder: 1}).toJSON()
 
       #sections
         each section in sections

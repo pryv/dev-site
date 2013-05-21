@@ -34,7 +34,7 @@ html.no-js(lang='en')
         a(href='index.html') Home
         //- TODO
 
-      - var sections = getCollection('appAccessSections').toJSON()
+      - var sections = getDatabase().findAll({doc: 'app-access'}).setComparator({sectionOrder: 1}).toJSON()
 
       #sections
         each section in sections

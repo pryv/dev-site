@@ -92,34 +92,32 @@ html.no-js(lang='en')
             - else
               | No examples... yet.
 
-          - var structureFiles = getCollection('standardStructureData').toJSON()
-          - each structureFile in structureFiles
-            - var content = JSON.parse(structureFile.body)
-            - var version = content.version.version
-            - var channels = content['channels']
-            - each channel in channels
-              .channel
-                h2
-                  - if (channel.id)
-                    | <code>!{channel.id}</code> channel
-                  - else
-                    | "!{channel.name}" channel
-                p.info
-                  - if (channel.id)
-                    | <strong>Standard</strong> channel. Default name (EN): "!{channel.name}".
-                  - else
-                    | <strong>Example</strong> channel.
-                    - channel.id = ''
-                p.description= channel.description
+          - var content = require('files/standard-structure/channels-folders.json')
+          - var version = content.version.version
+          - var channels = content['channels']
+          - each channel in channels
+            .channel
+              h2
+                - if (channel.id)
+                  | <code>!{channel.id}</code> channel
+                - else
+                  | "!{channel.name}" channel
+              p.info
+                - if (channel.id)
+                  | <strong>Standard</strong> channel. Default name (EN): "!{channel.name}".
+                - else
+                  | <strong>Example</strong> channel.
+                  - channel.id = ''
+              p.description= channel.description
 
-                - if (channel.folders.length)
-                  h3 Folders
-                  mixin renderFolders(channel.folders)
+              - if (channel.folders.length)
+                h3 Folders
+                mixin renderFolders(channel.folders)
 
-              - // Make event examples visibility optional.
-              h3: a(onclick='javascript:$("#events-'+channel.id+'").toggle()') Event examples
-              div(id='events-#{channel.id}', style='display:none;')
-                mixin renderEventExamples(channel.eventExamples)
+            - // Make event examples visibility optional.
+            h3: a(onclick='javascript:$("#events-'+channel.id+'").toggle()') Event examples
+            div(id='events-#{channel.id}', style='display:none;')
+              mixin renderEventExamples(channel.eventExamples)
 
 
     #toc

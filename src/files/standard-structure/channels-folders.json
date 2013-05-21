@@ -1,12 +1,5 @@
----
-doc: 'standard-structure'
-standardStructId: basic
-standardStructOrder: 1
----
 {
-  "version": {
-    "version": 20121212.01
-  },
+  "version": 20121212.01,
   "channels": [
     {
       "id":"diary",
