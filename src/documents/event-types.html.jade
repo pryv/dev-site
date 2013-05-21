@@ -118,9 +118,6 @@ html.no-js(lang='en')
             h2 <code>!{className}</code> class
             .description !{classDef.description}
             - var headers = []
-            - classDef.default = classDef.default || {}
-            for defaultField in Object.keys(classDef.default)
-              - headers.push(defaultField)
             for formatName in Object.keys(classDef.formats)
               - var formatDef = classDef.formats[formatName]
                 for formatField in Object.keys(formatDef)
@@ -139,7 +136,7 @@ html.no-js(lang='en')
               tbody
                 for formatName in Object.keys(classDef.formats)
                   - var formatDef = classDef.formats[formatName]
-                  - var properties = formatDef['properties'] || classDef.default['properties']
+                  - var properties = formatDef['properties']
                   - var example = formatDef['example']
                   - var rowSpan = 1 + (properties ? 1 : 0) + (example ? 1 : 0)
                   - var colSpan = headers.length - (properties ? 1 : 0) - (example ? 1 : 0)
@@ -148,7 +145,7 @@ html.no-js(lang='en')
                     td(rowspan=rowSpan) <code>!{formatName}</code>
                     each header in headers
                       -// other custom columns.
-                      - var value = formatDef[header] || classDef.default[header]
+                      - var value = formatDef[header]
                       if header !== 'properties' && header !== 'example'
                         if header === 'pattern'
                           td <code>!{value}</code>
