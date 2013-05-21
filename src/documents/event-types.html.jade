@@ -34,8 +34,8 @@ html.no-js(lang='en')
         a(href='index.html') Home
 
       -// load JSON file
-      - var file = getFilesAtPath('./event-types/event-types.json').models[0]
-      - var content = JSON.parse(file.attributes.source)
+      - var directoryFile = 'event-types/event-types.json'
+      - var content = JSON.parse(getFilesAtPath(directoryFile).models[0].attributes.source)
 
       .version Directory version: <strong>#{content.version}</strong>
 
@@ -85,7 +85,7 @@ html.no-js(lang='en')
 
             ## JSON file
 
-            This directory is available as a [JSON file](event-types/event-types.json) for automated
+            This directory is available as a [JSON file](!{directoryFile}) for automated
             processing. We use it in our API for validating event values (for standard types).
 
             ## Submitting new types to the directory
