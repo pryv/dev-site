@@ -3,6 +3,11 @@
 DocPad sources for the developers website: API reference, recommendations, guides, etc.
 
 
+## Temporary note
+
+A lot of files in `src/files` are only there for our temporary teaser page. This will have to be cleaned up when the full site get publication-ready.
+
+
 ## Writing documentation
 
 Try to stick to the following guidelines when writing (these guidelines are meant to be updated and completed as we progress):
