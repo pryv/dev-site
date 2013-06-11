@@ -34,7 +34,7 @@ html.no-js(lang='en')
         a(href='dev-index.html') Home
         //- TODO
 
-      - var sections = getDatabase().findAll({doc: 'reference'}).setComparator({sectionOrder: 1}).toJSON()
+      - var sections = getDatabase().findAll({doc: 'reference'}).sortCollection({sectionOrder: 1}).toJSON()
       - var apiVersion = '0.4.20' // do not change this line without updating `update-api-version.bash`
 
       .version API version: <strong>#{apiVersion}</strong>
