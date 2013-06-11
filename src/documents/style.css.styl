@@ -1,6 +1,38 @@
 // can't use nib for now because of DocPad plugin settings bug
 //@import 'nib'
 
+header#pageHeader h1
+  text-indent: -9000px;
+  display: block;
+  padding: 0;
+  height: 40px;
+  width: 80px;
+  background: url(../images/LogoPrYvDigital_80x40.png) no-repeat center top;
+//new strucure 2 column
+#sections
+  position:relative;
+  background-color:#393d46;
+  margin-left: 50%;
+.block-method
+  position:relative;
+  margin-left: -100%;
+  clear: left;
+.block-description
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  position:relative;
+  float: left;
+  width: 50%;
+.block-example
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding: 38px 30px 0;
+  position:relative;
+  width: 50%;
+  margin-left:50%;
+
 // override GitHub's awful default margins
 h1, h2, h3
   margin: 2.4em 0 1.2em;
@@ -15,9 +47,9 @@ h2
 h3
   border-bottom: 1px solid #CCC
 section
-  margin-top: 3.5em
-  border-top: 1px dotted #CCC
-  padding-top: 2.5em
+  //margin-top: 3.5em
+  //border-top: 1px dotted #CCC
+  //padding-top: 2.5em
   &:first-child
     margin-top: 0
     border-top: none
