@@ -1,22 +1,16 @@
 // can't use nib for now because of DocPad plugin settings bug
 //@import 'nib'
-
-header#pageHeader h1
-  text-indent: -9000px;
-  display: block;
-  padding: 0;
-  height: 40px;
-  width: 80px;
-  background: url(../images/LogoPrYvDigital_80x40.png) no-repeat center top;
-//new strucure 2 column
+  
+//new structure 2 column
 #sections
   position:relative;
-  background-color:#393d46;
+  background-color:#DADDE4;
   margin-left: 50%;
 .block-method
   position:relative;
   margin-left: -100%;
   clear: left;
+  overflow: hidden;
 .block-description
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -24,18 +18,33 @@ header#pageHeader h1
   position:relative;
   float: left;
   width: 50%;
+  padding: 30px;
 .block-example
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  padding: 38px 30px 0;
+  padding: 47px 30px 0;
   position:relative;
   width: 50%;
   margin-left:50%;
+//Logo Pryv
+.navbar .brand
+  text-indent: -9000px;
+  padding: 0;
+  height: 40px;
+  width: 80px;
+  background: url(../images/LogoPrYvDigital_80x40.png) no-repeat center top;
+  display: block;
+  margin-left: 5px;
+pre 
+  //background-color: #3c3f46;
+  border: 0px solid rgba(204, 204, 204, 0);
+
+
 
 // override GitHub's awful default margins
-h1, h2, h3
-  margin: 2.4em 0 1.2em;
+//h1, h2, h3
+//  margin: 2.4em 0 1.2em;
 h1:first-of-type
   margin-top: 0
 h5, h6
@@ -56,19 +65,21 @@ section
     padding-top: 0
 
 
-
+#main
+      margin-top: 40px
 #toc
   display: none // only shown if js and enough width
   top: 0px;
   left: 0px;
   height: 100%;
   position: fixed;
-  background: #333;
-  box-shadow: inset -5px 0 5px 0px #000;
+  background: #3c3f46;
+  //box-shadow: inset -5px 0 5px 0px #000;
   width: 200px;
   padding-top: 20px;
   color: #fff;
   overflow: scroll;
+  margin-top: 40px;
 
   ul
     margin: 0;
