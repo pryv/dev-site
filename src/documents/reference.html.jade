@@ -37,7 +37,7 @@ html.no-js(lang='en')
             li
               a(href='dev-index.html') Home
             li
-              - var apiVersion = '0.4.20' // do not change this line without updating `update-api-version.bash`
+              - var apiVersion = '0.4.22' // do not change this line without updating `update-api-version.bash`
               .version API version: <strong>#{apiVersion}</strong>
 
     #main
@@ -64,7 +64,7 @@ html.no-js(lang='en')
           'highlightOffset': 100,
           'anchorName': function(i, heading, prefix) {
             var $heading = $(heading),
-                sectionId = $heading.parents('section').attr('id');
+                sectionId = $heading.parents('section[id]').attr('id');
             return sectionId + ($heading.is('h1') ? '' : '-' + slugify($heading.text()));
           },
           'headerText': function(i, heading, $heading) {

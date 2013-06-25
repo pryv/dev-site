@@ -54,7 +54,7 @@ section#activity
         Methods for retrieving and manipulating [channels](#data-structure-channel).
 
     section.method
-      h3 Retrieve channels
+      h3 Get channels
       .content
         :markdown
           `GET /channels`, Socket.IO: `channels.get`
@@ -174,7 +174,7 @@ section#activity
         Methods to retrieve and manipulate [events](#data-structure-event).
 
     section.method
-      h3 Retrieve events
+      h3 Get events
       .content
         :markdown
           `GET /{channel-id}/events`, Socket.IO: `{channel-id}.events.get`
@@ -302,7 +302,7 @@ section#activity
           ```
 
     section.method
-      h3 Retrieve running periods
+      h3 Get running periods
       .content
         :markdown
           `GET /{channel-id}/events/running`, Socket.IO: `{channel-id}.events.getRunning`
@@ -398,7 +398,7 @@ section#activity
           ```
 
     section.method
-      h3 Retrieve attached file
+      h3 Get attached file
       .content
         :markdown
           `GET /{channel-id}/events/{event-id}/{file name}`
@@ -474,7 +474,7 @@ section#activity
         Methods to retrieve and manipulate [folders](#data-structure-folder).
 
     section.method
-      h3 Retrieve folders
+      h3 Get folders
       .content
         :markdown
           `GET /{channel-id}/folders`, Socket.IO: `{channel-id}.folders.get`
@@ -599,7 +599,25 @@ section#activity
         While full access management is reserved for trusted apps, any app can retrieve and manage shared accesses depending on its own permissions. All methods here only deal with shared accesses whose permissions are a subset of that linked to the token used for the requests. (You'll get a `403 Forbidden` error if trying to touch other types of accesses, or shared accesses with greater permissions.)
 
     section.method
-      h3 Retrieve accesses
+      h3 Get current access info
+      .content
+        :markdown
+          `GET /access-info`
+
+          Retrieves information about the current access.
+
+          #### Successful response: `200 OK`
+
+          An object with the [access'](#data-structure-access) `name`, `type` and `permissions`.
+      aside
+        :markdown
+          #### cURL example
+          ```bash
+          curl -i -H "Authorization: {access-token}" https://{username}.pryv.io/access-info
+          ```
+
+    section.method
+      h3 Get accesses
       .content
         :markdown
           `GET /accesses`
