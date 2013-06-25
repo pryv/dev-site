@@ -1,45 +1,13 @@
 // can't use nib for now because of DocPad plugin settings bug
 //@import 'nib'
-  
-//new structure 2 column
-#sections
-  position:relative;
-  background-color:#DADDE4;
-  margin-left: 50%;
-.block-method
-  position:relative;
-  margin-left: -100%;
-  clear: left;
-  margin-right: 100%;
-  padding: 0 30px;
-.block-example
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  padding: 47px 30px 0;
-  position:absolute;
-  width: 100%;
-  margin-left:50%;
-  left: 50%;
-//Logo Pryv
-.navbar .brand
-  text-indent: -9000px;
-  padding: 0;
-  height: 40px;
-  width: 80px;
-  background: url(../images/LogoPrYvDigital_80x40.png) no-repeat center top;
-  display: block;
-  margin-left: 5px;
-pre 
-  //background-color: #3c3f46;
-  border: 0px solid rgba(204, 204, 204, 0);
 
-
+*
+  box-sizing: border-box
 
 // override GitHub's awful default margins
-//h1, h2, h3
-//  margin: 2.4em 0 1.2em;
-h1:first-of-type
+h1, h2, h3
+  margin: 2em 0 1em;
+h1:first-of-type, h2:first-of-type
   margin-top: 0
 h5, h6
   margin: 1.5em 0 0.75em
@@ -49,11 +17,23 @@ h2
   border-bottom: 1px solid #000
 h3
   border-bottom: 1px solid #CCC
+pre
+  border: 0px solid rgba(204, 204, 204, 0)
 
-
-
+.navbar .brand
+  display: block
+  margin-left: 5px
+  width: 80px
+  height: 40px
+  padding: 0
+  text-indent: -9000px
+  background: url(images/LogoPrYvDigital_80x40.png) no-repeat center top
 #main
-      margin-top: 40px
+  margin-top: 40px
+#sections
+  > section
+    section
+      margin-bottom: 1.2em
 #toc
   display: none // only shown if js and enough width
   top: 0px;
@@ -98,9 +78,36 @@ h3
     background: #336699;
     box-shadow: inset -5px 0px 10px -5px #000;
 
-@media (min-width: 600px)
+@media (min-width: 767px)
   html.js
     #main
       margin-left: 200px
+    #sections
+      float: left;
+      background-color: #DADDE4
+      margin-left: 50%
+      padding-top: 1.2em
+      width: 50%
+
+      section
+        float: left;
+        clear: both;
+        width: 100%
+
+      > section
+        margin-left: -100%
+        width: 200%
+
+        h1, h2, .content
+          float: left
+          clear: left
+          width: 50%
+          padding: 0 30px
+
+        aside
+          float: right
+          clear: right
+          width: 50%
+          padding: 0 30px
     #toc
       display: block

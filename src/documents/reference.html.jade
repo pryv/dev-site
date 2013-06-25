@@ -29,19 +29,21 @@ html.no-js(lang='en')
       })();
 
   body
+    header#page-header.navbar.navbar-fixed-top
+      .navbar-inner
+        a.brand(href='/index.html') Pryv
+        .nav-collapse.collapse
+          ul.nav.pull-right
+            li
+              a(href='dev-index.html') Home
+            li
+              - var apiVersion = '0.4.20' // do not change this line without updating `update-api-version.bash`
+              .version API version: <strong>#{apiVersion}</strong>
+
     #main
-      header#pageHeader
-        a(href='dev-index.html') Home
-        //- TODO
-
-      - var sections = getDatabase().findAll({doc: 'reference'}).sortCollection({sectionOrder: 1}).toJSON()
-      - var apiVersion = '0.4.20' // do not change this line without updating `update-api-version.bash`
-
-      .version API version: <strong>#{apiVersion}</strong>
-
-
       #sections
-        each section in sections
+        include reference-sections/basics.html.jade
+        //- each section in sections
           .block-method
             section(id='#{section.sectionId}')!= section.contentRendered
 
