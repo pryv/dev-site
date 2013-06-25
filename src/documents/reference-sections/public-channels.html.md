@@ -6,7 +6,7 @@ sectionOrder: 99
 
 # Public channels
 
-*TODO: this should be a separate page. Wait till the final dev site structure is defined.*
+*TODO: contents here are probably obsolete but kept for reference until we do implement public channels. This should also be a separate page.*
 
 This section describes the public channel API, both for those of you who want to implement it for publishing their own channels and for those who want to integrate public channels into their app. The public channel API itself is a small subset of the Pryv API.
 

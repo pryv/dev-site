@@ -44,11 +44,13 @@ TODO: review and complete
 ## <a id="admin-session"></a>Session management
 
 
-### POST `/admin/login`
+### Login
+
+`POST /admin/login`
 
 Opens a new admin session, authenticating with the provided credentials. (See also POST `/admin/login/persona`.)
 
-#### Body parameters
+#### Parameters
 
 - `username` (string)
 - `password` (string)
@@ -66,11 +68,13 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"username":"{username}"
 ```
 
 
-### POST `/admin/login/persona`
+### Login with Mozilla Persona
+
+`POST /admin/login/persona`
 
 Opens a new admin session, authenticating with the provided [Mozilla Persona](https://developer.mozilla.org/en-US/docs/Persona) email and assertion.
 
-#### Body parameters
+#### Parameters
 
 - `email` (string): The user's email.
 - `assertion` (string): The Persona identity assertion (generated client-side) to be verified.
@@ -90,7 +94,9 @@ TODO: refactor the following as it duplicates the content for POST `/admin/login
 ```
 
 
-### POST `/admin/logout`
+### Logout
+
+`POST /admin/logout`
 
 Terminates the admin session.
 
@@ -106,7 +112,9 @@ curl -i -H "Content-Type: application/json" -H "Authorization: {session-id}" -X 
 ## <a id="admin-user"></a>User information
 
 
-### GET `/admin/user-info`
+### Get user info
+
+`GET /admin/user-info`
 
 TODO: get user informations
 Requires session token.
@@ -124,7 +132,9 @@ curl -i -H "Authorization: {session-id}" https://{username}.pryv.io/admin/user-i
 ```
 
 
-### PUT `/admin/user-info`
+### Update user info
+
+`PUT /admin/user-info`
 
 TODO: change user information
 
@@ -135,7 +145,9 @@ TODO: change user information
 ```
 
 
-### POST `/admin/change-password`
+### Change password
+
+`POST /admin/change-password`
 
 TODO: change user password
 Requires session token, old password, new password.
@@ -156,7 +168,9 @@ TODO: `WRONG_PASSWORD`, `INVALID_NEW_PASSWORD`
 TODO: introductory text
 
 
-### GET `/admin/accesses`
+### Get accesses
+
+`GET /admin/accesses`
 
 Gets all manageable accesses, which are the shared accesses. (Your app's own access token is retrieved with `POST /admin/get-app-token`.)
 
@@ -171,11 +185,13 @@ curl -i -H "Authorization: {session-id}" https://{username}.pryv.io/admin/access
 ```
 
 
-### POST `/admin/accesses`
+### Create access
+
+`POST /admin/accesses`
 
 Creates a new shared access.
 
-#### Body parameters
+#### Parameters
 
 The new access's data: see [access](#data-structure-access). Additionally, if a `defaultName` property is set on the new access' channel / folder permission objects, the corresponding channels / folders will be created with that name.
 
@@ -196,11 +212,13 @@ The new access's data: see [access](#data-structure-access). Additionally, if a 
 ```
 
 
-### PUT `/admin/accesses/{token}`
+### Update access
+
+`PUT /admin/accesses/{token}`
 
 Modifies the specified shared access.
 
-#### Body parameters
+#### Parameters
 
 New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
 
@@ -217,7 +235,9 @@ New values for the access's fields: see [access](#data-structure-access). All fi
 ```
 
 
-### DELETE `/admin/accesses/{token}`
+### Delete access
+
+`DELETE /admin/accesses/{token}`
 
 Deletes the specified shared access.
 
@@ -230,11 +250,13 @@ Deletes the specified shared access.
 ```
 
 
-### POST `/admin/accesses/check-app`
+### Check app authorization
+
+`POST /admin/accesses/check-app`
 
 For the app authorization process. Checks if the app requesting authorization already has access with the same permissions (and on the same device, if applicable), and returns details of the requested permissions' channels and folders (for display) if not.
 
-#### Body parameters
+#### Parameters
 
 - `requestingAppId` (string): The id of the app requesting authorization.
 - `deviceName` (string): Optional. The name of the device running the app requesting authorization, if applicable.
@@ -264,7 +286,9 @@ If a matching access already exists:
 TODO: introductory text
 
 
-### GET `/admin/bookmarks`
+### Get bookmarks
+
+`GET /admin/bookmarks`
 
 Gets all of the user's sharing bookmarks.
 
@@ -279,11 +303,13 @@ An array of [bookmarks](#data-structure-bookmark) containing all sharing bookmar
 ```
 
 
-### POST `/admin/bookmarks`
+### Create bookmark
+
+`POST /admin/bookmarks`
 
 Creates a new sharing bookmark.
 
-#### Body parameters
+#### Parameters
 
 The new bookmark's data: see [bookmark](#data-structure-bookmark).
 
@@ -298,11 +324,13 @@ The new bookmark's data: see [bookmark](#data-structure-bookmark).
 ```
 
 
-### PUT `/admin/bookmarks/{bookmark-id}`
+### Update bookmark
+
+`PUT /admin/bookmarks/{bookmark-id}`
 
 Modifies the specified sharing bookmark.
 
-#### Body parameters
+#### Parameters
 
 New values for the bookmark's fields: see [bookmark](#data-structure-bookmark). All fields are optional, and only modified values must be included. TODO: example
 
@@ -315,7 +343,9 @@ New values for the bookmark's fields: see [bookmark](#data-structure-bookmark). 
 ```
 
 
-### DELETE `/admin/bookmarks/{bookmark-id}`
+### Delete bookmark
+
+`DELETE /admin/bookmarks/{bookmark-id}`
 
 Deletes the specified sharing bookmark.
 
@@ -332,7 +362,7 @@ Deletes the specified sharing bookmark.
 
 TODO: for usage see [activity app profile](#activity-profile-app).
 
-### GET `/profile/public`: TODO
-### PUT `/profile/public`: TODO
-### GET `/profile/private`: TODO
-### PUT `/profile/private`: TODO
+### Get public profile `GET /profile/public`: TODO
+### Update public profile `PUT /profile/public`: TODO
+### Get private profile `GET /profile/private`: TODO
+### Update private profile `PUT /profile/private`: TODO

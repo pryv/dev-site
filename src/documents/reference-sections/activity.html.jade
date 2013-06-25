@@ -61,7 +61,7 @@ section#activity
 
           Gets the accessible activity channels (excluding those in the trash).
 
-          #### Query string parameters
+          #### Parameters
 
           - `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
 
@@ -181,7 +181,7 @@ section#activity
 
           Queries accessible events.
 
-          #### Query string parameters
+          #### Parameters
 
           - `fromTime` ([timestamp](#data-structure-timestamp)): Optional. The start time of the timeframe you want to retrieve events for. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
           - `toTime` ([timestamp](#data-structure-timestamp)): Optional. The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
@@ -481,7 +481,7 @@ section#activity
 
           Gets the accessible folders, either from the root level or only descending from a specified parent folder.
 
-          #### Query string parameters
+          #### Parameters
 
           - `parentId` ([identity](#data-structure-identity)): Optional. The id of the parent folder to use as root for the request. Default: `null` (returns all accessible folders from the root level).
           - `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
@@ -574,7 +574,7 @@ section#activity
           - If the folder is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
           - If the folder is already in the trash, it will be irreversibly deleted with its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`..
 
-          #### Query string parameters
+          #### Parameters
 
           - `mergeEventsWithParent` (`true` or `false`): Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
 
@@ -644,7 +644,7 @@ section#activity
 
           Creates a new shared access. You can only create accesses whose permissions are a subset of those linked to your own access token.
 
-          #### Body parameters
+          #### Parameters
 
           The new access's data: see [access](#data-structure-access).
 
@@ -672,7 +672,7 @@ section#activity
 
           Modifies the specified shared access. You can only modify accesses whose permissions are a subset of those linked to your own access token.
 
-          #### Body parameters
+          #### Parameters
 
           New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
 
@@ -745,7 +745,7 @@ section#activity
 
           Settings you don't specify in the update are left untouched.
 
-          #### Body parameters
+          #### Parameters
 
           An object with the desired changes to the settings (see above).
 
