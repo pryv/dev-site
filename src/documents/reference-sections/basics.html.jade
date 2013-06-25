@@ -1,5 +1,6 @@
 section#basics
   h1 Basics
+
   section
     h2 API style
     .content
@@ -15,7 +16,7 @@ section#basics
 
     aside
       :markdown
-        Example API request:
+        #### Example request
         ```http
         GET /{channel-id}/events HTTP/1.1
         Host: {user-name}.pryv.io
@@ -38,7 +39,7 @@ section#basics
 
     aside
       :markdown
-        Example event:
+        #### Example event
         ```json
         {
           "id": "5051941d04b8ffd00500000d",
@@ -78,7 +79,7 @@ section#basics
 
     aside
       :markdown
-        Here's an example "401 Unauthorized" error response:
+        #### Example error response
         ```json
         {
           "id": "invalid-access-token",
