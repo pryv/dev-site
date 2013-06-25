@@ -325,9 +325,7 @@ section#activity
       h3 Update event
       .content
         :markdown
-          ### PUT `/{channel-id}/events/{event-id}`
-
-          *Socket.IO command id: `{channel-id}.events.update`*
+          `PUT /{channel-id}/events/{event-id}`, Socket.IO: `{channel-id}.events.update`*
 
           Modifies the event's attributes.
 
@@ -356,7 +354,7 @@ section#activity
       h3 Add attached file(s) to event
       .content
         :markdown
-          ### POST `/{channel-id}/events/{event-id}`
+          `POST /{channel-id}/events/{event-id}`
 
           Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
 
@@ -538,9 +536,7 @@ section#activity
       h3 Update folder
       .content
         :markdown
-          ### PUT `/{channel-id}/folders/{folder-id}`
-
-          *Socket.IO command id: `{channel-id}.folders.update`*
+          `PUT /{channel-id}/folders/{folder-id}`, Socket.IO: `{channel-id}.folders.update`*
 
           Modifies the activity folder's attributes.
 
