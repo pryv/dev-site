@@ -1,10 +1,12 @@
 ---
-doc: overview
-sectionId: overview
+doc: concepts
+sectionId: introduction
 sectionOrder: 1
 ---
 
-# Pryv API for developers
+# Core concepts
+
+TODO: rewrite this page, quickly introducing the different concepts (events, channels, tags, accesses/sharing...), then detailing each one in a section
 
 Pryv provides a RESTful HTTP API, allowing your web or native app to create or read Pryv activity data, or to provide user account management features.
 

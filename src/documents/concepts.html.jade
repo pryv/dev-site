@@ -1,10 +1,10 @@
 ---
-name: 'overview'
-title: 'Overview'
+name: 'concepts'
+title: 'Concepts'
 layout: 'default'
 withExamples: false
 withTOC: true
 ---
-- var sections = getDatabase().findAll({doc: 'overview'}).sortCollection({sectionOrder: 1}).toJSON()
+- var sections = getDatabase().findAll({doc: 'concepts'}).sortCollection({sectionOrder: 1}).toJSON()
 each section in sections
   section(id='#{section.sectionId}')!= section.contentRendered
