@@ -8,11 +8,16 @@ scriptsFolder=$(cd $(dirname "$0"); pwd)
 cd $scriptsFolder/..
 
 SOURCE_PATH=../api-server/package.json
-TARGET_PATH=src/documents/reference.html.jade
+TARGET_PATH=src/layouts/default.html.jade
 
 if [ ! -f $SOURCE_PATH ]
 then
   echo >&2 "Expected $SOURCE_PATH to exist from repo root"
+  exit 1
+fi
+if [ ! -f $TARGET_PATH ]
+then
+  echo >&2 "Expected $TARGET_PATH to exist from repo root"
   exit 1
 fi
 

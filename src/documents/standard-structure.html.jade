@@ -1,152 +1,91 @@
 ---
 name: 'standard-structure'
+title: 'Standard data structure'
+layout: 'default'
+withExamples: false
+withTOC: true
 ---
+section#about
+  h1 Standard data structure
+  :markdown
+    This page lists the standard channels and folders we recommend to use in Pryv, for the
+    sake of integration into Pryv apps and general interoperability.
+    Where appropriate, you'll also find examples to illustrate their use.
 
-doctype 5
-html.no-js(lang='en')
-  head
-    meta(charset='UTF-8')
-    title Pryv API standard data structure
-    meta(name='description', content='TODO')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', type='text/css', href='bootstrap.min.css')
-    link(rel='stylesheet', type='text/css', href='github.css')
-    link(rel='stylesheet', type='text/css', href='highlight.css')
-    link(rel='stylesheet', type='text/css', href='style.css')
-    script(src='scripts/modernizr.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js')
-    script(src='scripts/jquery.toc.min.js')
+    **Warnings:**
 
-    script
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-36589447-2']);
-      _gaq.push(['_trackPageview']);
+    - The event structure used in examples is obsolete. Please refer to the [API
+    reference](reference.html#data-structure-event) for up-to-date info in the meantime.
+    - The channels and folders descriptions must be reviewed for relevance and consistency.
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+    ## Standard items and examples
 
-  body
-    #main
-      header#pageHeader
-        a(href='dev-index.html') Home
+    **Standard** items are standard channels and folders whose `id` is reserved and
+    specifically handled by Pryv apps. You should always use them if applicable (if not see
+    below about submitting new items to the list).
 
-      #sections
-        section#about
-          h1 Standard data structure
-          :markdown
-            This page lists the standard channels and folders we recommend to use in Pryv, for the
-            sake of integration into Pryv apps and general interoperability.
-            Where appropriate, you'll also find examples to illustrate their use.
+    **Examples** illustrate what kind of items you may find in the standard channels and
+    folders, to better understand their purpose. (The `id` of those examples is irrelevant
+    here and isn't mentioned.)
 
-            **Warnings:**
+    ## Submitting new items to the list
 
-            - The event structure used in examples is obsolete. Please refer to the [API
-            reference](reference.html#data-structure-event) for up-to-date info in the meantime.
-            - The channels and folders descriptions must be reviewed for relevance and consistency.
+    We can't pretend to cover every useful case; if you can't find a suitable item here and
+    your app handles data that's potentially reusable elsewhere, please
+    <a href="mailto:developers@pryv.com">send us an e-mail</a> explaining your needs.
 
-            ## Standard items and examples
+    ## JSON file
 
-            **Standard** items are standard channels and folders whose `id` is reserved and
-            specifically handled by Pryv apps. You should always use them if applicable (if not see
-            below about submitting new items to the list).
+    This list is also available as a [JSON file](standard-structure/channels-folders.json).
 
-            **Examples** illustrate what kind of items you may find in the standard channels and
-            folders, to better understand their purpose. (The `id` of those examples is irrelevant
-            here and isn't mentioned.)
+section#structure
+  h1 Standard channels and folders
+  p Standard items are identified by their <code>id</code>.
 
-            ## Submitting new items to the list
-
-            We can't pretend to cover every useful case; if you can't find a suitable item here and
-            your app handles data that's potentially reusable elsewhere, please
-            <a href="mailto:developers@pryv.com">send us an e-mail</a> explaining your needs.
-
-            ## JSON file
-
-            This list is also available as a [JSON file](standard-structure/channels-folders.json).
-
-        section#structure
-          h1 Standard channels and folders
-          p Standard items are identified by their <code>id</code>.
-
-          mixin renderFolders(folders)
-            if (folders && folders.length)
-              ul
-                - each folder in folders
-                  li
-                    - if (folder.id)
-                      | <code>!{folder.id}</code>: <strong>standard</strong>;
-                      | default name (EN): "!{folder.name}"
-                    - else
-                      | "!{folder.name}": <strong>example</strong>
-                    br
-                    | #{folder.description}
-                    mixin renderFolders(folder.folders)
-
-          mixin renderEventExamples(events)
-            - if (events && events.length)
-              each event in events
-                pre= JSON.stringify(event, null, 2)
+  mixin renderFolders(folders)
+    if (folders && folders.length)
+      ul
+        - each folder in folders
+          li
+            - if (folder.id)
+              | <code>!{folder.id}</code>: <strong>standard</strong>;
+              | default name (EN): "!{folder.name}"
             - else
-              | No examples... yet.
+              | "!{folder.name}": <strong>example</strong>
+            br
+            | #{folder.description}
+            mixin renderFolders(folder.folders)
 
-          - var content = require('files/standard-structure/channels-folders.json')
-          - var version = content.version.version
-          - var channels = content['channels']
-          - each channel in channels
-            .channel
-              h2
-                - if (channel.id)
-                  | <code>!{channel.id}</code> channel
-                - else
-                  | "!{channel.name}" channel
-              p.info
-                - if (channel.id)
-                  | <strong>Standard</strong> channel. Default name (EN): "!{channel.name}".
-                - else
-                  | <strong>Example</strong> channel.
-                  - channel.id = ''
-              p.description= channel.description
+  mixin renderEventExamples(events)
+    - if (events && events.length)
+      each event in events
+        pre= JSON.stringify(event, null, 2)
+    - else
+      | No examples... yet.
 
-              - if (channel.folders.length)
-                h3 Folders
-                mixin renderFolders(channel.folders)
+  - var content = require('files/standard-structure/channels-folders.json')
+  - var version = content.version.version
+  - var channels = content['channels']
+  - each channel in channels
+    .channel
+      h2
+        - if (channel.id)
+          | <code>!{channel.id}</code> channel
+        - else
+          | "!{channel.name}" channel
+      p.info
+        - if (channel.id)
+          | <strong>Standard</strong> channel. Default name (EN): "!{channel.name}".
+        - else
+          | <strong>Example</strong> channel.
+          - channel.id = ''
+      p.description= channel.description
 
-            - // Make event examples visibility optional.
-            h3: a(onclick='javascript:$("#events-'+channel.id+'").toggle()') Event examples
-            div(id='events-#{channel.id}', style='display:none;')
-              mixin renderEventExamples(channel.eventExamples)
+      - if (channel.folders.length)
+        h3 Folders
+        mixin renderFolders(channel.folders)
 
-
-    #toc
-      //- content generated by TOC plugin (see below)
-
-    //- TOC generation assumes that all headings are within a section, and that there is a single
-    //- level 1 heading (h1) per section (the section title)
-    script
-      jQuery(document).ready(function($) {
-        $('#toc').toc({
-          'selectors': 'h1,h2',
-          'container': '#sections',
-          'smoothScrolling': false,
-          'prefix': 'toc',
-          'onHighlight': function(el) {},
-          'highlightOnScroll': true,
-          'highlightOffset': 100,
-          'anchorName': function(i, heading, prefix) {
-            var $heading = $(heading),
-                sectionId = $heading.parents('section').attr('id');
-            if (! sectionId) { console.log('arrggh'); debugger; }
-            return sectionId + ($heading.is('h1') ? '' : '-' + slugify($heading.text()));
-          },
-          'headerText': function(i, heading, $heading) {
-            return $heading.text();
-          }
-        });
-
-        function slugify(text) {
-          return text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
-        }
-      });
+    - // Make event examples visibility optional.
+    h3: a(onclick='javascript:$("#events-'+channel.id+'").toggle()') Event examples
+    div(id='events-#{channel.id}', style='display:none;')
+      mixin renderEventExamples(channel.eventExamples)

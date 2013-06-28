@@ -1,4 +1,9 @@
 module.exports = {
+  srcPath: 'src',
+  outPath: 'out',
+  documentsPaths: ['documents'],
+  filesPaths: [ 'files', 'assets' ],
+  layoutsPaths: ['layouts'],
   plugins: {
     marked: {
       markedOptions: {

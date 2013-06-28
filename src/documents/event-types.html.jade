@@ -1,193 +1,135 @@
 ---
 name: 'event-types'
+title: 'Event types'
+layout: 'default'
+withExamples: false
+withTOC: true
 ---
 
-doctype 5
-html.no-js(lang='en')
-  head
-    meta(charset='UTF-8')
-    title Pryv API event types
-    meta(name='description', content='TODO')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', type='text/css', href='bootstrap.min.css')
-    link(rel='stylesheet', type='text/css', href='github.css')
-    link(rel='stylesheet', type='text/css', href='highlight.css')
-    link(rel='stylesheet', type='text/css', href='style.css')
-    script(src='scripts/modernizr.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js')
-    script(src='scripts/jquery.toc.min.js')
+-// load JSON file
+- var directoryFile = 'event-types/event-types.json'
+- var content = require('files/' + directoryFile)
 
-    script
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-36589447-2']);
-      _gaq.push(['_trackPageview']);
+.version Directory version: <strong>#{content.version}</strong>
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+section#about
+  h1 Event types
+  :markdown
+    This is the reference for the standard event types we recommend and handle (or will
+    handle) in the Pryv apps. You are free to use any type in your app, but for the sake of
+    interoperability we heavily recommend that you stick to the standard types listed here,
+    and <a href="mailto:developers@pryv.com">get in touch with us</a> to complete the
+    directory if you don't find what you need.
 
-  body
-    #main
-      header#pageHeader
-        a(href='dev-index.html') Home
+    ## Event type?
 
-      -// load JSON file
-      - var directoryFile = 'event-types/event-types.json'
-      - var content = require('files/' + directoryFile)
+    Each event has a `type` property that indicates how to handle its `value` (if any).
+    The type itself is a combination of a **class** and a **format** (see also the [event
+    data structure in the API reference](reference.html#data-structure-event)):
 
-      .version Directory version: <strong>#{content.version}</strong>
+    - The type's class (`type.class`) specifies the "nature" or "kind" of data represented
+      by the event. Events of the same class are assumed to be comparable and convertible,
+      and will likely be displayed similarly.
+    - The type's format (`type.format`) specifies how the data is structured. For example, a
+      text note may just be a single string value, while an HTML note may be a more complex
+      object structure.
 
-      #sections
+    Class and format are always specified in lowercase.
 
-        section#about
-          h1 Event types
-          :markdown
-            This is the reference for the standard event types we recommend and handle (or will
-            handle) in the Pryv apps. You are free to use any type in your app, but for the sake of
-            interoperability we heavily recommend that you stick to the standard types listed here,
-            and <a href="mailto:developers@pryv.com">get in touch with us</a> to complete the
-            directory if you don't find what you need.
+    **Shorthand notation**: we usually refer to types with the notation
+    "**{class}:{format}**" (e.g. "note:html").
 
-            ## Event type?
+    ## Format specification
 
-            Each event has a `type` property that indicates how to handle its `value` (if any).
-            The type itself is a combination of a **class** and a **format** (see also the [event
-            data structure in the API reference](reference.html#data-structure-event)):
+    For each of the types described below, the event value's structure is specified using
+    JSON-schema (see the
+    [JSON-schema specification](http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8)).
 
-            - The type's class (`type.class`) specifies the "nature" or "kind" of data represented
-              by the event. Events of the same class are assumed to be comparable and convertible,
-              and will likely be displayed similarly.
-            - The type's format (`type.format`) specifies how the data is structured. For example, a
-              text note may just be a single string value, while an HTML note may be a more complex
-              object structure.
+    Notes:
 
-            Class and format are always specified in lowercase.
+    - A "null" value type means that the event has no `value` property (usually because the
+      event's core properties are sufficient to carry the necessary information).
+    - Any value type other than "null" implies that the event must have a `value` property
+      of the specified JSON-schema type.
+    - If the value is an object, its (sub-)properties are assumed to be optional unless
+      otherwise specified by JSON-schema's "required" field.
 
-            **Shorthand notation**: we usually refer to types with the notation
-            "**{class}:{format}**" (e.g. "note:html").
+    ## JSON file
 
-            ## Format specification
+    This directory is available as a [JSON file](!{directoryFile}) for automated
+    processing. We use it in our API for validating event values (for standard types).
 
-            For each of the types described below, the event value's structure is specified using
-            JSON-schema (see the
-            [JSON-schema specification](http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8)).
+    ## Submitting new types to the directory
 
-            Notes:
+    This directory is constantly evolving to match the needs of Pryv apps; if you'd like it
+    to include other types, please just <a href="mailto:developers@pryv.com">send us your
+    proposal</a>.
 
-            - A "null" value type means that the event has no `value` property (usually because the
-              event's core properties are sufficient to carry the necessary information).
-            - Any value type other than "null" implies that the event must have a `value` property
-              of the specified JSON-schema type.
-            - If the value is an object, its (sub-)properties are assumed to be optional unless
-              otherwise specified by JSON-schema's "required" field.
+section#directory
+  h1 Event type directory
 
-            ## JSON file
+  mixin renderProperties(obj, isPropertyList)
+    ul
+      each key in Object.keys(obj)
+        - var value = obj[key]
+        li
+          - var keyElt = isPropertyList ? 'code' : 'strong'
+          | <!{keyElt}>!{key}</!{keyElt}>:!{' '}
+          case typeof value
+            when 'object'
+              mixin renderProperties(value, key === 'properties')
+            when 'array'
+              | !{value.join(', ')}
+            default
+              | !{value}
 
-            This directory is available as a [JSON file](!{directoryFile}) for automated
-            processing. We use it in our API for validating event values (for standard types).
-
-            ## Submitting new types to the directory
-
-            This directory is constantly evolving to match the needs of Pryv apps; if you'd like it
-            to include other types, please just <a href="mailto:developers@pryv.com">send us your
-            proposal</a>.
-
-        section#directory
-          h1 Event type directory
-
-          mixin renderProperties(obj, isPropertyList)
-            ul
-              each key in Object.keys(obj)
-                - var value = obj[key]
-                li
-                  - var keyElt = isPropertyList ? 'code' : 'strong'
-                  | <!{keyElt}>!{key}</!{keyElt}>:!{' '}
-                  case typeof value
-                    when 'object'
-                      mixin renderProperties(value, key === 'properties')
-                    when 'array'
-                      | !{value.join(', ')}
-                    default
-                      | !{value}
-
-          - var classes = content.classes
-          for className in Object.keys(classes)
-            - var classDef = classes[className]
-            h2 <code>!{className}</code> class
-            .description !{classDef.description}
-            - var headers = []
-            for formatName in Object.keys(classDef.formats)
-              - var formatDef = classDef.formats[formatName]
-                for formatField in Object.keys(formatDef)
-                  - headers.push(formatField)
-            - headers = headers.filter(function(el,i,a){if(i==a.indexOf(el))return 1;return 0})
-            - headers.sort(function(a,b){if(a==='description')return -1;if(a==='type')return -1;return a.localeCompare(b);})
-            table.table
-              thead
-                tr
-                  -// format id column.
-                  th format
-                  each header in headers
-                    if header !== 'properties' && header !== 'example'
-                      -// other custom columns.
-                      th= header
-              tbody
-                for formatName in Object.keys(classDef.formats)
-                  - var formatDef = classDef.formats[formatName]
-                  - var properties = formatDef['properties']
-                  - var example = formatDef['example']
-                  - var rowSpan = 1 + (properties ? 1 : 0) + (example ? 1 : 0)
-                  - var colSpan = headers.length - (properties ? 1 : 0) - (example ? 1 : 0)
-                  tr
-                    -// format id column.
-                    td(rowspan=rowSpan) <code>!{formatName}</code>
-                    each header in headers
-                      -// other custom columns.
-                      - var value = formatDef[header]
-                      if header !== 'properties' && header !== 'example'
-                        if header === 'pattern' && value
-                          td <code>!{value}</code>
-                        else
-                          td !{value}
-                    if properties
-                      tr
-                        td(colspan=colSpan)
-                          strong properties
-                          mixin renderProperties(properties, true)
-                    if example
-                      tr
-                        td(colspan=colSpan)
-                          strong example
-                          pre.example= JSON.stringify(example, null, 2)
-
-    #toc
-      //- content generated by TOC plugin (see below)
-
-    //- TOC generation assumes that all headings are within a section, and that there is a single
-    //- level 1 heading (h1) per section (the section title)
-    script
-      jQuery(document).ready(function($) {
-        $('#toc').toc({
-          'selectors': 'h1,h2',
-          'container': '#sections',
-          'smoothScrolling': false,
-          'prefix': 'toc',
-          'onHighlight': function(el) {},
-          'highlightOnScroll': true,
-          'highlightOffset': 100,
-          'anchorName': function(i, heading, prefix) {
-            var $heading = $(heading),
-                sectionId = $heading.parents('section').attr('id');
-            return sectionId + ($heading.is('h1') ? '' : '-' + slugify($heading.text()));
-          },
-          'headerText': function(i, heading, $heading) {
-            return $heading.text();
-          }
-        });
-
-        function slugify(text) {
-          return text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-').replace('-class', '');
-        }
-      });
+  - var classes = content.classes
+  for className in Object.keys(classes)
+    - var classDef = classes[className]
+    h2 <code>!{className}</code> class
+    .description !{classDef.description}
+    - var headers = []
+    for formatName in Object.keys(classDef.formats)
+      - var formatDef = classDef.formats[formatName]
+        for formatField in Object.keys(formatDef)
+          - headers.push(formatField)
+    - headers = headers.filter(function(el,i,a){if(i==a.indexOf(el))return 1;return 0})
+    - headers.sort(function(a,b){if(a==='description')return -1;if(a==='type')return -1;return a.localeCompare(b);})
+    table.table
+      thead
+        tr
+          -// format id column.
+          th format
+          each header in headers
+            if header !== 'properties' && header !== 'example'
+              -// other custom columns.
+              th= header
+      tbody
+        for formatName in Object.keys(classDef.formats)
+          - var formatDef = classDef.formats[formatName]
+          - var properties = formatDef['properties']
+          - var example = formatDef['example']
+          - var rowSpan = 1 + (properties ? 1 : 0) + (example ? 1 : 0)
+          - var colSpan = headers.length - (properties ? 1 : 0) - (example ? 1 : 0)
+          tr
+            -// format id column.
+            td(rowspan=rowSpan) <code>!{formatName}</code>
+            each header in headers
+              -// other custom columns.
+              - var value = formatDef[header]
+              if header !== 'properties' && header !== 'example'
+                if header === 'pattern' && value
+                  td <code>!{value}</code>
+                else
+                  td !{value}
+            if properties
+              tr
+                td(colspan=colSpan)
+                  strong properties
+                  mixin renderProperties(properties, true)
+            if example
+              tr
+                td(colspan=colSpan)
+                  strong example
+                  pre.example
+                    code= JSON.stringify(example, null, 2)
