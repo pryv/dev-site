@@ -1,5 +1,5 @@
 {
-  "version": 20130521.01,
+  "version": "20130717.01",
   "classes": {
     "activity": {
       "description": "To record the time spent doing something (tasks, sports, etc.).",
@@ -7,6 +7,19 @@
         "pryv": {
           "description": "Pryv activity event. No value here, as the value is actually defined by the event's time and duration fields as well as its classification (folder, tags).",
           "type": "null"
+        }
+      }
+    },
+    "mol": {
+      "description": "The size of an ensemble of elementary entities, such as atoms, molecules, electrons, and other particles.",
+      "formats": {
+        "mol": {
+          "description": "Mole ",
+          "type": "number"
+        },
+        "lb-mol": {
+          "description": "Pound-mole.",
+          "type": "number"
         }
       }
     },
@@ -59,17 +72,17 @@
     "encrypted": {
       "description": "For client-side-encrypted events. The decrypted <code>payload</code> is expected to be a JSON object with the regular <code>type</code> and <code>value</code> properties (e.g. <code>{ \"type\": { \"class\": \"..\", \"format\": \"..\" }, \"value\": \"..\" }</code>). If the event has attached files, they are expected to be similarly encrypted.",
       "formats": {
-        "aes-text-base64" : {
+        "aes-text-base64": {
           "description": "AES encrypted payload, with a <em>text</em> key and a <em>Base64</em> payload.",
           "type": "object",
-          "properties" : {
-            "payload" : {
+          "properties": {
+            "payload": {
               "description": "The encrypted data.",
               "type": "string",
               "required": true
             },
-            "keyRef" : {
-              "description": "A reference (e.g. id, name in keychain) to the key to use for decryption." ,
+            "keyRef": {
+              "description": "A reference (e.g. id, name in keychain) to the key to use for decryption.",
               "type": "string"
             },
             "hint": {
@@ -88,11 +101,11 @@
           "type": "null",
           "attachmentRequired": true
         },
-        "attached-multiple":{
+        "attached-multiple": {
           "description": "TODO",
           "type": "null",
           "attachmentRequired": true,
-          "example":{
+          "example": {
             "attachments": {
               "relative/path/to/file1.ext": {
                 "fileName": "relative_path_to_file1.ext",
@@ -116,27 +129,95 @@
       }
     },
     "length": {
-      "description": "To record length measurements. Format = unit.",
+      "description": "Length measurements. Format = unit.",
       "formats": {
         "cm": {
-          "description": "Centimeters.",
+          "description": "Centimeters",
           "type": "number"
         },
         "m": {
-          "description": "Meters.",
+          "description": "Meters",
+          "type": "number"
+        },
+        "mm": {
+          "description": "Millimeters",
           "type": "number"
         },
         "km": {
-          "description": "Kilometers.",
+          "description": "Kilometers",
+          "type": "number"
+        },
+        "a": {
+          "description": "Ångströms",
+          "type": "number"
+        },
+        "au": {
+          "description": "Astronomical Units",
+          "type": "number"
+        },
+        "ft": {
+          "description": "Feet",
+          "type": "number"
+        },
+        "in": {
+          "description": "Inches",
+          "type": "number"
+        },
+        "ly": {
+          "description": "Light-Years",
+          "type": "number"
+        },
+        "mi": {
+          "description": "Miles",
+          "type": "number"
+        },
+        "nmi": {
+          "description": "Miles (nautical)",
+          "type": "number"
+        },
+        "um": {
+          "description": "Microns",
+          "type": "number"
+        },
+        "yd": {
+          "description": "Yards",
           "type": "number"
         }
       }
     },
     "mass": {
-      "description": "To record mass measurements (kid weight, tons of gold digged today, etc.). Format = unit.",
+      "description": "The heaviness of an object.",
       "formats": {
         "kg": {
-          "description": "Kilograms.",
+          "description": "Kilograms",
+          "type": "number"
+        },
+        "dr": {
+          "description": "Drams ",
+          "type": "number"
+        },
+        "l-t": {
+          "description": "Long Tons ",
+          "type": "number"
+        },
+        "lb": {
+          "description": "Pounds",
+          "type": "number"
+        },
+        "mg": {
+          "description": "Metric Tons",
+          "type": "number"
+        },
+        "oz": {
+          "description": "Ounces (US)",
+          "type": "number"
+        },
+        "s-t": {
+          "description": "Short Tons",
+          "type": "number"
+        },
+        "st": {
+          "description": "Stone",
           "type": "number"
         }
       }
@@ -194,7 +275,7 @@
               "properties": {
                 "data": {
                   "type": "array",
-                  "items":{
+                  "items": {
                     "type": "object",
                     "properties": {
                       "name": "string",
@@ -244,95 +325,279 @@
     "money": {
       "description": "To record sums of money (expenses, loans, stock values, etc.). Format = currency. Based on ISO 4217.",
       "formats": {
-        "aed": {"type": "number"},
-        "ang": {"type": "number"},
-        "ars": {"type": "number"},
-        "aud": {"type": "number"},
-        "bgn": {"type": "number"},
-        "bhd": {"type": "number"},
-        "bnd": {"type": "number"},
-        "bob": {"type": "number"},
-        "brl": {"type": "number"},
-        "bwp": {"type": "number"},
-        "cad": {"type": "number"},
-        "chf": {"type": "number"},
-        "clp": {"type": "number"},
-        "cny": {"type": "number"},
-        "cop": {"type": "number"},
-        "crc": {"type": "number"},
-        "czk": {"type": "number"},
-        "dkk": {"type": "number"},
-        "dop": {"type": "number"},
-        "dzd": {"type": "number"},
-        "eek": {"type": "number"},
-        "egp": {"type": "number"},
-        "eur": {"type": "number"},
-        "fjd": {"type": "number"},
-        "gbp": {"type": "number"},
-        "hkd": {"type": "number"},
-        "hnl": {"type": "number"},
-        "hrk": {"type": "number"},
-        "huf": {"type": "number"},
-        "idr": {"type": "number"},
-        "ils": {"type": "number"},
-        "inr": {"type": "number"},
-        "jmd": {"type": "number"},
-        "jod": {"type": "number"},
-        "jpy": {"type": "number"},
-        "kes": {"type": "number"},
-        "krw": {"type": "number"},
-        "kwd": {"type": "number"},
-        "kyd": {"type": "number"},
-        "kzt": {"type": "number"},
-        "lbp": {"type": "number"},
-        "lkr": {"type": "number"},
-        "ltl": {"type": "number"},
-        "lvl": {"type": "number"},
-        "mad": {"type": "number"},
-        "mdl": {"type": "number"},
-        "mkd": {"type": "number"},
-        "mur": {"type": "number"},
-        "mxn": {"type": "number"},
-        "myr": {"type": "number"},
-        "nad": {"type": "number"},
-        "ngn": {"type": "number"},
-        "nio": {"type": "number"},
-        "nok": {"type": "number"},
-        "npr": {"type": "number"},
-        "nzd": {"type": "number"},
-        "omr": {"type": "number"},
-        "pen": {"type": "number"},
-        "pgk": {"type": "number"},
-        "php": {"type": "number"},
-        "pkr": {"type": "number"},
-        "pln": {"type": "number"},
-        "pyg": {"type": "number"},
-        "qar": {"type": "number"},
-        "ron": {"type": "number"},
-        "rsd": {"type": "number"},
-        "rub": {"type": "number"},
-        "sar": {"type": "number"},
-        "scr": {"type": "number"},
-        "sek": {"type": "number"},
-        "sgd": {"type": "number"},
-        "skk": {"type": "number"},
-        "sll": {"type": "number"},
-        "svc": {"type": "number"},
-        "thb": {"type": "number"},
-        "tnd": {"type": "number"},
-        "try": {"type": "number"},
-        "ttd": {"type": "number"},
-        "twd": {"type": "number"},
-        "tzs": {"type": "number"},
-        "uah": {"type": "number"},
-        "ugx": {"type": "number"},
-        "usd": {"type": "number"},
-        "uyu": {"type": "number"},
-        "uzs": {"type": "number"},
-        "vnd": {"type": "number"},
-        "yer": {"type": "number"},
-        "zar": {"type": "number"},
-        "zmk": {"type": "number"}
+        "aed": {
+          "type": "number"
+        },
+        "ang": {
+          "type": "number"
+        },
+        "ars": {
+          "type": "number"
+        },
+        "aud": {
+          "type": "number"
+        },
+        "bgn": {
+          "type": "number"
+        },
+        "bhd": {
+          "type": "number"
+        },
+        "bnd": {
+          "type": "number"
+        },
+        "bob": {
+          "type": "number"
+        },
+        "brl": {
+          "type": "number"
+        },
+        "bwp": {
+          "type": "number"
+        },
+        "cad": {
+          "type": "number"
+        },
+        "chf": {
+          "type": "number"
+        },
+        "clp": {
+          "type": "number"
+        },
+        "cny": {
+          "type": "number"
+        },
+        "cop": {
+          "type": "number"
+        },
+        "crc": {
+          "type": "number"
+        },
+        "czk": {
+          "type": "number"
+        },
+        "dkk": {
+          "type": "number"
+        },
+        "dop": {
+          "type": "number"
+        },
+        "dzd": {
+          "type": "number"
+        },
+        "eek": {
+          "type": "number"
+        },
+        "egp": {
+          "type": "number"
+        },
+        "eur": {
+          "type": "number",
+          "description": "Euro"
+        },
+        "fjd": {
+          "type": "number"
+        },
+        "gbp": {
+          "type": "number"
+        },
+        "hkd": {
+          "type": "number"
+        },
+        "hnl": {
+          "type": "number"
+        },
+        "hrk": {
+          "type": "number"
+        },
+        "huf": {
+          "type": "number"
+        },
+        "idr": {
+          "type": "number"
+        },
+        "ils": {
+          "type": "number"
+        },
+        "inr": {
+          "type": "number"
+        },
+        "jmd": {
+          "type": "number"
+        },
+        "jod": {
+          "type": "number"
+        },
+        "jpy": {
+          "type": "number"
+        },
+        "kes": {
+          "type": "number"
+        },
+        "krw": {
+          "type": "number"
+        },
+        "kwd": {
+          "type": "number"
+        },
+        "kyd": {
+          "type": "number"
+        },
+        "kzt": {
+          "type": "number"
+        },
+        "lbp": {
+          "type": "number"
+        },
+        "lkr": {
+          "type": "number"
+        },
+        "ltl": {
+          "type": "number"
+        },
+        "lvl": {
+          "type": "number"
+        },
+        "mad": {
+          "type": "number"
+        },
+        "mdl": {
+          "type": "number"
+        },
+        "mkd": {
+          "type": "number"
+        },
+        "mur": {
+          "type": "number"
+        },
+        "mxn": {
+          "type": "number"
+        },
+        "myr": {
+          "type": "number"
+        },
+        "nad": {
+          "type": "number"
+        },
+        "ngn": {
+          "type": "number"
+        },
+        "nio": {
+          "type": "number"
+        },
+        "nok": {
+          "type": "number"
+        },
+        "npr": {
+          "type": "number"
+        },
+        "nzd": {
+          "type": "number"
+        },
+        "omr": {
+          "type": "number"
+        },
+        "pen": {
+          "type": "number"
+        },
+        "pgk": {
+          "type": "number"
+        },
+        "php": {
+          "type": "number"
+        },
+        "pkr": {
+          "type": "number"
+        },
+        "pln": {
+          "type": "number"
+        },
+        "pyg": {
+          "type": "number"
+        },
+        "qar": {
+          "type": "number"
+        },
+        "ron": {
+          "type": "number"
+        },
+        "rsd": {
+          "type": "number"
+        },
+        "rub": {
+          "type": "number"
+        },
+        "sar": {
+          "type": "number"
+        },
+        "scr": {
+          "type": "number"
+        },
+        "sek": {
+          "type": "number"
+        },
+        "sgd": {
+          "type": "number"
+        },
+        "skk": {
+          "type": "number"
+        },
+        "sll": {
+          "type": "number"
+        },
+        "svc": {
+          "type": "number"
+        },
+        "thb": {
+          "type": "number"
+        },
+        "tnd": {
+          "type": "number"
+        },
+        "try": {
+          "type": "number"
+        },
+        "ttd": {
+          "type": "number"
+        },
+        "twd": {
+          "type": "number"
+        },
+        "tzs": {
+          "type": "number"
+        },
+        "uah": {
+          "type": "number"
+        },
+        "ugx": {
+          "type": "number"
+        },
+        "usd": {
+          "type": "number",
+          "description": "US Dollars"
+        },
+        "uyu": {
+          "type": "number"
+        },
+        "uzs": {
+          "type": "number"
+        },
+        "vnd": {
+          "type": "number"
+        },
+        "yer": {
+          "type": "number"
+        },
+        "zar": {
+          "type": "number"
+        },
+        "zmk": {
+          "type": "number"
+        },
+        "": {
+          "description": "",
+          "type": "number"
+        }
       }
     },
     "mood": {
@@ -469,14 +734,18 @@
       }
     },
     "temperature": {
-      "description": "To record temperature measurements. Format = unit.",
+      "description": "Temperature measurements. Format = unit.",
       "formats": {
         "c": {
-          "description": "Celsius.",
+          "description": "Celcius ",
+          "type": "number"
+        },
+        "k": {
+          "description": "Kelvin",
           "type": "number"
         },
         "f": {
-          "description": "Fahrenheit.",
+          "description": "Fahrenheit",
           "type": "number"
         }
       }
@@ -515,17 +784,467 @@
       }
     },
     "volume": {
-      "description": "To record volume measurements. Format = unit.",
+      "description": "The quantity of three-dimensional space enclosed by some closed boundary.",
       "formats": {
         "l": {
-          "description": "Liters.",
+          "description": "Liters",
           "type": "number"
         },
         "m3": {
-          "description": "Cubic meters.",
+          "description": "Cubic Meters",
+          "type": "number"
+        },
+        "c": {
+          "description": "Cups",
+          "type": "number"
+        },
+        "cm3": {
+          "description": "Cubic Centimeters",
+          "type": "number"
+        },
+        "floz": {
+          "description": "Fluid Ounces",
+          "type": "number"
+        },
+        "ft3": {
+          "description": "Cubic Feet",
+          "type": "number"
+        },
+        "galgb": {
+          "description": "Gallons Imperial",
+          "type": "number"
+        },
+        "galus": {
+          "description": "Gallons US",
+          "type": "number"
+        },
+        "in3": {
+          "description": "Cubic Inches",
+          "type": "number"
+        },
+        "ml": {
+          "description": "Milliliters",
+          "type": "number"
+        },
+        "pt": {
+          "description": "Pints",
+          "type": "number"
+        },
+        "qt": {
+          "description": "Quarts",
+          "type": "number"
+        },
+        "tbs": {
+          "description": "Tablespoons",
+          "type": "number"
+        },
+        "tsp": {
+          "description": "Teaspoons",
           "type": "number"
         }
       }
+    },
+    "This table can be converted to JSON with https://github.com/pryv/dev-tools  data-types-manip script": {
+      "formats": {},
+      "description": ""
+    },
+    "": {
+      "formats": {},
+      "description": ""
+    },
+    "class": {
+      "formats": {},
+      "description": "description"
+    },
+    "absorbed-dose": {
+      "formats": {
+        "gy": {
+          "description": "Gray",
+          "type": "number"
+        }
+      },
+      "description": "The energy deposited in a medium by ionizing radiation per unit mass."
+    },
+    "absorbed-dose-equivalent": {
+      "formats": {
+        "sv": {
+          "description": "Sievert",
+          "type": "number"
+        }
+      },
+      "description": "The radiation absorbed by a fixed mass of biological tissue."
+    },
+    "absorbed-dose-rate": {
+      "formats": {
+        "gy-s": {
+          "description": "Gray per second",
+          "type": "number"
+        }
+      },
+      "description": "The absorbed dose of ionizing radiation imparted at a given location per unit of time (second, minute, hour, or day). "
+    },
+    "angle": {
+      "formats": {
+        "deg": {
+          "description": "Degrees",
+          "type": "number"
+        },
+        "grad": {
+          "description": "Grade",
+          "type": "number"
+        },
+        "rad": {
+          "description": "Radians",
+          "type": "number"
+        }
+      },
+      "description": "The figure formed by two rays."
+    },
+    "angular-acceleration": {
+      "formats": {
+        "rad-s2": {
+          "description": "Radians per second squared",
+          "type": "number"
+        }
+      },
+      "description": "The rate of change of angular velocity."
+    },
+    "area": {
+      "formats": {
+        "ac": {
+          "description": "Acres (imperial)",
+          "type": "number"
+        },
+        "ft2": {
+          "description": "Square Feet",
+          "type": "number"
+        },
+        "ha": {
+          "description": "Hectares",
+          "type": "number"
+        },
+        "in2": {
+          "description": "Square Inches",
+          "type": "number"
+        },
+        "km2": {
+          "description": "Square Kilometers",
+          "type": "number"
+        },
+        "m2": {
+          "description": "Square meter",
+          "type": "number"
+        },
+        "mm2": {
+          "description": "Square Millimeters",
+          "type": "number"
+        },
+        "yd2": {
+          "description": "Square Yards",
+          "type": "number"
+        },
+        "mi2": {
+          "description": "Square Miles",
+          "type": "number"
+        }
+      },
+      "description": "The extent of a two-dimensional surface or shape, or planar lamina, in the plane."
+    },
+    "capacitance": {
+      "formats": {
+        "f": {
+          "description": "Farad",
+          "type": "number"
+        }
+      },
+      "description": "The ability of a body to store an electrical charge."
+    },
+    "catalytic-activity": {
+      "formats": {
+        "kat": {
+          "description": "Katal",
+          "type": "number"
+        }
+      },
+      "description": "The  increase in rate of a chemical reaction due to the participation of a substance called a catalyst."
+    },
+    "data-quantity": {
+      "formats": {
+        "b": {
+          "description": "Bytes",
+          "type": "number"
+        },
+        "bit": {
+          "description": "Bits",
+          "type": "number"
+        },
+        "gb": {
+          "description": "Gigabytes",
+          "type": "number"
+        },
+        "gbit": {
+          "description": "Gigabits",
+          "type": "number"
+        },
+        "kb": {
+          "description": "Kilobytes",
+          "type": "number"
+        },
+        "kbit": {
+          "description": "Kilobits",
+          "type": "number"
+        },
+        "mb": {
+          "description": "Megabytes",
+          "type": "number"
+        },
+        "mbit": {
+          "description": "Megabits",
+          "type": "number"
+        },
+        "tb": {
+          "description": "Terabytes",
+          "type": "number"
+        }
+      },
+      "description": "Unit of information in computing and digital communications."
+    },
+    "density": {
+      "formats": {
+        "kg-m3": {
+          "description": "Kilogram per cubic meter",
+          "type": "number"
+        }
+      },
+      "description": "The density of a material."
+    },
+    "dynamic-viscosity": {
+      "formats": {
+        "pa-s": {
+          "description": "Pascal second",
+          "type": "number"
+        }
+      },
+      "description": "The resistance to flow of a fluid under an applied force."
+    },
+    "electric-charge": {
+      "formats": {
+        "c": {
+          "description": "Coulomb ",
+          "type": "number"
+        }
+      },
+      "description": "The electric charge of an object."
+    },
+    "electric-charge-line-density": {
+      "formats": {
+        "c-m": {
+          "description": "Coulomb per meter",
+          "type": "number"
+        }
+      },
+      "description": "The electric charge per unit volume of space, in one, two or three dimensions."
+    },
+    "electric-current": {
+      "formats": {
+        "a": {
+          "description": "Ampere",
+          "type": "number"
+        }
+      },
+      "description": "A flow of electric charge."
+    },
+    "electrical-conductivity": {
+      "formats": {
+        "s": {
+          "description": "Siemens",
+          "type": "number"
+        }
+      },
+      "description": "A material that accommodates the transport of electric charge."
+    },
+    "electromotive-force": {
+      "formats": {
+        "v": {
+          "description": "Volt",
+          "type": "number"
+        }
+      },
+      "description": "Voltage generated by a battery or by the magnetic force."
+    },
+    "energy": {
+      "formats": {
+        "btu": {
+          "description": "British Thermal Units",
+          "type": "number"
+        },
+        "cal": {
+          "description": "Calories",
+          "type": "number"
+        },
+        "erg": {
+          "description": "Ergs",
+          "type": "number"
+        },
+        "ftlb": {
+          "description": "Foot-Pounds",
+          "type": "number"
+        },
+        "j": {
+          "description": "Joules",
+          "type": "number"
+        },
+        "kgcal": {
+          "description": "Kilogram-Calories",
+          "type": "number"
+        },
+        "kgm": {
+          "description": "Kilogram-Meters",
+          "type": "number"
+        },
+        "kwh": {
+          "description": "Kilowatt-Hours",
+          "type": "number"
+        },
+        "nm": {
+          "description": "Newton-Meters",
+          "type": "number"
+        },
+        "wh": {
+          "description": "Watt-Hours",
+          "type": "number"
+        }
+      },
+      "description": "The capacity of a physical system to perform work."
+    },
+    "force": {
+      "formats": {
+        "dyn": {
+          "description": "Dynes",
+          "type": "number"
+        },
+        "n": {
+          "description": "Newtons",
+          "type": "number"
+        },
+        "pdl": {
+          "description": "Poundals",
+          "type": "number"
+        }
+      },
+      "description": "A push or pull upon an object resulting from the object's interaction with another object."
+    },
+    "luminous-intensity": {
+      "formats": {
+        "cd": {
+          "description": "Candela",
+          "type": "number"
+        }
+      },
+      "description": "The wavelength-weighted power emitted by a light source."
+    },
+    "power": {
+      "formats": {
+        "btu-min": {
+          "description": "BTUs/Minute",
+          "type": "number"
+        },
+        "ftlb-s": {
+          "description": "Foot-Pounds/Second",
+          "type": "number"
+        },
+        "hp": {
+          "description": "Horsepower",
+          "type": "number"
+        },
+        "kw": {
+          "description": "Kilowatts",
+          "type": "number"
+        },
+        "w": {
+          "description": "Watts",
+          "type": "number"
+        }
+      },
+      "description": "The rate at which energy is transferred, used, or transformed."
+    },
+    "pressure": {
+      "formats": {
+        "at": {
+          "description": "Atmospheres",
+          "type": "number"
+        },
+        "bar": {
+          "description": "Bars",
+          "type": "number"
+        },
+        "cmhg": {
+          "description": "Centimeters of Mercury",
+          "type": "number"
+        },
+        "inhg": {
+          "description": "Inches of Mercury",
+          "type": "number"
+        },
+        "kg-m2": {
+          "description": "Kilograms/Square Meter",
+          "type": "number"
+        },
+        "pa": {
+          "description": "Pascals",
+          "type": "number"
+        },
+        "psf": {
+          "description": "Pounds/Square Foot",
+          "type": "number"
+        },
+        "psi": {
+          "description": "Pounds/Square Inch",
+          "type": "number"
+        }
+      },
+      "description": "The ratio of force to the area over which that force is distributed."
+    },
+    "speed": {
+      "formats": {
+        "ft-m": {
+          "description": "Feet/Minute",
+          "type": "number"
+        },
+        "ft-s": {
+          "description": "Feet/Second",
+          "type": "number"
+        },
+        "km-h": {
+          "description": "Kilometers/Hour",
+          "type": "number"
+        },
+        "km-s": {
+          "description": "Kilometers/Minute",
+          "type": "number"
+        },
+        "kt": {
+          "description": "Knots",
+          "type": "number"
+        },
+        "m-min": {
+          "description": "Miles/Minute",
+          "type": "number"
+        },
+        "m-s": {
+          "description": "Meters/Second",
+          "type": "number"
+        },
+        "mph": {
+          "description": "Miles/Hour",
+          "type": "number"
+        }
+      },
+      "description": "The magnitude of the velocity of an object. "
+    },
+    "time": {
+      "formats": {},
+      "description": "The durations of events and the intervals between them."
     }
   }
 }
