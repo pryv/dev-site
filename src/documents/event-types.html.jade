@@ -7,8 +7,35 @@ withTOC: true
 ---
 
 -// load JSON file
-- var directoryFile = 'event-types/event-types.json'
+- var directoryFile = 'event-types/event-types.staging.json'
 - var content = require('files/' + directoryFile)
+- var extraFile = 'event-types/event-types.staging.json'
+- var extra = require('files/' + extraFile)
+
+-// process file
+
+-// money
+- var classes = content.classes;
+- var money = classes.money;
+- delete classes['money'];
+
+-// measures get all "number only classes"
+- var measures = {}
+- var classNames = Object.keys(classes);
+each className in classNames
+  - var classDef = classes[className]
+  - var numberOnly = true
+
+  each formatName in Object.keys(classDef.formats)
+    - var formatDef = classDef.formats[formatName]
+    if formatDef.type !== 'number'
+      - numberOnly = false
+      - break
+
+  if numberOnly
+    - measures[className] = classDef
+    - delete classes[className]
+
 
 .version Directory version: <strong>#{content.version}</strong>
 
@@ -66,7 +93,7 @@ section#about
     proposal</a>.
 
 section#directory
-  h1 Event type directory
+  h1 Directory (no numeric)
 
   mixin renderProperties(obj, isPropertyList)
     ul
@@ -83,10 +110,9 @@ section#directory
             default
               | !{value}
 
-  - var classes = content.classes
   for className in Object.keys(classes)
     - var classDef = classes[className]
-    h2 <code>!{className}</code> class
+    h2 <code>!{className}</code>
     .description !{classDef.description}
     - var headers = []
     for formatName in Object.keys(classDef.formats)
@@ -109,11 +135,13 @@ section#directory
           - var formatDef = classDef.formats[formatName]
           - var properties = formatDef['properties']
           - var example = formatDef['example']
+          - var type = formatDef['type']
           - var rowSpan = 1 + (properties ? 1 : 0) + (example ? 1 : 0)
           - var colSpan = headers.length - (properties ? 1 : 0) - (example ? 1 : 0)
+
           tr
             -// format id column.
-            td(rowspan=rowSpan) <code>!{formatName}</code>
+            td(rowspan=rowSpan) <code>!{className}/!{formatName}</code>
             each header in headers
               -// other custom columns.
               - var value = formatDef[header]
@@ -133,3 +161,50 @@ section#directory
                   strong example
                   pre.example
                     code= JSON.stringify(example, null, 2)
+
+
+  h1 Directory Measures
+
+  for className in Object.keys(measures)
+    - var classDef = measures[className]
+    h2 <code>!{className}</code>
+    .description !{classDef.description}
+
+    table.table2
+      thead
+        tr
+          -// format id column.
+          th format
+          th title
+
+      tbody
+        for formatName in Object.keys(classDef.formats)
+          - var formatDef = classDef.formats[formatName]
+          - var formatDescription = formatDef.description
+          tr
+            -// format id column.
+            td <code>!{className}/!{formatName}</code>
+            td !{formatDescription}
+
+
+
+
+  h1 Money
+  - console.log(money)
+  .description !{money.description} <br> Value is a <code>Number</code>
+
+  table.table2
+    thead
+      tr
+        -// format id column.
+        th format
+        th title
+
+    tbody
+      for formatName in Object.keys(money.formats)
+        - var formatDef = money.formats[formatName]
+        - var formatDescription = formatDef.description
+        tr
+          -// format id column.
+          td <code>money/!{formatName}</code>
+          td !{formatDescription}
