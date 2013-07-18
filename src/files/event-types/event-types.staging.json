@@ -1,5 +1,5 @@
 {
-  "version": "20130717.01",
+  "version": 20130521.01,
   "classes": {
     "activity": {
       "description": "To record the time spent doing something (tasks, sports, etc.).",
@@ -27,7 +27,7 @@
       "description": "To record audio (conversations, voice messages, etc.).",
       "formats": {
         "attached": {
-          "description": "TODO",
+          "description": "The audio source is the file attached to the event (no explicit value defined).\nUse event.duration for the audio duration",
           "type": "null",
           "attachmentRequired": true
         },
@@ -41,11 +41,16 @@
     "call": {
       "description": "To record references to phone calls (landline, mobile, Skype, etc.).",
       "formats": {
+        "undefined": {
+          "description": "A call with an unspecified media",
+          "type": "null"
+        },
         "skype": {
-          "description": "TODO (skype id)"
+          "type": "String"
         },
         "telephone": {
-          "description": "TODO (number)"
+          "description": "A phone number",
+          "type": "String"
         }
       }
     },
@@ -53,10 +58,20 @@
       "description": "To record events related to people (meeting someone special, business encounters, etc.).",
       "formats": {
         "facebook": {
-          "description": "TODO"
+          "type": "object",
+          "description": "A Facebook user as specified in the Graph API: https://developers.facebook.com/docs/reference/api/user/",
+          "additionalProperties": "true",
+          "properties": {
+            "id": {
+              "type": "string",
+              "required": true
+            }
+          }
         },
         "vcard": {
-          "description": "TODO"
+          "description": "A business card in vcard 2.0 - 3.x format. See: rfc2425, rfc2426 ",
+          "type": "String",
+          "required": true
         }
       }
     },
@@ -65,7 +80,8 @@
       "formats": {
         "generic": {
           "description": "For general items that demand no particular handling.",
-          "type": "number"
+          "type": "number",
+          "required": true
         }
       }
     },
@@ -97,29 +113,14 @@
       "description": "To record a file, or a group of files. A fallback type for data with no specific handling in Pryv.",
       "formats": {
         "attached": {
-          "description": "TODO",
+          "description": "The file is attached to the event",
           "type": "null",
           "attachmentRequired": true
         },
         "attached-multiple": {
-          "description": "TODO",
-          "type": "null",
+          "description": "A set of file attached. Structure might be declared in the filenames.",
           "attachmentRequired": true,
-          "example": {
-            "attachments": {
-              "relative/path/to/file1.ext": {
-                "fileName": "relative_path_to_file1.ext",
-                "type": "mime-type",
-                "size": 5123
-              },
-              "relative/path/to/file2.ext": {
-                "fileName": "relative_path_to_file2.ext",
-                "type": "mime-type",
-                "size": 5123
-              }
-            },
-            "...": "..."
-          }
+          "type": "null"
         },
         "url": {
           "description": "TODO",
@@ -155,6 +156,14 @@
           "description": "Astronomical Units",
           "type": "number"
         },
+        "ch": {
+          "description": "Chains",
+          "type": "number"
+        },
+        "lea": {
+          "description": "Leagues",
+          "type": "number"
+        },
         "ft": {
           "description": "Feet",
           "type": "number"
@@ -167,12 +176,36 @@
           "description": "Light-Years",
           "type": "number"
         },
+        "mil": {
+          "description": "Mil",
+          "type": "number"
+        },
         "mi": {
           "description": "Miles",
           "type": "number"
         },
+        "fur": {
+          "description": "Furlongs",
+          "type": "number"
+        },
         "nmi": {
           "description": "Miles (nautical)",
+          "type": "number"
+        },
+        "p": {
+          "description": "Points",
+          "type": "number"
+        },
+        "pica": {
+          "description": "Picas",
+          "type": "number"
+        },
+        "ftm": {
+          "description": "Fathoms",
+          "type": "number"
+        },
+        "cb": {
+          "description": "Cables",
           "type": "number"
         },
         "um": {
@@ -192,8 +225,16 @@
           "description": "Kilograms",
           "type": "number"
         },
+        "gr": {
+          "description": "Grains",
+          "type": "number"
+        },
         "dr": {
           "description": "Drams ",
+          "type": "number"
+        },
+        "g": {
+          "description": "Grams",
           "type": "number"
         },
         "l-t": {
@@ -204,12 +245,12 @@
           "description": "Pounds",
           "type": "number"
         },
-        "mg": {
+        "t": {
           "description": "Metric Tons",
           "type": "number"
         },
         "oz": {
-          "description": "Ounces (US)",
+          "description": "Ounces",
           "type": "number"
         },
         "s-t": {
@@ -222,18 +263,20 @@
         }
       }
     },
-    "message": {
+    "post": {
       "description": "To record messages, such as e-mails or posts on social networks.",
       "formats": {
         "email": {
-          "description": "An e-mail message. TODO: review and complete",
+          "description": "An e-mail message.",
           "type": "object",
           "properties": {
             "from": {
-              "type": "string"
+              "type": "string",
+              "required": true
             },
             "to": {
-              "type": "string"
+              "type": "string",
+              "required": true
             },
             "cc": {
               "type": "string"
@@ -244,14 +287,26 @@
             "subject": {
               "type": "string"
             },
+            "message-id": {
+              "type": "String"
+            },
+            "reply-to": {
+              "type": "String"
+            },
+            "x-headers": {
+              "description": "Key / Value map of X-* headers ",
+              "type": "object"
+            },
             "body": {
-              "type": "string"
+              "type": "string",
+              "required": true
             }
           }
         },
         "facebook": {
-          "description": "A Facebook post. See <a href=\"https://developers.facebook.com/docs/reference/api/post/\">Facebook's API doc</a> for reference. TODO: add example (Facebook post can be copied RAW as a value. \nmap: \n   fbPost.message -> pryvEvent.description\n   fbPost.created_time -> pryvEvent.time\n TBD: what to do with videos & pictures?)",
+          "description": "A Facebook post. See <a href=\"https://developers.facebook.com/docs/reference/api/post/\">Facebook's API doc</a> for reference. \n\n**map**: \n   fbPost.message -> pryvEvent.description\n   fbPost.created_time -> pryvEvent.time\n\n**optional** fields such as `link`, `source`, `privacy`.. are optional and can be saved on the object.\n\n**attached content**:  \nIf a picture is attached to this post, you may want to attach it to the \"Pryv\" Event.  \n \n - attach the picture and keep \"{filename}.png\" in the URL \n\n\n",
           "type": "object",
+          "additionalProperties": true,
           "properties": {
             "id": {
               "type": "string",
@@ -286,37 +341,44 @@
               }
             },
             "message": {
-              "type": "string"
-            },
-            "picture": {
-              "type": "string"
-            },
-            "link": {
-              "type": "string"
-            },
-            "caption": {
-              "type": "string"
-            },
-            "description": {
+              "required": true,
               "type": "string"
             },
             "source": {
-              "type": "string"
+              "type": "string",
+              "description": "Either a fully qualified \"URL\" for an external source or a \"filename\" for a Flash Movie or Video attached to this event"
             },
-            "icon": {
-              "type": "string"
+            "properties": {
+              "type object": "String",
+              "description": "Relative to \"source\": A list of properties for an uploaded video, for example, the length of the video",
+              "additionalProperties": true
             },
-            "type": {
+            "picture": {
+              "description": "Either a fully qualified \"URL\" for an external picture or a \"filename\" for a picture attached to this event",
+              "type": "String"
+            },
+            "status-type": {
+              "description": "One of mobile_status_update, created_note, added_photos, added_video, shared_story, created_group, created_event, wall_post, app_created_story, published_story, tagged_in_photo, approved_friend",
               "type": "string"
             }
           }
         },
         "twitter": {
-          "description": "A Twitter post. TODO: detail",
+          "description": "A Twitter post.  \n\n`Created_at` property should be used as the timestamp for the event.\n\nNot specified property that can be found in https://dev.twitter.com/docs/api/1.1/get/statuses/show/%3Aid\ncan be added to the event",
           "type": "object",
+          "additionalProperties": true,
           "properties": {
-            "TODO": {
-              "type": "string"
+            "id": {
+              "type": "integer",
+              "required": true
+            },
+            "screen-name": {
+              "type": "String",
+              "required": true
+            },
+            "text": {
+              "type": "String",
+              "required": "true"
             }
           }
         }
@@ -329,134 +391,171 @@
           "type": "number"
         },
         "ang": {
-          "type": "number"
+          "type": "number",
+          "description": "Netherlands Antilles Guilder"
         },
         "ars": {
-          "type": "number"
+          "type": "number",
+          "description": "Argentina Peso"
         },
         "aud": {
-          "type": "number"
+          "type": "number",
+          "description": "Australia Dollar"
         },
         "bgn": {
-          "type": "number"
+          "type": "number",
+          "description": "Bulgaria Lev"
         },
         "bhd": {
           "type": "number"
         },
         "bnd": {
-          "type": "number"
+          "type": "number",
+          "description": "Brunei Darussalam Dollar"
         },
         "bob": {
-          "type": "number"
+          "type": "number",
+          "description": "Bolivia Boliviano"
         },
         "brl": {
-          "type": "number"
+          "type": "number",
+          "description": "Brazil Real"
         },
         "bwp": {
-          "type": "number"
+          "type": "number",
+          "description": "Botswana Pula"
         },
         "cad": {
-          "type": "number"
+          "type": "number",
+          "description": "Canada Dollar"
         },
         "chf": {
-          "type": "number"
+          "type": "number",
+          "description": "Switzerland Franc"
         },
         "clp": {
-          "type": "number"
+          "type": "number",
+          "description": "Chile Peso"
         },
         "cny": {
-          "type": "number"
+          "type": "number",
+          "description": "China Yuan Renminbi"
         },
         "cop": {
-          "type": "number"
+          "type": "number",
+          "description": "Colombia Peso"
         },
         "crc": {
-          "type": "number"
+          "type": "number",
+          "description": "Costa Rica Colon"
         },
         "czk": {
-          "type": "number"
+          "type": "number",
+          "description": "Czech Republic Koruna"
         },
         "dkk": {
-          "type": "number"
+          "type": "number",
+          "description": "Denmark Krone"
         },
         "dop": {
-          "type": "number"
+          "type": "number",
+          "description": "Dominican Republic Peso"
         },
         "dzd": {
           "type": "number"
         },
         "eek": {
-          "type": "number"
+          "type": "number",
+          "description": "Estonia Kroon"
         },
         "egp": {
-          "type": "number"
+          "type": "number",
+          "description": "Egypt Pound"
         },
         "eur": {
           "type": "number",
           "description": "Euro"
         },
         "fjd": {
-          "type": "number"
+          "type": "number",
+          "description": "Fiji Dollar"
         },
         "gbp": {
-          "type": "number"
+          "type": "number",
+          "description": "United Kingdom Pound"
         },
         "hkd": {
-          "type": "number"
+          "type": "number",
+          "description": "Hong Kong Dollar"
         },
         "hnl": {
-          "type": "number"
+          "type": "number",
+          "description": "Honduras Lempira"
         },
         "hrk": {
-          "type": "number"
+          "type": "number",
+          "description": "Croatia Kuna"
         },
         "huf": {
-          "type": "number"
+          "type": "number",
+          "description": "Hungary Forint"
         },
         "idr": {
-          "type": "number"
+          "type": "number",
+          "description": "Indonesia Rupiah"
         },
         "ils": {
-          "type": "number"
+          "type": "number",
+          "description": "Israel Shekel"
         },
         "inr": {
-          "type": "number"
+          "type": "number",
+          "description": "India Rupee"
         },
         "jmd": {
-          "type": "number"
+          "type": "number",
+          "description": "Jamaica Dollar"
         },
         "jod": {
           "type": "number"
         },
         "jpy": {
-          "type": "number"
+          "type": "number",
+          "description": "Japan Yen"
         },
         "kes": {
           "type": "number"
         },
         "krw": {
-          "type": "number"
+          "type": "number",
+          "description": "Korea (South) Won"
         },
         "kwd": {
           "type": "number"
         },
         "kyd": {
-          "type": "number"
+          "type": "number",
+          "description": "Cayman Islands Dollar"
         },
         "kzt": {
-          "type": "number"
+          "type": "number",
+          "description": "Kazakhstan Tenge"
         },
         "lbp": {
-          "type": "number"
+          "type": "number",
+          "description": "Lebanon Pound"
         },
         "lkr": {
-          "type": "number"
+          "type": "number",
+          "description": "Sri Lanka Rupee"
         },
         "ltl": {
-          "type": "number"
+          "type": "number",
+          "description": "Lithuania Litas"
         },
         "lvl": {
-          "type": "number"
+          "type": "number",
+          "description": "Latvia Lat"
         },
         "mad": {
           "type": "number"
@@ -465,79 +564,103 @@
           "type": "number"
         },
         "mkd": {
-          "type": "number"
+          "type": "number",
+          "description": "Macedonia Denar"
         },
         "mur": {
-          "type": "number"
+          "type": "number",
+          "description": "Mauritius Rupee"
         },
         "mxn": {
-          "type": "number"
+          "type": "number",
+          "description": "Mexico Peso"
         },
         "myr": {
-          "type": "number"
+          "type": "number",
+          "description": "Malaysia Ringgit"
         },
         "nad": {
-          "type": "number"
+          "type": "number",
+          "description": "Namibia Dollar"
         },
         "ngn": {
-          "type": "number"
+          "type": "number",
+          "description": "Nigeria Naira"
         },
         "nio": {
-          "type": "number"
+          "type": "number",
+          "description": "Nicaragua Cordoba"
         },
         "nok": {
-          "type": "number"
+          "type": "number",
+          "description": "Norway Krone"
         },
         "npr": {
-          "type": "number"
+          "type": "number",
+          "description": "Nepal Rupee"
         },
         "nzd": {
-          "type": "number"
+          "type": "number",
+          "description": "New Zealand Dollar"
         },
         "omr": {
-          "type": "number"
+          "type": "number",
+          "description": "Oman Rial"
         },
         "pen": {
-          "type": "number"
+          "type": "number",
+          "description": "Peru Nuevo Sol"
         },
         "pgk": {
           "type": "number"
         },
         "php": {
-          "type": "number"
+          "type": "number",
+          "description": "Philippines Peso"
         },
         "pkr": {
-          "type": "number"
+          "type": "number",
+          "description": "Pakistan Rupee"
         },
         "pln": {
-          "type": "number"
+          "type": "number",
+          "description": "Poland Zloty"
         },
         "pyg": {
-          "type": "number"
+          "type": "number",
+          "description": "Paraguay Guarani"
         },
         "qar": {
-          "type": "number"
+          "type": "number",
+          "description": "Qatar Riyal"
         },
         "ron": {
-          "type": "number"
+          "type": "number",
+          "description": "Romania New Leu"
         },
         "rsd": {
-          "type": "number"
+          "type": "number",
+          "description": "Serbia Dinar"
         },
         "rub": {
-          "type": "number"
+          "type": "number",
+          "description": "Russia Ruble"
         },
         "sar": {
-          "type": "number"
+          "type": "number",
+          "description": "Saudi Arabia Riyal"
         },
         "scr": {
-          "type": "number"
+          "type": "number",
+          "description": "Seychelles Rupee"
         },
         "sek": {
-          "type": "number"
+          "type": "number",
+          "description": "Sweden Krona"
         },
         "sgd": {
-          "type": "number"
+          "type": "number",
+          "description": "Singapore Dollar"
         },
         "skk": {
           "type": "number"
@@ -546,56 +669,223 @@
           "type": "number"
         },
         "svc": {
-          "type": "number"
+          "type": "number",
+          "description": "El Salvador Colon"
         },
         "thb": {
-          "type": "number"
+          "type": "number",
+          "description": "Thailand Baht"
         },
         "tnd": {
           "type": "number"
         },
         "try": {
-          "type": "number"
+          "type": "number",
+          "description": "Turkey Lira"
         },
         "ttd": {
-          "type": "number"
+          "type": "number",
+          "description": "Trinidad and Tobago Dollar"
         },
         "twd": {
-          "type": "number"
+          "type": "number",
+          "description": "Taiwan New Dollar"
         },
         "tzs": {
           "type": "number"
         },
         "uah": {
-          "type": "number"
+          "type": "number",
+          "description": "Ukraine Hryvna"
         },
         "ugx": {
           "type": "number"
         },
         "usd": {
           "type": "number",
-          "description": "US Dollars"
+          "description": "United States Dollar"
         },
         "uyu": {
-          "type": "number"
+          "type": "number",
+          "description": "Uruguay Peso"
         },
         "uzs": {
-          "type": "number"
+          "type": "number",
+          "description": "Uzbekistan Som"
         },
         "vnd": {
-          "type": "number"
+          "type": "number",
+          "description": "Viet Nam Dong"
         },
         "yer": {
-          "type": "number"
+          "type": "number",
+          "description": "Yemen Rial"
         },
         "zar": {
-          "type": "number"
+          "type": "number",
+          "description": "South Africa Rand"
         },
         "zmk": {
           "type": "number"
         },
-        "": {
-          "description": "",
+        "btc": {
+          "description": "Bitcoin",
+          "type": "number"
+        },
+        "all": {
+          "description": "Albania Lek",
+          "type": "number"
+        },
+        "afn": {
+          "description": "Afghanistan Afghani",
+          "type": "number"
+        },
+        "awg": {
+          "description": "Aruba Guilder",
+          "type": "number"
+        },
+        "azn": {
+          "description": "Azerbaijan New Manat",
+          "type": "number"
+        },
+        "bsd": {
+          "description": "Bahamas Dollar",
+          "type": "number"
+        },
+        "bbd": {
+          "description": "Barbados Dollar",
+          "type": "number"
+        },
+        "byr": {
+          "description": "Belarus Ruble",
+          "type": "number"
+        },
+        "bzd": {
+          "description": "Belize Dollar",
+          "type": "number"
+        },
+        "bmd": {
+          "description": "Bermuda Dollar",
+          "type": "number"
+        },
+        "bam": {
+          "description": "Bosnia and Herzegovina Convertible Marka",
+          "type": "number"
+        },
+        "khr": {
+          "description": "Cambodia Riel",
+          "type": "number"
+        },
+        "cup": {
+          "description": "Cuba Peso",
+          "type": "number"
+        },
+        "xcd": {
+          "description": "East Caribbean Dollar",
+          "type": "number"
+        },
+        "fkp": {
+          "description": "Falkland Islands (Malvinas) Pound",
+          "type": "number"
+        },
+        "ghc": {
+          "description": "Ghana Cedis",
+          "type": "number"
+        },
+        "gip": {
+          "description": "Gibraltar Pound",
+          "type": "number"
+        },
+        "gtq": {
+          "description": "Guatemala Quetzal",
+          "type": "number"
+        },
+        "ggp": {
+          "description": "Guernsey Pound",
+          "type": "number"
+        },
+        "gyd": {
+          "description": "Guyana Dollar",
+          "type": "number"
+        },
+        "isk": {
+          "description": "Iceland Krona",
+          "type": "number"
+        },
+        "irr": {
+          "description": "Iran Rial",
+          "type": "number"
+        },
+        "imp": {
+          "description": "Isle of Man Pound",
+          "type": "number"
+        },
+        "jep": {
+          "description": "Jersey Pound",
+          "type": "number"
+        },
+        "kpw": {
+          "description": "Korea (North) Won",
+          "type": "number"
+        },
+        "kgs": {
+          "description": "Kyrgyzstan Som",
+          "type": "number"
+        },
+        "lak": {
+          "description": "Laos Kip",
+          "type": "number"
+        },
+        "lrd": {
+          "description": "Liberia Dollar",
+          "type": "number"
+        },
+        "mnt": {
+          "description": "Mongolia Tughrik",
+          "type": "number"
+        },
+        "mzn": {
+          "description": "Mozambique Metical",
+          "type": "number"
+        },
+        "pab": {
+          "description": "Panama Balboa",
+          "type": "number"
+        },
+        "shp": {
+          "description": "Saint Helena Pound",
+          "type": "number"
+        },
+        "sbd": {
+          "description": "Solomon Islands Dollar",
+          "type": "number"
+        },
+        "sos": {
+          "description": "Somalia Shilling",
+          "type": "number"
+        },
+        "srd": {
+          "description": "Suriname Dollar",
+          "type": "number"
+        },
+        "syp": {
+          "description": "Syria Pound",
+          "type": "number"
+        },
+        "trl": {
+          "description": "Turkey Lira",
+          "type": "number"
+        },
+        "tvd": {
+          "description": "Tuvalu Dollar",
+          "type": "number"
+        },
+        "vef": {
+          "description": "Venezuela Bolivar",
+          "type": "number"
+        },
+        "zwd": {
+          "description": "Zimbabwe Dollar",
           "type": "number"
         }
       }
@@ -603,22 +893,54 @@
     "mood": {
       "description": "To record personal mood.",
       "formats": {
+        "rating": {
+          "description": "Rating of mood (float value) 0:worst -> 1:best ",
+          "type": "number",
+          "minimum": "0",
+          "maximum": "1"
+        },
         "emoticon": {
-          "description": "TODO; it's just an example."
+          "description": "ASCII Art emoticon",
+          "type": "string"
         }
       }
     },
     "music": {
-      "description": "To record references to music (from Soundcloud, Shazam tags, etc.).",
+      "description": "To record references to music, usualy tracks (from Soundcloud, Shazam tags, etc.).",
       "formats": {
-        "id3": {
-          "description": "TODO"
-        },
-        "itunes": {
-          "description": "TODO"
+        "basic": {
+          "description": "Inspired from id3 key/pair ",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "String"
+            },
+            "artist": {
+              "type": "String"
+            },
+            "album": {
+              "type": "String"
+            },
+            "track": {
+              "type": "integer"
+            },
+            "year": {
+              "type": "integer"
+            },
+            "genre": {
+              "type": "String"
+            }
+          }
         },
         "soundcloud": {
-          "description": "TODO"
+          "description": "See soundcloud track properties http://developers.soundcloud.com/docs/api/reference#tracks\nOnly the \"id\" is mandatory, other property depend of sound cloud specifications",
+          "type object": "Object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "required": true
+            }
+          }
         }
       }
     },
@@ -656,6 +978,26 @@
     "picture": {
       "description": "To record any kind of image (photos, designs, screenshots, etc.)",
       "formats": {
+        "base64": {
+          "description": "The picture is caried in base64 (utf-8) encoded in string",
+          "type": "string",
+          "properties": {
+            "payload": {
+              "type": "string",
+              "description": "base64 encoded content",
+              "required": true
+            },
+            "format": {
+              "type": "string",
+              "description": "The data format \"gif\", \"jpeg\", \"png\", \"tiff\", \"vnd.microsoft.com\", \"svg+xml\"",
+              "required": true
+            },
+            "filename": {
+              "description": "A filename",
+              "type": "string"
+            }
+          }
+        },
         "attached": {
           "description": "The picture is the image file attached to the event (no explicit value defined). TODO: list accepted formats.",
           "type": "null",
@@ -822,6 +1164,10 @@
           "description": "Cubic Inches",
           "type": "number"
         },
+        "yd3": {
+          "description": "Cubic Yard",
+          "type": "number"
+        },
         "ml": {
           "description": "Milliliters",
           "type": "number"
@@ -834,6 +1180,10 @@
           "description": "Quarts",
           "type": "number"
         },
+        "bbloil": {
+          "description": "Barrels (Oil)",
+          "type": "number"
+        },
         "tbs": {
           "description": "Tablespoons",
           "type": "number"
@@ -843,18 +1193,6 @@
           "type": "number"
         }
       }
-    },
-    "This table can be converted to JSON with https://github.com/pryv/dev-tools  data-types-manip script": {
-      "formats": {},
-      "description": ""
-    },
-    "": {
-      "formats": {},
-      "description": ""
-    },
-    "class": {
-      "formats": {},
-      "description": "description"
     },
     "absorbed-dose": {
       "formats": {
@@ -1082,6 +1420,10 @@
           "description": "Calories",
           "type": "number"
         },
+        "ev": {
+          "description": "Electron-Volts",
+          "type": "number"
+        },
         "erg": {
           "description": "Ergs",
           "type": "number"
@@ -1094,12 +1436,12 @@
           "description": "Joules",
           "type": "number"
         },
-        "kgcal": {
-          "description": "Kilogram-Calories",
+        "kcal": {
+          "description": "Kilo-Calories",
           "type": "number"
         },
-        "kgm": {
-          "description": "Kilogram-Meters",
+        "ws": {
+          "description": "Watts Second",
           "type": "number"
         },
         "kwh": {
@@ -1194,6 +1536,10 @@
           "description": "Pascals",
           "type": "number"
         },
+        "kpa": {
+          "description": "Kilo Pascals",
+          "type": "number"
+        },
         "psf": {
           "description": "Pounds/Square Foot",
           "type": "number"
@@ -1219,10 +1565,6 @@
           "description": "Kilometers/Hour",
           "type": "number"
         },
-        "km-s": {
-          "description": "Kilometers/Minute",
-          "type": "number"
-        },
         "kt": {
           "description": "Knots",
           "type": "number"
@@ -1243,7 +1585,9 @@
       "description": "The magnitude of the velocity of an object. "
     },
     "time": {
-      "formats": {},
+      "formats": {
+        
+      },
       "description": "The durations of events and the intervals between them."
     }
   }
