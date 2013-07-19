@@ -296,7 +296,8 @@
             },
             "x-headers": {
               "description": "Key / Value map of X-* headers ",
-              "type": "object"
+              "type": "object",
+              "additionalProperties": true
             },
             "body": {
               "type": "string",
@@ -936,6 +937,7 @@
         "soundcloud": {
           "description": "See soundcloud track properties http://developers.soundcloud.com/docs/api/reference#tracks\nOnly the \"id\" is mandatory, other property depend of sound cloud specifications",
           "type object": "Object",
+          "additionalProperties": true,
           "properties": {
             "id": {
               "type": "integer",
