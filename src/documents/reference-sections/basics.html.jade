@@ -10,7 +10,7 @@ section#basics
         - GET to read the item(s)
         - POST to create a new item, with a JSON message in the request body
         - PUT to modify the item, with a JSON message in the request body
-        - DELETE to delete the item (note that logical deletion, or trashing, is supported for items like events, folders and channels)
+        - DELETE to delete the item (note that logical deletion, or trashing, is supported for items like events and streams)
 
         Note that the API also supports Socket.IO, for both calling API methods and receiving live notifications of changes to activity data. See [the dedicated section](#socketio).
 
@@ -18,7 +18,7 @@ section#basics
       :markdown
         #### Example request
         ```http
-        GET /{channel-id}/events HTTP/1.1
+        GET /events HTTP/1.1
         Host: {user-name}.pryv.io
         Authorization: {access-token}
         ```
@@ -44,7 +44,7 @@ section#basics
         {
           "id": "5051941d04b8ffd00500000d",
           "time": 1347864935.964,
-          "folderId": "5058370ade44feaa03000015",
+          "streamId": "5058370ade44feaa03000015",
           "type": { "class": "position", "format": "wgs84" },
           "value": { "location": { "lat": 40.714728, "lng": -73.998672 } },
         }

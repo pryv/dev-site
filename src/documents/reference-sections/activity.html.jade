@@ -16,13 +16,13 @@ section#activity
         :markdown
           #### Example with `Authorization` header
           ```http
-          GET /{channel-id}/events HTTP/1.1
+          GET /events HTTP/1.1
           Host: yacinthe.pryv.io
           Authorization: {access-token}
           ```
           #### Example with `auth` query string parameter
           ```http
-          GET /{channel-id}/events?auth={access-token} HTTP/1.1
+          GET /events?auth={access-token} HTTP/1.1
           Host: yacinthe.pryv.io
           ```
 
@@ -37,135 +37,14 @@ section#activity
           - `401 Unauthorized`, id `invalid-access-token`: The data access token is missing or invalid.
           - `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
           - `404 Not Found`, possible cases:
-            - Id `unknown-channel`: The activity channel can't be found.
-            - Id `unknown-folder`: The activity folder can't be found in the specified channel.
-            - Id `unknown-event`: The event can't be found in the specified channel.
+            - Id `unknown-stream`: The activity stream can't be found.
+            - Id `unknown-event`: The event can't be found.
             - Id `unknown-attachment`: The attached file can't be found for the specified event.
 
           And a couple of others, related to the status of the user's account:
 
           - `301 Moved`, id `user-account-relocated`: The user has relocated her account to another Pryv server. Both the `Location` header and the error's `data` contain the equivalent URL pointing to the physical server now hosting the user's account. Note that this error can only occur between the moment the account is relocated and the moment your DNS is updated with the new server. So we're stretching the HTTP convention a little, in that the returned URL should not be used permanently (only until `{username}.pryv.io` points to the correct server again). You can decide whether you keep it for the duration of the session (if you have such a thing), for N hours, etc. (TODO: review and detail more if needed)
           - `402 Payment Required`, id `user-intervention-required`: We cannot serve the request at the moment, because the user's account has exceeded the limits of its plan. The user must log into Pryv to fix her account.
-
-  section
-    h2 Channels
-    .intro
-      :markdown
-        Methods for retrieving and manipulating [channels](#data-structure-channel).
-
-    section.method
-      h3 Get channels
-      .content
-        :markdown
-          `GET /channels`, Socket.IO: `channels.get`
-
-          Gets the accessible activity channels (excluding those in the trash).
-
-          #### Parameters
-
-          - `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-
-          #### Successful response: `200 OK`
-
-          An array of [activity channels](#data-structure-channel)) containing the accessible channels in the user's account matching the specified state, ordered by name.
-
-      aside
-        :markdown
-          #### cURL example
-
-          ```bash
-          curl -i https://{username}.pryv.io/channels?auth={access-token}
-          ```
-
-    section.method
-      h3 Create channel
-      .content
-        :markdown
-          `POST /channels`, Socket.IO: `channels.create`
-
-          Creates a new activity channel. Only personal accesses allow creating new channels.
-
-          #### Body parameters
-
-          The new channel's data: see [activity channel](#data-structure-channel).
-
-          #### Successful response: `201 Created`
-
-          - `id` ([identity](#data-structure-identity)): The created channel's id.
-
-          #### Specific errors
-
-          - `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
-          - `400 Bad Request`, id `item-id-already-exists`: A channel already exists with the same id.
-          - `400 Bad Request`, id `item-name-already-exists`: A channel already exists with the same name.
-      aside
-        :markdown
-          #### Simple example
-
-          ```json
-          { "name": "Undercover Activities" }
-          ```
-
-          #### cURL example
-
-          ```bash
-
-          ```
-
-    section.method
-      h3 Update channel
-      .content
-        :markdown
-          `PUT /channels/{channel-id}`, Socket.IO: `channels.update`
-
-          Modifies the activity channel's attributes.
-
-          #### Body parameters
-
-          New values for the channel's fields: see [activity channel](#data-structure-channel). All fields are optional, and only modified values must be included.
-
-          #### Successful response: `200 OK`
-
-          #### Specific errors
-
-          - `400 Bad Request`, id `item-name-already-exists`: A channel already exists with the same name.
-
-      aside
-        :markdown
-          #### Simple example
-
-          ```json
-          { "clientData": { "new-or-updated-client-specific-metadata": 42 } }
-          ```
-
-          #### cURL example
-
-          ```bash
-
-          ```
-
-    section.method
-      h3 Delete channel
-      .content
-        :markdown
-          `DELETE /channels/{channel-id}`, Socket.IO: `channels.del`
-
-          Trashes or deletes the given channel, depending on its current state:
-
-          - If the channel is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
-          - If the channel is already in the trash, it will be irreversibly deleted with all the folders and events it contains.
-
-          Only personal accesses allow deleting channels.
-
-          #### Successful response: `200 OK`
-
-      aside
-        :markdown
-          #### cURL example
-
-          ```bash
-
-          ```
 
   section
     h2 Events
@@ -177,7 +56,7 @@ section#activity
       h3 Get events
       .content
         :markdown
-          `GET /{channel-id}/events`, Socket.IO: `{channel-id}.events.get`
+          `GET /events`, Socket.IO: `events.get`
 
           Queries accessible events.
 
@@ -185,8 +64,9 @@ section#activity
 
           - `fromTime` ([timestamp](#data-structure-timestamp)): Optional. The start time of the timeframe you want to retrieve events for. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
           - `toTime` ([timestamp](#data-structure-timestamp)): Optional. The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
-          - `onlyFolders` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
+          - `streams` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
           - `tags` (array of strings): Optional. If set, only events assigned to all of the listed tags will be returned.
+          - `running` (boolean): Optional. If `true`, only running period events will be returned.
           - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
           - `skip` (number): Optional. The number of items to skip in the results.
           - `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
@@ -199,21 +79,21 @@ section#activity
 
           #### Specific errors
 
-          - `400 Bad Request`, id `unknown-folder`: one (or more) of the specified folders does not exist. The unknown folders' ids are listed as an array in the error's `data.unknownIds`.
+          - `400 Bad Request`, id `unknown-stream`: one (or more) of the specified streams does not exist. The unknown streams' ids are listed as an array in the error's `data.unknownIds`.
 
       aside
         :markdown
           #### cURL example
 
           ```bash
-          curl -i https://{username}.pryv.io/{channel-id}/events?auth={access-token}
+          curl -i https://{username}.pryv.io/events?auth={access-token}
           ```
 
     section.method
       h3 Create event
       .content
         :markdown
-          `POST /{channel-id}/events`, Socket.IO: `{channel-id}.events.create`
+          `POST /events`, Socket.IO: `events.create`
 
           Records a new event. Events recorded this way must be completed events, i.e. either period events with a known duration or mark events. To start a running period event, post a `events/start` request.
 
@@ -226,20 +106,20 @@ section#activity
           #### Successful response: `201 Created`
 
           - `id` ([identity](#data-structure-identity)): The new event's id.
-          - `stoppedId` ([identity](#data-structure-identity)): Only in channels with `enforceNoEventsOverlap`. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+          - `stoppedId` ([identity](#data-structure-identity)): Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
 
           #### Specific errors
 
-          - `400 Bad Request`, id `unknown-folder`: The specified folder cannot be found.
-          - `400 Bad Request`, id `invalid-operation`: The channel or specified folder is in the trash, and we prevent the recording of new events into trashed channels / folders. The error's `data.trashed` property indicates either `"channel"` or `"folder"`.
-          - `400 Bad request`, id `periods-overlap`: Only in channels with `enforceNoEventsOverlap`: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+          - `400 Bad Request`, id `unknown-stream`: The specified stream cannot be found.
+          - `400 Bad Request`, id `invalid-operation`: The stream is in the trash, and we prevent the recording of new events into trashed streams.
+          - `400 Bad request`, id `periods-overlap`: Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
       aside
         :markdown
           #### cURL example
 
           ```bash
-          curl -i -H "Content-Type: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{username}.pryv.io/{channel-id}/events?auth={access-token}
+          curl -i -H "Content-Type: application/json" -X POST -d '{"streamId":"{stream-id}"}' https://{username}.pryv.io/events?auth={access-token}
           ```
 
           TODO: multipart/form-data example
@@ -248,39 +128,40 @@ section#activity
       h3 Start period
       .content
         :markdown
-          `POST /{channel-id}/events/start`, Socket.IO: `{channel-id}.events.start`
+          `POST /events/start`, Socket.IO: `events.start`
 
-          Starts a new period event. In channels with `enforceNoEventsOverlap`, also stops the previously running period event if any. See POST `/{channel-id}/events` for details. TODO: detail
+          Starts a new period event. In `singleActivity` streams, also stops the previously running period event if any. See POST `/events` for details. TODO: detail
 
           #### Body parameters
 
-          See POST `{channel-id}/events`.
+          See POST `/events`.
 
           #### Successful response: `201 Created`
 
           #### Specific errors
 
-          See POST `/{channel-id}/events`.
+          See POST `/events`.
 
       aside
         :markdown
           #### cURL example
 
           ```bash
-          curl -i -H "Content-Type: application/json" -X POST -d '{"folderId":"{folder-id}"}' https://{username}.pryv.io/{channel-id}/events/start?auth={access-token}
+          curl -i -H "Content-Type: application/json" -X POST -d '{"streamId":"{stream-id}"}' https://{username}.pryv.io/events/start?auth={access-token}
           ```
 
     section.method
       h3 Stop period
       .content
         :markdown
-          `POST /{channel-id}/events/stop`, Socket.IO: `{channel-id}.events.stop`
+          `POST /events/stop`, Socket.IO: `events.stop`
 
-          Stops a previously running period event. In channels with `enforceNoEventsOverlap`, which guarantee that only one event is running at any given time, that event is automatically determined; for regular channels, the event to stop must be specified.
+          Stops a previously running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop must be specified.
 
           #### Body parameters
 
-          - `id` ([identity](#data-structure-identity)): The id of the event to stop. Optional in channels with `enforceNoEventsOverlap`.
+          - `streamId` ([identity](#data-structure-identity)): The id of the `singleActivity` stream in which to stop any running event. Either this or `id` must be specified.
+          - `id` ([identity](#data-structure-identity)): The id of the event to stop. Either this or `streamId` must be specified.
           - `time` ([timestamp](#data-structure-timestamp)): Optional. The stop time. Default: now.
 
           #### Successful response: `200 OK`
@@ -291,27 +172,7 @@ section#activity
 
           - `400 Bad Request`, id `unknown-event`: The specified event cannot be found.
           - `400 Bad Request`, id `invalid-operation`: The specified event is not a running period event.
-          - `400 Bad Request`, id `missing-parameter`: No event was specified and the channel does not `enforceNoEventsOverlap` (so that there can be more than one running event).
-
-      aside
-        :markdown
-          #### cURL example
-
-          ```bash
-
-          ```
-
-    section.method
-      h3 Get running periods
-      .content
-        :markdown
-          `GET /{channel-id}/events/running`, Socket.IO: `{channel-id}.events.getRunning`
-
-          Gets the currently running period events.
-
-          #### Successful response: `200 OK`
-
-          An array of [events](#data-structure-event) containing the running period events.
+          - `400 Bad Request`, id `missing-parameter`: No event was specified and the specified stream is not a `singleActivity` stream (so that there can be more than one running event).
 
       aside
         :markdown
@@ -325,7 +186,7 @@ section#activity
       h3 Update event
       .content
         :markdown
-          `PUT /{channel-id}/events/{event-id}`, Socket.IO: `{channel-id}.events.update`*
+          `PUT /events/{event-id}`, Socket.IO: `events.update`*
 
           Modifies the event's attributes.
 
@@ -354,7 +215,7 @@ section#activity
       h3 Add attached file(s) to event
       .content
         :markdown
-          `POST /{channel-id}/events/{event-id}`
+          `POST /events/{event-id}`
 
           Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
 
@@ -365,20 +226,20 @@ section#activity
           #### cURL example
 
           ```bash
-          curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F 'file=@-' https://{username}.rec.la/{channel-id}/events?auth={token} < {filename}
+          curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F 'file=@-' https://{username}.rec.la/events?auth={token} < {filename}
           ```
 
           ...or...
 
           ```bash
-          curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F "file=@{filename}" https://{username}.rec.la/{channel-id}/events?auth={token}
+          curl -i -F 'event={"type":{"class":"picture","format":"attached"}}'  -F "file=@{filename}" https://{username}.rec.la/events?auth={token}
           ```
 
     section.method
       h3 Delete event
       .content
         :markdown
-          `DELETE /{channel-id}/events/{event-id}`, Socket.IO: `{channel-id}.events.del`
+          `DELETE /events/{event-id}`, Socket.IO: `events.del`
 
           Trashes or deletes the specified event, depending on its current state:
 
@@ -399,7 +260,7 @@ section#activity
       h3 Get attached file
       .content
         :markdown
-          `GET /{channel-id}/events/{event-id}/{file name}`
+          `GET /events/{event-id}/{file name}`
 
           Gets the attached file.
 
@@ -417,7 +278,7 @@ section#activity
       h3 Delete attached file
       .content
         :markdown
-          `DELETE /{channel-id}/events/{event-id}/{filename}`, Socket.IO: `{channel-id}.events.deleteAttachedFile`
+          `DELETE /events/{event-id}/{filename}`, Socket.IO: `events.deleteAttachedFile`
 
           Irreversibly deletes the attached file.
 
@@ -433,7 +294,7 @@ section#activity
       h3 Batch-create events
       .content
         :markdown
-          `POST /{channel-id}/events/batch`, Socket.IO: `{channel-id}.events.createBatch`
+          `POST /events/batch`, Socket.IO: `events.createBatch`
 
           Batch upload events that were recorded by the client while offline. The submitted events are added in-order, with results returned individually for each (see response below).
 
@@ -445,13 +306,13 @@ section#activity
 
           An object with one property per event submitted holding the result for that event. Each property's name is the submitted event's client id, and its value contains:
 
-          - If the event was successful created, an object with the `id` of the event, and possibly the `stoppedId` of the running period event that was stopped as a result. (For details, see POST `/{channel-id}/events`.)
+          - If the event was successful created, an object with the `id` of the event, and possibly the `stoppedId` of the running period event that was stopped as a result. (For details, see POST `/events`.)
           - If there was an error creating the event: an object with an `error` property holding the encountered [error](#data-structure-error).
 
       aside
         :markdown
           #### cURL example
-          ```bash
+          ```
           ```
 
           #### Example response
@@ -459,40 +320,38 @@ section#activity
           {
             "temp_ref_id_1": {"id": "TTMyhYEZriJ"},
             "temp_ref_id_2": {"error": {
-              "id": "unknown-folder",
-              "message": "Folder 'bad-folder-id' is unknown."
+              "id": "unknown-stream",
+              "message": "Stream 'bad-stream-id' is unknown."
             }}
           }
           ```
 
   section
-    h2 Folders
+    h2 Streams
     .intro
       :markdown
-        Methods to retrieve and manipulate [folders](#data-structure-folder).
+        Methods to retrieve and manipulate [streams](#data-structure-stream).
 
     section.method
-      h3 Get folders
+      h3 Get streams
       .content
         :markdown
-          `GET /{channel-id}/folders`, Socket.IO: `{channel-id}.folders.get`
+          `GET /streams`, Socket.IO: `streams.get`
 
-          Gets the accessible folders, either from the root level or only descending from a specified parent folder.
+          Gets the accessible streams, either from the root level or only descending from a specified parent stream.
 
           #### Parameters
 
-          - `parentId` ([identity](#data-structure-identity)): Optional. The id of the parent folder to use as root for the request. Default: `null` (returns all accessible folders from the root level).
-          - `includeHidden` (`true` or `false`): Optional. When `true`, folders that are currently hidden will be included in the result. Default: `false`.
+          - `parentId` ([identity](#data-structure-identity)): Optional. The id of the parent stream to use as root for the request. Default: `null` (returns all accessible streams from the root level).
           - `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-          - `timeCountBase` ([timestamp](#data-structure-timestamp)): Optional. If specified, the returned folders will include the summed duration of all their period events, starting from this timestamp (see `timeCount` in [activity folder](#data-structure-folder)); otherwise no time count values will be returned.
 
           #### Successful response: `200 OK`
 
-          An array of [activity folders](#data-structure-folder) containing the tree of the accessible folders, sorted by name.
+          An array of [activity streams](#data-structure-stream) containing the tree of the accessible streams, sorted by name.
 
           #### Specific errors
 
-          - `400 Bad Request`, id `unknown-folder`: The specified parent folder can't be found.
+          - `400 Bad Request`, id `unknown-stream`: The specified parent stream can't be found.
 
       aside
         :markdown
@@ -503,25 +362,25 @@ section#activity
           ```
 
     section.method
-      h3 Create folder
+      h3 Create stream
       .content
         :markdown
-          `POST /{channel-id}/folders`, Socket.IO: `{channel-id}.folders.create`
+          `POST /streams`, Socket.IO: `streams.create`
 
-          Creates a new folder at the root level or as a child folder to the specified folder.
+          Creates a new stream at the root level or as a child stream to the specified stream.
 
           #### Body parameters
 
-          The new folder's data: see [activity folder](#data-structure-folder).
+          The new stream's data: see [activity stream](#data-structure-stream).
 
           #### Successful response: `201 Created`
 
-          - `id` ([identity](#data-structure-identity)): The created folder's id.
+          - `id` ([identity](#data-structure-identity)): The created stream's id.
 
           #### Specific errors
 
-          - `400 Bad Request`, id `item-id-already-exists`: A folder already exists with the same id.
-          - `400 Bad Request`, id `item-name-already-exists`: A sibling folder already exists with the same name.
+          - `400 Bad Request`, id `item-id-already-exists`: A stream already exists with the same id.
+          - `400 Bad Request`, id `item-name-already-exists`: A sibling stream already exists with the same name.
           - `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
       aside
@@ -533,23 +392,23 @@ section#activity
           ```
 
     section.method
-      h3 Update folder
+      h3 Update stream
       .content
         :markdown
-          `PUT /{channel-id}/folders/{folder-id}`, Socket.IO: `{channel-id}.folders.update`*
+          `PUT /streams/{stream-id}`, Socket.IO: `streams.update`*
 
-          Modifies the activity folder's attributes.
+          Modifies the activity stream's attributes.
 
           #### Body parameters
 
-          New values for the folder's fields: see [activity folder](#data-structure-folder). All fields are optional, and only modified values must be included.
+          New values for the stream's fields: see [activity stream](#data-structure-stream). All fields are optional, and only modified values must be included.
 
           #### Successful response: `200 OK`
 
           #### Specific errors
 
-          - `400 Bad Request`, id `unknown-folder`: The specified parent folder's id is unknown.
-          - `400 Bad Request`, id `item-name-already-exists`: A sibling folder already exists with the same name.
+          - `400 Bad Request`, id `unknown-stream`: The specified parent stream's id is unknown.
+          - `400 Bad Request`, id `item-name-already-exists`: A sibling stream already exists with the same name.
 
       aside
         :markdown
@@ -560,15 +419,15 @@ section#activity
           ```
 
     section.method
-      h3 Delete folder
+      h3 Delete stream
       .content
         :markdown
-          `DELETE /{channel-id}/folders/{folder-id}`, Socket.IO: `{channel-id}.folders.del`
+          `DELETE /streams/{stream-id}`, Socket.IO: `streams.del`
 
-          Trashes or deletes the specified folder, depending on its current state:
+          Trashes or deletes the specified stream, depending on its current state:
 
-          - If the folder is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
-          - If the folder is already in the trash, it will be irreversibly deleted with its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`..
+          - If the stream is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+          - If the stream is already in the trash, it will be irreversibly deleted with its possible descendants. If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`..
 
           #### Parameters
 

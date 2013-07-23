@@ -4,6 +4,8 @@ sectionId: web-app
 sectionOrder: 2
 ---
 
+# THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update
+
 # Web app (Javascript)
 
 Obtaining an access token for your web app.
@@ -12,7 +14,7 @@ Obtaining an access token for your web app.
 
 * make sure you got the [initial requirements](#intro-initial-requirements) ready.
 * include the following script in your page:
-	- Staging version (recommended at the moment):  
+	- Staging version (recommended at the moment):
 	```html
 	<script type="text/javascript" src="https://sw.rec.la:2443/access/v1/pryv-sdk.js"></script>
 	```
@@ -49,16 +51,16 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 	</head>
 	<body>
 		<script type="text/javascript">
-	
+
 		function callMeWithCredentials(username, appToken, languageCode) {
-			alert("SUCCESS! username:" + username + " appToken:" + 
+			alert("SUCCESS! username:" + username + " appToken:" +
 					appToken + " language:" + languageCode);
 		}
-	
+
 		var requestedPermissions = [{"channelId" : "diary",
 									"defaultName" : "Diary", // this name is localized
 	                                     "level" : "contribute"}];
-	
+
 	    Pryv.Access.setup({
 	        requestingAppId : 'pryv-mini-example',
 	        requestedPermissions : requestedPermissions,
@@ -68,8 +70,8 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
               initialization : function() { },
               needSignin : function(popupUrl, pollUrl, pollRateMs) { },
               accepted : function(username, appToken, languageCode) {
-                console.log("** SUCCESS! username:" + username + 
-                            " appToken:" + appToken + 
+                console.log("** SUCCESS! username:" + username +
+                            " appToken:" + appToken +
                             " lang:" + languageCode);
               },
               refused: function(reason) {
@@ -79,7 +81,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
                 console.log("** ERROR! " + code + " " + message);
            }
 	    });
-	
+
 	    </script>
 		<span id='pryvButton'></span>
 	</body>
@@ -113,7 +115,7 @@ The **settings** object supports the following parameters:
 ### <a name="webapp.returnURL"></a> settings.returnURL : Popup or URL Callback
 
 
-During the authentication process, we need to open a PrYv access web page in a separate window. This is in order to secure personal user's information.  
+During the authentication process, we need to open a PrYv access web page in a separate window. This is in order to secure personal user's information.
 
 This window can be opened in:
 
@@ -183,7 +185,7 @@ TODO
 TODO
 
 ## Pryv.Access.popupLogin()
-Once setup is done, you can trigger the populLogin window from your own button.  
+Once setup is done, you can trigger the populLogin window from your own button.
 Note: Trigger it from a user-click event.
 
 ## Pryv.Access.logout()
@@ -192,7 +194,7 @@ Once setup is done, and user logged in. Erase current credential and restart set
 **logout()** will trigger a `settings.callbacks.success(false,false,false);`
 
 ## Pryv.Access.retry()
-If a user refused to grant access, restart the setup process with the same settings. 
+If a user refused to grant access, restart the setup process with the same settings.
 
 ## Other Examples
 

@@ -4,6 +4,8 @@ sectionId: public-channels
 sectionOrder: 99
 ---
 
+# THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update
+
 # Public channels
 
 *TODO: contents here are probably obsolete but kept for reference until we do implement public channels. This should also be a separate page.*
@@ -41,7 +43,7 @@ The following headers must be included in every response:
 
 ### Data
 
-The JSON data exchanged is the same as in the Pryv API: see [events](#data-structure-event), [folders](#data-structure-folder) and [errors](#data-structure-error) there.
+The JSON data exchanged is the same as in the Pryv API: see [events](#data-structure-event), [streams](#data-structure-stream) and [errors](#data-structure-error) there.
 
 
 ## Events
@@ -57,7 +59,7 @@ Queries the channel's events. This is the only method that must be implemented i
 
 - `fromTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is 24 hours before `toTime`, if set.
 - `toTime` ([timestamp](#data-structure-timestamp)): Optional. TODO. Default is the current time.
-- `onlyFolders` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified folders and their sub-folders will be returned. To retrieve events that are not assigned to any folder, just include a `null` value in the array. By default, all accessible events are returned (regardless of their folder assignment).
+- `streams` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
 - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
 - `skip` (number): Optional. The number of items to skip in the results.
 - `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
@@ -70,7 +72,7 @@ An array of [events](#data-structure-event) containing the accessible events ord
 #### Errors
 
 - `400 Bad Request`, id `invalid-parameters-format`: The request's parameters do not follow the expected format (e.g. missing required parameter, wrong type of data, etc.)
-- `400 Bad Request`, id `unknown-folder`: One (or more) of the specified folders doesn't exist.
+- `400 Bad Request`, id `unknown-stream`: One (or more) of the specified streams doesn't exist.
 
 
 ### GET `{channel base path}/events/{event-id}/{file-name}`
@@ -84,26 +86,26 @@ Gets the attached file. This method does not have to be implemented if the publi
 - `404 Not Found`, id `unknown-attachment`: The attached file can't be found for the specified event.
 
 
-## Folders
+## Streams
 
-[Folders](#data-structure-folder) provide an organization structure for channels that need it. Implementing folders in public channels is by no means mandatory; public channels with no need for folders just return a `404 Not Found` response for the method below.
+[Streams](#data-structure-stream) provide an organization structure for channels that need it. Implementing streams in public channels is by no means mandatory; public channels with no need for streams just return a `404 Not Found` response for the method below.
 
 
-### GET `{channel base path}/folders`
+### GET `{channel base path}/streams`
 
-Gets the channel's folders, either from the root level or only descending from a specified parent folder.
+Gets the channel's streams, either from the root level or only descending from a specified parent stream.
 
 #### Query string parameters
 
-- `parentId` ([identity](#data-structure-identity)): Optional. The id of the parent folder to use as root for the request. Default: `null` (returns all folders from the root level).
+- `parentId` ([identity](#data-structure-identity)): Optional. The id of the parent stream to use as root for the request. Default: `null` (returns all streams).
 
 #### Successful response: `200 OK`
 
-An array of [activity folders](#data-structure-folder) containing the tree of the folders, sorted by name.
+An array of [activity streams](#data-structure-stream) containing the tree of the streams, sorted by name.
 
 #### Errors
 
 - `400 Bad Request`, id `invalid-parameters-format`: The request's parameters do not follow the expected format (e.g. missing required parameter, wrong type of data, etc.)
-- `400 Bad Request`, id `unknown-folder`: The specified parent folder can't be found.
+- `400 Bad Request`, id `unknown-stream`: The specified parent stream can't be found.
 
 TODO: example

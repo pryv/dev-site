@@ -8,7 +8,7 @@ sectionOrder: 3
 
 **Administration is only allowed for trusted apps**; to register your app as trusted, please [get in touch with us](mailto:developers@pryv.com). If you're only interested in obtaining access tokens for your app, see the [app access documentation](app-access.html) instead.
 
-Administration methods allow managing the user's [account information](#admin-user), [activity channels](#admin-channels) and [sharing](#admin-accesses) (via accesses).
+Administration methods allow managing the user's [account information](#admin-user) and [sharing](#admin-accesses) (via accesses).
 
 
 
@@ -193,7 +193,7 @@ Creates a new shared access.
 
 #### Parameters
 
-The new access's data: see [access](#data-structure-access). Additionally, if a `defaultName` property is set on the new access' channel / folder permission objects, the corresponding channels / folders will be created with that name.
+The new access's data: see [access](#data-structure-access). Additionally, if a `defaultName` property is set on the new access' stream permission objects, the corresponding streams will be created with that name.
 
 #### Successful response: `201 Created`
 
@@ -254,21 +254,21 @@ Deletes the specified shared access.
 
 `POST /admin/accesses/check-app`
 
-For the app authorization process. Checks if the app requesting authorization already has access with the same permissions (and on the same device, if applicable), and returns details of the requested permissions' channels and folders (for display) if not.
+For the app authorization process. Checks if the app requesting authorization already has access with the same permissions (and on the same device, if applicable), and returns details of the requested permissions' streams (for display) if not.
 
 #### Parameters
 
 - `requestingAppId` (string): The id of the app requesting authorization.
 - `deviceName` (string): Optional. The name of the device running the app requesting authorization, if applicable.
-- `requestedPermissions`: An array of channel permission request objects, which are identical to channel permission objects of [accesses](#data-structure-access) with the difference that each channel / folder permission object must have a `defaultName` property specifying the name the channel / folder should be created with later (in POST `/admin/accesses`) if missing.
+- `requestedPermissions`: An array of stream permission request objects, which are identical to stream permission objects of [accesses](#data-structure-access) with the difference that each permission object must have a `defaultName` property specifying the name the stream should be created with later (in POST `/admin/accesses`) if missing.
 
 #### Successful response: `200 OK`
 
 If no matching access already exists:
 
-- `checkedPermissions`: A updated copy of the `requestedPermissions` array passed in the request, with the `defaultName` property replaced by `name` for each existing channel / folder (set to the actual name of the item). (For missing channels / folders the `defaultName` property is left untouched.) If channels / folders already exist with the same name but a different `id`, `defaultName` is updated with a valid alternative proposal (in such cases the response also has an `error` property to signal the issue; see below).
+- `checkedPermissions`: A updated copy of the `requestedPermissions` array passed in the request, with the `defaultName` property replaced by `name` for each existing stream (set to the actual name of the item). (For missing streams the `defaultName` property is left untouched.) If streams already exist with the same name but a different `id`, `defaultName` is updated with a valid alternative proposal (in such cases the response also has an `error` property to signal the issue; see below).
 - `mismatchingAccessToken` ([identity](#data-structure-identity)): Set if an access already exists for the requesting app, but with different permissions than those requested.
-- `error` ([error](#data-structure-error)): If there is a duplicate issue with some channels / folders requested for creation (see `checkedPermissions`), this is set to an `item-name-already-exists` error.
+- `error` ([error](#data-structure-error)): If there is a duplicate issue with some streams requested for creation (see `checkedPermissions`), this is set to an `item-name-already-exists` error.
 
 If a matching access already exists:
 

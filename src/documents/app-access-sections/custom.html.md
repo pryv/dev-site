@@ -4,12 +4,14 @@ sectionId: custom
 sectionOrder: 10
 ---
 
+# THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update
+
 # Custom
 
 Implementing the authorization process and obtaining an access token all by yourself.
 
 **For testing: **
-Use our staging servers: https://access.rec.la/access 
+Use our staging servers: https://access.rec.la/access
 
 
 **Steps: **
@@ -29,7 +31,7 @@ from [https://sw.rec.la/access/test.html](https://sw.rec.la/access/test.html)
 
 ### Access request
 
-**request**: `POST https://reg.rec.la/access`  
+**request**: `POST https://reg.rec.la/access`
 **payload**:
 
 ```
@@ -67,7 +69,7 @@ from [https://sw.rec.la/access/test.html](https://sw.rec.la/access/test.html)
 ```
 
 
-**response**: 
+**response**:
 
 ```
 {
@@ -113,11 +115,11 @@ from [https://sw.rec.la/access/test.html](https://sw.rec.la/access/test.html)
 
 **request**: GET `https://reg.rec.la/access/dXRqBezem8v3mNxf`
 
-3 response codes: 
+3 response codes:
 
-**1 response**: `NEED_SIGNIN` 
+**1 response**: `NEED_SIGNIN`
 
-Content is the same than for the initial POST request.  
+Content is the same than for the initial POST request.
 **poll** and **poll_rate_ms** may vary
 
 **2 response**: 200 `ACCEPTED`

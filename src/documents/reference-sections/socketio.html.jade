@@ -40,7 +40,7 @@ section#socketio
         Here's how you could retrieve events:
         ```javascript
         var cmdData = {
-          id: '{channel-id}.events.get',
+          id: 'events.get',
           params: {
             sortAscending: true
           }
@@ -54,17 +54,13 @@ section#socketio
     h3 Receiving data change notifications
     .content
       :markdown
-        You can be notified of changes to channels, folders and events by subscribing to the corresponding messages `channelsChanged`, `eventsChanged` and `foldersChanged`. For the latter two, the message is passed a parameters object with a `channelId` property to help you refresh only what's necessary.
+        You can be notified of changes to streams and events by subscribing to the corresponding messages `streamsChanged`, and `eventsChanged`.
 
     aside
       :markdown
         For example:
         ```javascript
-        socket.on('channelsChanged', function() { // no scope parameter for channels
-          // ... (retrieve latest changes and update)
-        });
-        socket.on('eventsChanged', function(scope) {
-          // scope.channelId contains the related channel id
+        socket.on('eventsChanged', function() {
           // ... (retrieve latest changes and update)
         });
         ```
