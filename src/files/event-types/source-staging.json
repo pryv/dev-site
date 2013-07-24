@@ -1,12 +1,12 @@
 {
-  "version": 20130705.01,
+  "version": 20130724.01,
   "classes": {
     "activity": {
       "description": "To record the time spent doing something (tasks, sports, etc.).",
       "formats": {
         "pryv": {
           "example": "#### Time working on a specific project\ntimeframe: 26th june 2013, form 9am to 12am\n\nstory: In your company \"ACME Inc.\" you note that you did some \"Design work\" on the project \"Comics review\".\n\nexplanation: We note an \"amount of time\" which is a special event data-type (activity/pryv) as it's directly handled by Pryv's Event.\nWe need to have a dedicated Stream \"comic-review\" that while contain all the time accounting\n\ndatatypes: activity/pryv\n\nstream: activity/work/",
-          "description": "Pryv activity event. No value here, as the value is actually defined by the event's time and duration fields as well as its classification (folder, tags).",
+          "description": "Pryv activity event. No specific content here; content is defined by the event's stream, time and duration as well as possible classification (tags).",
           "type": "null"
         }
       }
@@ -28,7 +28,7 @@
       "description": "To record audio (conversations, voice messages, etc.).",
       "formats": {
         "attached": {
-          "description": "The audio source is the file attached to the event (no explicit value defined).\nUse event.duration for the audio duration",
+          "description": "The audio source is the file attached to the event (no explicit content defined).\nUse event.duration for the audio duration",
           "type": "null",
           "attachmentRequired": true
         },
@@ -87,7 +87,7 @@
       }
     },
     "encrypted": {
-      "description": "For client-side-encrypted events. The decrypted <code>payload</code> is expected to be a JSON object with the regular <code>type</code> and <code>value</code> properties (e.g. <code>{ \"type\": { \"class\": \"..\", \"format\": \"..\" }, \"value\": \"..\" }</code>). If the event has attached files, they are expected to be similarly encrypted.",
+      "description": "For client-side-encrypted events. The decrypted <code>payload</code> is expected to be a JSON object with the regular <code>type</code> and <code>content</code> properties (e.g. <code>{ \"type\": \"..\", \"content\": \"..\" }</code>). If the event has attached files, they are expected to be similarly encrypted.",
       "formats": {
         "aes-text-base64": {
           "description": "AES encrypted payload, with a <em>text</em> key and a <em>Base64</em> payload.",
@@ -1002,7 +1002,7 @@
           }
         },
         "attached": {
-          "description": "The picture is the image file attached to the event (no explicit value defined). TODO: list accepted formats.",
+          "description": "The picture is the image file attached to the event (no explicit content defined). TODO: list accepted formats.",
           "type": "null",
           "attachmentRequired": true
         },
@@ -1109,7 +1109,7 @@
       "description": "To record video (home snippets, Vimeo or YouTube links, etc.).",
       "formats": {
         "attached": {
-          "description": "The video is the file attached to the event (no explicit value defined). TODO: list accepted formats.",
+          "description": "The video is the file attached to the event (no explicit content defined). TODO: list accepted formats.",
           "type": "null",
           "attachmentRequired": true
         },

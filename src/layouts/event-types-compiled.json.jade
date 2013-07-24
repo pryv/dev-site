@@ -1,0 +1,10 @@
+-// load JSON file
+- var data = require(document.sourceFile)
+- data.types = {}
+each className in Object.keys(data.classes)
+  - var classDef = data.classes[className]
+  each formatName in Object.keys(classDef.formats)
+    - var formatDef = classDef.formats[formatName]
+    - data.types[className + '/' + formatName] = formatDef
+- delete data.classes
+!= JSON.stringify(data, null, '  ')

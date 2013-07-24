@@ -6,21 +6,20 @@ withExamples: false
 withTOC: true
 ---
 
--// load JSON file
-- var directoryFile = 'event-types/source.staging.json'
-- var content = require('files/' + directoryFile)
-- var extraFile = 'event-types/source.staging.json'
-- var extra = require('files/' + extraFile)
+- var sourceFile = 'event-types/source-staging.json'
+- var compiledFile = 'event-types/compiled-staging.json'
+- var extrasFile = 'event-types/extras.json'
 
--// process file
+-// load JSON files
 
--// money
+- var content = require('files/' + sourceFile)
 - var classes = content.classes;
-- var money = classes.money;
-- delete classes['money'];
 
--// measures get all "number only classes"
-- var measures = {}
+- var extras = require('files/' + extrasFile) // TODO: use this?
+
+-// extract numerical types (classes)
+
+- var numericalClasses = {}
 - var classNames = Object.keys(classes);
 each className in classNames
   - var classDef = classes[className]
@@ -33,7 +32,7 @@ each className in classNames
       - break
 
   if numberOnly
-    - measures[className] = classDef
+    - numericalClasses[className] = classDef
     - delete classes[className]
 
 
@@ -50,52 +49,47 @@ section#about
 
     ## Event type?
 
-    Each event has a `type` property that indicates how to handle its `value` (if any).
-    The type itself is a combination of a **class** and a **format** (see also the [event
-    data structure in the API reference](reference.html#data-structure-event)):
+    An event's type is defined by its `type` property that indicates how to handle its `content` (if any).
+    The type itself is specified as `{class}/{format}`, lowercase (e.g. `note/html`). Rationale:
 
-    - The type's class (`type.class`) specifies the "nature" or "kind" of data represented
-      by the event. Events of the same class are assumed to be comparable and convertible,
+    - The class specifies the "nature" or "kind" of data represented by the event.
+      Events of the same class are assumed to be comparable and convertible,
       and will likely be displayed similarly.
-    - The type's format (`type.format`) specifies how the data is structured. For example, a
-      text note may just be a single string value, while an HTML note may be a more complex
+    - The format specifies how the data is structured. For example, a
+      basic note may just be a single string value, while an rich-text note could be a more complex
       object structure.
-
-    Class and format are always specified in lowercase.
-
-    **Shorthand notation**: we usually refer to types with the notation
-    "**{class}:{format}**" (e.g. "note:html").
 
     ## Format specification
 
-    For each of the types described below, the event value's structure is specified using
+    For each of the types described below, the event content's structure is specified using
     JSON-schema (see the
     [JSON-schema specification](http://tools.ietf.org/html/draft-zyp-json-schema-03#page-8)).
-
     Notes:
 
-    - A "null" value type means that the event has no `value` property (usually because the
-      event's core properties are sufficient to carry the necessary information).
-    - Any value type other than "null" implies that the event must have a `value` property
-      of the specified JSON-schema type.
-    - If the value is an object, its (sub-)properties are assumed to be optional unless
+    - A "null" content type means that the event has no `content` property (usually because event
+      core properties are sufficient).
+    - Any content type other than "null" implies that the event must have a `content` property of the
+      specified JSON-schema type.
+    - If the content is an object, its (sub-)properties are assumed to be optional unless
       otherwise specified by JSON-schema's "required" field.
 
     ## JSON file
 
-    This directory is available as a [JSON file](!{directoryFile}) for automated
-    processing. We use it in our API for validating event values (for standard types).
+    This directory is available as a JSON file for automated processing:
+
+    - [Source](!{sourceFile}), with hierarchical `classes['{class}'].formats['{format}']` structure
+    - [Compiled](!{compiledFile}), with flat `types['{class}/{format}']` structure
 
     ## Submitting new types to the directory
 
     This directory is constantly evolving to match the needs of Pryv apps; if you'd like it
-    to include other types, please just <a href="mailto:developers@pryv.com">send us your
-    proposal</a>.
-
+    to include other types, <a href="mailto:developers@pryv.com">send us your proposal</a>.
 
 
 section#directory
-  h1 Directory (no numeric)
+  h1 Directory
+
+  h2 Complex types
 
   mixin renderProperties(obj, isPropertyList)
     ul
@@ -114,7 +108,7 @@ section#directory
 
   for className in Object.keys(classes)
     - var classDef = classes[className]
-    h2 <code>!{className}</code>
+    h3 <code>!{className}</code>
     .description !{classDef.description}
     - var headers = []
     for formatName in Object.keys(classDef.formats)
@@ -164,15 +158,14 @@ section#directory
                   pre.example
                     code= JSON.stringify(example, null, 2)
 
+  h2 Numerical types
 
-  h1 Directory Measures
-
-  for className in Object.keys(measures)
-    - var classDef = measures[className]
-    h2 <code>!{className}</code>
+  for className in Object.keys(numericalClasses)
+    - var classDef = numericalClasses[className]
+    h3 <code>!{className}</code>
     .description !{classDef.description}
 
-    table.table2
+    table.table
       thead
         tr
           -// format id column.
@@ -187,26 +180,3 @@ section#directory
             -// format id column.
             td <code>!{className}/!{formatName}</code>
             td !{formatDescription}
-
-
-
-
-  h1 Money
-  -// console.log(money)
-  .description !{money.description} <br> Value is a <code>Number</code>
-
-  table.table2
-    thead
-      tr
-        -// format id column.
-        th format
-        th title
-
-    tbody
-      for formatName in Object.keys(money.formats)
-        - var formatDef = money.formats[formatName]
-        - var formatDescription = formatDef.description
-        tr
-          -// format id column.
-          td <code>money/!{formatName}</code>
-          td !{formatDescription}
