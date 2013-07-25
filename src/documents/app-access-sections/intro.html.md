@@ -4,7 +4,7 @@ sectionId: intro
 sectionOrder: 1
 ---
 
-# THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update
+**THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update**
 
 # App access
 
