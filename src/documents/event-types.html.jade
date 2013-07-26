@@ -6,8 +6,8 @@ withExamples: false
 withTOC: true
 ---
 
-- var sourceFile = 'event-types/source-staging.json'
-- var compiledFile = 'event-types/compiled-staging.json'
+- var sourceFile = 'event-types/hierarchical-staging.json'
+- var flatFile = 'event-types/flat-staging.json'
 - var extrasFile = 'event-types/extras.json'
 
 -// load JSON files
@@ -77,8 +77,8 @@ section#about
 
     This directory is available as a JSON file for automated processing:
 
-    - [Source](!{sourceFile}), with hierarchical `classes['{class}'].formats['{format}']` structure
-    - [Compiled](!{compiledFile}), with flat `types['{class}/{format}']` structure
+    - [Hierarchical structure](!{sourceFile}): `classes['{class}'].formats['{format}']`
+    - [Flat structure](!{flatFile}): `types['{class}/{format}']`
 
     ## Submitting new types to the directory
 
@@ -108,7 +108,7 @@ section#directory
 
   for className in Object.keys(classes)
     - var classDef = classes[className]
-    h3 <code>!{className}</code>
+    h3 !{className.charAt(0).toUpperCase() + className.slice(1)}
     .description !{classDef.description}
     - var headers = []
     for formatName in Object.keys(classDef.formats)
@@ -121,7 +121,7 @@ section#directory
       thead
         tr
           -// format id column.
-          th format
+          th type
           each header in headers
             if header !== 'properties' && header !== 'example'
               -// other custom columns.
@@ -162,14 +162,14 @@ section#directory
 
   for className in Object.keys(numericalClasses)
     - var classDef = numericalClasses[className]
-    h3 <code>!{className}</code>
+    h3 !{className.charAt(0).toUpperCase() + className.slice(1)}
     .description !{classDef.description}
 
     table.table
       thead
         tr
           -// format id column.
-          th format
+          th type
           th title
 
       tbody
