@@ -1,22 +1,28 @@
 // can't use nib for now because of DocPad plugin settings bug
 //@import 'nib'
-
+body 
+    font-family:Helvetica Neue
+    color: #7E7E7E
 *
   box-sizing: border-box
 
 // override GitHub's awful default margins
-h1, h2, h3
-  margin: 2em 0 1em;
+h1, h2, h3, h4, h5
+  font-family: Museo
 h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
   margin-top: 0
 h5, h6
   margin: 1.5em 0 0.75em
 p, blockquote, ul, ol, dl, li, table, pre
   margin: 0.75em 0;
+h1
+  background-color:#F3F4F5
 h2
-  border-bottom: 1px solid #000
+  border-top: 1px solid #EEE
 h3
-  border-bottom: 1px solid #CCC
+  border-top: 1px solid #EEE
+  color:#056397
+  text-transform:uppercase
 pre
   border: 0 none
   padding: 0
@@ -41,11 +47,12 @@ pre
 #main
   > section
     margin-top: 2em
-    padding-top: 2em
-    border-top: 1px dashed #000
+    padding-top: 4em
+    border-top: 1px solid #EEE
 
     section
       margin-bottom: 1em
+      margin-top: 40px
 
   > section:first-of-type
     margin-top: 0
@@ -59,12 +66,13 @@ pre
   height: 100%;
   position: fixed;
   background: #3c3f46;
-  //box-shadow: inset -5px 0 5px 0px #000;
   width: 200px;
   padding-top: 20px;
   color: #fff;
   overflow: scroll;
   margin-top: 40px;
+  font-family: Museo,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
+  font-weight: 300;
 
   ul
     margin: 0;
@@ -77,12 +85,14 @@ pre
     line-height: 1.2em
 
   a
-    color: #fff;
-    text-decoration: none;
-    display: block;
+    color: #D6D6D6
+    text-decoration: none
+    display: block
 
   .toc-h1
     font-weight: bold
+  .toc-h1 a
+    color: #FFFFFF
 
   .toc-h2
     padding-left: 20px
@@ -108,15 +118,13 @@ pre
     margin: 0 auto
     padding: 0 20px
 
-    #main
-      padding-top: 1.2em
 
   body.with-examples
     padding: 0
 
     #main
       float: left;
-      background-color: #DADDE4
+      background-color: #EDEFF3
       margin: 0 0 0 50%
       max-width: none
       width: 50%
@@ -126,17 +134,32 @@ pre
         clear: both;
         width: 100%
 
-        > h1, > h2, > h3, > .intro, > .content
+        > h1, > h2, > h3
           float: left
           clear: left
           width: 50%
-          padding: 0 30px
+          padding: 40px 40px 0px 40px;
+
+        > .intro, > .content
+          float: left
+          clear: left
+          width: 50%
+          padding: 0px 40px
+
+        > h1
+          width:100%
+          background: url("images/bgH1.png") repeat-y center top
+          color:#25383D
+          padding: 20px 40px 20px 40px
+        > h2
+          //padding-top: 40px
+          
 
         > aside
           float: right
           clear: right
           width: 50%
-          padding: 0 30px
+          padding: 0 40px
 
       > section
         margin-left: -100%
