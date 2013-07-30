@@ -9,11 +9,42 @@ section.temp
   :markdown
     # About the API
 
-    TODO: sections covering the following:
+    **TODO: review & rework.**
 
-    - What the Pryv API is
-    - Basics of how it works
-    - What apps can be built on top of it
-    - Why we made it
-    - Links to concepts, guides and references for starting off
+    Pryv (TODO: link to front site) is a service to empower people with a simple, trusted space
+    where the many heterogeneous streams that make up their digital identity are reunited under
+    their control. It can store any type of timestamped data, modeling individual pieces as *events*
+    and contextualizing them into *streams*.
 
+    The Pryv API is an HTTP API that enables apps & services to interact with Pryv events and
+    streams.
+
+    ## The basics
+
+    Each user account is served by the Pryv API server which stores its data. There can be as many
+    servers as there are accounts.
+
+    Users collect, manipulate and view events on their account (or other users' accounts) via apps,
+    which are granted access to the parts of user data they need (e.g. specific streams). Apps
+    granted access to the same data and supporting the same event types are interoperable.
+
+    Stored data is private by default. Users share data by explicitly opening read-only or
+    collaborative accesses to specific parts of their data.
+
+    ## What you can build with it
+
+    Despite the name, which reflect our primary intent to stand for user privacy and control, you
+    can build mostly anything on top of the API. We recommend the use of standard streams and
+    event types to foster interoperability, but this is by no means an obligation.
+
+    What we *hope* you'll build, though, are apps and services that work to help people reclaim
+    control over their digital lives, cultivating simplicity, honesty, trust and human
+    relationships.
+
+    ## Why we made it
+
+    TODO
+
+    ## Links to concepts, guides and references for starting off
+
+    TODO
