@@ -16,17 +16,18 @@ section.temp
     their control. It can store any type of timestamped data, modeling individual pieces as *events*
     and contextualizing them into *streams*.
 
-    The Pryv API is an HTTP API that enables apps & services to interact with Pryv events and
-    streams.
+    The Pryv API is an HTTP and web sockets API that enables apps & services to interact with Pryv
+    events and streams.
 
     ## The basics
 
-    Each user account is served by the Pryv API server which stores its data. There can be as many
+    Each user account is served by the Pryv server which stores its data. There can be as many
     servers as there are accounts.
 
     Users collect, manipulate and view events on their account (or other users' accounts) via apps,
     which are granted access to the parts of user data they need (e.g. specific streams). Apps
-    granted access to the same data and supporting the same event types are interoperable.
+    can interoperate provided they support the same event types and are granted access to the same
+    data.
 
     Stored data is private by default. Users share data by explicitly opening read-only or
     collaborative accesses to specific parts of their data.
@@ -38,12 +39,12 @@ section.temp
     event types to foster interoperability, but this is by no means an obligation.
 
     What we *hope* you'll build, though, are apps and services that work to help people reclaim
-    control over their digital lives, cultivating simplicity, honesty, trust and human
-    relationships.
+    control over their digital lives, cultivating simplicity, honesty and trust, and placing human
+    relationships at the forefront.
 
     ## Why we made it
 
-    TODO
+    TODO (maybe this point belongs elsewhere?)
 
     ## Links to concepts, guides and references for starting off
 
