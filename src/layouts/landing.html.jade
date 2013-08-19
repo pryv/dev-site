@@ -2,7 +2,7 @@ doctype 5
 html.no-js(lang='en')
   head
     meta(charset='UTF-8')
-    title Pryv API - !{document.title || 'TODO'}
+    title Pryve API - !{document.title || 'TODO'}
     meta(name='description', content='TODO')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', type='text/css', href='bootstrap/css/bootstrap.min.css')
@@ -38,7 +38,7 @@ html.no-js(lang='en')
           span.icon-bar
           span.icon-bar
         .nav-collapse.collapse
-          ul.nav.pull-right
+          ul.nav
             //- TODO: generate this menu from data
             li
               a(href='about.html') About
@@ -66,8 +66,27 @@ html.no-js(lang='en')
             li
               a(href='#') Blog
         - var apiVersion = '0.5.2' // do not change this line without updating `update-api-version.bash`
-        .nav-header.pull-left
+        .nav-header.pull-right
           .version API version: <strong>#{apiVersion}</strong>
+
+
+    .masthead
+      .container
+        h1 Welcome Developer
+        img(src="images/logo-API-Big.png")
+
+    .container
+      .row-fluid
+        .span4
+          ## By nerds, for nerds
+          Built at Twitter by
+        .span4
+          ## By nerds, for nerds
+          Built at Twitter by
+        .span4
+          ## By nerds, for nerds
+          Built at Twitter by
+          
 
     #main-wrapper
       #main !{content}
