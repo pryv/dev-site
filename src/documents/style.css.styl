@@ -16,7 +16,10 @@ h5, h6
 p, blockquote, ul, ol, dl, li, table, pre
   margin: 0.75em 0;
 h1
-  padding: 20px 0 20px 0;
+  width:100%
+  background: #266C9C url("images/bgPaper.png") repeat center center;
+  color:#FFFFFF
+  padding: 20px 40px 20px 40px
 h2
   border-top: 1px solid #EEE
   padding: 40px 0px 0px 0px;
@@ -32,11 +35,11 @@ pre
   .brand
     display: block
     margin-left: 5px
-    width: 190px
+    width: 80px
     height: 40px
     padding: 0
     text-indent: -9000px
-    background: url(images/LogoPrYvDigital-API-Dev.png) no-repeat left center
+    background: url(images/LogoPrYvDigital-API.png) no-repeat left center
   li
     margin-top: 0 !important
     margin-bottom: 0 !important
@@ -80,6 +83,7 @@ pre
 
 #main-wrapper
   margin-top: 40px // for navbar
+
 
 #main
   > section
@@ -145,12 +149,21 @@ pre
 
 @media (min-width: 767px)
   html.js
+    body
+      #main-wrapper
+        width: 540px
     body.with-toc
       #main-wrapper
         margin-left: 200px
+        width: 540px;
       #toc
         display: block
-
+    body.with-toc.with-examples
+      #main-wrapper
+        width:auto
+    body.landing-page
+      #main-wrapper
+        width:auto
   body
     margin: 0 auto
     padding: 0 20px
@@ -187,8 +200,8 @@ pre
           padding: 0px 40px 40px      
         > h1
           width:100%
-          background: #F3F4F5 url("images/bgH1.png") repeat-y center top
-          color:#25383D
+          background: #266C9C url("images/bgPaper.png") repeat center center;
+          color:#FFFFFF
           padding: 20px 40px 20px 40px
         > h2
           //padding-top: 40px

@@ -6,7 +6,7 @@ html.no-js(lang='en')
     meta(name='description', content='TODO')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', type='text/css', href='bootstrap/css/bootstrap.min.css')
-    link(rel='stylesheet', type='text/css', href='github.css')
+    //link(rel='stylesheet', type='text/css', href='github.css')
     link(rel='stylesheet', type='text/css', href='highlight.css')
     link(rel='stylesheet', type='text/css', href='style.css')
     link(rel='stylesheet', type='text/css', href='bootstrap/css/bootstrap-responsive.min.css')
@@ -28,7 +28,7 @@ html.no-js(lang='en')
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-  - var bodyClass = (document.withTOC ? 'with-toc' : '') + (document.withExamples ? ' with-examples' : '')
+  - var bodyClass = (document.withTOC ? 'with-toc' : '') + (document.withExamples ? ' with-examples' : '') + (document.landingPage ? 'landing-page' : '')
   body(class=bodyClass)
     header#page-header.navbar.navbar-fixed-top
       .navbar-inner
@@ -38,7 +38,7 @@ html.no-js(lang='en')
           span.icon-bar
           span.icon-bar
         .nav-collapse.collapse
-          ul.nav.pull-right
+          ul.nav
             //- TODO: generate this menu from data
             li
               a(href='about.html') About
@@ -66,7 +66,7 @@ html.no-js(lang='en')
             li
               a(href='#') Blog
         - var apiVersion = '0.5.2' // do not change this line without updating `update-api-version.bash`
-        .nav-header.pull-left
+        .nav-header.pull-right
           .version API version: <strong>#{apiVersion}</strong>
 
     #main-wrapper
