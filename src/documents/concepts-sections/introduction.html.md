@@ -15,6 +15,8 @@ TODO
 
 TODO
 
+Note that as an open system, to provide true interoperability, Pryv does not set or enforce "ownership" of data per app. Provided the necessary permissions, data stored by a given app can be accessed and manipulated by any other app.
+
 
 ## Events
 
@@ -36,7 +38,6 @@ TODO: rewrite
 
 Events can be further classified and organized using **tags**. Tags offer typical flat, many-to-many organization for labeling and filtering events. One event can be tagged with multiple tags. For example, personal notes could be tagged as *fun* or *important*, or professional activities could be tagged as *prospection*, *meeting*, *development* or *support*.
 
-Note that as an open system, to provide true interoperability, Pryv does not set or enforce "ownership" of data per app. Provided the necessary permissions, data stored by a given app can be accessed and manipulated by any other app.
 See the [standard streams and tags](standard-structure.html) we encourage you to use when appropriate if you want your app to integrate nicely within the user's Pryv experience.
 
 
