@@ -9,18 +9,19 @@ section.temp
   :markdown
     # About the API
 
-    [Pryv](#TODO-link-to-front-site) is a service to empower people with a simple, trusted space
-    where the many heterogeneous streams that make up their digital identity are reunited under
-    their control. It can store any type of timestamped data, modeling individual pieces as *events*
-    and contextualizing them into *streams*.
+    [Pryv](#TODO-link-to-front-site) is a service empowering people with
+    a simple, trusted space where the many heterogeneous streams that make up their digital identity
+    are reunited under their control.
+    It handles any type of timestamped data, modeling individual pieces as *events* and
+    contextualizing them into *streams*.
 
     The Pryv API is an HTTP and web sockets API that enables apps & services to interact with Pryv
     events and streams.
 
     ## The basics
 
-    Each user account is served by the Pryv server which stores its data. There can be as many
-    servers as there are accounts.
+    Pryv is a decentralized service, with each user account served by the server storing its data.
+    There can be as many servers as there are accounts.
 
     Users collect, manipulate and view events on their account (or other users' accounts) via apps,
     which are granted access to the parts of user data they need (e.g. specific streams). Apps
@@ -30,20 +31,10 @@ section.temp
     Stored data is private by default. Users share data by explicitly opening read-only or
     collaborative accesses to specific parts of their data.
 
-    ## What you can build with it
-
-    Despite the name, which reflect our primary intent to stand for user privacy and control, you
-    can build mostly anything on top of the API. We recommend the use of standard streams and
-    event types to foster interoperability, but this is by no means an obligation.
-
-    What we *hope* you'll build, though, are apps and services that work to help people reclaim
-    control over their digital lives, cultivating simplicity, honesty and trust, and placing human
-    relationships at the forefront.
-
     ## Why we made it
 
     There is a definite convergence towards reuniting people's data into a single space and
-    towards more privacy and user control. This is happening, and for the good. On the one hand, new
+    towards more privacy and user control. This is happening, for the good. On the one hand, new
     apps and services now pop up regularly, each with their own angle on the matter
     (journaling, lifelogging/quantified self, travelling, etc.). On the other, initiatives such as
     [Tent](https://tent.io) aim to define the decentralized protocol that will bind all of this
@@ -54,12 +45,29 @@ section.temp
       with data decentralization (on the technical side) and full transparency and openness (on the
       business side).
     - We believe [our take on visualizing and browsing this data](#TODO) is appropriate and unique.
-    - We believe in the ultimate advent of an open protocol, but that app developers need a simple and
-      friendly platform to build on today. We also want to help shaping this future protocol by
-      example.
-    - We believe this can federate like-minded developers to build a new breed of apps on our platform
-      without having to attract them with hundreds of thousands of existing users.
-      (TODO: review and probably rephrase)
+    - We believe in the advent of an open protocol ultimately, and we will work to support that,
+      but we think app developers need a simple and friendly platform to build on today.
+      We also want to help shaping this future protocol by example.
+    - Building such a platform is what we do, and we do it upfront. We are not trying to pull out the
+      next great lifelogging or social app to get hundreds of thousands of users on board first,
+      as we think this would only distract us from our goal.
+      We believe that pursuing this goal passionately, openly and transparently has all the power we
+      need to federate a community of like-minded developers building a new breed of user-centric
+      apps.
+
+    ## What you can build with it
+
+    Despite the name, which reflect our primary intent to stand for user privacy and control, you
+    can build mostly anything on top of the API. We recommend the use of standard streams and
+    event types to foster interoperability, but this is by no means an obligation.
+    What we *hope* you'll build, though, are apps and services that work to help people reclaim
+    control over their digital lives, cultivating simplicity, honesty and trust, and putting human
+    relationships at the forefront.
+
+    But whatever you create will build on a fundamental principle, which can represent a
+    significant change of perspective: users own and control their data here. Pryv ensures that
+    apps are built with the sole focus of bringing true value to users, to avoid users
+    ever becoming the product again. *TODO: link to the future charter of Pryv app development*
 
     ## Next steps
 
