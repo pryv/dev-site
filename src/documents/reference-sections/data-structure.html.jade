@@ -13,14 +13,7 @@ section#data-structure
     h2 <a id="data-structure-event"></a>Event
     .content
       :markdown
-        Events can be period events, which are associated with a period of time, or mark events, which are just associated with a single point in time:
-
-        - Period events are used to track everything with a duration, like time spent drafting a project proposal, meeting with the customer or staying at a particular location.
-        - Mark events are used to track everything else, like a note, a log message, a GPS location, a temperature measurement, or a stock market asset value.
-
-        Period events carry a duration, mark events do not. Events always belong to an activity stream.
-
-        Fields:
+        See also: [core concepts](concepts.html#core-events).
 
         - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
         - `streamId` ([identity](#data-structure-identity)): The id of the belonging stream.
@@ -68,9 +61,7 @@ section#data-structure
     h2 <a id="data-structure-stream"></a>Stream
     .content
       :markdown
-        Activity streams represent organizational categories or data source for events. Streams follow a hierarchical tree structure: every stream can contain "child" streams (sub-streams).
-
-        Fields:
+        See also: [core concepts](concepts.html#core-streams).
 
         - `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the stream. Automatically generated if not set when creating the stream; **slugified if necessary**.
         - `name` (string): A name identifying the stream for users. The name must be unique among the stream's siblings in the streams tree structure.
@@ -113,9 +104,7 @@ section#data-structure
     h2 <a id="data-structure-access"></a>Access
     .content
       :markdown
-        An access defines a set of permissions on a user's activity data (streams and events). (See [how sharing works](concepts.html#sharing).)
-
-        Fields:
+        See also: [core concepts](concepts.html#core-accesses).
 
         - `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; **slugified if necessary**.
         - `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
@@ -135,9 +124,7 @@ section#data-structure
     h2 <a id="data-structure-bookmark"></a>Bookmark
     .content
       :markdown
-        Sharing bookmarks allow the user to keep track of accesses shared with her by other users.
-
-        Fields:
+        See also: [core concepts](concepts.html#core-subscriptions).
 
         - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the bookmark.
         - `name` (string): Unique. A name identifying the bookmark for the user.
