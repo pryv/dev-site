@@ -20,7 +20,7 @@ See also [available server locations](#TODO).
 
 ## Events
 
-Events are the primary units of content in Pryv. An event is a timestamped piece of typed data, possibly with one or more attached files. Depending on its type, an event can represent anything related to a particular time (picture, note, location, temperature measurement, etc.). It is possible for events to have a duration to represent a period instead of a single point in time. In the future we will also add support for references between events (allowing to model things such as albums, comments, etc.).
+Events are the primary units of content in Pryv. An event is a timestamped piece of typed data, possibly with one or more attached files. Depending on its type, an event can represent anything related to a particular time (picture, note, location, temperature measurement, etc.). It is possible for events to have a duration to represent a period instead of a single point in time. In the future we will also add support for references between events (allowing to model things such as albums, comments, versioning, etc.).
 
 See also [standard event types](event-types.html#directory).
 
