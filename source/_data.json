@@ -1,0 +1,45 @@
+{
+  "about": {
+    "title": "About",
+    "layout": "_layouts/default",
+    "withExamples": false,
+    "withTOC": false
+  },
+  "app-access": {
+    "title": "Another Example Title",
+    "layout": "_layouts/default",
+    "withExamples": false,
+    "withTOC": true
+  },
+  "concepts": {
+    "title": "Concepts",
+    "layout": "_layouts/default",
+    "withExamples": false,
+    "withTOC": true
+  },
+  "dev-index": {
+    "title": "Home",
+    "layout": "_layouts/default",
+    "withExamples": false,
+    "withTOC": false,
+    "landingPage": true
+  },
+  "event-types": {
+    "title": "Event types",
+    "layout": "_layouts/default",
+    "withExamples": false,
+    "withTOC": true
+  },
+  "reference": {
+    "title": "Reference",
+    "layout": "_layouts/default",
+    "withExamples": true,
+    "withTOC": true
+  },
+  "standard-structure": {
+    "title": "Standard data structure",
+    "layout": "_layouts/default",
+    "withExamples": false,
+    "withTOC": true
+  }
+}

@@ -1,9 +1,3 @@
----
-doc: app-access
-sectionId: custom
-sectionOrder: 10
----
-
 **THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update**
 
 # Custom

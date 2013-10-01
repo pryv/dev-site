@@ -9,28 +9,13 @@
     "developers",
     "API",
     "documentation",
-    "docpad"
+    "Harp"
   ],
   "author": "Pryv team",
   "dependencies": {
-    "docpad": "6.x",
-    "docpad-plugin-ghpages": "2.1.x",
-    "docpad-plugin-jade": "2.0.x",
-    "docpad-plugin-marked": "2.0.x",
-    "docpad-plugin-stylus": "2.0.x",
-    "docpad-plugin-highlightjs": "2.1.x",
-    "marked": "0.2.x"
+    "harp": "0.9.x"
   },
   "engines": {
-    "node": ">=0.4.0",
-    "docpad": "6.x"
-  },
-  "docpad.plugin": {
-    "marked": {
-      "markedOptions": {
-        "gfm": true,
-        "sanitize": false
-      }
-    }
+    "node": ">=0.8.0"
   }
 }

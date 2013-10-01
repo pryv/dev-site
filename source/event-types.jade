@@ -1,21 +1,13 @@
----
-name: 'event-types'
-title: 'Event types'
-layout: 'default'
-withExamples: false
-withTOC: true
----
-
 - var sourceFile = 'event-types/hierarchical-staging.json'
 - var flatFile = 'event-types/flat-staging.json'
 - var extrasFile = 'event-types/extras.json'
 
 -// load JSON files
-
-- var content = require('files/' + sourceFile)
+-// TODO: find a way to include JSON file
+- var content = require(sourceFile)
 - var classes = content.classes;
 
-- var extras = require('files/' + extrasFile) // TODO: use this?
+- var extras = require(extrasFile) // TODO: use this?
 
 -// extract numerical types (classes)
 

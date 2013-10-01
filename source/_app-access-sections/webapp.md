@@ -1,9 +1,3 @@
----
-doc: app-access
-sectionId: web-app
-sectionOrder: 2
----
-
 **THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update**
 
 # Web app (Javascript)

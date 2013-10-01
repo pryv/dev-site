@@ -1,0 +1,10 @@
+{
+  "flat": {
+    "layout": "../_layouts/event-types-flat",
+    "sourceFile": "hierarchical.json"
+  },
+  "flat-staging": {
+    "layout": "../_layouts/event-types-flat",
+    "sourceFile": "hierarchical-staging.json"
+  }
+}
