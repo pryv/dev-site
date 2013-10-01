@@ -22,6 +22,7 @@ section#data-structure
         - `type` (string): The type of the event. See the [event type directory](event-types.html#directory) for a list of standard types.
         - `content` (any type): Optional. The `type`-specific content of the event, if any.
         - `tags` (array of strings): Optional but always present in read items. The tags associated with the event.
+        - `references` (array of [identity](#data-structure-identity)): Optional but always present in read items. Other events associated with the event. *Note: event references aren't yet implemented in the API today.*
         - `description` (string): Optional. User description or comment for the event.
         - `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
           - `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
@@ -99,6 +100,23 @@ section#data-structure
           }
         ];
         ```
+
+  section
+    h2 <a id="data-structure-tag"></a>Tag
+    .content
+      :markdown
+        Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](concepts.html#core-tags).
+        *Note: typed tags aren't yet implemented in the API today.*
+
+        - `id` ([identity](#data-structure-identity)): Unique, read-only. The identifier for the tag.
+        - `type` (string): The type of the tag. See the [tag type directory](#TODO) for a list of standard types.
+        - `content` (any type): Optional. The `type`-specific content of the tag, if any.
+        - `clientData` ([additional item data](#data-structure-additional-data)): Optional. Additional client data for the tag.
+        - `trashed` (boolean): Optional. `true` if the tag is in the trash.
+        - `modified` ([timestamp](#data-structure-timestamp)): Read-only. The time the tag was last modified.
+    aside
+      :markdown
+        TODO: example
 
   section
     h2 <a id="data-structure-access"></a>Access
@@ -179,7 +197,7 @@ section#data-structure
       h3 <a id="data-structure-timestamp"></a>Timestamp
       .content
         :markdown
-          A positive floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not matter.
+          A positive floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not actually matter (but our servers do use standard Unix epoch time).
       aside
         :markdown
           Some examples of getting a valid timestamp in various environments:
