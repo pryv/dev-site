@@ -1,10 +1,10 @@
-{
+module.exports = {
   "flat": {
     "layout": "../_layouts/event-types-flat",
-    "sourceFile": "hierarchical.json"
+    "sourceData": require("./hierarchical.json")
   },
   "flat-staging": {
     "layout": "../_layouts/event-types-flat",
-    "sourceFile": "hierarchical-staging.json"
+    "sourceData": require("./hierarchical-staging.json")
   }
-}
+};

@@ -1,11 +1,11 @@
-# Pryv developers website
+# Pryv API (developers) website
 
-DocPad sources for the developers website: API reference, recommendations, guides, etc.
+API reference, recommendations, guides, etc.
 
 
 ## Temporary note
 
-A lot of files in `src/files` are only there for our temporary teaser page. This will have to be cleaned up when the full site get publication-ready.
+A lot of files in are only there for our temporary teaser page. This will have to be cleaned up when the full site get publication-ready.
 
 
 ## Writing documentation
@@ -20,26 +20,20 @@ Try to stick to the following guidelines when writing (these guidelines are mean
 
 ## Setting up the development environment
 
-Read, then execute `./scripts/setup-environment-dev.sh`.
+`make setup`
 
 
-## Generating the static website files with DocPad
+## Working & building
 
-- `./scripts/docpad.sh run` runs a small server serving the generated website, keeping the `out` folder up-to-date as source changes (for development)
-- `./scripts/docpad.sh generate` just generates the website from the source into the `out` folder
-
-Note: last time I checked DocPad does not cleanup obsolete files, so in case you remove some resources please make sure you don't leave garbage in the generated site.
-
-
-## Automatically updating the API version from a nearby `api-server` repo
-
-`scripts/update-api-version.bash` (assumes `../api-server/package.json` to exist from the present repo's root)
+- `make server` runs a small server serving the generated website during development development
+- `make compile` generates the website from the source into the `build` folder
+- `scripts/update-api-version.bash` automatically updates the API version from a nearby `api-server` repo (assuming `../api-server/package.json` to exist from the present repo's root)
 
 
 ## Publishing
 
-The website is published with GitHub pages on <http://pryv.github.io>. To update it, after making sure your changes in the sources are committed and the generated website files are up-to-date (see the instructions on generating the files with DocPad above), simply:
+The website is published with GitHub pages. To update it, after making sure your changes in the sources are committed and the generated website files are up-to-date (see the instructions on generating the files), simply:
 
-1. Go to the `out` folder (which is a working copy of our 'pryv.github.io' repo)
+1. Go to the `build` folder (which is a working copy of the appropriate repo branch)
 2. Commit the changes to the generated files
 3. Push (to 'master': `git push`)

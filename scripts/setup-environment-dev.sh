@@ -26,7 +26,7 @@ Syncing NVM...
 . ~/.nvm/nvm.sh # this line should be added to your .bash_profile as well
 nvm sync
 
-nodeVersion=v0.8.2
+nodeVersion=v0.8.23
 echo "
 Installing Node $nodeVersion if necessary...
 "
@@ -41,9 +41,9 @@ npm install
 if [ ! -d out ]
 then
   echo "
-Setting up 'out' folder for publishing to pryv.github.io...
+Setting up 'build' folder for publishing to GitHub pages...
 "
-  git clone git@github.com:pryv/pryv.github.io.git out
+  git clone -b gh-pages git@github.com:pryv/dev-site.git build
 fi
 
 echo "

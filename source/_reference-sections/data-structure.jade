@@ -1,0 +1,212 @@
+h1 Data structure
+.intro
+  :markdown
+    This section describes the structure of the different types of objects and values exchanged in the API.
+
+    Notes:
+
+    - "Read-only" = server-assigned, never set or modified by clients
+    - We should and will reformat items structure for quick visual parsing (e.g. using tables, or at least coloured labels for stuff like "optional")—for the moment we've consciously chosen low-formatting, quick-to-edit bullet lists
+
+section
+  h2 <a id="data-structure-event"></a>Event
+  .content
+    :markdown
+      See also: [core concepts](concepts.html#core-events).
+
+      - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
+      - `streamId` ([identity](#data-structure-identity)): The id of the belonging stream.
+      - `time` ([timestamp](#data-structure-timestamp)): The event's time. For period events, this is the time the event started.
+      - `duration` ([timestamp](#data-structure-timestamp) difference): Optional. If present, indicates that the event is a period event. **Running period events have a duration set to `null`**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
+      - `type` (string): The type of the event. See the [event type directory](event-types.html#directory) for a list of standard types.
+      - `content` (any type): Optional. The `type`-specific content of the event, if any.
+      - `tags` (array of strings): Optional but always present in read items. The tags associated with the event.
+      - `references` (array of [identity](#data-structure-identity)): Optional but always present in read items. Other events associated with the event. *Note: event references aren't yet implemented in the API today.*
+      - `description` (string): Optional. User description or comment for the event.
+      - `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
+        - `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
+        - `type` (string): The MIME type of the file.
+        - `size` (number): The size of the file, in bytes.
+      - `clientData` ([additional item data](#data-structure-additional-data)):  Optional. Additional client data for the event.
+      - `trashed` (boolean): Optional. `true` if the event is in the trash.
+      - `modified` ([timestamp](#data-structure-timestamp)): Read-only. The time the event was last modified.
+
+  aside
+    :markdown
+      #### Example
+
+      ```javascript
+      [
+        { "time": 1350365877.359, "description" : "Some pics", "id" : "event_0", "streamId" : null,
+          "tags": ["foraging", "funny"],
+          "type": "picture/attached",
+          "attachments" : {
+            "Gina": { "fileName": "gina.jpeg", "type": "image/jpeg", "size": 1236701 },
+            "Enzo": { "fileName": "enzo.jpeg", "type": "image/jpeg", "size": 1127465 }},
+            "modified" : 1350463077.359 },
+        { "time" : 1350369477.359, "duration" : 7140, "description": "A period of work",
+          "id" : "event_1", "streamId" : "free-veggies",
+          "tags": ["proposal"],
+          "type": "activity/pryv",
+          "modified" : 1350369477.359 },
+        { "time" : 1350373077.359, "description" : "A position", "id" : "event_2", "streamId" : null,
+          "tags": [],
+          "type": "position/wgs84",
+          "content": { "latitude": 40.714728, "longitude": -73.998672 },
+          "modified" : 1350373077.359 }
+      ]
+      ```
+
+section
+  h2 <a id="data-structure-stream"></a>Stream
+  .content
+    :markdown
+      See also: [core concepts](concepts.html#core-streams).
+
+      - `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the stream. Automatically generated if not set when creating the stream; **slugified if necessary**.
+      - `name` (string): A name identifying the stream for users. The name must be unique among the stream's siblings in the streams tree structure.
+      - `parentId` ([identity](#data-structure-identity)): Optional. The identifier of the stream's parent, if any. A value of `null` indicates that the stream has no parent (i.e. root stream).
+      - `singleActivity` (boolean): Optional. If specified and `true`, the system will ensure that period events in this stream and its children never overlap.
+      - `clientData` ([item additional data](#data-structure-additional-data)):  Optional. Additional client data for the stream.
+      - `children` (array of streams): Read-only. The stream's sub-streams, if any. This field cannot be set in requests creating a new streams: streams are created individually by design.
+      - `trashed` (boolean): Optional. `true` if the stream is in the trash.
+
+  aside
+    :markdown
+      #### Example
+
+      A stream structure for activities:
+
+      ```javascript
+      [
+        { "name": "Sport", "id": "sport", "parentId": null,
+          "children": [
+            { "name": "Jogging", "id": "jogging", "parentId": "sport", "children": [] },
+            { "name": "Bicycling", "id": "bicycling", "parentId": "sport", "children": [] }
+        ]},
+        { "name": "Work", "id": "work", "parentId": null,
+          "children": [
+            { "name": "Noble Works Co.", "id": "noble-works","parentId": "work", "children": [
+                { "name": "Last Be First", "id": "last-be-first","parentId": "noble-works", "children": [] },
+                { "name": "Big Tree", "id": "big-tree","parentId": "noble-works", "children": [] },
+                { "name": "Inner Light", "id": "inner-light","parentId": "noble-works", "children": [] }
+            ]},
+            { "name": "Freelancing", "id": "freelancing","parentId": "work", "children": [
+                { "name": "Funky Veggies", "id": "funky-veggies","parentId": "freelancing", "children": [] },
+                { "name": "Jojo Lapin & sons", "id": "jojo-lapin","parentId": "freelancing", "children": [] }
+            ]}
+          ]
+        }
+      ];
+      ```
+
+section
+  h2 <a id="data-structure-tag"></a>Tag
+  .content
+    :markdown
+      Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](concepts.html#core-tags).
+      *Note: typed tags aren't yet implemented in the API today.*
+
+      - `id` ([identity](#data-structure-identity)): Unique, read-only. The identifier for the tag.
+      - `type` (string): The type of the tag. See the [tag type directory](#TODO) for a list of standard types.
+      - `content` (any type): Optional. The `type`-specific content of the tag, if any.
+      - `clientData` ([additional item data](#data-structure-additional-data)): Optional. Additional client data for the tag.
+      - `trashed` (boolean): Optional. `true` if the tag is in the trash.
+      - `modified` ([timestamp](#data-structure-timestamp)): Read-only. The time the tag was last modified.
+  aside
+    :markdown
+      TODO: example
+
+section
+  h2 <a id="data-structure-access"></a>Access
+  .content
+    :markdown
+      See also: [core concepts](concepts.html#core-accesses).
+
+      - `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; **slugified if necessary**.
+      - `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
+      - `name` (string): Unique *per type and device name (if defined)*. The name identifying the access for the user. (Note that for personal and app access, the name is used as a technical identifier and not shown as-is to the user.)
+      - `deviceName` (string): Optional. Unique *per type and name (if defined)*. For app accesses only. The name of the client device running the app, if applicable.
+      - `permissions`: an array of stream permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
+        - `streamId` ([identity](#data-structure-identity)): The accessible stream's id, or `"*"` for "all streams". If the stream has child streams, they will be accessible too.
+        - `level` (`"read"`, `"contribute"` or `"manage"`): TThe level of access to the stream. With `"contribute"`, the access's token holder(s) can see and record events for the stream (and its child streams, if any); with `"manage"`, the access's token holder(s) can in addition create, modify and delete child streams.
+
+      A note about permissions: if the access defines conflicting permission levels (e.g. a stream set to "manage" but a child stream within it set to "contribute"), only the highest level is considered.
+
+  aside
+    :markdown
+      TODO: example
+
+section
+  h2 <a id="data-structure-bookmark"></a>Bookmark
+  .content
+    :markdown
+      See also: [core concepts](concepts.html#core-subscriptions).
+
+      - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the bookmark.
+      - `name` (string): Unique. A name identifying the bookmark for the user.
+      - `url` (string): The url pointing to the shared access's owning user's server. Not modifiable after creation.
+      - `accessToken` [identity](#data-structure-identity): The token of the shared access itself. Not modifiable after creation.
+  aside
+    :markdown
+      TODO: example
+
+section
+  h2 <a id="data-structure-additional-data"></a>Item additional data
+  .content
+    :markdown
+      An object (key-value map) for client apps to store additional data about the containing item (stream, event, etc.), such as a color, a reference to an associated icon, or other app-specific metadata.
+
+      ### Adding, updating and removing client data
+
+      When the containing item is updated, additional data fields can be added, updated and removed as follows:
+
+      - To add or update a field, just set its value; for example: `{"clientData": {"keyToAddOrUpdate": "value"}}`
+      - To delete a field, set its value to `null`; for example: `{"clientData": {"keyToDelete": null}}`
+
+      Fields you don't specify in the update are left untouched.
+
+      ### Naming convention
+
+      The convention is that each app names the keys it uses with an `"{app-id}:"` prefix. For example, an app with id "riki" would store its data in fields such as `"riki:key": "some value"`.
+
+section
+  h2 <a id="data-structure-error"></a>Error
+  .content
+    :markdown
+      Fields:
+
+      - `id` (string): Identifier for the error; complements the response's HTTP error code.
+      - `message` (string): A human-readable description of the error.
+      - `subErrors` (array of errors): Optional. Lists the detailed causes of the main error, if any.
+  aside
+    :markdown
+      TODO: example
+
+section
+  h2 Simple types
+
+  section
+    h3 <a id="data-structure-identity"></a>Item identity
+    .content
+      :markdown
+        A string value uniquely identifying an item of a given type (e.g. stream, event) for a given user. For some types of items ("structural" ones such as streams), it is allowed for the identity to be optionally set by API clients; otherwise the identity is generated by the server as an alphanumeric string.
+
+  section
+    h3 <a id="data-structure-timestamp"></a>Timestamp
+    .content
+      :markdown
+        A positive floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not actually matter (but our servers do use standard Unix epoch time).
+    aside
+      :markdown
+        Some examples of getting a valid timestamp in various environments:
+
+        - JavaScript: `Date.now() / 1000`
+        - PHP (5+): `microtime(true)`
+        - TODO: more examples
+
+  section
+    h3 <a id="data-structure-language-code"></a>Two-letter ISO language code
+    .content
+      :markdown
+        A two-letter string specifying a language following the ISO 639-1 standard (see [the related Wikipedia definition](http://en.wikipedia.org/wiki/ISO_639-1)).

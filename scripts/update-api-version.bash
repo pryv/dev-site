@@ -8,7 +8,7 @@ scriptsFolder=$(cd $(dirname "$0"); pwd)
 cd $scriptsFolder/..
 
 SOURCE_PATH=../api-server/package.json
-TARGET_PATH=src/layouts/default.html.jade
+TARGET_PATH=source/_layouts/default.jade
 
 if [ ! -f $SOURCE_PATH ]
 then

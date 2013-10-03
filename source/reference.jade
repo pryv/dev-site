@@ -1,4 +1,3 @@
-include reference-sections/basics.html.jade
-include reference-sections/activity.html.jade
-include reference-sections/socketio.html.jade
-include reference-sections/data-structure.html.jade
+- var sections = [ 'basics', 'activity', 'socketio', 'data-structure' ]
+each section in sections
+  section(id='#{section}')!= partial('_reference-sections/' + section)
