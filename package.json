@@ -13,7 +13,7 @@
   ],
   "author": "Pryv team",
   "dependencies": {
-    "harp": "0.9.x"
+    "harp": "git://github.com/attentif/harp.git"
   },
   "engines": {
     "node": ">=0.8.0"

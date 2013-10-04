@@ -1,18 +1,9 @@
-- var sourceFile = 'event-types/hierarchical-staging.json'
-- var flatFile = 'event-types/flat-staging.json'
-- var extrasFile = 'event-types/extras.json'
-
--// load JSON files
--// TODO: find a way to include JSON file
-- var content = require(sourceFile)
-- var classes = content.classes;
-
-- var extras = require(extrasFile) // TODO: use this?
+- var classes = sourceData.classes
 
 -// extract numerical types (classes)
 
 - var numericalClasses = {}
-- var classNames = Object.keys(classes);
+- var classNames = Object.keys(classes)
 each className in classNames
   - var classDef = classes[className]
   - var numberOnly = true
@@ -28,7 +19,7 @@ each className in classNames
     - delete classes[className]
 
 
-.version Directory version: <strong>#{content.version}</strong>
+.version Directory version: <strong>#{sourceData.version}</strong>
 
 section#about
   h1 Event types
@@ -69,8 +60,8 @@ section#about
 
     This directory is available as a JSON file for automated processing:
 
-    - [Hierarchical structure](!{sourceFile}): `classes['{class}'].formats['{format}']`
-    - [Flat structure](!{flatFile}): `types['{class}/{format}']`
+    - [Hierarchical structure](!{sourcePath}): `classes['{class}'].formats['{format}']`
+    - [Flat structure](!{flatPath}): `types['{class}/{format}']`
 
     ## Submitting new types to the directory
 

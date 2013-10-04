@@ -30,7 +30,7 @@ section#about
 
     ## JSON file
 
-    This list is also available as a [JSON file](standard-structure/channels-folders.json).
+    This list is also available as a [JSON file](!{sourcePath}).
 
 section#structure
   h1 THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update
@@ -58,10 +58,8 @@ section#structure
     - else
       | No examples... yet.
 
-  -// TODO: find a way to include JSON file
-  - var content = require('standard-structure/channels-folders.json')
-  - var version = content.version.version
-  - var channels = content['channels']
+  - var version = sourceData.version.version
+  - var channels = sourceData['channels']
   - each channel in channels
     .channel
       h2

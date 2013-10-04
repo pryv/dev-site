@@ -18,7 +18,7 @@ section
       - `streamId` ([identity](#data-structure-identity)): The id of the belonging stream.
       - `time` ([timestamp](#data-structure-timestamp)): The event's time. For period events, this is the time the event started.
       - `duration` ([timestamp](#data-structure-timestamp) difference): Optional. If present, indicates that the event is a period event. **Running period events have a duration set to `null`**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
-      - `type` (string): The type of the event. See the [event type directory](event-types.html#directory) for a list of standard types.
+      - `type` (string): The type of the event. See the [event type directory](event-typez.html#directory) for a list of standard types.
       - `content` (any type): Optional. The `type`-specific content of the event, if any.
       - `tags` (array of strings): Optional but always present in read items. The tags associated with the event.
       - `references` (array of [identity](#data-structure-identity)): Optional but always present in read items. Other events associated with the event. *Note: event references aren't yet implemented in the API today.*

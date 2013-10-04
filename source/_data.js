@@ -1,4 +1,4 @@
-{
+module.exports = {
   "about": {
     "title": "About",
     "layout": "_layouts/default",
@@ -24,9 +24,13 @@
     "withTOC": false,
     "landingPage": true
   },
-  "event-types": {
+  // TODO: rename to "event-types" when this issue fixed: https://github.com/sintaxi/harp/issues/106
+  "event-typez": {
     "title": "Event types",
     "layout": "_layouts/default",
+    "sourcePath": "event-types/hierarchical-staging.json",
+    "flatPath": "event-types/flat-staging.json",
+    "sourceData": require("./event-types/hierarchical-staging.json"),
     "withExamples": false,
     "withTOC": true
   },
@@ -39,7 +43,10 @@
   "standard-structure": {
     "title": "Standard data structure",
     "layout": "_layouts/default",
+    // TODO: rename subfolder to "standard-structure" when abovementioned issue fixed
+    "sourcePath": "standard-struct/channels-folders.json",
+    "sourceData": require("./standard-struct/channels-folders.json"),
     "withExamples": false,
     "withTOC": true
   }
-}
+};
