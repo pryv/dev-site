@@ -117,45 +117,40 @@ pre
     text-decoration: none
     display: block
 
-  .toc-h1
-    font-weight: bold
-  .toc-h1 a
-    color: #333
-  .toc-active a
-    color: #FFF
-
-  .toc-h2
-    padding-left: 20px
-    font-size: 0.9em
-
-  .toc-h3
-    padding-left: 30px
-    font-size: 0.85em
-
-  .toc-active
-    background: #336699;
-    box-shadow: inset -5px 0px 10px -5px #000;
-
-@media (min-width: 767px)
-  html.js
-    body
-      #main-wrapper
-        //width: 540px
-    body.with-toc
+.with-toc
       #toc
         display: none // only shown if js and enough width
         height: 100%;
         position: fixed;
         top:0
-        background: #EDEFF3;
         width: auto;
-        padding-top: 20px;
         color: #fff;
         overflow: scroll;
         margin-top: 40px;
-        font-family: museo_500regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
-        font-weight: 300;
+        font-family: museo_300regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
         width: 220px;
+        padding: 20px 20px 0 0
+      .toc-h1
+        font-family: museo_700regular
+        padding: 2px 5px;
+      .toc-h1 a
+        color: #333
+      .toc-h2
+        padding-left: 20px
+      .toc-h2 a
+        color:#a2a2a2
+      .toc-h3
+        padding-left: 30px
+        /*font-size: 0.85em*/
+      .toc-active
+        background: #336699;
+      .toc-active a
+        color: #FFF
+
+
+@media (min-width: 767px)
+  html.js
+    body.with-toc
       #main
         margin-left: 220px
         //width: 540px;
@@ -169,14 +164,14 @@ pre
         left: 0px;
         height: 100%;
         position: fixed;
-        background: #EDEFF3;
         width: 200px;
-        padding-top: 20px;
+        padding: 20px 0 20px;
         color: #fff;
         overflow: scroll;
         margin-top: 40px;
-        font-family: museo_500regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
-        font-weight: 300;
+        /*font-family: museo_500regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
+        font-weight: 300;*/
+        border-right: 1px solid #EEE;
       #main-wrapper
         margin-left: 200px
         width:auto
