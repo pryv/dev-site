@@ -9,11 +9,12 @@ body
 // override GitHub's awful default margins
 h1, h2, h3, h4, h5
   font-family: museo_300regular
+  color: #000
 h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
   margin-top: 0
 h5, h6
   margin: 1.5em 0 0.75em
-p, blockquote, ul, ol, dl, li, table, pre
+blockquote, ul, ol, dl, table, pre
   margin: 0.75em 0;
 h1
   width:100%
@@ -25,13 +26,31 @@ h2
   padding: 40px 0px 0px 0px;
   color: #333;
 h3
-  //border-top: 1px solid #EEE
-  color:#056397
   text-transform:uppercase
+  font-size: 17.5px;
 pre
   border: 0 none
   padding: 0
 
+dl
+  width: 41.1em;
+  margin: 2em 0;
+  padding: 0;
+  overflow: hidden;
+
+dt
+  width: 15em;
+  float: left;
+  margin: 0 0 0 0;
+  padding: .5em;
+  text-align: right;
+
+dd
+  float: left;
+  width: 24em;
+  margin: 0 0 0 0;
+  padding: .5em;
+  
 .navbar
   .brand
     display: block
@@ -109,9 +128,9 @@ pre
     list-style: none;
 
   li
-    margin: 0
-    padding: 5px 10px
-    line-height: 1.2em
+    //margin: 0
+    padding: 10px 0 10px 20px;
+    //line-height: 1.2em
 
 .with-toc
       #toc
@@ -126,6 +145,7 @@ pre
         font-family: museo_300regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
         width: 220px;
         padding: 20px 20px 0 0
+        font-size: 90%;
       .toc-h1
         font-family: museo_700regular
         padding: 2px 5px;
@@ -177,6 +197,7 @@ pre
         margin: 0 0 0 50%
         max-width: none
         width: 50%
+        border-left: 1px solid #E7E7E7;
     body.landing-page
       #main-wrapper
         width:auto
