@@ -8,12 +8,13 @@ body
 
 // override GitHub's awful default margins
 h1, h2, h3, h4, h5
-  font-family: museo_500regular
+  font-family: museo_300regular
+  color: #000
 h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
   margin-top: 0
 h5, h6
   margin: 1.5em 0 0.75em
-p, blockquote, ul, ol, dl, li, table, pre
+blockquote, ul, ol, dl, table, pre
   margin: 0.75em 0;
 h1
   width:100%
@@ -23,14 +24,29 @@ h1
 h2
   border-top: 1px solid #EEE
   padding: 40px 0px 0px 0px;
+  color: #333;
 h3
-  //border-top: 1px solid #EEE
-  color:#056397
   text-transform:uppercase
+  font-size: 17.5px;
 pre
   border: 0 none
   padding: 0
 
+dl
+  margin: 2em 0;
+  padding: 0;
+
+dt
+  width: 15em;
+  float: left;
+  margin: 0 0 0 0;
+  padding: .5em;
+  text-align: right;
+
+dd
+  margin: 0 0 0 0;
+  padding: .5em;
+  
 .navbar
   .brand
     display: block
@@ -108,54 +124,45 @@ pre
     list-style: none;
 
   li
-    margin: 0
-    padding: 5px 10px
-    line-height: 1.2em
+    //margin: 0
+    padding: 10px 0 10px 20px;
+    //line-height: 1.2em
 
-  a
-    color: #7e7e7e
-    text-decoration: none
-    display: block
-
-  .toc-h1
-    font-weight: bold
-  .toc-h1 a
-    color: #333
-  .toc-active a
-    color: #FFF
-
-  .toc-h2
-    padding-left: 20px
-    font-size: 0.9em
-
-  .toc-h3
-    padding-left: 30px
-    font-size: 0.85em
-
-  .toc-active
-    background: #336699;
-    box-shadow: inset -5px 0px 10px -5px #000;
-
-@media (min-width: 767px)
-  html.js
-    body
-      #main-wrapper
-        //width: 540px
-    body.with-toc
+.with-toc
       #toc
         display: none // only shown if js and enough width
         height: 100%;
         position: fixed;
         top:0
-        background: #EDEFF3;
         width: auto;
-        padding-top: 20px;
         color: #fff;
         overflow: scroll;
         margin-top: 40px;
-        font-family: museo_500regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
-        font-weight: 300;
+        font-family: museo_300regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
         width: 220px;
+        padding: 20px 20px 0 0
+        font-size: 90%;
+      .toc-h1
+        font-family: museo_700regular
+        padding: 2px 5px;
+      .toc-h1 a
+        color: #333
+      .toc-h2
+        padding-left: 20px
+      .toc-h2 a
+        color:#a2a2a2
+      .toc-h3
+        padding-left: 30px
+        /*font-size: 0.85em*/
+      .toc-active
+        background: #336699;
+      .toc-active a
+        color: #FFF
+
+
+@media (min-width: 767px)
+  html.js
+    body.with-toc
       #main
         margin-left: 220px
         //width: 540px;
@@ -169,14 +176,14 @@ pre
         left: 0px;
         height: 100%;
         position: fixed;
-        background: #EDEFF3;
         width: 200px;
-        padding-top: 20px;
+        padding: 20px 0 20px;
         color: #fff;
         overflow: scroll;
         margin-top: 40px;
-        font-family: museo_500regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
-        font-weight: 300;
+        /*font-family: museo_500regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
+        font-weight: 300;*/
+        border-right: 1px solid #EEE;
       #main-wrapper
         margin-left: 200px
         width:auto
@@ -186,6 +193,7 @@ pre
         margin: 0 0 0 50%
         max-width: none
         width: 50%
+        border-left: 1px solid #E7E7E7;
     body.landing-page
       #main-wrapper
         width:auto
