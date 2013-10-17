@@ -55,6 +55,15 @@ section
     :markdown
       Because we can't fathom out the crazy rationale behind [HTTP access control (CORS) rules](https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS), we offer web apps an alternative way to place POST, PUT and DELETE requests in the API by using `application/x-www-form-urlencoded` POST requests with the following fields (all optional):
 
+      <dl>
+        <dt>`_method`</dt>
+          <dd>The HTTP override method to use (usually `PUT` or `DELETE`; `POST` is used if not set).</dd>
+        <dt>`_auth`</dt>
+          <dd>The `Authorization` header value (alternative to sending the header itself).</dd>
+        <dt>`_json`</dt>
+          <dd>Considered as the JSON request body if set (overriding all other body content, if any).</dd>
+      </dl>
+
       - `_method`: The HTTP override method to use (usually `PUT` or `DELETE`; `POST` is used if not set).
       - `_auth`: The `Authorization` header value (alternative to sending the header itself).
       - `_json`: Considered as the JSON request body if set (overriding all other body content, if any).
