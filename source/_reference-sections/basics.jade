@@ -64,6 +64,24 @@ section
           <dd>Considered as the JSON request body if set (overriding all other body content, if any).</dd>
       </dl>
 
+    table.definitions
+      tr
+        th: :markdown
+          `_method`
+        td: :markdown
+          The HTTP override method to use (usually `PUT` or `DELETE`; `POST` is used if not set).
+      tr
+        th: :markdown
+          `_auth`
+        td: :markdown
+          The `Authorization` header value (alternative to sending the header itself).
+      tr
+        th: :markdown
+          `_json`
+        td: :markdown
+          Considered as the JSON request body if set (overriding all other body content, if any).
+
+    :markdown
       - `_method`: The HTTP override method to use (usually `PUT` or `DELETE`; `POST` is used if not set).
       - `_auth`: The `Authorization` header value (alternative to sending the header itself).
       - `_json`: Considered as the JSON request body if set (overriding all other body content, if any).
