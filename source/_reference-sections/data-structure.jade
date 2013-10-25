@@ -123,6 +123,7 @@ section
     :markdown
       See also: [core concepts](concepts.html#core-accesses).
 
+      - `id` ([identity](#data-structure-identity)): Unique, read-only. The identifier for the access.
       - `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; **slugified if necessary**.
       - `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
       - `name` (string): Unique *per type and device name (if defined)*. The name identifying the access for the user. (Note that for personal and app access, the name is used as a technical identifier and not shown as-is to the user.)

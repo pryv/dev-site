@@ -1,8 +1,4 @@
----
-# commented out to exclude registration from the reference: doc: reference
-sectionId: admin
-sectionOrder: 3
----
+# TODO: update for API v0.6 (no separate "admin" methods anymore) and integrate into main reference
 
 # Administration methods
 

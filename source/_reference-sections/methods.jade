@@ -1,7 +1,7 @@
 h1 API methods
 .intro
   :markdown
-    TODO: introductory text
+    Not all methods are available over Socket.IO for the moment; for those that are, we indicate the command id next to the HTTP verb and path.
 
 section
   h2 Preliminary information
@@ -29,26 +29,38 @@ section
     h3 Common errors
     .content
       :markdown
-        Here are errors commonly returned for requests:
+        #### Bad request `400`
 
-        - `400 Bad Request`:
-          - Id `invalid-request-structure`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
-          - Id `invalid-parameters-format`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
-          - Id `unknown-event`: The referenced event(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
-          - Id `unknown-stream`: The referenced stream(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
-          - Id `unknown-tag`: The referenced typed tag(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
-        - `401 Unauthorized`, id `invalid-access-token`: The data access token is missing or invalid.
-        - `403 Forbidden`: The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
-        - `404 Not Found`:
-          - Id `unknown-event`: The event can't be found.
-          - Id `unknown-stream`: The activity stream can't be found.
-          - Id `unknown-tag`: The tag can't be found.
-          - Id `unknown-attachment`: The attached file can't be found for the specified event.
+        - `invalid-request-structure`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
+        - `invalid-parameters-format`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
+        - `unknown-event`: The referenced event(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
+        - `unknown-stream`: The referenced stream(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
+        - `unknown-tag`: The referenced typed tag(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
+
+        #### Unauthorized `401`
+
+        - `invalid-access-token`: The data access token is missing or invalid.
+
+        #### Forbidden `403`
+
+        The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
+
+        #### Not found `404`
+
+        - `unknown-event`: The event can't be found.
+        - `unknown-stream`: The activity stream can't be found.
+        - `unknown-tag`: The tag can't be found.
+        - `unknown-attachment`: The attached file can't be found for the specified event.
 
         And a couple of others, related to the status of the user's account:
 
-        - `301 Moved`, id `user-account-relocated`: The user has relocated her account to another Pryv server. Both the `Location` header and the error's `data` contain the equivalent URL pointing to the physical server now hosting the user's account. Note that this error can only occur between the moment the account is relocated and the moment your DNS is updated with the new server. So we're stretching the HTTP convention a little, in that the returned URL should not be used permanently (only until `{username}.pryv.io` points to the correct server again). You can decide whether you keep it for the duration of the session (if you have such a thing), for N hours, etc. (TODO: review and detail more if needed)
-        - `402 Payment Required`, id `user-intervention-required`: We cannot serve the request at the moment, because the user's account has exceeded the limits of its plan. The user must log into Pryv to fix her account.
+        #### Moved `301`
+
+        - `user-account-relocated`: The user has relocated her account to another Pryv server. Both the `Location` header and the error's `data` contain the equivalent URL pointing to the physical server now hosting the user's account. Note that this error can only occur between the moment the account is relocated and the moment your DNS is updated with the new server. So we're stretching the HTTP convention a little, in that the returned URL should not be used permanently (only until `{username}.pryv.io` points to the correct server again). You can decide whether you keep it for the duration of the session (if you have such a thing), for N hours, etc.
+
+        #### Payment required `402`
+
+        - `user-intervention-required`: We cannot serve the request at the moment, because the user's account has exceeded the limits of its plan. The user must log into Pryv to fix her account.
 
 section
   h2 Events
@@ -66,17 +78,79 @@ section
 
         #### Parameters
 
-        - `fromTime` ([timestamp](#data-structure-timestamp)): Optional. The start time of the timeframe you want to retrieve events for. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
-        - `toTime` ([timestamp](#data-structure-timestamp)): Optional. The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
-        - `streams` (array of [identity](#data-structure-identity)): Optional. If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
-        - `tags` (array of strings): Optional. If set, only events assigned to all of the listed tags will be returned.
-        - `running` (boolean): Optional. If `true`, only running period events will be returned.
-        - `sortAscending` (`true` or `false`): If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
-        - `skip` (number): Optional. The number of items to skip in the results.
-        - `limit` (number): Optional. The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
-        - `state` (`default`, `trashed` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-        - `modifiedSince` ([timestamp](#data-structure-timestamp)): Optional. If specified, only events modified since that time will be returned.
+      table.definitions
+        tr
+          th: :markdown
+            `fromTime`
+          td: :markdown
+            <span class="type">[timestamp](#data-structure-timestamp)</span>
+            <span class="label optional">optional</span><br>
+            The start time of the timeframe you want to retrieve events for. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
+        tr
+          th: :markdown
+            `toTime`
+          td: :markdown
+            <span class="type">[timestamp](#data-structure-timestamp)</span>
+            <span class="label optional">optional</span><br>
+            The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
+        tr
+          th: :markdown
+            `streams`
+          td: :markdown
+            <span class="type">array of [identity](#data-structure-identity)</span>
+            <span class="label optional">optional</span><br>
+            If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
+        tr
+          th: :markdown
+            `tags`
+          td: :markdown
+            <span class="type">array of strings</span>
+            <span class="label optional">optional</span><br>
+            If set, only events assigned to all of the listed tags will be returned.
+        tr
+          th: :markdown
+            `running`
+          td: :markdown
+            <span class="type">boolean</span>
+            <span class="label optional">optional</span><br>
+            If `true`, only running period events will be returned.
+        tr
+          th: :markdown
+            `sortAscending`
+          td: :markdown
+            <span class="type">`true`|`false`</span>
+            <span class="label optional">optional</span><br>
+            If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
+        tr
+          th: :markdown
+            `skip`
+          td: :markdown
+            <span class="type">number</span>
+            <span class="label optional">optional</span><br>
+            The number of items to skip in the results.
+        tr
+          th: :markdown
+            `limit`
+          td: :markdown
+            <span class="type">number</span>
+            <span class="label optional">optional</span><br>
+            The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
+        tr
+          th: :markdown
+            `state`
+          td: :markdown
+            <span class="type">`default`|`trashed`|`all`</span>
+            <span class="label optional">optional</span><br>
+            Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+        tr
+          th: :markdown
+            `modifiedSince`
+          td: :markdown
+            <span class="type">[timestamp](#data-structure-timestamp)</span>
+            <span class="label optional">optional</span><br>
+            If specified, only events modified since that time will be returned.
 
+      :markdown
         #### Successful response: `200 OK`
 
         An array of [events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
