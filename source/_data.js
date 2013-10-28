@@ -32,7 +32,8 @@ module.exports = {
     "flatPath": "event-types/flat.json",
     "sourceData": require("./event-types/hierarchical.json"),
     "withExamples": false,
-    "withTOC": true
+    "withTOC": true,
+    "tocSelectors": "h1,h2,h3"
   },
   "reference": {
     "title": "Reference",

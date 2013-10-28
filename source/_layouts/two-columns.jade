@@ -45,7 +45,11 @@ html.no-js(lang='en')
               a(href='about.html') About
             li
               a(href='concepts.html') Concepts
-            li.dropdown
+            li
+              a(href='reference.html') API reference
+            li
+              a(href='event-typez.html') Event types
+            //li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
               //- TODO: make dropdown menu work...
               ul.dropdown-menu
@@ -53,7 +57,7 @@ html.no-js(lang='en')
                   a(href='#') Getting started
                 li
                   a(href='#') Data modeling
-            li.dropdown
+            //li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>
               ul.dropdown-menu
                 li
@@ -64,9 +68,9 @@ html.no-js(lang='en')
                   a(href='standard-structure.html') Standard data structure
                 li
                   a(href='app-access.html') App authorization
-            li
+            //li
               a(href='#') Blog
-        - var apiVersion = '0.5.2' // do not change this line without updating `update-api-version.bash`
+        - var apiVersion = '0.6.0' // do not change this line without updating `update-api-version.bash`
         .nav-header.pull-right
           .version API version: <strong>#{apiVersion}</strong>
 
@@ -100,7 +104,7 @@ html.no-js(lang='en')
                 });
 
                 function slugify(text) {
-                  return text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+                  return text.toLowerCase().replace(/[^\w- ]+/g,'').replace(/ +/g,'-');
                 }
               });
         .span9
