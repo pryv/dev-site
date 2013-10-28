@@ -28,3 +28,6 @@ compile: retrieve-types
 	@echo ""
 	@echo "REMINDER: make sure the API version is up-to-date (see scripts/update-api-version.bash)"
 	@echo ""
+
+publish: compile
+	@cd build;git add .;git add -u .;git commit -m "Updated generated files";git push origin gh-pages

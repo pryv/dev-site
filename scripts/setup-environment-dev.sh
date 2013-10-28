@@ -38,7 +38,7 @@ Installing Node modules from 'package.json' if necessary...
 "
 npm install
 
-if [ ! -d out ]
+if [ ! -d build ]
 then
   echo "
 Setting up 'build' folder for publishing to GitHub pages...
