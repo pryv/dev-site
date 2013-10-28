@@ -1,4 +1,4 @@
-# TODO: update for API v0.6 (no separate "admin" methods anymore) and integrate into main reference
+# TODO: update for API v0.6 (see `api-server/CHANGELOG.md`; no separate "admin" methods anymore) and integrate into main reference
 
 # Administration methods
 
