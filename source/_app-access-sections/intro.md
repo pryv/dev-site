@@ -18,11 +18,11 @@ See the examples below, as well as the `permissions` property in the [access dat
 
 #### Example app permissions
 
-A "contribute" access on the "diary" channel:
+A "contribute" access on the "diary" stream:
 
 ```json
 [{
-  "channelId" : "diary",
+  "streamId" : "diary",
   "defaultName" : "Journal",
   "level" : "contribute"
 }]
@@ -32,22 +32,21 @@ A "manage" access to the "notes" and "mood" folders of the "diary" channel:
 
 ```json
 [{
-  "channelId" : "diary",
-  "defaultName" : "Journal",
-  "level" : "read",
-  "folderPermissions" : [
-    {
-      "folderId" : "notes",
-      "level" : "manage",
-      "defaultName" : "Notes"
-    },
-    {
-      "folderId" : "mood",
-      "level" : "manage",
-      "defaultName" : "Mood"
-    }
-  ]
+   "streamId" : "diary",
+   "defaultName" : "Journal",
+   "level" : "read",
+  },
+  {
+   "streamId" : "notes",
+   "level" : "manage",
+   "defaultName" : "Notes"
+   },
+   {
+    "streamId" : "mood",
+    "level" : "manage",
+    "defaultName" : "Mood"
+   }
 }]
 ```
 
-**About the `defaultName` property**: `defaultName` is the name you'd like the channel or folder to be created with if it does not exist, and should be in the language of the user. The property is mandatory.
+**About the `defaultName` property**: `defaultName` is the name you'd like the stream to be created with if it does not exist, and should be in the language of the user. The property is mandatory.

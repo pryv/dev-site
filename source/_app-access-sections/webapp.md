@@ -1,5 +1,3 @@
-**THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update**
-
 # Web app (Javascript)
 
 Obtaining an access token for your web app.
@@ -10,7 +8,7 @@ Obtaining an access token for your web app.
 * include the following script in your page:
 	- Staging version (recommended at the moment):
 	```html
-	<script type="text/javascript" src="https://sw.rec.la:2443/access/v1/pryv-sdk.js"></script>
+	<script type="text/javascript" src="https://sw.pryv.li:2443/access/v1/pryv-sdk.js"></script>
 	```
 	- Production version:
 	```html
@@ -23,15 +21,15 @@ Obtaining an access token for your web app.
 * construct a `settings` JSON object
 * call `Pryv.Access.setup(settings)`
 
-For a more fleshed-out example look at the source code of [https://sw.rec.la/access/demo.html](https://sw.rec.la:2443/access/demo.html).
+For a more fleshed-out example look at the source code of [https://sw.pryv.li/access/demo.html](https://sw.pryv.li:2443/access/demo.html).
 
 <a name="webapp.test"></a>Or make your own tests from the page:
-[https://sw.rec.la:2443/access/test.html](https://sw.rec.la:2443/access/test.html)
+[https://sw.pryv.li:2443/access/test.html](https://sw.pryv.li:2443/access/test.html)
 
 
 ### Example: Minimalistic
 
-This app requests a "contribute" access to the "diary" channel, using the PrYv button and a popup for sign-in.
+This app requests a "contribute" access to the "diary" stream, using the PrYv button and a popup for sign-in.
 
 **TODO: review this code**
 
@@ -51,7 +49,7 @@ This app requests a "contribute" access to the "diary" channel, using the PrYv b
 					appToken + " language:" + languageCode);
 		}
 
-		var requestedPermissions = [{"channelId" : "diary",
+		var requestedPermissions = [{"streamId" : "diary",
 									"defaultName" : "Diary", // this name is localized
 	                                     "level" : "contribute"}];
 
@@ -89,7 +87,7 @@ The **settings** object supports the following parameters:
 
   - `requestingAppId` (string): Unique. Given by PrYv identifier for this app. It will be the key for the requested set of permission after user agreement.
   - `languageCode`(2 characters ISO 639-1 Code): Optional. If known the current language used by the user. This will influence the signin and register interface language.
-  - `requestedPermissions` (object): The requested set of permissions to access user's channels & folders.
+  - `requestedPermissions` (object): The requested set of permissions to access user's streams.
   - `returnURL` (url or 'auto<extra>'): Optional. If you don't want (or can't have) the popup signin-process and prefer set a returnURL. This URL will be called at the en of the SIGNIN process.This provides a better user experience on mobile devices. Details: [settings.returnURL](#webapp.returnURL)
   - `spanButtonID` (string) Optional. The id of a `<span />` element in the DOM of your web page. Details: [settings.spanButtonID](#webapp.spanButtonID)
   - `callbacks` (functionS): called on each step of the sign-in process. Most of them are optional if you decided to rely on PrYv signin Button. All are optional excepted "accepted". Details: [settings.callbacks](#webapp.callbacks)
