@@ -1,6 +1,6 @@
 // can't use nib for now because of DocPad plugin settings bug
 //@import 'nib'
-body 
+body
     font-family:Helvetica Neue
     color: #7E7E7E
 *
@@ -31,6 +31,17 @@ h3
 pre
   border: 0 none
   padding: 0
+code
+  color: #333
+
+table.definitions
+  th
+    padding-right: 0.8em
+    vertical-align: top
+    text-align: right
+    font-weight: normal
+  table.definitions
+    margin-top: 0
 
 dl
   margin: 2em 0;
@@ -46,7 +57,7 @@ dt
 dd
   margin: 0 0 0 0;
   padding: .5em;
-  
+
 .navbar
   .brand
     display: block
@@ -125,7 +136,9 @@ dd
 
   li
     //margin: 0
-    padding: 10px 0 10px 20px;
+    margin-left: 2.4em
+    padding: 10px 0 10px 0.4em
+    list-style-type: square
     //line-height: 1.2em
 
 .with-toc
@@ -140,20 +153,21 @@ dd
         margin-top: 40px;
         font-family: museo_300regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
         width: 220px;
-        padding: 20px 20px 0 0
+        padding: 20px 20px 50px 0
         font-size: 90%;
       .toc-h1
         font-family: museo_700regular
         padding: 2px 5px;
-      .toc-h1 a
-        color: #333
+        a
+          color: #333
       .toc-h2
         padding-left: 20px
-      .toc-h2 a
-        color:#a2a2a2
+        a
+          color:#a2a2a2
       .toc-h3
         padding-left: 30px
-        /*font-size: 0.85em*/
+        a
+          color:#a2a2a2
       .toc-active
         background: #336699;
       .toc-active a
@@ -223,7 +237,7 @@ dd
           float: left
           clear: left
           width: 50%
-          padding: 0px 40px 40px      
+          padding: 0px 40px 40px
         > h1
           width:100%
           background: #266C9C url("images/bgPaper.png") repeat center center;
@@ -231,7 +245,7 @@ dd
           padding: 20px 40px 20px 40px
         > h2
           //padding-top: 40px
-          
+
 
         > aside
           float: right

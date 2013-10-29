@@ -2,8 +2,9 @@
 
 -// extract numerical types (classes)
 
-- var numericalClasses = {}
 - var classNames = Object.keys(classes)
+- var complexClasses = {}
+- var numericalClasses = {}
 each className in classNames
   - var classDef = classes[className]
   - var numberOnly = true
@@ -13,22 +14,16 @@ each className in classNames
     if formatDef.type !== 'number'
       - numberOnly = false
       - break
-
   if numberOnly
     - numericalClasses[className] = classDef
-    - delete classes[className]
+  else
+    - complexClasses[className] = classDef
 
-
-.version Directory version: <strong>#{sourceData.version}</strong>
 
 section#about
   h1 Event types
   :markdown
-    This is the reference for the standard event types we recommend and handle (or will
-    handle) in the Pryv apps. You are free to use any type in your app, but for the sake of
-    interoperability we heavily recommend that you stick to the standard types listed here,
-    and <a href="mailto:developers@pryv.com">get in touch with us</a> to complete the
-    directory if you don't find what you need.
+    This is a **proposal** for the standard event types we recommend and plan to handle in our apps. You are free to use any type in your app, but for the sake of interoperability we heavily recommend that you stick to the standard types listed here, and <a href="https://github.com/pryv/data-types">help us</a> complete or adjust the directory if you don't find what you need.
 
     ## Event type?
 
@@ -63,14 +58,19 @@ section#about
     - [Hierarchical structure](!{sourcePath}): `classes['{class}'].formats['{format}']`
     - [Flat structure](!{flatPath}): `types['{class}/{format}']`
 
-    ## Submitting new types to the directory
+    ## Submitting types & issues
 
-    This directory is constantly evolving to match the needs of Pryv apps; if you'd like it
-    to include other types, <a href="mailto:developers@pryv.com">send us your proposal</a>.
+    This directory will keep evolving to match the needs of Pryv apps, and we need your help. We're awaiting your issues and pull requests on <a href="https://github.com/pryv/data-types">our GitHub repo</a>.
+
+    &nbsp;
+
+    &nbsp;
 
 
 section#directory
   h1 Directory
+
+  p.version <span class="label">version</span> <strong>#{sourceData.version}</strong>
 
   h2 Complex types
 
@@ -89,7 +89,7 @@ section#directory
             default
               | !{value}
 
-  for className in Object.keys(classes)
+  for className in Object.keys(complexClasses)
     - var classDef = classes[className]
     h3 !{className.charAt(0).toUpperCase() + className.slice(1)}
     .description !{classDef.description}

@@ -6,19 +6,19 @@ section
     :markdown
       Most of the API follows REST principles, meaning each item has its own unique resource URL and can be read or modified via HTTP verbs:
 
-      - GET to read the item(s)
-      - POST to create a new item, with a JSON message in the request body
-      - PUT to modify the item, with a JSON message in the request body
-      - DELETE to delete the item (note that logical deletion, or trashing, is supported for items like events and streams)
+      - **GET** to read the item(s)
+      - **POST** to create a new item, with a JSON message in the request body
+      - **PUT** to modify the item, with a JSON message in the request body
+      - **DELETE** to delete the item (note that logical deletion, or trashing, is supported for items like events and streams)
 
-      Note that the API also supports Socket.IO, for both calling API methods and receiving live notifications of changes to activity data. See [the dedicated section](#socketio).
+      The API also supports web sockets via Socket.IO, for both calling API methods and receiving live notifications of changes to activity data. See [the dedicated section](#socketio).
 
   aside
     :markdown
       #### Example request
       ```http
       GET /events HTTP/1.1
-      Host: {user-name}.pryv.io
+      Host: {username}.pryv.io
       Authorization: {access-token}
       ```
 
@@ -55,15 +55,6 @@ section
     :markdown
       Because we can't fathom out the crazy rationale behind [HTTP access control (CORS) rules](https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS), we offer web apps an alternative way to place POST, PUT and DELETE requests in the API by using `application/x-www-form-urlencoded` POST requests with the following fields (all optional):
 
-      <dl>
-        <dt>`_method`</dt>
-          <dd>The HTTP override method to use (usually `PUT` or `DELETE`; `POST` is used if not set).</dd>
-        <dt>`_auth`</dt>
-          <dd>The `Authorization` header value (alternative to sending the header itself).</dd>
-        <dt>`_json`</dt>
-          <dd>Considered as the JSON request body if set (overriding all other body content, if any).</dd>
-      </dl>
-
     table.definitions
       tr
         th: :markdown
@@ -82,10 +73,6 @@ section
           Considered as the JSON request body if set (overriding all other body content, if any).
 
     :markdown
-      - `_method`: The HTTP override method to use (usually `PUT` or `DELETE`; `POST` is used if not set).
-      - `_auth`: The `Authorization` header value (alternative to sending the header itself).
-      - `_json`: Considered as the JSON request body if set (overriding all other body content, if any).
-
       This is intended for web apps only; if your app isn't running in browsers you should use regular requests.
 
 section
@@ -94,8 +81,17 @@ section
     :markdown
       The following headers are included in every response:
 
-      - `API-Version`: The version of the API in the form `{major}.{minor}.{revision}`.
-      - `Server-Time`: The current server time as a [timestamp](#data-structure-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
+    table.definitions
+      tr
+        th: :markdown
+          `API-Version`
+        td: :markdown
+          The version of the API in the form `{major}.{minor}.{revision}`
+      tr
+        th: :markdown
+          `Server-Time`
+        td: :markdown
+          The current server time as a [timestamp](#data-structure-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
 
 section
   h2 Errors

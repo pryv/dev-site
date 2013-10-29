@@ -1,6 +1,8 @@
+.DS_Store
 .project
+build
 dev-site.iml
 node_modules
 out
-build
-.DS_Store
+source/event-types/extras.json
+source/event-types/hierarchical.json

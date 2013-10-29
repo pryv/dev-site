@@ -28,11 +28,12 @@ module.exports = {
   "event-typez": {
     "title": "Event types",
     "layout": "_layouts/default",
-    "sourcePath": "event-types/hierarchical-staging.json",
-    "flatPath": "event-types/flat-staging.json",
-    "sourceData": require("./event-types/hierarchical-staging.json"),
+    "sourcePath": "event-types/hierarchical.json",
+    "flatPath": "event-types/flat.json",
+    "sourceData": require("./event-types/hierarchical.json"),
     "withExamples": false,
-    "withTOC": true
+    "withTOC": true,
+    "tocSelectors": "h1,h2,h3"
   },
   "reference": {
     "title": "Reference",
