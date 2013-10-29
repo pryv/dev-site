@@ -14,12 +14,15 @@ section
     aside
       :markdown
         #### Example with `Authorization` header
+
         ```http
         GET /events HTTP/1.1
         Host: yacinthe.pryv.io
         Authorization: {access-token}
         ```
+
         #### Example with `auth` query string parameter
+
         ```http
         GET /events?auth={access-token} HTTP/1.1
         Host: yacinthe.pryv.io
@@ -51,8 +54,6 @@ section
         - `unknown-stream`: The activity stream can't be found.
         - `unknown-tag`: The tag can't be found.
         - `unknown-attachment`: The attached file can't be found for the specified event.
-
-        And a couple of others, related to the status of the user's account:
 
         #### Moved `301`
 
@@ -151,7 +152,7 @@ section
             If specified, only events modified since that time will be returned.
 
       :markdown
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
         An array of [events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
 
@@ -177,15 +178,27 @@ section
 
         The new event's data: see [Event](#data-structure-event).
 
-        #### Successful response: `201 Created`
+        #### Successful response: created `201`
 
-        - `id` ([identity](#data-structure-identity)): The new event's id.
-        - `stoppedId` ([identity](#data-structure-identity)): Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span><br>
+            The new event's id.
+        tr
+          th: :markdown
+            `stoppedId`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span><br>
+            Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
 
+      :markdown
         #### Specific errors
 
-        - `400 Bad Request`, id `invalid-operation`: The stream is in the trash, and we prevent the recording of new events into trashed streams.
-        - `400 Bad request`, id `periods-overlap`: Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+        - Bad request `400`, `invalid-operation`: The stream is in the trash, and we prevent the recording of new events into trashed streams.
+        - Bad request `400`, `periods-overlap`: Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
     aside
       :markdown
@@ -221,28 +234,53 @@ section
 
         Stops a previously running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop must be specified.
 
-        #### Body parameters
+        #### Parameters
 
-        - `streamId` ([identity](#data-structure-identity)): The id of the `singleActivity` stream in which to stop any running event. Either this or `id` must be specified.
-        - `id` ([identity](#data-structure-identity)): The id of the event to stop. Either this or `streamId` must be specified.
-        - `time` ([timestamp](#data-structure-timestamp)): Optional. The stop time. Default: now.
+      table.definitions
+        tr
+          th: :markdown
+            `streamId`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span><br>
+            The id of the `singleActivity` stream in which to stop any running event. Either this or `id` must be specified.
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span><br>
+            The id of the event to stop. Either this or `streamId` must be specified.
+        tr
+          th: :markdown
+            `time`
+          td: :markdown
+            <span class="type">[timestamp](#data-structure-timestamp)</span>
+            <span class="label optional">optional</span><br>
+            The stop time. Default: now.
 
-        #### Successful response: `200 OK`
+      :markdown
+        #### Successful response: OK `200`
 
-        - `stoppedId` ([identity](#data-structure-identity)): The id of the previously running period event that was stopped, or null if no running event was found.
+      table.definitions
+        tr
+          th: :markdown
+            `stoppedId`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span><br>
+            The id of the previously running period event that was stopped, or null if no running event was found.
 
+      :markdown
         #### Specific errors
 
-        - `400 Bad Request`, id `unknown-event`: The specified event cannot be found.
-        - `400 Bad Request`, id `invalid-operation`: The specified event is not a running period event.
-        - `400 Bad Request`, id `missing-parameter`: No event was specified and the specified stream is not a `singleActivity` stream (so that there can be more than one running event).
+        - Bad request `400`, `unknown-event`: The specified event cannot be found.
+        - Bad request `400`, `invalid-operation`: The specified event is not a running period event.
+        - Bad request `400`, `missing-parameter`: No event was specified and the specified stream is not a `singleActivity` stream (so that there can be more than one running event).
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -257,21 +295,28 @@ section
 
         New values for the event's fields: see [event](#data-structure-event). All fields are optional, and only modified values must be included. TODO: example
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
-        - `stoppedId` ([identity](#data-structure-identity)): If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+      table.definitions
+        tr
+          th: :markdown
+            `stoppedId`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span><br>
+            If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
 
+      :markdown
         #### Specific errors
 
-        - `400 Bad Request`, id `invalid-operation`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it. The error's `data.conflictingPeriodId` provides the id of the closest conflicting event.
-        - `400 Bad Request`, id `periods-overlap`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+        - Bad request `400`, `invalid-operation`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it. The error's `data.conflictingPeriodId` provides the id of the closest conflicting event.
+        - Bad request `400`, `periods-overlap`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -282,7 +327,7 @@ section
 
         Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
     aside
       :markdown
@@ -309,14 +354,14 @@ section
         - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
         - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -327,14 +372,14 @@ section
 
         Gets the attached file.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -345,12 +390,14 @@ section
 
         Irreversibly deletes the attached file.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
     aside
       :markdown
         #### cURL example
+
         ```bash
+        #TODO
         ```
 
   section.method
@@ -361,11 +408,11 @@ section
 
         Batch upload events that were recorded by the client while offline. The submitted events are added in-order, with results returned individually for each (see response below).
 
-        #### Body parameters
+        #### Parameters
 
         An array of client-recorded [events](#data-structure-event). In addition to the regular properties, each event must have a unique `tempRefId` defined (as it's temporary it must only be unique within the request). Also, make sure that the events' `time` is set in server time (as for single event requests).
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
         An object with one property per event submitted holding the result for that event. Each property's name is the submitted event's client id, and its value contains:
 
@@ -375,10 +422,13 @@ section
     aside
       :markdown
         #### cURL example
-        ```
+
+        ```bash
+        #TODO
         ```
 
         #### Example response
+
         ```json
         {
           "temp_ref_id_1": {"id": "TTMyhYEZriJ"},
@@ -405,23 +455,37 @@ section
 
         #### Parameters
 
-        - `parentId` ([identity](#data-structure-identity)): Optional. The id of the parent stream to use as root for the request. Default: `null` (returns all accessible streams from the root level).
-        - `state` (`default` or `all`): Optional. Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `all` return all items regardless of their state.
+      table.definitions
+        tr
+          th: :markdown
+            `parentId`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span>
+            <span class="label optional">optional</span><br>
+            The id of the parent stream to use as root for the request. Default: `null` (returns all accessible streams from the root level).
+        tr
+          th: :markdown
+            `state`
+          td: :markdown
+            <span class="type">`default`|`all`</span>
+            <span class="label optional">optional</span><br>
+            Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `all` return all items regardless of their state.
 
-        #### Successful response: `200 OK`
+      :markdown
+        #### Successful response: OK `200`
 
         An array of [activity streams](#data-structure-stream) containing the tree of the accessible streams, sorted by name.
 
         #### Specific errors
 
-        - `400 Bad Request`, id `unknown-stream`: The specified parent stream can't be found.
+        - Bad request `400`, `unknown-stream`: The specified parent stream can't be found.
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -436,22 +500,29 @@ section
 
         The new stream's data: see [activity stream](#data-structure-stream).
 
-        #### Successful response: `201 Created`
+        #### Successful response: created `201`
 
-        - `id` ([identity](#data-structure-identity)): The created stream's id.
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span><br>
+            The created stream's id.
 
+      :markdown
         #### Specific errors
 
-        - `400 Bad Request`, id `item-id-already-exists`: A stream already exists with the same id.
-        - `400 Bad Request`, id `item-name-already-exists`: A sibling stream already exists with the same name.
-        - `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
+        - Bad request `400`, `item-id-already-exists`: A stream already exists with the same id.
+        - Bad request `400`, `item-name-already-exists`: A sibling stream already exists with the same name.
+        - Bad request `400`, `invalid-item-id`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -462,23 +533,23 @@ section
 
         Modifies the activity stream's attributes.
 
-        #### Body parameters
+        #### Parameters
 
         New values for the stream's fields: see [activity stream](#data-structure-stream). All fields are optional, and only modified values must be included.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
         #### Specific errors
 
-        - `400 Bad Request`, id `unknown-stream`: The specified parent stream's id is unknown.
-        - `400 Bad Request`, id `item-name-already-exists`: A sibling stream already exists with the same name.
+        - Bad request `400`, `unknown-stream`: The specified parent stream's id is unknown.
+        - Bad request `400`, `item-name-already-exists`: A sibling stream already exists with the same name.
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -494,20 +565,27 @@ section
 
         #### Parameters
 
-        - `mergeEventsWithParent` (`true` or `false`): Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
+      table.definitions
+        tr
+          th: :markdown
+            `mergeEventsWithParent`
+          td: :markdown
+            <span class="type">`true`|`false`</span><br>
+            Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
 
-        #### Successful response: `200 OK`
+      :markdown
+        #### Successful response: OK `200`
 
         #### Specific errors
 
-        - `400 Bad Request`, id `missing-parameter`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
+        - Bad request `400`, `missing-parameter`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
 section
@@ -524,12 +602,13 @@ section
 
         Retrieves information about the current access.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
         An object with the [access'](#data-structure-access) `name`, `type` and `permissions`.
     aside
       :markdown
         #### cURL example
+
         ```bash
         curl -i -H "Authorization: {access-token}" https://{username}.pryv.io/access-info
         ```
@@ -542,7 +621,7 @@ section
 
         Gets all manageable shared accesses.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
         An array of [accesses](#data-structure-access) containing all manageable shared accesses in the user's account, ordered by name.
 
@@ -566,20 +645,33 @@ section
 
         The new access's data: see [access](#data-structure-access).
 
-        #### Successful response: `201 Created`
+        #### Successful response: created `201`
 
-        - `token` ([identity](#data-structure-identity)): The created access's token.
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span><br>
+            The created access's identifier.
+        tr
+          th: :markdown
+            `token`
+          td: :markdown
+            <span class="type">string</span><br>
+            The created access's token.
 
+      :markdown
         #### Specific errors
 
-        - `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
+        - Bad request `400`, `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -594,14 +686,14 @@ section
 
         New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -612,14 +704,14 @@ section
 
         Deletes the specified shared access. You can only delete accesses whose permissions are a subset of those linked to your own access token.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
     aside
       :markdown
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
 section
@@ -638,7 +730,7 @@ section
 
         Gets your app profile settings.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
         An object containing your app's current profile settings. The method always returns an object (which will be empty if your app never defined any setting).
 
@@ -647,7 +739,7 @@ section
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
   section.method
@@ -667,7 +759,7 @@ section
 
         An object with the desired changes to the settings (see above).
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
     aside
       :markdown
@@ -683,7 +775,7 @@ section
         #### cURL example
 
         ```bash
-
+        #TODO
         ```
 
 section
@@ -700,7 +792,7 @@ section
 
         Gets the user's public profile info.
 
-        #### Successful response: `200 OK`
+        #### Successful response: OK `200`
 
         An object containing the user's current public profile information.
 
@@ -709,5 +801,5 @@ section
         #### cURL example
 
         ```bash
-
+        #TODO
         ```

@@ -17,6 +17,7 @@ section
   aside
     :markdown
       For example, in Javascript do:
+
       ```javascript
       var socket = io.connect("https://mathurin.pryv.io:443/mathurin?auth=TVVro8e8T5&resource=/mathurin")
       ```
@@ -26,6 +27,7 @@ section
   .content
     :markdown
       Every method in the activity service can be called by sending a corresponding Socket.IO `command` message, providing a data object specifying the command (or method) and possible parameters, and a callback function for the response:
+
       ```javascript
       socket.emit('command', {id: '{id}', params: {/*parameters*/}}, function (error, data) {
         // handle response here
@@ -37,6 +39,7 @@ section
   aside
     :markdown
       Here's how you could retrieve events:
+
       ```javascript
       var cmdData = {
         id: 'events.get',
@@ -47,7 +50,7 @@ section
       socket.emit('command', cmdData, function (error, data) {
         // handle response
       });
-       ```
+      ```
 
 section
   h3 Receiving data change notifications
@@ -58,6 +61,7 @@ section
   aside
     :markdown
       For example:
+
       ```javascript
       socket.on('eventsChanged', function() {
         // ... (retrieve latest changes and update)

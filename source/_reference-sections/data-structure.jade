@@ -14,22 +14,118 @@ section
     :markdown
       See also: [core concepts](concepts.html#core-events).
 
-      - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the event.
-      - `streamId` ([identity](#data-structure-identity)): The id of the belonging stream.
-      - `time` ([timestamp](#data-structure-timestamp)): The event's time. For period events, this is the time the event started.
-      - `duration` ([timestamp](#data-structure-timestamp) difference): Optional. If present, indicates that the event is a period event. **Running period events have a duration set to `null`**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
-      - `type` (string): The type of the event. See the [event type directory](event-typez.html#directory) for a list of standard types.
-      - `content` (any type): Optional. The `type`-specific content of the event, if any.
-      - `tags` (array of strings): Optional but always present in read items. The tags associated with the event.
-      - `references` (array of [identity](#data-structure-identity)): Optional but always present in read items. Other events associated with the event. *Note: event references aren't yet implemented in the API today.*
-      - `description` (string): Optional. User description or comment for the event.
-      - `attachments`: Optional and read-only. An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
-        - `fileName` (string): The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
-        - `type` (string): The MIME type of the file.
-        - `size` (number): The size of the file, in bytes.
-      - `clientData` ([additional item data](#data-structure-additional-data)):  Optional. Additional client data for the event.
-      - `trashed` (boolean): Optional. `true` if the event is in the trash.
-      - `modified` ([timestamp](#data-structure-timestamp)): Read-only. The time the event was last modified.
+    table.definitions
+      tr
+        th: :markdown
+          `id`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span>
+          <span class="label unique">unique</span>
+          <span class="label read-only">read-only</span><br>
+          The server-assigned identifier for the event.
+      tr
+        th: :markdown
+          `streamId`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span><br>
+          The id of the belonging stream.
+      tr
+        th: :markdown
+          `time`
+        td: :markdown
+          <span class="type">[timestamp](#data-structure-timestamp)</span><br>
+          The event's time. For period events, this is the time the event started.
+      tr
+        th: :markdown
+          `duration`
+        td: :markdown
+          <span class="type">[timestamp](#data-structure-timestamp) difference</span>
+          <span class="label optional">optional</span><br>
+          If present, indicates that the event is a period event. **Running period events have a duration set to `null`**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
+      tr
+        th: :markdown
+          `type`
+        td: :markdown
+          <span class="type">string</span><br>
+          The type of the event. See the [event type directory](event-typez.html#directory) for a list of standard types.
+      tr
+        th: :markdown
+          `content`
+        td: :markdown
+          <span class="type">any type</span>
+          <span class="label optional">optional</span><br>
+          The `type`-specific content of the event, if any.
+      tr
+        th: :markdown
+          `tags`
+        td: :markdown
+          <span class="type">array of strings</span>
+          <span class="label optional">optional</span> (always present in read items)<br>
+          The tags associated with the event.
+      tr
+        th: :markdown
+          `references`
+        td: :markdown
+          <span class="type">array of [identity](#data-structure-identity)</span>
+          <span class="label optional">optional</span> (always present in read items)<br>
+          Other events associated with the event. *Note: event references aren't yet implemented in the API today.*
+      tr
+        th: :markdown
+          `description`
+        td: :markdown
+          <span class="type">string</span>
+          <span class="label optional">optional</span><br>
+          User description or comment for the event.
+      tr
+        th: :markdown
+          `attachments`
+        td
+          :markdown
+            <span class="type">object</span>
+            <span class="label optional">optional</span>
+            <span class="label read-only">read-only</span><br>
+            An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
+
+          table.definitions
+            tr
+              th: :markdown
+                `fileName`
+              td: :markdown
+                <span class="type">string</span><br>
+                The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
+            tr
+              th: :markdown
+                `type`
+              td: :markdown
+                <span class="type">string</span><br>
+                The MIME type of the file.
+            tr
+              th: :markdown
+                `size`
+              td: :markdown
+                <span class="type">number</span><br>
+                The size of the file, in bytes.
+      tr
+        th: :markdown
+          `clientData`
+        td: :markdown
+          <span class="type">[additional item data](#data-structure-additional-data)</span>
+          <span class="label optional">optional</span><br>
+          Additional client data for the event.
+      tr
+        th: :markdown
+          `trashed`
+        td: :markdown
+          <span class="type">boolean</span>
+          <span class="label optional">optional</span><br>
+          `true` if the event is in the trash.
+      tr
+        th: :markdown
+          `modified`
+        td: :markdown
+          <span class="type">[timestamp](#data-structure-timestamp)</span>
+          <span class="label read-only">read-only</span><br>
+          The time the event was last modified.
 
   aside
     :markdown
@@ -63,13 +159,56 @@ section
     :markdown
       See also: [core concepts](concepts.html#core-streams).
 
-      - `id` ([identity](#data-structure-identity)): Unique, read-only (except at creation). The identifier for the stream. Automatically generated if not set when creating the stream; **slugified if necessary**.
-      - `name` (string): A name identifying the stream for users. The name must be unique among the stream's siblings in the streams tree structure.
-      - `parentId` ([identity](#data-structure-identity)): Optional. The identifier of the stream's parent, if any. A value of `null` indicates that the stream has no parent (i.e. root stream).
-      - `singleActivity` (boolean): Optional. If specified and `true`, the system will ensure that period events in this stream and its children never overlap.
-      - `clientData` ([item additional data](#data-structure-additional-data)):  Optional. Additional client data for the stream.
-      - `children` (array of streams): Read-only. The stream's sub-streams, if any. This field cannot be set in requests creating a new streams: streams are created individually by design.
-      - `trashed` (boolean): Optional. `true` if the stream is in the trash.
+    table.definitions
+      tr
+        th: :markdown
+          `id`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span>
+          <span class="label unique">unique</span>
+          <span class="label read-only">read-only</span> (except at creation)<br>
+          The identifier for the stream. Automatically generated if not set when creating the stream; **slugified if necessary**.
+      tr
+        th: :markdown
+          `name`
+        td: :markdown
+          <span class="type">string</span><br>
+          A name identifying the stream for users. The name must be unique among the stream's siblings in the streams tree structure.
+      tr
+        th: :markdown
+          `parentId`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span>
+          <span class="label optional">optional</span><br>
+          The identifier of the stream's parent, if any. A value of `null` indicates that the stream has no parent (i.e. root stream).
+      tr
+        th: :markdown
+          `singleActivity`
+        td: :markdown
+          <span class="type">boolean</span>
+          <span class="label optional">optional</span><br>
+          If specified and `true`, the system will ensure that period events in this stream and its children never overlap.
+      tr
+        th: :markdown
+          `clientData`
+        td: :markdown
+          <span class="type">[item additional data](#data-structure-additional-data)</span>
+          <span class="label optional">optional</span><br>
+          Additional client data for the stream.
+      tr
+        th: :markdown
+          `children`
+        td: :markdown
+          <span class="type">array of streams</span>
+          <span class="label read-only">read-only</span><br>
+          The stream's sub-streams, if any. This field cannot be set in requests creating a new streams: streams are created individually by design.
+      tr
+        th: :markdown
+          `trashed`
+        td: :markdown
+          <span class="type">boolean</span>
+          <span class="label optional">optional</span><br>
+          `true` if the stream is in the trash.
 
   aside
     :markdown
@@ -107,12 +246,49 @@ section
       Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](concepts.html#core-tags).
       *Note: typed tags aren't yet implemented in the API today.*
 
-      - `id` ([identity](#data-structure-identity)): Unique, read-only. The identifier for the tag.
-      - `type` (string): The type of the tag. See the [tag type directory](#TODO) for a list of standard types.
-      - `content` (any type): Optional. The `type`-specific content of the tag, if any.
-      - `clientData` ([additional item data](#data-structure-additional-data)): Optional. Additional client data for the tag.
-      - `trashed` (boolean): Optional. `true` if the tag is in the trash.
-      - `modified` ([timestamp](#data-structure-timestamp)): Read-only. The time the tag was last modified.
+    table.definitions
+      tr
+        th: :markdown
+          `id`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span>
+          <span class="label unique">unique</span>
+          <span class="label read-only">read-only</span><br>
+          The identifier for the tag.
+      tr
+        th: :markdown
+          `type`
+        td: :markdown
+          <span class="type">string</span><br>
+          The type of the tag. See the [tag type directory](#TODO) for a list of standard types.
+      tr
+        th: :markdown
+          `content`
+        td: :markdown
+          <span class="type">any type</span>
+          <span class="label optional">optional</span><br>
+          The `type`-specific content of the tag, if any.
+      tr
+        th: :markdown
+          `clientData`
+        td: :markdown
+          <span class="type">[additional item data](#data-structure-additional-data)</span>
+          <span class="label optional">optional</span><br>
+          Additional client data for the tag.
+      tr
+        th: :markdown
+          `trashed`
+        td: :markdown
+          <span class="type">boolean</span>
+          <span class="label optional">optional</span><br>
+          `true` if the tag is in the trash.
+      tr
+        th: :markdown
+          `modified`
+        td: :markdown
+          <span class="type">[timestamp](#data-structure-timestamp)</span>
+          <span class="label read-only">read-only</span><br>
+          The time the tag was last modified.
   aside
     :markdown
       TODO: example
@@ -123,15 +299,68 @@ section
     :markdown
       See also: [core concepts](concepts.html#core-accesses).
 
-      - `id` ([identity](#data-structure-identity)): Unique, read-only. The identifier for the access.
-      - `token` (string): Unique, read-only (except at creation). The token identifying the access. Automatically generated if not set when creating the access; **slugified if necessary**.
-      - `type` (`"personal"`, `"app"` or `"shared"`): Optional. The type — or usage — of the access. Default: `"shared"`.
-      - `name` (string): Unique *per type and device name (if defined)*. The name identifying the access for the user. (Note that for personal and app access, the name is used as a technical identifier and not shown as-is to the user.)
-      - `deviceName` (string): Optional. Unique *per type and name (if defined)*. For app accesses only. The name of the client device running the app, if applicable.
-      - `permissions`: an array of stream permission objects as described below. Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here.
-        - `streamId` ([identity](#data-structure-identity)): The accessible stream's id, or `"*"` for "all streams". If the stream has child streams, they will be accessible too.
-        - `level` (`"read"`, `"contribute"` or `"manage"`): TThe level of access to the stream. With `"contribute"`, the access's token holder(s) can see and record events for the stream (and its child streams, if any); with `"manage"`, the access's token holder(s) can in addition create, modify and delete child streams.
+    table.definitions
+      tr
+        th: :markdown
+          `id`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span>
+          <span class="label unique">unique</span>
+          <span class="label read-only">read-only</span><br>
+          The identifier for the access.
+      tr
+        th: :markdown
+          `token`
+        td: :markdown
+          <span class="type">string</span>
+          <span class="label unique">unique</span>
+          <span class="label read-only">read-only</span> (except at creation)<br>
+          The token identifying the access. Automatically generated if not set when creating the access; **slugified if necessary**.
+      tr
+        th: :markdown
+          `type`
+        td: :markdown
+          <span class="type">`"personal"`|`"app"`|`"shared"`</span>
+          <span class="label optional">optional</span><br>
+          The type — or usage — of the access. Default: `"shared"`.
+      tr
+        th: :markdown
+          `name`
+        td: :markdown
+          <span class="type">string</span>
+          <span class="label unique">unique</span> *per type and device name (if defined)*<br>
+          The name identifying the access for the user. (Note that for personal and app access, the name is used as a technical identifier and not shown as-is to the user.)
+      tr
+        th: :markdown
+          `deviceName`
+        td: :markdown
+          <span class="type">string</span>
+          <span class="label optional">optional</span>
+          <span class="label unique">unique</span> *per type and name (if defined)*<br>
+          For app accesses only. The name of the client device running the app, if applicable.
+      tr
+        th: :markdown
+          `permissions`
+        td
+          :markdown
+            <span class="type">array of permission objects</span><br>
+            Ignored for personal accesses. Shared accesses are only granted access to activity data objects listed in here. Each permission object has the following structure:
 
+          table.definitions
+            tr
+              th: :markdown
+                `streamId`
+              td: :markdown
+                <span class="type">[identity](#data-structure-identity)</span><br>
+                The accessible stream's id, or `"*"` for "all streams". If the stream has child streams, they will be accessible too.
+            tr
+              th: :markdown
+                `level`
+              td: :markdown
+                <span class="type">`"read"`|`"contribute"`|`"manage"`</span><br>
+                The level of access to the stream. With `"contribute"`, the access's token holder(s) can see and record events for the stream (and its child streams, if any); with `"manage"`, the access's token holder(s) can in addition create, modify and delete child streams.
+
+    :markdown
       A note about permissions: if the access defines conflicting permission levels (e.g. a stream set to "manage" but a child stream within it set to "contribute"), only the highest level is considered.
 
   aside
@@ -139,15 +368,39 @@ section
       TODO: example
 
 section
-  h2 <a id="data-structure-bookmark"></a>Bookmark
+  h2 <a id="data-structure-bookmark"></a>Subscriptions (a.k.a. bookmarks)
   .content
     :markdown
       See also: [core concepts](concepts.html#core-subscriptions).
 
-      - `id` ([identity](#data-structure-identity)): Unique, read-only. The server-assigned identifier for the bookmark.
-      - `name` (string): Unique. A name identifying the bookmark for the user.
-      - `url` (string): The url pointing to the shared access's owning user's server. Not modifiable after creation.
-      - `accessToken` [identity](#data-structure-identity): The token of the shared access itself. Not modifiable after creation.
+    table.definitions
+      tr
+        th: :markdown
+          `id`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span>
+          <span class="label unique">unique</span>
+          <span class="label read-only">read-only</span><br>
+          The server-assigned identifier for the subscription.
+      tr
+        th: :markdown
+          `name`
+        td: :markdown
+          <span class="type">string</span>
+          <span class="label unique">unique</span><br>
+          A name identifying the subscription for the user.
+      tr
+        th: :markdown
+          `url`
+        td: :markdown
+          <span class="type">string</span><br>
+          The url pointing to the shared access's owning user's server. Not modifiable after creation.
+      tr
+        th: :markdown
+          `accessToken`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span><br>
+          The token of the shared access itself. Not modifiable after creation.
   aside
     :markdown
       TODO: example
@@ -174,12 +427,26 @@ section
 section
   h2 <a id="data-structure-error"></a>Error
   .content
-    :markdown
-      Fields:
-
-      - `id` (string): Identifier for the error; complements the response's HTTP error code.
-      - `message` (string): A human-readable description of the error.
-      - `subErrors` (array of errors): Optional. Lists the detailed causes of the main error, if any.
+    table.definitions
+      tr
+        th: :markdown
+          `id`
+        td: :markdown
+          <span class="type">string</span><br>
+          Identifier for the error; complements the response's HTTP error code.
+      tr
+        th: :markdown
+          `message`
+        td: :markdown
+          <span class="type">string</span><br>
+          A human-readable description of the error.
+      tr
+        th: :markdown
+          `subErrors`
+        td: :markdown
+          <span class="type">array of errors</span>
+          <span class="label optional">optional</span><br>
+          Lists the detailed causes of the main error, if any.
   aside
     :markdown
       TODO: example
