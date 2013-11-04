@@ -150,7 +150,7 @@ section
 
   aside
     :markdown
-      #### Example
+      #### Example (TODO: update)
 
       ```javascript
       [
@@ -160,7 +160,7 @@ section
           "attachments" : {
             "Gina": { "fileName": "gina.jpeg", "type": "image/jpeg", "size": 1236701 },
             "Enzo": { "fileName": "enzo.jpeg", "type": "image/jpeg", "size": 1127465 }},
-            "modified" : 1350463077.359 },
+          "modified" : 1350463077.359 },
         { "time" : 1350369477.359, "duration" : 7140, "description": "A period of work",
           "id" : "event_1", "streamId" : "free-veggies",
           "tags": ["proposal"],
@@ -230,10 +230,38 @@ section
           <span class="type">boolean</span>
           <span class="label optional">optional</span><br>
           `true` if the stream is in the trash.
+      tr
+        th: :markdown
+          `created`
+        td: :markdown
+          <span class="type">[timestamp](#data-structure-timestamp)</span>
+          <span class="label read-only">read-only</span><br>
+          The time the stream was created.
+      tr
+        th: :markdown
+          `createdBy`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span>
+          <span class="label read-only">read-only</span><br>
+          The id of the access used to create the stream.
+      tr
+        th: :markdown
+          `modified`
+        td: :markdown
+          <span class="type">[timestamp](#data-structure-timestamp)</span>
+          <span class="label read-only">read-only</span><br>
+          The time the stream was last modified.
+      tr
+        th: :markdown
+          `modifiedBy`
+        td: :markdown
+          <span class="type">[identity](#data-structure-identity)</span>
+          <span class="label read-only">read-only</span><br>
+          The id of the last access used to modify the stream.
 
   aside
     :markdown
-      #### Example
+      #### Example (TODO: update)
 
       A stream structure for activities:
 
