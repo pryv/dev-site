@@ -202,7 +202,9 @@ section
 
     aside
       :markdown
-        #### cURL example, post a mass record of 90Kg
+        #### cURL example
+
+        Record a 90 Kg mass measurement:
 
         ```bash
         curl -i -H "Content-Type: application/json" -X POST -d '{"streamId":"{stream-id}", "type": "mass/kg", "content": 90}' https://{username}.pryv.io/events?auth={access-token}
