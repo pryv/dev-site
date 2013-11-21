@@ -202,9 +202,7 @@ section
 
     aside
       :markdown
-        #### cURL example
-
-        Record a 90 Kg mass measurement:
+        #### cURL example, post a mass record of 90Kg
 
         ```bash
         curl -i -H "Content-Type: application/json" -X POST -d '{"streamId":"{stream-id}", "type": "mass/kg", "content": 90}' https://{username}.pryv.io/events?auth={access-token}
@@ -425,19 +423,26 @@ section
       :markdown
         #### cURL example
 
+        save a combination of blood pressures and heart rate.
+
         ```bash
-        #TODO
+        curl -i -H "Content-Type: application/json" -X POST -d '[
+        {"tempRefId": "aa", "time": 1385046854.282,
+         "streamId": "heart", "type": "frequency/bpm", "content": 90},
+        {"tempRefId": "bb", "time": 1385046854.282,
+         "streamId": "systolic", "type": "pressure/mmhg", "content": 120},
+        {"tempRefId": "cc", "time": 1385046854.282,
+         "streamId": "diastolic", "type": "pressure/mmhg", "content": 80
+        } ]' "https://$USERNAME.pryv.io/events/batch?auth=$TOKEN"
         ```
 
         #### Example response
 
         ```json
         {
-          "temp_ref_id_1": {"id": "TTMyhYEZriJ"},
-          "temp_ref_id_2": {"error": {
-            "id": "unknown-stream",
-            "message": "Stream 'bad-stream-id' is unknown."
-          }}
+         "aa":{"id":"PVRD0xlGXq"},
+         "bb":{"id":"TPMxA0RZKXq"},
+         "cc":{"id":"TTixw0vlKKO"}
         }
         ```
 
@@ -486,8 +491,14 @@ section
       :markdown
         #### cURL example
 
+        Create a sub-stream "diastolic" of "heart"
+
         ```bash
-        #TODO
+        curl -i -H "Content-Type: application/json" -X POST -d '
+        {"id":"diastolic",
+         "name": "Diastolic pressure",
+         "parentId": "heart"
+        }' "https://$USERNAME.pryv.io/streams?auth=$TOKEN"
         ```
 
   section.method
