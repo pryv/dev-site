@@ -1,5 +1,3 @@
-**THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update**
-
 # Custom
 
 Implementing the authorization process and obtaining an access token all by yourself.

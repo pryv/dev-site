@@ -1,5 +1,3 @@
-**THIS SECTION IS OBSOLETE AS OF API v0.5; TODO: update**
-
 # App access
 
 Get an access token.

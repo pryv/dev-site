@@ -2,6 +2,9 @@
 
 Obtaining an access token for your web app.
 
+** Warning !! The Pryv.Access javascript utility structure is changing .. it works as this today,
+but expect upcoming changes **
+
 ## What you need
 
 * make sure you got the [initial requirements](#intro-initial-requirements) ready.
