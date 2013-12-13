@@ -26,7 +26,7 @@ Syncing NVM...
 . ~/.nvm/nvm.sh # this line should be added to your .bash_profile as well
 nvm sync
 
-nodeVersion=v0.8.23
+nodeVersion=v0.10.23
 echo "
 Installing Node $nodeVersion if necessary...
 "
