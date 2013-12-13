@@ -26,10 +26,10 @@ section
   h3 Calling API methods
   .content
     :markdown
-      Every method in the activity service can be called by sending a corresponding Socket.IO `callMethod` message, providing a data object specifying the method and possible parameters, and a callback function for the response:
+      Every method in the activity service can be called by sending a corresponding Socket.IO `{method-id}` message, passing a parameters object, and a callback function for the response:
 
       ```javascript
-      socket.emit('callMethod', {id: '{id}', params: {/*parameters*/}}, function (error, data) {
+      socket.emit('{method-id}', {/*parameters*/}, function (error, data) {
         // handle response here
       });
       ```
@@ -41,13 +41,7 @@ section
       Here's how you could retrieve events:
 
       ```javascript
-      var cmdData = {
-        id: 'events.get',
-        params: {
-          sortAscending: true
-        }
-      };
-      socket.emit('callMethod', cmdData, function (error, data) {
+      socket.emit('events.get', {sortAscending: true}, function (error, data) {
         // handle response
       });
       ```
