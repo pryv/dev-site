@@ -30,4 +30,4 @@ compile: retrieve-types
 	@echo ""
 
 publish: compile
-	@cd build;git add .;git add -u .;git commit -m "Updated generated files";git push origin gh-pages
+	@cd build;git add .;git add -u .;git commit -m "Updated generated files";git push

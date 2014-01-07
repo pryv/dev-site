@@ -43,7 +43,7 @@ then
   echo "
 Setting up 'build' folder for publishing to GitHub pages...
 "
-  git clone -b gh-pages git@github.com:pryv/dev-site.git build
+  git clone git@github.com:pryv/pryv.github.io.git build
 fi
 
 echo "
