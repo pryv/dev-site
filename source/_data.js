@@ -5,11 +5,23 @@ module.exports = {
     "withExamples": false,
     "withTOC": false
   },
+  "apps-and-services": {
+    "title": "Apps and services",
+    "layout": "_layouts/default",
+    "withExamples": false,
+    "withTOC": false
+  },
   "app-access": {
     "title": "Another Example Title",
     "layout": "_layouts/default",
     "withExamples": false,
     "withTOC": true
+  },
+  "code-libraries": {
+    "title": "Code libraries",
+    "layout": "_layouts/default",
+    "withExamples": false,
+    "withTOC": false
   },
   "concepts": {
     "title": "Concepts",
