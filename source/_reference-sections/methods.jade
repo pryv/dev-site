@@ -154,7 +154,13 @@ section
       :markdown
         #### Successful response: OK `200`
 
-        An array of [events](#data-structure-event) containing the accessible events ordered by time (see `sortAscending` above).
+      table.definitions
+        tr
+          th: :markdown
+            `events`
+          td: :markdown
+            <span class="type">array of [events](#data-structure-event)</span><br>
+            The accessible events ordered by time (see `sortAscending` above).
 
     aside
       :markdown
@@ -183,10 +189,10 @@ section
       table.definitions
         tr
           th: :markdown
-            `id`
+            `event`
           td: :markdown
-            <span class="type">[identity](#data-structure-identity)</span><br>
-            The new event's id.
+            <span class="type">[event](#data-structure-event)</span><br>
+            The created event.
         tr
           th: :markdown
             `stoppedId`
@@ -266,7 +272,7 @@ section
             `stoppedId`
           td: :markdown
             <span class="type">[identity](#data-structure-identity)</span><br>
-            The id of the previously running period event that was stopped, or null if no running event was found.
+            Only in `singleActivity` streams. The id of the previously running period event that was stopped, or null if no running event was found.
 
       :markdown
         #### Specific errors
@@ -300,10 +306,16 @@ section
       table.definitions
         tr
           th: :markdown
+            `event`
+          td: :markdown
+            <span class="type">[event](#data-structure-event)</span><br>
+            The updated event.
+        tr
+          th: :markdown
             `stoppedId`
           td: :markdown
             <span class="type">[identity](#data-structure-identity)</span><br>
-            If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+            Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
 
       :markdown
         #### Specific errors
@@ -347,14 +359,14 @@ section
     h3 Delete event
     .content
       :markdown
-        `DELETE /events/{event-id}`, Socket.IO: `events.del`
+        `DELETE /events/{event-id}`, Socket.IO: `events.delete`
 
         Trashes or deletes the specified event, depending on its current state:
 
         - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
         - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
 
-        #### Successful response: OK `200`
+        #### Successful response: No content `204`
 
     aside
       :markdown
@@ -390,7 +402,7 @@ section
 
         Irreversibly deletes the attached file.
 
-        #### Successful response: OK `200`
+        #### Successful response: No content `204`
 
     aside
       :markdown
@@ -405,6 +417,8 @@ section
     .content
       :markdown
         `POST /events/batch`, Socket.IO: `events.createBatch`
+
+        **This will be replaced with a generic batch method accepting any type of method calls.**
 
         Batch upload events that were recorded by the client while offline. The submitted events are added in-order, with results returned individually for each (see response below).
 
@@ -481,8 +495,15 @@ section
       :markdown
         #### Successful response: OK `200`
 
-        An array of [activity streams](#data-structure-stream) containing the tree of the accessible streams, sorted by name.
+      table.definitions
+        tr
+          th: :markdown
+            `streams`
+          td: :markdown
+            <span class="type">array of [streams](#data-structure-stream)</span><br>
+            The tree of the accessible streams, sorted by name.
 
+      :markdown
         #### Specific errors
 
         - Bad request `400`, `unknown-stream`: The specified parent stream can't be found.
@@ -518,10 +539,10 @@ section
       table.definitions
         tr
           th: :markdown
-            `id`
+            `stream`
           td: :markdown
-            <span class="type">[identity](#data-structure-identity)</span><br>
-            The created stream's id.
+            <span class="type">[stream](#data-structure-stream)</span><br>
+            The created stream.
 
       :markdown
         #### Specific errors
@@ -552,6 +573,15 @@ section
 
         #### Successful response: OK `200`
 
+      table.definitions
+        tr
+          th: :markdown
+            `stream`
+          td: :markdown
+            <span class="type">[stream](#data-structure-stream)</span><br>
+            The updated stream (without child streams).
+
+      :markdown
         #### Specific errors
 
         - Bad request `400`, `unknown-stream`: The specified parent stream's id is unknown.
@@ -569,7 +599,7 @@ section
     h3 Delete stream
     .content
       :markdown
-        `DELETE /streams/{stream-id}`, Socket.IO: `streams.del`
+        `DELETE /streams/{stream-id}`, Socket.IO: `streams.delete`
 
         Trashes or deletes the specified stream, depending on its current state:
 
@@ -587,7 +617,7 @@ section
             Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
 
       :markdown
-        #### Successful response: OK `200`
+        #### Successful response: No content `204`
 
         #### Specific errors
 
@@ -617,7 +647,26 @@ section
 
         #### Successful response: OK `200`
 
-        An object with the [access'](#data-structure-access) `name`, `type` and `permissions`.
+      table.definitions
+        tr
+          th: :markdown
+            `name`
+          td: :markdown
+            <span class="type">string</span><br>
+            The current access' name.
+        tr
+          th: :markdown
+            `type`
+          td: :markdown
+            <span class="type">string</span><br>
+            The current access' type.
+        tr
+          th: :markdown
+            `permissions`
+          td: :markdown
+            <span class="type">[access](#data-structure-access).permissions</span><br>
+            The current access' permissions.
+
     aside
       :markdown
         #### cURL example
@@ -636,7 +685,13 @@ section
 
         #### Successful response: OK `200`
 
-        An array of [accesses](#data-structure-access) containing all manageable shared accesses in the user's account, ordered by name.
+      table.definitions
+        tr
+          th: :markdown
+            `accesses`
+          td: :markdown
+            <span class="type">array of [accesses](#data-structure-access)</span><br>
+            All manageable shared accesses in the user's account, ordered by name.
 
     aside
       :markdown
@@ -663,16 +718,10 @@ section
       table.definitions
         tr
           th: :markdown
-            `id`
+            `access`
           td: :markdown
-            <span class="type">[identity](#data-structure-identity)</span><br>
-            The created access's identifier.
-        tr
-          th: :markdown
-            `token`
-          td: :markdown
-            <span class="type">string</span><br>
-            The created access's token.
+            <span class="type">[access](#data-structure-access)</span><br>
+            The created access.
 
       :markdown
         #### Specific errors
@@ -691,7 +740,7 @@ section
     h3 Update access
     .content
       :markdown
-        `PUT /accesses/{token}`
+        `PUT /accesses/{id}`
 
         Modifies the specified shared access. You can only modify accesses whose permissions are a subset of those linked to your own access token.
 
@@ -700,6 +749,14 @@ section
         New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
 
         #### Successful response: OK `200`
+
+      table.definitions
+        tr
+          th: :markdown
+            `access`
+          td: :markdown
+            <span class="type">[access](#data-structure-access)</span><br>
+            The updated access.
 
     aside
       :markdown
@@ -713,11 +770,11 @@ section
     h3 Delete access
     .content
       :markdown
-        `DELETE /accesses/{token}`
+        `DELETE /accesses/{id}`
 
         Deletes the specified shared access. You can only delete accesses whose permissions are a subset of those linked to your own access token.
 
-        #### Successful response: OK `200`
+        #### Successful response: No content `204`
 
     aside
       :markdown
@@ -745,7 +802,13 @@ section
 
         #### Successful response: OK `200`
 
-        An object containing your app's current profile settings. The method always returns an object (which will be empty if your app never defined any setting).
+      table.definitions
+        tr
+          th: :markdown
+            `profile`
+          td: :markdown
+            <span class="type">object</span><br>
+            Your app's current profile settings. (Empty if your app never defined any setting.)
 
     aside
       :markdown
@@ -773,6 +836,14 @@ section
         An object with the desired changes to the settings (see above).
 
         #### Successful response: OK `200`
+
+      table.definitions
+        tr
+          th: :markdown
+            `profile`
+          td: :markdown
+            <span class="type">object</span><br>
+            Your app's updated profile settings.
 
     aside
       :markdown
@@ -807,7 +878,13 @@ section
 
         #### Successful response: OK `200`
 
-        An object containing the user's current public profile information.
+      table.definitions
+        tr
+          th: :markdown
+            `profile`
+          td: :markdown
+            <span class="type">object</span><br>
+            The user's current public profile information.
 
     aside
       :markdown

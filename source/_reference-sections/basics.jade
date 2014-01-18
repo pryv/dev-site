@@ -50,7 +50,7 @@ section
       ```
 
 section
-  h2 Alternative request method
+  h2 Alternative HTTP request method
   .content
     :markdown
       Because we can't fathom out the crazy rationale behind [HTTP access control (CORS) rules](https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS), we offer web apps an alternative way to place POST, PUT and DELETE requests in the API by using `application/x-www-form-urlencoded` POST requests with the following fields (all optional):
@@ -76,20 +76,20 @@ section
       This is intended for web apps only; if your app isn't running in browsers you should use regular requests.
 
 section
-  h2 Common HTTP headers
+  h2 Common response metadata
   .content
     :markdown
-      The following headers are included in every response:
+      The following metadata is included in every response:
 
     table.definitions
       tr
         th: :markdown
-          `API-Version`
+          `meta.apiVersion`
         td: :markdown
-          The version of the API in the form `{major}.{minor}.{revision}`
+          The version of the API in the form `{major}.{minor}.{revision}`. Mirrored in HTTP header `API-Version`.
       tr
         th: :markdown
-          `Server-Time`
+          `meta.serverTime`
         td: :markdown
           The current server time as a [timestamp](#data-structure-timestamp). Keeping reference of the server time is an absolute necessity to properly read and write event times.
 
@@ -97,7 +97,7 @@ section
   h2 Errors
   .content
     :markdown
-      When an error occurs, the API returns a 4xx or 5xx status code, with the response body usually containing an [error](#data-structure-error) object detailing the cause.
+      When an error occurs, the API returns a 4xx or 5xx status code, with the response containing an `error` property (of type [error](#data-structure-error)) detailing the cause.
 
   aside
     :markdown
