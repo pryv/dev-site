@@ -97,14 +97,16 @@ section
   h2 Errors
   .content
     :markdown
-      When an error occurs, the API returns a 4xx or 5xx status code, with the response containing an `error` property (of type [error](#data-structure-error)) detailing the cause.
+      When an error occurs, the API returns a response with an `error` object (see [error](#data-structure-error)) detailing the cause. (Over HTTP, the response status is set to 4xx or 5xx.) In this documentation, errors are identified by their `id`.
 
   aside
     :markdown
       #### Example error response
       ```json
       {
-        "id": "invalid-access-token",
-        "message": "Cannot find access with token 'bad-token'."
+        "error": {
+          "id": "invalid-access-token",
+          "message": "Cannot find access with token 'bad-token'."
+        }
       }
       ```

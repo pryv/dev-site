@@ -32,7 +32,9 @@ section
     h3 Common errors
     .content
       :markdown
-        #### Bad request `400`
+        #### Bad request
+
+        <span class="label http">HTTP status</span> `400`
 
         - `invalid-request-structure`: The request's structure is not that expected. This can happen e.g. with invalid JSON syntax, or when using an unexpected multipart structure for uploading file attachments.
         - `invalid-parameters-format`: The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
@@ -40,26 +42,36 @@ section
         - `unknown-stream`: The referenced stream(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
         - `unknown-tag`: The referenced typed tag(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
 
-        #### Unauthorized `401`
+        #### Unauthorized
+
+        <span class="label http">HTTP status</span> `401`
 
         - `invalid-access-token`: The data access token is missing or invalid.
 
-        #### Forbidden `403`
+        #### Forbidden
+
+        <span class="label http">HTTP status</span> `403`
 
         The given access token does not grant permission for this operation. See [accesses](#data-structure-access) for more details about accesses and permissions.
 
-        #### Not found `404`
+        #### Not found
+
+        <span class="label http">HTTP status</span> `404`
 
         - `unknown-event`: The event can't be found.
         - `unknown-stream`: The activity stream can't be found.
         - `unknown-tag`: The tag can't be found.
         - `unknown-attachment`: The attached file can't be found for the specified event.
 
-        #### Moved `301`
+        #### Moved
+
+        <span class="label http">HTTP status</span> `301`
 
         - `user-account-relocated`: The user has relocated her account to another Pryv server. Both the `Location` header and the error's `data` contain the equivalent URL pointing to the physical server now hosting the user's account. Note that this error can only occur between the moment the account is relocated and the moment your DNS is updated with the new server. So we're stretching the HTTP convention a little, in that the returned URL should not be used permanently (only until `{username}.pryv.io` points to the correct server again). You can decide whether you keep it for the duration of the session (if you have such a thing), for N hours, etc.
 
-        #### Payment required `402`
+        #### Payment required
+
+        <span class="label http">HTTP status</span> `402`
 
         - `user-intervention-required`: We cannot serve the request at the moment, because the user's account has exceeded the limits of its plan. The user must log into Pryv to fix her account.
 
@@ -73,7 +85,7 @@ section
     h3 Get events
     .content
       :markdown
-        `GET /events`, Socket.IO: `events.get`
+        <span class="label http">HTTP</span> `GET /events` <span class="label method-id">id</span> `events.get`
 
         Queries accessible events.
 
@@ -152,7 +164,9 @@ section
             If specified, only events modified since that time will be returned.
 
       :markdown
-        #### Successful response: OK `200`
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -174,17 +188,19 @@ section
     h3 Create event
     .content
       :markdown
-        `POST /events`, Socket.IO: `events.create`
+        <span class="label http">HTTP</span> `POST /events` <span class="label method-id">id</span> `events.create`
 
         Records a new event. It is recommended that events recorded this way are completed events, i.e. either period events with a known duration or mark events. To start a running period event, use [Start period](#TODO) instead.
 
         In addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
 
-        #### Body parameters
+        #### Parameters
 
         The new event's data: see [Event](#data-structure-event).
 
-        #### Successful response: created `201`
+        #### Response
+
+        <span class="label http">HTTP status</span> `201 Created`
 
       table.definitions
         tr
@@ -203,8 +219,8 @@ section
       :markdown
         #### Specific errors
 
-        - Bad request `400`, `invalid-operation`: The stream is in the trash, and we prevent the recording of new events into trashed streams.
-        - Bad request `400`, `periods-overlap`: Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+        - `invalid-operation` <span class="label http">HTTP status</span> `400 Bad request`: The stream is in the trash, and we prevent the recording of new events into trashed streams.
+        - `periods-overlap` <span class="label http">HTTP status</span> `400 Bad request`: Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
     aside
       :markdown
@@ -220,7 +236,7 @@ section
     h3 Start period
     .content
       :markdown
-        `POST /events/start`, Socket.IO: `events.start`
+        <span class="label http">HTTP</span> `POST /events/start` <span class="label method-id">id</span> `events.start`
 
         Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any. See [Create event](#TODO) for details.
 
@@ -236,7 +252,7 @@ section
     h3 Stop period
     .content
       :markdown
-        `POST /events/stop`, Socket.IO: `events.stop`
+        <span class="label http">HTTP</span> `POST /events/stop` <span class="label method-id">id</span> `events.stop`
 
         Stops a previously running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop must be specified.
 
@@ -264,7 +280,9 @@ section
             The stop time. Default: now.
 
       :markdown
-        #### Successful response: OK `200`
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -277,9 +295,9 @@ section
       :markdown
         #### Specific errors
 
-        - Bad request `400`, `unknown-event`: The specified event cannot be found.
-        - Bad request `400`, `invalid-operation`: The specified event is not a running period event.
-        - Bad request `400`, `missing-parameter`: No event was specified and the specified stream is not a `singleActivity` stream (so that there can be more than one running event).
+        - `unknown-event` <span class="label http">HTTP status</span> `400 Bad request`: The specified event cannot be found.
+        - `invalid-operation` <span class="label http">HTTP status</span> `400 Bad request`: The specified event is not a running period event.
+        - `missing-parameter` <span class="label http">HTTP status</span> `400 Bad request`: No event was specified and the specified stream is not a `singleActivity` stream (so that there can be more than one running event).
 
     aside
       :markdown
@@ -293,15 +311,32 @@ section
     h3 Update event
     .content
       :markdown
-        `PUT /events/{event-id}`, Socket.IO: `events.update`*
+        <span class="label http">HTTP</span> `PUT /events/{event-id}` <span class="label method-id">id</span> `events.update`
 
         Modifies the event's attributes.
 
-        #### Body parameters
+        #### Parameters
 
-        New values for the event's fields: see [event](#data-structure-event). All fields are optional, and only modified values must be included. TODO: example
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span>
+            <span class="label http">HTTP</span> Set in request path<br>
+            The id of the event.
+        tr
+          th: :markdown
+            `update`
+          td: :markdown
+            <span class="type">object</span>
+            <span class="label http">HTTP</span> = request body<br>
+            New values for the event's fields: see [event](#data-structure-event). All fields are optional, and only modified values must be included. TODO: example
 
-        #### Successful response: OK `200`
+      :markdown
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -320,8 +355,8 @@ section
       :markdown
         #### Specific errors
 
-        - Bad request `400`, `invalid-operation`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it. The error's `data.conflictingPeriodId` provides the id of the closest conflicting event.
-        - Bad request `400`, `periods-overlap`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+        - `invalid-operation` <span class="label http">HTTP status</span> `400 Bad request`: Returned for period events, if attempting to set the event's duration to `undefined` (i.e. still running) while one or more other period events were recorded after it. The error's `data.conflictingPeriodId` provides the id of the closest conflicting event.
+        - `periods-overlap` <span class="label http">HTTP status</span> `400 Bad request`: Returned for period events, if attempting to change the event's duration to a value that causes an overlap with one or more subsequent period event(s). The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
 
     aside
       :markdown
@@ -335,11 +370,13 @@ section
     h3 Add attached file(s) to event
     .content
       :markdown
-        `POST /events/{event-id}`
+        <span class="label http">HTTP</span> `POST /events/{event-id}`
 
-        Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
+        HTTP-only. Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
 
-        #### Successful response: OK `200`
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
     aside
       :markdown
@@ -359,14 +396,28 @@ section
     h3 Delete event
     .content
       :markdown
-        `DELETE /events/{event-id}`, Socket.IO: `events.delete`
+        <span class="label http">HTTP</span> `DELETE /events/{event-id}` <span class="label method-id">id</span> `events.delete`
 
         Trashes or deletes the specified event, depending on its current state:
 
         - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
         - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
 
-        #### Successful response: No content `204`
+        #### Parameters
+
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span>
+            <span class="label http">HTTP</span> Set in request path<br>
+            The id of the event.
+
+      :markdown
+        #### Response
+
+        <span class="label http">HTTP status</span> `204 No content`
 
     aside
       :markdown
@@ -378,13 +429,16 @@ section
 
   section.method
     h3 Get attached file
+
     .content
       :markdown
-        `GET /events/{event-id}/{file name}`
+        <span class="label http">HTTP</span> `GET /events/{event-id}/{file name}`
 
-        Gets the attached file.
+        HTTP-only. Gets the attached file.
 
-        #### Successful response: OK `200`
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
     aside
       :markdown
@@ -398,11 +452,32 @@ section
     h3 Delete attached file
     .content
       :markdown
-        `DELETE /events/{event-id}/{filename}`, Socket.IO: `events.deleteAttachedFile`
+        <span class="label http">HTTP</span> `DELETE /events/{event-id}/{filename}` <span class="label method-id">id</span> `events.deleteAttachedFile`
 
         Irreversibly deletes the attached file.
 
-        #### Successful response: No content `204`
+        #### Parameters
+
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span>
+            <span class="label http">HTTP</span> Set in request path<br>
+            The id of the event.
+        tr
+          th: :markdown
+            `fileName`
+          td: :markdown
+            <span class="type">object</span>
+            <span class="label http">HTTP</span> Set in request path<br>
+            The attached file's name.
+
+      :markdown
+        #### Response
+
+        <span class="label http">HTTP status</span> `204 No content`
 
     aside
       :markdown
@@ -410,54 +485,6 @@ section
 
         ```bash
         #TODO
-        ```
-
-  section.method
-    h3 Batch-create events
-    .content
-      :markdown
-        `POST /events/batch`, Socket.IO: `events.createBatch`
-
-        **This will be replaced with a generic batch method accepting any type of method calls.**
-
-        Batch upload events that were recorded by the client while offline. The submitted events are added in-order, with results returned individually for each (see response below).
-
-        #### Parameters
-
-        An array of client-recorded [events](#data-structure-event). In addition to the regular properties, each event must have a unique `tempRefId` defined (as it's temporary it must only be unique within the request). Also, make sure that the events' `time` is set in server time (as for single event requests).
-
-        #### Successful response: OK `200`
-
-        An object with one property per event submitted holding the result for that event. Each property's name is the submitted event's client id, and its value contains:
-
-        - If the event was successful created, an object with the `id` of the event, and possibly the `stoppedId` of the running period event that was stopped as a result. (For details, see POST `/events`.)
-        - If there was an error creating the event: an object with an `error` property holding the encountered [error](#data-structure-error).
-
-    aside
-      :markdown
-        #### cURL example
-
-        save a combination of blood pressures and heart rate.
-
-        ```bash
-        curl -i -H "Content-Type: application/json" -X POST -d '[
-        {"tempRefId": "aa", "time": 1385046854.282,
-         "streamId": "heart", "type": "frequency/bpm", "content": 90},
-        {"tempRefId": "bb", "time": 1385046854.282,
-         "streamId": "systolic", "type": "pressure/mmhg", "content": 120},
-        {"tempRefId": "cc", "time": 1385046854.282,
-         "streamId": "diastolic", "type": "pressure/mmhg", "content": 80
-        } ]' "https://$USERNAME.pryv.io/events/batch?auth=$TOKEN"
-        ```
-
-        #### Example response
-
-        ```json
-        {
-         "aa":{"id":"PVRD0xlGXq"},
-         "bb":{"id":"TPMxA0RZKXq"},
-         "cc":{"id":"TTixw0vlKKO"}
-        }
         ```
 
 section
@@ -470,7 +497,7 @@ section
     h3 Get streams
     .content
       :markdown
-        `GET /streams`, Socket.IO: `streams.get`
+        <span class="label http">HTTP</span> `GET /streams` <span class="label method-id">id</span> `streams.get`
 
         Gets the accessible streams, either from the root level or only descending from a specified parent stream.
 
@@ -493,7 +520,9 @@ section
             Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `all` return all items regardless of their state.
 
       :markdown
-        #### Successful response: OK `200`
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -506,7 +535,7 @@ section
       :markdown
         #### Specific errors
 
-        - Bad request `400`, `unknown-stream`: The specified parent stream can't be found.
+        - `unknown-stream` <span class="label http">HTTP status</span> `400 Bad request`: The specified parent stream can't be found.
 
     aside
       :markdown
@@ -526,7 +555,7 @@ section
     h3 Create stream
     .content
       :markdown
-        `POST /streams`, Socket.IO: `streams.create`
+        <span class="label http">HTTP</span> `POST /streams` <span class="label method-id">id</span> `streams.create`
 
         Creates a new stream at the root level or as a child stream to the specified stream.
 
@@ -534,7 +563,9 @@ section
 
         The new stream's data: see [activity stream](#data-structure-stream).
 
-        #### Successful response: created `201`
+        #### Response
+
+        <span class="label http">HTTP status</span> `201 Created`
 
       table.definitions
         tr
@@ -547,9 +578,9 @@ section
       :markdown
         #### Specific errors
 
-        - Bad request `400`, `item-id-already-exists`: A stream already exists with the same id.
-        - Bad request `400`, `item-name-already-exists`: A sibling stream already exists with the same name.
-        - Bad request `400`, `invalid-item-id`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
+        - `item-id-already-exists` <span class="label http">HTTP status</span> `400 Bad request`: A stream already exists with the same id.
+        - `item-name-already-exists` <span class="label http">HTTP status</span> `400 Bad request`: A sibling stream already exists with the same name.
+        - `invalid-item-id` <span class="label http">HTTP status</span> `400 Bad request`: Occurs if trying to set the id to an invalid value (e.g. a reserved word like `"null"`).
 
     aside
       :markdown
@@ -563,15 +594,32 @@ section
     h3 Update stream
     .content
       :markdown
-        `PUT /streams/{stream-id}`, Socket.IO: `streams.update`*
+        <span class="label http">HTTP</span> `PUT /streams/{stream-id}` <span class="label method-id">id</span> `streams.update`
 
         Modifies the activity stream's attributes.
 
         #### Parameters
 
-        New values for the stream's fields: see [activity stream](#data-structure-stream). All fields are optional, and only modified values must be included.
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span>
+            <span class="label http">HTTP</span> Set in request path<br>
+            The id of the stream.
+        tr
+          th: :markdown
+            `update`
+          td: :markdown
+            <span class="type">object</span>
+            <span class="label http">HTTP</span> = request body<br>
+            New values for the stream's fields: see [activity stream](#data-structure-stream). All fields are optional, and only modified values must be included.
 
-        #### Successful response: OK `200`
+      :markdown
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -584,8 +632,8 @@ section
       :markdown
         #### Specific errors
 
-        - Bad request `400`, `unknown-stream`: The specified parent stream's id is unknown.
-        - Bad request `400`, `item-name-already-exists`: A sibling stream already exists with the same name.
+        - `unknown-stream` <span class="label http">HTTP status</span> `400 Bad request`: The specified parent stream's id is unknown.
+        - `item-name-already-exists` <span class="label http">HTTP status</span> `400 Bad request`: A sibling stream already exists with the same name.
 
     aside
       :markdown
@@ -599,7 +647,7 @@ section
     h3 Delete stream
     .content
       :markdown
-        `DELETE /streams/{stream-id}`, Socket.IO: `streams.delete`
+        <span class="label http">HTTP</span> `DELETE /streams/{stream-id}` <span class="label method-id">id</span> `streams.delete`
 
         Trashes or deletes the specified stream, depending on its current state:
 
@@ -611,17 +659,26 @@ section
       table.definitions
         tr
           th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span>
+            <span class="label http">HTTP</span> Set in request path<br>
+            The id of the stream.
+        tr
+          th: :markdown
             `mergeEventsWithParent`
           td: :markdown
             <span class="type">`true`|`false`</span><br>
             Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
 
       :markdown
-        #### Successful response: No content `204`
+        #### Response
+
+        <span class="label http">HTTP status</span> `204 No content`
 
         #### Specific errors
 
-        - Bad request `400`, `missing-parameter`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
+        - `missing-parameter` <span class="label http">HTTP status</span> `400 Bad request`: There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing.
 
     aside
       :markdown
@@ -638,52 +695,16 @@ section
       While full access management is reserved for trusted apps, any app can retrieve and manage shared accesses depending on its own permissions. All methods here only deal with shared accesses whose permissions are a subset of that linked to the token used for the requests. (You'll get a `403 Forbidden` error if trying to touch other types of accesses, or shared accesses with greater permissions.)
 
   section.method
-    h3 Get current access info
-    .content
-      :markdown
-        `GET /access-info`
-
-        Retrieves information about the current access.
-
-        #### Successful response: OK `200`
-
-      table.definitions
-        tr
-          th: :markdown
-            `name`
-          td: :markdown
-            <span class="type">string</span><br>
-            The current access' name.
-        tr
-          th: :markdown
-            `type`
-          td: :markdown
-            <span class="type">string</span><br>
-            The current access' type.
-        tr
-          th: :markdown
-            `permissions`
-          td: :markdown
-            <span class="type">[access](#data-structure-access).permissions</span><br>
-            The current access' permissions.
-
-    aside
-      :markdown
-        #### cURL example
-
-        ```bash
-        curl -i -H "Authorization: {access-token}" https://{username}.pryv.io/access-info
-        ```
-
-  section.method
     h3 Get accesses
     .content
       :markdown
-        `GET /accesses`
+        <span class="label http">HTTP</span> `GET /accesses` <span class="label method-id">id</span> `accesses.get`
 
         Gets all manageable shared accesses.
 
-        #### Successful response: OK `200`
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -705,7 +726,7 @@ section
     h3 Create access
     .content
       :markdown
-        `POST /accesses`
+        <span class="label http">HTTP</span> `POST /accesses` <span class="label method-id">id</span> `accesses.create`
 
         Creates a new shared access. You can only create accesses whose permissions are a subset of those linked to your own access token.
 
@@ -713,7 +734,9 @@ section
 
         The new access's data: see [access](#data-structure-access).
 
-        #### Successful response: created `201`
+        #### Response
+
+        <span class="label http">HTTP status</span> `201 Created`
 
       table.definitions
         tr
@@ -726,7 +749,7 @@ section
       :markdown
         #### Specific errors
 
-        - Bad request `400`, `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
+        - `invalid-item-id` <span class="label http">HTTP status</span> `400 Bad request`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
 
     aside
       :markdown
@@ -740,15 +763,32 @@ section
     h3 Update access
     .content
       :markdown
-        `PUT /accesses/{id}`
+        <span class="label http">HTTP</span> `PUT /accesses/{id}` <span class="label method-id">id</span> `accesses.update`
 
         Modifies the specified shared access. You can only modify accesses whose permissions are a subset of those linked to your own access token.
 
         #### Parameters
 
-        New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span>
+            <span class="label http">HTTP</span> Set in request path<br>
+            The id of the access.
+        tr
+          th: :markdown
+            `update`
+          td: :markdown
+            <span class="type">object</span>
+            <span class="label http">HTTP</span> = request body<br>
+            New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included. TODO: example
 
-        #### Successful response: OK `200`
+      :markdown
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -770,11 +810,25 @@ section
     h3 Delete access
     .content
       :markdown
-        `DELETE /accesses/{id}`
+        <span class="label http">HTTP</span> `DELETE /accesses/{id}` <span class="label method-id">id</span> `accesses.delete`
 
         Deletes the specified shared access. You can only delete accesses whose permissions are a subset of those linked to your own access token.
 
-        #### Successful response: No content `204`
+        #### Parameters
+
+      table.definitions
+        tr
+          th: :markdown
+            `id`
+          td: :markdown
+            <span class="type">[identity](#data-structure-identity)</span>
+            <span class="label http">HTTP</span> Set in request path<br>
+            The id of the access.
+
+      :markdown
+        #### Response
+
+        <span class="label http">HTTP status</span> `204 No content`
 
     aside
       :markdown
@@ -796,11 +850,13 @@ section
     h3 Get app settings
     .content
       :markdown
-        `GET /profile/app`
+        <span class="label http">HTTP</span> `GET /profile/app` <span class="label method-id">id</span> `profile.getApp`
 
         Gets your app profile settings.
 
-        #### Successful response: OK `200`
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -822,7 +878,7 @@ section
     h3 Update profile settings
     .content
       :markdown
-        `PUT /profile/app`
+        <span class="label http">HTTP</span> `PUT /profile/app` <span class="label method-id">id</span> `profile.updateApp`
 
         Adds, updates or delete settings.
 
@@ -833,9 +889,19 @@ section
 
         #### Parameters
 
-        An object with the desired changes to the settings (see above).
+      table.definitions
+        tr
+          th: :markdown
+            `update`
+          td: :markdown
+            <span class="type">object</span>
+            <span class="label http">HTTP</span> = request body<br>
+            An object with the desired changes to the settings (see above).
 
-        #### Successful response: OK `200`
+      :markdown
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -872,11 +938,13 @@ section
     h3 Get public info
     .content
       :markdown
-        `GET /profile/public`
+        <span class="label http">HTTP</span> `GET /profile/public` <span class="label method-id">id</span> `profile.getPublic`
 
         Gets the user's public profile info.
 
-        #### Successful response: OK `200`
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
 
       table.definitions
         tr
@@ -892,4 +960,137 @@ section
 
         ```bash
         #TODO
+        ```
+
+section
+  h2 General methods
+  .intro
+    :markdown
+      Methods that don't pertain to a particular resource type.
+
+  section.method
+    h3 Get current access info
+    .content
+      :markdown
+        <span class="label http">HTTP</span> `GET /access-info` <span class="label method-id">id</span> `getAccessInfo`
+
+        Retrieves information about the current access.
+
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
+
+      table.definitions
+        tr
+          th: :markdown
+            `name`
+          td: :markdown
+            <span class="type">string</span><br>
+            The current access' name.
+        tr
+          th: :markdown
+            `type`
+          td: :markdown
+            <span class="type">string</span><br>
+            The current access' type.
+        tr
+          th: :markdown
+            `permissions`
+          td: :markdown
+            <span class="type">[access](#data-structure-access).permissions</span><br>
+            The current access' permissions.
+    aside
+      :markdown
+        #### cURL example
+        ```bash
+        curl -i -H "Authorization: {access-token}" https://{username}.pryv.io/access-info
+        ```
+
+  section.method
+    h3 Call batch
+    .content
+      :markdown
+        <span class="label http">HTTP</span> `POST /` <span class="label method-id">id</span> `callBatch`
+
+        Calls a batch of API methods.
+
+        #### Parameters
+
+        Array of method call objects, each defined as follows:
+
+      table.definitions
+        tr
+          th: :markdown
+            `method`
+          td: :markdown
+            <span class="type">string</span><br>
+            The method id.
+        tr
+          th: :markdown
+            `params`
+          td: :markdown
+            <span class="type">object or array</span><br>
+            The call parameters as required by the method.
+
+      :markdown
+        #### Response
+
+        <span class="label http">HTTP status</span> `200 OK`
+
+      table.definitions
+        tr
+          th: :markdown
+            `results`
+          td: :markdown
+            <span class="type">array of call results</span><br>
+            The results of each method call, in order.
+
+    aside
+      :markdown
+        #### cURL example
+
+        Save a combination of blood pressures and heart rate.
+
+        ```bash
+        curl -i -H "Content-Type: application/json" -X POST -d '[
+          {
+            "methodId": "events.create",
+            "params": {
+              "time": 1385046854.282,
+              "streamId": "heart",
+              "type": "frequency/bpm",
+              "content": 90
+            }
+          },
+          {
+            "methodId": "events.create",
+            "params": {
+              "time": 1385046854.282,
+              "streamId": "systolic",
+              "type": "pressure/mmhg",
+              "content": 120
+            }
+          },
+          {
+            "methodId": "events.create",
+            "params": {
+              "time": 1385046854.282,
+              "streamId": "diastolic",
+              "type": "pressure/mmhg",
+              "content": 80
+            }
+          }
+        ]' "https://$USERNAME.pryv.io/?auth=$TOKEN"
+        ```
+
+        #### Example response
+
+        ```json
+        {
+          "results": [
+            {"event": {...}},
+            {"event": {...}},
+            {"event": {...}}
+          ]
+        }
         ```
