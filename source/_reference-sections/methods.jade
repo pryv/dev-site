@@ -423,7 +423,20 @@ section
             The id of the event.
 
       :markdown
-        #### Response
+        #### Response if trashed
+
+        <span class="label http">HTTP status</span> `200 OK`
+
+      table.definitions
+        tr
+          th: :markdown
+            `event`
+          td: :markdown
+            <span class="type">[event](#data-structure-event)</span><br>
+            The trashed event.
+
+      :markdown
+        #### Response if deleted
 
         <span class="label http">HTTP status</span> `204 No content`
 
@@ -690,7 +703,20 @@ section
             Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
 
       :markdown
-        #### Response
+        #### Response if trashed
+
+        <span class="label http">HTTP status</span> `200 OK`
+
+      table.definitions
+        tr
+          th: :markdown
+            `stream`
+          td: :markdown
+            <span class="type">[stream](#data-structure-stream)</span><br>
+            The trashed stream.
+
+      :markdown
+        #### Response if deleted
 
         <span class="label http">HTTP status</span> `204 No content`
 
