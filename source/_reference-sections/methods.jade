@@ -378,6 +378,14 @@ section
 
         <span class="label http">HTTP status</span> `200 OK`
 
+      table.definitions
+        tr
+          th: :markdown
+            `event`
+          td: :markdown
+            <span class="type">[event](#data-structure-event)</span><br>
+            The updated event.
+
     aside
       :markdown
         #### cURL example
@@ -432,13 +440,15 @@ section
 
     .content
       :markdown
-        <span class="label http">HTTP</span> `GET /events/{event-id}/{file name}`
+        <span class="label http">HTTP</span> `GET /events/{event-id}/{file id}`
 
         HTTP-only. Gets the attached file.
 
         #### Response
 
         <span class="label http">HTTP status</span> `200 OK`
+
+        The file's contents.
 
     aside
       :markdown
@@ -452,7 +462,7 @@ section
     h3 Delete attached file
     .content
       :markdown
-        <span class="label http">HTTP</span> `DELETE /events/{event-id}/{filename}` <span class="label method-id">id</span> `events.deleteAttachedFile`
+        <span class="label http">HTTP</span> `DELETE /events/{event-id}/{file-id}` <span class="label method-id">id</span> `events.deleteAttachedFile`
 
         Irreversibly deletes the attached file.
 
@@ -468,7 +478,7 @@ section
             The id of the event.
         tr
           th: :markdown
-            `fileName`
+            `fileId`
           td: :markdown
             <span class="type">object</span>
             <span class="label http">HTTP</span> Set in request path<br>
@@ -477,7 +487,15 @@ section
       :markdown
         #### Response
 
-        <span class="label http">HTTP status</span> `204 No content`
+        <span class="label http">HTTP status</span> `200 OK`
+
+      table.definitions
+        tr
+          th: :markdown
+            `event`
+          td: :markdown
+            <span class="type">[event](#data-structure-event)</span><br>
+            The updated event.
 
     aside
       :markdown

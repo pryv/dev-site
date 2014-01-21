@@ -81,18 +81,24 @@ section
           `attachments`
         td
           :markdown
-            <span class="type">object</span>
+            <span class="type">array of file attachments</span>
             <span class="label optional">optional</span>
             <span class="label read-only">read-only</span><br>
-            An object describing the files attached to the event. Each of its properties corresponds to one file and has the following structure:
+            An array describing the files attached to the event. Each item has the following structure:
 
           table.definitions
+            tr
+              th: :markdown
+                `id`
+              td: :markdown
+                <span class="type">[identity](#data-structure-identity)</span><br>
+                The file's id. The attached file's URL is obtained by appending this id to the event's resource URL.
             tr
               th: :markdown
                 `fileName`
               td: :markdown
                 <span class="type">string</span><br>
-                The file's name. The attached file's URL is obtained by appending this file name to the event's resource URL.
+                The file's name as uploaded.
             tr
               th: :markdown
                 `type`
