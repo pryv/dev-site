@@ -1,0 +1,118 @@
+mixin h1(string)
+  if string
+    !{markdown('#' + string)}
+
+mixin h2(string)
+  if string
+    !{markdown('##' + string)}
+
+mixin h3(string)
+  if string
+    !{markdown('###' + string)}
+
+mixin h4(string)
+  if string
+    !{markdown('####' + string)}
+
+mixin h5(string)
+  if string
+    !{markdown('#####' + string)}
+
+mixin intro(string)
+  if string
+    .intro
+      !{markdown(string)}
+
+mixin text(string)
+  if string
+    !{markdown(string)}
+
+mixin methodId(id)
+  if id
+    span.method-id
+      span.label id
+      span.label-value: code !{id}
+
+mixin http(http)
+  if http
+    span.http
+      span.label HTTP
+      span.label-value: code !{http}
+
+mixin properties(properties)
+  if properties
+    table.definitions
+      each prop in properties
+        tr
+          th
+            code !{prop.key}
+          td
+            .header
+              // TODO make type specification robust
+              span.type !{markdown(prop.type)}
+              if prop.unique
+                span.label.unique unique
+              if prop.optional
+                span.label.optional optional
+              if prop.readOnly
+                span.label.read-only read-only
+            .description !{markdown(prop.description)}
+
+mixin method(method, inDocParentId)
+  section(id='#{getInDocId(inDocParentId, method.id)}').method
+    +h3(method.title)
+    .content
+      +methodId(method.id)
+      +http(method.http)
+      +intro(method.description)
+      if method.params
+        +h4('Parameters')
+        +text(method.params.description)
+        +properties(method.params.properties)
+      if method.result
+        +h4('Result')
+        +http(method.result.http)
+        +text(method.result.description)
+        +properties(method.result.properties)
+    if method.examples
+      aside
+        each ex in method.examples
+          +text(ex.title)
+          pre: code !{printJSON(ex.params)}
+          .step-marker ⬇
+          pre: code !{printJSON(ex.result)}
+
+mixin type(type, inDocParentId)
+  section(id='#{getInDocId(inDocParentId, type.id)}')
+    +h2(type.title)
+    .content
+      +intro(type.description)
+      +properties(type.properties)
+    if type.examples
+      aside
+        each ex in type.examples
+          +text(ex.title)
+          pre: code !{printJSON(ex.content)}
+
+- function getInDocId() { return [].slice.apply(arguments).join('-'); }
+- function printJSON(content) { return JSON.stringify(content, null, 2); }
+
+each level1Section in sourceData
+  section(id='#{getInDocId(level1Section.id)}')
+    +h1(level1Section.title)
+    +intro(level1Section.description)
+
+    if level1Section.sections
+      each level2Section in level1Section.sections
+        section(id='#{getInDocId(level1Section.id, level2Section.id)}')
+          +h2(level2Section.title)
+          +intro(level2Section.description)
+
+          if level2Section.methods
+            each method in level2Section.methods
+              - var parentInDocId = getInDocId(level1Section.id, level2Section.id)
+              +method(method, parentInDocId)
+
+    if level1Section.types
+      each type in level1Section.types
+        +type(type, level1Section.id)

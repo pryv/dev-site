@@ -141,8 +141,33 @@ dd
     list-style-type: square
     //line-height: 1.2em
 
-  .label.method-id
-    background-color: black
+
+  .method-id, .http
+    display: inline-block
+    border-radius: 3px
+    overflow: hidden
+    .label
+      padding: 4px 5px
+      border: 0 none
+      border-radius: 0
+      margin: 0
+    code
+      padding: 5px
+      border: 0 none
+      border-radius: 0
+      margin: 0
+
+  .method-id
+    .label
+      background-color: #266C9C
+
+  .http
+    .label
+      background-color: #7E7E7E
+
+  .method .step-marker
+    text-align: center
+    font-size: 1.5em
 
 .with-toc
       #toc

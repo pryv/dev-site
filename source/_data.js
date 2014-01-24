@@ -53,6 +53,14 @@ module.exports = {
     "withExamples": true,
     "withTOC": true
   },
+  "reference-new": {
+    "title": "Reference",
+    "layout": "_layouts/default",
+    "sourceData": require("../../api-server/doc"),
+    "markdown": require('marked'),
+    "withExamples": true,
+    "withTOC": true
+  },
   "standard-structure": {
     "title": "Standard data structure",
     "layout": "_layouts/default",
