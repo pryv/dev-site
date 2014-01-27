@@ -39,6 +39,11 @@ mixin http(http)
       span.label HTTP
       span.label-value: code !{http}
 
+mixin labelValue(label, cssClass, value)
+  if value
+    span(class='label !{cssClass}')
+      !{label + (typeof(value) === 'string' ? ' ' + value : '')}
+
 mixin properties(properties)
   if properties
     table.definitions
@@ -50,13 +55,11 @@ mixin properties(properties)
             .header
               // TODO make type specification robust
               span.type !{markdown(prop.type)}
-              if prop.unique
-                span.label.unique unique
-              if prop.optional
-                span.label.optional optional
-              if prop.readOnly
-                span.label.read-only read-only
+              +labelValue('unique', 'unique', prop.unique)
+              +labelValue('optional', 'optional', prop.optional)
+              +labelValue('read-only', 'read-only', prop.readOnly)
             .description !{markdown(prop.description)}
+            +properties(prop.properties)
 
 mixin method(method, inDocParentId)
   section(id='#{getInDocId(inDocParentId, method.id)}').method
@@ -92,7 +95,10 @@ mixin type(type, inDocParentId)
       aside
         each ex in type.examples
           +text(ex.title)
-          pre: code !{printJSON(ex.content)}
+          if typeof(ex.content) === 'string'
+            +text(ex.content)
+          else
+            pre: code !{printJSON(ex.content)}
 
 - function getInDocId() { return [].slice.apply(arguments).join('-'); }
 - function printJSON(content) { return JSON.stringify(content, null, 2); }
