@@ -1,4 +1,6 @@
-module.exports = {
+var serverDoc = require("../../api-server/doc");
+
+module.exports = exports = {
   "about": {
     "title": "About",
     "layout": "_layouts/default",
@@ -56,7 +58,6 @@ module.exports = {
   "reference-new": {
     "title": "Reference",
     "layout": "_layouts/default",
-    "sourceData": require("../../api-server/doc"),
     "markdown": require('marked'),
     "withExamples": true,
     "withTOC": true
@@ -71,3 +72,8 @@ module.exports = {
     "withTOC": true
   }
 };
+
+// add server doc data to all
+Object.keys(exports).forEach(function(key) {
+  exports[key].serverDoc = serverDoc;
+});

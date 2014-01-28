@@ -110,7 +110,7 @@ mixin type(type, inDocParentId)
 - function getInDocId() { return [].slice.apply(arguments).join('-'); }
 - function printJSON(content) { return JSON.stringify(content, null, 2); }
 
-each level1Section in sourceData
+each level1Section in serverDoc
   section(id='#{getInDocId(level1Section.id)}')
     +h1(level1Section.title)
     +intro(level1Section.description)

@@ -20,11 +20,12 @@ Try to stick to the following guidelines when writing (these guidelines are mean
 
 ## Development
 
+Prerequisite: the source API server working copy must be under `../api-server`.
+
 - `make setup` sets up the environment; relies on [nvm](https://github.com/creationix/nvm)
 - `make server` runs a small server serving the generated website during development development
 - `make compile` generates the website from the source into the `build` folder
 - `make publish` compiles the website (see `compile` target above) and publishes it to the repo's `gh-pages` branch
-- `scripts/update-api-version.bash` automatically updates the API version from a nearby `api-server` repo (assuming `../api-server/package.json` to exist from the present repo's root)
 
 (Read the `makefile` for details.)
 
