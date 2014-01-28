@@ -39,9 +39,15 @@ mixin http(http)
       span.label HTTP
       span.label-value: code !{http}
 
+mixin typeText(string)
+  if string
+    - var output = markdown(string)
+    -// YES, HACK
+    span.type !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
+
 mixin labelValue(label, cssClass, value)
   if value
-    span(class='label !{cssClass}')
+    span(class='label ' + cssClass)
       !{label + (typeof(value) === 'string' ? ' ' + value : '')}
 
 mixin properties(properties)
@@ -53,8 +59,8 @@ mixin properties(properties)
             code !{prop.key}
           td
             .header
-              // TODO make type specification robust
-              span.type !{markdown(prop.type)}
+              -// TODO make type specification flexible
+              +typeText(prop.type)
               +labelValue('unique', 'unique', prop.unique)
               +labelValue('optional', 'optional', prop.optional)
               +labelValue('read-only', 'read-only', prop.readOnly)
@@ -65,8 +71,9 @@ mixin method(method, inDocParentId)
   section(id='#{getInDocId(inDocParentId, method.id)}').method
     +h3(method.title)
     .content
-      +methodId(method.id)
-      +http(method.http)
+      .meta
+        +methodId(method.id)
+        +http(method.http)
       +intro(method.description)
       if method.params
         +h4('Parameters')
