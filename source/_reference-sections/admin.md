@@ -33,7 +33,7 @@ TODO: review and complete
 - `401 Unauthorized`, id `invalid-credentials`: User credentials are missing or invalid.
 - `404 Not Found`, possible cases:
 	- Id `unknown-access`: The data access can't be found.
-	- Id `unknown-bookmark`: The access bookmark can't be found.
+	- Id `unknown-followed-slice`: The followed slice can't be found.
 
 
 
@@ -277,20 +277,20 @@ If a matching access already exists:
 ```
 
 
-## <a id="admin-bookmarks"></a>Bookmarks
+## <a id="admin-followed-slice"></a>Followed slices
 
 TODO: introductory text
 
 
-### Get bookmarks
+### Get followed slices
 
-`GET /admin/bookmarks`
+`GET /followed-slices`
 
-Gets all of the user's sharing bookmarks.
+Gets all of the user's followed slices.
 
 #### Successful response: `200 OK`
 
-An array of [bookmarks](#data-structure-bookmark) containing all sharing bookmarks in the user's account, ordered by name.
+An array of [followed slices](#data-structure-followed-slice) containing all followed slices in the user's account, ordered by name.
 
 #### cURL example
 
@@ -299,19 +299,19 @@ An array of [bookmarks](#data-structure-bookmark) containing all sharing bookmar
 ```
 
 
-### Create bookmark
+### Create followed slice
 
-`POST /admin/bookmarks`
+`POST /followed-slices`
 
-Creates a new sharing bookmark.
+Creates a new followed slice.
 
 #### Parameters
 
-The new bookmark's data: see [bookmark](#data-structure-bookmark).
+The new followed slice's data: see [followed slice](#data-structure-followed-slice).
 
 #### Successful response: `201 Created`
 
-- `id` ([identity](#data-structure-identity)): The created bookmark's id.
+- `id` ([identity](#data-structure-identity)): The created followed slice's id.
 
 #### cURL example
 
@@ -320,15 +320,15 @@ The new bookmark's data: see [bookmark](#data-structure-bookmark).
 ```
 
 
-### Update bookmark
+### Update followed slice
 
-`PUT /admin/bookmarks/{bookmark-id}`
+`PUT /followed-slices/{followed-slice-id}`
 
-Modifies the specified sharing bookmark.
+Modifies the specified followed slice.
 
 #### Parameters
 
-New values for the bookmark's fields: see [bookmark](#data-structure-bookmark). All fields are optional, and only modified values must be included. TODO: example
+New values for the followed slice's fields: see [followed slice](#data-structure-followed-slice). All fields are optional, and only modified values must be included. TODO: example
 
 #### Successful response: `200 OK`
 
@@ -339,11 +339,11 @@ New values for the bookmark's fields: see [bookmark](#data-structure-bookmark). 
 ```
 
 
-### Delete bookmark
+### Delete followed slice
 
-`DELETE /admin/bookmarks/{bookmark-id}`
+`DELETE /followed-slices/{followed-slice-id}`
 
-Deletes the specified sharing bookmark.
+Deletes the specified followed slice.
 
 #### Successful response: `200 OK`
 
