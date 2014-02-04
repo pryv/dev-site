@@ -64,33 +64,49 @@ mixin properties(properties)
               +labelValue('unique', 'unique', prop.unique)
               +labelValue('optional', 'optional', prop.optional)
               +labelValue('read-only', 'read-only', prop.readOnly)
+              +http(prop.http)
             .description !{markdown(prop.description)}
             +properties(prop.properties)
 
-mixin method(method, inDocParentId)
-  section(id='#{getInDocId(inDocParentId, method.id)}').method
-    +h3(method.title)
+mixin exampleContent(content)
+  if content
+    if typeof(content) === 'string'
+      +text(content)
+    else
+      pre: code !{printJSON(content)}
+
+mixin section(section, inDocParentId)
+  - var isMethod = section.type === 'method'
+  section(id='#{getInDocId(inDocParentId, section.id)}', class='#{section.type || ""}')
+    +h3(section.title)
     .content
-      .meta
-        +methodId(method.id)
-        +http(method.http)
-      +intro(method.description)
-      if method.params
+      if isMethod
+        .meta
+          +methodId(section.id)
+          +http(section.http)
+      +intro(section.description)
+      +properties(section.properties)
+      if section.params
         +h4('Parameters')
-        +text(method.params.description)
-        +properties(method.params.properties)
-      if method.result
+        +text(section.params.description)
+        +properties(section.params.properties)
+      if section.result
         +h4('Result')
-        +http(method.result.http)
-        +text(method.result.description)
-        +properties(method.result.properties)
-    if method.examples
+        +http(section.result.http)
+        +text(section.result.description)
+        +properties(section.result.properties)
+      if section.errors
+        +h4('Specific errors')
+        +properties(section.errors)
+    if section.examples
       aside
-        each ex in method.examples
+        each ex in section.examples
           +text(ex.title)
-          pre: code !{printJSON(ex.params)}
-          .step-marker ⬇
-          pre: code !{printJSON(ex.result)}
+          +exampleContent(ex.content)
+          if ex.params
+            +exampleContent(ex.params)
+            .step-marker ⬇
+            +exampleContent(ex.result)
 
 mixin type(type, inDocParentId)
   section(id='#{getInDocId(inDocParentId, type.id)}')
@@ -102,10 +118,7 @@ mixin type(type, inDocParentId)
       aside
         each ex in type.examples
           +text(ex.title)
-          if typeof(ex.content) === 'string'
-            +text(ex.content)
-          else
-            pre: code !{printJSON(ex.content)}
+          +exampleContent(ex.content)
 
 - function getInDocId() { return [].slice.apply(arguments).join('-'); }
 - function printJSON(content) { return JSON.stringify(content, null, 2); }
@@ -121,10 +134,10 @@ each level1Section in serverDoc
           +h2(level2Section.title)
           +intro(level2Section.description)
 
-          if level2Section.methods
-            each method in level2Section.methods
+          if level2Section.sections
+            each section in level2Section.sections
               - var parentInDocId = getInDocId(level1Section.id, level2Section.id)
-              +method(method, parentInDocId)
+              +section(section, parentInDocId)
 
     if level1Section.types
       each type in level1Section.types
