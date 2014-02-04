@@ -3,8 +3,8 @@ h1 API methods
   :markdown
     Not all methods are available over Socket.IO for the moment; for those that are, we indicate the method id next to the HTTP verb and path.
 
+// TODO: REMOVE THIS (this section is now defined in api-server/docs)
 section
-  // TODO: REMOVE THIS (this content is now defined in api-server/docs)
   h2 Preliminary information
   section
     h3 Authorization
@@ -76,6 +76,7 @@ section
 
         - `user-intervention-required`: We cannot serve the request at the moment, because the user's account has exceeded the limits of its plan. The user must log into Pryv to fix her account.
 
+// TODO: REMOVE THIS (this section is now defined in api-server/docs)
 section
   h2 Events
   .intro
@@ -476,7 +477,7 @@ section
     h3 Delete attached file
     .content
       :markdown
-        <span class="label http">HTTP</span> `DELETE /events/{event-id}/{file-id}` <span class="label method-id">id</span> `events.deleteAttachedFile`
+        <span class="label http">HTTP</span> `DELETE /events/{event-id}/{file-id}` <span class="label method-id">id</span> `events.deleteAttachment`
 
         Irreversibly deletes the attached file.
 

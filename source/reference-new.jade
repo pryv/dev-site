@@ -33,11 +33,18 @@ mixin methodId(id)
       span.label id
       span.label-value: code !{id}
 
-mixin http(http)
+mixin http(http, httpOnly)
   if http
     span.http
-      span.label HTTP
-      span.label-value: code !{http}
+      span.label= httpOnly ? 'HTTP-only' : 'HTTP'
+      span.label-value
+        if http.code
+          code !{http.code}
+        else if http.text
+          span !{http.text}
+        else
+          code !{http}
+
 
 mixin typeText(string)
   if string
@@ -68,6 +75,14 @@ mixin properties(properties)
             .description !{markdown(prop.description)}
             +properties(prop.properties)
 
+mixin result(result)
+  if result
+    +h4(result.title || 'Result')
+    +http(result.http)
+    +text(result.description)
+    +properties(result.properties)
+
+
 mixin exampleContent(content)
   if content
     if typeof(content) === 'string'
@@ -82,8 +97,9 @@ mixin section(section, inDocParentId)
     .content
       if isMethod
         .meta
-          +methodId(section.id)
-          +http(section.http)
+          if ! section.httpOnly
+            +methodId(section.id)
+          +http(section.http, section.httpOnly)
       +intro(section.description)
       +properties(section.properties)
       if section.params
@@ -91,10 +107,11 @@ mixin section(section, inDocParentId)
         +text(section.params.description)
         +properties(section.params.properties)
       if section.result
-        +h4('Result')
-        +http(section.result.http)
-        +text(section.result.description)
-        +properties(section.result.properties)
+        if section.result instanceof Array
+          each result in section.result
+            +result(result)
+        else
+          +result(section.result)
       if section.errors
         +h4('Specific errors')
         +properties(section.errors)
@@ -103,8 +120,8 @@ mixin section(section, inDocParentId)
         each ex in section.examples
           +text(ex.title)
           +exampleContent(ex.content)
-          if ex.params
-            +exampleContent(ex.params)
+          +exampleContent(ex.params)
+          if ex.result
             .step-marker ⬇
             +exampleContent(ex.result)
 

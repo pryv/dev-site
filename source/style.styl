@@ -149,6 +149,7 @@ dd
 
     .method-id, .http
       display: inline-block
+      vertical-align: middle
       border-radius: 3px
       overflow: hidden
       .label
@@ -156,10 +157,14 @@ dd
         border: 0 none
         border-radius: 0
         margin: 0
-      code
-        padding: 5px
-        border: 0 none
-        margin: 0
+      .label-value
+        code, span
+          padding: 5px
+          border: 0 none
+          border-radius: 0
+          margin: 0
+          white-space: nowrap
+          background-color: #f7f7f9
 
     .method-id
       margin-right: 0.5em
