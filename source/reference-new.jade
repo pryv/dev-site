@@ -90,10 +90,14 @@ mixin exampleContent(content)
     else
       pre: code !{printJSON(content)}
 
-mixin section(section, inDocParentId)
+mixin section(section, parentDocId, level)
   - var isMethod = section.type === 'method'
-  section(id='#{getInDocId(inDocParentId, section.id)}', class='#{section.type || ""}')
-    +h3(section.title)
+  - var docId = serverDoc.getDocId(parentDocId, section.id)
+  section(id='#{docId}', class='#{section.type || ""}')
+    if level === 2
+      +h2(section.title)
+    else
+      +h3(section.title)
     .content
       if isMethod
         .meta
@@ -124,38 +128,17 @@ mixin section(section, inDocParentId)
           if ex.result
             .step-marker ⬇
             +exampleContent(ex.result)
+    if section.sections
+      each subSection in section.sections
+        +section(subSection, docId, level + 1)
 
-mixin type(type, inDocParentId)
-  section(id='#{getInDocId(inDocParentId, type.id)}')
-    +h2(type.title)
-    .content
-      +intro(type.description)
-      +properties(type.properties)
-    if type.examples
-      aside
-        each ex in type.examples
-          +text(ex.title)
-          +exampleContent(ex.content)
-
-- function getInDocId() { return [].slice.apply(arguments).join('-'); }
 - function printJSON(content) { return JSON.stringify(content, null, 2); }
 
 each level1Section in serverDoc
-  section(id='#{getInDocId(level1Section.id)}')
+  section(id='#{serverDoc.getDocId(level1Section.id)}')
     +h1(level1Section.title)
     +intro(level1Section.description)
 
     if level1Section.sections
       each level2Section in level1Section.sections
-        section(id='#{getInDocId(level1Section.id, level2Section.id)}')
-          +h2(level2Section.title)
-          +intro(level2Section.description)
-
-          if level2Section.sections
-            each section in level2Section.sections
-              - var parentInDocId = getInDocId(level1Section.id, level2Section.id)
-              +section(section, parentInDocId)
-
-    if level1Section.types
-      each type in level1Section.types
-        +type(type, level1Section.id)
+        +section(level2Section, level1Section.id, 2)
