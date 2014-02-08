@@ -81,13 +81,16 @@ section#directory
         li
           - var keyElt = isPropertyList ? 'code' : 'strong'
           | <!{keyElt}>!{key}</!{keyElt}>:!{' '}
-          case typeof value
-            when 'object'
-              mixin renderProperties(value, key === 'properties')
-            when 'array'
+          if Array.isArray(value)
+            if key === 'required'
+              - var asCode = value.map(function(k) { return '<code>' + k + '</code>'; });
+              | !{asCode.join(', ')}
+            else
               | !{value.join(', ')}
-            default
-              | !{value}
+          else if typeof value === 'object'
+            mixin renderProperties(value, key === 'properties')
+          else
+            | !{value}
 
   for className in Object.keys(complexClasses)
     - var classDef = classes[className]
@@ -127,6 +130,10 @@ section#directory
               if header !== 'properties' && header !== 'example'
                 if header === 'pattern' && value
                   td <code>!{value}</code>
+                else if header === 'required'
+                  if value
+                    - var asCode = value.map(function(k) { return '<code>' + k + '</code>'; });
+                    td !{asCode.join(', ')}
                 else
                   td !{value}
             if properties
