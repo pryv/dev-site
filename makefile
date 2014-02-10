@@ -2,8 +2,7 @@ HARP=./node_modules/harp/bin/harp
 SOURCE=source
 OUTPUT=build
 
-# TODO: restore official URL (ie. master branch) when OK
-TYPES_BASE_URL=https://raw.github.com/pryv/data-types/schema/
+TYPES_BASE_URL=https://raw.github.com/pryv/data-types/master/
 EVENT_TYPES_URL=$(TYPES_BASE_URL)event-types.json
 EVENT_EXTRAS_URL=$(TYPES_BASE_URL)event-extras.json
 
