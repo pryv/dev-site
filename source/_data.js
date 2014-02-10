@@ -59,7 +59,7 @@ module.exports = exports = {
     "title": "Reference",
     "layout": "_layouts/default",
     "markdown": require('marked'),
-    "withExamples": true,
+    "withExamples": {menu: true},
     "withTOC": true
   },
   "standard-structure": {

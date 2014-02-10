@@ -90,6 +90,51 @@ mixin exampleContent(content)
     else
       pre: code !{printJSON(content)}
 
+-// settings: {id, http, [result.http]} context to generate example forms (e.g. HTTP, cURL...)
+mixin examples(examples, settings)
+  if examples
+    aside
+      - for (var i = 0; i < examples.length; i++)
+        - var ex = examples[i]
+        .example
+          +text(ex.title)
+          if ex.content || typeof(ex.params) === 'string'
+            +exampleContent(ex.content)
+            +exampleContent(ex.params)
+            if ex.result
+              .step-marker ⬇
+              +exampleContent(ex.result)
+          else if ex.params
+            .tab-content
+              .tab-pane.json.active
+                pre: code !{printJSON(ex.params)}
+                if ex.result
+                  .step-marker ⬇
+                  pre: code !{printJSON(ex.result)}
+              if settings.http
+                .tab-pane.http
+                  pre: code.
+                    !{settings.http} HTTP/1.1
+                    Host: https://{username}.pryv.io
+                    Authentication: {access-token}
+
+                    !{printJSON(ex.params)}
+                  if ex.result
+                    .step-marker ⬇
+                    pre: code.
+                      HTTP/1.1 !{ex.resultHTTP || settings.result.http || settings.result[0].http}
+                      Content-Type: application/json; charset=utf-8
+                      API-Version: !{serverDoc.version}
+
+                      !{printJSON(ex.result)}
+              if settings.id
+                .tab-pane.sockets
+                  pre: code.
+                    socket.emit('!{settings.id}', !{printJSON(ex.params)}, callback);
+                  if ex.result
+                    .step-marker ⬇
+                    pre: code !{printJSON(ex.result)}
+
 mixin section(section, parentDocId, level)
   - var isMethod = section.type === 'method'
   - var docId = serverDoc.getDocId(parentDocId, section.id)
@@ -119,15 +164,7 @@ mixin section(section, parentDocId, level)
       if section.errors
         +h4('Specific errors')
         +properties(section.errors)
-    if section.examples
-      aside
-        each ex in section.examples
-          +text(ex.title)
-          +exampleContent(ex.content)
-          +exampleContent(ex.params)
-          if ex.result
-            .step-marker ⬇
-            +exampleContent(ex.result)
+    +examples(section.examples, section)
     if section.sections
       each subSection in section.sections
         +section(subSection, docId, level + 1)

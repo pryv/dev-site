@@ -72,7 +72,6 @@ dd
     margin-top: 0 !important
     margin-bottom: 0 !important
   .version
-    margin-top: 8px;
     font-weight: normal;
     font-size:14px
 .masthead
@@ -130,16 +129,17 @@ dd
 
 
 
-  ul
+  ul:not(.nav)
     margin: 0;
     padding: 0;
     list-style: none;
     li
       list-style-type: square
 
-  li
-    margin-left: 2.4em
-    padding: 10px 0 10px 0.4em
+  ul:not(.nav), ol
+    li
+      margin-left: 2.4em
+      padding: 10px 0 10px 0.4em
 
   .content
     .meta

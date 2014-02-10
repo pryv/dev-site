@@ -83,7 +83,19 @@ html.no-js(lang='en')
             //li
               a(href='#') Blog
         .nav-header.pull-right
-          .version API version: <strong>#{serverDoc.version}</strong>
+          ul.nav.nav-pills.examples-menu
+            if withExamples && withExamples.menu
+              li
+                p.navbar-text Examples:&nbsp;
+              li.json.active
+                a(href='javascript:showExamples("json")') Raw JSON
+              li.http
+                a(href='javascript:showExamples("http")') HTTP
+              li.sockets
+                a(href='javascript:showExamples("sockets")') Socket.IO
+              li.divider-vertical
+            li
+              p.navbar-text.version API version: <strong>#{serverDoc.version}</strong>
 
     #main-wrapper.container
       #main.row!= yield
@@ -119,3 +131,17 @@ html.no-js(lang='en')
               return text.toLowerCase().replace(/[^\w- ]+/g,'').replace(/ +/g,'-');
             }
           });
+
+      if withExamples && withExamples.menu
+        script
+          function showExamples(format) {
+            var removeSelectors = [];
+            ['json', 'http', 'sockets'].forEach(function(f) {
+              if (format !== f) {
+                removeSelectors.push('.examples-menu li.' + f + '.active');
+                removeSelectors.push('.example .tab-pane.' + f + '.active');
+              }
+            });
+            $(removeSelectors.join(',')).removeClass("active");
+            $('.examples-menu li.' + format + ', .example .tab-pane.' + format).addClass("active");
+          }
