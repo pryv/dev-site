@@ -52,12 +52,6 @@ module.exports = exports = {
   "reference": {
     "title": "Reference",
     "layout": "_layouts/default",
-    "withExamples": true,
-    "withTOC": true
-  },
-  "reference-new": {
-    "title": "Reference",
-    "layout": "_layouts/default",
     "markdown": require('marked'),
     "withExamples": {menu: true},
     "withTOC": true

@@ -1,3 +1,181 @@
-- var sections = [ 'basics', 'methods', 'socketio', 'data-structure' ]
-each section in sections
-  section(id='#{section}')!= partial('_reference-sections/' + section)
+mixin h1(string)
+  if string
+    !{markdown('#' + string)}
+
+mixin h2(string)
+  if string
+    !{markdown('##' + string)}
+
+mixin h3(string)
+  if string
+    !{markdown('###' + string)}
+
+mixin h4(string)
+  if string
+    !{markdown('####' + string)}
+
+mixin h5(string)
+  if string
+    !{markdown('#####' + string)}
+
+mixin intro(string)
+  if string
+    .intro
+      !{markdown(string)}
+
+mixin text(string)
+  if string
+    !{markdown(string)}
+
+mixin methodId(id)
+  if id
+    span.method-id
+      span.label id
+      span.label-value: code !{id}
+
+mixin http(http, httpOnly)
+  if http
+    span.http
+      span.label= httpOnly ? 'HTTP-only' : 'HTTP'
+      span.label-value
+        if http.code
+          code !{http.code}
+        else if http.text
+          span !{http.text}
+        else
+          code !{http}
+
+
+mixin typeText(string)
+  if string
+    - var output = markdown(string)
+    -// YES, HACK
+    span.type !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
+
+mixin labelValue(label, cssClass, value)
+  if value
+    span(class='label ' + cssClass)
+      !{label + (typeof(value) === 'string' ? ' ' + value : '')}
+
+mixin properties(properties)
+  if properties
+    table.definitions
+      each prop in properties
+        tr
+          th
+            code !{prop.key}
+          td
+            .header
+              -// TODO make type specification flexible
+              +typeText(prop.type)
+              +labelValue('unique', 'unique', prop.unique)
+              +labelValue('optional', 'optional', prop.optional)
+              +labelValue('read-only', 'read-only', prop.readOnly)
+              +http(prop.http)
+            .description !{markdown(prop.description)}
+            +properties(prop.properties)
+
+mixin result(result)
+  if result
+    +h4(result.title || 'Result')
+    +http(result.http)
+    +text(result.description)
+    +properties(result.properties)
+
+
+mixin exampleContent(content)
+  if content
+    if typeof(content) === 'string'
+      +text(content)
+    else
+      pre: code !{printJSON(content)}
+
+-// settings: {id, http, [result.http]} context to generate example forms (e.g. HTTP, cURL...)
+mixin examples(examples, settings)
+  if examples
+    aside
+      - for (var i = 0; i < examples.length; i++)
+        - var ex = examples[i]
+        .example
+          +text(ex.title)
+          if ex.content || typeof(ex.params) === 'string'
+            +exampleContent(ex.content)
+            +exampleContent(ex.params)
+            if ex.result
+              .step-marker ⬇
+              +exampleContent(ex.result)
+          else if ex.params
+            .tab-content
+              .tab-pane.json.active
+                pre: code !{printJSON(ex.params)}
+                if ex.result
+                  .step-marker ⬇
+                  pre: code !{printJSON(ex.result)}
+              if settings.http
+                .tab-pane.http
+                  pre: code.
+                    !{settings.http} HTTP/1.1
+                    Host: https://{username}.pryv.io
+                    Authentication: {access-token}
+
+                    !{printJSON(ex.params)}
+                  if ex.result
+                    .step-marker ⬇
+                    pre: code.
+                      HTTP/1.1 !{ex.resultHTTP || settings.result.http || settings.result[0].http}
+                      Content-Type: application/json; charset=utf-8
+                      API-Version: !{serverDoc.version}
+
+                      !{printJSON(ex.result)}
+              if settings.id
+                .tab-pane.sockets
+                  pre: code.
+                    socket.emit('!{settings.id}', !{printJSON(ex.params)}, callback);
+                  if ex.result
+                    .step-marker ⬇
+                    pre: code !{printJSON(ex.result)}
+
+mixin section(section, parentDocId, level)
+  - var isMethod = section.type === 'method'
+  - var docId = serverDoc.getDocId(parentDocId, section.id)
+  section(id='#{docId}', class='#{section.type || ""}')
+    if level === 2
+      +h2(section.title)
+    else
+      +h3(section.title)
+    .content
+      if isMethod
+        .meta
+          if ! section.httpOnly
+            +methodId(section.id)
+          +http(section.http, section.httpOnly)
+      +intro(section.description)
+      +properties(section.properties)
+      if section.params
+        +h4('Parameters')
+        +text(section.params.description)
+        +properties(section.params.properties)
+      if section.result
+        if section.result instanceof Array
+          each result in section.result
+            +result(result)
+        else
+          +result(section.result)
+      if section.errors
+        +h4('Specific errors')
+        +properties(section.errors)
+    +examples(section.examples, section)
+    if section.sections
+      each subSection in section.sections
+        +section(subSection, docId, level + 1)
+
+- function printJSON(content) { return JSON.stringify(content, null, 2); }
+
+each level1Section in serverDoc
+  section(id='#{serverDoc.getDocId(level1Section.id)}')
+    +h1(level1Section.title)
+    +intro(level1Section.description)
+
+    if level1Section.sections
+      each level2Section in level1Section.sections
+        +section(level2Section, level1Section.id, 2)
