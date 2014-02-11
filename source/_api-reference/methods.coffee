@@ -1,6 +1,4 @@
-# TODO: use safe links to doc sections
-# TODO: rename "activity stream" to just "stream" in the entire doc
-
+pages = require("../_meta").pages
 dataStructure = require('./data-structure.coffee')
 examples = require("./examples")
 helpers = require("./helpers")
@@ -205,19 +203,19 @@ module.exports = exports =
       params:
         properties: [
           key: "streamId"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           description: """
                        The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified.
                        """
         ,
           key: "id"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           description: """
                        The id of the event to stop. Either this or `streamId` must be specified.
                        """
         ,
           key: "time"
-          type: "[timestamp](#data-structure-timestamp)"
+          type: "[timestamp](#{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
                        The stop time. Default: now.
@@ -227,7 +225,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "stoppedId"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           description: """
                        The id of the event that was stopped or null if no running event was found.
                        """
@@ -271,7 +269,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -283,20 +281,20 @@ module.exports = exports =
           http:
             text: "= request body"
           description: """
-                       New values for the event's fields: see [event](#data-structure-event). All fields are optional, and only modified values must be included.
+                       New values for the event's fields: see [event](#{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
           key: "event"
-          type: "[event](#data-structure-event)"
+          type: "[event](#{dataStructure.getDocId("event")})"
           description: """
                        The updated event.
                        """
         ,
           key: "stoppedId"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           description: """
                        Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
                        """
@@ -338,7 +336,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "event"
-          type: "[event](#data-structure-event)"
+          type: "[event](#{dataStructure.getDocId("event")})"
           description: """
                        The updated event.
                        """
@@ -383,7 +381,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -391,7 +389,7 @@ module.exports = exports =
                        """
         ,
           key: "fileId"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -402,7 +400,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "event"
-          type: "[event](#data-structure-event)"
+          type: "[event](#{dataStructure.getDocId("event")})"
           description: """
                        The updated event.
                        """
@@ -430,7 +428,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -442,7 +440,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "event"
-          type: "[event](#data-structure-event)"
+          type: "[event](#{dataStructure.getDocId("event")})"
           description: """
                        The trashed event.
                        """
@@ -465,7 +463,7 @@ module.exports = exports =
     id: "streams"
     title: "Streams"
     description: """
-                 Methods to retrieve and manipulate [streams](#data-structure-stream).
+                 Methods to retrieve and manipulate [streams](#{dataStructure.getDocId("stream")}).
                  """
     sections: [
       id: "streams.get"
@@ -478,7 +476,7 @@ module.exports = exports =
       params:
         properties: [
           key: "parentId"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           optional: true
           description: """
                        The id of the parent stream from which to retrieve streams. Default: `null` (returns all accessible streams from the root level).
@@ -495,7 +493,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "streams"
-          type: "array of [streams](#data-structure-stream)"
+          type: "array of [streams](#{dataStructure.getDocId("stream")})"
           description: """
                        The tree of the accessible streams, sorted by name.
                        """
@@ -519,13 +517,13 @@ module.exports = exports =
                    """
       params:
         description: """
-                     The new stream's data: see [activity stream](#data-structure-stream).
+                     The new stream's data: see [stream](#{dataStructure.getDocId("stream")}).
                      """
       result:
         http: "201 Created"
         properties: [
           key: "stream"
-          type: "[stream](#data-structure-stream)"
+          type: "[stream](#{dataStructure.getDocId("stream")})"
           description: """
                        The created stream.
                        """
@@ -568,7 +566,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -580,14 +578,14 @@ module.exports = exports =
           http:
             text: "= request body"
           description: """
-                       New values for the stream's fields: see [stream](#data-structure-stream). All fields are optional, and only modified values must be included.
+                       New values for the stream's fields: see [stream](#{dataStructure.getDocId("stream")}). All fields are optional, and only modified values must be included.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
           key: "stream"
-          type: "[stream](#data-structure-stream)"
+          type: "[stream](#{dataStructure.getDocId("stream")})"
           description: """
                        The updated stream (without child streams).
                        """
@@ -624,7 +622,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -642,7 +640,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "stream"
-          type: "[stream](#data-structure-stream)"
+          type: "[stream](#{dataStructure.getDocId("stream")})"
           description: """
                        The trashed stream.
                        """
@@ -672,7 +670,7 @@ module.exports = exports =
     id: "accesses"
     title: "Accesses"
     description: """
-                 Methods to retrieve and manipulate [accesses](#data-structure-access), e.g. for sharing.
+                 Methods to retrieve and manipulate [accesses](#{dataStructure.getDocId("access")}), e.g. for sharing.
                  Any app can manage shared accesses whose permissions are a subset of its own. (Full access management is available to trusted apps.)
                  """
     sections: [
@@ -687,7 +685,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "accesses"
-          type: "array of [accesses](#data-structure-access)"
+          type: "array of [accesses](#{dataStructure.getDocId("access")})"
           description: """
                        All manageable accesses in the user's account, ordered by name.
                        """
@@ -709,13 +707,13 @@ module.exports = exports =
                    """
       params:
         description: """
-                     An object with the new access's data: see [access](#data-structure-access).
+                     An object with the new access's data: see [access](#{dataStructure.getDocId("access")}).
                      """
       result:
         http: "201 Created"
         properties: [
           key: "access"
-          type: "[access](#data-structure-access)"
+          type: "[access](#{dataStructure.getDocId("access")})"
           description: """
                        The created access.
                        """
@@ -745,7 +743,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -757,14 +755,14 @@ module.exports = exports =
           http:
             text: "= request body"
           description: """
-                       New values for the access's fields: see [access](#data-structure-access). All fields are optional, and only modified values must be included.
+                       New values for the access's fields: see [access](#{dataStructure.getDocId("access")}). All fields are optional, and only modified values must be included.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
           key: "access"
-          type: "[access](#data-structure-access)"
+          type: "[access](#{dataStructure.getDocId("access")})"
           description: """
                        The updated access.
                        """
@@ -791,7 +789,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#data-structure-identity)"
+          type: "[identity](#{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -928,13 +926,13 @@ module.exports = exports =
                        """
         ,
           key: "type"
-          type: "[access](#data-structure-access).type"
+          type: "[access](#{dataStructure.getDocId("access")}).type"
           description: """
                        The access' type.
                        """
         ,
           key: "permissions"
-          type: "[access](#data-structure-access).permissions"
+          type: "[access](#{dataStructure.getDocId("access")}).permissions"
           description: """
                        The access' permissions.
                        """

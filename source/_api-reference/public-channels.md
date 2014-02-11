@@ -101,7 +101,7 @@ Gets the channel's streams, either from the root level or only descending from a
 
 #### Successful response: `200 OK`
 
-An array of [activity streams](#data-structure-stream) containing the tree of the streams, sorted by name.
+An array of [streams](#data-structure-stream) containing the tree of the streams, sorted by name.
 
 #### Errors
 

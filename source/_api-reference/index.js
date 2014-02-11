@@ -1,7 +1,7 @@
 // for loading .coffee files
 require('coffee-script');
 
-module.exports = exports = [
+exports.sections = [
   require('./basics.coffee'),
   // TODO: include authorization flow here?
   require('./methods.coffee'),
@@ -10,3 +10,4 @@ module.exports = exports = [
 
 exports.version = require('../../../api-server/package.json').version;
 exports.getDocId = require('./helpers.coffee').getDocId;
+

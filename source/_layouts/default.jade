@@ -46,22 +46,22 @@ html.no-js(lang='en')
           ul.nav
             //- TODO: generate this menu from data
             li
-              a(href='about.html') About
+              a(href='#{meta.pages.linkTo("about")}') About
             li
-              a(href='concepts.html') Concepts
+              a(href='#{meta.pages.linkTo("concepts")}') Concepts
             li
-              a(href='reference.html') API reference
+              a(href='#{meta.pages.linkTo("reference")}') API reference
             li
-              a(href='event-typez.html') Event types
+              a(href='#{meta.pages.linkTo("eventTypes")}') Event types
             li
-              a(href='app-access.html') App access
+              a(href='#{meta.pages.linkTo("appAccess")}') App access
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown') More <b class="caret"></b>
               ul.dropdown-menu
                 li
-                  a(href='apps-and-services.html') Pryv apps and services
+                  a(href='#{meta.pages.linkTo("appsAndServices")}') Pryv apps and services
                 li
-                  a(href='code-libraries.html') Code libraries
+                  a(href='#{meta.pages.linkTo("codeLibraries")}') Code libraries
             //li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
               ul.dropdown-menu
@@ -73,13 +73,13 @@ html.no-js(lang='en')
               a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>
               ul.dropdown-menu
                 li
-                  a(href='reference.html') API
+                  a(href='#{meta.pages.linkTo("reference")}') API
                 li
-                  a(href='event-typez.html') Event types
+                  a(href='#{meta.pages.linkTo("eventTypes")}') Event types
                 li
-                  a(href='standard-structure.html') Standard data structure
+                  a(href='#{meta.pages.linkTo("standardStructure")}') Standard data structure
                 li
-                  a(href='app-access.html') App authorization
+                  a(href='#{meta.pages.linkTo("appAccess")}') App authorization
             //li
               a(href='#') Blog
         .nav-header.pull-right
@@ -95,7 +95,7 @@ html.no-js(lang='en')
                 a(href='javascript:showExamples("sockets")') Socket.IO
               li.divider-vertical
             li
-              p.navbar-text.version API version: <strong>#{serverDoc.version}</strong>
+              p.navbar-text.version API version: <strong>#{apiReference.version}</strong>
 
     #main-wrapper.container
       #main.row!= yield

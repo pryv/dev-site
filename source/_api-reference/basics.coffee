@@ -1,6 +1,5 @@
-# TODO: use safe links to doc sections
-
-dataStructure = require('./data-structure.coffee')
+pages = require("../_meta").pages
+dataStructure = require("./data-structure.coffee")
 examples = require("./examples")
 helpers = require("./helpers")
 timestamp = require("pryv-api-server-common").utils.timestamp
@@ -175,7 +174,7 @@ module.exports = exports =
     description: """
                  All requests for retrieving and manipulating activity data must carry a valid [access token](##{dataStructure.getDocId("access")}) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter. With Socket.IO the token is passed in the handshake.
 
-                 (Access tokens are obtained via the [app auth flow](app-access.html) or from sharing.)
+                 (Access tokens are obtained via the [app auth flow](#{pages.linkTo("appAccess")}) or from sharing.)
                  """
     examples: [
       title: "HTTP `Authorization` header"
@@ -229,7 +228,7 @@ module.exports = exports =
       ,
         key: "meta.serverTime"
         description: """
-                     The current server time as a [timestamp](#data-structure-timestamp). Keeping track of server time is necessary to properly handle time in API calls.
+                     The current server time as a [timestamp](#{dataStructure.getDocId("timestamp")}). Keeping track of server time is necessary to properly handle time in API calls.
                      """
       ]
     ]
@@ -240,7 +239,7 @@ module.exports = exports =
     id: "errors"
     title: "Errors"
     description: """
-                 When an error occurs, the API returns a response with an `error` object (see [error](#data-structure-error)) detailing the cause. (Over HTTP, the response status is set to 4xx or 5xx.) In this documentation, errors are identified by their `id`.
+                 When an error occurs, the API returns a response with an `error` object (see [error](#{dataStructure.getDocId("error")}) detailing the cause. (Over HTTP, the response status is set to 4xx or 5xx.) In this documentation, errors are identified by their `id`.
                  """
     examples: [
       content: examples.errors.invalidAccessToken
@@ -303,7 +302,7 @@ module.exports = exports =
         key: "unknown-stream"
         http: "404"
         description: """
-                     The activity stream can't be found.
+                     The stream can't be found.
                      """
       ,
         key: "unknown-tag"

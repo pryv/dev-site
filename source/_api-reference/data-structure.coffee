@@ -1,5 +1,4 @@
-# TODO: use safe links to doc sections
-
+pages = require("../_meta").pages
 examples = require("./examples")
 helpers = require("./helpers")
 _ = require("lodash")
@@ -7,6 +6,30 @@ _ = require("lodash")
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
 _getDocId = (typeId) ->
   return helpers.getDocId("data-structure", typeId)
+
+# Quick macro
+changeTrackingProperties = (typeName) ->
+  return [
+    key: "created"
+    type: "[timestamp](#data-structure-timestamp)"
+    readOnly: true
+    description: "The time the #{typeName} was created."
+  ,
+    key: "createdBy"
+    type: "[identity](#data-structure-identity)"
+    readOnly: true
+    description: "The id of the access used to create the #{typeName}."
+  ,
+    key: "modified"
+    type: "[timestamp](#data-structure-timestamp)"
+    readOnly: true
+    description: "The time the #{typeName} was last modified."
+  ,
+    key: "modifiedBy"
+    type: "[identity](#data-structure-identity)"
+    readOnly: true
+    description: "The id of the last access used to modify the #{typeName}."
+  ]
 
 module.exports = exports =
   id: "data-structure"
@@ -18,7 +41,7 @@ module.exports = exports =
     id: "event"
     title: "Event"
     description: """
-                 See also: [core concepts](concepts.html#core-events).
+                 See also: [core concepts](#{pages.linkTo("concepts")}#core-events).
                  """
     properties: [
       key: "id"
@@ -51,7 +74,7 @@ module.exports = exports =
       key: "type"
       type: "string"
       description: """
-                   The type of the event. See the [event type directory](event-typez.html#directory) for a list of standard types.
+                   The type of the event. See the [event type directory](#{pages.linkTo("eventTypes")}#directory) for a list of standard types.
                    """
     ,
       key: "content"
@@ -128,7 +151,7 @@ module.exports = exports =
       description: """
                    `true` if the event is in the trash.
                    """
-    ].concat(helpers.changeTrackingProperties("event"))
+    ].concat(changeTrackingProperties("event"))
     examples: [
       title: "A picture"
       content: examples.events.picture
@@ -145,7 +168,7 @@ module.exports = exports =
     id: "stream"
     title: "Stream"
     description: """
-                 See also: [core concepts](concepts.html#core-streams).
+                 See also: [core concepts](#{pages.linkTo("concepts")}#core-streams).
                  """
     properties: [
       key: "id"
@@ -197,7 +220,7 @@ module.exports = exports =
       description: """
                    `true` if the stream is in the trash.
                    """
-    ].concat(helpers.changeTrackingProperties("stream"))
+    ].concat(changeTrackingProperties("stream"))
     examples: [
       title: "A structure for activities"
       content: examples.streams.activities
@@ -208,7 +231,7 @@ module.exports = exports =
     id: "tag"
     title: "Tag"
     description: """
-                 Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](concepts.html#core-tags). *Note: typed tags aren't yet implemented in the API today.*
+                 Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](#{pages.linkTo("concepts")}#core-tags). *Note: typed tags aren't yet implemented in the API today.*
                  """
     properties: [
       key: "id"
@@ -245,7 +268,7 @@ module.exports = exports =
       description: """
                    `true` if the tag is in the trash.
                    """
-    ].concat(helpers.changeTrackingProperties("tag"))
+    ].concat(changeTrackingProperties("tag"))
     examples: []
 
   ,
@@ -253,7 +276,7 @@ module.exports = exports =
     id: "access"
     title: "Access"
     description: """
-                 See also: [core concepts](concepts.html#core-accesses).
+                 See also: [core concepts](#{pages.linkTo("concepts")}#core-accesses).
                  """
     properties: [
       key: "id"
@@ -313,7 +336,7 @@ module.exports = exports =
                      The level of access to the stream. With `"contribute"`, one can see and record events for the stream (and its child streams, if any); with `"manage"`, one can in addition create, modify and delete child streams.
                      """
       ]
-    ].concat(helpers.changeTrackingProperties("access"))
+    ].concat(changeTrackingProperties("access"))
     examples: []
 
   ,
@@ -321,7 +344,7 @@ module.exports = exports =
     id: "followed-slices"
     title: "Followed slices"
     description: """
-                 See also: [core concepts](concepts.html#core-followed-slices).
+                 See also: [core concepts](#{pages.linkTo("concepts")}#core-followed-slices).
                  """
     properties: [
       key: "id"

@@ -1,4 +1,5 @@
-var serverDoc = require("./_reference-sections");
+var meta = require('./_meta'),
+    apiReference = require("./_api-reference");
 
 module.exports = exports = {
   "about": {
@@ -67,7 +68,8 @@ module.exports = exports = {
   }
 };
 
-// add server doc data to all
+// add common data to all
 Object.keys(exports).forEach(function(key) {
-  exports[key].serverDoc = serverDoc;
+  exports[key].meta = meta;
+  exports[key].apiReference = apiReference;
 });
