@@ -1,7 +1,7 @@
 map = module.exports = exports =
   "about": "/about.html"
   "appAccess": "/app-access.html"
-  "appsAndServices": "/app-and-services.html"
+  "appsAndServices": "/apps-and-services.html"
   "codeLibraries": "/code-libraries.html"
   "concepts": "/concepts.html"
   "home": "/dev-index.html"
