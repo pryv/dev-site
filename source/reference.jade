@@ -114,11 +114,7 @@ mixin examples(examples, settings)
               if settings.http
                 .tab-pane.http
                   pre: code.
-                    !{settings.http} HTTP/1.1
-                    Host: https://{username}.pryv.io
-                    Authentication: {access-token}
-
-                    !{printJSON(ex.params)}
+                    !{apiReference.helpers.getCurlCall(ex.params, settings.http)}
                   if ex.result
                     .step-marker ⬇
                     pre: code.
@@ -137,7 +133,7 @@ mixin examples(examples, settings)
 
 mixin section(section, parentDocId, level)
   - var isMethod = section.type === 'method'
-  - var docId = apiReference.getDocId(parentDocId, section.id)
+  - var docId = apiReference.helpers.getDocId(parentDocId, section.id)
   section(id='#{docId}', class='#{section.type || ""}')
     if level === 2
       +h2(section.title)
@@ -172,7 +168,7 @@ mixin section(section, parentDocId, level)
 - function printJSON(content) { return JSON.stringify(content, null, 2); }
 
 each level1Section in apiReference.sections
-  section(id='#{apiReference.getDocId(level1Section.id)}')
+  section(id='#{apiReference.helpers.getDocId(level1Section.id)}')
     +h1(level1Section.title)
     +intro(level1Section.description)
 

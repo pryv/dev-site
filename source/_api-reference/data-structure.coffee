@@ -337,7 +337,10 @@ module.exports = exports =
                      """
       ]
     ].concat(changeTrackingProperties("access"))
-    examples: []
+    examples: [
+      title: "An app access"
+      content: examples.accesses.app
+    ]
 
   ,
 

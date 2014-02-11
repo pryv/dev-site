@@ -9,5 +9,5 @@ exports.sections = [
 ];
 
 exports.version = require('../../../api-server/package.json').version;
-exports.getDocId = require('./helpers.coffee').getDocId;
+exports.helpers = require('./helpers.coffee');
 
