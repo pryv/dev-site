@@ -13,8 +13,12 @@
     "Harp"
   ],
   "dependencies": {
+    "coffee-script": "latest",
+    "cuid": "latest",
+    "lodash": "latest",
     "harp": "git://github.com/attentif/harp.git",
-    "marked": "0.3.x"
+    "marked": "0.3.x",
+    "pryv-api-server-common": "git+ssh://git@github.com:pryv/api-server-common.git#v0.5.2"
   },
   "engines": {
     "node": ">=0.8.0"

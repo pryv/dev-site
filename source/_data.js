@@ -1,4 +1,4 @@
-var serverDoc = require("../../api-server/doc");
+var serverDoc = require("./_reference-sections");
 
 module.exports = exports = {
   "about": {
