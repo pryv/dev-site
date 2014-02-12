@@ -165,7 +165,7 @@ module.exports = exports =
         title: "cURL with attachment"
         content: """
                  ```bash
-                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" https://{username}.pryv.io/events?auth={token}
+                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" https://${username}.pryv.io/events?auth=${token}
                  ```
                  """
         result:
@@ -345,7 +345,7 @@ module.exports = exports =
         title: "cURL"
         content: """
                  ```bash
-                 curl -i -F "file=@{filename}" https://{username}.pryv.io/events/#{examples.events.picture.id}?auth={token}
+                 curl -i -F "file=@{filename}" https://${username}.pryv.io/events/#{examples.events.picture.id}?auth=${token}
                  ```
                  """
       ]

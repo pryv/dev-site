@@ -48,7 +48,7 @@ module.exports = exports =
                ```http
                GET /events HTTP/1.1
                Host: {username}.pryv.io
-               Authorization: {access-token}
+               Authorization: {token}
                ```
                """
     ]
@@ -182,14 +182,14 @@ module.exports = exports =
                ```http
                GET /events HTTP/1.1
                Host: {username}.pryv.io
-               Authorization: {access-token}
+               Authorization: {token}
                ```
                """
     ,
       title: "HTTP `auth` query string parameter"
       content: """
                ```http
-               GET /events?auth={access-token} HTTP/1.1
+               GET /events?auth={token} HTTP/1.1
                Host: {username}.pryv.io
                ```
                """

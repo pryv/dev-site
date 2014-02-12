@@ -16,7 +16,7 @@ exports.getCurlCall = (params, http) ->
       path = newPath
       delete processedParams[k]
 
-  queryString = "?auth={access-token}"
+  queryString = "?auth={token}"
   data = ""
   if method == "GET"
     Object.keys(processedParams).forEach (k) ->
@@ -26,4 +26,7 @@ exports.getCurlCall = (params, http) ->
   else
     data = "-d '#{JSON.stringify(processedParams)}' "
 
-  return "curl -i #{request}#{data}https://{username}.pryv.io#{path}#{queryString}"
+  call = "curl -i #{request}#{data}https://{username}.pryv.io#{path}#{queryString}"
+  # use shell variable format to help with quick copy-paste
+  return call.replace /({\w+?})/g, (match) ->
+    "$#{match}"
