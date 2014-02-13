@@ -199,7 +199,7 @@ The new access's data: see [access](#data-structure-access). Additionally, if a 
 
 - `400 Bad Request`, id `item-id-already-exists`: An access already exists with the same token.
 - `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type (and device name, for app accesses).
-- `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `"null"`).
+- `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `null`).
 
 #### cURL example
 

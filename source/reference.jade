@@ -63,7 +63,15 @@ mixin properties(properties)
       each prop in properties
         tr
           th
-            code !{prop.key}
+            if prop.key instanceof Array
+              - var i = 0
+              each key in prop.key
+                code !{key}
+                if i < prop.key.length - 1
+                  | |
+                - i++
+            else
+              code !{prop.key}
           td
             .header
               -// TODO make type specification flexible

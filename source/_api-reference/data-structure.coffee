@@ -296,11 +296,11 @@ module.exports = exports =
                    """
     ,
       key: "type"
-      type: "`\"personal\"`|`\"app\"`|`\"shared\"`"
+      type: "`personal`|`app`|`shared`"
       readOnly: "(except at creation)"
       optional: true
       description: """
-                   The type — or usage — of the access. Default: `"shared"`.
+                   The type — or usage — of the access. Default: `shared`.
                    """
     ,
       key: "name"
@@ -324,16 +324,16 @@ module.exports = exports =
                    Ignored for personal accesses. If permission levels conflict (e.g. stream set to "manage" and child stream set to "contribute"), only the highest level is considered. Each permission object has the following structure:
                    """
       properties: [
-        key: "streamId"
-        type: "[identity](##{_getDocId("identity")})"
+        key: [ "streamId", "tag" ]
+        type: "[identity](##{_getDocId("identity")}) | string"
         description: """
-                     The id of the stream the permission applies to, or `"*"` for "all streams". If the stream has child streams, the permission applies to them as well.
+                     The id of the stream or the tag the permission applies to, or `*` for all streams/tags. Stream permissions are recursively applied to child streams.
                      """
       ,
         key: "level"
-        type: "`\"read\"`|`\"contribute\"`|`\"manage\"`"
+        type: "`read`|`contribute`|`manage`"
         description: """
-                     The level of access to the stream. With `"contribute"`, one can see and record events for the stream (and its child streams, if any); with `"manage"`, one can in addition create, modify and delete child streams.
+                     The level of access to the stream. With `contribute`, one can see and record events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.
                      """
       ]
     ].concat(changeTrackingProperties("access"))
@@ -397,7 +397,7 @@ module.exports = exports =
 
                  ### Naming convention
 
-                 The convention is that each app names the keys it uses with an `"{app-id}:"` prefix. For example, an app with id "riki" would store its data in fields such as `"riki:key": "some value"`.
+                 The convention is that each app names the keys it uses with an `{app-id}:` prefix. For example, an app with id "riki" would store its data in fields such as `"riki:key": "some value"`.
                  """
     examples: []
 

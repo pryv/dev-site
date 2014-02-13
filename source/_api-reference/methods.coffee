@@ -53,7 +53,7 @@ module.exports = exports =
           type: "array of strings"
           optional: true
           description: """
-                       If set, only events assigned to all of the listed tags will be returned.
+                       If set, only events assigned to any of the listed tags will be returned.
                        """
         ,
           key: "running"
