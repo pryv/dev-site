@@ -1,6 +1,6 @@
 {
   "name": "pryv-dev-site",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "description": "Pryv API reference, recommendations, guides, etc.",
   "author": "Pryv team <developers@pryv.com>",
@@ -18,7 +18,7 @@
     "lodash": "latest",
     "harp": "git://github.com/attentif/harp.git",
     "marked": "0.3.x",
-    "pryv-api-server-common": "git+ssh://git@github.com:pryv/api-server-common.git#v0.5.2"
+    "pryv-api-server-common": "git+ssh://git@github.com:pryv/api-server-common.git"
   },
   "engines": {
     "node": ">=0.8.0"
