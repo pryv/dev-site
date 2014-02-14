@@ -1,39 +1,53 @@
-// can't use nib for now because of DocPad plugin settings bug
-//@import 'nib'
 body
-    font-family:Helvetica Neue
-    color: #7E7E7E
+  font-family: Helvetica Neue
+  color: #7E7E7E
+  padding-top: 50px // for navbar
+
 *
   -moz-box-sizing: border-box
   box-sizing: border-box
 
-// override GitHub's awful default margins
 h1, h2, h3, h4, h5
   font-family: museo_300regular
   color: #000
-h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
-  margin-top: 0
+
+#main
+  h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
+    margin-top: 0
+
 h5, h6
   margin: 1.5em 0 0.75em
+
 blockquote, ul, ol, dl, table, pre
   margin: 0.75em 0;
+
 h1
   width:100%
   background: #266C9C url("images/bgPaper.png") repeat center center;
   color:#FFFFFF
   padding: 20px 40px 20px 40px
+
 h2
   border-top: 1px solid #EEE
   padding: 40px 0px 0px 0px;
   color: #333;
+section:first-of-type>h2
+  border: none
+
 h3
   text-transform:uppercase
   font-size: 17.5px;
+
 pre
   border: 0 none
   padding: 0
+
 code
   color: #333
+  background-color: #EDEFF3
+
+img
+  max-width: 100%
 
 table.definitions
   th
@@ -60,57 +74,43 @@ dd
   padding: .5em;
 
 .navbar
-  .brand
-    display: block
-    margin-left: 5px
-    width: 80px
-    height: 40px
-    padding: 0
-    text-indent: -9000px
-    background: url(images/LogoPrYvDigital-API.png) no-repeat left center
-  li
-    margin-top: 0 !important
-    margin-bottom: 0 !important
-  .version
-    font-weight: normal;
-    font-size:14px
+  .navbar-brand.logo
+    padding-top: 5px
+
 .masthead
-    margin: 0 -20px 0 -20px
-    background: #266C9C url(images/bgPaper.png) repeat center center
-    h1
-      color: #FFFFFF
-    .container
-      text-align: center
-      padding: 30px 0 70px 0
-.marketingIcon
-    h2
-      border:0
-      padding-top: 10px;
-    .span4
-      text-align: center
-    img
-      margin:20px 0 0 0
+  margin: 0 -20px 0 -20px
+  background: #266C9C url(images/bgPaper.png) repeat center center
+  h1
+    color: #FFFFFF
+  .container
+    text-align: center
+    padding: 30px 0 70px 0
+
+.marketing-icon
+  text-align: center
+  h2
+    border:0
+    padding-top: 10px;
+  img
+    margin:20px 0 0 0
+
 .buttonCreateAccount
-    a
-      text-align: center
-      margin: 0 auto
-      background-color: #C22121;
-      color: #FFABAB;
-      width: 340px;
-      padding: 20px 30px;
-      display: block;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size:18px
-      strong
-        color:#FFF
-
-#main-wrapper
-  margin-top: 40px // for navbar
-
+  a
+    text-align: center
+    margin: 0 auto
+    background-color: #C22121;
+    color: #FFABAB;
+    width: 340px;
+    padding: 20px 30px;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size:18px
+    strong
+      color:#FFF
 
 #main
   > section
@@ -163,7 +163,7 @@ dd
           border-radius: 0
           margin: 0
           white-space: nowrap
-          background-color: #f7f7f9
+          background-color: #EDEFF3
 
     .method-id
       margin-right: 0.5em
@@ -184,67 +184,59 @@ dd
 
   .method .step-marker
     text-align: center
-    margin-top: -0.25em
-    margin-bottom: -0.18em
+    margin-top: -0.65em;
+    margin-bottom: -0.58em;
     font-size: 2em
     color: #3F3F3F;
 
-.with-toc
-      #toc
-        display: none // only shown if js and enough width
-        height: 100%;
-        position: fixed;
-        top:0
-        width: auto;
-        color: #fff;
-        overflow: scroll;
-        margin-top: 40px;
-        font-family: museo_300regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
-        width: 220px;
-        padding: 20px 20px 50px 0
-        font-size: 90%;
-      .toc-h1
-        font-family: museo_700regular
-        padding: 2px 5px;
-        a
-          color: #333
-      .toc-h2
-        padding-left: 20px
-        a
-          color:#a2a2a2
-      .toc-h3
-        padding-left: 30px
-        a
-          color:#a2a2a2
-      .toc-active
-        background: #336699;
-      .toc-active a
-        color: #FFF
+#toc
+  display: none
+  height: 100%
+  position: fixed
+  top: 50px // = navbar height
+  width: auto
+  color: #fff
+  overflow: scroll
+  font-family: museo_300regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
+  width: 220px
+  padding: 20px 20px 50px 0
+  font-size: 90%
+  ul
+    margin: 0
+    padding: 0
+  .toc-h1
+    font-family: museo_700regular
+    padding: 2px 5px;
+    a
+      color: #333
+  .toc-h2
+    padding-left: 20px
+    a
+      color:#a2a2a2
+  .toc-h3
+    padding-left: 30px
+    a
+      color:#a2a2a2
+  .toc-active
+    background: #336699;
+  .toc-active a
+    color: #FFF
 
 
 @media (min-width: 767px)
-  html.js
+  html
     body.with-toc
       #main
         margin-left: 220px
-        //width: 540px;
       .row
         position:relative
       #toc
         display: block
     body.with-toc.with-examples
       #toc
-        top: 0px;
         left: 0px;
-        height: 100%;
-        position: fixed;
         width: 200px;
         padding: 20px 0 20px;
-        color: #fff;
-        overflow: scroll;
-        margin-top: 40px;
-        /*font-family: museo_500regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
-        font-weight: 300;*/
         border-right: 1px solid #EEE;
       #main-wrapper
         margin-left: 200px
@@ -259,13 +251,11 @@ dd
     body.landing-page
       #main-wrapper
         width:auto
-  body
-    margin: 0 auto
-    padding: 0 20px
 
 
   body.with-examples
-    padding: 0
+    #main-wrapper
+      padding: 0
     #main
       section
         float: left;
@@ -300,6 +290,8 @@ dd
           clear: right
           width: 50%
           padding: 0 40px
+          :not(pre)>code
+            background-color: #FFFFFF
 
       > section
         margin-left: -100%

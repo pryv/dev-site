@@ -20,7 +20,7 @@ module.exports = exports =
                  https://{username}.pryv.io
                  ```
 
-                 Because each user account is potentially served from a different machine according to the user's choice, each user has a dedicated API endpoint.
+                 Each user account uses a dedicated API endpoint as it is potentially served from a different location.
                  """
     examples: [
       title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.io`"

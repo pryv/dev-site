@@ -4,24 +4,24 @@
     img(src="images/logo-API-Big.png")
 
 .container
-  .row-fluid.marketingIcon
-    .span4
+  .row
+    .col-sm-4.marketing-icon
       img(src="images/icons/Toilet-Paper@2x.png", style="width:100px;height:auto;")
       :markdown
         ## This site is a mess
         Or rather, it is a **work-in-progress**. But it should be enough to get you going, with our support of course. Just <a href="mailto:developers@pryv.com">e-mail</a> if you need help, or directly [report issues on GitHub](https://github.com/pryv/dev-site/issues).
-    .span4
+    .col-sm-4.marketing-icon
       img(src="images/icons/Compas@2x.png", style="width:100px;height:auto;")
       :markdown
         ## API endpoints
         Due to the stage of development we're in, the frequent changes and the confidential number of developers working with us, we recommend everyone to **use our test environment endpoints** on `https://{username}.pryv.in`.<br>
         Our test environment usually matches the information on this site. (The production environment on `pryv.io` is rarely updated for now.)
-    .span4
+    .col-sm-4.marketing-icon
       img(src="images/icons/Mail@2x.png", style="width:100px;height:auto;")
       :markdown
         ## News
         We haven't put much effort into this yet, but in general we do announce **API changes and other updates on [our temporary developers blog](http://dev-blog.pryv.com)**. Newsfeed [here](http://dev-blog.pryv.com/feed).
-  //.row-fluid.buttonCreateAccount
+  //.row.buttonCreateAccount
     a <strong>Create a user</strong> on the staging environment
 
   p &nbsp;
