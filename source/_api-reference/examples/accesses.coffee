@@ -1,5 +1,5 @@
 generateId = require("cuid")
-timestamp = require("pryv-api-server-common").utils.timestamp
+timestamp = require("unix-timestamp")
 
 idPersonal = generateId()
 idApp = generateId()
@@ -9,9 +9,9 @@ module.exports =
     id: idPersonal
     token: generateId()
     type: "personal"
-    created: timestamp.getFromNow(-24 * 30)
+    created: timestamp.now('-1M')
     createdBy: "system"
-    modified: timestamp.getFromNow(-24 * 7)
+    modified: timestamp.now('-1w')
     modifiedBy: "system"
 
   app:
@@ -23,9 +23,9 @@ module.exports =
       streamId: "health"
       level: "contribute"
     ]
-    created: timestamp.getFromNow(-24)
+    created: timestamp.now('-1d')
     createdBy: idPersonal
-    modified: timestamp.getFromNow(-24)
+    modified: timestamp.now('-1d')
     modifiedBy: idPersonal
 
   shared:
@@ -37,9 +37,9 @@ module.exports =
       streamId: "family"
       level: "contribute"
     ]
-    created: timestamp.getFromNow(-12)
+    created: timestamp.now('-12h')
     createdBy: idApp
-    modified: timestamp.getFromNow(-12)
+    modified: timestamp.now('-12h')
     modifiedBy: idApp
 
   sharedNew:
@@ -51,7 +51,7 @@ module.exports =
       streamId: "work"
       level: "read"
     ]
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: idApp
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: idApp

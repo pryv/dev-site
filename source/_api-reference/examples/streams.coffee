@@ -1,4 +1,4 @@
-timestamp = require("pryv-api-server-common").utils.timestamp
+timestamp = require("unix-timestamp")
 generateId = require("cuid")
 accesses = require("./accesses")
 
@@ -125,9 +125,9 @@ module.exports = exports =
     name: "Diastolic pressure"
     parentId: "heart"
     children: []
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: accesses.app.id
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: accesses.app.id
   ]
 
@@ -138,5 +138,5 @@ addTrackingProperties = (time, accessId, stream) ->
   stream.modifiedBy ?= accessId
   stream.children.forEach(addTrackingProperties.bind(null, time + Math.random() * 30, accessId))
 Object.keys(exports).forEach((key) ->
-  exports[key].forEach(addTrackingProperties.bind(null, timestamp.getFromNow(-24 * 365 * 2), accesses.personal.id))
+  exports[key].forEach(addTrackingProperties.bind(null, timestamp.now('-2y'), accesses.personal.id))
 )

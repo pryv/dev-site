@@ -1,4 +1,4 @@
-timestamp = require("pryv-api-server-common").utils.timestamp
+timestamp = require("unix-timestamp")
 generateId = require("cuid")
 accesses = require("./accesses")
 streams = require("./streams")
@@ -6,32 +6,32 @@ streams = require("./streams")
 module.exports =
   activity:
     id: generateId()
-    time: timestamp.get()
+    time: timestamp.now()
     streamId: streams.activities[0].children[0].id
     tags: []
     type: "activity/pryv"
     content: null
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: accesses.app.id
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: accesses.app.id
 
   activityRunning:
     id: generateId()
-    time: timestamp.get()
+    time: timestamp.now()
     duration: null
     streamId: streams.activities[0].children[1].id
     tags: []
     type: "activity/pryv"
     content: null
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: accesses.app.id
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: accesses.app.id
 
   activityAttachment:
     id: generateId()
-    time: timestamp.get()
+    time: timestamp.now()
     duration: null
     streamId: streams.activities[1].children[1].id
     tags: []
@@ -43,9 +43,9 @@ module.exports =
       type: "image/jpeg"
       size: 1111
     ]
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: accesses.app.id
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: accesses.app.id
 
   heartRate:
@@ -55,9 +55,9 @@ module.exports =
     tags: []
     type: "frequency/bpm"
     content: 90
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: accesses.app.id
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: accesses.app.id
 
   heartSystolic:
@@ -67,9 +67,9 @@ module.exports =
     tags: []
     type: "pressure/mmhg"
     content: 120
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: accesses.app.id
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: accesses.app.id
 
   heartDiastolic:
@@ -79,38 +79,38 @@ module.exports =
     tags: []
     type: "pressure/mmhg"
     content: 80
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: accesses.app.id
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: accesses.app.id
 
   mass:
     id: generateId()
-    time: timestamp.get()
+    time: timestamp.now()
     streamId: streams.health[0].children[2].id
     tags: []
     type: "mass/kg"
     content: 90
-    created: timestamp.get()
+    created: timestamp.now()
     createdBy: accesses.app.id
-    modified: timestamp.get()
+    modified: timestamp.now()
     modifiedBy: accesses.app.id
 
   note:
     id: generateId()
-    time: timestamp.getFromNow(-1)
+    time: timestamp.now('-1h')
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
     content: "道可道非常道。。。"
-    created: timestamp.getFromNow(10)
+    created: timestamp.now('-1h')
     createdBy: accesses.app.id
-    modified: timestamp.getFromNow(10)
+    modified: timestamp.now('+10h')
     modifiedBy: accesses.app.id
 
   picture:
     id: generateId()
-    time: timestamp.getFromNow(-1)
+    time: timestamp.now('-1h')
     streamId: streams.diary[0].id
     tags: []
     type: "picture/attached"
@@ -121,9 +121,9 @@ module.exports =
       type: "image/jpeg"
       size: 2561
     ]
-    created: timestamp.getFromNow(1)
+    created: timestamp.now('-1h')
     createdBy: accesses.shared.id
-    modified: timestamp.getFromNow(1)
+    modified: timestamp.now('-1h')
     modifiedBy: accesses.shared.id
 
   position:
@@ -135,7 +135,7 @@ module.exports =
     content:
       latitude: 40.714728
       longitude: -73.998672
-    created: timestamp.getFromNow(-2)
+    created: timestamp.now('-2h')
     createdBy: accesses.personal.id
-    modified: timestamp.getFromNow(-2)
+    modified: timestamp.now('-2h')
     modifiedBy: accesses.personal.id

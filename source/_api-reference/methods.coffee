@@ -2,7 +2,7 @@ pages = require("../_meta").pages
 dataStructure = require('./data-structure.coffee')
 examples = require("./examples")
 helpers = require("./helpers")
-timestamp = require("pryv-api-server-common").utils.timestamp
+timestamp = require("unix-timestamp")
 _ = require("lodash")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
@@ -252,7 +252,7 @@ module.exports = exports =
       examples: [
         params:
           streamId: examples.events.activityRunning.streamId
-          time: timestamp.get()
+          time: timestamp.now()
         result:
           stoppedId: examples.events.activityRunning.id
       ]
@@ -319,7 +319,7 @@ module.exports = exports =
           update:
             tags: ["home"]
         result:
-          event: _.defaults({ tags: ["home"], modified: timestamp.get(), modifiedBy: examples.accesses.app.id }, examples.events.position)
+          event: _.defaults({ tags: ["home"], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
       ]
 
     ,
@@ -454,7 +454,7 @@ module.exports = exports =
         params:
           id: examples.events.note.id
         result:
-          event: _.defaults({ trashed: true, modified: timestamp.get(), modifiedBy: examples.accesses.app.id }, examples.events.note)
+          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.note)
       ]
     ]
 
@@ -604,7 +604,7 @@ module.exports = exports =
           update:
             name: "Slothing"
         result:
-          stream: _.defaults({ name: "Slothing", modified: timestamp.get(), modifiedBy: examples.accesses.app.id }, _.omit(examples.streams.activities[0], "children"))
+          stream: _.defaults({ name: "Slothing", modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, _.omit(examples.streams.activities[0], "children"))
       ]
 
     ,
@@ -661,7 +661,7 @@ module.exports = exports =
         params:
           id: examples.streams.health[0].children[2].id
         result:
-          event: _.defaults({ trashed: true, modified: timestamp.get(), modifiedBy: examples.accesses.app.id }, examples.streams.health[0].children[2])
+          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.streams.health[0].children[2])
       ]
     ]
 
@@ -774,7 +774,7 @@ module.exports = exports =
           update:
             permissions: [ _.defaults({level: "contribute"}, examples.accesses.sharedNew.permissions[0])]
         result:
-          access: _.defaults({ permissions: [ _.defaults({level: "contribute"}, examples.accesses.sharedNew.permissions[0])], modified: timestamp.get(), modifiedBy: examples.accesses.app.id }, examples.accesses.sharedNew)
+          access: _.defaults({ permissions: [ _.defaults({level: "contribute"}, examples.accesses.sharedNew.permissions[0])], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.accesses.sharedNew)
       ]
 
     ,

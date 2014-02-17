@@ -2,7 +2,6 @@ pages = require("../_meta").pages
 dataStructure = require("./data-structure.coffee")
 examples = require("./examples")
 helpers = require("./helpers")
-timestamp = require("pryv-api-server-common").utils.timestamp
 _ = require("lodash")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
