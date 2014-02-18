@@ -1,31 +1,31 @@
 mixin h1(string)
   if string
-    !{markdown('#' + string)}
+    | !{markdown('#' + string)}
 
 mixin h2(string)
   if string
-    !{markdown('##' + string)}
+    | !{markdown('##' + string)}
 
 mixin h3(string)
   if string
-    !{markdown('###' + string)}
+    | !{markdown('###' + string)}
 
 mixin h4(string)
   if string
-    !{markdown('####' + string)}
+    | !{markdown('####' + string)}
 
 mixin h5(string)
   if string
-    !{markdown('#####' + string)}
+    | !{markdown('#####' + string)}
 
 mixin intro(string)
   if string
     .intro
-      !{markdown(string)}
+      | !{markdown(string)}
 
 mixin text(string)
   if string
-    !{markdown(string)}
+    | !{markdown(string)}
 
 mixin methodId(id)
   if id
@@ -54,8 +54,8 @@ mixin typeText(string)
 
 mixin labelValue(label, cssClass, value)
   if value
-    span(class='label ' + cssClass)
-      !{label + (typeof(value) === 'string' ? ' ' + value : '')}
+    span(class='label label-default ' + cssClass)
+      | !{label + (typeof(value) === 'string' ? ' ' + value : '')}
 
 mixin properties(properties)
   if properties
