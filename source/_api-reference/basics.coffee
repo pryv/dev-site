@@ -1,4 +1,4 @@
-pages = require("../_meta").pages
+linkTo = require("../_meta/links.coffee")
 dataStructure = require("./data-structure.coffee")
 examples = require("./examples")
 helpers = require("./helpers")
@@ -173,7 +173,7 @@ module.exports = exports =
     description: """
                  All requests for retrieving and manipulating activity data must carry a valid [access token](##{dataStructure.getDocId("access")}) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter. With Socket.IO the token is passed in the handshake.
 
-                 (Access tokens are obtained via the [app auth flow](#{pages.linkTo("appAccess")}) or from sharing.)
+                 (Access tokens are obtained via the [app auth flow](#{linkTo.appAccess}) or from sharing.)
                  """
     examples: [
       title: "HTTP `Authorization` header"

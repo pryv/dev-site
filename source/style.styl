@@ -11,6 +11,10 @@ h1, h2, h3, h4, h5
   font-family: museo_300regular
   color: #000
 
+h1.page-title
+  color: #666
+  background: none
+
 #main
   h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
     margin-top: 0
@@ -26,6 +30,8 @@ h1
   background: #266C9C url("images/bgPaper.png") repeat center center;
   color:#FFFFFF
   padding: 20px 40px 20px 40px
+h1.page-title
+  padding: 20px 0
 
 h2
   border-top: 1px solid #EEE
@@ -146,7 +152,7 @@ dd
       margin-top: -0.5em
       margin-bottom: 0.5em
 
-    .method-id, .http
+    .method-id, :not(code).http
       display: inline-block
       height: 1.6em
       border-radius: 0.25em
@@ -255,6 +261,8 @@ dd
     #main-wrapper
       padding: 0
     #main
+      h1.page-title
+        padding: 20px 40px 20px 40px
       section
         float: left;
         clear: both;
@@ -264,11 +272,11 @@ dd
           float: left
           clear: left
           width: 50%
-          padding: 40px 40px 0px 40px;
+          padding: 40px 40px 0px 40px
         > .intro
-          //text-transform: uppercase;
-          color: #C4C4C4;
-          //font-style: italic;
+          //text-transform: uppercase
+          color: #C4C4C4
+          //font-style: italic
         > .intro, > .content
           float: left
           clear: left
@@ -276,7 +284,7 @@ dd
           padding: 0px 40px 40px
         > h1
           width:100%
-          background: #266C9C url("images/bgPaper.png") repeat center center;
+          background: #266C9C url("images/bgPaper.png") repeat center center
           color:#FFFFFF
           padding: 20px 40px 20px 40px
         > h2
@@ -291,7 +299,7 @@ dd
           :not(pre)>code
             background-color: #FFFFFF
 
-      > section
+      > section, >h1.page-title
         margin-left: -100%
         width: 200%
 

@@ -1,4 +1,4 @@
-pages = require("../_meta").pages
+linkTo = require("../_meta/links.coffee")
 examples = require("./examples")
 helpers = require("./helpers")
 _ = require("lodash")
@@ -41,7 +41,7 @@ module.exports = exports =
     id: "event"
     title: "Event"
     description: """
-                 See also: [core concepts](#{pages.linkTo("concepts")}#core-events).
+                 See also: [core concepts](#{linkTo.concepts}#core-events).
                  """
     properties: [
       key: "id"
@@ -74,7 +74,7 @@ module.exports = exports =
       key: "type"
       type: "string"
       description: """
-                   The type of the event. See the [event type directory](#{pages.linkTo("eventTypes")}#directory) for a list of standard types.
+                   The type of the event. See the [event type directory](#{linkTo.eventTypes}#directory) for a list of standard types.
                    """
     ,
       key: "content"
@@ -168,7 +168,7 @@ module.exports = exports =
     id: "stream"
     title: "Stream"
     description: """
-                 See also: [core concepts](#{pages.linkTo("concepts")}#core-streams).
+                 See also: [core concepts](#{linkTo.concepts}#core-streams).
                  """
     properties: [
       key: "id"
@@ -231,7 +231,7 @@ module.exports = exports =
     id: "tag"
     title: "Tag"
     description: """
-                 Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](#{pages.linkTo("concepts")}#core-tags). *Note: typed tags aren't yet implemented in the API today.*
+                 Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](#{linkTo.concepts}#core-tags). *Note: typed tags aren't yet implemented in the API today.*
                  """
     properties: [
       key: "id"
@@ -276,7 +276,7 @@ module.exports = exports =
     id: "access"
     title: "Access"
     description: """
-                 See also: [core concepts](#{pages.linkTo("concepts")}#core-accesses).
+                 See also: [core concepts](#{linkTo.concepts}#core-accesses).
                  """
     properties: [
       key: "id"
@@ -347,7 +347,7 @@ module.exports = exports =
     id: "followed-slices"
     title: "Followed slices"
     description: """
-                 See also: [core concepts](#{pages.linkTo("concepts")}#core-followed-slices).
+                 See also: [core concepts](#{linkTo.concepts}#core-followed-slices).
                  """
     properties: [
       key: "id"
