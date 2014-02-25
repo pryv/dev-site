@@ -262,22 +262,10 @@ module.exports = exports =
                      The request's parameters do not follow the expected format. The error's `data` contains an array of validation errors.
                      """
       ,
-        key: "unknown-event"
+        key: "unknown-referenced-resource"
         http: "400"
         description: """
-                     The referenced event(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
-                     """
-      ,
-        key: "unknown-stream"
-        http: "400"
-        description: """
-                     The referenced stream(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
-                     """
-      ,
-        key: "unknown-tag"
-        http: "400"
-        description: """
-                     The referenced typed tag(s) can't be found. If relevant, the unknown items' ids are listed as an array in the error's `data.unknownIds`.
+                     One or more referenced resource(s) can't be found. The error's `data.{method-parameter-key}` (e.g. `data.streamId`) contains the unknown reference(s).
                      """
       ,
         key: "invalid-access-token"
@@ -292,28 +280,10 @@ module.exports = exports =
                      The given access token does not grant permission for this operation. See [accesses](##{dataStructure.getDocId("access")}) for more details about accesses and permissions.
                      """
       ,
-        key: "unknown-event"
+        key: "unknown-resource"
         http: "404"
         description: """
-                     The event can't be found.
-                     """
-      ,
-        key: "unknown-stream"
-        http: "404"
-        description: """
-                     The stream can't be found.
-                     """
-      ,
-        key: "unknown-tag"
-        http: "404"
-        description: """
-                     The tag can't be found.
-                     """
-      ,
-        key: "unknown-attachment"
-        http: "404"
-        description: """
-                     The attached file can't be found for the specified event.
+                     The resource can't be found.
                      """
       ,
         key: "user-account-relocated"

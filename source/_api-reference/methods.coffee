@@ -230,12 +230,6 @@ module.exports = exports =
                        """
         ]
       errors: [
-        key: "unknown-event"
-        http: "400"
-        description: """
-                     The specified event cannot be found.
-                     """
-      ,
         key: "invalid-operation"
         http: "400"
         description: """
