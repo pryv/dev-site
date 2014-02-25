@@ -197,8 +197,7 @@ The new access's data: see [access](#data-structure-access). Additionally, if a 
 
 #### Specific errors
 
-- `400 Bad Request`, id `item-id-already-exists`: An access already exists with the same token.
-- `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type (and device name, for app accesses).
+- `400 Bad Request`, id `item-already-exists`: A similar access already exists. The error's `data` contains the conflicting properties.
 - `400 Bad Request`, id `invalid-item-id`: Occurs if trying to set the token to an invalid value (e.g. a reserved word like `null`).
 
 #### cURL example
@@ -222,7 +221,7 @@ New values for the access's fields: see [access](#data-structure-access). All fi
 
 #### Specific errors
 
-- `400 Bad Request`, id `item-name-already-exists`: An access already exists with the same name and type (and device name, for app accesses).
+- `400 Bad Request`, id `item-already-exists`: A similar access already exists. The error's `data` contains the conflicting properties.
 
 #### cURL example
 
@@ -264,7 +263,7 @@ If no matching access already exists:
 
 - `checkedPermissions`: A updated copy of the `requestedPermissions` array passed in the request, with the `defaultName` property replaced by `name` for each existing stream (set to the actual name of the item). (For missing streams the `defaultName` property is left untouched.) If streams already exist with the same name but a different `id`, `defaultName` is updated with a valid alternative proposal (in such cases the response also has an `error` property to signal the issue; see below).
 - `mismatchingAccessToken` ([identity](#data-structure-identity)): Set if an access already exists for the requesting app, but with different permissions than those requested.
-- `error` ([error](#data-structure-error)): If there is a duplicate issue with some streams requested for creation (see `checkedPermissions`), this is set to an `item-name-already-exists` error.
+- `error` ([error](#data-structure-error)): If there is a duplicate issue with some streams requested for creation (see `checkedPermissions`), this is set to an `item-already-exists` error.
 
 If a matching access already exists:
 

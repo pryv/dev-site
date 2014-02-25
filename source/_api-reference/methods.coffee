@@ -522,16 +522,10 @@ module.exports = exports =
                        """
         ]
       errors: [
-        key: "item-id-already-exists"
+        key: "item-already-exists"
         http: "400"
         description: """
-                     A stream already exists with the same id.
-                     """
-      ,
-        key: "item-name-already-exists"
-        http: "400"
-        description: """
-                     A sibling stream already exists with the same name.
+                     A similar stream already exists. The error's `data` contains the conflicting properties.
                      """
       ,
         key: "invalid-item-id"
@@ -584,10 +578,10 @@ module.exports = exports =
                        """
         ]
       errors: [
-        key: "item-name-already-exists"
+        key: "item-already-exists"
         http: "400"
         description: """
-                     A sibling stream already exists with the same name.
+                     A similar stream already exists. The error's `data` contains the conflicting properties.
                      """
       ]
       examples: [
