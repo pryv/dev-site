@@ -52,8 +52,10 @@ html.no-js(lang='en')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') More <b class="caret"></b>
                 ul.dropdown-menu
+                  +menuItem('changeLog')
                   +menuItem('appsAndServices')
                   +menuItem('codeLibraries')
+                  +menuItem('faq')
               //li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
@@ -70,7 +72,8 @@ html.no-js(lang='en')
                   +menuItem('appAccess')
               //li
                 a(href='#') Blog
-            p.navbar-text.navbar-right.version API version: <strong>#{apiReference.version}</strong>
+            p.navbar-text.navbar-right.version
+              a(href=pages[linkTo['changeLog']].id, title='View change log') API version: <strong>#{apiReference.version}</strong>
             if withExamples && withExamples.menu
               form.navbar-form.navbar-right
                 .form-group

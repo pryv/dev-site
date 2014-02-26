@@ -20,6 +20,13 @@ source = [
   withExamples: false
   withTOC: true
 ,
+  id: 'change-log'
+  titleShort: 'API change log'
+  titleFull: 'API change log'
+  layout: '_layouts/default'
+  withExamples: false
+  withTOC: false
+,
   id: 'code-libraries'
   titleShort: 'Code libraries'
   titleFull: 'Code libraries'
@@ -41,6 +48,13 @@ source = [
   withExamples: false
   withTOC: false
   landingPage: true
+,
+  id: 'faq'
+  titleShort: 'FAQ'
+  titleFull: 'Frequently Asked Questions'
+  layout: '_layouts/default'
+  withExamples: false
+  withTOC: false
 ,
   # TODO: rename to event-types: https://github.com/sintaxi/harp/issues/106
   id: 'event-typez'
