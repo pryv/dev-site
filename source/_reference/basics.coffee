@@ -205,6 +205,8 @@ module.exports = exports =
                  2. Send an auth request from your app
                  3. Open the auth page from the URL returned (e.g. as a popup); the auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one)
                  4. Handle the result by either polling the appropriate URL or directly from the return URL you'll have defined
+
+                 **Note: this auth flow will very likely undergo some changes in the coming weeks.**
                  """
     sections: [
       id: "auth-request"
@@ -335,20 +337,20 @@ module.exports = exports =
                  Host: reg.pryv.io
 
                  {
-                 "requestingAppId": "test-app-id",
-                 "requestedPermissions": [
-                 {
-                 "streamId": "diary",
-                 "level": "read",
-                 "defaultName": "Journal"
-                 },
-                 {
-                 "streamId": "position",
-                 "level": "contribute",
-                 "defaultName": "Position"
-                 }
-                 ],
-                 "languageCode": "fr"
+                   "requestingAppId": "test-app-id",
+                   "requestedPermissions": [
+                     {
+                       "streamId": "diary",
+                       "level": "read",
+                       "defaultName": "Journal"
+                     },
+                     {
+                       "streamId": "position",
+                       "level": "contribute",
+                       "defaultName": "Position"
+                     }
+                   ],
+                   "languageCode": "fr"
                  }
                  ```
                  """
@@ -358,10 +360,10 @@ module.exports = exports =
         content: """
                  ```json
                  {
-                 "status": "NEED_SIGNIN",
-                 "url": "https://sw.pryv.io:2443/access/v1/access.html?lang=fr&key=dXRqBezem8v3mNxf&requestingAppId=test-app-id&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.io%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
-                 "poll": "https://reg.pryv.io/access/dXRqBezem8v3mNxf",
-                 "poll_rate_ms": 1000
+                   "status": "NEED_SIGNIN",
+                   "url": "https://sw.pryv.io:2443/access/v1/access.html?lang=fr&key=dXRqBezem8v3mNxf&requestingAppId=test-app-id&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.io%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
+                   "poll": "https://reg.pryv.io/access/dXRqBezem8v3mNxf",
+                   "poll_rate_ms": 1000
                  }
                  ```
                  """
