@@ -90,5 +90,5 @@ source = [
 pages = module.exports = {}
 source.forEach (pageData) ->
   pageData.linkTo = require('./links.coffee')
-  pageData.apiReference = require('../_api-reference')
+  pageData.apiReference = require('../_reference')
   pages[pageData.id] = pageData
