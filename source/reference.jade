@@ -41,7 +41,9 @@ mixin http(http, httpOnly)
         if http.code
           code !{http.code}
         else if http.text
-          span !{http.text}
+          - var output = markdown(http.text)
+          -// YES, HACK
+          span !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
         else
           code !{http}
 
@@ -145,8 +147,10 @@ mixin section(section, parentDocId, level)
   section(id='#{docId}', class='#{section.type || ""}')
     if level === 2
       +h2(section.title)
-    else
+    else if level === 3
       +h3(section.title)
+    else
+      +h4(section.title)
     .content
       if isMethod
         .meta
@@ -156,7 +160,7 @@ mixin section(section, parentDocId, level)
       +intro(section.description)
       +properties(section.properties)
       if section.params
-        +h4('Parameters')
+        +h4(section.params.title || 'Parameters')
         +text(section.params.description)
         +properties(section.params.properties)
       if section.result
