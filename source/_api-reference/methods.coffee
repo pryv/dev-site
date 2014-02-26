@@ -146,7 +146,7 @@ module.exports = exports =
         key: "invalid-operation"
         http: "400"
         description: """
-                     The stream is in the trash, and we prevent the recording of new events into trashed streams.
+                     The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
                      """
       ,
         key: "periods-overlap"
@@ -235,12 +235,6 @@ module.exports = exports =
         description: """
                      The specified event is not a running period event.
                      """
-      ,
-        key: "missing-parameter"
-        http: "400"
-        description: """
-                     No `id` was specified and the specified stream is not a `singleActivity` stream (so that there can be more than one running event).
-                     """
       ]
       examples: [
         params:
@@ -296,7 +290,7 @@ module.exports = exports =
         key: "invalid-operation"
         http: "400"
         description: """
-                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingPeriodId` provides the id of the closest conflicting event.
+                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
                      """
       ,
         key: "periods-overlap"
@@ -635,13 +629,6 @@ module.exports = exports =
       ,
         title: "Result: deleted"
         http: "204 No content"
-      ]
-      errors: [
-        key: "missing-parameter"
-        http: "400"
-        description: """
-                     There are events referring to the deleted item(s) and the `mergeEventsWithParent` parameter is missing.
-                     """
       ]
       examples: [
         title: "Trashing"
