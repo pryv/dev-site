@@ -11,13 +11,11 @@ h1, h2, h3, h4, h5
   font-family: museo_300regular
   color: #000
 
-h1.page-title
-  color: #666
-  background: none
-
 #main
   h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
     margin-top: 0
+
+  margin-bottom: 50px
 
 h5, h6
   margin: 1.5em 0 0.75em
@@ -30,8 +28,11 @@ h1
   background: #266C9C url("images/bgPaper.png") repeat center center;
   color:#FFFFFF
   padding: 20px 40px 20px 40px
+
 h1.page-title
   padding: 20px 0
+  color: #666
+  background: none
 
 h2
   border-top: 1px solid #EEE
@@ -83,22 +84,60 @@ dd
   .navbar-brand.logo
     padding-top: 5px
 
-.masthead
-  margin: 0 -20px 0 -20px
-  background: #266C9C url(images/bgPaper.png) repeat center center
-  h1
-    color: #FFFFFF
-  .container
-    text-align: center
-    padding: 30px 0 70px 0
+#footer-nav .navbar-nav
+  margin-left: -15px
+#page-footer nav
+  margin-bottom: 0
 
-.marketing-icon
-  text-align: center
-  h2
-    border:0
-    padding-top: 10px;
-  img
-    margin:20px 0 0 0
+body.landing-page
+  h1
+    padding: 0
+
+  .masthead
+    margin: 0 -20px 0 -20px
+    padding: 30px 0 40px 0
+    text-align: center
+    background: #266C9C url(images/bgPaper.png) repeat center center
+    h1
+      color: #FFFFFF
+
+  .summary
+    margin: 30px 0 50px
+    text-align: center
+    h1
+      color: #000
+      background: none
+
+
+  .marketing-icon
+    text-align: center
+    margin-bottom: 30px
+    h2
+      border:0
+      padding-top: 10px;
+    img
+      margin: 15px 0 0 0
+    pre>code
+      text-align: left
+      max-height: 250px
+      overflow-y: scroll
+    p
+      font-size: 1.2em
+      font-weight: 200;
+      line-height: 1.4;
+
+  .signup
+    margin: 30px -15px 0 -15px
+    padding: 30px 0 30px 0
+    text-align: center
+    background-color: #EDEFF3
+    input, button
+      margin: 0 10px
+      height: 2.4em
+      font-size: 1.2em
+    button
+      background-color: #266C9C
+
 
 .buttonCreateAccount
   a
@@ -186,7 +225,7 @@ dd
     .label
       background-color: #7E7E7E
 
-  .example .step-marker
+  .example .step-marker, .marketing-icon .step-marker
     text-align: center
     margin-top: -0.65em;
     margin-bottom: -0.58em;

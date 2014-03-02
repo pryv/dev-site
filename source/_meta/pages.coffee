@@ -41,14 +41,6 @@ source = [
   withExamples: false
   withTOC: true
 ,
-  id: 'dev-index'
-  titleShort: 'Home'
-  # no in-page full title
-  layout: '_layouts/default'
-  withExamples: false
-  withTOC: false
-  landingPage: true
-,
   id: 'faq'
   titleShort: 'FAQ'
   titleFull: 'Frequently Asked Questions'
@@ -67,6 +59,14 @@ source = [
   withExamples: false
   withTOC: true
   tocSelectors: 'h1:not(.page-title),h2,h3'
+,
+  id: 'index'
+  titleShort: 'Home'
+  # no in-page full title
+  layout: '_layouts/default'
+  withExamples: false
+  withTOC: false
+  landingPage: true
 ,
   id: 'reference'
   titleShort: 'Reference'

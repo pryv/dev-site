@@ -8,7 +8,7 @@ module.exports =
   codeLibraries: "code-libraries"
   concepts: "concepts"
   faq: "faq"
-  home: "dev-index"
+  home: "index"
   eventTypes: "event-typez"
   reference: "reference"
   standardStructure: "standard-structure"
