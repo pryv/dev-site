@@ -4,18 +4,18 @@ section(id='core')
 
     ## User accounts
 
-    User accounts represent people or organizations that use Pryv. Each account is identified by either a Pryv username or the URL of its corresponding API root endpoint (although the latter isn't used at the moment). An account's data usually contains account settings (e.g. credentails, profile), events, contexts (streams, tags) and accesses.
+    User accounts represent people or organizations that use Pryv. Each account is identified by either a Pryv username or the URL of its corresponding API root endpoint (although the latter isn't used at the moment). An account's data usually contains account settings (e.g. credentials, profile), events, contexts (streams, tags) and accesses.
 
 
     ## Servers
 
     Each user account is served from one root API endpoint on a Pryv server; one server can host one or more accounts.
-    Users choose what server handles their account depending on their own location (typically considering network distance, with an obvious tie to performance), privacy/legal context and/or other constraints. Data for each account is stored individually, i.e. separately from other accounts' (except Pryv username-to-server mapping information, currently kept globally in a central DNS directory plus locally on each server for the accounts it serves).
+    Users can choose which server hosts their account depending on their own location (typically considering network distance, with an obvious tie to performance), privacy/legal context and/or other constraints. Data for each account is stored individually, i.e. separately from other accounts' (except Pryv username-to-server mapping information, currently kept globally in a central DNS directory plus locally on each server for the accounts it serves).
 
 
     ## Events
 
-    Events are the primary units of content in Pryv. An event is a timestamped piece of typed data, possibly with one or more attached files, belonging to a given context. Depending on its type, an event can represent anything related to a particular time (picture, note, location, temperature measurement, etc.). An event can also reference other events, allowing to model things such as photo/music albums, comments, versioning, etc. It is also possible for events to have a duration to represent a period instead of a single point in time, and the API includes some specific functionality to deal with periods.
+    Events are the primary units of content in Pryv. An event is a timestamped piece of typed data, possibly with one or more attached files, belonging to a given context. Depending on its type, an event can represent anything related to a particular time (picture, note, location, temperature measurement, etc.). An event can also reference other events, allowing to model things such as albums, comments, versioning, etc. It is also possible for events to have a duration to represent a period instead of a single point in time, and the API includes specific functionality to deal with periods.
 
     *Note: event references aren't yet implemented in the API today.*
 
@@ -31,7 +31,7 @@ section(id='core')
 
     Streams are the fundamental contexts in which events occur. Every event occurs in one stream. Streams follow a hierarchical structure—streams can have sub-streams—and usually match either user/app-specific organizational levels (e.g. life journal, work projects, etc.) or data sources (e.g. apps and/or devices).
 
-    See also [standard streams](#{linkTo.standardStructure}).
+    <!-- TODO: See also [standard streams](#{linkTo.standardStructure}). -->
 
 
     ### Tags
@@ -50,7 +50,7 @@ section(id='core')
 
     *Note: typed tags aren't yet implemented in the API today.*
 
-    See also [standard tag types](#TODO).
+    <!-- TODO: See also [standard tag types](#TODO). -->
 
 
     ## Accesses
@@ -61,9 +61,9 @@ section(id='core')
     - **App** accesses are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs; this includes the management of shared accesses with lower or equivalent permissions. App accesses require the app to be registered. Access is obtained by the user authorizing the requesting app after authenticating on Pryv (OAuth2-three-legged-style).
     - **Personal** accesses are used by apps that need to access the entirety of the user's data and/or manage account settings. They grant full permissions, including management of other accesses. Personal accesses require the app to be registered as a trusted Pryv app. Access is obtained by the user directly authenticating with her personal credentials within the app.
 
-    See also [registering your app](#TODO).
+    <!-- TODO: See also [registering your app](#TODO). -->
 
 
     ## Followed slices
 
-    Users can add streams shared by other users along with theirs as followed slices (as in "slices of life"). A followed slice is a reference to another user's shared access, together with details on how to integrate the shared data within the user's own streams.
+    Users can view and possibly manipulate streams shared by other users as **followed slices** of life. A followed slice is a reference to another user's shared access, together with details on how to integrate the shared data within the user's own streams.

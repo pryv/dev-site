@@ -8,10 +8,9 @@
       .summary
         h1 Pryv is an open platform for (personal) time-based data
         p.lead
-          | Everybody seems to be out to collect users data with apps and devices—but what’s next?<br/>
+          | Everyday new apps and devices pop up, collecting and building value from users data—<br>but with each working in its own silo, how far can we get?<br/>
           strong
-            | Data streams from heterogeneous sources need to reunite, and users must be in control.<br/>
-            | We have a platform for that.
+            | Data streams from heterogeneous sources need to reunite, and users must be in control.<br>
 
   .row
     .col-md-4.marketing-icon
@@ -25,38 +24,59 @@
         ![Event types](images/event-type.png)
 
     .col-md-4.marketing-icon
-      :markdown
-        ## One sensible REST-based / websockets API
+      h2 One simple HTTP + websockets API
 
-        ```http
-        GET /events?auth={token} HTTP/1.1
-        Host: {user}.pryv.io
-        Accept: application/json
-        ```
-      .step-marker ⬇
-      :markdown
-        ```json
-        {
-          "events": [
+      ul.nav.nav-tabs
+        li.active: a(href='#api-example-http', data-toggle='tab') HTTP
+        li: a(href='#api-example-sockets', data-toggle='tab') Socket.IO
+      .tab-content
+        #api-example-http.tab-pane.active
+          :markdown
+            ```http
+            GET /events?auth={token} HTTP/1.1
+            Host: {user}.pryv.io
+            Accept: application/json
+            ```
+          .step-marker ⬇
+          :markdown
+            ```json
             {
-              "time": 1369143391.115,
-              "type": "temperature/c",
-              "content": 27.7,
-              "...": "..."
-            },
-            {
-              "time": 1369140027.36,
-              "type": "position/wgs84",
-              "content": {
-                "latitude": 46.517699,
-                "longitude": 6.562671
-              },
-              "...": "..."
-            },
-            ...
-          ]
-        }
-        ```
+              "events": [
+                {
+                  "time": 1369143391.115,
+                  "type": "temperature/c",
+                  "content": 27.7,
+                  "...": "..."
+                },
+                {
+                  "time": 1369140027.36,
+                  "type": "position/wgs84",
+                  "content": {
+                    "latitude": 46.517699,
+                    "longitude": 6.562671
+                  },
+                  "...": "..."
+                },
+                ...
+              ]
+            }
+            ```
+        #api-example-sockets.tab-pane
+          :markdown
+            ```javascript
+            socket.emit('events.get', {}, function (err, result) {
+              // > result.events
+              // [
+              //   {
+              //     time: 1369143391.115,
+              //     type: 'temperature/c',
+              //     content: 27.7,
+              //     ...
+              //   },
+              //   ...
+              // ]
+            });
+            ```
 
     .col-md-4.marketing-icon
       :markdown

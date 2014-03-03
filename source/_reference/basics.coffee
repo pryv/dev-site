@@ -13,13 +13,13 @@ module.exports = exports =
   title: "Basics"
   sections: [
     id: "endpoint-url"
-    title: "Endpoint URL"
+    title: "Root endpoint URL"
     description: """
                  ```
                  https://{username}.pryv.io
                  ```
 
-                 Each user account uses a dedicated API endpoint as it is potentially served from a different location.
+                 Each user account has a dedicated root API endpoint as it is potentially served from a different location.
                  """
     examples: [
       title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.io`"

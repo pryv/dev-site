@@ -23,9 +23,9 @@ each className in classNames
 section#about
   h1 About types
   :markdown
-    This is a **proposal** for the standard event types we recommend and plan to handle in our apps. You are free to use any type in your app, but for the sake of interoperability we heavily recommend that you stick to the standard types listed here, and <a href="https://github.com/pryv/data-types">help us</a> complete or adjust the directory if you don't find what you need.
+    This is a **proposal** for the standard event types we recommend and plan to handle in our apps. You are free to use any type in your app, but for the sake of interoperability we heavily recommend that you stick to the standard types listed here, and [help us](https://github.com/pryv/data-types) complete or adjust the directory if you don't find what you need.
 
-    ## Event type?
+    ## Basics
 
     An event's type is defined by its `type` property that indicates how to handle its `content` (if any).
     The type itself is specified as `{class}/{format}`, lowercase (e.g. `note/html`). Rationale:
@@ -39,13 +39,12 @@ section#about
 
     ## Format specification
 
-    For each of the types described below, the event content's structure is specified using
-    JSON-schema (see the
-    [JSON-schema specification](http://tools.ietf.org/html/draft-zyp-json-schema-04#page-8)).
+    For each of the types described below, the event content's structure is specified with
+    [JSON-schema](http://tools.ietf.org/html/draft-zyp-json-schema-04#page-8).
     Notes:
 
-    - A "null" content type means that the event has no `content` property (usually because event
-      core properties are sufficient).
+    - A "null" content type means that the event has no `content` property (because the core event
+      structure is sufficient).
     - Any content type other than "null" implies that the event must have a `content` property of the
       specified JSON-schema type.
     - If the content is an object, its (sub-)properties are assumed to be optional unless
@@ -60,7 +59,7 @@ section#about
 
     ## Submitting types & issues
 
-    This directory will keep evolving to match the needs of Pryv apps, and we need your help. We're awaiting your issues and pull requests on <a href="https://github.com/pryv/data-types">our GitHub repo</a>.
+    This directory will keep evolving to match the needs of Pryv apps: [issues and pull requests are welcome](https://github.com/pryv/data-types).
 
     &nbsp;
 
@@ -70,27 +69,47 @@ section#about
 section#directory
   h1 Directory
 
-  p.version <span class="label">version</span> <strong>#{sourceData.version}</strong>
+  p.version Version: <strong>#{sourceData.version}</strong>
 
   h2 Complex types
 
-  mixin renderProperties(obj, isPropertyList)
-    ul
-      each key in Object.keys(obj)
-        - var value = obj[key]
-        li
-          - var keyElt = isPropertyList ? 'code' : 'strong'
-          | <!{keyElt}>!{key}</!{keyElt}>:!{' '}
-          if Array.isArray(value)
-            if key === 'required'
+  mixin attribute(header, value)
+    if value
+      | ,
+      span.attribute
+        strong !{header}:&nbsp;
+        | !{value}
+
+  mixin definition(name, schema)
+    - var type = schema['type']
+    - var description = schema['description']
+    - var properties = schema['properties']
+    - var example = schema['example']
+    tr
+      th: code !{name}
+      td
+        | !{type}
+        each key in Object.keys(schema)
+          - var value = schema[key]
+          if key !== 'type' && key !== 'description' && key !== 'properties' && key !== 'example'
+            if key === 'pattern'
+              +attribute(key, '<code>' + value + '</code>')
+            else if key === 'required' && value
               - var asCode = value.map(function(k) { return '<code>' + k + '</code>'; });
-              | !{asCode.join(', ')}
+              +attribute(key, asCode.join(', '))
             else
-              | !{value.join(', ')}
-          else if typeof value === 'object'
-            mixin renderProperties(value, key === 'properties')
-          else
-            | !{value}
+              +attribute(key, value)
+        if description
+          .description !{description}
+        if properties
+          table.definitions
+            tbody
+              each k in Object.keys(properties)
+                +definition(k, properties[k])
+        if example
+          .example
+            strong Example:
+            pre: code= JSON.stringify(example, null, 2)
 
   for className in Object.keys(complexClasses)
     - var classDef = classes[className]
@@ -103,50 +122,12 @@ section#directory
           - headers.push(formatField)
     - headers = headers.filter(function(el,i,a){if(i==a.indexOf(el))return 1;return 0})
     - headers.sort(function(a,b){if(a==='description')return -1;if(a==='type')return -1;return a.localeCompare(b);})
-    table.table
-      thead
-        tr
-          -// format id column.
-          th type
-          each header in headers
-            if header !== 'properties' && header !== 'example'
-              -// other custom columns.
-              th= header
+    table.definitions
       tbody
         for formatName in Object.keys(classDef.formats)
+          - var name = className + '/' + formatName
           - var formatDef = classDef.formats[formatName]
-          - var properties = formatDef['properties']
-          - var example = formatDef['example']
-          - var type = formatDef['type']
-          - var rowSpan = 1 + (properties ? 1 : 0) + (example ? 1 : 0)
-          - var colSpan = headers.length - (properties ? 1 : 0) - (example ? 1 : 0)
-
-          tr
-            -// format id column.
-            td(rowspan=rowSpan) <code>!{className}/!{formatName}</code>
-            each header in headers
-              -// other custom columns.
-              - var value = formatDef[header]
-              if header !== 'properties' && header !== 'example'
-                if header === 'pattern' && value
-                  td <code>!{value}</code>
-                else if header === 'required'
-                  if value
-                    - var asCode = value.map(function(k) { return '<code>' + k + '</code>'; });
-                    td !{asCode.join(', ')}
-                else
-                  td !{value}
-            if properties
-              tr
-                td(colspan=colSpan)
-                  strong properties
-                  mixin renderProperties(properties, true)
-            if example
-              tr
-                td(colspan=colSpan)
-                  strong example
-                  pre.example
-                    code= JSON.stringify(example, null, 2)
+          +definition(name, formatDef)
 
   h2 Numerical types
 
@@ -155,18 +136,11 @@ section#directory
     h3 !{className.charAt(0).toUpperCase() + className.slice(1)}
     .description !{classDef.description}
 
-    table.table
-      thead
-        tr
-          -// format id column.
-          th type
-          th title
-
+    table.definitions
       tbody
         for formatName in Object.keys(classDef.formats)
           - var formatDef = classDef.formats[formatName]
           - var formatDescription = formatDef.description
           tr
-            -// format id column.
-            td <code>!{className}/!{formatName}</code>
+            th: code !{className}/!{formatName}
             td !{formatDescription}
