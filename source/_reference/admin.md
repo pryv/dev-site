@@ -262,12 +262,12 @@ For the app authorization process. Checks if the app requesting authorization al
 If no matching access already exists:
 
 - `checkedPermissions`: A updated copy of the `requestedPermissions` array passed in the request, with the `defaultName` property replaced by `name` for each existing stream (set to the actual name of the item). (For missing streams the `defaultName` property is left untouched.) If streams already exist with the same name but a different `id`, `defaultName` is updated with a valid alternative proposal (in such cases the response also has an `error` property to signal the issue; see below).
-- `mismatchingAccessToken` ([identity](#data-structure-identity)): Set if an access already exists for the requesting app, but with different permissions than those requested.
+- `mismatchingAccess` ([access](#data-structure-access)): Set if an access already exists for the requesting app, but with different permissions than those requested.
 - `error` ([error](#data-structure-error)): If there is a duplicate issue with some streams requested for creation (see `checkedPermissions`), this is set to an `item-already-exists` error.
 
 If a matching access already exists:
 
-- `matchingAccessToken` ([identity](#data-structure-identity)): The requesting app's existing [access](#data-structure-access) token.
+- `matchingAccess` ([access](#data-structure-access)): The requesting app's existing [access](#data-structure-access).
 
 #### cURL example
 
