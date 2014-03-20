@@ -10,6 +10,7 @@ Major changes here towards more standardization and flexibility:
 - Deleting a resource now returns code 204 if the item was permanently deleted; it still returns a 200 when trashed (now including the trashed item in the response)
 - Method ids for deletion/trashing are now `{resource}.delete` instead of `{resource}.del`
 - The `attachments` property of events is now an array (instead of an object), with each attachment now identified by a new `id` property (instead of `fileName`)
+- As a security measure, reading attached files now either requires auth via the `Authorization` HTTP header or a new `readToken` query string parameter (`auth` isn't allowed anymore in this case); the token to use is specific to each file and access, and is defined in the `readToken` property of each event attachment
 - Event batch creation method has been replaced with generic batch method (`callBatch`, HTTP: `POST /`)
 - Bookmarks have been renamed to "followed slices", corresponding method ids to `followedSlices.*` and HTTP routes to `/followed-slices`
 - Accesses can now define tag permissions in `permissions` (in addition to the existing stream permissions)
