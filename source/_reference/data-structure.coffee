@@ -136,6 +136,12 @@ module.exports = exports =
         description: """
                      The size of the file, in bytes.
                      """
+      ,
+        key: "readToken"
+        type: "string"
+        description: """
+                     The auth token to pass in the query string when reading the file (instead of the regular `auth` parameter). The token is unique for the file and the access used to read it. This is a security measure in situations where it is impractical to use the `Authorization` HTTP header and/or where the file's URL is likely to be exposed. See also events method [get attachment](#methods-events-events-getAttachment).
+                     """
       ]
     ,
       key: "clientData"

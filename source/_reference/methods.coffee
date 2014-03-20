@@ -347,6 +347,14 @@ module.exports = exports =
       description: """
                    Gets the attached file.
                    """
+      params:
+        properties: [
+          key: "readToken"
+          type: "string"
+          description: """
+                       The file read token to authentify the request if not using the `Authorization` HTTP header. See [`event.attachments[].readToken`](##{dataStructure.getDocId("event")}) for more info.
+                       """
+        ]
       result:
         http: "200 OK"
         description: """
