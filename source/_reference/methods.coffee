@@ -960,13 +960,13 @@ module.exports = exports =
       examples: [
         title: "Sync some health metrics"
         params: [
-          methodId: "events.create"
+          method: "events.create"
           params: _.pick(examples.events.heartRate, "time", "streamId", "type", "content")
         ,
-          methodId: "events.create"
+          method: "events.create"
           params: _.pick(examples.events.heartSystolic, "time", "streamId", "type", "content")
         ,
-          methodId: "events.create"
+          method: "events.create"
           params: _.pick(examples.events.heartDiastolic, "time", "streamId", "type", "content")
         ]
         result:
