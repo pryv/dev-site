@@ -13,15 +13,19 @@ Major changes here towards more standardization and flexibility:
 - As a security measure, reading attached files now either requires auth via the `Authorization` HTTP header or a new `readToken` query string parameter (`auth` isn't allowed anymore in this case); the token to use is specific to each file and access, and is defined in the `readToken` property of each event attachment
 - Event batch creation method has been replaced with generic batch method (`callBatch`, HTTP: `POST /`)
 - Bookmarks have been renamed to "followed slices", corresponding method ids to `followedSlices.*` and HTTP routes to `/followed-slices`
-- Accesses can now define tag permissions in `permissions` (in addition to the existing stream permissions)
-    - If only tag permissions are set, all streams are considered readable, and vice-versa
-    - When stream and tag permissions conflict, the highest permission level is considered
 - Getting events: setting the `tags` parameter now returns events with *any* of the specified tags, instead of *all* of them
 - Error ids:
     - `unknown-*` errors replaced with either `unknown-resource` or `unknown-referenced-resource`
     - `item-*-already-exists` replaced with `item-already-exists`
     - `missing-parameter` replaced with `invalid-parameters-format`
 - Other improvements and fixes (data validation performance, minor bugs on auth for trusted apps)
+
+New features:
+
+- Getting events: filter for specific event types with the `types` parameter
+- Accesses can now define tag permissions in `permissions` (in addition to the existing stream permissions)
+    - If only tag permissions are set, all streams are considered readable, and vice-versa
+    - When stream and tag permissions conflict, the highest permission level is considered
 
 
 ## v0.6

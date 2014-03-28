@@ -55,6 +55,13 @@ module.exports = exports =
                        If set, only events assigned to any of the listed tags will be returned.
                        """
         ,
+          key: "types"
+          type: "array of strings"
+          optional: true
+          description: """
+                       If set, only events of any of the listed types will be returned.
+                       """
+        ,
           key: "running"
           type: "boolean"
           optional: true
