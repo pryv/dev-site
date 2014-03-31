@@ -144,38 +144,41 @@ mixin examples(examples, settings)
 mixin section(section, parentDocId, level)
   - var isMethod = section.type === 'method'
   - var docId = apiReference.helpers.getDocId(parentDocId, section.id)
-  section(id='#{docId}', class='#{section.type || ""}')
-    if level === 2
-      +h2(section.title)
-    else if level === 3
-      +h3(section.title)
-    else
-      +h4(section.title)
-    .content
-      if isMethod
-        .meta
-          if ! section.httpOnly
-            +methodId(section.id)
-          +http(section.http, section.httpOnly)
-      +intro(section.description)
-      +properties(section.properties)
-      if section.params
-        +h4(section.params.title || 'Parameters')
-        +text(section.params.description)
-        +properties(section.params.properties)
-      if section.result
-        if section.result instanceof Array
-          each result in section.result
-            +result(result)
-        else
-          +result(section.result)
-      if section.errors
-        +h4('Specific errors')
-        +properties(section.errors)
-    +examples(section.examples, section)
-    if section.sections
-      each subSection in section.sections
-        +section(subSection, docId, level + 1)
+  - var sectionClass = (section.type || '') + (section.trustedOnly ? ' trusted-only' : '')
+  if ! section.trustedOnly || showTrustedOnlyContent
+    section(id='#{docId}', class='#{sectionClass}')
+      if level === 2
+        +h2(section.title)
+      else if level === 3
+        +h3(section.title)
+      else
+        +h4(section.title)
+      .content
+        if isMethod
+          .meta
+            if ! section.httpOnly
+              +methodId(section.id)
+            +http(section.http, section.httpOnly)
+            //TODO: trusted only label
+        +intro(section.description)
+        +properties(section.properties)
+        if section.params
+          +h4(section.params.title || 'Parameters')
+          +text(section.params.description)
+          +properties(section.params.properties)
+        if section.result
+          if section.result instanceof Array
+            each result in section.result
+              +result(result)
+          else
+            +result(section.result)
+        if section.errors
+          +h4('Specific errors')
+          +properties(section.errors)
+      +examples(section.examples, section)
+      if section.sections
+        each subSection in section.sections
+          +section(subSection, docId, level + 1)
 
 - function printJSON(content) { return JSON.stringify(content, null, 2); }
 

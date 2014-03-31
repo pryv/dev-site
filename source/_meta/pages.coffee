@@ -75,6 +75,7 @@ source = [
   markdown: require('marked')
   withExamples: {menu: true}
   withTOC: true
+  showTrustedOnlyContent: true
 ,
   id: 'standard-structure'
   titleShort: 'Standard data structure'

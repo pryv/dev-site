@@ -12,6 +12,81 @@ module.exports = exports =
   id: "methods"
   title: "API methods"
   sections: [
+    id: "auth"
+    title: "Authentication"
+    trustedOnly: true
+    description: """
+                 Methods for trusted apps to login/logout users.
+                 """
+    sections: [
+      id: "auth.login"
+      type: "method"
+      title: "Login user"
+      http: "POST /auth/login"
+      description: """
+                   Authenticates the user against the provided credentials, opening a personal access session. This is the only API method that does not expect an [auth parameter](#basics-authentication).
+                   """
+      params:
+        properties: [
+          key: "username"
+          type: "string"
+          description: """
+                       The user's username.
+                       """
+        ,
+          key: "password"
+          type: "string"
+          description: """
+                       The user's password.
+                       """
+        ,
+          key: "appId"
+          type: "string"
+          description: """
+                       Your app's unique identifier.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "token"
+          type: "string"
+          description: """
+                       The personal access token to use for further API calls.
+                       """
+        ,
+          key: "preferredLanguage"
+          type: "string"
+          description: """
+                       The user's preferred language as a 2-letter ISO language code.
+                       """
+        ]
+      examples: [
+        params:
+          username: examples.users.one.username
+          password: examples.users.one.password
+          appId: "my-app-id"
+        result:
+          token: examples.accesses.personal.token
+          preferredLanguage: examples.users.one.language
+      ]
+
+    ,
+
+      id: "auth.logout"
+      type: "method"
+      title: "Logout user"
+      http: "POST /auth/logout"
+      description: """
+                   Terminates a personal access session by invalidating its access token (the user will have to login again).
+                   """
+      result:
+        http: "200 OK"
+      examples: []
+    ]
+
+  ,
+
     id: "events"
     title: "Events"
     description: """
@@ -209,19 +284,19 @@ module.exports = exports =
       params:
         properties: [
           key: "streamId"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           description: """
                        The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified.
                        """
         ,
           key: "id"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           description: """
                        The id of the event to stop. Either this or `streamId` must be specified.
                        """
         ,
           key: "time"
-          type: "[timestamp](#{dataStructure.getDocId("timestamp")})"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
                        The stop time. Default: now.
@@ -231,7 +306,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "stoppedId"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           description: """
                        The id of the event that was stopped or null if no running event was found.
                        """
@@ -263,7 +338,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -275,20 +350,20 @@ module.exports = exports =
           http:
             text: "= request body"
           description: """
-                       New values for the event's fields: see [event](#{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
+                       New values for the event's fields: see [event](##{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
           key: "event"
-          type: "[event](#{dataStructure.getDocId("event")})"
+          type: "[event](##{dataStructure.getDocId("event")})"
           description: """
                        The updated event.
                        """
         ,
           key: "stoppedId"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           description: """
                        Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
                        """
@@ -330,7 +405,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "event"
-          type: "[event](#{dataStructure.getDocId("event")})"
+          type: "[event](##{dataStructure.getDocId("event")})"
           description: """
                        The updated event.
                        """
@@ -383,7 +458,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -391,7 +466,7 @@ module.exports = exports =
                        """
         ,
           key: "fileId"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -402,7 +477,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "event"
-          type: "[event](#{dataStructure.getDocId("event")})"
+          type: "[event](##{dataStructure.getDocId("event")})"
           description: """
                        The updated event.
                        """
@@ -430,7 +505,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -442,7 +517,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "event"
-          type: "[event](#{dataStructure.getDocId("event")})"
+          type: "[event](##{dataStructure.getDocId("event")})"
           description: """
                        The trashed event.
                        """
@@ -465,7 +540,7 @@ module.exports = exports =
     id: "streams"
     title: "Streams"
     description: """
-                 Methods to retrieve and manipulate [streams](#{dataStructure.getDocId("stream")}).
+                 Methods to retrieve and manipulate [streams](##{dataStructure.getDocId("stream")}).
                  """
     sections: [
       id: "streams.get"
@@ -478,7 +553,7 @@ module.exports = exports =
       params:
         properties: [
           key: "parentId"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           optional: true
           description: """
                        The id of the parent stream from which to retrieve streams. Default: `null` (returns all accessible streams from the root level).
@@ -495,7 +570,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "streams"
-          type: "array of [streams](#{dataStructure.getDocId("stream")})"
+          type: "array of [streams](##{dataStructure.getDocId("stream")})"
           description: """
                        The tree of the accessible streams, sorted by name.
                        """
@@ -519,13 +594,13 @@ module.exports = exports =
                    """
       params:
         description: """
-                     The new stream's data: see [stream](#{dataStructure.getDocId("stream")}).
+                     The new stream's data: see [stream](##{dataStructure.getDocId("stream")}).
                      """
       result:
         http: "201 Created"
         properties: [
           key: "stream"
-          type: "[stream](#{dataStructure.getDocId("stream")})"
+          type: "[stream](##{dataStructure.getDocId("stream")})"
           description: """
                        The created stream.
                        """
@@ -562,7 +637,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -574,14 +649,14 @@ module.exports = exports =
           http:
             text: "= request body"
           description: """
-                       New values for the stream's fields: see [stream](#{dataStructure.getDocId("stream")}). All fields are optional, and only modified values must be included.
+                       New values for the stream's fields: see [stream](##{dataStructure.getDocId("stream")}). All fields are optional, and only modified values must be included.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
           key: "stream"
-          type: "[stream](#{dataStructure.getDocId("stream")})"
+          type: "[stream](##{dataStructure.getDocId("stream")})"
           description: """
                        The updated stream (without child streams).
                        """
@@ -618,7 +693,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -636,7 +711,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "stream"
-          type: "[stream](#{dataStructure.getDocId("stream")})"
+          type: "[stream](##{dataStructure.getDocId("stream")})"
           description: """
                        The trashed stream.
                        """
@@ -659,7 +734,7 @@ module.exports = exports =
     id: "accesses"
     title: "Accesses"
     description: """
-                 Methods to retrieve and manipulate [accesses](#{dataStructure.getDocId("access")}), e.g. for sharing.
+                 Methods to retrieve and manipulate [accesses](##{dataStructure.getDocId("access")}), e.g. for sharing.
                  Any app can manage shared accesses whose permissions are a subset of its own. (Full access management is available to trusted apps.)
                  """
     sections: [
@@ -674,7 +749,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "accesses"
-          type: "array of [accesses](#{dataStructure.getDocId("access")})"
+          type: "array of [accesses](##{dataStructure.getDocId("access")})"
           description: """
                        All manageable accesses in the user's account, ordered by name.
                        """
@@ -696,13 +771,13 @@ module.exports = exports =
                    """
       params:
         description: """
-                     An object with the new access's data: see [access](#{dataStructure.getDocId("access")}).
+                     An object with the new access's data: see [access](##{dataStructure.getDocId("access")}).
                      """
       result:
         http: "201 Created"
         properties: [
           key: "access"
-          type: "[access](#{dataStructure.getDocId("access")})"
+          type: "[access](##{dataStructure.getDocId("access")})"
           description: """
                        The created access.
                        """
@@ -732,7 +807,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -744,14 +819,14 @@ module.exports = exports =
           http:
             text: "= request body"
           description: """
-                       New values for the access's fields: see [access](#{dataStructure.getDocId("access")}). All fields are optional, and only modified values must be included.
+                       New values for the access's fields: see [access](##{dataStructure.getDocId("access")}). All fields are optional, and only modified values must be included.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
           key: "access"
-          type: "[access](#{dataStructure.getDocId("access")})"
+          type: "[access](##{dataStructure.getDocId("access")})"
           description: """
                        The updated access.
                        """
@@ -778,7 +853,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](#{dataStructure.getDocId("identity")})"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
           http:
             text: "set in request path"
           description: """
@@ -792,6 +867,173 @@ module.exports = exports =
           id: examples.accesses.shared.id
         result: {}
       ]
+
+    ,
+
+      id: "accesses.checkApp"
+      type: "method"
+      trustedOnly: true
+      title: "Check app authorization"
+      http: "POST /accesses/check-app"
+      description: """
+                   For the app authorization process. Checks if the app requesting authorization already has access with the same permissions (and on the same device, if applicable), and returns details of the requested permissions' streams (for display) if not.
+                   """
+      params:
+        properties: [
+          key: "requestingAppId"
+          type: "string"
+          description: """
+                       The id of the app requesting authorization.
+                       """
+        ,
+          key: "deviceName"
+          type: "string"
+          optional: true
+          description: """
+                       The name of the device running the app requesting authorization, if applicable.
+                       """
+        ,
+          key: "requestedPermissions"
+          type: "array of permission request objects"
+          description: """
+                       An array of permission request objects, which are identical to stream permission objects of [accesses](##{dataStructure.getDocId("access")}) except that each stream permission object must have a `defaultName` property specifying the name the stream should be created with later if missing.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "checkedPermissions"
+          type: "array of permission request objects"
+          description: """
+                       Set if no matching access already exists.
+                       A updated copy of the `requestedPermissions` parameter, with the `defaultName` property of stream permissions replaced by `name` for each existing stream (set to the actual name of the item). (For missing streams the `defaultName` property is left untouched.) If streams already exist with the same name but a different `id`, `defaultName` is updated with a valid alternative proposal (in such cases the result also has an `error` property to signal the issue).
+                       """
+        ,
+          key: "mismatchingAccess"
+          type: "[access](##{dataStructure.getDocId("access")})"
+          description: """
+                       Set if an access already exists for the requesting app, but with different permissions than those requested.
+                       """
+        ,
+          key: "matchingAccess"
+          type: "[access](##{dataStructure.getDocId("access")})"
+          description: """
+                       The requesting app's existing [access](##{dataStructure.getDocId("access")}).
+                       """
+        ]
+      examples: []
+    ]
+
+  ,
+
+    id: "followed-slices"
+    title: "Followed slices"
+    description: """
+                 Methods to retrieve and manipulate [followed slices](##{dataStructure.getDocId("followed-slice")}).
+                 """
+    sections: [
+      id: "followedSlices.get"
+      type: "method"
+      title: "Get followed slices"
+      http: "GET /followed-slices"
+      description: """
+                   Gets followed slices.
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "followedSlices"
+          type: "array of [followed slices](##{dataStructure.getDocId("followed-slice")})"
+          description: """
+                       All followed slices in the user's account, ordered by name.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "followedSlices.create"
+      type: "method"
+      title: "Create followed slice"
+      http: "POST /followed-slices"
+      description: """
+                   Creates a new followed slice.
+                   """
+      params:
+        description: """
+                     An object with the new followed slice's data: see [followed slice](##{dataStructure.getDocId("followed-slice")}).
+                     """
+      result:
+        http: "201 Created"
+        properties: [
+          key: "followedSlice"
+          type: "[followed slice](##{dataStructure.getDocId("followed-slice")})"
+          description: """
+                       The created followed slice.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "followedSlices.update"
+      type: "method"
+      title: "Update followed slice"
+      http: "PUT /followed-slices/{id}"
+      description: """
+                   Modifies the specified followed slice.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the followed slice.
+                       """
+        ,
+          key: "update"
+          type: "object"
+          http:
+            text: "= request body"
+          description: """
+                       New values for the followed slice's fields: see [followed slice](##{dataStructure.getDocId("followed-slice")}). All fields are optional, and only modified values must be included.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "followedSlice"
+          type: "[followed slice](##{dataStructure.getDocId("followed-slice")})"
+          description: """
+                       The updated followed slice.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "followedSlices.delete"
+      type: "method"
+      title: "Delete followed slice"
+      http: "DELETE /followed-slices/{id}"
+      description: """
+                   Deletes the specified followed slice.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the followed slice.
+                       """
+        ]
+      result:
+        http: "204 No content"
+      examples: []
     ]
 
   ,
@@ -888,6 +1130,182 @@ module.exports = exports =
         result:
           profile: _.defaults({setting1: "new value"}, _.omit(examples.profileSets.app, "setting2"))
       ]
+
+    ,
+
+      id: "profile.get"
+      type: "method"
+      trustedOnly: true
+      title: "Get profile"
+      http: "GET /profile/{id}"
+      description: """
+                   Gets the specified user profile set.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the profile set.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The profile set.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "profile.update"
+      type: "method"
+      trustedOnly: true
+      title: "Update profile"
+      http: "PUT /profile/{id}"
+      description: """
+                   Adds, updates or delete profile keys.
+
+                   - To add or update a key, just set its value
+                   - To delete a key, set its value to `null`
+
+                   Existing keys not included in the update are left untouched.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identity](##{dataStructure.getDocId("identity")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the profile set.
+                       """
+        ,
+          key: "update"
+          type: "object"
+          http:
+            text: "= request body"
+          description: """
+                       An object with the desired key changes (see above).
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The updated profile set.
+                       """
+        ]
+      examples: []
+    ]
+
+  ,
+
+    id: "account"
+    title: "Account management"
+    trustedOnly: true
+    description: """
+                 Methods to manage the user's account.
+                 """
+    sections: [
+      id: "account.get"
+      type: "method"
+      title: "Get account information"
+      http: "GET /account"
+      description: """
+                   Retrieves the user's account information.
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "account"
+          type: "[account information](##{dataStructure.getDocId("account")})"
+          description: """
+                       The user's account information.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          account: _.omit(examples.users.one, "id", "password")
+      ]
+
+    ,
+
+      id: "account.update"
+      type: "method"
+      title: "Update account information"
+      http: "PUT /account"
+      description: """
+                   Modifies the user's account information.
+                   """
+      params:
+        properties: [
+          key: "update"
+          type: "object"
+          http:
+            text: "= request body"
+          description: """
+                       New values for the account information's fields: see [account information](##{dataStructure.getDocId("account")}). All fields are optional, and only modified values must be included.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "account"
+          type: "[account information](##{dataStructure.getDocId("account")})"
+          description: """
+                       The updated account information.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "account.changePassword"
+      type: "method"
+      title: "Change password"
+      http: "POST /account/change-password"
+      description: """
+                   Modifies the user's password.
+                   """
+      params:
+        properties: [
+          key: "oldPassword"
+          type: "string"
+          description: """
+                       The current password.
+                       """
+        ,
+          key: "newPassword"
+          type: "string"
+          description: """
+                       The new password.
+                       """
+        ]
+      result:
+        http: "200 OK"
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The given password does not match.
+                     """
+      ]
+      examples: [
+        params:
+          oldPassword: examples.users.one.password
+          newPassword: "//\\_.:o0o:._//\\"
+        result: {}
+      ]
     ]
 
   ,
@@ -915,13 +1333,13 @@ module.exports = exports =
                        """
         ,
           key: "type"
-          type: "[access](#{dataStructure.getDocId("access")}).type"
+          type: "[access](##{dataStructure.getDocId("access")}).type"
           description: """
                        The access' type.
                        """
         ,
           key: "permissions"
-          type: "[access](#{dataStructure.getDocId("access")}).permissions"
+          type: "[access](##{dataStructure.getDocId("access")}).permissions"
           description: """
                        The access' permissions.
                        """

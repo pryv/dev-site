@@ -350,8 +350,9 @@ module.exports = exports =
 
   ,
 
-    id: "followed-slices"
-    title: "Followed slices"
+    id: "followed-slice"
+    title: "Followed slice"
+    trustedOnly: true
     description: """
                  See also: [core concepts](#{linkTo.concepts}#core-followed-slices).
                  """
@@ -381,6 +382,38 @@ module.exports = exports =
       type: "string"
       description: """
                    The token of the shared access itself. Not modifiable after creation.
+                   """
+    ]
+    examples: []
+
+  ,
+
+    id: "account"
+    title: "Account information"
+    trustedOnly: true
+    description: """
+                 User account information.
+                 """
+    properties: [
+      key: "username"
+      type: "string"
+      unique: true
+      readOnly: true
+      description: """
+                   The user's username.
+                   """
+    ,
+      key: "email"
+      type: "string"
+      unique: true
+      description: """
+                   The user's contact e-mail address.
+                   """
+    ,
+      key: "language"
+      type: "string"
+      description: """
+                   The user's preferred language as a 2-letter ISO language code.
                    """
     ]
     examples: []
