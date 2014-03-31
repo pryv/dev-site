@@ -918,7 +918,7 @@ module.exports = exports =
           key: "matchingAccess"
           type: "[access](##{dataStructure.getDocId("access")})"
           description: """
-                       The requesting app's existing [access](##{dataStructure.getDocId("access")}).
+                       Set if an access already exists for the requesting app with matching permissions. The existing [access](##{dataStructure.getDocId("access")}).
                        """
         ]
       examples: []
@@ -928,6 +928,7 @@ module.exports = exports =
 
     id: "followed-slices"
     title: "Followed slices"
+    trustedOnly: true
     description: """
                  Methods to retrieve and manipulate [followed slices](##{dataStructure.getDocId("followed-slice")}).
                  """

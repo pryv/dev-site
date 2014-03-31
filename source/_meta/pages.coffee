@@ -75,6 +75,15 @@ source = [
   markdown: require('marked')
   withExamples: {menu: true}
   withTOC: true
+  showTrustedOnlyContent: false
+,
+  id: 'reference-full'
+  titleShort: 'Reference (full)'
+  titleFull: 'API reference'
+  layout: '_layouts/default'
+  markdown: require('marked')
+  withExamples: {menu: true}
+  withTOC: true
   showTrustedOnlyContent: true
 ,
   id: 'standard-structure'
