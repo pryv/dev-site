@@ -24,7 +24,7 @@ module.exports = exports =
       title: "Login user"
       http: "POST /auth/login"
       description: """
-                   Authenticates the user against the provided credentials, opening a personal access session. This is the only API method that does not expect an [auth parameter](#basics-authentication).
+                   Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authentication).
                    """
       params:
         properties: [
@@ -1305,6 +1305,70 @@ module.exports = exports =
         params:
           oldPassword: examples.users.one.password
           newPassword: "//\\_.:o0o:._//\\"
+        result: {}
+      ]
+
+    ,
+
+      id: "account.requestPasswordReset"
+      type: "method"
+      title: "Request password reset"
+      http: "POST /account/request-password-reset"
+      description: """
+                   Requests the resetting of the user's password. An e-mail containing an expiring reset token (e.g. in a link) will be sent to the user. This method does not expect an [auth parameter](#basics-authentication).
+                   """
+      params:
+        properties: [
+          key: "appId"
+          type: "string"
+          description: """
+                       Your app's unique identifier.
+                       """
+        ]
+      result:
+        http: "200 OK"
+      examples: [
+        params:
+          appId: "my-app-id"
+        result: {}
+      ]
+
+    ,
+
+      id: "account.resetPassword"
+      type: "method"
+      title: "Reset password"
+      http: "POST /account/reset-password"
+      description: """
+                   Resets the user's password, authenticating the request with the given reset token (see "request password reset" above). This method does not expect an [auth parameter](#basics-authentication).
+                   """
+      params:
+        properties: [
+          key: "resetToken"
+          type: "string"
+          description: """
+                       The expiring reset token that was sent to the user after requesting the password reset.
+                       """
+        ,
+          key: "newPassword"
+          type: "string"
+          description: """
+                       The new password.
+                       """
+        ,
+          key: "appId"
+          type: "string"
+          description: """
+                       Your app's unique identifier.
+                       """
+        ]
+      result:
+        http: "200 OK"
+      examples: [
+        params:
+          resetToken: "chtplghfp0000hqjx814u6393"
+          newPassword: "Dr0ws$4p"
+          appId: "my-app-id"
         result: {}
       ]
     ]
