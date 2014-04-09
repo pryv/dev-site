@@ -59,7 +59,7 @@ Responses as redirects
 
 ##### Specific errors
 
-* 200 to https://pryv.io/?error=UNKOWN_USER_NAME
+* 200 to https://pryv.io/?error=UNKNOWN_USER_NAME
 
 
 #### POST `/{user-name}/server`
@@ -76,7 +76,7 @@ exemple : (everything went fine)
 ##### Specific errors
 
 * 400 (bad request), code `INVALID_USER_NAME`
-* 404 (not found), code `UNKOWN_USER_NAME`
+* 404 (not found), code `UNKNOWN_USER_NAME`
 
 
 ### Check if username exists
@@ -237,6 +237,6 @@ Confirmation failed: `GET /{challenge}/confirm`
 #### https://pryv.io/error.html?id=INVALID_USER_NAME
 Server request failed: `GET /{username}/server`
 
-#### https://pryv.io/error.html?id=UNKOWN_USER_NAME
+#### https://pryv.io/error.html?id=UNKNOWN_USER_NAME
 Server request  failed: `GET /{challenge}/server`
 
