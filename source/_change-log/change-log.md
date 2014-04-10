@@ -26,6 +26,7 @@ New features:
 - Accesses can now define tag permissions in `permissions` (in addition to the existing stream permissions)
     - If only tag permissions are set, all streams are considered readable, and vice-versa
     - When stream and tag permissions conflict, the highest permission level is considered
+- Full support for managing account information, including password change and reset
 
 
 ## v0.6
