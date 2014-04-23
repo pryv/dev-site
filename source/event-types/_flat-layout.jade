@@ -1,6 +1,5 @@
 -// load JSON file
--// TODO: find a solution to include JSON files
-- var data = sourceData
+- var data = _.clone(sourceData)
 - data.types = {}
 each className in Object.keys(data.classes)
   - var classDef = data.classes[className]

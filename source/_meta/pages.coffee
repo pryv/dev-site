@@ -2,76 +2,51 @@ source = [
   id: 'about'
   titleShort: 'About'
   titleFull: 'About the API'
-  layout: '_layouts/default'
-  withExamples: false
-  withTOC: false
 ,
   id: 'apps-and-services'
   titleShort: 'Pryv apps & services'
   titleFull: 'Pryv apps and services'
-  layout: '_layouts/default'
-  withExamples: false
-  withTOC: false
 ,
   id: 'app-access'
   titleShort: 'App auth'
   titleFull: 'App authorization flow'
-  layout: '_layouts/default'
-  withExamples: false
   withTOC: true
 ,
   id: 'change-log'
   titleShort: 'API change log'
   titleFull: 'API change log'
-  layout: '_layouts/default'
-  withExamples: false
-  withTOC: false
 ,
   id: 'code-libraries'
   titleShort: 'Code libraries'
   titleFull: 'Code libraries'
-  layout: '_layouts/default'
-  withExamples: false
-  withTOC: false
 ,
   id: 'concepts'
   titleShort: 'Concepts'
   titleFull: 'Concepts'
-  layout: '_layouts/default'
-  withExamples: false
   withTOC: true
 ,
   id: 'faq'
   titleShort: 'FAQ'
   titleFull: 'Frequently Asked Questions'
-  layout: '_layouts/default'
-  withExamples: false
-  withTOC: false
 ,
-  # TODO: rename to event-types: https://github.com/sintaxi/harp/issues/106
-  id: 'event-typez'
+  id: 'event-types'
   titleShort: 'Event types'
   titleFull: 'Event types reference'
-  layout: '_layouts/default'
-  sourcePath: 'event-types/hierarchical.json'
-  flatPath: 'event-types/flat.json'
+  sourcePath: 'hierarchical.json'
+  flatPath: 'flat.json'
   sourceData: require('../event-types/hierarchical.json')
-  withExamples: false
   withTOC: true
   tocSelectors: 'h1:not(.page-title),h2,h3'
 ,
-  id: 'index'
+  id: 'home'
   titleShort: 'Home'
   # no in-page full title
-  layout: '_layouts/default'
-  withExamples: false
-  withTOC: false
+  layout: '_layout'
   landingPage: true
 ,
   id: 'reference'
   titleShort: 'Reference'
   titleFull: 'API reference'
-  layout: '_layouts/default'
   markdown: require('marked')
   withExamples: {menu: true}
   withTOC: true
@@ -80,7 +55,6 @@ source = [
   id: 'reference-full'
   titleShort: 'Reference (full)'
   titleFull: 'API reference'
-  layout: '_layouts/default'
   markdown: require('marked')
   withExamples: {menu: true}
   withTOC: true
@@ -89,16 +63,21 @@ source = [
   id: 'standard-structure'
   titleShort: 'Standard data structure'
   titleFull: 'Standard data structure reference'
-  layout: '_layouts/default'
-  # TODO: 'standard-structure' when abovementioned issue fixed
-  sourcePath: 'standard-struct/channels-folders.json'
-  sourceData: require('../standard-struct/channels-folders.json')
-  withExamples: false
+  sourcePath: 'standard-structure/channels-folders.json'
+  sourceData: require('../standard-structure/channels-folders.json')
   withTOC: true
 ]
 
 pages = module.exports = {}
 source.forEach (pageData) ->
+  # set defaults
+  pageData.layout ?= '../_layout'
+  pageData.withExamples ?= false
+  pageData.withTOC ?= false
+
+  # add common metadata to all
   pageData.linkTo = require('./links.coffee')
   pageData.apiReference = require('../_reference')
+  pageData.pages = pages
+
   pages[pageData.id] = pageData

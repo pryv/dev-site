@@ -9,6 +9,6 @@ module.exports =
   concepts: "concepts"
   faq: "faq"
   home: "index"
-  eventTypes: "event-typez"
+  eventTypes: "event-types"
   reference: "reference"
   standardStructure: "standard-structure"

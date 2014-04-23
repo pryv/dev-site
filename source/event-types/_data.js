@@ -1,6 +1,8 @@
 module.exports = {
-  "flat": {
-    "layout": "../_layouts/event-types-flat",
-    "sourceData": require("./hierarchical.json")
-  }
+  flat: {
+    layout: '_flat-layout',
+    sourceData: require('./hierarchical.json'),
+    _: require('lodash')
+  },
+  index: require('../_meta/pages')['event-types']
 };
