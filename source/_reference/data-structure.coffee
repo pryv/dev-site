@@ -342,6 +342,12 @@ module.exports = exports =
                      The level of access to the stream. With `contribute`, one can see and record events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.
                      """
       ]
+    ,
+      key: "lastUsed"
+      type: "[timestamp](#data-structure-timestamp)"
+      optional: true
+      readOnly: true
+      description: "The time the access was last used."
     ].concat(changeTrackingProperties("access"))
     examples: [
       title: "An app access"
