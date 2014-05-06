@@ -6,8 +6,8 @@ TYPES_BASE_URL=https://raw.github.com/pryv/data-types/master/
 EVENT_TYPES_URL=$(TYPES_BASE_URL)event-types.json
 EVENT_EXTRAS_URL=$(TYPES_BASE_URL)event-extras.json
 
-RETRIEVE_EVENT_TYPES=curl -o ./source/event-types/hierarchical.json $(EVENT_TYPES_URL)
-RETRIEVE_EVENT_EXTRAS=curl -o ./source/event-types/extras.json $(EVENT_EXTRAS_URL)
+RETRIEVE_EVENT_TYPES=curl -L -o ./source/event-types/hierarchical.json $(EVENT_TYPES_URL)
+RETRIEVE_EVENT_EXTRAS=curl -L -o ./source/event-types/extras.json $(EVENT_EXTRAS_URL)
 
 default: setup retrieve-types compile
 
