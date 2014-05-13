@@ -16,15 +16,16 @@ exports.getCurlCall = (params, http) ->
       path = newPath
       delete processedParams[k]
 
+  hasData = (method == "POST" || method == "PUT")
   queryString = "?auth={token}"
-  data = ""
-  if method == "GET"
+  data = if hasData then "-H 'Content-Type: application/json' " else ""
+  if not hasData
     Object.keys(processedParams).forEach (k) ->
       queryString += "&#{k}=#{processedParams[k]}"
   else if method == "PUT" && processedParams.update
-    data = "-d '#{JSON.stringify(processedParams.update)}' "
+    data += "-d '#{JSON.stringify(processedParams.update)}' "
   else
-    data = "-d '#{JSON.stringify(processedParams)}' "
+    data += "-d '#{JSON.stringify(processedParams)}' "
 
   call = "curl -i #{request}#{data}https://{username}.pryv.io#{path}#{queryString}"
   # use shell variable format to help with quick copy-paste
