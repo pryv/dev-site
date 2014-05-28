@@ -1,21 +1,22 @@
+html, body
+  font-size: 16px
+
 body
-  font-family: Helvetica Neue
+  font-family: 'Roboto', Helvetica Neue, Arial, sans-serif
   color: #7E7E7E
-  padding-top: 50px // for navbar
+  padding-top: 50px // = navbar height
 
 *
   -moz-box-sizing: border-box
   box-sizing: border-box
 
 h1, h2, h3, h4, h5
-  font-family: museo_300regular
-  color: #000
+  color: #333
 
 #main
+  margin-bottom: 50px
   h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
     margin-top: 0
-
-  margin-bottom: 50px
 
 h5, h6
   margin: 1.5em 0 0.75em
@@ -27,17 +28,16 @@ h1
   width:100%
   background: #266C9C url("images/bgPaper.png") repeat center center;
   color:#FFFFFF
-  padding: 20px 40px 20px 40px
+  padding: 1rem 2rem
 
 h1.page-title
-  padding: 20px 0
-  color: #666
+  padding: 1rem 0
+  color: #333
   background: none
 
 h2
   border-top: 1px solid #EEE
   padding: 40px 0px 0px 0px;
-  color: #333;
 section:first-of-type>h2
   border: none
 
@@ -98,20 +98,13 @@ body.landing-page
     padding: 0
 
   .masthead
-    margin: 0 -20px 0 -20px
-    padding: 30px 0 40px 0
+    margin: 0 -15px 1rem -15px
+    padding: 2rem 0
     text-align: center
+    color: #FFFFFF
     background: #266C9C url(images/bgPaper.png) repeat center center
-    h1
-      color: #FFFFFF
-
-  .summary
-    margin: 30px 0 50px
-    text-align: center
-    h1
-      color: #000
-      background: none
-
+    p
+      padding-top: 0.5em
 
   .marketing-icon
     text-align: center
@@ -266,7 +259,7 @@ body.landing-page
   width: auto
   color: #fff
   overflow: scroll
-  font-family: museo_300regular,"Helvetica Neue",Helvetica,"pragmatica-web",Arial,sans-serif;
+  font-family: 'Roboto', Helvetica Neue, Arial, sans-serif
   width: 220px
   padding: 20px 20px 50px 0
   font-size: 90%
@@ -274,7 +267,8 @@ body.landing-page
     margin: 0
     padding: 0
   .toc-h1
-    font-family: museo_700regular
+    font-family: 'Roboto', Helvetica Neue, Arial, sans-serif
+    font-weight: 700
     padding: 2px 5px;
     a
       color: #333
@@ -293,6 +287,8 @@ body.landing-page
 
 
 @media (min-width: 767px)
+  #page-header > nav
+    height: 50px
   html
     body.with-toc
       #main
