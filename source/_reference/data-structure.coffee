@@ -93,9 +93,9 @@ module.exports = exports =
     ,
       key: "references"
       type: "array of [identity](##{_getDocId("identity")})"
-      optional: "(always present in read items)"
+      optional: true #"(always present in read items)"
       description: """
-                   Other events associated with the event. *Note: event references aren't yet implemented in the API today.*
+                   Other events associated with the event. *Note: event references are coming in a future version of the API.*
                    """
     ,
       key: "description"
@@ -237,7 +237,7 @@ module.exports = exports =
     id: "tag"
     title: "Tag"
     description: """
-                 Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](/#{linkTo.concepts}#core-tags). *Note: typed tags aren't yet implemented in the API today.*
+                 Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](/#{linkTo.concepts}#core-tags). *Note: typed tags are coming in a future version of the API.*
                  """
     properties: [
       key: "id"
