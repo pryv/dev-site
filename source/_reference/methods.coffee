@@ -425,9 +425,9 @@ module.exports = exports =
       type: "method"
       title: "Get attachment"
       httpOnly: true
-      http: "GET /events/{id}/{fileId}"
+      http: "GET /events/{id}/{fileId}[/{fileName}]"
       description: """
-                   Gets the attached file.
+                   Gets the attached file. Accepts an arbitrary filename path suffix (ignored) for easier link creation.
                    """
       params:
         properties: [
