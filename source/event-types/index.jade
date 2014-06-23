@@ -81,31 +81,45 @@ section#directory
         | !{value}
 
   mixin definition(name, schema)
-    - var type = schema['type']
-    - var description = schema['description']
-    - var properties = schema['properties']
-    - var example = schema['example']
+    - var type = schema.type
+    - var description = schema.description
+    - var properties = schema.properties
+    - var example = schema.example
     tr
       th: code !{name}
       td
-        | !{type}
+        if type && type !== 'null'
+          | !{type}
+        else
+          span.label.label-default no content
+          | &nbsp;
         each key in Object.keys(schema)
           - var value = schema[key]
-          if key !== 'type' && key !== 'description' && key !== 'properties' && key !== 'example'
+          if key !== 'type' && key !== 'description' && key !== 'properties' && key !== 'patternProperties' && key !== 'example'
             if key === 'pattern'
               +attribute(key, '<code>' + value + '</code>')
             else if key === 'required' && value
               - var asCode = value.map(function(k) { return '<code>' + k + '</code>'; });
               +attribute(key, asCode.join(', '))
+            else if key === 'attachmentRequired' && value
+              span.label.label-default attachment required
+            else if key === 'additionalProperties'
+              +attribute('additional properties', value ? 'allowed' : 'forbidden')
             else
               +attribute(key, value)
         if description
-          .description !{description}
+          .description !{markdown(description)}
         if properties
           table.definitions
             tbody
               each k in Object.keys(properties)
                 +definition(k, properties[k])
+        if schema.patternProperties
+          p Properties unspecified above must match the following pattern:
+          table.definitions
+            tbody
+              each k in Object.keys(schema.patternProperties)
+                +definition(k, schema.patternProperties[k])
         if example
           .example
             strong Example:
