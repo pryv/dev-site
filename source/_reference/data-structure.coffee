@@ -421,6 +421,25 @@ module.exports = exports =
       description: """
                    The user's preferred language as a 2-letter ISO language code.
                    """
+    ,
+      key: "storageUsed"
+      type: "object"
+      description: """
+                   The current storage size used by the user account.
+                   """
+      properties: [
+        key: "dbDocuments"
+        type: "number"
+        description: """
+                     Bytes used by documents (records) in the database.
+                     """
+      ,
+        key: "attachedFiles"
+        type: "number"
+        description: """
+                     Bytes used by attached files.
+                     """
+      ]
     ]
     examples: []
 
