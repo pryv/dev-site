@@ -1,14 +1,9 @@
 # Pryv API (developers) website
 
-API reference, recommendations, guides, etc.
+Source content for api.pryv.com (API reference, recommendations, guides, etc.)
 
 
-## Temporary note
-
-There's a mess of files that are only there for our temporary teaser page (current `index.html`). This will be cleaned up when the full site gets ready for prime time.
-
-
-## Writing documentation
+## Writing documentation <!-- TODO: probably move this to guidelines and just refer from here -->
 
 Try to stick to the following guidelines when writing (these guidelines are meant to be updated and completed as we progress):
 
@@ -18,12 +13,12 @@ Try to stick to the following guidelines when writing (these guidelines are mean
 - **Take the diversity of third-party apps dev stacks into account**: Don't assume everyone is using Javascript; Pryv apps can be written with any dev stack.
 
 
-## Development
+## Building
 
 Prerequisite: the source API server working copy must be under `../api-server`.
 
 - `make setup` sets up the environment; relies on [nvm](https://github.com/creationix/nvm)
-- `make server` runs a small server serving the generated website during development development
+- `make server` runs a small server serving the generated website during development
 - `make compile` generates the website from the source into the `build` folder
 - `make publish` compiles the website (see `compile` target above) and publishes it to the repo's `gh-pages` branch
 

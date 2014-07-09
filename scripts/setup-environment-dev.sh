@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This script sets up the Pryv API documentation development environment
+# This script sets up the Pryv API documentation build environment
 
 # working dir fix
 scriptsFolder=$(cd $(dirname "$0"); pwd)
@@ -50,5 +50,5 @@ echo "
 
 
 If no errors were listed above, the setup is complete.
-See the README for more info on writing and publishing the doc.
+See the README for more info on writing and publishing.
 "
