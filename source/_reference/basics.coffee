@@ -20,6 +20,8 @@ module.exports = exports =
                  ```
 
                  Each user account has a dedicated root API endpoint as it is potentially served from a different location.
+
+                 A test (AKA staging) environment is available on domain **`pryv.in`**—so the root endpoint for test accounts is `https://{username}.pryv.in`.
                  """
     examples: [
       title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.io`"
@@ -206,7 +208,7 @@ module.exports = exports =
                  3. Open the auth page from the URL returned (e.g. as a popup); the auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one)
                  4. Handle the result by either polling the appropriate URL or directly from the return URL you'll have defined
 
-                 **Note: this auth flow will very likely undergo some changes in the coming weeks.**
+                 **Note: this auth flow will very likely undergo some changes in the near future.**
                  """
     sections: [
       id: "auth-request"
@@ -356,7 +358,7 @@ module.exports = exports =
                  """
       ,
         title: '"In progress" response'
-      # TODO: this example is not consistent (url query string doesn't match)
+        # TODO: this example is not consistent (url query string doesn't match)
         content: """
                  ```json
                  {
@@ -365,6 +367,14 @@ module.exports = exports =
                    "poll": "https://reg.pryv.io/access/dXRqBezem8v3mNxf",
                    "poll_rate_ms": 1000
                  }
+                 ```
+                 """
+      ,
+        title: 'Polling request'
+        content: """
+                 ```http
+                 GET /access/dXRqBezem8v3mNxf HTTP/1.1
+                 Host: reg.pryv.io
                  ```
                  """
       ]
