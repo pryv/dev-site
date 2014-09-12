@@ -279,7 +279,7 @@ module.exports = exports =
       title: "Stop period"
       http: "POST /events/stop"
       description: """
-                   Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop must be specified.
+                   Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop (or its type) must be specified.
                    """
       params:
         properties: [
@@ -292,7 +292,13 @@ module.exports = exports =
           key: "id"
           type: "[identity](##{dataStructure.getDocId("identity")})"
           description: """
-                       The id of the event to stop. Either this or `streamId` must be specified.
+                       The id of the event to stop. Either this or `streamId` (and possibly `type`) must be specified.
+                       """
+        ,
+          key: "type"
+          type: "string"
+          description: """
+                       The type of the event to stop. `streamId` must be specified as well. If there are multiple running events matching, the closest one (by time) will be stopped.
                        """
         ,
           key: "time"
