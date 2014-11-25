@@ -1,3 +1,16 @@
+## v0.8
+
+Changes:
+
+- Deletion methods now:
+    - Reply to permanent deletions with a `{item}Deletion` field confirming the deleted item's identity
+    - Always return code 200 on HTTP (that's a rollback of the v0.7.x change which was a bit too zealous to be practical)
+
+New features:
+
+- Event and stream deletions are now kept for sync purposes; they're accessible via parameter `includeDeletions` (`events.get`) or `includeDeletionsSince` (`streams.get`). Deletions are cleaned up after some time (currently a year).
+
+
 ## v0.7
 
 Major changes here towards more standardization and flexibility:

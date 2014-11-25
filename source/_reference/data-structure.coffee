@@ -445,6 +445,29 @@ module.exports = exports =
 
   ,
 
+    id: "item-deletion"
+    title: "Item deletion"
+    description: """
+                 A record of a deleted item for sync purposes. Item deletions are currently kept for a year.
+                 """
+    properties: [
+      key: "id"
+      type: "[identity](##{_getDocId("identity")})"
+      description: """
+                   The identifier of the deleted item.
+                   """
+    ,
+      key: "deleted"
+      type: "[timestamp](#data-structure-timestamp)"
+      optional: true
+      description: """
+                   The time the item was deleted.
+                   """
+    ]
+    examples: []
+
+  ,
+
     id: "key-value"
     title: "Key-value"
     description: """

@@ -178,6 +178,13 @@ module.exports = exports =
           description: """
                        If specified, only events modified since that time will be returned.
                        """
+        ,
+          key: "includeDeletions"
+          type: "boolean"
+          optional: true
+          description: """
+                       Whether to include event deletions since `modifiedSince` for sync purposes (only applies when `modifiedSince` is set). Defaults to `false`.
+                       """
         ]
       result:
         http: "200 OK"
@@ -186,6 +193,13 @@ module.exports = exports =
           type: "array of [events](##{dataStructure.getDocId("event")})"
           description: """
                        The accessible events ordered by time (see `sortAscending` above).
+                       """
+        ,
+          key: "eventDeletions"
+          type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
+          optional: true
+          description: """
+                       If requested by `includeDeletions`, the event deletions since `modifiedSince`, ordered by deletion time.
                        """
         ]
       examples: [
@@ -530,7 +544,14 @@ module.exports = exports =
         ]
       ,
         title: "Result: deleted"
-        http: "204 No content"
+        http: "200 OK"
+        properties: [
+          key: "eventDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The event deletion record.
+                       """
+        ]
       ]
       examples: [
         title: "Trashing"
@@ -571,6 +592,13 @@ module.exports = exports =
           description: """
                        By default, only items that are not in the trash are returned; `all` return all items regardless of their state.
                        """
+        ,
+          key: "includeDeletionsSince"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       Whether to include stream deletions since that time for sync purposes.
+                       """
         ]
       result:
         http: "200 OK"
@@ -579,6 +607,13 @@ module.exports = exports =
           type: "array of [streams](##{dataStructure.getDocId("stream")})"
           description: """
                        The tree of the accessible streams, sorted by name.
+                       """
+        ,
+          key: "streamDeletions"
+          type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
+          optional: true
+          description: """
+                       If requested by `includeDeletionsSince`, the stream deletions since then, ordered by deletion time.
                        """
         ]
       examples: [
@@ -724,7 +759,14 @@ module.exports = exports =
         ]
       ,
         title: "Result: deleted"
-        http: "204 No content"
+        http: "200 OK"
+        properties: [
+          key: "streamDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The stream deletion record.
+                       """
+        ]
       ]
       examples: [
         title: "Trashing"
@@ -867,7 +909,14 @@ module.exports = exports =
                        """
         ]
       result:
-        http: "204 No content"
+        http: "200 OK"
+        properties: [
+          key: "accessDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The deletion record.
+                       """
+        ]
       examples: [
         params:
           id: examples.accesses.shared.id
@@ -1039,7 +1088,14 @@ module.exports = exports =
                        """
         ]
       result:
-        http: "204 No content"
+        http: "200 OK"
+        properties: [
+          key: "followedSliceDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The deletion record.
+                       """
+        ]
       examples: []
     ]
 
