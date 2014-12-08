@@ -93,7 +93,7 @@ module.exports = exports =
                    - For a web app, the Javascript lib is directly served by the API at:
                      <pre><code>https://{username}.pryv.io/socket.io/socket.io.js</code></pre>
 
-                   - For other platforms see the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).)
+                   - For other platforms see the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).
 
                    Then initialize the connection with the URL:
 
