@@ -1,22 +1,18 @@
-html, body
-  font-size: 16px
+// Pryv style variables
+
+$brand-primary = $pryv-dark-gray
+
+@import '../../node_modules/pryv-style/stylus/pryv'
+
+// Overrides & custom stuff
 
 body
-  font-family: 'Roboto', Helvetica Neue, Arial, sans-serif
-  color: #7E7E7E
-  padding-top: 50px // = navbar height
-
-*
-  -moz-box-sizing: border-box
-  box-sizing: border-box
-
-h1, h2, h3, h4, h5
-  color: #333
+  background-color: $white
+  padding-top: $navbar-height
+  overflow-x: hidden
 
 #main
-  margin-bottom: 50px
-  h1:first-of-type, h2:first-of-type, h3:first-of-type, h4:first-of-type, p:first-of-type
-    margin-top: 0
+  margin-bottom: $navbar-height
 
 h5, h6
   margin: 1.5em 0 0.75em
@@ -24,34 +20,27 @@ h5, h6
 blockquote, ul, ol, dl, table, pre
   margin: 0.75em 0;
 
-h1
-  width:100%
-  background: #266C9C url("images/bgPaper.png") repeat center center;
-  color:#FFFFFF
-  padding: 1rem 2rem
+body:not(.landing-page)
+  h1
+    margin-left: - $page-header-hline-overflow
+    margin-right: - $page-header-hline-overflow
+    padding: $page-header-vpadding $page-header-hline-overflow
+    color: $white
+    background-color: $pryv-dark-gray
 
-h1.page-title
-  padding: 1rem 0
-  color: #333
-  background: none
+  h1.page-title
+    color: $text-color
+    background-color: transparent
 
-h2
-  border-top: 1px solid #EEE
-  padding: 40px 0px 0px 0px;
-section:first-of-type>h2
-  border: none
+  h2
+    @extend .page-header
 
-h3
-  text-transform:uppercase
-  font-size: 17.5px;
 
 pre
   border: 0 none
   padding: 0
-
-code
-  color: #333
-  background-color: #EDEFF3
+  code
+    font-size: 90%
 
 img
   max-width: 100%
@@ -68,6 +57,7 @@ table
     vertical-align: top
 
 table.definitions
+  width: auto
   th, td
     padding: 0 0 0.4em 0
   th
@@ -112,7 +102,7 @@ body.landing-page
     margin: 0 -15px 1rem -15px
     padding: 2rem 0
     text-align: center
-    color: #FFFFFF
+    color: $white
     background: #266C9C url(images/bgPaper.png) repeat center center
     p
       padding-top: 0.5em
@@ -173,25 +163,9 @@ body.landing-page
     cursor: pointer;
     font-size:18px
     strong
-      color:#FFF
+      color:$white
 
 #main
-  > section
-    //margin-top: 2em
-    //padding-top: 4em
-    border-top: 1px solid #EEE
-
-    section
-      //margin-bottom: 1em
-      //margin-top: 40px
-
-  > section:first-of-type
-    margin-top: 0
-    padding-top: 0
-    border-top: 0 none
-
-
-
   ul:not(.nav)
     margin: 0;
     padding: 0;
@@ -206,7 +180,6 @@ body.landing-page
 
   .content
     .meta
-      margin-top: -0.5em
       margin-bottom: 0.5em
 
     .method-id, :not(code).http
@@ -261,7 +234,7 @@ body.landing-page
         vertical-align: middle
         margin-left: 1em
         padding: 0.6em 0.6em
-        color: #FFF
+        color: $white
         background-color: #DD8800
         border-radius: 0.25em
 
@@ -269,9 +242,8 @@ body.landing-page
   display: none
   height: 100%
   position: fixed
-  top: 50px // = navbar height
-  width: auto
-  color: #fff
+  top: $navbar-height
+  color: $white
   overflow: scroll
   font-family: 'Roboto', Helvetica Neue, Arial, sans-serif
   width: 220px
@@ -280,6 +252,7 @@ body.landing-page
   ul
     margin: 0
     padding: 0
+    background-color: $white
   .toc-h1
     font-family: 'Roboto', Helvetica Neue, Arial, sans-serif
     font-weight: 700
@@ -297,28 +270,18 @@ body.landing-page
   .toc-active
     background: #336699;
   .toc-active a
-    color: #FFF
+    color: $white
 
 
 @media (min-width: 767px)
   #page-header > nav
-    height: 50px
+    height: $navbar-height
   html
     body.with-toc
-      #main
-        margin-left: 220px
       .row
         position:relative
-      #toc
-        display: block
     body.with-toc.with-examples
-      #toc
-        left: 0px;
-        width: 200px;
-        padding: 20px 0 20px;
-        border-right: 1px solid #EEE;
       #main-wrapper
-        margin-left: 200px
         width:auto
       #main
         float: left;
@@ -336,8 +299,6 @@ body.landing-page
     #main-wrapper
       padding: 0
     #main
-      h1.page-title
-        padding: 20px 40px 20px 40px
       section
         float: left;
         clear: both;
@@ -346,36 +307,44 @@ body.landing-page
         > h1, > h2, > h3
           float: left
           clear: left
-          width: 50%
-          padding: 40px 40px 0px 40px
+          width: calc(50% + 23px) // warning: pixel part must equal $page-header-hline-overflow
+        > h1
+          width: calc(100% + 46px) // warning: pixel part must equal 2 * $page-header-hline-overflow
         > .intro
-          //text-transform: uppercase
-          color: #C4C4C4
-          //font-style: italic
+          color: $pryv-light-gray
         > .intro, > .content
           float: left
           clear: left
           width: 50%
-          padding: 0px 40px 40px
-        > h1
-          width:100%
-          background: #266C9C url("images/bgPaper.png") repeat center center
-          color:#FFFFFF
-          padding: 20px 40px 20px 40px
-        > h2
-          //padding-top: 40px
-
+          padding-right: $page-header-hline-overflow
 
         > aside
           float: right
           clear: right
           width: 50%
-          padding: 0 40px
+          padding-left: $page-header-hline-overflow
           :not(pre)>code
-            background-color: #FFFFFF
+            background-color: $white
 
       > section, >h1.page-title
         margin-left: -100%
         width: 200%
+      > section
+        padding-left: $page-header-hline-overflow
+        padding-right: $page-header-hline-overflow
 
-
+@media (min-width: 1120px)
+  html
+    body.with-toc
+      #toc
+        display: block
+        margin-left: -225px
+    body.with-toc.with-examples
+      #toc
+        left: 0;
+        margin-left: 0
+        width: 200px;
+        padding: 20px 0 20px;
+        border-right: 1px solid #EEE;
+      #main-wrapper
+        margin-left: 200px
