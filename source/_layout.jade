@@ -65,8 +65,9 @@ html.no-js(lang='en')
                   +menuItem('standardStructure')
               //li
                 a(href='#') Blog
-            p.navbar-text.navbar-right.version
-              a(href='/#{pages[linkTo["changeLog"]].id}', title='View change log') API version: <strong>#{apiReference.version}</strong>
+            .navbar-right
+              p.navbar-text.version
+                a(href='/#{pages[linkTo["changeLog"]].id}', title='View change log') API version: <strong>#{apiReference.version}</strong>
             if withExamples && withExamples.menu
               form.navbar-form.navbar-right
                 .form-group
