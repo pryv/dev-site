@@ -18,7 +18,9 @@ h5, h6
   margin: 1.5em 0 0.75em
 
 blockquote, ul, ol, dl, table, pre
-  margin: 0.75em 0;
+  &:not(:first-child)
+    margin-top: 0.75em
+    margin-bottom: 0.75em
 
 body:not(.landing-page)
   h1
@@ -36,11 +38,8 @@ body:not(.landing-page)
     @extend .page-header
 
 
-pre
-  border: 0 none
-  padding: 0
-  code
-    font-size: 90%
+pre code
+  font-size: 90%
 
 img
   max-width: 100%
@@ -223,10 +222,10 @@ body.landing-page
 
   .example .step-marker, .marketing-icon .step-marker
     text-align: center
-    margin-top: -0.65em;
+    margin-top: -0.60em;
     margin-bottom: -0.58em;
     font-size: 2em
-    color: #3F3F3F;
+    color: $pryv-light-gray;
 
   .trusted-only
     > h2, > h3, > h4
@@ -289,7 +288,7 @@ body.landing-page
         width:auto
       #main
         float: left;
-        background-color: #EDEFF3
+        background-color: rgba(0, 8, 64, 0.03)
         margin: 0 0 0 50%
         max-width: none
         width: 50%
@@ -347,6 +346,5 @@ body.landing-page
         left: 0;
         margin-left: 0
         width: 200px
-        padding: 15px 0
       #main-wrapper
         margin-left: 200px

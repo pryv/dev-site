@@ -17,8 +17,8 @@ html.no-js(lang='en')
     |   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     | <![endif]-->
     link(rel='stylesheet', type='text/css', href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,400italic|Roboto+Condensed:400,300,700')
+    link(rel='stylesheet', type='text/css', href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/docco.min.css')
     link(rel='stylesheet', type='text/css', href='/assets/style.css')
-    link(rel='stylesheet', type='text/css', href='/assets/highlight/styles/zenburn.css')
 
   - try { isLanding = landingPage; } catch (e) { isLanding = false; }
   - var bodyClass = (isLanding ? 'landing-page' : '') + (withTOC ? 'with-toc' : '') + (withExamples ? ' with-examples' : '')
@@ -111,7 +111,7 @@ html.no-js(lang='en')
           var offset = 50;
 
           $('#toc').toc({
-            selector: '#{tocSelectors || '#main h1:not(.page-title),#main h2'}',
+            selector: '#main h1:not(.page-title),#main h2,#main h3',
             ulClass: 'nav'
           });
 
@@ -154,7 +154,7 @@ html.no-js(lang='en')
         }
 
     // Code blocks highlighting
-    script(src='/assets/highlight/highlight.pack.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js')
     script.
       hljs.initHighlightingOnLoad();
 
