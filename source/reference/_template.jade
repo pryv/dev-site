@@ -144,7 +144,7 @@ mixin examples(examples, settings)
 mixin section(section, parentDocId, level)
   - var isMethod = section.type === 'method'
   - var docId = apiReference.helpers.getDocId(parentDocId, section.id)
-  - var sectionClass = (section.type || '') + (section.trustedOnly ? ' trusted-only' : '')
+  - var sectionClass = (section.type || '')
   if ! section.trustedOnly || showTrustedOnlyContent
     section(id='#{docId}', class='#{sectionClass}')
       if level === 2
@@ -154,11 +154,13 @@ mixin section(section, parentDocId, level)
       else
         +h4(section.title)
       .content
-        if isMethod
-          .meta
+        .meta
+          if isMethod
             if ! section.httpOnly
               +methodId(section.id)
             +http(section.http, section.httpOnly)
+          if section.trustedOnly
+            span.label.trusted-only Trusted apps only
         +intro(section.description)
         +properties(section.properties)
         if section.params
