@@ -245,37 +245,36 @@ body.landing-page
 
 #toc
   display: none
-  height: 100%
   position: fixed
   top: $navbar-height
+  bottom: $navbar-height
   color: $white
   overflow: scroll
   font-family: 'Roboto', Helvetica Neue, Arial, sans-serif
   width: 220px
-  padding: 20px 20px 50px 0
+  padding-right: 20px
   font-size: 90%
-  ul
+  ul.nav
     margin: 0
     padding: 0
     background-color: $white
-  .toc-h1
-    font-family: 'Roboto', Helvetica Neue, Arial, sans-serif
+  ul.toc-ul-root
+    padding: 15px 0
+  .nav .nav
+    display: none
+  .active > .nav
+    display: block
+  a
+    color: #999
+    padding: 5px 15px
+  a.toc-link-1
     font-weight: 700
-    padding: 2px 5px;
-    a
-      color: #333
-  .toc-h2
-    padding-left: 20px
-    a
-      color:#a2a2a2
-  .toc-h3
+  a.toc-link-2
     padding-left: 30px
-    a
-      color:#a2a2a2
-  .toc-active
-    background: #336699;
-  .toc-active a
-    color: $white
+  a.toc-link-3
+    padding-left: 45px
+  .active > a
+    color: $text-color
 
 
 @media (min-width: 767px)
@@ -294,7 +293,6 @@ body.landing-page
         margin: 0 0 0 50%
         max-width: none
         width: 50%
-        border-left: 1px solid #E7E7E7;
     body.landing-page
       #main-wrapper
         width:auto
@@ -348,8 +346,7 @@ body.landing-page
       #toc
         left: 0;
         margin-left: 0
-        width: 200px;
-        padding: 20px 0 20px;
-        border-right: 1px solid #EEE;
+        width: 200px
+        padding: 15px 0
       #main-wrapper
         margin-left: 200px

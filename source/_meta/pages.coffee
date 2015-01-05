@@ -37,7 +37,7 @@ source = [
   sourceData: require('../event-types/hierarchical.json')
   markdown: require('marked')
   withTOC: true
-  tocSelectors: 'h1:not(.page-title),h2,h3'
+  tocSelectors: '#main h1:not(.page-title),#main h2,#main h3'
 ,
   id: 'home'
   titleShort: 'Home'
