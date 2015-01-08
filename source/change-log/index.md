@@ -1,3 +1,10 @@
+---
+id: change-log
+titleShort: API change log
+titleFull: API change log
+template: default.jade
+---
+
 ## v0.8
 
 Changes:

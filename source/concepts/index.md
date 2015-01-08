@@ -1,3 +1,11 @@
+---
+id: concepts
+titleShort: Concepts
+titleFull: Concepts
+template: default.jade
+withTOC: true
+---
+
 ## User accounts
 
 User accounts represent people or organizations that use Pryv. Each account is identified by either a Pryv username or the URL of its corresponding API root endpoint (although the latter isn't used at the moment). An account's data usually contains account settings (e.g. credentials, profile), events, contexts (streams, tags) and accesses.
@@ -15,7 +23,7 @@ Events are the primary units of content in Pryv. An event is a timestamped piece
 
 *Note: event references are coming in a future version of the API.*
 
-See also [standard event types](/#{linkTo.eventTypes}#directory).
+See also [standard event types](/event-types#directory).
 
 
 ## Contexts
@@ -27,7 +35,7 @@ Contexts are the circumstances in which events occur. The context of an event is
 
 Streams are the fundamental contexts in which events occur. Every event occurs in one stream. Streams follow a hierarchical structure—streams can have sub-streams—and usually match either user/app-specific organizational levels (e.g. life journal, work projects, etc.) or data sources (e.g. apps and/or devices).
 
-<!-- TODO: See also [standard streams](/#{linkTo.standardStructure}). -->
+<!-- TODO: See also [standard streams](/standard-structure). -->
 
 
 ### Tags

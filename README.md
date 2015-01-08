@@ -18,13 +18,13 @@ Try to stick to the following guidelines when writing (these guidelines are mean
 Prerequisite: the source API server working copy must be under `../api-server`.
 
 - `make setup` sets up the environment
-- `make server` runs a small server serving the generated website during development
-- `make compile` generates the website from the source into the `build` folder
-- `make publish` compiles the website (see `compile` target above) and publishes it to the repo's `gh-pages` branch
+- `make build` generates the website from the source into the `build` folder
+- `make watch` watches the source folder and rebuilds on changes
+- `make publish` builds and publishes the website
 
 (Read the `makefile` for details.)
 
-**Note:** data types are sourced from repo `pryv/data-types` on `make compile` (or run `make retrieve-types` to execute that specific step) to files in `source/event-types` (git-ignored).
+**Note:** data types are sourced from repo `pryv/data-types` on `make retrieve-types` and `make publish` into `source/event-types/_source`.
 
 
 ## License

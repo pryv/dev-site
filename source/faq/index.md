@@ -1,3 +1,10 @@
+---
+id: 'faq'
+titleShort: 'FAQ'
+titleFull: 'Frequently Asked Questions'
+template: default.jade
+---
+
 Just [send us a message](mailto:developers@pryv.com) to add more here.
 
 ## Why Pryv?

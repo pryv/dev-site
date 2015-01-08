@@ -1,3 +1,10 @@
-- var sections = [ 'intro', 'webapp', 'custom' ]
-each section in sections
-  section(id='#{section}')!= partial('_sections/' + section)
+---
+id: app-access
+titleShort: App auth
+titleFull: App authorization flow
+template: default.jade
+withTOC: true
+---
+
+each section in appAccessSections
+  section(id='#{section.id}')!= section.contents

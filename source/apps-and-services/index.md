@@ -1,3 +1,10 @@
+---
+id: apps-and-services
+titleShort: Pryv apps & services
+titleFull: Pryv apps and services
+template: default.jade
+---
+
 To add items to the lists below just [send us a message](mailto:developers@pryv.com).
 
 ## Existing apps and services

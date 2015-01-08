@@ -1,5 +1,5 @@
 // for loading .coffee files
-require('coffee-script');
+require('coffee-script').register();
 
 exports.sections = [
   require('./basics.coffee'),

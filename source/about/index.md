@@ -1,3 +1,10 @@
+---
+id: about
+titleShort: About
+titleFull: About the API
+template: default.jade
+---
+
 Pryv is a service empowering people with a simple, trusted space reuniting the streams that matter under their control. It handles any type of timestamped data, modeling individual pieces as **events** (stuff that happens) and contextualizing them into **streams** and **tags** (the circumstances in which stuff happens).
 
 The Pryv API is an HTTP and web sockets API that enables apps & services to interact with Pryv events and contexts.
@@ -23,4 +30,4 @@ Let's just underline the fundamental principle all apps running on Pryv are buil
 
 ## Now what?
 
-Learn more about the [core concepts](/#{linkTo.concepts}), or jump straight to the [API reference](/#{linkTo.reference}).
+Learn more about the [core concepts](/concepts), or jump straight to the [API reference](/reference).

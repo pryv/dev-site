@@ -1,3 +1,7 @@
+---
+order: 3
+---
+
 # Custom
 
 Implementing the authorization process and obtaining an access token all by yourself.

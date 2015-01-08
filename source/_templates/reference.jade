@@ -1,3 +1,5 @@
+extends layout
+
 mixin h1(string)
   if string
     | !{markdown('#' + string)}
@@ -98,7 +100,7 @@ mixin exampleContent(content)
     if typeof(content) === 'string'
       +text(content)
     else
-      pre: code !{printJSON(content)}
+      pre: code !{helpers.printJSON(content)}
 
 -// settings: {id, http, [result.http]} context to generate example forms (e.g. HTTP, cURL...)
 mixin examples(examples, settings)
@@ -117,10 +119,10 @@ mixin examples(examples, settings)
           else if ex.params
             .tab-content
               .tab-pane.json.active
-                pre: code !{printJSON(ex.params)}
+                pre: code !{helpers.printJSON(ex.params)}
                 if ex.result
                   .step-marker ⬇
-                  pre: code !{printJSON(ex.result)}
+                  pre: code !{helpers.printJSON(ex.result)}
               if settings.http
                 .tab-pane.http
                   pre: code.
@@ -132,14 +134,14 @@ mixin examples(examples, settings)
                       Content-Type: application/json; charset=utf-8
                       API-Version: !{apiReference.version}
 
-                      !{printJSON(ex.result)}
+                      !{helpers.printJSON(ex.result)}
               if settings.id
                 .tab-pane.sockets
                   pre: code.
-                    socket.emit('!{settings.id}', !{printJSON(ex.params)}, callback);
+                    socket.emit('!{settings.id}', !{helpers.printJSON(ex.params)}, callback);
                   if ex.result
                     .step-marker ⬇
-                    pre: code !{printJSON(ex.result)}
+                    pre: code !{helpers.printJSON(ex.result)}
 
 mixin section(section, parentDocId, level)
   - var isMethod = section.type === 'method'
@@ -181,13 +183,44 @@ mixin section(section, parentDocId, level)
         each subSection in section.sections
           +section(subSection, docId, level + 1)
 
-- function printJSON(content) { return JSON.stringify(content, null, 2); }
+block content
+  each level1Section in apiReference.sections
+    section(id='#{apiReference.helpers.getDocId(level1Section.id)}')
+      +h1(level1Section.title)
+      +intro(level1Section.description)
 
-each level1Section in apiReference.sections
-  section(id='#{apiReference.helpers.getDocId(level1Section.id)}')
-    +h1(level1Section.title)
-    +intro(level1Section.description)
+      if level1Section.sections
+        each level2Section in level1Section.sections
+          +section(level2Section, level1Section.id, 2)
 
-    if level1Section.sections
-      each level2Section in level1Section.sections
-        +section(level2Section, level1Section.id, 2)
+
+//- Support for switching examples format
+
+block custom-navbar-items
+  form.navbar-form.navbar-right
+    .form-group
+      label(for='examples-format') Examples:&nbsp;
+      select#examples-format.form-control
+        option(value='json', selected='selected') Raw JSON
+        option(value='http') cURL
+        option(value='sockets') Socket.IO
+
+block custom-scripts
+  // Code examples format switch
+  script.
+    $(document).ready(function () {
+      setExamplesFormat($('#examples-format').get(0).value);
+    });
+    $('#examples-format').on('change', function () {
+      setExamplesFormat(this.value);
+    });
+    function setExamplesFormat(format) {
+      var removeSelectors = [];
+      ['json', 'http', 'sockets'].forEach(function (f) {
+        if (format !== f) {
+          removeSelectors.push('.example .tab-pane.' + f + '.active');
+        }
+      });
+      $(removeSelectors.join(',')).removeClass("active");
+      $('.example .tab-pane.' + format).addClass("active");
+    }
