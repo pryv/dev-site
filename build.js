@@ -7,6 +7,7 @@ var metalsmith = require('metalsmith')(__dirname),
     jade = require('metalsmith-jade'),
     json = require('metalsmith-json'),
     markdown = require('metalsmith-markdown'),
+    permalinks = require('metalsmith-permalinks'),
     stylus = require('metalsmith-stylus'),
     templates = require('metalsmith-templates'),
     watch = process.argv[2] === 'watch' ? require('metalsmith-watch') : null;
@@ -39,7 +40,11 @@ metalsmith
       '_templates/*',
       'app-access/_sections/*',
       'event-types/_source/*'
-    ]));
+    ]))
+    .use(permalinks({
+      pattern: ':id',
+      relative: false
+    }));
 
 if (watch) {
   metalsmith.use(watch());
