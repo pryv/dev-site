@@ -20,9 +20,10 @@ Prerequisite: the source API server working copy must be under `../api-server`.
 - `make setup` sets up the environment
 - `make build` generates the website from the source into the `build` folder
 - `make watch` watches the source folder and rebuilds on changes
+- `make clean` cleans up the `build` folder (not done by build/watch)
 - `make publish` builds and publishes the website
 
-(Read the `makefile` for details.)
+(Read `makefile` for details.)
 
 **Note:** data types are sourced from repo `pryv/data-types` on `make retrieve-types` and `make publish` into `source/event-types/_source`.
 

@@ -9,8 +9,11 @@ build:
 watch:
 	node build.js watch
 
+clean:
+	rm -rf build/*
+
 setup:
-	./scripts/setup-environment-dev.sh
+	./dev-env/setup.sh
 
 retrieve-types:
 	@echo ""
