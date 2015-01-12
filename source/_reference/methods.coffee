@@ -117,7 +117,7 @@ module.exports = exports =
                        """
         ,
           key: "streams"
-          type: "array of [identity](##{dataStructure.getDocId("identity")})"
+          type: "array of [identifier](##{dataStructure.getDocId("identifier")})"
           optional: true
           description: """
                        If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
@@ -233,7 +233,7 @@ module.exports = exports =
                        """
         ,
           key: "stoppedId"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
                        Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
                        """
@@ -298,13 +298,13 @@ module.exports = exports =
       params:
         properties: [
           key: "streamId"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
                        The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified.
                        """
         ,
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
                        The id of the event to stop. Either this or `streamId` (and possibly `type`) must be specified.
                        """
@@ -326,7 +326,7 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "stoppedId"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
                        The id of the event that was stopped or null if no running event was found.
                        """
@@ -358,7 +358,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -383,7 +383,7 @@ module.exports = exports =
                        """
         ,
           key: "stoppedId"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
                        Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
                        """
@@ -478,7 +478,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -486,7 +486,7 @@ module.exports = exports =
                        """
         ,
           key: "fileId"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -525,7 +525,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -580,7 +580,7 @@ module.exports = exports =
       params:
         properties: [
           key: "parentId"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           optional: true
           description: """
                        The id of the parent stream from which to retrieve streams. Default: `null` (returns all accessible streams from the root level).
@@ -678,7 +678,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -734,7 +734,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -855,7 +855,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -901,7 +901,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -1042,7 +1042,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -1080,7 +1080,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -1207,7 +1207,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """
@@ -1243,7 +1243,7 @@ module.exports = exports =
       params:
         properties: [
           key: "id"
-          type: "[identity](##{dataStructure.getDocId("identity")})"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           http:
             text: "set in request path"
           description: """

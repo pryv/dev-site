@@ -231,7 +231,7 @@ module.exports = exports =
                        """
           properties: [
             key: "streamId"
-            type: "[identity](#{dataStructure.getDocId("identity")})"
+            type: "[identifier](#{dataStructure.getDocId("identifier")})"
             description: """
                          The id of the requested stream.
                          """

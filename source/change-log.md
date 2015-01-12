@@ -10,7 +10,7 @@ template: default.jade
 Changes:
 
 - Deletion methods now:
-    - Reply to permanent deletions with a `{item}Deletion` field confirming the deleted item's identity
+    - Reply to permanent deletions with a `{item}Deletion` field confirming the deleted item's identifier
     - Always return code 200 on HTTP (that's a rollback of the v0.7.x change which was a bit too zealous to be practical)
 
 New features:
