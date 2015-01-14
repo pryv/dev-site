@@ -18,6 +18,7 @@ html.no-js(lang='en')
     | <![endif]-->
     link(rel='stylesheet', type='text/css', href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,400italic|Roboto+Condensed:400,300,700')
     link(rel='stylesheet', type='text/css', href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/docco.min.css')
+    link(rel='stylesheet', type='text/css', href='/assets/fonts/ss-gizmo.min.css')
     link(rel='stylesheet', type='text/css', href='/assets/style.css')
 
   - try { isLanding = landingPage; } catch (e) { isLanding = false; }
@@ -36,36 +37,31 @@ html.no-js(lang='en')
               span.icon-bar
               span.icon-bar
           #main-nav.collapse.navbar-collapse
-            mixin menuItem(fileId, text)
+            mixin menuItem(fileId, text, options)
+              - options = options || {}
               - var activeClass = id === fileId ? 'active' : ''
-              li(class=activeClass)
+              li(class=activeClass + (options.disabled ? ' disabled' : ''))
                 a(href='/#{fileId}')= text
 
             ul.nav.navbar-nav
-              +menuItem('about', 'About')
-              +menuItem('concepts', 'Concepts')
-              +menuItem('reference', 'Reference')
-              +menuItem('event-types', 'Event types')
               li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown') More <b class="caret"></b>
-                ul.dropdown-menu
-                  +menuItem('change-log', 'API change log')
-                  +menuItem('apps-and-services', 'Pryv apps & services')
-                  +menuItem('code-libraries', 'Code libraries')
-                  +menuItem('faq', 'FAQ')
-              //li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
-                  li
-                    a(href='#') Getting started
-                  li
-                    a(href='#') Data modeling
-              //li.dropdown
+                  +menuItem('getting-started', 'Getting started (soon)', {disabled: true})
+                  +menuItem('concepts', 'Concepts')
+                  //+menuItem('data-modeling', 'Data modeling') —> into "Concepts"??
+              li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>
                 ul.dropdown-menu
-                  +menuItem('reference')
-                  +menuItem('eventTypes')
-                  +menuItem('standardStructure')
+                  +menuItem('reference', 'API reference')
+                  +menuItem('change-log', 'API change log')
+                  +menuItem('eventTypes', 'Event types')
+                  //+menuItem('standardStructure')
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown') Code <b class="caret"></b>
+                ul.dropdown-menu
+                  +menuItem('code-libraries', 'Code libraries')
+                  +menuItem('apps-and-services', 'Example apps')
               //li
                 a(href='#') Blog
             .navbar-right
@@ -88,8 +84,9 @@ html.no-js(lang='en')
         div.container-fluid
           #footer-nav
             ul.nav.navbar-nav
-              li: a(href='mailto:developers@pryv.com') Contact us
+              li: a(href='mailto:developers@pryv.com') Send a message
               li: a(href='http://github.com/pryv') GitHub
+              li: a(href='http://pryv.com') pryv.com
 
     //- append scripts
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
