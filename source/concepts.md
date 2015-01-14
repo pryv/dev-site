@@ -1,7 +1,6 @@
 ---
 id: concepts
-titleShort: Concepts
-titleFull: Concepts
+title: Concepts
 template: default.jade
 withTOC: true
 ---

@@ -1,7 +1,6 @@
 ---
 id: change-log
-titleShort: API change log
-titleFull: API change log
+title: API change log
 template: default.jade
 ---
 

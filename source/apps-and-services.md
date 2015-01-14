@@ -1,7 +1,6 @@
 ---
 id: apps-and-services
-titleShort: Example apps
-titleFull: Example apps
+title: Example apps
 template: default.jade
 ---
 

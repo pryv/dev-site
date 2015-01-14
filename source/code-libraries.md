@@ -1,7 +1,6 @@
 ---
 id: code-libraries
-titleShort: Code libraries
-titleFull: Code libraries
+title: Code libraries
 template: default.jade
 ---
 
