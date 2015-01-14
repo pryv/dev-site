@@ -35,17 +35,17 @@ each className in classNames
 section#about
   h1 About types
   :markdown
-    This is a **proposal** for the standard event types we recommend and plan to handle in our apps. You are free to use any type in your app, but for the sake of interoperability we heavily recommend that you stick to the standard types listed here, and [help us](https://github.com/pryv/data-types) complete or adjust the directory if you don't find what you need.
+    You are free to use any type in your app, but for the sake of interoperability we heavily recommend that you stick to the standard types listed here, and [help us](https://github.com/pryv/data-types) complete or adjust the directory if you don't find what you need.
 
     ## Basics
 
     An event's type is defined by its `type` property that indicates how to handle its `content` (if any).
     The type itself is specified as `{class}/{format}`, lowercase (e.g. `note/html`). Rationale:
 
-    - The class specifies the "nature" or "kind" of data represented by the event.
+    - The class usually specifies the "nature" or "kind" of data represented by the event.
       Events of the same class are assumed to be comparable and convertible,
       and will likely be displayed similarly.
-    - The format specifies how the data is structured. For example, a
+    - The format usually specifies how the data is structured. For example, a
       basic note may just be a single string value, while an rich-text note could be a more complex
       object structure.
 

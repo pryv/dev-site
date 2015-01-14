@@ -56,7 +56,7 @@ module.exports = exports =
       id: "alternative-http-request-method"
       title: "Alternative HTTP request method"
       description: """
-                   Because we could't fathom out the rationale behind [HTTP access control (CORS) rules](https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS), the API allows web apps to fake POST, PUT and DELETE requests through `application/x-www-form-urlencoded` POST requests with the following fields (all optional):
+                   For those having trouble with [HTTP access control (CORS) rules](https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS), the API allows web apps to fake POST, PUT and DELETE requests through `application/x-www-form-urlencoded` POST requests with the following fields (all optional):
                    """
       properties: [
         key: "_method"

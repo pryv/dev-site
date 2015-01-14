@@ -6,22 +6,34 @@ template: default.jade
 withTOC: true
 ---
 
+
+## Basics
+
+Pryv supports any type of timestamped data, modeling individual pieces as **events** (stuff that happens) and contextualizing them into **streams** and **tags** (the circumstances in which stuff happens).
+
+Storage is decentralized: you access each user account on the server hosting its data (e.g. `https://{username}.pryv.io/`). There can be as many servers as there are accounts.
+
+Users collect, manipulate and view events on their account (or other users' accounts) via apps, which are granted access to the parts of user data they need (e.g. specific streams). Apps can interoperate provided they support the same event types and are granted access to the same data.
+
+Stored data is all private by default. Users share data by explicitly opening read-only or collaborative accesses to specific parts of their data (**slices of life**).
+
+
 ## User accounts
 
-User accounts represent people or organizations that use Pryv. Each account is identified by either a Pryv username or the URL of its corresponding API root endpoint (although the latter isn't used at the moment). An account's data usually contains account settings (e.g. credentials, profile), events, contexts (streams, tags) and accesses.
+User accounts represent people or organizations that use Pryv. Each account is identified by either a Pryv username or the URL of its corresponding API root endpoint. An account's data usually contains account settings (e.g. credentials, profile), events, contexts (streams, tags) and accesses.
 
 
 ## Servers
 
 Each user account is served from one root API endpoint on a Pryv server; one server can host one or more accounts.
-Users can choose which server hosts their account depending on their own location (typically considering network distance, with an obvious tie to performance), privacy/legal context and/or other constraints. Data for each account is stored individually, i.e. separately from other accounts' (except Pryv username-to-server mapping information, currently kept globally in a central DNS directory plus locally on each server for the accounts it serves).
+Server hosts are typically chosen depending on users' location (typically considering network distance, with an obvious tie to performance), privacy/legal context and/or other constraints. Data for each account is stored individually, i.e. separately from other accounts' (except Pryv username-to-server mapping information, currently kept globally in a central DNS directory, plus locally on each server for the accounts it serves).
 
 
 ## Events
 
-Events are the primary units of content in Pryv. An event is a timestamped piece of typed data, possibly with one or more attached files, belonging to a given context. Depending on its type, an event can represent anything related to a particular time (picture, note, location, temperature measurement, etc.). An event can also reference other events, allowing to model things such as albums, comments, versioning, etc. It is also possible for events to have a duration to represent a period instead of a single point in time, and the API includes specific functionality to deal with periods.
+Events are the primary units of content in Pryv. An event is a timestamped piece of typed data, possibly with one or more attached files, belonging to a given context. Depending on its type, an event can represent anything related to a particular time (picture, note, location, temperature measurement, etc.).
 
-*Note: event references are coming in a future version of the API.*
+In the future, the API will support event references, allowing to model things such as albums, comments, versioning, etc. It is also possible for events to have a duration to represent a period instead of a single point in time, and the API includes specific functionality to deal with periods.
 
 See also [standard event types](/event-types#directory).
 

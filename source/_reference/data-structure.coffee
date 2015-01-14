@@ -33,9 +33,7 @@ changeTrackingProperties = (typeName) ->
 module.exports = exports =
   id: "data-structure"
   title: "Data structure"
-  description: """
-               This section describes the structure of the different types of objects and values exchanged in the API.
-               """
+  description: ""
   sections: [
     id: "event"
     title: "Event"
