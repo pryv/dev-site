@@ -13,9 +13,16 @@ body
 
 #main
   margin-bottom: $navbar-height
+  hr
+    margin-left: -15px
+    margin-right: -15px
 
 h5, h6
   margin: 1.5em 0 0.75em
+
+.ss-icon
+  font-size: 1.3em
+  vertical-align: middle
 
 blockquote, ul, ol, dl, table, pre
   &:not(:first-child)
@@ -101,21 +108,42 @@ dd
 body.landing-page
   h1
     padding: 0
+    img
+      margin: 0.25em
 
-  .masthead
-    margin: 0 -15px 1rem -15px
+  .jumbotron
+    margin: 0 -15px 2rem
+    border-radius: 0
     padding: 2rem 0
     text-align: center
     color: $white
-    background: #266C9C url(images/bgPaper.png) repeat center center
+    background: $brand-primary url(images/laptop&makey.jpg) center
+    background-size: cover
+    h1
+      margin: 0
+      font-size: floor($font-size-base * 2.428571429) // reset to default h1 size
+
+  #logo-dev
+    max-width: 100px
+    height: auto
+
+  .summary
+    margin: 2em 0
+    text-align: center
     p
-      padding-top: 0.5em
+      margin: 0
+    .lead
+      margin-bottom: 2em
+    .btn-lg
+      margin-bottom: 0.5em
+      font-weight: 300
 
   .marketing-icon
     text-align: center
     margin-bottom: 30px
     h2
-      border:0
+      margin-top: 0
+      border: 0
       padding-top: 10px;
     img
       margin: 15px 0 0 0
@@ -267,6 +295,9 @@ body.landing-page
   .active > a
     color: $text-color
 
+@media (max-width: 600px)
+  body.landing-page h1 span
+    display: block
 
 @media (min-width: 767px)
   #page-header > nav
