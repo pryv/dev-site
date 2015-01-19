@@ -39,7 +39,8 @@ html.no-js(lang='en')
           #main-nav.collapse.navbar-collapse
             mixin menuItem(fileId, text, options)
               - options = options || {}
-              - var activeClass = id === fileId ? 'active' : ''
+              - fullId = (sectionId ? sectionId + '/' : '') + id
+              - var activeClass = fullId === fileId ? 'active' : ''
               li(class=activeClass + (options.disabled ? ' disabled' : ''))
                 a(href='/#{fileId}')= text
 
@@ -47,8 +48,9 @@ html.no-js(lang='en')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
-                  +menuItem('getting-started', 'Getting started (soon)', {disabled: true})
-                  +menuItem('concepts', 'Concepts')
+                  //+menuItem('getting-started', 'Getting started (soon)', {disabled: true})
+                  +menuItem('getting-started/javascript', 'Getting started (Javascript)')
+                  +menuItem('concepts', 'API concepts')
                   //+menuItem('data-modeling', 'Data modeling') —> into "Concepts"??
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>

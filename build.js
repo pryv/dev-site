@@ -42,7 +42,8 @@ metalsmith
       'event-types/_source/*'
     ]))
     .use(permalinks({
-      pattern: ':id',
+      // section id is optional in metadata
+      pattern: ':sectionId/:id',
       relative: false
     }));
 
