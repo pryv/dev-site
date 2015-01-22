@@ -6,28 +6,29 @@ template: default.jade
 withTOC: true
 ---
 
-Using [our Javacript library](https://github.com/pryv/lib-javascript).
+A few initial pointers to get going with [our Javacript library](https://github.com/pryv/lib-javascript).<br>
+[Feedback and suggestions welcome](http://github.com/pryv/dev-site/issues).
 
 
 ### Install the library
 
-On **Node.js or Browserify**, install the module...
+<div class="row">
 
-```
-npm install pryv --save
-```
+<div class="col-md-6">
+<h6>Node.js / Browserify</h6>
+<p>Install the module...</p>
+<pre><code class="lang-bash">npm install pryv --save</code></pre>
+<p>...then require it in your JS:</p>
+<pre><code class="lang-javascript">var pryv = require('pryv');</code></pre>
+</div>
 
-...then require it in your JS:
+<div class="col-md-6">
+<h6>Browser, old style</h6>
+<p>[Download](http://api.pryv.com/lib-javascript/latest/pryv.js) then include the library file:</p>
+<pre><code class="lang-html">&lt;script type="text/javascript" src="pryv.js"&gt;&lt;/script&gt;</code></pre>
+</div>
 
-```
-var pryv = require('pryv');
-```
-
-On the **browser (old style)**, [download](http://api.pryv.com/lib-javascript/latest/pryv.js) then include the library file:
-
-```html
-<script type="text/javascript" src="pryv.js"></script>
-```
+</div>
 
 
 ### Authorize your app
@@ -55,7 +56,7 @@ var settings = {
   requestedPermissions: requestedPermissions,
   spanButtonID: 'pryv-button',
   callbacks: {
-    accepted: function(username, accessToken, languageCode) {
+    accepted: function (username, accessToken, languageCode) {
       credentials = { username: username, auth: accessToken };
       // ...
     },
