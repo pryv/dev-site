@@ -29,8 +29,10 @@ html.no-js(lang='en')
       nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
         div.container-fluid
           .navbar-header
-            a.navbar-brand.logo(href='/')
-              img(src='/assets/images/logo-256-black.png', alt='Pryv')
+            a.navbar-brand.logo.pryv-home(href='http://pryv.com', title='Pryv home')
+              img(src='/assets/images/icon-home.svg', alt='Pryv home', height='50')
+            a.navbar-brand.logo(href='/', title='Developers home')
+              img(src='/assets/images/logo-256-black.png', alt='Developers home')
             button.navbar-toggle(type='button', data-toggle='collapse', data-target='#main-nav')
               span.sr-only Toggle navigation
               span.icon-bar
