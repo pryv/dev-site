@@ -82,7 +82,9 @@ var connection = new pryv.Connection(credentials);
 ```
 
 
-### Retrieve data
+### Retrieve & manipulate events
+
+#### Retrieve
 
 ```javascript
 var filter = new pryv.Filter({limit : 20});
@@ -91,8 +93,7 @@ connection.events.get(filter, function (err, events) {
 });
 ```
 
-
-### Create data
+#### Create
 
 ```javascript
 var eventData = {
@@ -105,8 +106,7 @@ connection.events.create(eventData, function (err, event) { 
 });
 ```
 
-
-### Update data
+#### Update
 
 ```javascript
 event.content = 'Updated content.';
@@ -115,14 +115,20 @@ event.update(function (err, updatedEvent) {
 });
 ```
 
-
-### Delete data
+#### Delete
 
 ```javascript
 event.delete(function (err, trashedEventOrNull) {
   // ...
 });
 ```
+
+
+### Examples
+
+On JSFiddle:
+
+- [Basic example: authenticate & retrieve data](http://jsfiddle.net/pryv/fr4e834p/11/)
 
 
 ### Further resources
