@@ -27,8 +27,8 @@ add the dependency in your project's pom.xml file:
 ```
 <dependency>
         <groupId>com.pryv</groupId>
-        <artifactId>lib-java</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>lib</artifactId>
+        <version>0.1.0</version>
 </dependency>
 ```
 
@@ -47,18 +47,22 @@ permissions.add(permission);
 AuthView view = new AuthView() {
 	public void onAuthSuccess(String username, String token) {
       // provides username and valid token
+      ...
     }
       
     public void onAuthError(String message) {
-      // ...
+      // display error message
+      ...
     }
     
     public void onAuthRefused(int reasonId, String message, String detail) {
-  	  // ...
+  	  // display authentication refused message
+  	  ...
     }
       
     public void displayLoginVew(String loginURL) {
       // generate WebView to load URL to enter credentials
+      ...
     }
 };
     
@@ -94,6 +98,7 @@ Event newEvent = new Event()
 newEvent.setStreamId("diary");
 newEvent.setType("note/txt");
 newEvent.setContent("I track, therefore I am.");
+// here, 'this' implements EventsCallback
 connection.createEvent(newEvent, this);
 ```
 
@@ -101,12 +106,14 @@ connection.createEvent(newEvent, this);
 
 ```
 event.setContent = "Updated content.";
+// here, 'this' implements EventsCallback
 connection.updateEvent(event, this);
 ```
 
 #### Delete
 
 ```
+// here, 'this' implements EventsCallback
 connection.deleteEvent(event, this);
 ```
 
@@ -114,7 +121,7 @@ connection.deleteEvent(event, this);
 ### Examples
 
 
-- [Basic example: authenticate & retrieve data](http://jsfiddle.net/pryv/fr4e834p/11/)
+- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/src/test/java/com/pryv/examples/BasicExample.java)
 - [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
 
 
