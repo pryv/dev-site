@@ -1,7 +1,7 @@
 ---
 id: javascript
 sectionId: getting-started
-title: Getting started (Javascript)
+title: "Getting started: Javascript"
 template: default.jade
 withTOC: true
 ---

@@ -1,7 +1,7 @@
 ---
 id: java
 sectionId: getting-started
-title: Getting started (Java)
+title: "Getting started: Java"
 template: default.jade
 withTOC: true
 ---
@@ -14,17 +14,18 @@ A few initial pointers to get going with [our Java library](https://github.com/p
 
 Clone the git repo:
 
-```
+```bash
 git clone https://github.com/pryv/lib-java
 ```
+
 Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sect-maven-install.html) and install the library locally:
 
-```
+```bash
 mvn install
 ```
 add the dependency in your project's pom.xml file:
 
-```
+```xml
 <dependency>
         <groupId>com.pryv</groupId>
         <artifactId>lib</artifactId>
@@ -32,12 +33,14 @@ add the dependency in your project's pom.xml file:
 </dependency>
 ```
 
+_(Note: The lib will soon be made available on the Maven central repository.)_
+
 
 ### Authorize your app
 
 First obtain an app identifier (for now: just [ask us](mailto:developers@pryv.com)), then in your client code:
 
-```
+```java
 // Here we request full permissions on a custom stream;
 // in practice, scope and permission level will vary depending on your needs
 Permission permission = new Permission("example-app", Permission.Level.manage, "Example App");
@@ -49,23 +52,23 @@ AuthView view = new AuthView() {
       // provides username and valid token
       ...
     }
-      
+
     public void onAuthError(String message) {
       // display error message
       ...
     }
-    
+
     public void onAuthRefused(int reasonId, String message, String detail) {
   	  // display authentication refused message
   	  ...
     }
-      
+
     public void displayLoginVew(String loginURL) {
       // generate WebView to load URL to enter credentials
       ...
     }
 };
-    
+
 AuthController authenticator = new AuthControllerImpl(REQUESTING_APP_ID, permissions, "en", "", view);
 authenticator.signIn();
 ```
@@ -75,7 +78,7 @@ See also: [app authorization in the API reference](/reference/#authorizing-your-
 
 ### Connect to the account
 
-```
+```java
 connection = new Connection(username, token, new DBinitCallback());
 ```
 
@@ -84,36 +87,36 @@ connection = new Connection(username, token, new DBinitCallback());
 
 #### Retrieve
 
-```
+```java
 Filter filter = new Filter();
 filter.setLimit(20);
-// here, 'this' implements EventsCallback
+// 'this' implements EventsCallback
 connection.getEvents(filter, this);
 ```
 
 #### Create
 
-```
+```java
 Event newEvent = new Event()
 newEvent.setStreamId("diary");
 newEvent.setType("note/txt");
 newEvent.setContent("I track, therefore I am.");
-// here, 'this' implements EventsCallback
+// 'this' implements EventsCallback
 connection.createEvent(newEvent, this);
 ```
 
 #### Update
 
-```
+```java
 event.setContent = "Updated content.";
-// here, 'this' implements EventsCallback
+// 'this' implements EventsCallback
 connection.updateEvent(event, this);
 ```
 
 #### Delete
 
-```
-// here, 'this' implements EventsCallback
+```java
+// 'this' implements EventsCallback
 connection.deleteEvent(event, this);
 ```
 
