@@ -12,17 +12,7 @@ A few initial pointers to get going with [our Java library](https://github.com/p
 
 ### Install the library
 
-Clone the git repo:
-
-```
-git clone https://github.com/pryv/lib-java
-```
-Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sect-maven-install.html) and install the library locally:
-
-```
-mvn install
-```
-add the dependency in your project's pom.xml file:
+Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sect-maven-install.html) and add the dependency in your project's pom.xml file:
 
 ```
 <dependency>
@@ -121,8 +111,8 @@ connection.deleteEvent(event, this);
 ### Examples
 
 
-- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/src/test/java/com/pryv/examples/BasicExample.java)
-- [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
+- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/examples/BasicExample/src/main/java/com/pryv/main/BasicExample.java)
+- [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
 
 
 ### Further resources
