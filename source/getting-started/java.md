@@ -27,7 +27,7 @@ Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sec
 
 First obtain an app identifier (for now: just [ask us](mailto:developers@pryv.com)), then in your client code:
 
-```
+```java
 // Here we request full permissions on a custom stream;
 // in practice, scope and permission level will vary depending on your needs
 Permission permission = new Permission("example-app", Permission.Level.manage, "Example App");
@@ -65,7 +65,7 @@ See also: [app authorization in the API reference](/reference/#authorizing-your-
 
 ### Connect to the account
 
-```
+```java
 connection = new Connection(username, token, new DBinitCallback());
 ```
 
@@ -74,7 +74,7 @@ connection = new Connection(username, token, new DBinitCallback());
 
 #### Retrieve
 
-```
+```java
 Filter filter = new Filter();
 filter.setLimit(20);
 // here, 'this' implements EventsCallback
@@ -83,7 +83,7 @@ connection.getEvents(filter, this);
 
 #### Create
 
-```
+```java
 Event newEvent = new Event()
 newEvent.setStreamId("diary");
 newEvent.setType("note/txt");
@@ -94,7 +94,7 @@ connection.createEvent(newEvent, this);
 
 #### Update
 
-```
+```java
 event.setContent = "Updated content.";
 // here, 'this' implements EventsCallback
 connection.updateEvent(event, this);
@@ -102,7 +102,7 @@ connection.updateEvent(event, this);
 
 #### Delete
 
-```
+```java
 // here, 'this' implements EventsCallback
 connection.deleteEvent(event, this);
 ```
@@ -110,8 +110,18 @@ connection.deleteEvent(event, this);
 
 ### Examples
 
-
 - [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/examples/BasicExample/src/main/java/com/pryv/main/BasicExample.java)
+
+to run it:
+```
+mvn package
+cd examples/BasicExample/
+javac -classpath ../../target/lib-0.1.0-jar-with-dependencies.jar src/main/java/BasicExample.java
+cd target/classes/
+java -classpath ../../../../target/lib-0.1.0-jar-with-dependencies.jar:./ BasicExample
+```
+
+
 - [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
 
 
