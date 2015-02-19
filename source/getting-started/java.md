@@ -110,16 +110,9 @@ connection.deleteEvent(event, this);
 
 ### Examples
 
-- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/examples/BasicExample/src/main/java/com/pryv/main/BasicExample.java)
+- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/examples/BasicExample/src/main/java/BasicExample.java#L32)
 
-to run it:
-```
-mvn package
-cd examples/BasicExample/
-javac -classpath ../../target/lib-0.1.0-jar-with-dependencies.jar src/main/java/BasicExample.java
-cd target/classes/
-java -classpath ../../../../target/lib-0.1.0-jar-with-dependencies.jar:./ BasicExample
-```
+  To run it: `examples/BasicExample/run.sh`
 
 
 - [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
