@@ -117,6 +117,7 @@ connection.deleteEvent(event, this);
 
 - [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
 
+  To run it: `examples/JavaApp/run.sh` (Java 1.8 required)
 
 ### Further resources
 
