@@ -12,18 +12,7 @@ A few initial pointers to get going with [our Java library](https://github.com/p
 
 ### Install the library
 
-Clone the git repo:
-
-```bash
-git clone https://github.com/pryv/lib-java
-```
-
-Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sect-maven-install.html) and install the library locally:
-
-```bash
-mvn install
-```
-add the dependency in your project's pom.xml file:
+Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sect-maven-install.html) and add the dependency in your project's pom.xml file:
 
 ```xml
 <dependency>
@@ -32,8 +21,6 @@ add the dependency in your project's pom.xml file:
         <version>0.1.0</version>
 </dependency>
 ```
-
-_(Note: The lib will soon be made available on the Maven central repository.)_
 
 
 ### Authorize your app
@@ -123,10 +110,14 @@ connection.deleteEvent(event, this);
 
 ### Examples
 
+- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/examples/BasicExample/src/main/java/BasicExample.java#L32)
 
-- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/src/test/java/com/pryv/examples/BasicExample.java)
-- [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
+  To run it: `examples/BasicExample/run.sh`
 
+
+- [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
+
+  To run it: `examples/JavaApp/run.sh` (Java 1.8 required)
 
 ### Further resources
 
