@@ -8,6 +8,6 @@ exports.sections = [
   require('./data-structure.coffee')
 ];
 
-exports.version = require('../../../api-server/package.json').version;
+exports.version = require('pryv-service-core/package.json').version;
 exports.helpers = require('./helpers.coffee');
 

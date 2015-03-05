@@ -30,11 +30,11 @@
     "metalsmith-stylus": "^0.2.1",
     "metalsmith-templates": "^0.6.0",
     "metalsmith-watch": "^0.2.0",
-    "pryv-api-server-common": "git+ssh://git@github.com:pryv/api-server-common.git",
+    "pryv-service-core": "git+ssh://git@github.com:pryv/service-core.git",
     "pryv-style": "git://github.com/pryv/style.git",
     "unix-timestamp": "^0.1.2"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   }
 }
