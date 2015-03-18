@@ -28,6 +28,7 @@ metalsmith
     .use(markdown())
     .use(jade({useMetadata: true}))
     .use(stylus({
+      paths: ['node_modules/pryv-style/stylus'],
       nib: true,
       compress: true
     }))
