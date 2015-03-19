@@ -10,6 +10,14 @@ A few initial pointers to get going with [our Java library](https://github.com/p
 [Feedback and suggestions welcome](http://github.com/pryv/dev-site/issues).
 
 
+### Examples
+
+- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/examples/BasicExample/src/main/java/BasicExample.java#L32)<br>
+  Run it via `examples/BasicExample/run.sh`
+- [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)<br>
+  Run it via `examples/JavaApp/run.sh` (Java 1.8 required)
+
+
 ### Install the library
 
 Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sect-maven-install.html) and add the dependency in your project's pom.xml file:
@@ -107,17 +115,6 @@ connection.updateEvent(event, this);
 connection.deleteEvent(event, this);
 ```
 
-
-### Examples
-
-- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/examples/BasicExample/src/main/java/BasicExample.java#L32)
-
-  To run it: `examples/BasicExample/run.sh`
-
-
-- [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)
-
-  To run it: `examples/JavaApp/run.sh` (Java 1.8 required)
 
 ### Further resources
 
