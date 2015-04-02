@@ -38,7 +38,7 @@ module.exports = exports =
     id: "event"
     title: "Event"
     description: """
-                 See also: [core concepts](/concepts#core-events).
+                 See also: [core concepts](/concepts/#events).
                  """
     properties: [
       key: "id"
@@ -71,7 +71,7 @@ module.exports = exports =
       key: "type"
       type: "string"
       description: """
-                   The type of the event. See the [event type directory](/event-types#directory) for a list of standard types.
+                   The type of the event. See the [event type directory](/event-types/#directory) for a list of standard types.
                    """
     ,
       key: "content"
@@ -171,7 +171,7 @@ module.exports = exports =
     id: "stream"
     title: "Stream"
     description: """
-                 See also: [core concepts](/concepts#core-streams).
+                 See also: [core concepts](/concepts/#streams).
                  """
     properties: [
       key: "id"
@@ -234,7 +234,7 @@ module.exports = exports =
     id: "tag"
     title: "Tag"
     description: """
-                 Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](/concepts#core-tags). *Note: typed tags are coming in a future version of the API.*
+                 Tags can be plain text or typed tags; this describes the latter. See also: [core concepts](/concepts/#tags). *Note: typed tags are coming in a future version of the API.*
                  """
     properties: [
       key: "id"
@@ -279,7 +279,7 @@ module.exports = exports =
     id: "access"
     title: "Access"
     description: """
-                 See also: [core concepts](/concepts#core-accesses).
+                 See also: [core concepts](/concepts/#accesses).
                  """
     properties: [
       key: "id"
@@ -357,7 +357,7 @@ module.exports = exports =
     title: "Followed slice"
     trustedOnly: true
     description: """
-                 See also: [core concepts](/concepts#core-followed-slices).
+                 See also: [core concepts](/concepts/#followed-slices).
                  """
     properties: [
       key: "id"

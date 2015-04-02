@@ -118,4 +118,4 @@ connection.deleteEvent(event, this);
 
 ### Further resources
 
-- [API reference](/reference)
+- [API reference](/reference/)

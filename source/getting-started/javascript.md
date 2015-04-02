@@ -134,5 +134,5 @@ event.delete(function (err, trashedEventOrNull) {
 
 ### Further resources
 
-- [API reference](/reference)
+- [API reference](/reference/)
 - [Library JS docs](/lib-javascript/latest/docs/)

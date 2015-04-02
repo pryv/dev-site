@@ -16,7 +16,7 @@ A Pryv app id is a string uniquely identifying your app. For the moment, just [a
 
 ### 2. Define the access permissions you need
 
-See the examples below, as well as the `permissions` property in the [access data structure reference](reference.html#data-structure-access).
+See the examples below, as well as the `permissions` property in the [access data structure reference](reference/#data-structure-access).
 
 #### Example app permissions
 

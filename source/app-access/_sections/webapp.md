@@ -149,7 +149,7 @@ EXAMPLES
 * with `https://mysite.com/page.php?mycustom=1` as source URL.
   - **self&** -> `https://mysite.com/page.php?mycustom=1&prYvk...`
 
-Make your own tests from the [test page](webapp.test).
+Make your own tests from the [test page](#webapp.test).
 
 #### * Custom
 
