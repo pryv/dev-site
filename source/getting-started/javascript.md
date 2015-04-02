@@ -32,7 +32,7 @@ On JSFiddle:
 
 <div class="col-md-6">
 <h6>Browser, old style</h6>
-<p>[Download](http://api.pryv.com/lib-javascript/latest/pryv.js) then include the library file:</p>
+<p>[Download](https://api.pryv.com/lib-javascript/latest/pryv.js) then include the library file:</p>
 <pre><code class="lang-html">&lt;script type="text/javascript" src="pryv.js"&gt;&lt;/script&gt;</code></pre>
 </div>
 
