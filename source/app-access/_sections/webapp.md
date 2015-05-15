@@ -6,29 +6,23 @@ order: 2
 
 Obtaining an access token for your web app.
 
-** Warning !! The Pryv.Access javascript utility structure is changing .. it works as this today,
-but expect upcoming changes **
 
 ## What you need
 
 * make sure you got the [initial requirements](#intro-initial-requirements) ready.
 * include the following script in your page:
-	- Staging version (recommended at the moment):
+	- From github:
 	```html
-	<script type="text/javascript" src="https://sw.pryv.li:2443/access/v1/pryv-sdk.js"></script>
+	<script type="text/javascript" src="//pryv.github.io/lib-javascript/latest/pryv.js"></script>
 	```
-	- Production version:
+	- or the optimized CloudFront cache: (recommended)
 	```html
-	<script type="text/javascript" src="https://sw.pryv.me/access/v1/pryv-sdk.js"></script>
-	```
-	- or the optimized CloudFront cache:
-	```html
-	<script type="text/javascript" src="//d3gblc8a9weyfb.cloudfront.net/access/v1/pryv-sdk.js"></script>
+	<script type="text/javascript" src="//dlw0lofo79is5.cloudfront.net/lib-javascript/latest/pryv.js"></script>
 	```
 * construct a `settings` JSON object
-* call `Pryv.Access.setup(settings)`
+* call `Pryv.Auth.setup(settings)`
 
-For a more fleshed-out example look at the source code of [https://sw.pryv.li/access/demo.html](https://sw.pryv.li:2443/access/demo.html).
+For a more fleshed-out example look at the source code of [http://jsfiddle.net/pryv/fr4e834p/](http://jsfiddle.net/pryv/fr4e834p/).
 
 <a name="webapp.test"></a>Or make your own tests from the page:
 [https://sw.pryv.li:2443/access/test.html](https://sw.pryv.li:2443/access/test.html)
@@ -60,7 +54,7 @@ This app requests a "contribute" access to the "diary" stream, using the PrYv bu
 									"defaultName" : "Diary", // this name is localized
 	                                     "level" : "contribute"}];
 
-	    Pryv.Access.setup({
+	    Pryv.Auth.setup({
 	        requestingAppId : 'pryv-mini-example',
 	        requestedPermissions : requestedPermissions,
 	        returnURL: 'auto#',
@@ -87,7 +81,7 @@ This app requests a "contribute" access to the "diary" stream, using the PrYv bu
 	</html>
 ```
 
-## Pryv.Access.setup(settings)
+## Pryv.Auth.setup(settings)
 
 
 The **settings** object supports the following parameters:
