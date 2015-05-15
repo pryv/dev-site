@@ -1,13 +1,21 @@
 ---
 id: javascript
 sectionId: getting-started
-title: Getting started (Javascript)
+title: "Getting started: Javascript"
 template: default.jade
 withTOC: true
 ---
 
 A few initial pointers to get going with [our Javacript library](https://github.com/pryv/lib-javascript).<br>
 [Feedback and suggestions welcome](http://github.com/pryv/dev-site/issues).
+
+
+### Quick examples
+
+On JSFiddle:
+
+- [Basic example: authenticate & retrieve data](http://jsfiddle.net/pryv/fr4e834p/11/)
+- [Events monitor: manipulate events & monitor changes](http://jsfiddle.net/pryv/bwpv0b3o/18/)
 
 
 ### Install the library
@@ -24,7 +32,7 @@ A few initial pointers to get going with [our Javacript library](https://github.
 
 <div class="col-md-6">
 <h6>Browser, old style</h6>
-<p>[Download](http://api.pryv.com/lib-javascript/latest/pryv.js) then include the library file:</p>
+<p>[Download](https://api.pryv.com/lib-javascript/latest/pryv.js) then include the library file:</p>
 <pre><code class="lang-html">&lt;script type="text/javascript" src="pryv.js"&gt;&lt;/script&gt;</code></pre>
 </div>
 
@@ -124,15 +132,7 @@ event.delete(function (err, trashedEventOrNull) {
 ```
 
 
-### Examples
-
-On JSFiddle:
-
-- [Basic example: authenticate & retrieve data](http://jsfiddle.net/pryv/fr4e834p/11/)
-- [Events monitor: manipulate events & monitor changes](http://jsfiddle.net/pryv/bwpv0b3o/18/)
-
-
 ### Further resources
 
-- [API reference](/reference)
+- [API reference](/reference/)
 - [Library JS docs](/lib-javascript/latest/docs/)

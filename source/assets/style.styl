@@ -2,7 +2,7 @@
 
 $brand-primary = $pryv-dark-gray
 
-@import '../../node_modules/pryv-style/stylus/pryv'
+@import 'pryv'
 
 // Overrides & custom stuff
 
@@ -24,7 +24,7 @@ h5, h6
   font-size: 1.3em
   vertical-align: middle
 
-blockquote, ul, ol, dl, table, pre
+blockquote, ul:not(.dropdown-menu), ol, dl, table, pre
   &:not(:first-child)
     margin-top: 0.75em
     margin-bottom: 0.75em
@@ -140,7 +140,16 @@ body.landing-page
       margin-bottom: 0.5em
       font-weight: 300
 
-  .marketing-icon
+    ul.dropdown-menu-lg
+      width: 100%
+      text-align: center
+      li
+        a
+          font-size: $font-size-large
+          font-weight: 300
+          line-height: $line-height-large
+
+.marketing-icon
     text-align: center
     margin-bottom: 30px
     h2
@@ -200,14 +209,14 @@ body.landing-page
       color:$white
 
 #main
-  ul:not(.nav)
+  ul:not(.nav, .dropdown-menu)
     margin: 0;
     padding: 0;
     list-style: none;
     li
       list-style-type: square
 
-  ul:not(.nav), ol
+  ul:not(.nav, .dropdown-menu), ol
     li
       margin-left: 2.4em
       padding: 10px 0 10px 0.4em

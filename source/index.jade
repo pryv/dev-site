@@ -20,14 +20,19 @@ permalink: false
       | Unite custom & existing streams onto one simple yet remarkably powerful platform. All data is kept per-user in decentralized, medical-grade storage locations.
     .row
       .col-md-4
-        a.btn.btn-primary.btn-lg.btn-block(href='/getting-started/javascript') Getting started (Javascript)
-        small.text-muted More languages soon.
-      .col-md-4: a.btn.btn-primary.btn-lg.btn-block(href='/concepts') API concepts
-      .col-md-4: a.btn.btn-primary.btn-lg.btn-block(href='/reference') API reference
+        .dropdown
+          button#btn-get-started.btn.btn-primary.btn-lg.btn-block.dropdown-toggle(data-toggle='dropdown', aria-expanded='true')
+            | Get started <span class="caret"></span>
+          ul.dropdown-menu.dropdown-menu-lg(role='menu', aria-labelledby='btn-get-started')
+            li: a(href='/getting-started/javascript/') Javascript
+            li: a(href='/getting-started/java/') Java
+            li: small.text-muted More languages coming
+      .col-md-4: a.btn.btn-primary.btn-lg.btn-block(href='/concepts/') API concepts
+      .col-md-4: a.btn.btn-primary.btn-lg.btn-block(href='/reference/') API reference
 
 
     p.
-      To learn about Pryv itself, see <a href="http://pryv.com">our main website</a>.
+      To learn about Pryv itself, see <a href="https://pryv.com">our main website</a>.
 
 .container
   h2.page-header Features
@@ -36,7 +41,7 @@ permalink: false
       :markdown
         ### Events for anything, contextualized
 
-        The API supports any timestamped content, including files. Health metrics, locations, pictures, audio samples, notes, activities, vegetable garden yields, you name it. See [the standard types directory](/event-types).
+        The API supports any timestamped content, including files. Health metrics, locations, pictures, audio samples, notes, activities, vegetable garden yields, you name it. See [the standard types directory](/event-types/).
 
         Organization is handled via simple and proven constructs like a hierarchical structure (streams) and tags.
 
@@ -101,6 +106,6 @@ permalink: false
       :markdown
         ### Decentralized & built&nbsp;for&nbsp;privacy
 
-        Each user account can be served by a different server, which can be located anywhere. Pryv is [HIPAA-certified](http://pryv.com/certification).
+        Each user account can be served by a different server, which can be located anywhere. Pryv is [HIPAA-certified](https://pryv.com/certification).
 
         ![Decentralization](assets/images/vShare.png)

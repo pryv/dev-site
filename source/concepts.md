@@ -34,7 +34,7 @@ Events are the primary units of content in Pryv. An event is a timestamped piece
 
 In the future, the API will support event references, allowing to model things such as albums, comments, versioning, etc. It is also possible for events to have a duration to represent a period instead of a single point in time, and the API includes specific functionality to deal with periods.
 
-See also [standard event types](/event-types#directory).
+See also [standard event types](/event-types/#directory).
 
 
 ## Contexts
@@ -46,7 +46,7 @@ Contexts are the circumstances in which events occur. The context of an event is
 
 Streams are the fundamental contexts in which events occur. Every event occurs in one stream. Streams follow a hierarchical structure—streams can have sub-streams—and usually match either user/app-specific organizational levels (e.g. life journal, work projects, etc.) or data sources (e.g. apps and/or devices).
 
-<!-- TODO: See also [standard streams](/standard-structure). -->
+<!-- TODO: See also [standard streams](/standard-structure/). -->
 
 
 ### Tags

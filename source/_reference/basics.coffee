@@ -231,7 +231,7 @@ module.exports = exports =
                        """
           properties: [
             key: "streamId"
-            type: "[identifier](#{dataStructure.getDocId("identifier")})"
+            type: "[identifier](##{dataStructure.getDocId("identifier")})"
             description: """
                          The id of the requested stream.
                          """
@@ -412,7 +412,7 @@ module.exports = exports =
       ,
         key: "meta.serverTime"
         description: """
-                     The current server time as a [timestamp](#{dataStructure.getDocId("timestamp")}). Keeping track of server time is necessary to properly handle time in API calls.
+                     The current server time as a [timestamp](##{dataStructure.getDocId("timestamp")}). Keeping track of server time is necessary to properly handle time in API calls.
                      """
       ]
     ]
@@ -423,7 +423,7 @@ module.exports = exports =
     id: "errors"
     title: "Errors"
     description: """
-                 When an error occurs, the API returns a response with an `error` object (see [error](#{dataStructure.getDocId("error")}) detailing the cause. (Over HTTP, the response status is set to 4xx or 5xx.) In this documentation, errors are identified by their `id`.
+                 When an error occurs, the API returns a response with an `error` object (see [error](##{dataStructure.getDocId("error")}) detailing the cause. (Over HTTP, the response status is set to 4xx or 5xx.) In this documentation, errors are identified by their `id`.
                  """
     examples: [
       content: examples.errors.invalidAccessToken
