@@ -11,3 +11,5 @@ exports.sections = [
 exports.version = require('pryv-service-core/package.json').version;
 exports.helpers = require('./helpers.coffee');
 
+exports.system = require('./system.coffee');
+
