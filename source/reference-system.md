@@ -1,4 +1,5 @@
 ---
+id: reference-system
 title: User management reference
 sourceOverride: system
 template: reference.jade

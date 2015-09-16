@@ -1,6 +1,6 @@
 ---
 id: javascript
-sectionId: getting-started
+parentId: getting-started
 title: "Getting started: Javascript"
 template: default.jade
 withTOC: true
