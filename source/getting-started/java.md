@@ -1,6 +1,6 @@
 ---
 id: java
-sectionId: getting-started
+parentId: getting-started
 title: "Getting started: Java"
 template: default.jade
 withTOC: true

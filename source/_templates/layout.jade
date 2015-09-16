@@ -21,9 +21,8 @@ html.no-js(lang='en')
     link(rel='stylesheet', type='text/css', href='/assets/fonts/ss-gizmo.min.css')
     link(rel='stylesheet', type='text/css', href='/assets/style.css')
 
-  - try { isLanding = landingPage; } catch (e) { isLanding = false; }
-  - var bodyClass = (isLanding ? 'landing-page' : '') + (withTOC ? 'with-toc' : '') + (withExamples ? ' with-examples' : '')
-  - var rootContainerClass = withExamples ? 'container-fluid' : ('container' + (! isLanding ? ' container-narrow' : ''))
+  - var bodyClass = (id ? id : '') + (withTOC ? ' with-toc' : '') + (withExamples ? ' with-examples' : '')
+  - var rootContainerClass = withExamples ? 'container-fluid' : ('container' + (id != 'home' ? ' container-narrow' : ''))
   body(class=bodyClass)
     header#page-header
       nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
@@ -41,7 +40,7 @@ html.no-js(lang='en')
           #main-nav.collapse.navbar-collapse
             mixin menuItem(fileId, text, options)
               - options = options || {}
-              - fullId = (sectionId ? sectionId + '/' : '') + id
+              - fullId = (parentId ? parentId + '/' : '') + id
               - var activeClass = fullId === fileId ? 'active' : ''
               li(class=activeClass + (options.disabled ? ' disabled' : ''))
                 a(href='/#{fileId}/')= text
