@@ -19,10 +19,10 @@ module.exports = exports =
       id: "services-involved"
       title: "Services involved"
       description: """
-                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. creation, relocation, deletion) is handled by both the central registration server (AKA user account directory) and the core servers.
+                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. creation, relocation, deletion) is handled by the core servers _and_ the central registration server (AKA user account directory).
 
-                   - The **registration server** owns the process of creating a new account, and takes part in the processes of migrating and deleting accounts.
-                   - The **core servers** obviously take part in account creation, and own account migration and deletion.
+                   - The **core servers** own the account management processes, i.e. account creation, migration and deletion
+                   - The **registration server** maintains the list of account names and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
                    """
     ]
 
@@ -31,7 +31,7 @@ module.exports = exports =
     id: "account-creation"
     title: "Creating an account"
     description: """
-
+                 **Attention, this process will change**: the creation call will no longer happen on the registration server but on the core server, and the registration server will only provide checks and get notified of changes.
                  """
     sections: [
       id: "process-steps"
@@ -58,7 +58,7 @@ module.exports = exports =
                    """
         params:
           properties: [
-            key: "appId"
+            key: "appid"
             type: "string"
             description: """
                        Your app's unique identifier.
@@ -67,7 +67,7 @@ module.exports = exports =
             key: "hosting"
             type: "string"
             description: """
-                       The core server that should host the account.
+                       The name of the core server that should host the account.
                        """
           ,
             key: "username"
@@ -88,35 +88,37 @@ module.exports = exports =
                          The user's e-mail.
                          """
           ,
-            key: "TODO"
-            type: "TODO"
-            description: "TODO"
+            key: "languageCode"
+            type: "string"
+            optional: true
+            description: """
+                         The user's preferred language as a 2-letter ISO language code.
+                         """
+          ,
+            key: "invitationtoken"
+            type: "string"
+            description: "An invitation token; used when limiting registration to a specific set of users."
+          ,
+            key: "referer"
+            type: "string"
+            optional: true
+            description: "A referer id potentially used for analytics."
           ]
         result:
           http: "200 OK"
           properties: [
-            key: "todo"
+            key: "username"
             type: "string"
             description: """
-                       TODO
-                       """
+                         A confirmation of the user's username.
+                         """
+          ,
+            key: "server"
+            type: "string"
+            description: """
+                         The hostname of the core server hosting the new account.
+                         """
           ]
-        examples: [
-          title: "TODO"
-          content: "TODO"
-        ]
-
-      ,
-
-        id: "TODO"
-        type: "method"
-        title: "TODO"
-        http: "POST /TODO"
-        description: """
-
-                   """
-        result:
-          http: "200 OK"
         examples: []
       ]
     ]
