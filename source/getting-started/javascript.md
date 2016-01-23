@@ -41,7 +41,7 @@ On JSFiddle:
 
 ### Authorize your app
 
-First obtain an app identifier (for now: just [ask us](mailto:developers@pryv.com)), then in your client code:
+First choose an app identifier (min. length 6 chars), then in your client code:
 
 ```html
 <!-- Add the "Pryv" auth button somewhere (skip this for custom UI/behavior) -->

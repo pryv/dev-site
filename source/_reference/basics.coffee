@@ -201,7 +201,7 @@ module.exports = exports =
     description: """
                  To authenticate users in your app, and thus for users to grant your app access to their data, you must:
 
-                 1. Obtain an app identifier (for now: just [ask us](mailto:developers@pryv.com))
+                 1. Choose an app identifier (min. length 6 chars)
                  2. Send an auth request from your app
                  3. Open the auth page from the URL returned (e.g. as a popup); the auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one)
                  4. Handle the result by either polling the appropriate URL or directly from the return URL you'll have defined
