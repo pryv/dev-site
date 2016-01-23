@@ -173,7 +173,17 @@ module.exports = exports =
     description: """
                  All requests for retrieving and manipulating activity data must carry a valid [access token](##{dataStructure.getDocId("access")}) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter. With Socket.IO the token is passed in the handshake.
 
-                 (Access tokens are obtained via the [app authorization](#authorizing-your-app) or from sharing.)
+                 Access tokens are obtained via the [app authorization](#authorizing-your-app) or from sharing.
+
+                 You can also use the **Access token generator** to obtain an app token:
+
+                 ```
+                 http://pryv.github.io/app-web-access/?pryv-reg=reg.{domain}
+                 ```
+
+                 For example:
+
+                 [http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io)
                  """
     examples: [
       title: "HTTP `Authorization` header"
