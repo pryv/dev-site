@@ -6,3 +6,4 @@ node_modules
 out
 source/event-types/extras.json
 source/event-types/hierarchical.json
+.idea
