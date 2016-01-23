@@ -20,7 +20,6 @@ module.exports = exports =
 
                  Each user account has a dedicated root API endpoint as it is potentially served from a different location.
 
-                 A test (AKA staging) environment is available on domain **`pryv.in`**—so the root endpoint for test accounts is `https://{username}.pryv.in`.
                  """
     examples: [
       title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.io`"

@@ -6,10 +6,6 @@ order: 3
 
 Implementing the authorization process and obtaining an access token all by yourself.
 
-**For testing: **
-Use our staging servers: https://access.pryv.in/access
-
-
 **Steps: **
 
 1. start an access request by calling **POST https://access.pryv.io/access**
@@ -27,7 +23,7 @@ from [https://sw.pryv.li/access/test.html](https://sw.pryv.li/access/test.html)
 
 ### Access request
 
-**request**: `POST https://reg.pryv.in/access`
+**request**: `POST https://reg.pryv.io/access`
 **payload**:
 
 ```
@@ -87,8 +83,8 @@ from [https://sw.pryv.li/access/test.html](https://sw.pryv.li/access/test.html)
      "level": "read"
     }
   ],
-  "url": "https://sw.pryv.in:2443/access/v1/access.html?lang=en&key=dXRqBezem8v3mNxf&requestingAppId=web-page-test&returnURL=false&domain=pryv.in&registerURL=https%3A%2F%2Freg.pryv.in%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
-  "poll": "https://reg.pryv.in:443/access/dXRqBezem8v3mNxf",
+  "url": "https://sw.pryv.io:2443/access/v1/access.html?lang=en&key=dXRqBezem8v3mNxf&requestingAppId=web-page-test&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.io%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
+  "poll": "https://reg.pryv.io:443/access/dXRqBezem8v3mNxf",
   "returnURL": false,
   "poll_rate_ms": 1000
 }
@@ -97,7 +93,7 @@ from [https://sw.pryv.li/access/test.html](https://sw.pryv.li/access/test.html)
 
 ### Polling
 
-**request**: GET `https://reg.pryv.in/access/dXRqBezem8v3mNxf`
+**request**: GET `https://reg.pryv.io/access/dXRqBezem8v3mNxf`
 
 3 response codes:
 
