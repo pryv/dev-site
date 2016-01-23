@@ -14,7 +14,7 @@ Storage is decentralized: you access each user account on the server hosting its
 
 Users collect, manipulate and view events on their account (or other users' accounts) via apps, which are granted access to the parts of user data they need (e.g. specific streams). Apps can interoperate provided they support the same event types and are granted access to the same data.
 
-Stored data is all private by default. Users share data by explicitly opening read-only or collaborative accesses to specific parts of their data (**slices of life**).
+Stored data is all private by default. Users share data by explicitly opening read-only or collaborative accesses to specific parts of their data (**Accesses**).
 
 
 ## User accounts
