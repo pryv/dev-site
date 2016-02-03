@@ -183,7 +183,8 @@ module.exports = exports =
 
                  For example:
 
-                 [http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io)
+                 [https://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](https://pryv.github
+                 .io/app-web-access/?pryv-reg=reg.pryv.io)
                  """
     examples: [
       title: "HTTP `Authorization` header"
