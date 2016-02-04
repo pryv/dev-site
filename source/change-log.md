@@ -4,6 +4,15 @@ title: API change log
 template: default.jade
 ---
 
+## v1.0
+
+New features:
+
+- Versioning:
+  - a new endpoint on `/events/{id}` allows to retrieve a specific event by his `id`. Setting the 
+  `includeHistory` parameter to `true`, the response will contain an array of the previous versions
+   of the event in the `history` field.
+
 ## v0.8
 
 Changes:
