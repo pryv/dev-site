@@ -96,8 +96,27 @@ Event newEvent = new Event()
 newEvent.setStreamId("diary");
 newEvent.setType("note/txt");
 newEvent.setContent("I track, therefore I am.");
-// 'this' implements EventsCallback
-connection.createEvent(newEvent, this);
+connection.events.get(new Filter, new GetEventsCallback() {
+	@Override
+	public void cacheCallback(List<Event> events, Map<String, Double> eventDeletions) {
+    	// do something            
+	}
+
+	@Override
+	public void onCacheError(String errorMessage) {
+		// do something
+	}
+
+	@Override
+	public void apiCallback(List<Event> events, Map<String, Double> eventDeletions, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onApiError(String errorMessage, Double serverTime) {
+		// do something
+	}
+});
 ```
 
 #### Update
