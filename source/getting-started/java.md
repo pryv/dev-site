@@ -76,7 +76,7 @@ See also: [app authorization in the API reference](/reference/#authorizing-your-
 ```java
 connection = new Connection(username, token, new DBinitCallback());
 
-// define the scope of the cached data. Leave null to cache all Pryv data (including from other apps)
+// define the scope of the cached data. Leave null to cache all Pryv data (including data from other apps)
 new Filter scope = new Filter();
 scope.addStream(myTrackedStream);
 connection.setupCacheScope(scope)
@@ -226,7 +226,7 @@ connection.streams.get(null, new GetStreamsCallback() {
 
 #### Create
 
-````java
+```java
 Stream newStream = new Stream();
 newStream.setId("heartRate");
 newStream.setName("Heart rate");
@@ -255,7 +255,7 @@ connection.streams.create(newStream, new StreamsCallback() {
 
 #### Update
 
-``java
+```java
 stream.setParentId("health");
 connection.streams.update(stream, new StreamsCallback() {
 	@Override
