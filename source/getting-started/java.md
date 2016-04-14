@@ -85,18 +85,7 @@ connection = new Connection(username, token, new DBinitCallback());
 ```java
 Filter filter = new Filter();
 filter.setLimit(20);
-// 'this' implements EventsCallback
-connection.getEvents(filter, this);
-```
-
-#### Create
-
-```java
-Event newEvent = new Event()
-newEvent.setStreamId("diary");
-newEvent.setType("note/txt");
-newEvent.setContent("I track, therefore I am.");
-connection.events.get(new Filter, new GetEventsCallback() {
+connection.events.get(filter, new GetEventsCallback() {
 	@Override
 	public void cacheCallback(List<Event> events, Map<String, Double> eventDeletions) {
     	// do something            
@@ -119,19 +108,87 @@ connection.events.get(new Filter, new GetEventsCallback() {
 });
 ```
 
+#### Create
+
+```java
+Event newEvent = new Event()
+newEvent.setStreamId("diary");
+newEvent.setType("note/txt");
+newEvent.setContent("I track, therefore I am.");
+connection.events.create(newEvent, new EventsCallback() {
+	@Override
+	public void onApiSuccess(String successMessage, Event event, String stoppedId, Double serverTime) {
+    	// do something            
+	}
+
+	@Override
+	public void onApiError(String errorMessage, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onCacheSuccess(String successMessage, Event event) {
+		// do something
+	}
+
+	@Override
+	public void onCacheError(String errorMessage) {
+		// do something
+	}
+});
+```
+
 #### Update
 
 ```java
 event.setContent = "Updated content.";
-// 'this' implements EventsCallback
-connection.updateEvent(event, this);
+connection.events.update(event, new EventsCallback() {
+	@Override
+	public void onApiSuccess(String successMessage, Event event, String stoppedId, Double serverTime) {
+    	// do something            
+	}
+
+	@Override
+	public void onApiError(String errorMessage, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onCacheSuccess(String successMessage, Event event) {
+		// do something
+	}
+
+	@Override
+	public void onCacheError(String errorMessage) {
+		// do something
+	}
+});
 ```
 
 #### Delete
 
 ```java
-// 'this' implements EventsCallback
-connection.deleteEvent(event, this);
+connection.events.delete(event, new EventsCallback() {
+	@Override
+	public void onApiSuccess(String successMessage, Event event, String stoppedId, Double serverTime) {
+    	// do something            
+	}
+
+	@Override
+	public void onApiError(String errorMessage, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onCacheSuccess(String successMessage, Event event) {
+		// do something
+	}
+
+	@Override
+	public void onCacheError(String errorMessage) {
+		// do something
+	}
+});
 ```
 
 
