@@ -71,10 +71,15 @@ authenticator.signIn();
 See also: [app authorization in the API reference](/reference/#authorizing-your-app)
 
 
-### Connect to the account
+### Setup connection
 
 ```java
 connection = new Connection(username, token, new DBinitCallback());
+
+// define the scope of the cached data. Leave null to cache all Pryv data (including from other apps)
+new Filter scope = new Filter();
+scope.addStream(myTrackedStream);
+connection.setupCacheScope(scope)
 ```
 
 
