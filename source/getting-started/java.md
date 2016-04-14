@@ -196,6 +196,116 @@ connection.events.delete(event, new EventsCallback() {
 });
 ```
 
+### Retrieve and manipulate Streams
+
+#### Retrieve
+
+```java
+connection.streams.get(null, new GetStreamsCallback() {
+	@Override
+	public void cacheCallback(Map<String, Stream> streams, Map<String, Double> streamDeletions) {
+    	// do something            
+	}
+
+	@Override
+	public void onCacheError(String errorMessage) {
+		// do something
+	}
+
+	@Override
+	public void apiCallback(Map<String, Stream> streams, Map<String, Double> streamDeletions, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onApiError(String errorMessage, Double serverTime) {
+		// do something
+	}
+});
+```
+
+#### Create
+
+````java
+Stream newStream = new Stream();
+newStream.setId("heartRate");
+newStream.setName("Heart rate");
+connection.streams.create(newStream, new StreamsCallback() {
+	@Override
+	public void onApiSuccess(String successMessage, Stream stream, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onApiError(String errorMessage, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onCacheSuccess(String successMessage, Stream stream) {
+		// do something
+	}
+
+	@Override
+	public void onCacheError(String errorMessage) {
+		// do something
+	}
+});
+```
+
+#### Update
+
+``java
+stream.setParentId("health");
+connection.streams.update(stream, new StreamsCallback() {
+	@Override
+	public void onApiSuccess(String successMessage, Stream stream, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onApiError(String errorMessage, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onCacheSuccess(String successMessage, Stream stream) {
+		// do something
+	}
+
+	@Override
+	public void onCacheError(String errorMessage) {
+		// do something
+	}
+});
+```
+
+#### Delete
+
+```java
+connection.streams.delete(stream, new StreamsCallback() {
+	@Override
+	public void onApiSuccess(String successMessage, Stream stream, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onApiError(String errorMessage, Double serverTime) {
+		// do something
+	}
+
+	@Override
+	public void onCacheSuccess(String successMessage, Stream stream) {
+		// do something
+	}
+
+	@Override
+	public void onCacheError(String errorMessage) {
+		// do something
+	}
+});
+```
+
 
 ### Further resources
 
