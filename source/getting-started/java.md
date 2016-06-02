@@ -38,7 +38,7 @@ First choose an app identifier (min. length 6 chars), then in your client code:
 ```java
 // Here we request full permissions on a custom stream;
 // in practice, scope and permission level will vary depending on your needs
-Permission permission = new Permission("example-app", Permission.Level.manage, "Example App");
+Permission permission = new Permission("example-app-id", Permission.Level.manage, "Example App");
 List<Permission> permissions = new ArrayList<Permission>();
 permissions.add(permission);
 
@@ -74,14 +74,13 @@ See also: [app authorization in the API reference](/reference/#authorizing-your-
 ### Setup connection
 
 ```java
-connection = new Connection(username, token, new DBinitCallback());
+connection = new Connection("bob", "12345678qwertz", "pryv.me", false, new DBinitCallback());
 
 // define the scope of the cached data. Leave null to cache all Pryv data (including data from other apps)
 new Filter scope = new Filter();
 scope.addStream(myTrackedStream);
-connection.setupCacheScope(scope)
+connection.setupCacheScope(scope);
 ```
-
 
 ### Retrieve & manipulate events
 
