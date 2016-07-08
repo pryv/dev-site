@@ -4,10 +4,10 @@ EVENT_EXTRAS_URL=$(TYPES_BASE_URL)event-extras.json
 TYPES_SOURCE_TARGET=./source/event-types/_source
 
 build:
-	node build.js
+	node --harmony build.js
 
 watch:
-	node build.js watch
+	node --harmony build.js watch
 
 clean:
 	rm -rf build/*
