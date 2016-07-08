@@ -14,8 +14,9 @@ A few initial pointers to get going with [our Javacript library](https://github.
 
 On JSFiddle:
 
-- [Basic example: authenticate & retrieve data](http://jsfiddle.net/pryv/fr4e834p/11/)
-- [Events monitor: manipulate events & monitor changes](http://jsfiddle.net/pryv/bwpv0b3o/18/)
+- [Basic example: authenticate & retrieve data](http://jsfiddle.net/pryv/fr4e834p/)
+- [Second step: create notes & numerical values](https://jsfiddle.net/pryv/kmtyxj37/)
+- [Events monitor: manipulate events & monitor changes](http://jsfiddle.net/pryv/bwpv0b3o/)
 
 
 ### Install the library
