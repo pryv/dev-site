@@ -391,6 +391,74 @@ module.exports = exports =
 
   ,
 
+    id: "hook"
+    title: "Hook"
+    description: """
+                 See also: [core concepts](/concepts/#hooks).
+                 """
+    properties: [
+      key: "id"
+      type: "[identifier](##{_getDocId("identifier")})"
+      unique: true
+      readOnly: "(except at creation)"
+      description: """
+                   The identifier for the stream. Automatically generated if not set when creating the stream; **slugified if necessary**.
+                   """
+    ,
+      key: "accesId"
+      type: "[identifier](##{_getDocId("identifier")})"
+      readOnly: "(except at creation)"
+      description: """
+                   The identifier for the creating access.
+                   """
+    ,
+      key: "name"
+      type: "string"
+      unique: "among siblings"
+      description: """
+                   A name identifying the hook. The name must be unique among the access' hooks.
+                   """
+    ,
+      key: "scope"
+      type: "string"
+      description: """
+                   (`null` or scope object, optional) A set of parameters to optionally filter down which data changes trigger a call (if `null`, the access's scope is used). The scope object is a subset of the `events.get` method parameters, supporting one or more of: `streams`, `tags`, `types` (see `events.get` method doc for details). The scope actually applied is always the intersection of this and the access's scope.
+                   """
+    ,
+      key: "url"
+      type: "string"
+      description: """
+                   The URL to be called.
+                   """
+    ,
+      key: "authentication"
+      type: "string"
+      optional: true
+      description: """
+                   Optional value for the Authentication HTTP header.
+                   """
+    ,
+      key: "status"
+      type: "array of streams"
+      optional: true
+      description: """
+                   The webhook's status. The only accepted value when creating/updating is null (i.e. reset); other values are set by the system.
+                   """
+    ,
+      key: "trashed"
+      type: "boolean"
+      optional: true
+      description: """
+                   `true` if the stream is in the trash.
+                   """
+    ].concat(changeTrackingProperties("hook"))
+    examples: [
+      title: "TODO - example title"
+      content: examples.streams.activities
+    ]
+
+  ,
+
     id: "account"
     title: "Account information"
     trustedOnly: true

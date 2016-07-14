@@ -1101,6 +1101,308 @@ module.exports = exports =
 
   ,
 
+    id: "hooks"
+    title: "Hooks"
+    description: """
+                 Methods to retrieve and manipulate [hooks](##{dataStructure.getDocId("hook")}).
+                 Only personal and app access can manipulate hooks, which scope is a subset of its own permissions.
+                 """
+    sections: [
+
+      id: "hooks.get"
+      type: "method"
+      title: "Get hooks"
+      http: "GET /hooks"
+      description: """
+                   Queries existing hooks.
+                   """
+      params:
+        properties: [
+          key: "fromTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       The start time of the timeframe you want to retrieve events for. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
+                       """
+        ,
+          key: "toTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
+                       """
+        ,
+          key: "streams"
+          type: "array of [identifier](##{dataStructure.getDocId("identifier")})"
+          optional: true
+          description: """
+                       If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
+                       """
+        ,
+          key: "tags"
+          type: "array of strings"
+          optional: true
+          description: """
+                       If set, only events assigned to any of the listed tags will be returned.
+                       """
+        ,
+          key: "types"
+          type: "array of strings"
+          optional: true
+          description: """
+                       If set, only events of any of the listed types will be returned.
+                       """
+        ,
+          key: "running"
+          type: "boolean"
+          optional: true
+          description: """
+                       If `true`, only running period events will be returned.
+                       """
+        ,
+          key: "sortAscending"
+          type: "`true`|`false`"
+          optional: true
+          description: """
+                       If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
+                       """
+        ,
+          key: "skip"
+          type: "number"
+          optional: true
+          description: """
+                       The number of items to skip in the results.
+                       """
+        ,
+          key: "limit"
+          type: "number"
+          optional: true
+          description: """
+                       The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
+                       """
+        ,
+          key: "state"
+          type: "`default`|`trashed`|`all`"
+          optional: true
+          description: """
+                       Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
+                       """
+        ,
+          key: "modifiedSince"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       If specified, only events modified since that time will be returned.
+                       """
+        ,
+          key: "includeDeletions"
+          type: "boolean"
+          optional: true
+          description: """
+                       Whether to include event deletions since `modifiedSince` for sync purposes (only applies when `modifiedSince` is set). Defaults to `false`.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "events"
+          type: "array of [events](##{dataStructure.getDocId("event")})"
+          description: """
+                       The accessible events ordered by time (see `sortAscending` above).
+                       """
+        ,
+          key: "eventDeletions"
+          type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
+          optional: true
+          description: """
+                       If requested by `includeDeletions`, the event deletions since `modifiedSince`, ordered by deletion time.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          events: [examples.events.picture, examples.events.activity, examples.events.position]
+      ]
+
+    ,
+
+      id: "hooks.create"
+      type: "method"
+      title: "Create hook"
+      http: "POST /hooks"
+      description: """
+                   Records a new event. It is recommended that events recorded this way are completed events, i.e. either period events with a known duration or mark events. To start a running period event, use [Start period](##{_getDocId("events", "events.start")}) instead.
+
+                   In addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
+                   """
+      params:
+        description: """
+                     The new event's data: see [Event](##{dataStructure.getDocId("event")}).
+                     """
+      result:
+        http: "201 Created"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The created event.
+                       """
+        ,
+          key: "stoppedId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          description: """
+                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
+                     """
+      ,
+        key: "periods-overlap"
+        http: "400"
+        description: """
+                     Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+                     """
+      ]
+      examples: [
+        title: "Capturing a simple number value"
+        params: _.pick(examples.events.mass, "streamId", "type", "content")
+        result:
+          event: examples.events.mass
+      ,
+        title: "cURL with attachment"
+        content: """
+                 ```bash
+                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" https://${username}.pryv.io/events?auth=${token}
+                 ```
+                 """
+        result:
+          event: examples.events.picture
+      ]
+
+      ,
+
+      id: "hooks.update"
+      type: "method"
+      title: "Update hook"
+      http: "PUT /hooks/{id}"
+      description: """
+                   Modifies the hook.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the event.
+                       """
+        ,
+          key: "update"
+          type: "object"
+          http:
+            text: "= request body"
+          description: """
+                       New values for the event's fields: see [event](##{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The updated event.
+                       """
+        ,
+          key: "stoppedId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          description: """
+                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
+                     """
+      ,
+        key: "periods-overlap"
+        http: "400"
+        description: """
+                     Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
+                     """
+      ]
+      examples: [
+        title: "Adding a tag"
+        params:
+          id: examples.events.position.id
+          update:
+            tags: ["home"]
+        result:
+          event: _.defaults({ tags: ["home"], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
+      ]
+
+    ,
+
+      id: "hooks.delete"
+      type: "method"
+      title: "Delete hook"
+      http: "DELETE /hooks/{id}"
+      description: """
+                   Trashes or deletes the specified event, depending on its current state:
+
+                   - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+                   - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the event.
+                       """
+        ]
+      result: [
+        title: "Result: trashed"
+        http: "200 OK"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The trashed event.
+                       """
+        ]
+      ,
+        title: "Result: deleted"
+        http: "200 OK"
+        properties: [
+          key: "eventDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The event deletion record.
+                       """
+        ]
+      ]
+      examples: [
+        title: "Trashing"
+        params:
+          id: examples.events.note.id
+        result:
+          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.note)
+      ]
+
+    ]
+
+  ,
+
     id: "profile"
     title: "Profile sets"
     description: """
