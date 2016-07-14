@@ -7,10 +7,9 @@ Source content for api.pryv.com (API reference, recommendations, guides, etc.)
 
 ### Prerequisites
 
-Node v0.10+.
+Node v4.4.3+.
 
 `make setup` sets up the environment.
-
 
 ### Build & publish
 
