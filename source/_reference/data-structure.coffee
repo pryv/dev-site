@@ -400,21 +400,21 @@ module.exports = exports =
       key: "id"
       type: "[identifier](##{_getDocId("identifier")})"
       unique: true
-      readOnly: "(except at creation)"
+      readOnly: true
       description: """
-                   The identifier for the stream. Automatically generated if not set when creating the stream; **slugified if necessary**.
+                   The identifier for the hook.
                    """
     ,
       key: "accesId"
       type: "[identifier](##{_getDocId("identifier")})"
-      readOnly: "(except at creation)"
+      readOnly: true
       description: """
                    The identifier for the creating access.
                    """
     ,
       key: "name"
       type: "string"
-      unique: "among siblings"
+      unique: "among the access\' hooks"
       description: """
                    A name identifying the hook. The name must be unique among the access' hooks.
                    """
@@ -439,17 +439,10 @@ module.exports = exports =
                    """
     ,
       key: "status"
-      type: "array of streams"
+      type: "enum"
       optional: true
       description: """
                    The webhook's status. The only accepted value when creating/updating is null (i.e. reset); other values are set by the system.
-                   """
-    ,
-      key: "trashed"
-      type: "boolean"
-      optional: true
-      description: """
-                   `true` if the stream is in the trash.
                    """
     ].concat(changeTrackingProperties("hook"))
     examples: [
