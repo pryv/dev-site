@@ -1115,107 +1115,26 @@ module.exports = exports =
       http: "GET /hooks"
       description: """
                    Queries existing hooks.
+
+                   - If the access used for this call is personnal, you can specify an accessId.
+                   - If calling using an app access, it will fetch the hooks created by this access.
                    """
       params:
         properties: [
-          key: "fromTime"
-          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          key: "accessId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
           optional: true
           description: """
-                       The start time of the timeframe you want to retrieve events for. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account.
-                       """
-        ,
-          key: "toTime"
-          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
-          optional: true
-          description: """
-                       The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
-                       """
-        ,
-          key: "streams"
-          type: "array of [identifier](##{dataStructure.getDocId("identifier")})"
-          optional: true
-          description: """
-                       If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
-                       """
-        ,
-          key: "tags"
-          type: "array of strings"
-          optional: true
-          description: """
-                       If set, only events assigned to any of the listed tags will be returned.
-                       """
-        ,
-          key: "types"
-          type: "array of strings"
-          optional: true
-          description: """
-                       If set, only events of any of the listed types will be returned.
-                       """
-        ,
-          key: "running"
-          type: "boolean"
-          optional: true
-          description: """
-                       If `true`, only running period events will be returned.
-                       """
-        ,
-          key: "sortAscending"
-          type: "`true`|`false`"
-          optional: true
-          description: """
-                       If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
-                       """
-        ,
-          key: "skip"
-          type: "number"
-          optional: true
-          description: """
-                       The number of items to skip in the results.
-                       """
-        ,
-          key: "limit"
-          type: "number"
-          optional: true
-          description: """
-                       The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`).
-                       """
-        ,
-          key: "state"
-          type: "`default`|`trashed`|`all`"
-          optional: true
-          description: """
-                       Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state.
-                       """
-        ,
-          key: "modifiedSince"
-          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
-          optional: true
-          description: """
-                       If specified, only events modified since that time will be returned.
-                       """
-        ,
-          key: "includeDeletions"
-          type: "boolean"
-          optional: true
-          description: """
-                       Whether to include event deletions since `modifiedSince` for sync purposes (only applies when `modifiedSince` is set). Defaults to `false`.
+                       Accepted only if called using a personnal access.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
-          key: "events"
-          type: "array of [events](##{dataStructure.getDocId("event")})"
+          key: "hooks"
+          type: "array of [hooks](##{dataStructure.getDocId("hook")})"
           description: """
-                       The accessible events ordered by time (see `sortAscending` above).
-                       """
-        ,
-          key: "eventDeletions"
-          type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
-          optional: true
-          description: """
-                       If requested by `includeDeletions`, the event deletions since `modifiedSince`, ordered by deletion time.
+                       The accessible hooks.
                        """
         ]
       examples: [
@@ -1244,6 +1163,12 @@ module.exports = exports =
           type: "[hook](##{dataStructure.getDocId("hook")})"
           description: """
                        The created hook.
+                       """
+        ,
+          key: "accessId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          description: """
+                       Only if calling with a personnal access.
                        """
         ]
       examples: [
