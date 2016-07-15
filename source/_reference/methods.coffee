@@ -1231,44 +1231,23 @@ module.exports = exports =
       title: "Create hook"
       http: "POST /hooks"
       description: """
-                   Records a new event. It is recommended that events recorded this way are completed events, i.e. either period events with a known duration or mark events. To start a running period event, use [Start period](##{_getDocId("events", "events.start")}) instead.
-
-                   In addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
+                   Creates a new hook.
                    """
       params:
         description: """
-                     The new event's data: see [Event](##{dataStructure.getDocId("event")}).
+                     The new hook's data: see [Hook](##{dataStructure.getDocId("hook")}).
                      """
       result:
         http: "201 Created"
         properties: [
-          key: "event"
-          type: "[event](##{dataStructure.getDocId("event")})"
+          key: "hook"
+          type: "[hook](##{dataStructure.getDocId("hook")})"
           description: """
-                       The created event.
-                       """
-        ,
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+                       The created hook.
                        """
         ]
-      errors: [
-        key: "invalid-operation"
-        http: "400"
-        description: """
-                     The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
-                     """
-      ,
-        key: "periods-overlap"
-        http: "400"
-        description: """
-                     Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
-                     """
-      ]
       examples: [
-        title: "Capturing a simple number value"
+        title: "Creating a simple hook"
         params: _.pick(examples.events.mass, "streamId", "type", "content")
         result:
           event: examples.events.mass
@@ -1283,7 +1262,7 @@ module.exports = exports =
           event: examples.events.picture
       ]
 
-      ,
+    ,
 
       id: "hooks.update"
       type: "method"
@@ -1299,7 +1278,7 @@ module.exports = exports =
           http:
             text: "set in request path"
           description: """
-                       The id of the event.
+                       The id of the hook.
                        """
         ,
           key: "update"
@@ -1307,37 +1286,18 @@ module.exports = exports =
           http:
             text: "= request body"
           description: """
-                       New values for the event's fields: see [event](##{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
+                       New values for the hook's fields: see [hook](##{dataStructure.getDocId("hook")}). All fields are optional, and only modified values must be included.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
-          key: "event"
-          type: "[event](##{dataStructure.getDocId("event")})"
+          key: "hook"
+          type: "[hook](##{dataStructure.getDocId("hook")})"
           description: """
-                       The updated event.
-                       """
-        ,
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+                       The updated hook.
                        """
         ]
-      errors: [
-        key: "invalid-operation"
-        http: "400"
-        description: """
-                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
-                     """
-      ,
-        key: "periods-overlap"
-        http: "400"
-        description: """
-                     Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
-                     """
-      ]
       examples: [
         title: "Adding a tag"
         params:
@@ -1355,10 +1315,7 @@ module.exports = exports =
       title: "Delete hook"
       http: "DELETE /hooks/{id}"
       description: """
-                   Trashes or deletes the specified event, depending on its current state:
-
-                   - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
-                   - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
+                   Deletes the specified hook.
                    """
       params:
         properties: [
@@ -1367,32 +1324,22 @@ module.exports = exports =
           http:
             text: "set in request path"
           description: """
-                       The id of the event.
+                       The id of the hook.
                        """
         ]
       result: [
-        title: "Result: trashed"
-        http: "200 OK"
-        properties: [
-          key: "event"
-          type: "[event](##{dataStructure.getDocId("event")})"
-          description: """
-                       The trashed event.
-                       """
-        ]
-      ,
         title: "Result: deleted"
         http: "200 OK"
         properties: [
-          key: "eventDeletion"
+          key: "hookDeletion"
           type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
           description: """
-                       The event deletion record.
+                       The hook deletion record.
                        """
         ]
       ]
       examples: [
-        title: "Trashing"
+        title: "Deleting"
         params:
           id: examples.events.note.id
         result:
