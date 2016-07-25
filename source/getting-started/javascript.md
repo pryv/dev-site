@@ -48,10 +48,9 @@ First choose an app identifier (min. length 6 chars), then in your client code:
 <!-- Add the "Pryv" auth button somewhere (skip this for custom UI/behavior) -->
 <span id="pryv-button"></span>
 ```
-
 ```javascript
 var credentials = null;
-
+var pryvDomain = 'pryv.io';
 var requestedPermissions = [{
   // Here we request full permissions on a custom stream;
   // in practice, scope and permission level will vary depending on your needs
@@ -65,8 +64,14 @@ var settings = {
   requestedPermissions: requestedPermissions,
   spanButtonID: 'pryv-button',
   callbacks: {
-    accepted: function (username, accessToken, languageCode) {
-      credentials = { username: username, auth: accessToken };
+    initialization: function () {
+      // ...
+    },
+    needSignin: function (popupUrl, pollUrl, pollRateMs) {
+      // ...
+    },
+    signedIn: function (authData) {
+      credentials = authData;
       // ...
     },
     refused: function (code) {
@@ -78,10 +83,10 @@ var settings = {
   }
 };
 
+pryv.Auth.config.registerURL.host = 'reg.' + pryvDomain;
 pryv.Auth.setup(settings);
 ```
-
-See also: [app authorization in the API reference](/reference/#authorizing-your-app)
+Link to API reference: [App authorization](/reference/#authorizing-your-app)
 
 
 ### Connect to the account
@@ -96,42 +101,171 @@ var connection = new pryv.Connection(credentials);
 #### Retrieve
 
 ```javascript
-var filter = new pryv.Filter({limit : 20});
-connection.events.get(filter, function (err, events) {
+// Set the number of events to be retrieved, default is 20
+var filter = new pryv.Filter({limit : 10});
+connection.events.get(filter, function (err, eventList) {
   // ...
 });
 ```
+Link to API reference: [Get events](reference/#get-events)
 
 #### Create
 
 ```javascript
+// This is the minimum required data to create an event
 var eventData = {
-  streamId: 'diary',
-  type: 'note/txt',
-  content: 'I track, therefore I am.'
+  streamId: 'String',
+  type: 'String',
+  content: 'String'
 };
-connection.events.create(eventData, function (err, event) { 
+connection.events.create(event, function (err, eventCreated) { 
   // ...
 });
 ```
+Link to API reference: [Create event](reference/#create-event)
+
+Full documentation: [More about types](/event-types/)
 
 #### Update
 
 ```javascript
-event.content = 'Updated content.';
-event.update(function (err, updatedEvent) {
+event.content = 'String';
+connection.events.update(event, function (err, eventUpdated) {
   // ...
 });
 ```
+Link to API reference: [Upade event](reference/#update-event)
 
 #### Delete
 
 ```javascript
-event.delete(function (err, trashedEventOrNull) {
+// Only the id of an event is needed for removal
+connection.events.delete(event, function (err, eventDeleted) {
   // ...
 });
 ```
 
+Link to API reference: [Delete event](/reference/#delete-event)
+
+### Retrieve & manipulate streams
+
+#### Retrieve
+
+```javascript
+var option = {
+    parentId: 'String',
+    state: 'String'
+};
+connection.streams.get(option, function (err, streamList) {
+  // ...
+});
+```
+Link to API reference: [Get streams](reference/#get-streams)
+
+#### Create
+
+```javascript
+// If no id is set, one is generated;
+// If parentId is null, a "root" stream is created
+var streamData = {
+  name: 'String',
+  id: 'String',
+  parentId: 'String'
+};
+
+var stream = new pryv.Stream(connection, streamData);
+connection.strams.create(stream, function (err, streamCreated) { 
+  // ...
+});
+```
+Link to API reference: [Create stream](/reference/#create-stream)
+
+#### Update
+
+```javascript
+// Only modified values must be include
+var stream = {
+  id: 'String',
+  update: Object
+}
+
+connection.events.update(stream, function (err, streamUpdated) {
+  // ...
+});
+```
+Link to API reference: [Update stream](/reference/#update-stream)
+
+#### Delete
+
+```javascript
+// Only the id of the stream is needed for removal
+connection.streams.delete(stream, function (err, streamDeleted) {
+  // ...
+}, mergeEventsWithParent);
+```
+Link to API reference: [Delete stream](/reference/#delete-stream)
+
+### Monitor events
+
+#### Setup Monitor
+```javascript
+var filter = new pryv.Filter({limit: 5});
+var monitor = connection.monitor(filter);
+
+// This whill look in cache before looking online, default is false
+monitor.useCacheForEventsGetAllAndCompare = false;
+// This whill optimize start up by prefecthing some events, default is 100
+monitor.ensureFullCache = false;
+// This will fetch all events on start up, default is true
+monitor.initWithPrefetch = 0;
+```
+
+#### Load
+```javascript
+var onLoad = pryv.MESSAGES.MONITOR.ON_LOAD;
+monitor.addEventListener(onLoad, function (events) {
+  // ...
+});
+```
+
+#### Error
+```javascript
+var onError = pryv.MESSAGES.MONITOR.ON_ERROR;
+monitor.addEventListener(onError, function (error) {
+  // ...
+});
+```
+
+#### Event change
+```javascript
+var onEventChange = pryv.MESSAGES.MONITOR.ON_EVENT_CHANGE;
+monitor.addEventListener(onEventChange, function (changes) {
+  // ...
+});
+```
+
+#### Structure change
+```javascript
+var onStructureChange = pryv.MESSAGES.MONITOR.ON_STRUCTURE_CHANGE;
+monitor.addEventListener(onStructureChange, function (changes) {
+  // ...
+});
+```
+
+#### Filter change
+```javascript
+var onFilterChange = pryv.MESSAGES.MONITOR.ON_FILTER_CHANGE;
+monitor.addEventListener(onFilterChange, function (changes) {
+  // ...
+});
+```
+
+#### Start
+```javascript
+monitor.start(function (err) {
+  // ...
+});
+```
 
 ### Further resources
 
