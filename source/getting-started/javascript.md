@@ -54,7 +54,7 @@ var pryvDomain = 'pryv.io';
 var requestedPermissions = [{
   // Here we request full permissions on a custom stream;
   // in practice, scope and permission level will vary depending on your needs
-  streamId: 'example-app',
+  streamId: 'example-app-id',
   defaultName: 'Example app',
   level: 'manage'
 }];
@@ -86,7 +86,7 @@ var settings = {
 pryv.Auth.config.registerURL.host = 'reg.' + pryvDomain;
 pryv.Auth.setup(settings);
 ```
-Link to API reference: [App authorization](/reference/#authorizing-your-app)
+See also: [App authorization](/reference/#authorizing-your-app)
 
 
 ### Connect to the account
@@ -95,46 +95,48 @@ Link to API reference: [App authorization](/reference/#authorizing-your-app)
 var connection = new pryv.Connection(credentials);
 ```
 
+### Request access infomations
 
-### Retrieve & manipulate events
+```javascript
+connection.accessInfo(function (err, accessInfo) {
+  //...
+});
+```
+
+### Manage events
 
 #### Retrieve
 
 ```javascript
-// Set the number of events to be retrieved, default is 20
 var filter = new pryv.Filter({limit : 10});
 connection.events.get(filter, function (err, eventList) {
   // ...
 });
 ```
-Link to API reference: [Get events](reference/#get-events)
 
 #### Create
 
 ```javascript
 // This is the minimum required data to create an event
 var eventData = {
-  streamId: 'String',
-  type: 'String',
-  content: 'String'
+  streamId: 'valid-stream-id',
+  type: 'note/txt',
+  content: 'This is an example.'
 };
 connection.events.create(event, function (err, eventCreated) { 
   // ...
 });
 ```
-Link to API reference: [Create event](reference/#create-event)
-
-Full documentation: [More about types](/event-types/)
+See also: [More about types](/event-types/)
 
 #### Update
 
 ```javascript
-event.content = 'String';
+event.content = 'This is an update.';
 connection.events.update(event, function (err, eventUpdated) {
   // ...
 });
 ```
-Link to API reference: [Upade event](reference/#update-event)
 
 #### Delete
 
@@ -145,22 +147,21 @@ connection.events.delete(event, function (err, eventDeleted) {
 });
 ```
 
-Link to API reference: [Delete event](/reference/#delete-event)
-
-### Retrieve & manipulate streams
+### Manage streams
 
 #### Retrieve
 
 ```javascript
 var option = {
-    parentId: 'String',
-    state: 'String'
+    // If null, select all "root" streams
+    parentId: 'valid-stream-id',
+    // if null, retrieve active streams only
+    state: 'all'
 };
 connection.streams.get(option, function (err, streamList) {
   // ...
 });
 ```
-Link to API reference: [Get streams](reference/#get-streams)
 
 #### Create
 
@@ -168,44 +169,135 @@ Link to API reference: [Get streams](reference/#get-streams)
 // If no id is set, one is generated;
 // If parentId is null, a "root" stream is created
 var streamData = {
-  name: 'String',
-  id: 'String',
-  parentId: 'String'
+  name: 'A Stream',
+  id: 'a-stream-id',
+  parentId: 'valid-stream-id'
 };
 
 var stream = new pryv.Stream(connection, streamData);
-connection.strams.create(stream, function (err, streamCreated) { 
+connection.streams.create(stream, function (err, streamCreated) { 
   // ...
 });
 ```
-Link to API reference: [Create stream](/reference/#create-stream)
 
 #### Update
 
 ```javascript
-// Only modified values must be include
 var stream = {
-  id: 'String',
-  update: Object
+  id: 'a-stream-id',
+  // Here we update the name of the stream created above
+  name: 'An Updated Stream'
 }
 
-connection.events.update(stream, function (err, streamUpdated) {
+connection.streams.update(stream, function (err, streamUpdated) {
   // ...
 });
 ```
-Link to API reference: [Update stream](/reference/#update-stream)
 
 #### Delete
 
 ```javascript
-// Only the id of the stream is needed for removal
+// Only the id of a stream is needed for removal
 connection.streams.delete(stream, function (err, streamDeleted) {
   // ...
 }, mergeEventsWithParent);
 ```
-Link to API reference: [Delete stream](/reference/#delete-stream)
 
-### Monitor events
+### Manage accesses
+
+#### Retrieve
+
+```javascript
+connection.accesses.get(function (err, accessList) {
+  // ...
+});
+```
+
+#### Create
+
+```javascript
+var access = {
+  name: 'An Access',
+  permissions: [
+    {
+      streamId: 'valid-stream-id',
+      level: 'manage'
+    }
+  ]
+};
+
+connection.accesses.create(access, function (err, accessCreated) { 
+  // ...
+});
+```
+
+#### Update
+
+```javascript
+var access = {
+  id: 'an-access-id',
+  name: 'An Updated Access'
+  permissions: [
+    {
+      streamId: 'valid-stream-id',
+      level: 'contribute'
+    }
+  ]
+}
+
+connection.accesses.update(access, function (err, accessUpdated) {
+  // ...
+});
+```
+
+#### Delete
+
+```javascript
+// Only the id of an access is needed for removal
+connection.accesses.delete(access, function (err, accessDeleted) {
+  // ...
+});
+```
+
+### Batch calls
+
+```javascript
+var methodsData = [
+  {
+    'method': 'streams.create',
+    'params': {
+      'id': 'a-new-stream',
+      'name': 'A New Stream'
+    }
+  },
+  {
+    'method': 'events.create',
+    'params': {
+      'streamId': 'a-new-stream',
+      'type': 'note/txt',
+      'content': 'This is a new event.'
+    }
+  },
+  {
+    'method': 'accesses.create',
+    'params': {
+      'name': 'A New Access',
+      'permissions': [
+        {
+          'streamId': 'a-new-stream',
+          'level': 'read'
+        }
+      ]
+    }
+  }
+];
+
+connection.batchCall(methodsData, function (err, results) {
+  //...
+});
+```
+
+### Monitor
 
 #### Setup Monitor
 ```javascript
