@@ -95,11 +95,20 @@ See also: [App authorization](/reference/#authorizing-your-app)
 var connection = new pryv.Connection(credentials);
 ```
 
+### Initialize the datastore
+
+```javascript
+// Required by the monitor
+connection.fetchStructure(function (err, streamList) {
+  // ...
+})
+```
+
 ### Request access informations
 
 ```javascript
 connection.accessInfo(function (err, accessInfo) {
-  //...
+  // ...
 });
 ```
 
@@ -332,7 +341,10 @@ monitor.addEventListener(onError, function (error) {
 ```javascript
 var onEventChange = pryv.MESSAGES.MONITOR.ON_EVENT_CHANGE;
 monitor.addEventListener(onEventChange, function (changes) {
-  // ...
+  [ 'created', 'modified', 'trashed'  ].forEach(function (action) {
+  changes[action].forEach(function (event) {
+    // ...
+  });
 });
 ```
 
@@ -340,7 +352,11 @@ monitor.addEventListener(onEventChange, function (changes) {
 ```javascript
 var onStructureChange = pryv.MESSAGES.MONITOR.ON_STRUCTURE_CHANGE;
 monitor.addEventListener(onStructureChange, function (changes) {
-  // ...
+  [ 'created', 'modified', 'trashed', 'deleted' ].forEach(function (action) {
+    changes[action].forEach(function (stream) {
+      // ...
+    });
+
 });
 ```
 
@@ -348,7 +364,10 @@ monitor.addEventListener(onStructureChange, function (changes) {
 ```javascript
 var onFilterChange = pryv.MESSAGES.MONITOR.ON_FILTER_CHANGE;
 monitor.addEventListener(onFilterChange, function (changes) {
-  // ...
+  [ 'enter', 'leave' ].forEach(function (action) {
+    changes[action].forEach(function (filter) {
+      // ...
+    });
 });
 ```
 
