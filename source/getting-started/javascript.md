@@ -95,7 +95,7 @@ See also: [App authorization](/reference/#authorizing-your-app)
 var connection = new pryv.Connection(credentials);
 ```
 
-### Request access infomations
+### Request access informations
 
 ```javascript
 connection.accessInfo(function (err, accessInfo) {
