@@ -104,14 +104,6 @@ connection.fetchStructure(function (err, streamList) {
 })
 ```
 
-### Request access informations
-
-```javascript
-connection.accessInfo(function (err, accessInfo) {
-  // ...
-});
-```
-
 ### Manage events
 
 #### Retrieve
@@ -127,7 +119,7 @@ connection.events.get(filter, function (err, eventList) {
 
 ```javascript
 // This is the minimum required data to create an event
-var eventData = {
+var event = {
   streamId: 'valid-stream-id',
   type: 'note/txt',
   content: 'This is an example.'
@@ -150,7 +142,6 @@ connection.events.update(event, function (err, eventUpdated) {
 #### Delete
 
 ```javascript
-// Only the id of an event is needed for removal
 connection.events.delete(event, function (err, eventDeleted) {
   // ...
 });
@@ -161,13 +152,13 @@ connection.events.delete(event, function (err, eventDeleted) {
 #### Retrieve
 
 ```javascript
-var option = {
-    // If null, select all "root" streams
+var options = {
+    // If null, selects all "root" streams
     parentId: 'valid-stream-id',
     // if null, retrieve active streams only
     state: 'all'
 };
-connection.streams.get(option, function (err, streamList) {
+connection.streams.get(options, function (err, streamList) {
   // ...
 });
 ```
@@ -177,13 +168,12 @@ connection.streams.get(option, function (err, streamList) {
 ```javascript
 // If no id is set, one is generated;
 // If parentId is null, a "root" stream is created
-var streamData = {
+var stream = {
   name: 'A Stream',
   id: 'a-stream-id',
   parentId: 'valid-stream-id'
 };
 
-var stream = new pryv.Stream(connection, streamData);
 connection.streams.create(stream, function (err, streamCreated) { 
   // ...
 });
@@ -192,12 +182,8 @@ connection.streams.create(stream, function (err, streamCreated) { 
 #### Update
 
 ```javascript
-var stream = {
-  id: 'a-stream-id',
-  // Here we update the name of the stream created above
-  name: 'An Updated Stream'
-}
-
+// Here we update the name of the stream created above
+stream.name: 'An Updated Stream';
 connection.streams.update(stream, function (err, streamUpdated) {
   // ...
 });
@@ -206,7 +192,6 @@ connection.streams.update(stream, function (err, streamUpdated) {
 #### Delete
 
 ```javascript
-// Only the id of a stream is needed for removal
 connection.streams.delete(stream, function (err, streamDeleted) {
   // ...
 }, mergeEventsWithParent);
@@ -217,7 +202,7 @@ connection.streams.delete(stream, function (err, streamDeleted) {
 #### Retrieve
 
 ```javascript
-connection.accesses.get(function (err, accessList) {
+connection.accesses.get(function (err, accesses) {
   // ...
 });
 ```
@@ -262,7 +247,6 @@ connection.accesses.update(access, function (err, accessUpdated) {
 #### Delete
 
 ```javascript
-// Only the id of an access is needed for removal
 connection.accesses.delete(access, function (err, accessDeleted) {
   // ...
 });
