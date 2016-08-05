@@ -228,17 +228,9 @@ connection.accesses.create(access, function (err, accessCreated) { 
 #### Update
 
 ```javascript
-var access = {
-  id: 'an-access-id',
-  name: 'An Updated Access'
-  permissions: [
-    {
-      streamId: 'valid-stream-id',
-      level: 'contribute'
-    }
-  ]
-}
-
+// Here we update the name and permissions of the access created above;
+access.name: 'An Updated Access';
+access.permissions[0].level: 'contribute';
 connection.accesses.update(access, function (err, accessUpdated) {
   // ...
 });
@@ -247,12 +239,12 @@ connection.accesses.update(access, function (err, accessUpdated) {
 #### Delete
 
 ```javascript
-connection.accesses.delete(access, function (err, accessDeleted) {
+connection.accesses.delete(access, function (err, accessDeletion) {
   // ...
 });
 ```
 
-### Batch calls
+### Batch call
 
 ```javascript
 var methodsData = [
@@ -290,23 +282,33 @@ connection.batchCall(methodsData, function (err, results) {
 });
 ```
 
-### Monitor
+### Monitors
 
-#### Setup Monitor
+Monitors will watch the changes from a selected structure of data (i.e: Errors, Events, Streams or Filters), made within a user account in an app. They are used to fetch the current state of all the elements in an app after load. Therefore it allows to manage data in a user account while an app in running.
+
+To use monitors you will need to:
+- Setup a monitor variable (see below in 'Setup Monitors').
+- Call any of the monitors (i.e: Load, Error, Event, Stream, Filter).
+- Call the `monitor.start` method to start monitoring (see below in 'Start').
+
+
+#### Setup Monitors
 ```javascript
 var filter = new pryv.Filter({limit: 5});
 var monitor = connection.monitor(filter);
 
-// This whill look in cache before looking online, default is false
+
+//This will use the local cache before fetching data online, default is false
 monitor.useCacheForEventsGetAllAndCompare = false;
-// This whill optimize start up by prefecthing some events, default is 100
+// This will optimize start up by prefecthing some events, default is 100
 monitor.ensureFullCache = false;
 // This will fetch all events on start up, default is true
 monitor.initWithPrefetch = 0;
 ```
 
-#### Load
+#### Load  
 ```javascript
+// Will fetch events depending of the filter set in 'Setup Monitors' above
 var onLoad = pryv.MESSAGES.MONITOR.ON_LOAD;
 monitor.addEventListener(onLoad, function (events) {
   // ...
@@ -323,6 +325,8 @@ monitor.addEventListener(onError, function (error) {
 
 #### Event change
 ```javascript
+// Will trigger if any event is created, modified or trashed;
+// the array of index is used to distinguish which type of change was made
 var onEventChange = pryv.MESSAGES.MONITOR.ON_EVENT_CHANGE;
 monitor.addEventListener(onEventChange, function (changes) {
   [ 'created', 'modified', 'trashed'  ].forEach(function (action) {
@@ -334,6 +338,8 @@ monitor.addEventListener(onEventChange, function (changes) {
 
 #### Structure change
 ```javascript
+// Will trigger if any stream is created, modified, trashed or deleted;
+// the array of index is used to distinguish which type of change was made
 var onStructureChange = pryv.MESSAGES.MONITOR.ON_STRUCTURE_CHANGE;
 monitor.addEventListener(onStructureChange, function (changes) {
   [ 'created', 'modified', 'trashed', 'deleted' ].forEach(function (action) {
@@ -346,6 +352,9 @@ monitor.addEventListener(onStructureChange, function (changes) {
 
 #### Filter change
 ```javascript
+// Will trigger if any filter is modified ;
+// the array of index gives informations about the new filter ('enter'),
+// and the old filter ('leave')
 var onFilterChange = pryv.MESSAGES.MONITOR.ON_FILTER_CHANGE;
 monitor.addEventListener(onFilterChange, function (changes) {
   [ 'enter', 'leave' ].forEach(function (action) {
