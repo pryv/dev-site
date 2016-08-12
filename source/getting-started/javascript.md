@@ -98,7 +98,7 @@ var connection = new pryv.Connection(credentials);
 ### Initialize the datastore
 
 ```javascript
-// Required by the monitor
+// Required by the monitors
 connection.fetchStructure(function (err, streamList) {
   // ...
 })
@@ -152,12 +152,20 @@ connection.events.delete(event, function (err, eventDeleted) {
 #### Retrieve
 
 ```javascript
-var options = {
-    // If null, selects all "root" streams
-    parentId: 'valid-stream-id',
-    // if null, retrieve active streams only
+var options;
+
+// Here we will get all streams (including root and trashed streams)
+option = {
+    // If null, retrieve active streams only
     state: 'all'
 };
+
+// Same as above but in a selected stream structure
+options = {
+    parentId: 'valid-stream-id',
+    state: 'all'
+};
+
 connection.streams.get(options, function (err, streamList) {
   // ...
 });
@@ -298,11 +306,11 @@ var filter = new pryv.Filter({limit: 5});
 var monitor = connection.monitor(filter);
 
 
-//This will use the local cache before fetching data online, default is false
+//This will use the local cache before fetching data online, default is true
 monitor.useCacheForEventsGetAllAndCompare = false;
-// This will optimize start up by prefecthing some events, default is 100
-monitor.ensureFullCache = false;
 // This will fetch all events on start up, default is true
+monitor.ensureFullCache = false;
+// This will optimize start up by prefecthing some events, default is 100
 monitor.initWithPrefetch = 0;
 ```
 
