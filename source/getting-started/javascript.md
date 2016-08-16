@@ -50,7 +50,7 @@ First choose an app identifier (min. length 6 chars), then in your client code:
 ```
 ```javascript
 var credentials = null;
-var pryvDomain = 'pryv.io';
+var pryvDomain = 'pryv.me';
 var requestedPermissions = [{
   // Here we request full permissions on a custom stream;
   // in practice, scope and permission level will vary depending on your needs
@@ -99,7 +99,7 @@ var connection = new pryv.Connection(credentials);
 
 ```javascript
 // Required by the monitors
-connection.fetchStructure(function (err, streamList) {
+connection.fetchStructure(function (err, streams) {
   // ...
 })
 ```
