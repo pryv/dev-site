@@ -48,14 +48,13 @@ First choose an app identifier (min. length 6 chars), then in your client code:
 <!-- Add the "Pryv" auth button somewhere (skip this for custom UI/behavior) -->
 <span id="pryv-button"></span>
 ```
-
 ```javascript
 var credentials = null;
-
+var pryvDomain = 'pryv.me';
 var requestedPermissions = [{
   // Here we request full permissions on a custom stream;
   // in practice, scope and permission level will vary depending on your needs
-  streamId: 'example-app',
+  streamId: 'example-app-id',
   defaultName: 'Example app',
   level: 'manage'
 }];
@@ -65,8 +64,14 @@ var settings = {
   requestedPermissions: requestedPermissions,
   spanButtonID: 'pryv-button',
   callbacks: {
-    accepted: function (username, accessToken, languageCode) {
-      credentials = { username: username, auth: accessToken };
+    initialization: function () {
+      // ...
+    },
+    needSignin: function (popupUrl, pollUrl, pollRateMs) {
+      // ...
+    },
+    signedIn: function (authData) {
+      credentials = authData;
       // ...
     },
     refused: function (code) {
@@ -78,10 +83,10 @@ var settings = {
   }
 };
 
+pryv.Auth.config.registerURL.host = 'reg.' + pryvDomain;
 pryv.Auth.setup(settings);
 ```
-
-See also: [app authorization in the API reference](/reference/#authorizing-your-app)
+See also: [App authorization](/reference/#authorizing-your-app)
 
 
 ### Connect to the account
@@ -90,13 +95,21 @@ See also: [app authorization in the API reference](/reference/#authorizing-your-
 var connection = new pryv.Connection(credentials);
 ```
 
+### Fetch the stream structure
 
-### Retrieve & manipulate events
+```javascript
+// Required by the monitors
+connection.fetchStructure(function (err, streams) {
+  // ...
+})
+```
+
+### Manage events
 
 #### Retrieve
 
 ```javascript
-var filter = new pryv.Filter({limit : 20});
+var filter = new pryv.Filter({limit : 10});
 connection.events.get(filter, function (err, events) {
   // ...
 });
@@ -105,21 +118,22 @@ connection.events.get(filter, function (err, events) {
 #### Create
 
 ```javascript
-var eventData = {
-  streamId: 'diary',
+var event = {
+  streamId: 'valid-stream-id',
   type: 'note/txt',
-  content: 'I track, therefore I am.'
+  content: 'This is an example.'
 };
-connection.events.create(eventData, function (err, event) { 
+connection.events.create(event, function (err, eventCreated) { 
   // ...
 });
 ```
+See also: [More about types](/event-types/)
 
 #### Update
 
 ```javascript
-event.content = 'Updated content.';
-event.update(function (err, updatedEvent) {
+event.content = 'This is an update.';
+connection.events.update(event, function (err, eventUpdated) {
   // ...
 });
 ```
@@ -127,11 +141,240 @@ event.update(function (err, updatedEvent) {
 #### Delete
 
 ```javascript
-event.delete(function (err, trashedEventOrNull) {
+connection.events.delete(event, function (err, eventDeleted) {
   // ...
 });
 ```
 
+### Manage streams
+
+#### Retrieve
+
+```javascript
+var options;
+
+// Here we will get all streams (including root and trashed streams)
+options = {
+    // If null, retrieve active streams only
+    state: 'all'
+};
+
+// Same as above but in a selected stream
+options = {
+    parentId: 'valid-stream-id',
+    state: 'all'
+};
+
+connection.streams.get(options, function (err, streams) {
+  // ...
+});
+```
+
+#### Create
+
+```javascript
+// If no id is set, one is generated;
+// If parentId is null, the stream is created at the root
+var stream = {
+  name: 'A Stream',
+  id: 'a-stream-id',
+  parentId: 'valid-stream-id'
+};
+
+connection.streams.create(stream, function (err, streamCreated) { 
+  // ...
+});
+```
+
+#### Update
+
+```javascript
+stream.name: 'An Updated Stream';
+connection.streams.update(stream, function (err, streamUpdated) {
+  // ...
+});
+```
+
+#### Delete
+
+```javascript
+connection.streams.delete(stream, function (err, streamDeleted) {
+  // ...
+});
+```
+
+### Manage accesses
+
+#### Retrieve
+
+```javascript
+connection.accesses.get(function (err, accesses) {
+  // ...
+});
+```
+
+#### Create
+
+```javascript
+var access = {
+  name: 'An Access',
+  permissions: [
+    {
+      streamId: 'valid-stream-id',
+      level: 'manage'
+    }
+  ]
+};
+
+connection.accesses.create(access, function (err, accessCreated) { 
+  // ...
+});
+```
+
+#### Update
+
+```javascript
+access.name: 'An Updated Access';
+access.permissions[0].level: 'contribute';
+connection.accesses.update(access, function (err, accessUpdated) {
+  // ...
+});
+```
+
+#### Delete
+
+```javascript
+connection.accesses.delete(access, function (err, accessDeletion) {
+  // ...
+});
+```
+
+### Batch call
+
+```javascript
+var methodsData = [
+  {
+    'method': 'streams.create',
+    'params': {
+      'id': 'a-new-stream',
+      'name': 'A New Stream'
+    }
+  },
+  {
+    'method': 'events.create',
+    'params': {
+      'streamId': 'a-new-stream',
+      'type': 'note/txt',
+      'content': 'This is a new event.'
+    }
+  },
+  {
+    'method': 'accesses.create',
+    'params': {
+      'name': 'A New Access',
+      'permissions': [
+        {
+          'streamId': 'a-new-stream',
+          'level': 'read'
+        }
+      ]
+    }
+  }
+];
+
+connection.batchCall(methodsData, function (err, results) {
+  //...
+});
+```
+
+### Monitors
+
+Monitors watch the changes to selected data structures (i.e: Errors, Events, Streams or Filters). They are used to fetch the current state of all the elements in an app upon loading. Therefore it allows to manage data in a user account at runtime.
+
+To use monitors you will need to:
+- Setup a monitor variable.
+- Add the requested event listener(s).
+- Call the `monitor.start`.
+
+
+#### Setup Monitors
+```javascript
+var filter = new pryv.Filter({limit: 5});
+var monitor = connection.monitor(filter);
+
+
+//This will use the local cache before fetching data online, default is true
+monitor.useCacheForEventsGetAllAndCompare = false;
+// This will fetch all events on start up, default is true
+monitor.ensureFullCache = false;
+// This will optimize start up by prefecthing some events, default is 100
+monitor.initWithPrefetch = 0;
+```
+
+#### Load  
+```javascript
+// Will fetch events depending on the filter set in 'Setup Monitors' above
+var onLoad = pryv.MESSAGES.MONITOR.ON_LOAD;
+monitor.addEventListener(onLoad, function (events) {
+  // ...
+});
+```
+
+#### Error
+```javascript
+var onError = pryv.MESSAGES.MONITOR.ON_ERROR;
+monitor.addEventListener(onError, function (error) {
+  // ...
+});
+```
+
+#### Event change
+```javascript
+// Will trigger if any event is created, updated or trashed;
+// the array index is used to distinguish which type of change was made
+var onEventChange = pryv.MESSAGES.MONITOR.ON_EVENT_CHANGE;
+monitor.addEventListener(onEventChange, function (changes) {
+  [ 'created', 'modified', 'trashed'  ].forEach(function (action) {
+  changes[action].forEach(function (event) {
+    // ...
+  });
+});
+```
+
+#### Structure change
+```javascript
+// Will trigger if any stream is created, updated, trashed or deleted;
+// the array index is used to distinguish which type of change was made
+var onStructureChange = pryv.MESSAGES.MONITOR.ON_STRUCTURE_CHANGE;
+monitor.addEventListener(onStructureChange, function (changes) {
+  [ 'created', 'modified', 'trashed', 'deleted' ].forEach(function (action) {
+    changes[action].forEach(function (stream) {
+      // ...
+    });
+
+});
+```
+
+#### Filter change
+```javascript
+// Will trigger if any filter is updated ;
+// the array index gives informations about the new filter ('enter'),
+// and the old filter ('leave')
+var onFilterChange = pryv.MESSAGES.MONITOR.ON_FILTER_CHANGE;
+monitor.addEventListener(onFilterChange, function (changes) {
+  [ 'enter', 'leave' ].forEach(function (action) {
+    changes[action].forEach(function (filter) {
+      // ...
+    });
+});
+```
+
+#### Start
+```javascript
+monitor.start(function (err) {
+  // ...
+});
+```
 
 ### Further resources
 
