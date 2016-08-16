@@ -95,7 +95,7 @@ See also: [App authorization](/reference/#authorizing-your-app)
 var connection = new pryv.Connection(credentials);
 ```
 
-### Initialize the datastore
+### Fetch the stream structure
 
 ```javascript
 // Required by the monitors
@@ -118,7 +118,6 @@ connection.events.get(filter, function (err, eventList) {
 #### Create
 
 ```javascript
-// This is the minimum required data to create an event
 var event = {
   streamId: 'valid-stream-id',
   type: 'note/txt',
@@ -155,12 +154,12 @@ connection.events.delete(event, function (err, eventDeleted) {
 var options;
 
 // Here we will get all streams (including root and trashed streams)
-option = {
+options = {
     // If null, retrieve active streams only
     state: 'all'
 };
 
-// Same as above but in a selected stream structure
+// Same as above but in a selected stream
 options = {
     parentId: 'valid-stream-id',
     state: 'all'
@@ -175,7 +174,7 @@ connection.streams.get(options, function (err, streamList) {
 
 ```javascript
 // If no id is set, one is generated;
-// If parentId is null, a "root" stream is created
+// If parentId is null, the stream is created at the root
 var stream = {
   name: 'A Stream',
   id: 'a-stream-id',
@@ -190,7 +189,6 @@ connection.streams.create(stream, function (err, streamCreated) { 
 #### Update
 
 ```javascript
-// Here we update the name of the stream created above
 stream.name: 'An Updated Stream';
 connection.streams.update(stream, function (err, streamUpdated) {
   // ...
@@ -202,7 +200,7 @@ connection.streams.update(stream, function (err, streamUpdated) {
 ```javascript
 connection.streams.delete(stream, function (err, streamDeleted) {
   // ...
-}, mergeEventsWithParent);
+});
 ```
 
 ### Manage accesses
@@ -236,7 +234,6 @@ connection.accesses.create(access, function (err, accessCreated) { 
 #### Update
 
 ```javascript
-// Here we update the name and permissions of the access created above;
 access.name: 'An Updated Access';
 access.permissions[0].level: 'contribute';
 connection.accesses.update(access, function (err, accessUpdated) {
@@ -292,12 +289,12 @@ connection.batchCall(methodsData, function (err, results) {
 
 ### Monitors
 
-Monitors will watch the changes from a selected structure of data (i.e: Errors, Events, Streams or Filters), made within a user account in an app. They are used to fetch the current state of all the elements in an app after load. Therefore it allows to manage data in a user account while an app in running.
+Monitors watch the changes to selected data structures (i.e: Errors, Events, Streams or Filters). They are used to fetch the current state of all the elements in an app upon loading. Therefore it allows to manage data in a user account at runtime.
 
 To use monitors you will need to:
-- Setup a monitor variable (see below in 'Setup Monitors').
-- Call any of the monitors (i.e: Load, Error, Event, Stream, Filter).
-- Call the `monitor.start` method to start monitoring (see below in 'Start').
+- Setup a monitor variable.
+- Add the requested event listener(s).
+- Call the `monitor.start`.
 
 
 #### Setup Monitors
@@ -316,7 +313,7 @@ monitor.initWithPrefetch = 0;
 
 #### Load  
 ```javascript
-// Will fetch events depending of the filter set in 'Setup Monitors' above
+// Will fetch events depending on the filter set in 'Setup Monitors' above
 var onLoad = pryv.MESSAGES.MONITOR.ON_LOAD;
 monitor.addEventListener(onLoad, function (events) {
   // ...
@@ -333,8 +330,8 @@ monitor.addEventListener(onError, function (error) {
 
 #### Event change
 ```javascript
-// Will trigger if any event is created, modified or trashed;
-// the array of index is used to distinguish which type of change was made
+// Will trigger if any event is created, updated or trashed;
+// the array index are used to distinguish which type of change was made
 var onEventChange = pryv.MESSAGES.MONITOR.ON_EVENT_CHANGE;
 monitor.addEventListener(onEventChange, function (changes) {
   [ 'created', 'modified', 'trashed'  ].forEach(function (action) {
@@ -346,8 +343,8 @@ monitor.addEventListener(onEventChange, function (changes) {
 
 #### Structure change
 ```javascript
-// Will trigger if any stream is created, modified, trashed or deleted;
-// the array of index is used to distinguish which type of change was made
+// Will trigger if any stream is created, updated, trashed or deleted;
+// the array index are used to distinguish which type of change was made
 var onStructureChange = pryv.MESSAGES.MONITOR.ON_STRUCTURE_CHANGE;
 monitor.addEventListener(onStructureChange, function (changes) {
   [ 'created', 'modified', 'trashed', 'deleted' ].forEach(function (action) {
@@ -360,8 +357,8 @@ monitor.addEventListener(onStructureChange, function (changes) {
 
 #### Filter change
 ```javascript
-// Will trigger if any filter is modified ;
-// the array of index gives informations about the new filter ('enter'),
+// Will trigger if any filter is updated ;
+// the array index give informations about the new filter ('enter'),
 // and the old filter ('leave')
 var onFilterChange = pryv.MESSAGES.MONITOR.ON_FILTER_CHANGE;
 monitor.addEventListener(onFilterChange, function (changes) {
