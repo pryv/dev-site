@@ -110,7 +110,7 @@ connection.fetchStructure(function (err, streamList) {
 
 ```javascript
 var filter = new pryv.Filter({limit : 10});
-connection.events.get(filter, function (err, eventList) {
+connection.events.get(filter, function (err, events) {
   // ...
 });
 ```
@@ -165,7 +165,7 @@ options = {
     state: 'all'
 };
 
-connection.streams.get(options, function (err, streamList) {
+connection.streams.get(options, function (err, streams) {
   // ...
 });
 ```
@@ -331,7 +331,7 @@ monitor.addEventListener(onError, function (error) {
 #### Event change
 ```javascript
 // Will trigger if any event is created, updated or trashed;
-// the array index are used to distinguish which type of change was made
+// the array index is used to distinguish which type of change was made
 var onEventChange = pryv.MESSAGES.MONITOR.ON_EVENT_CHANGE;
 monitor.addEventListener(onEventChange, function (changes) {
   [ 'created', 'modified', 'trashed'  ].forEach(function (action) {
@@ -344,7 +344,7 @@ monitor.addEventListener(onEventChange, function (changes) {
 #### Structure change
 ```javascript
 // Will trigger if any stream is created, updated, trashed or deleted;
-// the array index are used to distinguish which type of change was made
+// the array index is used to distinguish which type of change was made
 var onStructureChange = pryv.MESSAGES.MONITOR.ON_STRUCTURE_CHANGE;
 monitor.addEventListener(onStructureChange, function (changes) {
   [ 'created', 'modified', 'trashed', 'deleted' ].forEach(function (action) {
@@ -358,7 +358,7 @@ monitor.addEventListener(onStructureChange, function (changes) {
 #### Filter change
 ```javascript
 // Will trigger if any filter is updated ;
-// the array index give informations about the new filter ('enter'),
+// the array index gives informations about the new filter ('enter'),
 // and the old filter ('leave')
 var onFilterChange = pryv.MESSAGES.MONITOR.ON_FILTER_CHANGE;
 monitor.addEventListener(onFilterChange, function (changes) {
