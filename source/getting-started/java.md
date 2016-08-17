@@ -26,7 +26,7 @@ Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sec
 <dependency>
         <groupId>com.pryv</groupId>
         <artifactId>lib</artifactId>
-        <version>0.1.0</version>
+        <version>1.0.2</version>
 </dependency>
 ```
 
