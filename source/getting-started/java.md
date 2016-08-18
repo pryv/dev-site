@@ -12,28 +12,72 @@ A few initial pointers to get going with [our Java library](https://github.com/p
 
 ### Examples
 
-- [Basic example: authenticate & retrieve data](https://github.com/pryv/lib-java/blob/master/examples/BasicExample/src/main/java/BasicExample.java#L32)<br>
-  Run it via `examples/BasicExample/run.sh`
-- [Java App example: JavaFX app to view user data](https://github.com/pryv/lib-java/blob/master/examples/JavaApp/src/main/java/com/pryv/ExampleApp.java#L47)<br>
-  Run it via `examples/JavaApp/run.sh` (Java 1.8 required)
+- [Java Basic example: authenticate & retrieve data](https://github.com/pryv/app-java-examples/tree/master/BasicExample)<br>
+
+- [Java App example: JavaFX app to view user data](https://github.com/pryv/app-java-examples/tree/master/JavaFxApp)<br>
+
+- [Java Backup app: backup one's Pryv data locally to CSV format](https://github.com/pryv/app-java-examples/tree/master/BackupApp)<br>
+
+- [Android App example: authenticate, create note Events and retrieve them, with integration guide](https://github.com/pryv/app-android-example)<br>
 
 
 ### Install the library
 
-Install [Maven](http://books.sonatype.com/mvnref-book/reference/installation-sect-maven-install.html) and add the dependency in your project's pom.xml file:
+Since this library aims to be compatible with Java and Android environment, it contains a Java library and an Android library that both have a Commons library as dependency. Thus, please import the dependency depending on the platform you are targeting as follows :
 
-```xml
+#### Gradle
+
+Java project:
+```
+compile 'com.pryv:java:1.0.2'
+```
+
+Android project:
+```
+compile 'com.pryv:android:1.0.2'
+```
+
+#### Maven
+
+Java project:
+```
 <dependency>
-        <groupId>com.pryv</groupId>
-        <artifactId>lib</artifactId>
-        <version>1.0.2</version>
+  <groupId>com.pryv</groupId>
+  <artifactId>java</artifactId>
+  <version>1.0.2</version>
+  <type>pom</type>
 </dependency>
 ```
 
+Android project:
+```
+<dependency>
+  <groupId>com.pryv</groupId>
+  <artifactId>android</artifactId>
+  <version>1.0.2</version>
+  <type>pom</type>
+</dependency>
+```
+
+#### Ivy
+
+Java project:
+```
+<dependency org='com.pryv' name='java' rev='1.0.2'>
+  <artifact name='$AID' ext='pom'></artifact>
+</dependency>
+```
+
+Android project:
+```
+<dependency org='com.pryv' name='android' rev='1.0.2'>
+  <artifact name='$AID' ext='pom'></artifact>
+</dependency>
+```
 
 ### Authorize your app
 
-First choose an app identifier (min. length 6 chars), then in your client code:
+First choose an app identifier (REQUESTING_APP_ID, min. length 6 chars), then in your client code:
 
 ```java
 // Here we request full permissions on a custom stream;
@@ -58,13 +102,13 @@ AuthView view = new AuthView() {
   	  ...
     }
 
-    public void displayLoginVew(String loginURL) {
+    public void displayLoginView(String loginURL) {
       // generate WebView to load URL to enter credentials
       ...
     }
 };
 
-AuthController authenticator = new AuthControllerImpl(REQUESTING_APP_ID, permissions, "en", "", view);
+AuthController authenticator = new AuthControllerImpl(REQUESTING_APP_ID, permissions, language, returnURL, view);
 authenticator.signIn();
 ```
 
@@ -74,15 +118,15 @@ See also: [app authorization in the API reference](/reference/#authorizing-your-
 ### Setup connection
 
 ```java
-connection = new Connection("bob", "12345678qwertz", "pryv.me", false, new DBinitCallback());
+Connection connection = new Connection(userID, accessToken, domain, true, new DBinitCallback());
 
-// define the scope of the cached data. Leave null to cache all Pryv data (including data from other apps)
-new Filter scope = new Filter();
-scope.addStream(myTrackedStream);
+// Define the scope of the cached data
+Filter scope = new Filter();
+scope.addStream(myTrackedStream); // Omit this to cache all Pryv data (including data from other apps)
 connection.setupCacheScope(scope);
 ```
 
-### Retrieve & manipulate events
+### Manage events
 
 #### Retrieve
 
@@ -195,7 +239,7 @@ connection.events.delete(event, new EventsCallback() {
 });
 ```
 
-### Retrieve and manipulate Streams
+### Manage Streams
 
 #### Retrieve
 
