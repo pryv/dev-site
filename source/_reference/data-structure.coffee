@@ -62,10 +62,10 @@ module.exports = exports =
                    """
     ,
       key: "duration"
-      type: "[timestamp](##{_getDocId("timestamp")})"
+      type: "number"
       optional: true
       description: """
-                   If present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
+                   In seconds, if present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
                    """
     ,
       key: "type"
@@ -400,16 +400,9 @@ module.exports = exports =
       key: "id"
       type: "[identifier](##{_getDocId("identifier")})"
       unique: true
-      readOnly: true
+      readOnly: "(except at creation)"
       description: """
                    The identifier for the hook.
-                   """
-    ,
-      key: "accesId"
-      type: "[identifier](##{_getDocId("identifier")})"
-      readOnly: true
-      description: """
-                   The identifier for the creating access.
                    """
     ,
       key: "name"
@@ -419,37 +412,137 @@ module.exports = exports =
                    A name identifying the hook. The name must be unique among the access' hooks.
                    """
     ,
-      key: "scope"
-      type: "string"
-      description: """
-                   (`null` or scope object, optional) A set of parameters to optionally filter down which data changes trigger a call (if `null`, the access's scope is used). The scope object is a subset of the `events.get` method parameters, supporting one or more of: `streams`, `tags`, `types` (see `events.get` method doc for details). The scope actually applied is always the intersection of this and the access's scope.
-                   """
-    ,
-      key: "url"
-      type: "string"
-      description: """
-                   The URL to be called.
-                   """
-    ,
-      key: "authentication"
-      type: "string"
-      optional: true
-      description: """
-                   Optional value for the Authentication HTTP header.
-                   """
-    ,
       key: "status"
-      type: "enum"
+      type: "`on`|`off`|`faulty`"
       optional: true
       description: """
-                   The webhook's status. The only accepted value when creating/updating is null (i.e. reset); other values are set by the system.
+                   The webhook's status. Can be updated manually. Status `faulty` can be triggered by the system after too much failures occur.
+                   """
+    ,
+      key: "timeout"
+      type: "number"
+      optional: true
+      description: """
+                   In miliseconds, the maximum time to allocate to execute the hook. The system provides default and maximum values.
+                   """
+    ,
+      key: "maxfail"
+      type: "number"
+      optional: true
+      description: """
+                   Maximum consecutive failures to tolerate before the system deactivates this hook by setting the status to `faulty`.
+                   """
+    ,
+      key: "on"
+      type: "array of `eventsChanged`|`streamsChanged`|`timer`|`load`|`close`"
+      optional: false
+      description: """
+                   The changes or events that will trigger the execution of the hook
+
+                   - *eventsChanged*: One or more event creation or modfication occured.
+                   - *streamsChanged*: One ore more stream creation or modfication occured.
+                   - *timer*: The hook supports triggers from timer (see persistantState:timedExecutionAt)
+                   - *load*: When the hook is loaded by the system, (can occur after a restart)
+                   - *close*: When the system is going down, for maintenance as an example. (their no warranty that this will be triggered)
+
+
+                   """
+    ,
+      key: "persistantState"
+      type: "object"
+      optional: false
+      description: """
+                   The changes or events that will trigger the execution of the hook
+
+                   - *eventsChanged*: One or more event creation or modfication occured.
+                   - *streamsChanged*: One ore more stream creation or modfication occured.
+                   - *timer*: The hook supports triggers from timer (see persistantState:timedExecutionAt)
+                   - *load*: When the hook is loaded by the system, (can occur after a restart)
+                   - *close*: When the system is going down, for maintenance as an example. (their no warranty that this will be triggered)
+
+
+                   """
+     ,
+      key: "processes"
+      type: "array of [Hook Process](##{_getDocId("hook-process")}) objects"
+      optional: false
+      description: """
+                   Processes will be executed in order.
+                   """
+    ,
+      key: "processError"
+      type: "string"
+      optional: true
+      description: """
+                   Javascript code to be executed in the scope of persistantState when an error occurs in the execution of one of the previous processes.
                    """
     ].concat(changeTrackingProperties("hook"))
     examples: [
       title: "TODO - example title"
-      content: examples.streams.activities
+      content: examples.hooks.todo
     ]
 
+  ,
+
+
+    id: "hook-persistantState"
+    title: "Hook PersistantState"
+    description: """
+                 A persitant object that will be passed to all the processes and processError executions of a [Hook](##{_getDocId("hook")}).
+                 """
+    properties: [
+      key: "timedExecutionAt"
+      optional: true
+      readOnly: false
+      type: "[timestamp](#data-structure-timestamp)"
+      description: """
+                   If defined, define the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}).
+                   """
+    ,
+      key: "batch"
+      optional: true
+      readOnly: false
+      type: "[timestamp](#data-structure-timestamp)"
+      description: """
+                   If defined, define the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}).
+                   """
+    ,
+      key: "*"
+      type: "objects, numbers, strings"
+      optional: true
+      description: """
+                   In a persistantState object any properties can be added for the usage of processes.
+                   """
+    ]
+    examples: [
+    ]
+  ,
+
+    id: "hook-process"
+    title: "Hook Process"
+    description: """
+                 A single process of a hook chain
+                 """
+    properties: [
+        key: "name"
+        optional: false
+        unique: "among the processes chain of this hook"
+        type: "string"
+        description: """
+                     An identifier for this process
+                     """
+      ,
+        key: "code"
+        type: "string with valid javascript"
+        optional: false
+        description: """
+                     Javascript code to be executed in the scope of persistantState
+                     """
+    ]
+    examples: [
+      title: "TODO - example title"
+      content: examples.hooks.process
+    ]
   ,
 
     id: "account"

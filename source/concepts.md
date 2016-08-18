@@ -85,4 +85,4 @@ Users can view and possibly manipulate streams shared by other users as **follow
 
 ## Hooks
 
-Hooks belong to accesses and are restricted to **appp** and **personal** access types. Each hook's scope is limited to that of its owning access (set by the latter's permissions). If the hook's endpoint does not respond successfully, the data notification will not be attempted again; after a certain number of unsuccessful attempts the endpoint will not be called again until the hook's status is reset.
+Hooks belong to accesses and are restricted to **app** access types. Each hook's scope is limited to that of its owning access (set by the latter's permissions). If the hook's endpoint does not respond successfully, the data notification will not be attempted again; after a certain number of unsuccessful attempts the endpoint will not be called again until the hook's status is reset.
