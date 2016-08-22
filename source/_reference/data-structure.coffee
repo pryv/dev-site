@@ -416,7 +416,7 @@ module.exports = exports =
       type: "`on`|`off`|`faulty`"
       optional: true
       description: """
-                   The webhook's status. Can be updated manually. Status `faulty` can be triggered by the system after too much failures occur.
+                   The webhook's status. Can be updated manually. Status `faulty` can be triggered by the system after too many failures occur.
                    """
     ,
       key: "timeout"
