@@ -422,51 +422,41 @@ module.exports = exports =
       type: "number"
       optional: true
       description: """
-                   In miliseconds, the maximum time to allocate to execute the hook. The system provides default and maximum values.
+                   In miliseconds, the maximum time allocated to execute the hook. The system provides default and maximum values.
                    """
     ,
       key: "maxfail"
       type: "number"
       optional: true
       description: """
-                   Maximum consecutive failures to tolerate before the system deactivates this hook by setting the status to `faulty`.
+                   The maximum consecutive failures to tolerate before the system deactivates this hook by setting the status to `faulty`.
                    """
     ,
       key: "on"
       type: "array of `eventsChanged`|`streamsChanged`|`timer`|`load`|`close`"
       optional: false
       description: """
-                   The changes or events that will trigger the execution of the hook
+                   The changes or events that will trigger the execution of the hook.
 
-                   - *eventsChanged*: One or more event creation or modfication occured.
-                   - *streamsChanged*: One ore more stream creation or modfication occured.
-                   - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt)
-                   - *load*: When the hook is loaded by the system, (can occur after a restart)
-                   - *close*: When the system is going down, for maintenance as an example. (their no warranty that this will be triggered)
-
-
+                   - *eventsChanged*: One or more event creation or modification occured.
+                   - *streamsChanged*: One ore more stream creation or modification occured.
+                   - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt).
+                   - *load*: When the hook is loaded by the system, (can occur after a restart).
+                   - *close*: When the system is going down, for maintenance as an example (there is no warranty that this will be triggered).
                    """
     ,
       key: "persistentState"
-      type: "object"
+      type: "[Hook PersistentState](##{_getDocId("hook-persistentState")})"
       optional: false
       description: """
-                   The changes or events that will trigger the execution of the hook
-
-                   - *eventsChanged*: One or more event creation or modfication occured.
-                   - *streamsChanged*: One ore more stream creation or modfication occured.
-                   - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt)
-                   - *load*: When the hook is loaded by the system, (can occur after a restart)
-                   - *close*: When the system is going down, for maintenance as an example. (their no warranty that this will be triggered)
-
-
+                   An object used to store context values.
                    """
      ,
       key: "processes"
       type: "array of [Hook Process](##{_getDocId("hook-process")}) objects"
       optional: false
       description: """
-                   Processes will be executed in order.
+                   The processes that will be executed.
                    """
     ,
       key: "processError"
