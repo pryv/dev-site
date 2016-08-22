@@ -468,7 +468,7 @@ module.exports = exports =
     ].concat(changeTrackingProperties("hook"))
     examples: [
       title: "TODO - example title"
-      content: examples.hooks.todo
+      content: examples.hooks.heartRateAlert
     ]
 
   ,
