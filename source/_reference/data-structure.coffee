@@ -477,7 +477,7 @@ module.exports = exports =
     id: "hook-persistentState"
     title: "Hook PersistentState"
     description: """
-                 A persitant object that will be passed to all the processes and processError executions of a [Hook](##{_getDocId("hook")}).
+                 A persitent object that will be available to all the processes and processError executions of a [Hook](##{_getDocId("hook")}).
                  """
     properties: [
       key: "timedExecutionAt"
@@ -485,7 +485,7 @@ module.exports = exports =
       readOnly: false
       type: "[timestamp](#data-structure-timestamp)"
       description: """
-                   If defined, define the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}).
+                   If defined, determines the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}) is set.
                    """
     ,
       key: "batch"
@@ -496,11 +496,11 @@ module.exports = exports =
                    If defined, define the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}).
                    """
     ,
-      key: "*"
-      type: "objects, numbers, strings"
+      key: "clientData"
+      type: "[key-value](##{_getDocId("key-value")})"
       optional: true
       description: """
-                   In a persistentState object any properties can be added for the usage of processes.
+                   Additional client data for the usage of processes.
                    """
     ]
     examples: [
