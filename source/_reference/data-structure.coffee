@@ -493,7 +493,7 @@ module.exports = exports =
       readOnly: false
       type: "[timestamp](#data-structure-timestamp)"
       description: """
-                   If defined, define the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}).
+                   TODO
                    """
     ,
       key: "clientData"
@@ -514,18 +514,16 @@ module.exports = exports =
                  """
     properties: [
         key: "name"
-        optional: false
-        unique: "among the processes chain of this hook"
+        unique: "among the process chain of this hook"
         type: "string"
         description: """
-                     An identifier for this process
+                     An identifier for this process.
                      """
       ,
         key: "code"
         type: "string with valid javascript"
-        optional: false
         description: """
-                     Javascript code to be executed in the scope of persistentState
+                     Javascript code to be executed in the scope of persistentState.
                      """
     ]
     examples: [
