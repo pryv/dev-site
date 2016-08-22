@@ -441,14 +441,14 @@ module.exports = exports =
 
                    - *eventsChanged*: One or more event creation or modfication occured.
                    - *streamsChanged*: One ore more stream creation or modfication occured.
-                   - *timer*: The hook supports triggers from timer (see persistantState:timedExecutionAt)
+                   - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt)
                    - *load*: When the hook is loaded by the system, (can occur after a restart)
                    - *close*: When the system is going down, for maintenance as an example. (their no warranty that this will be triggered)
 
 
                    """
     ,
-      key: "persistantState"
+      key: "persistentState"
       type: "object"
       optional: false
       description: """
@@ -456,7 +456,7 @@ module.exports = exports =
 
                    - *eventsChanged*: One or more event creation or modfication occured.
                    - *streamsChanged*: One ore more stream creation or modfication occured.
-                   - *timer*: The hook supports triggers from timer (see persistantState:timedExecutionAt)
+                   - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt)
                    - *load*: When the hook is loaded by the system, (can occur after a restart)
                    - *close*: When the system is going down, for maintenance as an example. (their no warranty that this will be triggered)
 
@@ -474,7 +474,7 @@ module.exports = exports =
       type: "string"
       optional: true
       description: """
-                   Javascript code to be executed in the scope of persistantState when an error occurs in the execution of one of the previous processes.
+                   Javascript code to be executed in the scope of persistentState when an error occurs in the execution of one of the previous processes.
                    """
     ].concat(changeTrackingProperties("hook"))
     examples: [
@@ -485,8 +485,8 @@ module.exports = exports =
   ,
 
 
-    id: "hook-persistantState"
-    title: "Hook PersistantState"
+    id: "hook-persistentState"
+    title: "Hook PersistentState"
     description: """
                  A persitant object that will be passed to all the processes and processError executions of a [Hook](##{_getDocId("hook")}).
                  """
@@ -511,7 +511,7 @@ module.exports = exports =
       type: "objects, numbers, strings"
       optional: true
       description: """
-                   In a persistantState object any properties can be added for the usage of processes.
+                   In a persistentState object any properties can be added for the usage of processes.
                    """
     ]
     examples: [
@@ -536,7 +536,7 @@ module.exports = exports =
         type: "string with valid javascript"
         optional: false
         description: """
-                     Javascript code to be executed in the scope of persistantState
+                     Javascript code to be executed in the scope of persistentState
                      """
     ]
     examples: [
