@@ -1,6 +1,8 @@
+hooks = require("./data-structure/hook")
 examples = require("./examples")
 helpers = require("./helpers")
 _ = require("lodash")
+
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
 _getDocId = (typeId) ->
@@ -391,145 +393,50 @@ module.exports = exports =
 
   ,
 
-    id: "hook"
-    title: "Hook"
+
+    id: "item-deletion"
+    title: "Item deletion"
     description: """
-                 See also: [core concepts](/concepts/#hooks).
+                 A record of a deleted item for sync purposes. Item deletions are currently kept for a year.
                  """
     properties: [
       key: "id"
       type: "[identifier](##{_getDocId("identifier")})"
-      unique: true
-      readOnly: "(except at creation)"
       description: """
-                   The identifier for the hook.
+                   The identifier of the deleted item.
                    """
     ,
-      key: "name"
-      type: "string"
-      unique: "among the access\' hooks"
-      description: """
-                   A name identifying the hook. The name must be unique among the access' hooks.
-                   """
-    ,
-      key: "status"
-      type: "`on`|`off`|`faulty`"
-      description: """
-                   The webhook's status. Can be updated manually. Status `faulty` can be triggered by the system after too many failures occur.
-                   """
-    ,
-      key: "timeout"
-      type: "number"
+      key: "deleted"
+      type: "[timestamp](#data-structure-timestamp)"
       optional: true
       description: """
-                   In miliseconds, the maximum time allocated to execute the hook. The system provides default and maximum values.
+                   The time the item was deleted.
                    """
-    ,
-      key: "maxfail"
-      type: "number"
-      optional: true
-      description: """
-                   The maximum consecutive failures to tolerate before the system deactivates this hook by setting the status to `faulty`.
-                   """
-    ,
-      key: "on"
-      type: "array of `eventsChanged`|`streamsChanged`|`timer`|`load`|`close`"
-      optional: false
-      description: """
-                   The changes or events that will trigger the execution of the hook.
-
-                   - *eventsChanged*: One or more event creation or modification occured.
-                   - *streamsChanged*: One ore more stream creation or modification occured.
-                   - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt).
-                   - *load*: When the hook is loaded by the system, (can occur after a restart).
-                   - *close*: When the system is going down, for maintenance as an example (there is no warranty that this will be triggered).
-                   """
-    ,
-      key: "persistentState"
-      type: "[Hook PersistentState](##{_getDocId("hook-persistentState")})"
-      optional: false
-      description: """
-                   An object used to store context values.
-                   """
-     ,
-      key: "processes"
-      type: "array of [Hook Process](##{_getDocId("hook-process")}) objects"
-      optional: false
-      description: """
-                   The processes that will be executed.
-                   """
-    ,
-      key: "processError"
-      type: "string"
-      optional: true
-      description: """
-                   Javascript code to be executed in the scope of persistentState when an error occurs in the execution of one of the previous processes.
-                   """
-    ].concat(changeTrackingProperties("hook"))
-    examples: [
-      title: "TODO - example title"
-      content: examples.hooks.heartRateAlert
     ]
+    examples: []
 
   ,
 
-
-    id: "hook-persistentState"
-    title: "Hook PersistentState"
+    id: "key-value"
+    title: "Key-value"
     description: """
-                 A persitent object that will be available to all the processes and processError executions of a [Hook](##{_getDocId("hook")}).
-                 """
-    properties: [
-      key: "timedExecutionAt"
-      optional: true
-      readOnly: false
-      type: "[timestamp](#data-structure-timestamp)"
-      description: """
-                   If defined, determines the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}) is set.
-                   """
-    ,
-      key: "batch"
-      optional: true
-      readOnly: false
-      type: "[timestamp](#data-structure-timestamp)"
-      description: """
-                   TODO
-                   """
-    ,
-      key: "clientData"
-      type: "[key-value](##{_getDocId("key-value")})"
-      optional: true
-      description: """
-                   Additional client data for the usage of processes.
-                   """
-    ]
-    examples: [
-    ]
-  ,
+                 An object (key-value map) for client apps to store additional data about the containing item (stream, event, etc.), such as a color, a reference to an associated icon, or other app-specific metadata.
 
-    id: "hook-process"
-    title: "Hook Process"
-    description: """
-                 A single process of a hook chain
+                 ### Adding, updating and removing client data
+
+                 When the containing item is updated, additional data fields can be added, updated and removed as follows:
+
+                 - To add or update a field, just set its value; for example: `{"clientData": {"keyToAddOrUpdate": "value"}}`
+                 - To delete a field, set its value to `null`; for example: `{"clientData": {"keyToDelete": null}}`
+
+                 Fields you don't specify in the update are left untouched.
+
+                 ### Naming convention
+
+                 The convention is that each app names the keys it uses with an `{app-id}:` prefix. For example, an app with id "riki" would store its data in fields such as `"riki:key": "some value"`.
                  """
-    properties: [
-        key: "name"
-        unique: "among the process chain of this hook"
-        type: "string"
-        description: """
-                     An identifier for this process.
-                     """
-      ,
-        key: "code"
-        type: "string with valid javascript"
-        description: """
-                     Javascript code to be executed in the scope of persistentState.
-                     """
-    ]
-    examples: [
-      title: "TODO - example title"
-      content: examples.hooks.process
-    ]
+    examples: []
+
   ,
 
     id: "account"
@@ -580,54 +487,9 @@ module.exports = exports =
       ]
     ]
     examples: []
-
   ,
-
-    id: "item-deletion"
-    title: "Item deletion"
-    description: """
-                 A record of a deleted item for sync purposes. Item deletions are currently kept for a year.
-                 """
-    properties: [
-      key: "id"
-      type: "[identifier](##{_getDocId("identifier")})"
-      description: """
-                   The identifier of the deleted item.
-                   """
-    ,
-      key: "deleted"
-      type: "[timestamp](#data-structure-timestamp)"
-      optional: true
-      description: """
-                   The time the item was deleted.
-                   """
-    ]
-    examples: []
-
+    hooks.hook
   ,
-
-    id: "key-value"
-    title: "Key-value"
-    description: """
-                 An object (key-value map) for client apps to store additional data about the containing item (stream, event, etc.), such as a color, a reference to an associated icon, or other app-specific metadata.
-
-                 ### Adding, updating and removing client data
-
-                 When the containing item is updated, additional data fields can be added, updated and removed as follows:
-
-                 - To add or update a field, just set its value; for example: `{"clientData": {"keyToAddOrUpdate": "value"}}`
-                 - To delete a field, set its value to `null`; for example: `{"clientData": {"keyToDelete": null}}`
-
-                 Fields you don't specify in the update are left untouched.
-
-                 ### Naming convention
-
-                 The convention is that each app names the keys it uses with an `{app-id}:` prefix. For example, an app with id "riki" would store its data in fields such as `"riki:key": "some value"`.
-                 """
-    examples: []
-
-  ,
-
     id: "error"
     title: "Error"
     description: ""
