@@ -12,7 +12,7 @@ A few initial pointers to get going with [our Java library](https://github.com/p
 
 ### Examples
 
-- [Java Basic example: authenticate & retrieve data](https://github.com/pryv/app-java-examples/tree/master/BasicExample)<br>
+- [Java Basic example: authenticate & retrieve data](https://github.com/pryv/app-java-examples/blob/master/BasicExample/src/main/java/BasicExample.java)<br>
 
 - [Java App example: JavaFX app to view user data](https://github.com/pryv/app-java-examples/tree/master/JavaFxApp)<br>
 
@@ -349,6 +349,13 @@ connection.streams.delete(stream, new StreamsCallback() {
 });
 ```
 
+### Manage accesses
+
+Coming soon!
+
+### Batch call
+
+Coming soon!
 
 ### Further resources
 
