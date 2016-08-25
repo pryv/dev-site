@@ -139,7 +139,7 @@ var event = {
   description: 'This is a description.'
 };
 var pictureData = fs.readFileSync('pathToFile/image.jpg');
-var formData = pryv.utility.forgeFormData('an-id', pictureData, {
+var formData = pryv.utility.forgeFormData('attachment-id', pictureData, {
   type: 'image/jpg',
   filename: 'attachment'
 });
