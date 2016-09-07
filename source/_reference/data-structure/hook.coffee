@@ -45,11 +45,11 @@ properties: [
   type: "number"
   optional: true
   description: """
-               The maximum consecutive failures to tolerate before the system deactivates this hook by setting the status to `faulty`.
+               The maximum consecutive failures to tolerate before the system deactivates this hook by setting the status to `faulty`. Set to `-1` to never go faulty.
                """
 ,
   key: "on"
-  type: "array of `eventsChanged`|`streamsChanged`|`timer`|`load`|`close`"
+  type: "array of `eventsChanged`|`streamsChanged`|`timer`|`serverStarted`|`serverShutdown`"
   optional: false
   description: """
                The changes or events that will trigger the execution of the hook.
@@ -57,8 +57,8 @@ properties: [
                - *eventsChanged*: One or more event creation or modification occured.
                - *streamsChanged*: One ore more stream creation or modification occured.
                - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt).
-               - *load*: When the hook is loaded by the system, (can occur after a restart).
-               - *close*: When the system is going down, for maintenance as an example (there is no warranty that this will be triggered).
+               - *serverStarted*: When the hook is loaded by the system, (can occur after a restart).
+               - *serverShutdown*: When the system is going down, for maintenance as an example (there is no warranty that this will be triggered).
                """
 ,
   key: "persistentState"
@@ -75,6 +75,13 @@ properties: [
     type: "[timestamp](#data-structure-timestamp)"
     description: """
                  If defined, determines the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}) is set.
+                 """
+  ,
+    key: "timedExecutionIn"
+    optional: true
+    type: "[timestamp](#data-structure-timestamp)"
+    description: """
+                 If defined, determines the next execution. Maybe rename timerPeriod?
                  """
   ]
 ,
@@ -95,15 +102,29 @@ properties: [
     key: "code"
     type: "string with valid javascript"
     description: """
-                 Javascript code to be executed in the scope of persistentState.
+                 Javascript code to be executed in the scope of persistentState. Inside it, you may define the following objects: `batch`, `httpRequest` and `log` (maybe change to function instead of object):
+               - *batch*: API [batch call](#call-batch) that will be executed after the process code.
+               - *httpRequest*: HTTP request options that will be executed after the process code.
+                 - protocol
+                 - host
+                 - path
+                 - method
+                 - port
+                 - headers
                  """
+  ,
+
   ]
 ,
   key: "processError"
-  type: "string"
+  type: "code"
   optional: true
   description: """
                Javascript code to be executed in the scope of persistentState when an error occurs in the execution of one of the previous processes.
+               An error is defined as following:
+
+               - An uncaught error in the process code execution
+               -
                """
 ]
 examples: [
