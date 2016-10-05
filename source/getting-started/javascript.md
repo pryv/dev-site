@@ -349,11 +349,11 @@ var methodsData = [
     'params': ???
   },
   {
-    'method': 'events.create',
+    'method': 'events.update',
     'params': ???
   },
   {
-    'method': 'accesses.create',
+    'method': 'accesses.update',
     'params': ???
   }
 ];
@@ -368,15 +368,15 @@ connection.batchCall(methodsData, function (err, results) {
 ```javascript
 var methodsData = [
   {
-    'method': 'streams.update',
+    'method': 'streams.delete',
     'params': ???
   },
   {
-    'method': 'events.create',
+    'method': 'events.delete',
     'params': ???
   },
   {
-    'method': 'accesses.create',
+    'method': 'accesses.delete',
     'params': ???
   }
 ];
