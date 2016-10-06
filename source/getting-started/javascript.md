@@ -340,53 +340,6 @@ connection.batchCall(methodsData, function (err, results) {
 });
 ```
 
-#### Update
-
-```javascript
-var methodsData = [
-  {
-    'method': 'streams.update',
-    'params': ???
-  },
-  {
-    'method': 'events.update',
-    'params': ???
-  },
-  {
-    'method': 'accesses.update',
-    'params': ???
-  }
-];
-
-connection.batchCall(methodsData, function (err, results) {
-  //...
-});
-```
-
-#### Delete
-
-```javascript
-var methodsData = [
-  {
-    'method': 'streams.delete',
-    'params': ???
-  },
-  {
-    'method': 'events.delete',
-    'params': ???
-  },
-  {
-    'method': 'accesses.delete',
-    'params': ???
-  }
-];
-
-connection.batchCall(methodsData, function (err, results) {
-  //...
-});
-```
-
-
 ### Monitors
 
 Monitors watch the changes to selected data structures (i.e: Errors, Events, Streams or Filters). They are used to fetch the current state of all the elements in an app upon loading. Therefore it allows to manage data in a user account at runtime.
