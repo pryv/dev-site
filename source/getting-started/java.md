@@ -29,12 +29,12 @@ Since this library aims to be compatible with Java and Android environment, it c
 
 Java project:
 ```
-compile 'com.pryv:java:1.0.3'
+compile 'com.pryv:java:1.0.4'
 ```
 
 Android project:
 ```
-compile 'com.pryv:android:1.0.3'
+compile 'com.pryv:android:1.0.4'
 ```
 
 #### Maven
@@ -44,7 +44,7 @@ Java project:
 <dependency>
   <groupId>com.pryv</groupId>
   <artifactId>java</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <type>pom</type>
 </dependency>
 ```
@@ -54,7 +54,7 @@ Android project:
 <dependency>
   <groupId>com.pryv</groupId>
   <artifactId>android</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <type>pom</type>
 </dependency>
 ```
