@@ -57,8 +57,8 @@ properties: [
                - *eventsChanged*: One or more event creation or modification occured.
                - *streamsChanged*: One ore more stream creation or modification occured.
                - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt).
-               - *serverStarted*: When the hook is loaded by the system, (can occur after a restart).
-               - *serverShutdown*: When the system is going down, for maintenance as an example (there is no warranty that this will be triggered).
+               - *load*: When the hook is loaded by the system, (can occur after a restart).
+               - *close*: When the system is going down, for maintenance as an example (there is no warranty that this will be triggered).
                """
 ,
   key: "persistentState"
