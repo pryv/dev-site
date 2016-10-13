@@ -65,7 +65,7 @@ properties: [
   type: "[key-value](##{_getDocId("key-value")})"
   optional: false
   description: """
-               An extensible object used to store context values. Developpers are free to add any key - value
+               An extensible object used to store context values. Developpers are free to add any key-value.
 
                """
   properties: [
@@ -74,7 +74,7 @@ properties: [
     readOnly: false
     type: "[timestamp](#data-structure-timestamp)"
     description: """
-                 If defined, determines the next execution of this hook. This will be used only if `on` property of [Hook](##{_getDocId("hook")}) is set.
+                 If defined, determines the next execution of this hook. This will be used only if `on:timer` property of [Hook](##{_getDocId("hook")}) is set.
                  """
   ,
     key: "timedExecutionIn"
