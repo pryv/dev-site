@@ -115,8 +115,10 @@ connection.setupCacheScope(scope);
 #### Retrieve
 
 ```java
-Filter filter = new Filter();
-filter.setLimit(20);
+Filter filter = new Filter(Double from, Double to, Set<Stream> streams, Set<String> tags,
+    Set<String> types, Boolean running, Boolean sortAscending, Integer skip, Integer limit,
+    State state, Double modifiedSince, String parentId, Boolean includeDeletions, Boolean includeDeletionsSince);
+
 connection.events.get(filter, new GetEventsCallback() {
 	@Override
 	public void cacheCallback(List<Event> events, Map<String, Double> eventDeletions) {
@@ -228,7 +230,11 @@ connection.events.delete(event, new EventsCallback() {
 #### Retrieve
 
 ```java
-connection.streams.get(null, new GetStreamsCallback() {
+Filter filter = new Filter(Double from, Double to, Set<Stream> streams, Set<String> tags,
+    Set<String> types, Boolean running, Boolean sortAscending, Integer skip, Integer limit,
+    State state, Double modifiedSince, String parentId, Boolean includeDeletions, Boolean includeDeletionsSince);
+
+connection.streams.get(filter, new GetStreamsCallback() {
 	@Override
 	public void cacheCallback(Map<String, Stream> streams, Map<String, Double> streamDeletions) {
     	// do something            
