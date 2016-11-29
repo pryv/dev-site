@@ -98,10 +98,15 @@ var connection = new pryv.Connection(credentials);
 ### Fetch the stream structure
 
 ```javascript
-// Required by the monitors
+// This is mandatory;
+// make sure the structure has been fully fetched before calling any method
 connection.fetchStructure(function (err, streams) {
   // ...
-})
+});
+// This shoule be called before/after fetchStructure if needed
+connection.accessInfo(function (err, info) {
+  // ...
+});
 ```
 
 ### Manage events
@@ -176,14 +181,14 @@ var options;
 
 // Here we will get all streams (including root and trashed streams)
 options = {
-    // If null, retrieve active streams only
+    // If null, retrieve active (non-trashed) streams only
     state: 'all'
 };
 
-// Same as above but in a selected stream
+// This will get a selected set streams;
+// the parentId field will override the state field;
 options = {
     parentId: 'valid-stream-id',
-    state: 'all'
 };
 
 connection.streams.get(options, function (err, streams) {
