@@ -128,6 +128,7 @@ var event = {
   type: 'note/txt',
   content: 'This is an example.'
 };
+
 connection.events.create(event, function (err, eventCreated) { 
   // ...
 });
@@ -185,7 +186,7 @@ options = {
     state: 'all'
 };
 
-// This will get a selected set streams;
+// This will get a selected set of streams;
 // the parentId field will override the state field;
 options = {
     parentId: 'valid-stream-id',
@@ -279,31 +280,109 @@ connection.accesses.delete(access, function (err, accessDeletion) {
 
 ```javascript
 var methodsData = [
+  // Retrieve methods -----------------------
   {
-    'method': 'streams.create',
-    'params': {
-      'id': 'a-new-stream',
-      'name': 'A New Stream'
+    method: 'streams.get',
+    params: {
+      option: {
+        state: 'all'
+      }
     }
   },
   {
-    'method': 'events.create',
-    'params': {
-      'streamId': 'a-new-stream',
-      'type': 'note/txt',
-      'content': 'This is a new event.'
+    method: 'events.get',
+    params: {
+      filter: {
+        limit: 10
+      }
     }
   },
   {
-    'method': 'accesses.create',
-    'params': {
-      'name': 'A New Access',
-      'permissions': [
+    method: 'accesses.get',
+    params: {}
+  },
+
+  // Create methods -------------------------
+  {
+    method: 'streams.create',
+    params: {
+      name: 'Stream Name',
+      id: 'stream-id'
+    }
+  },
+  {
+    method: 'events.create',
+    params: {
+      streamId: 'valid-stream-id',
+      type: 'note/txt',
+      content: 'The event content.'
+    }
+  },
+  {
+    method: 'accesses.create',
+    params: {
+      name: 'An Access',
+      permissions: [
         {
-          'streamId': 'a-new-stream',
-          'level': 'read'
+          streamId: '*',
+          level: 'manage'
         }
       ]
+    }
+  },
+
+  // Update methods -------------------------
+  {
+    method: 'streams.update',
+    params: {
+      id: 'valid-stream-id',
+      update: {
+        name: 'Updated Stream Name'
+      }
+    }
+  },
+  {
+    method: 'events.update',
+    params: {
+      id: 'valid-event-id',
+      update: {
+        content: 'The updated event content.'
+      }
+    }
+  },
+  {
+    method: 'accesses.update',
+    params: {
+      id: 'valid-access-id',
+      update: {
+        name: 'An Updated Access',
+        permissions: [
+          {
+            streamId: '*',
+            level: 'read'
+          }
+        ]
+      }
+    }
+  },
+
+  // Delete methods -------------------------
+  {
+    method: 'streams.delete',
+    params: {
+      id: 'valid-stream-id'
+    }
+  },
+  {
+    method: 'events.delete',
+    params: {
+      id: 'valid-event-id'
+    }
+  },
+  {
+    method: 'accesses.delete',
+    params: {
+      id: 'valid-access-id'
     }
   }
 ];
