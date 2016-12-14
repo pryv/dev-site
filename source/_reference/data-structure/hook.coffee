@@ -49,7 +49,7 @@ module.exports.hook =
                """
   ,
     key: "on"
-    type: "array of `eventsChanged`|`streamsChanged`|`timer`|`serverStarted`|`serverShutdown`"
+    type: "array of `eventsChanged`|`streamsChanged`|`timer`|`load`|`close`"
     optional: false
     description: """
                The changes or events that will trigger the execution of the hook.
@@ -65,25 +65,9 @@ module.exports.hook =
     type: "[key-value](##{_getDocId("key-value")})"
     optional: false
     description: """
-               An extensible object used to store context values. Developpers are free to add any key-value.
-
+               An object used to store context values. Developpers are free to add any key-value to the `hookContext` object'.
+               See example on the side.
                """
-    properties: [
-      key: "timedExecutionAt"
-      optional: true
-      readOnly: false
-      type: "[timestamp](#data-structure-timestamp)"
-      description: """
-                 If defined, determines the next execution of this hook. This will be used only if `on:timer` property of [Hook](##{_getDocId("hook")}) is set.
-                 """
-    ,
-      key: "timedExecutionIn"
-      optional: true
-      type: "[timestamp](#data-structure-timestamp)"
-      description: """
-                 If defined, determines the next execution. Maybe rename timerPeriod?
-                 """
-    ]
   ,
     key: "processes"
     type: "array of stringified JS code"
@@ -102,7 +86,11 @@ module.exports.hook =
       key: "code"
       type: "string with valid javascript"
       description: """
-                 Javascript code to be executed in the scope of persistentState. Inside it, you may define the following objects: `batch`, `httpRequest` and `log` (maybe change to function instead of object):
+                 Javascript code to be executed in a specifc scope. Inside it, you may define or use the following objects:
+               - *persistentState*: Key, value object for developper use. See doc before
+               - *processesResults*: Holds the results of the previous process in the chain.
+                  - processesResults.{process.name}.batchResult (see: BATCH call on API)
+                  - httpResult.{process.name}.httpResult
                - *batch*: API [batch call](#call-batch) that will be executed after the process code.
                - *httpRequest*: HTTP request that will be executed after the process code with the following options :
                  - ssl
@@ -113,6 +101,8 @@ module.exports.hook =
                  - headers
                  - body
                - *log*: logging message that will be printed to the console after the process code.
+               - *timedExecutionAt*: timestamp in the serverTime context for the next evaluation of the hook. Only used when `on` hook property define `timer`.
+               - *continue*: Each process can stop the exectution of the flow by setting *continue* to false.
                  """
     ]
   ,
@@ -124,10 +114,12 @@ module.exports.hook =
                An error is defined as following:
 
                - An uncaught error in the process code execution
-               -
                """
   ]
   examples: [
+    title: "**Example: keep the last call `events.get` time in order to sync only new events**"
+    content: examples.hooks.getLastEvents
+  ,
     title: "TODO - example title"
     content: examples.hooks.heartRateAlert
   ]

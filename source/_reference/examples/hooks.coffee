@@ -10,17 +10,12 @@ module.exports =
 
   heartRateAlert:
     id: generateId()
-    name: "heart rate alert"
+    name: "Heart rate alert"
     status: "on"
     timeout: 100
     maxfail: 3
     on: ["eventsChanged"]
-    persistentState:
-      timedExecutionAt: timestamp.now('+1h')
-      batch: "TODO"
-      clientData:
-        param1: "value 1"
-        param2: "value 2"
+    persistentState: {}
     processes:
       name: "threshold-check"
       code: "some code that checks values from persistentState?"
@@ -29,3 +24,36 @@ module.exports =
     createdBy: accesses.app.id
     modified: timestamp.now()
     modifiedBy: accesses.app.id
+
+  getLastEvents:
+    id: generateId()
+    name: "Sample to get last events"
+    status: "on"
+    timeout: 1000
+    maxFail: 5
+    on: ["load", "eventsChange"]
+    processError: false
+    persistentState: {lastGetEventTime : 0 }
+    processes: [
+     name: "p1"
+     code: "
+        {
+        batch = [{
+          method: 'events.get',
+          params: {
+            modifiedSince: persistentState.lastGetEventTime || 0,
+            limit: 1000
+          }
+        }];
+      }"
+    ,
+      name: "p2"
+      code: "{
+        var data = JSON.parse(processesResults.p1.batchResult.data);
+        if (data.meta) {
+          // the data.meta.serverTime is kept for the next synch
+          persistentState.lastGetEventTime = data.meta.serverTime;
+          var events = data.results[0].events;
+          // do something here with the events
+          ......"
+    ]
