@@ -65,7 +65,10 @@ module.exports.hook =
     type: "[key-value](##{_getDocId("key-value")})"
     optional: false
     description: """
-               An object used to store context values. Developpers are free to add any key-value to the `hookContext` object'.
+                 An object used to store context values. Developpers are free to add any key-value to the `hookContext` object' or to use the following system-reserved variables:
+               - *persistentState.timedExecutionAt*: timestamp in the serverTime context for the next evaluation of the hook. Only used when `on` hook property defines `timer`.
+               - *persistentState.successiveFailures*: counter for successive hook's failures. It can be compared with `maxfail` if defined (see: maxfail doc above).
+
                See example on the side.
                """
   ,
@@ -87,7 +90,7 @@ module.exports.hook =
       type: "string with valid javascript"
       description: """
                  Javascript code to be executed in a specifc scope. Inside it, you may define or use the following objects:
-               - *persistentState*: Key, value object for developper use. See doc before
+               - *persistentState*: Key, value object for developper use (see: doc above).
                - *processesResults*: Holds the results of the previous process in the chain.
                   - processesResults.{process.name}.batchResult (see: BATCH call on API)
                   - httpResult.{process.name}.httpResult
@@ -101,8 +104,7 @@ module.exports.hook =
                  - headers
                  - body
                - *log*: logging message that will be printed to the console after the process code.
-               - *timedExecutionAt*: timestamp in the serverTime context for the next evaluation of the hook. Only used when `on` hook property define `timer`.
-               - *continue*: Each process can stop the exectution of the flow by setting *continue* to false.
+               - *continue*: Each process can stop the execution of the flow by setting *continue* to false.
                  """
     ]
   ,
@@ -120,6 +122,6 @@ module.exports.hook =
     title: "**Example: keep the last call `events.get` time in order to sync only new events**"
     content: examples.hooks.getLastEvents
   ,
-    title: "TODO - example title"
+    title: "Example: heartrate alert"
     content: examples.hooks.heartRateAlert
   ]
