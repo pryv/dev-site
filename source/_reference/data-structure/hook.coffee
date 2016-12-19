@@ -65,12 +65,31 @@ module.exports.hook =
     type: "[key-value](##{_getDocId("key-value")})"
     optional: false
     description: """
-                 An object used to store context values. Developpers are free to add any key-value or to use the following system-reserved variables:
-               - *persistentState.timedExecutionAt*: timestamp in the serverTime context for the next evaluation of the hook. Only used when `on` hook property defines `timer`.
-               - *persistentState.successiveFailures*: counter for successive hook's failures. It can be compared with `maxfail` if defined (see: maxfail doc above).
-
-               See example on the side.
+                An object used to store context values.
+                See example on the side.
                """
+    properties: [
+      key: "user"
+      type: "[key-value](##{_getDocId("key-value")})"
+      description: """
+                   User space to store persistant values. Developpers are free to add any key-value
+                   to the `user` property
+                   """
+    ,
+      key: "system"
+      type: "string"
+      description:"Properties used by the stystem"
+      properties: [
+        key: "timedExecutionAt"
+        readonly: false
+        type: "[timestamp](##{_getDocId("timestamp")})"
+        description: """
+                     *persistentState.system.timedExecutionAt*: timestamp in the serverTime
+                     context for the next evaluation of the hook. Only used when `on`
+                     hook property defines `timer`.
+                     """
+      ]
+    ]
   ,
     key: "processes"
     type: "array of stringified JS code"
