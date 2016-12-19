@@ -133,9 +133,9 @@ module.exports.hook =
                """
   ]
   examples: [
-    title: "Example: Keep the last call `events.get` time in order to sync only new events"
+    title: "Keep the last call `events.get` time in order to sync only new events"
     content: examples.hooks.getLastEvents
   ,
-    title: "Example: Heartrate alert"
+    title: "Heartrate alert"
     content: examples.hooks.heartRateAlert
   ]
