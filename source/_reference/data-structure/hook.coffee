@@ -72,7 +72,7 @@ module.exports.hook =
       key: "user"
       type: "[key-value](##{_getDocId("key-value")})"
       description: """
-                   User space to store persistent values. Developpers are free to add any key-value.
+                   User space to store persistent values. Developers are free to add any key-value.
                    """
     ,
       key: "system"
@@ -107,11 +107,8 @@ module.exports.hook =
       type: "string with valid javascript"
       description: """
                  Javascript code to be executed in a specifc scope. Inside it, you may define or use the following objects:
-               - *persistentState*: Key, value object for developper and system use (see: doc above).
-               - *processesResults*: Holds the results of the previous process in the chain.
-                  - processesResults.{process.name}.batchResult (see: Batch call on API)
-                  - httpResult.{process.name}.httpResult
-               - *batch*: API [batch call](#call-batch) that will be executed after the process code.
+               - *persistentState*: Key, value object for developer and system use (see above).
+               - *batch*: Pryv [batch call](#call-batch) that will be executed after the process code.
                - *httpRequest*: HTTP request that will be executed after the process code with the following options :
                  - ssl
                  - host
@@ -120,8 +117,11 @@ module.exports.hook =
                  - port
                  - headers
                  - body
-               - *log*: Logging message that will be printed to the console after the process code.
-               - *continue*: Each process can stop the execution of the flow by setting *continue* to false.
+               - *processesResults*: Holds the results of the previous process in the chain.
+                 - processesResults.{process.name}.batchResult (see: Batch call on API)
+                 - httpResult.{process.name}.httpResult
+               - *log*: Logging message that will saved after the process code is run.
+               - *continue*: Each process can stop its execution by setting *continue* to false.
                  """
     ]
   ,
