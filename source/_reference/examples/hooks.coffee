@@ -41,7 +41,7 @@ module.exports =
         batch = [{
           method: 'events.get',
           params: {
-            modifiedSince: persistentState.lastGetEventTime || 0,
+            modifiedSince: persistentState.user.lastGetEventTime || 0,
             limit: 1000
           }
         }];
@@ -52,7 +52,7 @@ module.exports =
         var data = JSON.parse(processesResults.p1.batchResult.data);
         if (data.meta) {
           // the data.meta.serverTime is kept for the next synch
-          persistentState.lastGetEventTime = data.meta.serverTime;
+          persistentState.user.lastGetEventTime = data.meta.serverTime;
           var events = data.results[0].events;
           // do something here with the events
           ......"

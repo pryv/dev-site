@@ -31,7 +31,7 @@ module.exports.hook =
     key: "status"
     type: "`on`|`off`|`faulty`"
     description: """
-               The webhook's status. Can be updated manually. Status `faulty` can be triggered by the system after too many failures occur.
+               The hook's status. Can be updated programmatically. Status `faulty` can be triggered by the system when too many failures occur.
                """
   ,
     key: "timeout"
@@ -56,9 +56,9 @@ module.exports.hook =
 
                - *eventsChanged*: One or more event creation or modification occured.
                - *streamsChanged*: One ore more stream creation or modification occured.
-               - *timer*: The hook supports triggers from timer (see persistentState:timedExecutionAt).
+               - *timer*: The hook supports triggers from timer (see persistentState.system.timedExecutionAt).
                - *load*: When the hook is loaded by the system, (can occur after a restart).
-               - *close*: When the system is going down, for maintenance as an example (there is no warranty that this will be triggered).
+               - *close*: When the system is going down, for maintenance for example (there is no warranty that this will be triggered).
                """
   ,
     key: "persistentState"
@@ -72,21 +72,19 @@ module.exports.hook =
       key: "user"
       type: "[key-value](##{_getDocId("key-value")})"
       description: """
-                   User space to store persistant values. Developpers are free to add any key-value
-                   to the `user` property
+                   User space to store persistent values. Developpers are free to add any key-value.
                    """
     ,
       key: "system"
-      type: "string"
-      description:"Properties used by the stystem"
+      type: "[key-value](##{_getDocId("key-value")})"
+      description:"Properties used by the system."
       properties: [
         key: "timedExecutionAt"
         readonly: false
         type: "[timestamp](##{_getDocId("timestamp")})"
         description: """
-                     *persistentState.system.timedExecutionAt*: timestamp in the serverTime
-                     context for the next evaluation of the hook. Only used when `on`
-                     hook property defines `timer`.
+                     Timestamp in the serverTime context for the next evaluation of the hook.
+                     Only used when the `on` property defines `timer` (see: doc above).
                      """
       ]
     ]
@@ -109,9 +107,9 @@ module.exports.hook =
       type: "string with valid javascript"
       description: """
                  Javascript code to be executed in a specifc scope. Inside it, you may define or use the following objects:
-               - *persistentState*: Key, value object for developper use (see: doc above).
+               - *persistentState*: Key, value object for developper and system use (see: doc above).
                - *processesResults*: Holds the results of the previous process in the chain.
-                  - processesResults.{process.name}.batchResult (see: BATCH call on API)
+                  - processesResults.{process.name}.batchResult (see: Batch call on API)
                   - httpResult.{process.name}.httpResult
                - *batch*: API [batch call](#call-batch) that will be executed after the process code.
                - *httpRequest*: HTTP request that will be executed after the process code with the following options :
@@ -122,7 +120,7 @@ module.exports.hook =
                  - port
                  - headers
                  - body
-               - *log*: logging message that will be printed to the console after the process code.
+               - *log*: Logging message that will be printed to the console after the process code.
                - *continue*: Each process can stop the execution of the flow by setting *continue* to false.
                  """
     ]
@@ -132,15 +130,12 @@ module.exports.hook =
     optional: true
     description: """
                Javascript code to be executed in the scope of persistentState when an error occurs in the execution of one of the previous processes.
-               An error is defined as following:
-
-               - An uncaught error in the process code execution
                """
   ]
   examples: [
-    title: "**Example: keep the last call `events.get` time in order to sync only new events**"
+    title: "**Example: Keep the last call `events.get` time in order to sync only new events**"
     content: examples.hooks.getLastEvents
   ,
-    title: "Example: heartrate alert"
+    title: "Example: Heartrate alert"
     content: examples.hooks.heartRateAlert
   ]
