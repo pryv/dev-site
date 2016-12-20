@@ -33,11 +33,12 @@ module.exports =
               {
                 method: 'events.get',
                 params: {
-                  streams: ['heart],
+                  streams: ['heart'],
                   type: 'parameters/heart-rate-monitoring',
                   limit: 1
                 }
               ];
+            }
             "
       ,
         name: "send-alert-if-needed"
@@ -65,7 +66,8 @@ module.exports =
                     {'Authorization': 'abcdefghik123'}],
                   body: message
                 };
-              };
+              }
+            }
             "
     ]
     created: timestamp.now()
