@@ -18,7 +18,6 @@ module.exports =
       user:
         heartRateThreshold: 130
     on: ["eventsChanged"]
-    persistentState: {}
     processes: [
         name: "get-last-value"
         code: "{
