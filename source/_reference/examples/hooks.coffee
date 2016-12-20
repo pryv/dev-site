@@ -13,47 +13,62 @@ module.exports =
     name: "Heart rate alert"
     status: "on"
     timeout: 100
-    maxfail: 3
+    maxFail: 3
+    persistentState:
+      user:
+        heartRateThreshold: 130
     on: ["eventsChanged"]
     persistentState: {}
-    processes:
-      name: "threshold-check"
-      code: "some code that checks values from persistentState?"
-    processError: "some error, i think it's not required"
+    processes: [
+        name: "get-last-value"
+        code: "{
+              batch = [{
+                method: 'events.get',
+                params: {
+                  streams: ['heart'],
+                  type: 'frequency/bpm',
+                  limit: 1
+                }
+              },
+              {
+                method: 'events.get',
+                params: {
+                  streams: ['heart],
+                  type: 'parameters/heart-rate-monitoring',
+                  limit: 1
+                }
+              ];
+            "
+      ,
+        name: "send-alert-if-needed"
+        code: "{
+              var result = JSON.parse(processesResults['get-last-value'].batchResult.body);
+              var lastEvent = result.results[0].events[0];
+
+              persistentState.user.hearRateThreshold = result.results[1].events[0].content;
+
+              if (lastValue.content > persistentState.user.heartRateThreshold) {
+
+                var message = JSON.stringify({
+                  heartRate: lastValue.content,
+                  time: lastValue.time
+                });
+                httpRequest = {
+                  ssl: true,
+                  host: 'sms-alert.com',
+                  path: '/alert/api',
+                  method: 'POST',
+                  port: 443,
+                  headers: [
+                    {'Content-Type': 'application/json'},
+                    {'Content-length': message.length},
+                    {'Authorization': 'abcdefghik123'}],
+                  body: message
+                };
+              };
+            "
+    ]
     created: timestamp.now()
     createdBy: accesses.app.id
     modified: timestamp.now()
     modifiedBy: accesses.app.id
-
-  getLastEvents:
-    id: generateId()
-    name: "Sample to get last events"
-    status: "on"
-    timeout: 1000
-    maxFail: 5
-    on: ["load", "eventsChange"]
-    processError: false
-    persistentState: {lastGetEventTime : 0 }
-    processes: [
-     name: "p1"
-     code: "
-        {
-        batch = [{
-          method: 'events.get',
-          params: {
-            modifiedSince: persistentState.user.lastGetEventTime || 0,
-            limit: 1000
-          }
-        }];
-      }"
-    ,
-      name: "p2"
-      code: "{
-        var data = JSON.parse(processesResults.p1.batchResult.data);
-        if (data.meta) {
-          // the data.meta.serverTime is kept for the next synch
-          persistentState.user.lastGetEventTime = data.meta.serverTime;
-          var events = data.results[0].events;
-          // do something here with the events
-          ......"
-    ]

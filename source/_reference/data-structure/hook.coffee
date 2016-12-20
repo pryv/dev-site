@@ -41,7 +41,7 @@ module.exports.hook =
                In miliseconds, the maximum time allocated to execute the hook. The system provides default and maximum values.
                """
   ,
-    key: "maxfail"
+    key: "maxFail"
     type: "number"
     optional: true
     description: """
@@ -133,9 +133,6 @@ module.exports.hook =
                """
   ]
   examples: [
-    title: "Keep the last call `events.get` time in order to sync only new events"
-    content: examples.hooks.getLastEvents
-  ,
-    title: "Heartrate alert"
+    title: "Heart rate alert"
     content: examples.hooks.heartRateAlert
   ]
