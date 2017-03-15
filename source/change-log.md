@@ -4,6 +4,12 @@ title: API change log
 template: default.jade
 ---
 
+## v1.1.7
+
+Changes:
+
+- Direct `events.get` API call result size is now unbounded.
+
 ## v1.1
 
 New feature:

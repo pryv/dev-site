@@ -126,6 +126,13 @@ module.exports = exports =
 
                    See each method's doc for its id.
                    """
+      errors: [
+        key: "invalid-method"
+        http: "404"
+        description: """
+                     An invalid method id is sent over websockets.
+                     """
+      ]
       examples: [
         title: "Retrieving events (Javascript)"
         content: """
@@ -479,6 +486,12 @@ module.exports = exports =
         http: "404"
         description: """
                      The resource can't be found.
+                     """
+      ,
+        key: "too-many-results"
+        http: "413"
+        description: """
+                     When using the `events.get` method in batch calls or websockets that generate too many results. For calls yielding large results, call the API method directly, narrow the request scope or page the request.
                      """
       ,
         key: "user-account-relocated"
