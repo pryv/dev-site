@@ -130,7 +130,7 @@ module.exports = exports =
         key: "invalid-method"
         http: "404"
         description: """
-                     An invalid method id is sent over websockets.
+                     The given method id is invalid.
                      """
       ]
       examples: [
@@ -491,7 +491,7 @@ module.exports = exports =
         key: "too-many-results"
         http: "413"
         description: """
-                     When using the `events.get` method in batch calls or websockets that generate too many results. For calls yielding large results, call the API method directly, narrow the request scope or page the request.
+                     The `events.get` method in batch or websocket call yielded too many results. Call the API method directly, narrow the request scope or page the request.
                      """
       ,
         key: "user-account-relocated"
