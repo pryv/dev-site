@@ -8,7 +8,7 @@ template: default.jade
 
 Changes:
 
-- Direct `events.get` API call result size is now unbounded.
+- Direct `events.get` API call now supports really large results. Changes made have improved this call's performance by around 30%. As a by-product of this change, we now do not send the 'Content-Size' HTTP header anymore.
 
 ## v1.1
 
