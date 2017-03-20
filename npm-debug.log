@@ -1,0 +1,1714 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/iliakebets/.nvm/versions/node/v6.9.5/bin/node',
+1 verbose cli   '/Users/iliakebets/.nvm/versions/node/v6.9.5/bin/npm',
+1 verbose cli   'install' ]
+2 info using npm@3.10.10
+3 info using node@v6.9.5
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly install normalizeTree
+8 silly loadCurrentTree Finishing
+9 silly loadIdealTree Starting
+10 silly install loadIdealTree
+11 silly cloneCurrentTree Starting
+12 silly install cloneCurrentTreeToIdealTree
+13 silly cloneCurrentTree Finishing
+14 silly loadShrinkwrap Starting
+15 silly install loadShrinkwrap
+16 silly loadShrinkwrap Finishing
+17 silly loadAllDepsIntoIdealTree Starting
+18 silly install loadAllDepsIntoIdealTree
+19 silly fetchOtherPackageData pryv-service-core@git+ssh://git@github.com/pryv/service-core.git
+20 silly cache add args [ 'pryv-service-core@git+ssh://git@github.com/pryv/service-core.git',
+20 silly cache add   null ]
+21 verbose cache add spec pryv-service-core@git+ssh://git@github.com/pryv/service-core.git
+22 silly cache add parsed spec Result {
+22 silly cache add   raw: 'pryv-service-core@git+ssh://git@github.com/pryv/service-core.git',
+22 silly cache add   scope: null,
+22 silly cache add   escapedName: 'pryv-service-core',
+22 silly cache add   name: 'pryv-service-core',
+22 silly cache add   rawSpec: 'git+ssh://git@github.com/pryv/service-core.git',
+22 silly cache add   spec: 'git+ssh://git@github.com/pryv/service-core.git',
+22 silly cache add   type: 'hosted',
+22 silly cache add   hosted:
+22 silly cache add    { type: 'github',
+22 silly cache add      ssh: 'git@github.com:pryv/service-core.git',
+22 silly cache add      sshUrl: 'git+ssh://git@github.com/pryv/service-core.git',
+22 silly cache add      httpsUrl: 'git+https://github.com/pryv/service-core.git',
+22 silly cache add      gitUrl: 'git://github.com/pryv/service-core.git',
+22 silly cache add      shortcut: 'github:pryv/service-core',
+22 silly cache add      directUrl: 'https://raw.githubusercontent.com/pryv/service-core/master/package.json' } }
+23 verbose addRemoteGit caching git+ssh://git@github.com/pryv/service-core.git
+24 verbose addRemoteGit git+ssh://git@github.com/pryv/service-core.git is a repository hosted by github
+25 silly tryClone cloning git+ssh://git@github.com/pryv/service-core.git via git+ssh://git@github.com/pryv/service-core.git
+26 verbose tryClone git-ssh-git-github-com-pryv-service-core-git-82ad4d0f not in flight; caching
+27 verbose correctMkdir /Users/iliakebets/.npm/_git-remotes correctMkdir not in flight; initializing
+28 info git [ 'config', '--get', 'remote.origin.url' ]
+29 silly validateExistingRemote git+ssh://git@github.com/pryv/service-core.git remote.origin.url: ssh://git@github.com/pryv/service-core.git
+30 verbose validateExistingRemote git+ssh://git@github.com/pryv/service-core.git is updating existing cached remote /Users/iliakebets/.npm/_git-remotes/git-ssh-git-github-com-pryv-service-core-git-82ad4d0f
+31 info git [ 'fetch', '-a', 'origin' ]
+32 verbose updateRemote git fetch -a origin (ssh://git@github.com/pryv/service-core.git)
+33 verbose correctMkdir /Users/iliakebets/.npm/_git-remotes correctMkdir not in flight; initializing
+34 verbose setPermissions git+ssh://git@github.com/pryv/service-core.git set permissions on /Users/iliakebets/.npm/_git-remotes/git-ssh-git-github-com-pryv-service-core-git-82ad4d0f
+35 verbose resolveHead git+ssh://git@github.com/pryv/service-core.git original treeish: master
+36 info git [ 'rev-list', '-n1', 'master' ]
+37 silly resolveHead git+ssh://git@github.com/pryv/service-core.git resolved treeish: 79c6cc202a08280629047c6393eafbdb476d5102
+38 verbose resolveHead git+ssh://git@github.com/pryv/service-core.git resolved Git URL: git+ssh://git@github.com/pryv/service-core.git#79c6cc202a08280629047c6393eafbdb476d5102
+39 silly resolveHead Git working directory: /var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-3a57cdbf/79c6cc202a08280629047c6393eafbdb476d5102
+40 info git [ 'clone',
+40 info git   '/Users/iliakebets/.npm/_git-remotes/git-ssh-git-github-com-pryv-service-core-git-82ad4d0f',
+40 info git   '/var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-3a57cdbf/79c6cc202a08280629047c6393eafbdb476d5102' ]
+41 verbose cloneResolved git+ssh://git@github.com/pryv/service-core.git clone Cloning into '/var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-3a57cdbf/79c6cc202a08280629047c6393eafbdb476d5102'...
+41 verbose cloneResolved done.
+42 info git [ 'checkout', '79c6cc202a08280629047c6393eafbdb476d5102' ]
+43 verbose checkoutTreeish git+ssh://git@github.com/pryv/service-core.git checkout Note: checking out '79c6cc202a08280629047c6393eafbdb476d5102'.
+43 verbose checkoutTreeish
+43 verbose checkoutTreeish You are in 'detached HEAD' state. You can look around, make experimental
+43 verbose checkoutTreeish changes and commit them, and you can discard any commits you make in this
+43 verbose checkoutTreeish state without impacting any branches by performing another checkout.
+43 verbose checkoutTreeish
+43 verbose checkoutTreeish If you want to create a new branch to retain commits you create, you may
+43 verbose checkoutTreeish do so (now or later) by using -b with the checkout command again. Example:
+43 verbose checkoutTreeish
+43 verbose checkoutTreeish   git checkout -b <new-branch-name>
+43 verbose checkoutTreeish
+43 verbose checkoutTreeish HEAD is now at 79c6cc2... Remove a variable that is not used down below
+44 info git [ 'submodule', '-q', 'update', '--init', '--recursive' ]
+45 verbose updateSubmodules git+ssh://git@github.com/pryv/service-core.git submodule update
+46 verbose addLocalDirectory /Users/iliakebets/.npm/pryv-service-core/1.1.7/package.tgz not in flight; packing
+47 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+48 verbose tar pack [ '/Users/iliakebets/.npm/pryv-service-core/1.1.7/package.tgz',
+48 verbose tar pack   '/var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-3a57cdbf/79c6cc202a08280629047c6393eafbdb476d5102' ]
+49 verbose tarball /Users/iliakebets/.npm/pryv-service-core/1.1.7/package.tgz
+50 verbose folder /var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-3a57cdbf/79c6cc202a08280629047c6393eafbdb476d5102
+51 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/pryv-service-core/1.1.7/package.tgz
+52 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+53 verbose addRemoteGit data._from: git+ssh://git@github.com/pryv/service-core.git
+54 verbose addRemoteGit data._resolved: git+ssh://git@github.com/pryv/service-core.git#79c6cc202a08280629047c6393eafbdb476d5102
+55 silly cache afterAdd pryv-service-core@1.1.7
+56 verbose afterAdd /Users/iliakebets/.npm/pryv-service-core/1.1.7/package/package.json not in flight; writing
+57 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+58 verbose afterAdd /Users/iliakebets/.npm/pryv-service-core/1.1.7/package/package.json written
+59 silly resolveWithNewModule pryv-service-core@1.1.7 checking installable status
+60 silly fetchNamedPackageData async
+61 silly mapToRegistry name async
+62 silly mapToRegistry using default registry
+63 silly mapToRegistry registry https://registry.npmjs.org/
+64 silly mapToRegistry data Result {
+64 silly mapToRegistry   raw: 'async',
+64 silly mapToRegistry   scope: null,
+64 silly mapToRegistry   escapedName: 'async',
+64 silly mapToRegistry   name: 'async',
+64 silly mapToRegistry   rawSpec: '',
+64 silly mapToRegistry   spec: 'latest',
+64 silly mapToRegistry   type: 'tag' }
+65 silly mapToRegistry uri https://registry.npmjs.org/async
+66 silly fetchNamedPackageData axon
+67 silly mapToRegistry name axon
+68 silly mapToRegistry using default registry
+69 silly mapToRegistry registry https://registry.npmjs.org/
+70 silly mapToRegistry data Result {
+70 silly mapToRegistry   raw: 'axon',
+70 silly mapToRegistry   scope: null,
+70 silly mapToRegistry   escapedName: 'axon',
+70 silly mapToRegistry   name: 'axon',
+70 silly mapToRegistry   rawSpec: '',
+70 silly mapToRegistry   spec: 'latest',
+70 silly mapToRegistry   type: 'tag' }
+71 silly mapToRegistry uri https://registry.npmjs.org/axon
+72 silly fetchNamedPackageData cron
+73 silly mapToRegistry name cron
+74 silly mapToRegistry using default registry
+75 silly mapToRegistry registry https://registry.npmjs.org/
+76 silly mapToRegistry data Result {
+76 silly mapToRegistry   raw: 'cron',
+76 silly mapToRegistry   scope: null,
+76 silly mapToRegistry   escapedName: 'cron',
+76 silly mapToRegistry   name: 'cron',
+76 silly mapToRegistry   rawSpec: '',
+76 silly mapToRegistry   spec: 'latest',
+76 silly mapToRegistry   type: 'tag' }
+77 silly mapToRegistry uri https://registry.npmjs.org/cron
+78 silly fetchNamedPackageData express
+79 silly mapToRegistry name express
+80 silly mapToRegistry using default registry
+81 silly mapToRegistry registry https://registry.npmjs.org/
+82 silly mapToRegistry data Result {
+82 silly mapToRegistry   raw: 'express',
+82 silly mapToRegistry   scope: null,
+82 silly mapToRegistry   escapedName: 'express',
+82 silly mapToRegistry   name: 'express',
+82 silly mapToRegistry   rawSpec: '',
+82 silly mapToRegistry   spec: 'latest',
+82 silly mapToRegistry   type: 'tag' }
+83 silly mapToRegistry uri https://registry.npmjs.org/express
+84 silly fetchNamedPackageData mkdirp
+85 silly mapToRegistry name mkdirp
+86 silly mapToRegistry using default registry
+87 silly mapToRegistry registry https://registry.npmjs.org/
+88 silly mapToRegistry data Result {
+88 silly mapToRegistry   raw: 'mkdirp',
+88 silly mapToRegistry   scope: null,
+88 silly mapToRegistry   escapedName: 'mkdirp',
+88 silly mapToRegistry   name: 'mkdirp',
+88 silly mapToRegistry   rawSpec: '',
+88 silly mapToRegistry   spec: 'latest',
+88 silly mapToRegistry   type: 'tag' }
+89 silly mapToRegistry uri https://registry.npmjs.org/mkdirp
+90 silly fetchNamedPackageData mocha
+91 silly mapToRegistry name mocha
+92 silly mapToRegistry using default registry
+93 silly mapToRegistry registry https://registry.npmjs.org/
+94 silly mapToRegistry data Result {
+94 silly mapToRegistry   raw: 'mocha',
+94 silly mapToRegistry   scope: null,
+94 silly mapToRegistry   escapedName: 'mocha',
+94 silly mapToRegistry   name: 'mocha',
+94 silly mapToRegistry   rawSpec: '',
+94 silly mapToRegistry   spec: 'latest',
+94 silly mapToRegistry   type: 'tag' }
+95 silly mapToRegistry uri https://registry.npmjs.org/mocha
+96 silly fetchNamedPackageData qs
+97 silly mapToRegistry name qs
+98 silly mapToRegistry using default registry
+99 silly mapToRegistry registry https://registry.npmjs.org/
+100 silly mapToRegistry data Result {
+100 silly mapToRegistry   raw: 'qs',
+100 silly mapToRegistry   scope: null,
+100 silly mapToRegistry   escapedName: 'qs',
+100 silly mapToRegistry   name: 'qs',
+100 silly mapToRegistry   rawSpec: '',
+100 silly mapToRegistry   spec: 'latest',
+100 silly mapToRegistry   type: 'tag' }
+101 silly mapToRegistry uri https://registry.npmjs.org/qs
+102 silly fetchNamedPackageData rimraf
+103 silly mapToRegistry name rimraf
+104 silly mapToRegistry using default registry
+105 silly mapToRegistry registry https://registry.npmjs.org/
+106 silly mapToRegistry data Result {
+106 silly mapToRegistry   raw: 'rimraf',
+106 silly mapToRegistry   scope: null,
+106 silly mapToRegistry   escapedName: 'rimraf',
+106 silly mapToRegistry   name: 'rimraf',
+106 silly mapToRegistry   rawSpec: '',
+106 silly mapToRegistry   spec: 'latest',
+106 silly mapToRegistry   type: 'tag' }
+107 silly mapToRegistry uri https://registry.npmjs.org/rimraf
+108 silly fetchNamedPackageData superagent
+109 silly mapToRegistry name superagent
+110 silly mapToRegistry using default registry
+111 silly mapToRegistry registry https://registry.npmjs.org/
+112 silly mapToRegistry data Result {
+112 silly mapToRegistry   raw: 'superagent',
+112 silly mapToRegistry   scope: null,
+112 silly mapToRegistry   escapedName: 'superagent',
+112 silly mapToRegistry   name: 'superagent',
+112 silly mapToRegistry   rawSpec: '',
+112 silly mapToRegistry   spec: 'latest',
+112 silly mapToRegistry   type: 'tag' }
+113 silly mapToRegistry uri https://registry.npmjs.org/superagent
+114 silly fetchOtherPackageData dependable@github:attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+115 silly cache add args [ 'dependable@github:attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+115 silly cache add   null ]
+116 verbose cache add spec dependable@github:attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+117 silly fetchOtherPackageData utils@file:components/utils
+118 silly cache add args [ 'utils@file:components/utils', null ]
+119 verbose cache add spec utils@file:components/utils
+120 silly fetchDirectoryPackageData api-server
+121 silly cache add parsed spec Result {
+121 silly cache add   raw: 'dependable@github:attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+121 silly cache add   scope: null,
+121 silly cache add   escapedName: 'dependable',
+121 silly cache add   name: 'dependable',
+121 silly cache add   rawSpec: 'github:attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+121 silly cache add   spec: 'github:attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+121 silly cache add   type: 'hosted',
+121 silly cache add   hosted:
+121 silly cache add    { type: 'github',
+121 silly cache add      ssh: 'git@github.com:attentif/dependable.git#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+121 silly cache add      sshUrl: 'git+ssh://git@github.com/attentif/dependable.git#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+121 silly cache add      httpsUrl: 'git+https://github.com/attentif/dependable.git#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+121 silly cache add      gitUrl: 'git://github.com/attentif/dependable.git#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+121 silly cache add      shortcut: 'github:attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd',
+121 silly cache add      directUrl: 'https://raw.githubusercontent.com/attentif/dependable/0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd/package.json' } }
+122 verbose addRemoteGit caching github:attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+123 verbose addRemoteGit attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd is a repository hosted by github
+124 silly tryGitProto attempting to clone git://github.com/attentif/dependable.git#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+125 silly tryClone cloning attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd via git://github.com/attentif/dependable.git#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+126 verbose tryClone git-github-com-attentif-dependable-git-0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd-23324a20 not in flight; caching
+127 verbose correctMkdir /Users/iliakebets/.npm/_git-remotes correctMkdir not in flight; initializing
+128 silly fetchDirectoryPackageData errors
+129 silly fetchDirectoryPackageData middleware
+130 silly fetchDirectoryPackageData model
+131 silly fetchDirectoryPackageData previews-server
+132 silly fetchDirectoryPackageData pryvuser-cli
+133 silly fetchDirectoryPackageData storage
+134 silly fetchDirectoryPackageData test-helpers
+135 silly cache add parsed spec Result {
+135 silly cache add   raw: 'utils@file:components/utils',
+135 silly cache add   scope: null,
+135 silly cache add   escapedName: 'utils',
+135 silly cache add   name: 'utils',
+135 silly cache add   rawSpec: 'file:components/utils',
+135 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils',
+135 silly cache add   type: 'local' }
+136 error addLocal Could not install /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils
+137 silly fetchPackageMetaData Error: ENOENT: no such file or directory, open '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils'
+137 silly fetchPackageMetaData     at Error (native)
+137 silly fetchPackageMetaData  error for utils@file:components/utils { Error: ENOENT: no such file or directory, open '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils'
+137 silly fetchPackageMetaData     at Error (native)
+137 silly fetchPackageMetaData   errno: -2,
+137 silly fetchPackageMetaData   code: 'ENOENT',
+137 silly fetchPackageMetaData   syscall: 'open',
+137 silly fetchPackageMetaData   path: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils' }
+138 verbose request uri https://registry.npmjs.org/axon
+139 verbose request no auth needed
+140 info attempt registry request try #1 at 4:25:51 PM
+141 verbose request id 37f807ebe2e2f68c
+142 verbose etag W/"5852d69c-722e"
+143 verbose lastModified Thu, 15 Dec 2016 17:45:00 GMT
+144 http request GET https://registry.npmjs.org/axon
+145 verbose request uri https://registry.npmjs.org/cron
+146 verbose request no auth needed
+147 info attempt registry request try #1 at 4:25:51 PM
+148 verbose etag W/"58bd1be3-d5c8"
+149 verbose lastModified Mon, 06 Mar 2017 08:20:51 GMT
+150 http request GET https://registry.npmjs.org/cron
+151 verbose request uri https://registry.npmjs.org/async
+152 verbose request no auth needed
+153 info attempt registry request try #1 at 4:25:51 PM
+154 verbose etag W/"58c6cd57-1e0c5"
+155 verbose lastModified Mon, 13 Mar 2017 16:48:23 GMT
+156 http request GET https://registry.npmjs.org/async
+157 verbose request uri https://registry.npmjs.org/mkdirp
+158 verbose request no auth needed
+159 info attempt registry request try #1 at 4:25:51 PM
+160 verbose etag W/"58c61b77-628a"
+161 verbose lastModified Mon, 13 Mar 2017 04:09:27 GMT
+162 http request GET https://registry.npmjs.org/mkdirp
+163 verbose request uri https://registry.npmjs.org/express
+164 verbose request no auth needed
+165 info attempt registry request try #1 at 4:25:51 PM
+166 verbose etag W/"58c7e6d6-8b833"
+167 verbose lastModified Tue, 14 Mar 2017 12:49:26 GMT
+168 http request GET https://registry.npmjs.org/express
+169 verbose request uri https://registry.npmjs.org/qs
+170 verbose request no auth needed
+171 info attempt registry request try #1 at 4:25:51 PM
+172 verbose etag W/"58c5fbba-178ae"
+173 verbose lastModified Mon, 13 Mar 2017 01:54:02 GMT
+174 http request GET https://registry.npmjs.org/qs
+175 verbose request uri https://registry.npmjs.org/mocha
+176 verbose request no auth needed
+177 info attempt registry request try #1 at 4:25:51 PM
+178 verbose etag W/"58c6f71d-942c6"
+179 verbose lastModified Mon, 13 Mar 2017 19:46:37 GMT
+180 http request GET https://registry.npmjs.org/mocha
+181 verbose request uri https://registry.npmjs.org/superagent
+182 verbose request no auth needed
+183 info attempt registry request try #1 at 4:25:51 PM
+184 verbose etag W/"58c5805c-2e1ba"
+185 verbose lastModified Sun, 12 Mar 2017 17:07:40 GMT
+186 http request GET https://registry.npmjs.org/superagent
+187 verbose request uri https://registry.npmjs.org/rimraf
+188 verbose request no auth needed
+189 info attempt registry request try #1 at 4:25:51 PM
+190 verbose etag W/"58c628cc-e2bc"
+191 verbose lastModified Mon, 13 Mar 2017 05:06:20 GMT
+192 http request GET https://registry.npmjs.org/rimraf
+193 silly resolveWithNewModule errors@1.1.7 checking installable status
+194 silly cache add args [ 'errors@file:components/errors', null ]
+195 verbose cache add spec errors@file:components/errors
+196 silly resolveWithNewModule middleware@1.1.7 checking installable status
+197 silly cache add args [ 'middleware@file:components/middleware', null ]
+198 verbose cache add spec middleware@file:components/middleware
+199 silly resolveWithNewModule model@1.1.7 checking installable status
+200 silly cache add args [ 'model@file:components/model', null ]
+201 verbose cache add spec model@file:components/model
+202 info git [ 'config', '--get', 'remote.origin.url' ]
+203 silly cache add parsed spec Result {
+203 silly cache add   raw: 'errors@file:components/errors',
+203 silly cache add   scope: null,
+203 silly cache add   escapedName: 'errors',
+203 silly cache add   name: 'errors',
+203 silly cache add   rawSpec: 'file:components/errors',
+203 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/errors',
+203 silly cache add   type: 'directory' }
+204 silly cache add parsed spec Result {
+204 silly cache add   raw: 'middleware@file:components/middleware',
+204 silly cache add   scope: null,
+204 silly cache add   escapedName: 'middleware',
+204 silly cache add   name: 'middleware',
+204 silly cache add   rawSpec: 'file:components/middleware',
+204 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/middleware',
+204 silly cache add   type: 'directory' }
+205 silly cache add parsed spec Result {
+205 silly cache add   raw: 'model@file:components/model',
+205 silly cache add   scope: null,
+205 silly cache add   escapedName: 'model',
+205 silly cache add   name: 'model',
+205 silly cache add   rawSpec: 'file:components/model',
+205 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/model',
+205 silly cache add   type: 'directory' }
+206 silly resolveWithNewModule api-server@1.1.7 checking installable status
+207 silly cache add args [ 'api-server@file:components/api-server', null ]
+208 verbose cache add spec api-server@file:components/api-server
+209 verbose addLocalDirectory /Users/iliakebets/.npm/errors/1.1.7/package.tgz not in flight; packing
+210 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+211 verbose addLocalDirectory /Users/iliakebets/.npm/model/1.1.7/package.tgz not in flight; packing
+212 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+213 verbose addLocalDirectory /Users/iliakebets/.npm/middleware/1.1.7/package.tgz not in flight; packing
+214 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+215 silly resolveWithNewModule pryvuser-cli@1.1.7 checking installable status
+216 silly cache add args [ 'pryvuser-cli@file:components/pryvuser-cli', null ]
+217 verbose cache add spec pryvuser-cli@file:components/pryvuser-cli
+218 silly resolveWithNewModule previews-server@1.1.7 checking installable status
+219 silly cache add args [ 'previews-server@file:components/previews-server', null ]
+220 verbose cache add spec previews-server@file:components/previews-server
+221 silly resolveWithNewModule test-helpers@1.1.7 checking installable status
+222 silly cache add args [ 'test-helpers@file:components/test-helpers', null ]
+223 verbose cache add spec test-helpers@file:components/test-helpers
+224 silly resolveWithNewModule storage@1.1.7 checking installable status
+225 silly cache add args [ 'storage@file:components/storage', null ]
+226 verbose cache add spec storage@file:components/storage
+227 silly cache add parsed spec Result {
+227 silly cache add   raw: 'api-server@file:components/api-server',
+227 silly cache add   scope: null,
+227 silly cache add   escapedName: 'api-server',
+227 silly cache add   name: 'api-server',
+227 silly cache add   rawSpec: 'file:components/api-server',
+227 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/api-server',
+227 silly cache add   type: 'directory' }
+228 silly validateExistingRemote attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd remote.origin.url: git://github.com/attentif/dependable.git
+229 verbose validateExistingRemote attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd is updating existing cached remote /Users/iliakebets/.npm/_git-remotes/git-github-com-attentif-dependable-git-0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd-23324a20
+230 info lifecycle errors@1.1.7~prepublish: errors@1.1.7
+231 info lifecycle model@1.1.7~prepublish: model@1.1.7
+232 info lifecycle middleware@1.1.7~prepublish: middleware@1.1.7
+233 silly cache add parsed spec Result {
+233 silly cache add   raw: 'pryvuser-cli@file:components/pryvuser-cli',
+233 silly cache add   scope: null,
+233 silly cache add   escapedName: 'pryvuser-cli',
+233 silly cache add   name: 'pryvuser-cli',
+233 silly cache add   rawSpec: 'file:components/pryvuser-cli',
+233 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/pryvuser-cli',
+233 silly cache add   type: 'directory' }
+234 silly cache add parsed spec Result {
+234 silly cache add   raw: 'previews-server@file:components/previews-server',
+234 silly cache add   scope: null,
+234 silly cache add   escapedName: 'previews-server',
+234 silly cache add   name: 'previews-server',
+234 silly cache add   rawSpec: 'file:components/previews-server',
+234 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/previews-server',
+234 silly cache add   type: 'directory' }
+235 silly cache add parsed spec Result {
+235 silly cache add   raw: 'test-helpers@file:components/test-helpers',
+235 silly cache add   scope: null,
+235 silly cache add   escapedName: 'test-helpers',
+235 silly cache add   name: 'test-helpers',
+235 silly cache add   rawSpec: 'file:components/test-helpers',
+235 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/test-helpers',
+235 silly cache add   type: 'directory' }
+236 silly cache add parsed spec Result {
+236 silly cache add   raw: 'storage@file:components/storage',
+236 silly cache add   scope: null,
+236 silly cache add   escapedName: 'storage',
+236 silly cache add   name: 'storage',
+236 silly cache add   rawSpec: 'file:components/storage',
+236 silly cache add   spec: '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/storage',
+236 silly cache add   type: 'directory' }
+237 silly lifecycle errors@1.1.7~prepublish: no script for prepublish, continuing
+238 silly lifecycle model@1.1.7~prepublish: no script for prepublish, continuing
+239 silly lifecycle middleware@1.1.7~prepublish: no script for prepublish, continuing
+240 verbose tar pack [ '/Users/iliakebets/.npm/errors/1.1.7/package.tgz',
+240 verbose tar pack   '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/errors' ]
+241 verbose tarball /Users/iliakebets/.npm/errors/1.1.7/package.tgz
+242 verbose folder /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/errors
+243 verbose tar pack [ '/Users/iliakebets/.npm/model/1.1.7/package.tgz',
+243 verbose tar pack   '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/model' ]
+244 verbose tarball /Users/iliakebets/.npm/model/1.1.7/package.tgz
+245 verbose folder /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/model
+246 verbose tar pack [ '/Users/iliakebets/.npm/middleware/1.1.7/package.tgz',
+246 verbose tar pack   '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/middleware' ]
+247 verbose tarball /Users/iliakebets/.npm/middleware/1.1.7/package.tgz
+248 verbose folder /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/middleware
+249 info git [ 'fetch', '-a', 'origin' ]
+250 verbose addLocalDirectory /Users/iliakebets/.npm/api-server/1.1.7/package.tgz not in flight; packing
+251 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+252 verbose addLocalDirectory /Users/iliakebets/.npm/previews-server/1.1.7/package.tgz not in flight; packing
+253 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+254 verbose addLocalDirectory /Users/iliakebets/.npm/test-helpers/1.1.7/package.tgz not in flight; packing
+255 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+256 verbose addLocalDirectory /Users/iliakebets/.npm/storage/1.1.7/package.tgz not in flight; packing
+257 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+258 info lifecycle api-server@1.1.7~prepublish: api-server@1.1.7
+259 verbose addLocalDirectory /Users/iliakebets/.npm/pryvuser-cli/1.1.7/package.tgz not in flight; packing
+260 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+261 silly lifecycle api-server@1.1.7~prepublish: no script for prepublish, continuing
+262 info lifecycle previews-server@1.1.7~prepublish: previews-server@1.1.7
+263 info lifecycle test-helpers@1.1.7~prepublish: test-helpers@1.1.7
+264 info lifecycle storage@1.1.7~prepublish: storage@1.1.7
+265 verbose tar pack [ '/Users/iliakebets/.npm/api-server/1.1.7/package.tgz',
+265 verbose tar pack   '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/api-server' ]
+266 verbose tarball /Users/iliakebets/.npm/api-server/1.1.7/package.tgz
+267 verbose folder /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/api-server
+268 info lifecycle pryvuser-cli@1.1.7~prepublish: pryvuser-cli@1.1.7
+269 silly lifecycle previews-server@1.1.7~prepublish: no script for prepublish, continuing
+270 silly lifecycle test-helpers@1.1.7~prepublish: no script for prepublish, continuing
+271 silly lifecycle storage@1.1.7~prepublish: no script for prepublish, continuing
+272 silly lifecycle pryvuser-cli@1.1.7~prepublish: no script for prepublish, continuing
+273 verbose tar pack [ '/Users/iliakebets/.npm/previews-server/1.1.7/package.tgz',
+273 verbose tar pack   '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/previews-server' ]
+274 verbose tarball /Users/iliakebets/.npm/previews-server/1.1.7/package.tgz
+275 verbose folder /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/previews-server
+276 verbose tar pack [ '/Users/iliakebets/.npm/test-helpers/1.1.7/package.tgz',
+276 verbose tar pack   '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/test-helpers' ]
+277 verbose tarball /Users/iliakebets/.npm/test-helpers/1.1.7/package.tgz
+278 verbose folder /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/test-helpers
+279 verbose tar pack [ '/Users/iliakebets/.npm/storage/1.1.7/package.tgz',
+279 verbose tar pack   '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/storage' ]
+280 verbose tarball /Users/iliakebets/.npm/storage/1.1.7/package.tgz
+281 verbose folder /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/storage
+282 verbose tar pack [ '/Users/iliakebets/.npm/pryvuser-cli/1.1.7/package.tgz',
+282 verbose tar pack   '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/pryvuser-cli' ]
+283 verbose tarball /Users/iliakebets/.npm/pryvuser-cli/1.1.7/package.tgz
+284 verbose folder /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/pryvuser-cli
+285 http 304 https://registry.npmjs.org/cron
+286 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+286 verbose headers   via: '1.1 varnish',
+286 verbose headers   'cache-control': 'max-age=300',
+286 verbose headers   etag: 'W/"58bd1be3-d5c8"',
+286 verbose headers   age: '81',
+286 verbose headers   connection: 'keep-alive',
+286 verbose headers   'x-served-by': 'cache-hhn1529-HHN',
+286 verbose headers   'x-cache': 'HIT',
+286 verbose headers   'x-cache-hits': '1',
+286 verbose headers   'x-timer': 'S1489505151.133964,VS0,VE0',
+286 verbose headers   vary: 'Accept-Encoding' }
+287 silly get cb [ 304,
+287 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+287 silly get     via: '1.1 varnish',
+287 silly get     'cache-control': 'max-age=300',
+287 silly get     etag: 'W/"58bd1be3-d5c8"',
+287 silly get     age: '81',
+287 silly get     connection: 'keep-alive',
+287 silly get     'x-served-by': 'cache-hhn1529-HHN',
+287 silly get     'x-cache': 'HIT',
+287 silly get     'x-cache-hits': '1',
+287 silly get     'x-timer': 'S1489505151.133964,VS0,VE0',
+287 silly get     vary: 'Accept-Encoding' } ]
+288 verbose etag https://registry.npmjs.org/cron from cache
+289 verbose get saving cron to /Users/iliakebets/.npm/registry.npmjs.org/cron/.cache.json
+290 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+291 http 304 https://registry.npmjs.org/axon
+292 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+292 verbose headers   via: '1.1 varnish',
+292 verbose headers   'cache-control': 'max-age=300',
+292 verbose headers   etag: 'W/"5852d69c-722e"',
+292 verbose headers   age: '0',
+292 verbose headers   connection: 'keep-alive',
+292 verbose headers   'x-served-by': 'cache-hhn1521-HHN',
+292 verbose headers   'x-cache': 'HIT',
+292 verbose headers   'x-cache-hits': '1',
+292 verbose headers   'x-timer': 'S1489505151.132914,VS0,VE1',
+292 verbose headers   vary: 'Accept-Encoding' }
+293 silly get cb [ 304,
+293 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+293 silly get     via: '1.1 varnish',
+293 silly get     'cache-control': 'max-age=300',
+293 silly get     etag: 'W/"5852d69c-722e"',
+293 silly get     age: '0',
+293 silly get     connection: 'keep-alive',
+293 silly get     'x-served-by': 'cache-hhn1521-HHN',
+293 silly get     'x-cache': 'HIT',
+293 silly get     'x-cache-hits': '1',
+293 silly get     'x-timer': 'S1489505151.132914,VS0,VE1',
+293 silly get     vary: 'Accept-Encoding' } ]
+294 verbose etag https://registry.npmjs.org/axon from cache
+295 verbose get saving axon to /Users/iliakebets/.npm/registry.npmjs.org/axon/.cache.json
+296 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+297 http 304 https://registry.npmjs.org/async
+298 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+298 verbose headers   via: '1.1 varnish',
+298 verbose headers   'cache-control': 'max-age=300',
+298 verbose headers   etag: 'W/"58c6cd57-1e0c5"',
+298 verbose headers   age: '201',
+298 verbose headers   connection: 'keep-alive',
+298 verbose headers   'x-served-by': 'cache-hhn1539-HHN',
+298 verbose headers   'x-cache': 'HIT',
+298 verbose headers   'x-cache-hits': '625',
+298 verbose headers   'x-timer': 'S1489505151.141718,VS0,VE0',
+298 verbose headers   vary: 'Accept-Encoding' }
+299 silly get cb [ 304,
+299 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+299 silly get     via: '1.1 varnish',
+299 silly get     'cache-control': 'max-age=300',
+299 silly get     etag: 'W/"58c6cd57-1e0c5"',
+299 silly get     age: '201',
+299 silly get     connection: 'keep-alive',
+299 silly get     'x-served-by': 'cache-hhn1539-HHN',
+299 silly get     'x-cache': 'HIT',
+299 silly get     'x-cache-hits': '625',
+299 silly get     'x-timer': 'S1489505151.141718,VS0,VE0',
+299 silly get     vary: 'Accept-Encoding' } ]
+300 verbose etag https://registry.npmjs.org/async from cache
+301 verbose get saving async to /Users/iliakebets/.npm/registry.npmjs.org/async/.cache.json
+302 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+303 http 304 https://registry.npmjs.org/mkdirp
+304 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+304 verbose headers   via: '1.1 varnish',
+304 verbose headers   'cache-control': 'max-age=300',
+304 verbose headers   etag: 'W/"58c61b77-628a"',
+304 verbose headers   age: '50',
+304 verbose headers   connection: 'keep-alive',
+304 verbose headers   'x-served-by': 'cache-hhn1544-HHN',
+304 verbose headers   'x-cache': 'HIT',
+304 verbose headers   'x-cache-hits': '8',
+304 verbose headers   'x-timer': 'S1489505151.142663,VS0,VE0',
+304 verbose headers   vary: 'Accept-Encoding' }
+305 silly get cb [ 304,
+305 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+305 silly get     via: '1.1 varnish',
+305 silly get     'cache-control': 'max-age=300',
+305 silly get     etag: 'W/"58c61b77-628a"',
+305 silly get     age: '50',
+305 silly get     connection: 'keep-alive',
+305 silly get     'x-served-by': 'cache-hhn1544-HHN',
+305 silly get     'x-cache': 'HIT',
+305 silly get     'x-cache-hits': '8',
+305 silly get     'x-timer': 'S1489505151.142663,VS0,VE0',
+305 silly get     vary: 'Accept-Encoding' } ]
+306 verbose etag https://registry.npmjs.org/mkdirp from cache
+307 verbose get saving mkdirp to /Users/iliakebets/.npm/registry.npmjs.org/mkdirp/.cache.json
+308 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+309 http 304 https://registry.npmjs.org/express
+310 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+310 verbose headers   via: '1.1 varnish',
+310 verbose headers   'cache-control': 'max-age=300',
+310 verbose headers   etag: 'W/"58c7e6d6-8b833"',
+310 verbose headers   age: '41',
+310 verbose headers   connection: 'keep-alive',
+310 verbose headers   'x-served-by': 'cache-hhn1546-HHN',
+310 verbose headers   'x-cache': 'HIT',
+310 verbose headers   'x-cache-hits': '5',
+310 verbose headers   'x-timer': 'S1489505151.149639,VS0,VE0',
+310 verbose headers   vary: 'Accept-Encoding' }
+311 silly get cb [ 304,
+311 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+311 silly get     via: '1.1 varnish',
+311 silly get     'cache-control': 'max-age=300',
+311 silly get     etag: 'W/"58c7e6d6-8b833"',
+311 silly get     age: '41',
+311 silly get     connection: 'keep-alive',
+311 silly get     'x-served-by': 'cache-hhn1546-HHN',
+311 silly get     'x-cache': 'HIT',
+311 silly get     'x-cache-hits': '5',
+311 silly get     'x-timer': 'S1489505151.149639,VS0,VE0',
+311 silly get     vary: 'Accept-Encoding' } ]
+312 verbose etag https://registry.npmjs.org/express from cache
+313 verbose get saving express to /Users/iliakebets/.npm/registry.npmjs.org/express/.cache.json
+314 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+315 http 304 https://registry.npmjs.org/qs
+316 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+316 verbose headers   via: '1.1 varnish',
+316 verbose headers   'cache-control': 'max-age=300',
+316 verbose headers   etag: 'W/"58c5fbba-178ae"',
+316 verbose headers   age: '3',
+316 verbose headers   connection: 'keep-alive',
+316 verbose headers   'x-served-by': 'cache-hhn1530-HHN',
+316 verbose headers   'x-cache': 'HIT',
+316 verbose headers   'x-cache-hits': '2',
+316 verbose headers   'x-timer': 'S1489505151.149534,VS0,VE0',
+316 verbose headers   vary: 'Accept-Encoding' }
+317 silly get cb [ 304,
+317 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+317 silly get     via: '1.1 varnish',
+317 silly get     'cache-control': 'max-age=300',
+317 silly get     etag: 'W/"58c5fbba-178ae"',
+317 silly get     age: '3',
+317 silly get     connection: 'keep-alive',
+317 silly get     'x-served-by': 'cache-hhn1530-HHN',
+317 silly get     'x-cache': 'HIT',
+317 silly get     'x-cache-hits': '2',
+317 silly get     'x-timer': 'S1489505151.149534,VS0,VE0',
+317 silly get     vary: 'Accept-Encoding' } ]
+318 verbose etag https://registry.npmjs.org/qs from cache
+319 verbose get saving qs to /Users/iliakebets/.npm/registry.npmjs.org/qs/.cache.json
+320 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+321 http 304 https://registry.npmjs.org/rimraf
+322 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+322 verbose headers   via: '1.1 varnish',
+322 verbose headers   'cache-control': 'max-age=300',
+322 verbose headers   etag: 'W/"58c628cc-e2bc"',
+322 verbose headers   age: '225',
+322 verbose headers   connection: 'keep-alive',
+322 verbose headers   'x-served-by': 'cache-hhn1544-HHN',
+322 verbose headers   'x-cache': 'HIT',
+322 verbose headers   'x-cache-hits': '27',
+322 verbose headers   'x-timer': 'S1489505151.149419,VS0,VE0',
+322 verbose headers   vary: 'Accept-Encoding' }
+323 silly get cb [ 304,
+323 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+323 silly get     via: '1.1 varnish',
+323 silly get     'cache-control': 'max-age=300',
+323 silly get     etag: 'W/"58c628cc-e2bc"',
+323 silly get     age: '225',
+323 silly get     connection: 'keep-alive',
+323 silly get     'x-served-by': 'cache-hhn1544-HHN',
+323 silly get     'x-cache': 'HIT',
+323 silly get     'x-cache-hits': '27',
+323 silly get     'x-timer': 'S1489505151.149419,VS0,VE0',
+323 silly get     vary: 'Accept-Encoding' } ]
+324 verbose etag https://registry.npmjs.org/rimraf from cache
+325 verbose get saving rimraf to /Users/iliakebets/.npm/registry.npmjs.org/rimraf/.cache.json
+326 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+327 http 304 https://registry.npmjs.org/superagent
+328 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+328 verbose headers   via: '1.1 varnish',
+328 verbose headers   'cache-control': 'max-age=300',
+328 verbose headers   etag: 'W/"58c5805c-2e1ba"',
+328 verbose headers   age: '95',
+328 verbose headers   connection: 'keep-alive',
+328 verbose headers   'x-served-by': 'cache-hhn1546-HHN',
+328 verbose headers   'x-cache': 'HIT',
+328 verbose headers   'x-cache-hits': '2',
+328 verbose headers   'x-timer': 'S1489505151.150886,VS0,VE0',
+328 verbose headers   vary: 'Accept-Encoding' }
+329 silly get cb [ 304,
+329 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+329 silly get     via: '1.1 varnish',
+329 silly get     'cache-control': 'max-age=300',
+329 silly get     etag: 'W/"58c5805c-2e1ba"',
+329 silly get     age: '95',
+329 silly get     connection: 'keep-alive',
+329 silly get     'x-served-by': 'cache-hhn1546-HHN',
+329 silly get     'x-cache': 'HIT',
+329 silly get     'x-cache-hits': '2',
+329 silly get     'x-timer': 'S1489505151.150886,VS0,VE0',
+329 silly get     vary: 'Accept-Encoding' } ]
+330 verbose etag https://registry.npmjs.org/superagent from cache
+331 verbose get saving superagent to /Users/iliakebets/.npm/registry.npmjs.org/superagent/.cache.json
+332 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+333 http 304 https://registry.npmjs.org/mocha
+334 verbose headers { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+334 verbose headers   via: '1.1 varnish',
+334 verbose headers   'cache-control': 'max-age=300',
+334 verbose headers   etag: 'W/"58c6f71d-942c6"',
+334 verbose headers   age: '98',
+334 verbose headers   connection: 'keep-alive',
+334 verbose headers   'x-served-by': 'cache-hhn1529-HHN',
+334 verbose headers   'x-cache': 'HIT',
+334 verbose headers   'x-cache-hits': '1',
+334 verbose headers   'x-timer': 'S1489505151.150012,VS0,VE0',
+334 verbose headers   vary: 'Accept-Encoding' }
+335 silly get cb [ 304,
+335 silly get   { date: 'Tue, 14 Mar 2017 15:25:51 GMT',
+335 silly get     via: '1.1 varnish',
+335 silly get     'cache-control': 'max-age=300',
+335 silly get     etag: 'W/"58c6f71d-942c6"',
+335 silly get     age: '98',
+335 silly get     connection: 'keep-alive',
+335 silly get     'x-served-by': 'cache-hhn1529-HHN',
+335 silly get     'x-cache': 'HIT',
+335 silly get     'x-cache-hits': '1',
+335 silly get     'x-timer': 'S1489505151.150012,VS0,VE0',
+335 silly get     vary: 'Accept-Encoding' } ]
+336 verbose etag https://registry.npmjs.org/mocha from cache
+337 verbose get saving mocha to /Users/iliakebets/.npm/registry.npmjs.org/mocha/.cache.json
+338 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+339 silly resolveWithNewModule cron@1.2.1 checking installable status
+340 silly cache add args [ 'cron@^1.2.1', null ]
+341 verbose cache add spec cron@^1.2.1
+342 silly cache add parsed spec Result {
+342 silly cache add   raw: 'cron@^1.2.1',
+342 silly cache add   scope: null,
+342 silly cache add   escapedName: 'cron',
+342 silly cache add   name: 'cron',
+342 silly cache add   rawSpec: '^1.2.1',
+342 silly cache add   spec: '>=1.2.1 <2.0.0',
+342 silly cache add   type: 'range' }
+343 silly addNamed cron@>=1.2.1 <2.0.0
+344 verbose addNamed ">=1.2.1 <2.0.0" is a valid semver range for cron
+345 silly addNameRange { name: 'cron', range: '>=1.2.1 <2.0.0', hasData: false }
+346 silly mapToRegistry name cron
+347 silly mapToRegistry using default registry
+348 silly mapToRegistry registry https://registry.npmjs.org/
+349 silly mapToRegistry data Result {
+349 silly mapToRegistry   raw: 'cron',
+349 silly mapToRegistry   scope: null,
+349 silly mapToRegistry   escapedName: 'cron',
+349 silly mapToRegistry   name: 'cron',
+349 silly mapToRegistry   rawSpec: '',
+349 silly mapToRegistry   spec: 'latest',
+349 silly mapToRegistry   type: 'tag' }
+350 silly mapToRegistry uri https://registry.npmjs.org/cron
+351 verbose addNameRange registry:https://registry.npmjs.org/cron not in flight; fetching
+352 silly resolveWithNewModule async@2.1.5 checking installable status
+353 silly cache add args [ 'async@^2.1.4', null ]
+354 verbose cache add spec async@^2.1.4
+355 silly cache add parsed spec Result {
+355 silly cache add   raw: 'async@^2.1.4',
+355 silly cache add   scope: null,
+355 silly cache add   escapedName: 'async',
+355 silly cache add   name: 'async',
+355 silly cache add   rawSpec: '^2.1.4',
+355 silly cache add   spec: '>=2.1.4 <3.0.0',
+355 silly cache add   type: 'range' }
+356 silly addNamed async@>=2.1.4 <3.0.0
+357 verbose addNamed ">=2.1.4 <3.0.0" is a valid semver range for async
+358 silly addNameRange { name: 'async', range: '>=2.1.4 <3.0.0', hasData: false }
+359 silly mapToRegistry name async
+360 silly mapToRegistry using default registry
+361 silly mapToRegistry registry https://registry.npmjs.org/
+362 silly mapToRegistry data Result {
+362 silly mapToRegistry   raw: 'async',
+362 silly mapToRegistry   scope: null,
+362 silly mapToRegistry   escapedName: 'async',
+362 silly mapToRegistry   name: 'async',
+362 silly mapToRegistry   rawSpec: '',
+362 silly mapToRegistry   spec: 'latest',
+362 silly mapToRegistry   type: 'tag' }
+363 silly mapToRegistry uri https://registry.npmjs.org/async
+364 verbose addNameRange registry:https://registry.npmjs.org/async not in flight; fetching
+365 silly resolveWithNewModule axon@2.0.3 checking installable status
+366 silly cache add args [ 'axon@2.0.x', null ]
+367 verbose cache add spec axon@2.0.x
+368 silly cache add parsed spec Result {
+368 silly cache add   raw: 'axon@2.0.x',
+368 silly cache add   scope: null,
+368 silly cache add   escapedName: 'axon',
+368 silly cache add   name: 'axon',
+368 silly cache add   rawSpec: '2.0.x',
+368 silly cache add   spec: '>=2.0.0 <2.1.0',
+368 silly cache add   type: 'range' }
+369 silly addNamed axon@>=2.0.0 <2.1.0
+370 verbose addNamed ">=2.0.0 <2.1.0" is a valid semver range for axon
+371 silly addNameRange { name: 'axon', range: '>=2.0.0 <2.1.0', hasData: false }
+372 silly mapToRegistry name axon
+373 silly mapToRegistry using default registry
+374 silly mapToRegistry registry https://registry.npmjs.org/
+375 silly mapToRegistry data Result {
+375 silly mapToRegistry   raw: 'axon',
+375 silly mapToRegistry   scope: null,
+375 silly mapToRegistry   escapedName: 'axon',
+375 silly mapToRegistry   name: 'axon',
+375 silly mapToRegistry   rawSpec: '',
+375 silly mapToRegistry   spec: 'latest',
+375 silly mapToRegistry   type: 'tag' }
+376 silly mapToRegistry uri https://registry.npmjs.org/axon
+377 verbose addNameRange registry:https://registry.npmjs.org/axon not in flight; fetching
+378 silly resolveWithNewModule mkdirp@0.5.1 checking installable status
+379 silly cache add args [ 'mkdirp@0.5.x', null ]
+380 verbose cache add spec mkdirp@0.5.x
+381 silly cache add parsed spec Result {
+381 silly cache add   raw: 'mkdirp@0.5.x',
+381 silly cache add   scope: null,
+381 silly cache add   escapedName: 'mkdirp',
+381 silly cache add   name: 'mkdirp',
+381 silly cache add   rawSpec: '0.5.x',
+381 silly cache add   spec: '>=0.5.0 <0.6.0',
+381 silly cache add   type: 'range' }
+382 silly addNamed mkdirp@>=0.5.0 <0.6.0
+383 verbose addNamed ">=0.5.0 <0.6.0" is a valid semver range for mkdirp
+384 silly addNameRange { name: 'mkdirp', range: '>=0.5.0 <0.6.0', hasData: false }
+385 silly mapToRegistry name mkdirp
+386 silly mapToRegistry using default registry
+387 silly mapToRegistry registry https://registry.npmjs.org/
+388 silly mapToRegistry data Result {
+388 silly mapToRegistry   raw: 'mkdirp',
+388 silly mapToRegistry   scope: null,
+388 silly mapToRegistry   escapedName: 'mkdirp',
+388 silly mapToRegistry   name: 'mkdirp',
+388 silly mapToRegistry   rawSpec: '',
+388 silly mapToRegistry   spec: 'latest',
+388 silly mapToRegistry   type: 'tag' }
+389 silly mapToRegistry uri https://registry.npmjs.org/mkdirp
+390 verbose addNameRange registry:https://registry.npmjs.org/mkdirp not in flight; fetching
+391 verbose get https://registry.npmjs.org/cron not expired, no request
+392 silly addNameRange number 2 { name: 'cron', range: '>=1.2.1 <2.0.0', hasData: true }
+393 silly addNameRange versions [ 'cron',
+393 silly addNameRange   [ '0.1.0',
+393 silly addNameRange     '0.1.1',
+393 silly addNameRange     '0.1.2',
+393 silly addNameRange     '0.1.3',
+393 silly addNameRange     '0.2.0',
+393 silly addNameRange     '0.3.0',
+393 silly addNameRange     '0.3.1',
+393 silly addNameRange     '0.3.2',
+393 silly addNameRange     '0.3.3',
+393 silly addNameRange     '0.3.4',
+393 silly addNameRange     '1.0.0',
+393 silly addNameRange     '1.0.1',
+393 silly addNameRange     '1.0.2',
+393 silly addNameRange     '1.0.3',
+393 silly addNameRange     '1.0.4',
+393 silly addNameRange     '1.0.5',
+393 silly addNameRange     '1.0.6',
+393 silly addNameRange     '1.0.7',
+393 silly addNameRange     '1.0.8',
+393 silly addNameRange     '1.0.9',
+393 silly addNameRange     '1.1.0',
+393 silly addNameRange     '1.1.1',
+393 silly addNameRange     '1.2.0',
+393 silly addNameRange     '1.2.1' ] ]
+394 silly addNamed cron@1.2.1
+395 verbose addNamed "1.2.1" is a plain semver version for cron
+396 silly resolveWithNewModule rimraf@2.6.1 checking installable status
+397 silly cache add args [ 'rimraf@^2.4.3', null ]
+398 verbose cache add spec rimraf@^2.4.3
+399 silly cache add parsed spec Result {
+399 silly cache add   raw: 'rimraf@^2.4.3',
+399 silly cache add   scope: null,
+399 silly cache add   escapedName: 'rimraf',
+399 silly cache add   name: 'rimraf',
+399 silly cache add   rawSpec: '^2.4.3',
+399 silly cache add   spec: '>=2.4.3 <3.0.0',
+399 silly cache add   type: 'range' }
+400 silly addNamed rimraf@>=2.4.3 <3.0.0
+401 verbose addNamed ">=2.4.3 <3.0.0" is a valid semver range for rimraf
+402 silly addNameRange { name: 'rimraf', range: '>=2.4.3 <3.0.0', hasData: false }
+403 silly mapToRegistry name rimraf
+404 silly mapToRegistry using default registry
+405 silly mapToRegistry registry https://registry.npmjs.org/
+406 silly mapToRegistry data Result {
+406 silly mapToRegistry   raw: 'rimraf',
+406 silly mapToRegistry   scope: null,
+406 silly mapToRegistry   escapedName: 'rimraf',
+406 silly mapToRegistry   name: 'rimraf',
+406 silly mapToRegistry   rawSpec: '',
+406 silly mapToRegistry   spec: 'latest',
+406 silly mapToRegistry   type: 'tag' }
+407 silly mapToRegistry uri https://registry.npmjs.org/rimraf
+408 verbose addNameRange registry:https://registry.npmjs.org/rimraf not in flight; fetching
+409 silly resolveWithNewModule qs@6.4.0 checking installable status
+410 silly cache add args [ 'qs@^6.3.0', null ]
+411 verbose cache add spec qs@^6.3.0
+412 silly cache add parsed spec Result {
+412 silly cache add   raw: 'qs@^6.3.0',
+412 silly cache add   scope: null,
+412 silly cache add   escapedName: 'qs',
+412 silly cache add   name: 'qs',
+412 silly cache add   rawSpec: '^6.3.0',
+412 silly cache add   spec: '>=6.3.0 <7.0.0',
+412 silly cache add   type: 'range' }
+413 silly addNamed qs@>=6.3.0 <7.0.0
+414 verbose addNamed ">=6.3.0 <7.0.0" is a valid semver range for qs
+415 silly addNameRange { name: 'qs', range: '>=6.3.0 <7.0.0', hasData: false }
+416 silly mapToRegistry name qs
+417 silly mapToRegistry using default registry
+418 silly mapToRegistry registry https://registry.npmjs.org/
+419 silly mapToRegistry data Result {
+419 silly mapToRegistry   raw: 'qs',
+419 silly mapToRegistry   scope: null,
+419 silly mapToRegistry   escapedName: 'qs',
+419 silly mapToRegistry   name: 'qs',
+419 silly mapToRegistry   rawSpec: '',
+419 silly mapToRegistry   spec: 'latest',
+419 silly mapToRegistry   type: 'tag' }
+420 silly mapToRegistry uri https://registry.npmjs.org/qs
+421 verbose addNameRange registry:https://registry.npmjs.org/qs not in flight; fetching
+422 silly resolveWithNewModule express@3.5.3 checking installable status
+423 silly cache add args [ 'express@3.5.x', null ]
+424 verbose cache add spec express@3.5.x
+425 silly cache add parsed spec Result {
+425 silly cache add   raw: 'express@3.5.x',
+425 silly cache add   scope: null,
+425 silly cache add   escapedName: 'express',
+425 silly cache add   name: 'express',
+425 silly cache add   rawSpec: '3.5.x',
+425 silly cache add   spec: '>=3.5.0 <3.6.0',
+425 silly cache add   type: 'range' }
+426 silly addNamed express@>=3.5.0 <3.6.0
+427 verbose addNamed ">=3.5.0 <3.6.0" is a valid semver range for express
+428 silly addNameRange { name: 'express', range: '>=3.5.0 <3.6.0', hasData: false }
+429 silly mapToRegistry name express
+430 silly mapToRegistry using default registry
+431 silly mapToRegistry registry https://registry.npmjs.org/
+432 silly mapToRegistry data Result {
+432 silly mapToRegistry   raw: 'express',
+432 silly mapToRegistry   scope: null,
+432 silly mapToRegistry   escapedName: 'express',
+432 silly mapToRegistry   name: 'express',
+432 silly mapToRegistry   rawSpec: '',
+432 silly mapToRegistry   spec: 'latest',
+432 silly mapToRegistry   type: 'tag' }
+433 silly mapToRegistry uri https://registry.npmjs.org/express
+434 verbose addNameRange registry:https://registry.npmjs.org/express not in flight; fetching
+435 verbose get https://registry.npmjs.org/axon not expired, no request
+436 silly addNameRange number 2 { name: 'axon', range: '>=2.0.0 <2.1.0', hasData: true }
+437 silly addNameRange versions [ 'axon',
+437 silly addNameRange   [ '0.0.3',
+437 silly addNameRange     '0.1.0',
+437 silly addNameRange     '0.2.0',
+437 silly addNameRange     '0.3.0',
+437 silly addNameRange     '0.3.1',
+437 silly addNameRange     '0.3.2',
+437 silly addNameRange     '0.4.0',
+437 silly addNameRange     '0.4.1',
+437 silly addNameRange     '0.4.2',
+437 silly addNameRange     '0.4.3',
+437 silly addNameRange     '0.4.4',
+437 silly addNameRange     '0.4.5',
+437 silly addNameRange     '0.4.6',
+437 silly addNameRange     '0.5.0',
+437 silly addNameRange     '0.5.1',
+437 silly addNameRange     '0.5.2',
+437 silly addNameRange     '0.6.0',
+437 silly addNameRange     '0.6.1',
+437 silly addNameRange     '1.0.0',
+437 silly addNameRange     '2.0.0',
+437 silly addNameRange     '2.0.1',
+437 silly addNameRange     '2.0.2',
+437 silly addNameRange     '2.0.3' ] ]
+438 silly addNamed axon@2.0.3
+439 verbose addNamed "2.0.3" is a plain semver version for axon
+440 verbose get https://registry.npmjs.org/async not expired, no request
+441 silly addNameRange number 2 { name: 'async', range: '>=2.1.4 <3.0.0', hasData: true }
+442 silly addNameRange versions [ 'async',
+442 silly addNameRange   [ '0.1.0',
+442 silly addNameRange     '0.1.1',
+442 silly addNameRange     '0.1.2',
+442 silly addNameRange     '0.1.3',
+442 silly addNameRange     '0.1.4',
+442 silly addNameRange     '0.1.5',
+442 silly addNameRange     '0.1.6',
+442 silly addNameRange     '0.1.7',
+442 silly addNameRange     '0.1.8',
+442 silly addNameRange     '0.1.9',
+442 silly addNameRange     '0.1.10',
+442 silly addNameRange     '0.1.11',
+442 silly addNameRange     '0.1.12',
+442 silly addNameRange     '0.1.13',
+442 silly addNameRange     '0.1.14',
+442 silly addNameRange     '0.1.15',
+442 silly addNameRange     '0.1.16',
+442 silly addNameRange     '0.1.17',
+442 silly addNameRange     '0.1.18',
+442 silly addNameRange     '0.1.19',
+442 silly addNameRange     '0.1.20',
+442 silly addNameRange     '0.1.21',
+442 silly addNameRange     '0.1.22',
+442 silly addNameRange     '0.2.0',
+442 silly addNameRange     '0.2.1',
+442 silly addNameRange     '0.2.2',
+442 silly addNameRange     '0.2.3',
+442 silly addNameRange     '0.2.4',
+442 silly addNameRange     '0.2.5',
+442 silly addNameRange     '0.2.6',
+442 silly addNameRange     '0.2.7',
+442 silly addNameRange     '0.2.8',
+442 silly addNameRange     '0.2.9',
+442 silly addNameRange     '0.2.10',
+442 silly addNameRange     '0.3.0',
+442 silly addNameRange     '0.4.0',
+442 silly addNameRange     '0.4.1',
+442 silly addNameRange     '0.5.0',
+442 silly addNameRange     '0.6.0',
+442 silly addNameRange     '0.6.1',
+442 silly addNameRange     '0.6.2',
+442 silly addNameRange     '0.7.0',
+442 silly addNameRange     '0.8.0',
+442 silly addNameRange     '0.9.0',
+442 silly addNameRange     '0.9.2',
+442 silly addNameRange     '1.0.0',
+442 silly addNameRange     '1.1.0',
+442 silly addNameRange     '1.2.0',
+442 silly addNameRange     '1.1.1',
+442 silly addNameRange     '1.2.1',
+442 silly addNameRange     '1.3.0',
+442 silly addNameRange     '1.4.0',
+442 silly addNameRange     '1.4.1',
+442 silly addNameRange     '1.4.2',
+442 silly addNameRange     '1.5.0',
+442 silly addNameRange     '1.5.1',
+442 silly addNameRange     '1.5.2',
+442 silly addNameRange     '2.0.0-alpha.0',
+442 silly addNameRange     '2.0.0-rc.1',
+442 silly addNameRange     '2.0.0-rc.2',
+442 silly addNameRange     '2.0.0-rc.3',
+442 silly addNameRange     '2.0.0-rc.4',
+442 silly addNameRange     '2.0.0-rc.5',
+442 silly addNameRange     '2.0.0-rc.6',
+442 silly addNameRange     '2.0.0',
+442 silly addNameRange     '2.0.1',
+442 silly addNameRange     '2.1.0',
+442 silly addNameRange     '2.1.1',
+442 silly addNameRange     '2.1.2',
+442 silly addNameRange     '2.1.4',
+442 silly addNameRange     '2.1.5' ] ]
+443 silly addNamed async@2.1.5
+444 verbose addNamed "2.1.5" is a plain semver version for async
+445 silly resolveWithNewModule superagent@3.5.0 checking installable status
+446 silly cache add args [ 'superagent@^3.3.2', null ]
+447 verbose cache add spec superagent@^3.3.2
+448 silly cache add parsed spec Result {
+448 silly cache add   raw: 'superagent@^3.3.2',
+448 silly cache add   scope: null,
+448 silly cache add   escapedName: 'superagent',
+448 silly cache add   name: 'superagent',
+448 silly cache add   rawSpec: '^3.3.2',
+448 silly cache add   spec: '>=3.3.2 <4.0.0',
+448 silly cache add   type: 'range' }
+449 silly addNamed superagent@>=3.3.2 <4.0.0
+450 verbose addNamed ">=3.3.2 <4.0.0" is a valid semver range for superagent
+451 silly addNameRange { name: 'superagent', range: '>=3.3.2 <4.0.0', hasData: false }
+452 silly mapToRegistry name superagent
+453 silly mapToRegistry using default registry
+454 silly mapToRegistry registry https://registry.npmjs.org/
+455 silly mapToRegistry data Result {
+455 silly mapToRegistry   raw: 'superagent',
+455 silly mapToRegistry   scope: null,
+455 silly mapToRegistry   escapedName: 'superagent',
+455 silly mapToRegistry   name: 'superagent',
+455 silly mapToRegistry   rawSpec: '',
+455 silly mapToRegistry   spec: 'latest',
+455 silly mapToRegistry   type: 'tag' }
+456 silly mapToRegistry uri https://registry.npmjs.org/superagent
+457 verbose addNameRange registry:https://registry.npmjs.org/superagent not in flight; fetching
+458 verbose get https://registry.npmjs.org/mkdirp not expired, no request
+459 silly addNameRange number 2 { name: 'mkdirp', range: '>=0.5.0 <0.6.0', hasData: true }
+460 silly addNameRange versions [ 'mkdirp',
+460 silly addNameRange   [ '0.0.1',
+460 silly addNameRange     '0.0.2',
+460 silly addNameRange     '0.0.3',
+460 silly addNameRange     '0.0.4',
+460 silly addNameRange     '0.0.5',
+460 silly addNameRange     '0.0.6',
+460 silly addNameRange     '0.0.7',
+460 silly addNameRange     '0.1.0',
+460 silly addNameRange     '0.2.0',
+460 silly addNameRange     '0.2.1',
+460 silly addNameRange     '0.2.2',
+460 silly addNameRange     '0.3.0',
+460 silly addNameRange     '0.3.1',
+460 silly addNameRange     '0.3.2',
+460 silly addNameRange     '0.3.3',
+460 silly addNameRange     '0.3.4',
+460 silly addNameRange     '0.3.5',
+460 silly addNameRange     '0.4.0',
+460 silly addNameRange     '0.4.1',
+460 silly addNameRange     '0.4.2',
+460 silly addNameRange     '0.5.0',
+460 silly addNameRange     '0.5.1' ] ]
+461 silly addNamed mkdirp@0.5.1
+462 verbose addNamed "0.5.1" is a plain semver version for mkdirp
+463 silly resolveWithNewModule mocha@3.2.0 checking installable status
+464 silly cache add args [ 'mocha@^3.2.0', null ]
+465 verbose cache add spec mocha@^3.2.0
+466 silly cache add parsed spec Result {
+466 silly cache add   raw: 'mocha@^3.2.0',
+466 silly cache add   scope: null,
+466 silly cache add   escapedName: 'mocha',
+466 silly cache add   name: 'mocha',
+466 silly cache add   rawSpec: '^3.2.0',
+466 silly cache add   spec: '>=3.2.0 <4.0.0',
+466 silly cache add   type: 'range' }
+467 silly addNamed mocha@>=3.2.0 <4.0.0
+468 verbose addNamed ">=3.2.0 <4.0.0" is a valid semver range for mocha
+469 silly addNameRange { name: 'mocha', range: '>=3.2.0 <4.0.0', hasData: false }
+470 silly mapToRegistry name mocha
+471 silly mapToRegistry using default registry
+472 silly mapToRegistry registry https://registry.npmjs.org/
+473 silly mapToRegistry data Result {
+473 silly mapToRegistry   raw: 'mocha',
+473 silly mapToRegistry   scope: null,
+473 silly mapToRegistry   escapedName: 'mocha',
+473 silly mapToRegistry   name: 'mocha',
+473 silly mapToRegistry   rawSpec: '',
+473 silly mapToRegistry   spec: 'latest',
+473 silly mapToRegistry   type: 'tag' }
+474 silly mapToRegistry uri https://registry.npmjs.org/mocha
+475 verbose addNameRange registry:https://registry.npmjs.org/mocha not in flight; fetching
+476 verbose get https://registry.npmjs.org/qs not expired, no request
+477 silly addNameRange number 2 { name: 'qs', range: '>=6.3.0 <7.0.0', hasData: true }
+478 silly addNameRange versions [ 'qs',
+478 silly addNameRange   [ '0.0.1',
+478 silly addNameRange     '0.0.2',
+478 silly addNameRange     '0.0.3',
+478 silly addNameRange     '0.0.4',
+478 silly addNameRange     '0.0.5',
+478 silly addNameRange     '0.0.6',
+478 silly addNameRange     '0.0.7',
+478 silly addNameRange     '0.1.0',
+478 silly addNameRange     '0.2.0',
+478 silly addNameRange     '0.3.0',
+478 silly addNameRange     '0.3.1',
+478 silly addNameRange     '0.3.2',
+478 silly addNameRange     '0.4.0',
+478 silly addNameRange     '0.4.1',
+478 silly addNameRange     '0.4.2',
+478 silly addNameRange     '0.5.0',
+478 silly addNameRange     '0.5.1',
+478 silly addNameRange     '0.5.2',
+478 silly addNameRange     '0.5.3',
+478 silly addNameRange     '0.5.4',
+478 silly addNameRange     '0.5.5',
+478 silly addNameRange     '0.5.6',
+478 silly addNameRange     '0.6.0',
+478 silly addNameRange     '0.6.1',
+478 silly addNameRange     '0.6.2',
+478 silly addNameRange     '0.6.3',
+478 silly addNameRange     '0.6.4',
+478 silly addNameRange     '0.6.5',
+478 silly addNameRange     '0.6.6',
+478 silly addNameRange     '1.0.0',
+478 silly addNameRange     '1.0.1',
+478 silly addNameRange     '1.0.2',
+478 silly addNameRange     '1.1.0',
+478 silly addNameRange     '1.2.0',
+478 silly addNameRange     '1.2.1',
+478 silly addNameRange     '1.2.2',
+478 silly addNameRange     '2.0.0',
+478 silly addNameRange     '2.1.0',
+478 silly addNameRange     '2.2.0',
+478 silly addNameRange     '2.2.1',
+478 silly addNameRange     '2.2.2',
+478 silly addNameRange     '2.2.3',
+478 silly addNameRange     '2.2.4',
+478 silly addNameRange     '2.2.5',
+478 silly addNameRange     '2.3.0',
+478 silly addNameRange     '2.3.1',
+478 silly addNameRange     '2.3.2',
+478 silly addNameRange     '2.3.3',
+478 silly addNameRange     '2.4.0',
+478 silly addNameRange     '2.4.1',
+478 silly addNameRange     '2.4.2',
+478 silly addNameRange     '3.0.0',
+478 silly addNameRange     '3.1.0',
+478 silly addNameRange     '4.0.0',
+478 silly addNameRange     '5.0.0',
+478 silly addNameRange     '5.1.0',
+478 silly addNameRange     '5.2.0',
+478 silly addNameRange     '6.0.0',
+478 silly addNameRange     '6.0.1',
+478 silly addNameRange     '6.0.2',
+478 silly addNameRange     '6.1.0',
+478 silly addNameRange     '6.2.0',
+478 silly addNameRange     '5.2.1',
+478 silly addNameRange     '6.2.1',
+478 silly addNameRange     '6.3.0',
+478 silly addNameRange     '6.3.1',
+478 silly addNameRange     '6.1.1',
+478 silly addNameRange     '6.0.3',
+478 silly addNameRange     '6.2.2',
+478 silly addNameRange     '6.4.0',
+478 silly addNameRange     '6.3.2',
+478 silly addNameRange     '6.2.3',
+478 silly addNameRange     '6.1.2',
+478 silly addNameRange     '6.0.4' ] ]
+479 silly addNamed qs@6.4.0
+480 verbose addNamed "6.4.0" is a plain semver version for qs
+481 verbose get https://registry.npmjs.org/rimraf not expired, no request
+482 silly addNameRange number 2 { name: 'rimraf', range: '>=2.4.3 <3.0.0', hasData: true }
+483 silly addNameRange versions [ 'rimraf',
+483 silly addNameRange   [ '1.0.0',
+483 silly addNameRange     '1.0.1',
+483 silly addNameRange     '1.0.2',
+483 silly addNameRange     '1.0.4',
+483 silly addNameRange     '1.0.5',
+483 silly addNameRange     '1.0.6',
+483 silly addNameRange     '1.0.7',
+483 silly addNameRange     '1.0.8',
+483 silly addNameRange     '1.0.9',
+483 silly addNameRange     '2.0.0',
+483 silly addNameRange     '2.0.1',
+483 silly addNameRange     '2.0.2',
+483 silly addNameRange     '2.0.3',
+483 silly addNameRange     '2.1.0',
+483 silly addNameRange     '2.1.1',
+483 silly addNameRange     '2.1.2',
+483 silly addNameRange     '2.1.3',
+483 silly addNameRange     '2.1.4',
+483 silly addNameRange     '2.2.0',
+483 silly addNameRange     '2.2.1',
+483 silly addNameRange     '2.2.2',
+483 silly addNameRange     '2.2.3',
+483 silly addNameRange     '2.2.4',
+483 silly addNameRange     '2.2.5',
+483 silly addNameRange     '2.2.6',
+483 silly addNameRange     '2.2.8',
+483 silly addNameRange     '2.3.0',
+483 silly addNameRange     '2.3.1',
+483 silly addNameRange     '2.3.2',
+483 silly addNameRange     '2.3.3',
+483 silly addNameRange     '2.3.4',
+483 silly addNameRange     '2.4.0',
+483 silly addNameRange     '2.4.1',
+483 silly addNameRange     '2.4.2',
+483 silly addNameRange     '2.4.3',
+483 silly addNameRange     '2.4.4',
+483 silly addNameRange     '2.4.5',
+483 silly addNameRange     '2.5.0',
+483 silly addNameRange     '2.5.1',
+483 silly addNameRange     '2.5.2',
+483 silly addNameRange     '2.5.3',
+483 silly addNameRange     '2.5.4',
+483 silly addNameRange     '2.6.0',
+483 silly addNameRange     '2.6.1' ] ]
+484 silly addNamed rimraf@2.6.1
+485 verbose addNamed "2.6.1" is a plain semver version for rimraf
+486 verbose get https://registry.npmjs.org/express not expired, no request
+487 silly addNameRange number 2 { name: 'express', range: '>=3.5.0 <3.6.0', hasData: true }
+488 silly addNameRange versions [ 'express',
+488 silly addNameRange   [ '0.14.0',
+488 silly addNameRange     '0.14.1',
+488 silly addNameRange     '1.0.0',
+488 silly addNameRange     '1.0.1',
+488 silly addNameRange     '1.0.2',
+488 silly addNameRange     '1.0.3',
+488 silly addNameRange     '1.0.4',
+488 silly addNameRange     '1.0.5',
+488 silly addNameRange     '1.0.6',
+488 silly addNameRange     '1.0.7',
+488 silly addNameRange     '1.0.8',
+488 silly addNameRange     '2.0.0',
+488 silly addNameRange     '2.1.0',
+488 silly addNameRange     '2.1.1',
+488 silly addNameRange     '2.2.0',
+488 silly addNameRange     '2.2.1',
+488 silly addNameRange     '2.2.2',
+488 silly addNameRange     '2.3.0',
+488 silly addNameRange     '2.3.1',
+488 silly addNameRange     '2.3.2',
+488 silly addNameRange     '2.3.3',
+488 silly addNameRange     '2.3.4',
+488 silly addNameRange     '2.3.5',
+488 silly addNameRange     '2.3.6',
+488 silly addNameRange     '2.3.7',
+488 silly addNameRange     '2.3.8',
+488 silly addNameRange     '2.3.9',
+488 silly addNameRange     '2.3.10',
+488 silly addNameRange     '2.3.11',
+488 silly addNameRange     '2.3.12',
+488 silly addNameRange     '2.4.0',
+488 silly addNameRange     '2.4.1',
+488 silly addNameRange     '2.4.2',
+488 silly addNameRange     '2.4.3',
+488 silly addNameRange     '2.4.4',
+488 silly addNameRange     '2.4.5',
+488 silly addNameRange     '2.4.6',
+488 silly addNameRange     '2.4.7',
+488 silly addNameRange     '2.5.0',
+488 silly addNameRange     '2.5.1',
+488 silly addNameRange     '2.5.2',
+488 silly addNameRange     '2.5.3',
+488 silly addNameRange     '2.5.4',
+488 silly addNameRange     '2.5.5',
+488 silly addNameRange     '2.5.6',
+488 silly addNameRange     '2.5.7',
+488 silly addNameRange     '2.5.8',
+488 silly addNameRange     '2.5.9',
+488 silly addNameRange     '2.5.10',
+488 silly addNameRange     '2.5.11',
+488 silly addNameRange     '3.0.0',
+488 silly addNameRange     '3.0.1',
+488 silly addNameRange     '3.0.2',
+488 silly addNameRange     '3.0.3',
+488 silly addNameRange     '3.0.4',
+488 silly addNameRange     '3.0.5',
+488 silly addNameRange     '3.0.6',
+488 silly addNameRange     '3.1.0',
+488 silly addNameRange     '3.1.1',
+488 silly addNameRange     '3.1.2',
+488 silly addNameRange     '3.2.0',
+488 silly addNameRange     '3.2.1',
+488 silly addNameRange     '3.2.2',
+488 silly addNameRange     '3.2.3',
+488 silly addNameRange     '3.2.4',
+488 silly addNameRange     '3.2.5',
+488 silly addNameRange     '3.2.6',
+488 silly addNameRange     '3.3.0',
+488 silly addNameRange     '3.3.1',
+488 silly addNameRange     '3.3.2',
+488 silly addNameRange     '3.3.3',
+488 silly addNameRange     '3.3.4',
+488 silly addNameRange     '3.3.5',
+488 silly addNameRange     '3.3.6',
+488 silly addNameRange     '1.0.0-beta',
+488 silly addNameRange     '1.0.0-beta2',
+488 silly addNameRange     '1.0.0-rc',
+488 silly addNameRange     '1.0.0-rc2',
+488 silly addNameRange     '1.0.0-rc3',
+488 silly addNameRange     '1.0.0-rc4',
+488 silly addNameRange     '2.0.0-beta',
+488 silly addNameRange     '2.0.0-beta2',
+488 silly addNameRange     '2.0.0-beta3',
+488 silly addNameRange     '2.0.0-rc',
+488 silly addNameRange     '2.0.0-rc2',
+488 silly addNameRange     '2.0.0-rc3',
+488 silly addNameRange     '3.0.0-alpha1',
+488 silly addNameRange     '3.0.0-alpha2',
+488 silly addNameRange     '3.0.0-alpha3',
+488 silly addNameRange     '3.0.0-alpha4',
+488 silly addNameRange     '3.0.0-alpha5',
+488 silly addNameRange     '3.0.0-beta1',
+488 silly addNameRange     '3.0.0-beta2',
+488 silly addNameRange     '3.0.0-beta3',
+488 silly addNameRange     '3.0.0-beta4',
+488 silly addNameRange     '3.0.0-beta6',
+488 silly addNameRange     '3.0.0-beta7',
+488 silly addNameRange     '3.0.0-rc1',
+488 silly addNameRange     '3.0.0-rc2',
+488 silly addNameRange     '3.0.0-rc3',
+488 silly addNameRange     ... 151 more items ] ]
+489 silly addNamed express@3.5.3
+490 verbose addNamed "3.5.3" is a plain semver version for express
+491 verbose get https://registry.npmjs.org/superagent not expired, no request
+492 silly addNameRange number 2 { name: 'superagent', range: '>=3.3.2 <4.0.0', hasData: true }
+493 silly addNameRange versions [ 'superagent',
+493 silly addNameRange   [ '0.1.1',
+493 silly addNameRange     '0.1.2',
+493 silly addNameRange     '0.1.3',
+493 silly addNameRange     '0.2.0',
+493 silly addNameRange     '0.3.0',
+493 silly addNameRange     '0.4.0',
+493 silly addNameRange     '0.4.1',
+493 silly addNameRange     '0.4.2',
+493 silly addNameRange     '0.4.3',
+493 silly addNameRange     '0.5.0',
+493 silly addNameRange     '0.5.1',
+493 silly addNameRange     '0.6.0',
+493 silly addNameRange     '0.7.0',
+493 silly addNameRange     '0.8.0',
+493 silly addNameRange     '0.8.1',
+493 silly addNameRange     '0.8.2',
+493 silly addNameRange     '0.9.0',
+493 silly addNameRange     '0.9.1',
+493 silly addNameRange     '0.9.2',
+493 silly addNameRange     '0.9.3',
+493 silly addNameRange     '0.9.4',
+493 silly addNameRange     '0.9.5',
+493 silly addNameRange     '0.9.6',
+493 silly addNameRange     '0.9.7',
+493 silly addNameRange     '0.9.8',
+493 silly addNameRange     '0.9.9',
+493 silly addNameRange     '0.9.10',
+493 silly addNameRange     '0.10.0',
+493 silly addNameRange     '0.11.0',
+493 silly addNameRange     '0.12.0',
+493 silly addNameRange     '0.12.1',
+493 silly addNameRange     '0.12.2',
+493 silly addNameRange     '0.12.3',
+493 silly addNameRange     '0.12.4',
+493 silly addNameRange     '0.13.0',
+493 silly addNameRange     '0.14.0',
+493 silly addNameRange     '0.14.1',
+493 silly addNameRange     '0.14.2',
+493 silly addNameRange     '0.14.3',
+493 silly addNameRange     '0.14.4',
+493 silly addNameRange     '0.14.5',
+493 silly addNameRange     '0.14.6',
+493 silly addNameRange     '0.14.7',
+493 silly addNameRange     '0.14.8',
+493 silly addNameRange     '0.14.9',
+493 silly addNameRange     '0.15.0',
+493 silly addNameRange     '0.15.1',
+493 silly addNameRange     '0.15.2',
+493 silly addNameRange     '0.15.3',
+493 silly addNameRange     '0.15.4',
+493 silly addNameRange     '0.15.5',
+493 silly addNameRange     '0.15.6',
+493 silly addNameRange     '0.15.7',
+493 silly addNameRange     '0.16.0',
+493 silly addNameRange     '0.17.0',
+493 silly addNameRange     '0.18.0',
+493 silly addNameRange     '0.18.1',
+493 silly addNameRange     '0.18.2',
+493 silly addNameRange     '0.19.0',
+493 silly addNameRange     '0.19.1',
+493 silly addNameRange     '0.20.0',
+493 silly addNameRange     '0.21.0',
+493 silly addNameRange     '1.0.0',
+493 silly addNameRange     '1.1.0',
+493 silly addNameRange     '1.2.0',
+493 silly addNameRange     '1.3.0',
+493 silly addNameRange     '1.4.0',
+493 silly addNameRange     '1.5.0',
+493 silly addNameRange     '1.6.0',
+493 silly addNameRange     '1.6.1',
+493 silly addNameRange     '1.7.0',
+493 silly addNameRange     '1.7.1',
+493 silly addNameRange     '1.7.2',
+493 silly addNameRange     '1.8.0-beta.1',
+493 silly addNameRange     '1.8.0-beta.2',
+493 silly addNameRange     '1.8.0',
+493 silly addNameRange     '1.8.1',
+493 silly addNameRange     '1.8.2',
+493 silly addNameRange     '1.8.3',
+493 silly addNameRange     '2.0.0-alpha.1',
+493 silly addNameRange     '2.0.0-alpha.2',
+493 silly addNameRange     '2.0.0-alpha.3',
+493 silly addNameRange     '2.0.0',
+493 silly addNameRange     '2.1.0-beta.1',
+493 silly addNameRange     '2.1.0',
+493 silly addNameRange     '1.8.4',
+493 silly addNameRange     '2.2.0',
+493 silly addNameRange     '2.3.0',
+493 silly addNameRange     '3.0.0-alpha.1',
+493 silly addNameRange     '3.0.0-alpha.2',
+493 silly addNameRange     '3.0.0-alpha.3',
+493 silly addNameRange     '3.0.0',
+493 silly addNameRange     '3.1.0',
+493 silly addNameRange     '1.8.5',
+493 silly addNameRange     '3.2.0',
+493 silly addNameRange     '3.2.1',
+493 silly addNameRange     '3.3.0',
+493 silly addNameRange     '3.3.1',
+493 silly addNameRange     '3.3.2',
+493 silly addNameRange     '3.4.0',
+493 silly addNameRange     ... 5 more items ] ]
+494 silly addNamed superagent@3.5.0
+495 verbose addNamed "3.5.0" is a plain semver version for superagent
+496 silly cache afterAdd cron@1.2.1
+497 verbose afterAdd /Users/iliakebets/.npm/cron/1.2.1/package/package.json not in flight; writing
+498 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+499 verbose get https://registry.npmjs.org/mocha not expired, no request
+500 silly addNameRange number 2 { name: 'mocha', range: '>=3.2.0 <4.0.0', hasData: true }
+501 silly addNameRange versions [ 'mocha',
+501 silly addNameRange   [ '0.0.1-alpha1',
+501 silly addNameRange     '0.0.1-alpha2',
+501 silly addNameRange     '0.0.1-alpha3',
+501 silly addNameRange     '0.0.1-alpha4',
+501 silly addNameRange     '0.0.1-alpha5',
+501 silly addNameRange     '0.0.1-alpha6',
+501 silly addNameRange     '0.0.1',
+501 silly addNameRange     '0.0.2',
+501 silly addNameRange     '0.0.3',
+501 silly addNameRange     '0.0.4',
+501 silly addNameRange     '0.0.5',
+501 silly addNameRange     '0.0.6',
+501 silly addNameRange     '0.0.7',
+501 silly addNameRange     '0.0.8',
+501 silly addNameRange     '0.1.0',
+501 silly addNameRange     '0.2.0',
+501 silly addNameRange     '0.3.0',
+501 silly addNameRange     '0.3.1',
+501 silly addNameRange     '0.3.2',
+501 silly addNameRange     '0.3.3',
+501 silly addNameRange     '0.3.4',
+501 silly addNameRange     '0.3.6',
+501 silly addNameRange     '0.4.0',
+501 silly addNameRange     '0.5.0',
+501 silly addNameRange     '0.6.0',
+501 silly addNameRange     '0.7.0',
+501 silly addNameRange     '0.7.1',
+501 silly addNameRange     '0.8.0',
+501 silly addNameRange     '0.8.1',
+501 silly addNameRange     '0.9.0',
+501 silly addNameRange     '0.10.0',
+501 silly addNameRange     '0.10.1',
+501 silly addNameRange     '0.10.2',
+501 silly addNameRange     '0.11.0',
+501 silly addNameRange     '0.12.0',
+501 silly addNameRange     '0.12.1',
+501 silly addNameRange     '0.13.0',
+501 silly addNameRange     '0.14.0',
+501 silly addNameRange     '0.14.1',
+501 silly addNameRange     '1.0.0',
+501 silly addNameRange     '1.0.1',
+501 silly addNameRange     '1.0.2',
+501 silly addNameRange     '1.0.3',
+501 silly addNameRange     '1.1.0',
+501 silly addNameRange     '1.2.0',
+501 silly addNameRange     '1.2.1',
+501 silly addNameRange     '1.2.2',
+501 silly addNameRange     '1.3.0',
+501 silly addNameRange     '1.3.1',
+501 silly addNameRange     '1.3.2',
+501 silly addNameRange     '1.4.0',
+501 silly addNameRange     '1.4.1',
+501 silly addNameRange     '1.4.2',
+501 silly addNameRange     '1.4.3',
+501 silly addNameRange     '1.5.0',
+501 silly addNameRange     '1.6.0',
+501 silly addNameRange     '1.7.0',
+501 silly addNameRange     '1.7.1',
+501 silly addNameRange     '1.7.2',
+501 silly addNameRange     '1.7.3',
+501 silly addNameRange     '1.7.4',
+501 silly addNameRange     '1.8.0',
+501 silly addNameRange     '1.8.1',
+501 silly addNameRange     '1.8.2',
+501 silly addNameRange     '1.9.0',
+501 silly addNameRange     '1.10.0',
+501 silly addNameRange     '1.11.0',
+501 silly addNameRange     '1.12.0',
+501 silly addNameRange     '1.12.1',
+501 silly addNameRange     '1.13.0',
+501 silly addNameRange     '1.14.0',
+501 silly addNameRange     '1.15.0',
+501 silly addNameRange     '1.15.1',
+501 silly addNameRange     '1.16.0',
+501 silly addNameRange     '1.16.1',
+501 silly addNameRange     '1.16.2',
+501 silly addNameRange     '1.17.0',
+501 silly addNameRange     '1.17.1',
+501 silly addNameRange     '1.18.0',
+501 silly addNameRange     '1.18.1',
+501 silly addNameRange     '1.18.2',
+501 silly addNameRange     '1.19.0',
+501 silly addNameRange     '1.20.0',
+501 silly addNameRange     '1.20.1',
+501 silly addNameRange     '1.21.0',
+501 silly addNameRange     '1.21.1',
+501 silly addNameRange     '1.21.2',
+501 silly addNameRange     '1.21.3',
+501 silly addNameRange     '1.21.4',
+501 silly addNameRange     '1.21.5',
+501 silly addNameRange     '2.0.0',
+501 silly addNameRange     '2.0.1',
+501 silly addNameRange     '2.1.0',
+501 silly addNameRange     '2.2.0',
+501 silly addNameRange     '2.2.1',
+501 silly addNameRange     '2.2.3',
+501 silly addNameRange     '2.2.4',
+501 silly addNameRange     '2.2.5',
+501 silly addNameRange     '2.3.0',
+501 silly addNameRange     '2.3.1',
+501 silly addNameRange     ... 22 more items ] ]
+502 silly addNamed mocha@3.2.0
+503 verbose addNamed "3.2.0" is a plain semver version for mocha
+504 silly cache afterAdd async@2.1.5
+505 verbose afterAdd /Users/iliakebets/.npm/async/2.1.5/package/package.json not in flight; writing
+506 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+507 silly cache afterAdd axon@2.0.3
+508 verbose afterAdd /Users/iliakebets/.npm/axon/2.0.3/package/package.json not in flight; writing
+509 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+510 verbose updateRemote git fetch -a origin (git://github.com/attentif/dependable.git)
+511 verbose correctMkdir /Users/iliakebets/.npm/_git-remotes correctMkdir not in flight; initializing
+512 silly cache afterAdd mkdirp@0.5.1
+513 verbose afterAdd /Users/iliakebets/.npm/mkdirp/0.5.1/package/package.json not in flight; writing
+514 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+515 silly cache afterAdd qs@6.4.0
+516 verbose afterAdd /Users/iliakebets/.npm/qs/6.4.0/package/package.json not in flight; writing
+517 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+518 silly cache afterAdd rimraf@2.6.1
+519 verbose afterAdd /Users/iliakebets/.npm/rimraf/2.6.1/package/package.json not in flight; writing
+520 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+521 silly cache afterAdd express@3.5.3
+522 verbose afterAdd /Users/iliakebets/.npm/express/3.5.3/package/package.json not in flight; writing
+523 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+524 silly cache afterAdd superagent@3.5.0
+525 verbose afterAdd /Users/iliakebets/.npm/superagent/3.5.0/package/package.json not in flight; writing
+526 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+527 verbose afterAdd /Users/iliakebets/.npm/cron/1.2.1/package/package.json written
+528 silly cache afterAdd mocha@3.2.0
+529 verbose afterAdd /Users/iliakebets/.npm/mocha/3.2.0/package/package.json not in flight; writing
+530 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+531 verbose afterAdd /Users/iliakebets/.npm/async/2.1.5/package/package.json written
+532 verbose afterAdd /Users/iliakebets/.npm/axon/2.0.3/package/package.json written
+533 verbose afterAdd /Users/iliakebets/.npm/mkdirp/0.5.1/package/package.json written
+534 verbose afterAdd /Users/iliakebets/.npm/qs/6.4.0/package/package.json written
+535 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/errors/1.1.7/package.tgz
+536 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+537 verbose afterAdd /Users/iliakebets/.npm/express/3.5.3/package/package.json written
+538 verbose afterAdd /Users/iliakebets/.npm/rimraf/2.6.1/package/package.json written
+539 verbose afterAdd /Users/iliakebets/.npm/superagent/3.5.0/package/package.json written
+540 verbose afterAdd /Users/iliakebets/.npm/mocha/3.2.0/package/package.json written
+541 verbose setPermissions attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd set permissions on /Users/iliakebets/.npm/_git-remotes/git-github-com-attentif-dependable-git-0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd-23324a20
+542 verbose resolveHead attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd original treeish: 0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+543 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/model/1.1.7/package.tgz
+544 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+545 info git [ 'rev-list', '-n1', '0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd' ]
+546 silly cache afterAdd errors@1.1.7
+547 verbose afterAdd /Users/iliakebets/.npm/errors/1.1.7/package/package.json not in flight; writing
+548 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+549 silly resolveHead attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd resolved treeish: 0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+550 verbose resolveHead attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd resolved Git URL: git://github.com/attentif/dependable.git#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+551 silly resolveHead Git working directory: /var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-696fa54a/0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+552 silly cache afterAdd model@1.1.7
+553 verbose afterAdd /Users/iliakebets/.npm/model/1.1.7/package/package.json not in flight; writing
+554 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+555 info git [ 'clone',
+555 info git   '/Users/iliakebets/.npm/_git-remotes/git-github-com-attentif-dependable-git-0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd-23324a20',
+555 info git   '/var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-696fa54a/0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd' ]
+556 verbose afterAdd /Users/iliakebets/.npm/errors/1.1.7/package/package.json written
+557 verbose afterAdd /Users/iliakebets/.npm/model/1.1.7/package/package.json written
+558 verbose cloneResolved attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd clone Cloning into '/var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-696fa54a/0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd'...
+558 verbose cloneResolved done.
+559 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/middleware/1.1.7/package.tgz
+560 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+561 info git [ 'checkout', '0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd' ]
+562 verbose checkoutTreeish attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd checkout Note: checking out '0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd'.
+562 verbose checkoutTreeish
+562 verbose checkoutTreeish You are in 'detached HEAD' state. You can look around, make experimental
+562 verbose checkoutTreeish changes and commit them, and you can discard any commits you make in this
+562 verbose checkoutTreeish state without impacting any branches by performing another checkout.
+562 verbose checkoutTreeish
+562 verbose checkoutTreeish If you want to create a new branch to retain commits you create, you may
+562 verbose checkoutTreeish do so (now or later) by using -b with the checkout command again. Example:
+562 verbose checkoutTreeish
+562 verbose checkoutTreeish   git checkout -b <new-branch-name>
+562 verbose checkoutTreeish
+562 verbose checkoutTreeish HEAD is now at 0bb5c4a... Added 'function annotations' mode to support function dependencies; fixes #24
+563 silly cache afterAdd middleware@1.1.7
+564 verbose afterAdd /Users/iliakebets/.npm/middleware/1.1.7/package/package.json not in flight; writing
+565 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+566 info git [ 'submodule', '-q', 'update', '--init', '--recursive' ]
+567 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/pryvuser-cli/1.1.7/package.tgz
+568 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+569 verbose afterAdd /Users/iliakebets/.npm/middleware/1.1.7/package/package.json written
+570 silly cache afterAdd pryvuser-cli@1.1.7
+571 verbose afterAdd /Users/iliakebets/.npm/pryvuser-cli/1.1.7/package/package.json not in flight; writing
+572 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+573 verbose afterAdd /Users/iliakebets/.npm/pryvuser-cli/1.1.7/package/package.json written
+574 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/previews-server/1.1.7/package.tgz
+575 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+576 silly cache afterAdd previews-server@1.1.7
+577 verbose afterAdd /Users/iliakebets/.npm/previews-server/1.1.7/package/package.json not in flight; writing
+578 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+579 verbose updateSubmodules attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd submodule update
+580 verbose afterAdd /Users/iliakebets/.npm/previews-server/1.1.7/package/package.json written
+581 verbose addLocalDirectory /Users/iliakebets/.npm/dependable/0.2.5/package.tgz not in flight; packing
+582 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+583 verbose tar pack [ '/Users/iliakebets/.npm/dependable/0.2.5/package.tgz',
+583 verbose tar pack   '/var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-696fa54a/0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd' ]
+584 verbose tarball /Users/iliakebets/.npm/dependable/0.2.5/package.tgz
+585 verbose folder /var/folders/1d/cn3kh2y55dg281_g4xf2_7640000gn/T/npm-19107-77544f70/git-cache-696fa54a/0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+586 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/storage/1.1.7/package.tgz
+587 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+588 silly cache afterAdd storage@1.1.7
+589 verbose afterAdd /Users/iliakebets/.npm/storage/1.1.7/package/package.json not in flight; writing
+590 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+591 verbose afterAdd /Users/iliakebets/.npm/storage/1.1.7/package/package.json written
+592 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/dependable/0.2.5/package.tgz
+593 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+594 verbose addRemoteGit data._from: attentif/dependable#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+595 verbose addRemoteGit data._resolved: git://github.com/attentif/dependable.git#0bb5c4a9ef2b32dded1b24d5d3c0ecccfb0bf7fd
+596 silly cache afterAdd dependable@0.2.5
+597 verbose afterAdd /Users/iliakebets/.npm/dependable/0.2.5/package/package.json not in flight; writing
+598 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+599 verbose afterAdd /Users/iliakebets/.npm/dependable/0.2.5/package/package.json written
+600 silly resolveWithNewModule dependable@0.2.5 checking installable status
+601 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/api-server/1.1.7/package.tgz
+602 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+603 silly cache afterAdd api-server@1.1.7
+604 verbose afterAdd /Users/iliakebets/.npm/api-server/1.1.7/package/package.json not in flight; writing
+605 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+606 verbose afterAdd /Users/iliakebets/.npm/api-server/1.1.7/package/package.json written
+607 verbose addLocalTarball adding from inside cache /Users/iliakebets/.npm/test-helpers/1.1.7/package.tgz
+608 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+609 silly cache afterAdd test-helpers@1.1.7
+610 verbose afterAdd /Users/iliakebets/.npm/test-helpers/1.1.7/package/package.json not in flight; writing
+611 verbose correctMkdir /Users/iliakebets/.npm correctMkdir not in flight; initializing
+612 verbose afterAdd /Users/iliakebets/.npm/test-helpers/1.1.7/package/package.json written
+613 silly rollbackFailedOptional Starting
+614 silly rollbackFailedOptional Finishing
+615 silly runTopLevelLifecycles Finishing
+616 silly install printInstalled
+617 verbose stack Error: ENOENT: no such file or directory, open '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils'
+617 verbose stack     at Error (native)
+618 verbose cwd /Users/iliakebets/Dropbox/Pryv/git/dev-site
+619 error Darwin 16.4.0
+620 error argv "/Users/iliakebets/.nvm/versions/node/v6.9.5/bin/node" "/Users/iliakebets/.nvm/versions/node/v6.9.5/bin/npm" "install"
+621 error node v6.9.5
+622 error npm  v3.10.10
+623 error path /Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils
+624 error code ENOENT
+625 error errno -2
+626 error syscall open
+627 error enoent ENOENT: no such file or directory, open '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils'
+628 error enoent ENOENT: no such file or directory, open '/Users/iliakebets/Dropbox/Pryv/git/dev-site/node_modules/pryv-service-core/components/utils'
+628 error enoent This is most likely not a problem with npm itself
+628 error enoent and is related to npm not being able to find a file.
+629 verbose exit [ -2, true ]
