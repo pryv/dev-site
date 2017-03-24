@@ -1101,6 +1101,180 @@ module.exports = exports =
 
   ,
 
+    id: "hooks"
+    title: "Hooks"
+    description: """
+                 Methods to retrieve and manipulate [hooks](##{dataStructure.getDocId("hook")}).
+                 Only personal and app access can manipulate hooks, which scope is a subset of its own permissions.
+                 """
+    sections: [
+
+      id: "hooks.get"
+      type: "method"
+      title: "Get hooks"
+      http: "GET /hooks"
+      description: """
+                   Queries existing hooks.
+
+                   - If the access used for this call is personnal, you can specify an accessId.
+                   - If calling using an app access, it will fetch the hooks created by this access.
+                   """
+      params:
+        properties: [
+          key: "accessId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          optional: true
+          description: """
+                       Accepted only if called using a personnal access.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "hooks"
+          type: "array of [hooks](##{dataStructure.getDocId("hook")})"
+          description: """
+                       The accessible hooks.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          events: [examples.events.picture, examples.events.activity, examples.events.position]
+      ]
+
+    ,
+
+      id: "hooks.create"
+      type: "method"
+      title: "Create hook"
+      http: "POST /hooks"
+      description: """
+                   Creates a new hook.
+                   """
+      params:
+        description: """
+                     The new hook's data: see [Hook](##{dataStructure.getDocId("hook")}).
+                     """
+      result:
+        http: "201 Created"
+        properties: [
+          key: "hook"
+          type: "[hook](##{dataStructure.getDocId("hook")})"
+          description: """
+                       The created hook.
+                       """
+        ,
+          key: "accessId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          description: """
+                       Only if calling with a personnal access.
+                       """
+        ]
+      examples: [
+        title: "Creating a simple hook"
+        params: _.pick(examples.events.mass, "streamId", "type", "content")
+        result:
+          event: examples.events.mass
+      ,
+        title: "cURL with attachment"
+        content: """
+                 ```bash
+                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" https://${username}.pryv.io/events?auth=${token}
+                 ```
+                 """
+        result:
+          event: examples.events.picture
+      ]
+
+    ,
+
+      id: "hooks.update"
+      type: "method"
+      title: "Update hook"
+      http: "PUT /hooks/{id}"
+      description: """
+                   Modifies the hook.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the hook.
+                       """
+        ,
+          key: "update"
+          type: "object"
+          http:
+            text: "= request body"
+          description: """
+                       New values for the hook's fields: see [hook](##{dataStructure.getDocId("hook")}). All fields are optional, and only modified values must be included.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "hook"
+          type: "[hook](##{dataStructure.getDocId("hook")})"
+          description: """
+                       The updated hook.
+                       """
+        ]
+      examples: [
+        title: "Adding a tag"
+        params:
+          id: examples.events.position.id
+          update:
+            tags: ["home"]
+        result:
+          event: _.defaults({ tags: ["home"], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
+      ]
+
+    ,
+
+      id: "hooks.delete"
+      type: "method"
+      title: "Delete hook"
+      http: "DELETE /hooks/{id}"
+      description: """
+                   Deletes the specified hook.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the hook.
+                       """
+        ]
+      result: [
+        title: "Result: deleted"
+        http: "200 OK"
+        properties: [
+          key: "hookDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The hook deletion record.
+                       """
+        ]
+      ]
+      examples: [
+        title: "Deleting"
+        params:
+          id: examples.events.note.id
+        result:
+          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.note)
+      ]
+
+    ]
+
+  ,
+
     id: "profile"
     title: "Profile sets"
     description: """

@@ -1,6 +1,8 @@
+hooks = require("./data-structure/hook")
 examples = require("./examples")
 helpers = require("./helpers")
 _ = require("lodash")
+
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
 _getDocId = (typeId) ->
@@ -62,10 +64,10 @@ module.exports = exports =
                    """
     ,
       key: "duration"
-      type: "[timestamp](##{_getDocId("timestamp")})"
+      type: "number"
       optional: true
       description: """
-                   If present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
+                   In seconds, if present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
                    """
     ,
       key: "type"
@@ -391,6 +393,52 @@ module.exports = exports =
 
   ,
 
+
+    id: "item-deletion"
+    title: "Item deletion"
+    description: """
+                 A record of a deleted item for sync purposes. Item deletions are currently kept for a year.
+                 """
+    properties: [
+      key: "id"
+      type: "[identifier](##{_getDocId("identifier")})"
+      description: """
+                   The identifier of the deleted item.
+                   """
+    ,
+      key: "deleted"
+      type: "[timestamp](#data-structure-timestamp)"
+      optional: true
+      description: """
+                   The time the item was deleted.
+                   """
+    ]
+    examples: []
+
+  ,
+
+    id: "key-value"
+    title: "Key-value"
+    description: """
+                 An object (key-value map) for client apps to store additional data about the containing item (stream, event, etc.), such as a color, a reference to an associated icon, or other app-specific metadata.
+
+                 ### Adding, updating and removing client data
+
+                 When the containing item is updated, additional data fields can be added, updated and removed as follows:
+
+                 - To add or update a field, just set its value; for example: `{"clientData": {"keyToAddOrUpdate": "value"}}`
+                 - To delete a field, set its value to `null`; for example: `{"clientData": {"keyToDelete": null}}`
+
+                 Fields you don't specify in the update are left untouched.
+
+                 ### Naming convention
+
+                 The convention is that each app names the keys it uses with an `{app-id}:` prefix. For example, an app with id "riki" would store its data in fields such as `"riki:key": "some value"`.
+                 """
+    examples: []
+
+  ,
+
     id: "account"
     title: "Account information"
     trustedOnly: true
@@ -439,54 +487,9 @@ module.exports = exports =
       ]
     ]
     examples: []
-
   ,
-
-    id: "item-deletion"
-    title: "Item deletion"
-    description: """
-                 A record of a deleted item for sync purposes. Item deletions are currently kept for a year.
-                 """
-    properties: [
-      key: "id"
-      type: "[identifier](##{_getDocId("identifier")})"
-      description: """
-                   The identifier of the deleted item.
-                   """
-    ,
-      key: "deleted"
-      type: "[timestamp](#data-structure-timestamp)"
-      optional: true
-      description: """
-                   The time the item was deleted.
-                   """
-    ]
-    examples: []
-
+    hooks.hook
   ,
-
-    id: "key-value"
-    title: "Key-value"
-    description: """
-                 An object (key-value map) for client apps to store additional data about the containing item (stream, event, etc.), such as a color, a reference to an associated icon, or other app-specific metadata.
-
-                 ### Adding, updating and removing client data
-
-                 When the containing item is updated, additional data fields can be added, updated and removed as follows:
-
-                 - To add or update a field, just set its value; for example: `{"clientData": {"keyToAddOrUpdate": "value"}}`
-                 - To delete a field, set its value to `null`; for example: `{"clientData": {"keyToDelete": null}}`
-
-                 Fields you don't specify in the update are left untouched.
-
-                 ### Naming convention
-
-                 The convention is that each app names the keys it uses with an `{app-id}:` prefix. For example, an app with id "riki" would store its data in fields such as `"riki:key": "some value"`.
-                 """
-    examples: []
-
-  ,
-
     id: "error"
     title: "Error"
     description: ""
