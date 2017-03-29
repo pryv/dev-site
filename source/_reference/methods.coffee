@@ -203,10 +203,30 @@ module.exports = exports =
                        """
         ]
       examples: [
+        title: "Fetching the last 20 events (default call)"
         params: {}
         result:
           events: [examples.events.picture, examples.events.activity, examples.events.position]
+      ,
+        title: "cURL for multiple streams"
+        params: """
+                ```bash
+                curl -i https://${username}.pryv.io/events?auth=${token}&streams[]=diary&streams[]=weight
+                ```
+                """
+        result:
+          events: [examples.events.picture, examples.events.note, examples.events.position, examples.events.mass]
+      ,
+        title: "cURL with deletions"
+        params: """
+                ```bash
+                curl -i https://${username}.pryv.io/events?auth=${token}&includeDeletions=true&modifiedSince=#{timestamp.now('-24h')}
+                ```
+                """
+        result:
+          events: [examples.events.mass, examples.itemDeletions[0], examples.itemDeletions[1], examples.itemDeletions[2]]
       ]
+
 
     ,
 
