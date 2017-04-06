@@ -10,6 +10,7 @@ Changes:
 
 - Fix edge-case behaviour on very large `streams.delete` operations.
 - Direct `events.get` API call now supports really large results. Changes made have improved this call's performance by around 30%. As a by-product of this change, we now do not send the 'Content-Size' HTTP header anymore.
+- Allow custom cuid-like ids when creating events
 
 ## v1.1
 
