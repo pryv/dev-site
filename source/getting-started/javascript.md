@@ -127,6 +127,7 @@ connection.events.create(event, function (err, eventCreated) { 
   // ...
 });
 ```
+See also: [More about types](/event-types/)
 
 #### Create with attachment
 
@@ -148,7 +149,6 @@ connection.events.createWithAttachment(event, formData, function (err, event) {
   // ...
 });
 ```
-See also: [More about types](/event-types/)
 
 #### Update
 
@@ -272,21 +272,53 @@ connection.accesses.delete(access, function (err, accessDeletion) {
 
 ### Batch call
 
+#### Retrieve
+
+```javascript
+var methodsData = [
+  {
+    'method': 'streams.get',
+    'params': {
+      'options' : {
+        'parentId': null,
+        'state': 'all'
+      }
+    }
+  },
+  {
+    'method': 'events.get',
+    'params': {
+      'filter': new pryv.Filter({limit: 10}),
+    }
+  },
+  {
+    'method': 'accesses.get',
+    'params': { }
+  }
+];
+
+connection.batchCall(methodsData, function (err, results) {
+  //...
+});
+```
+
+#### Create
+
 ```javascript
 var methodsData = [
   {
     'method': 'streams.create',
     'params': {
-      'id': 'a-new-stream',
+      'id': 'new-stream-id',
       'name': 'A New Stream'
     }
   },
   {
     'method': 'events.create',
     'params': {
-      'streamId': 'a-new-stream',
+      'streamId': 'valid-stream-id',
       'type': 'note/txt',
-      'content': 'This is a new event.'
+      'content': 'This is a new text event.'
     }
   },
   {
@@ -295,8 +327,8 @@ var methodsData = [
       'name': 'A New Access',
       'permissions': [
         {
-          'streamId': 'a-new-stream',
-          'level': 'read'
+          'streamId': 'valid-stream-id',
+          'level': 'manage'
         }
       ]
     }
