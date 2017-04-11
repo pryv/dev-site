@@ -3,6 +3,7 @@
 build
 dev-site.iml
 node_modules
+npm-debug.log
 out
 source/event-types/extras.json
 source/event-types/hierarchical.json
