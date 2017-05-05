@@ -22,7 +22,7 @@ Obtaining an access token for your web app.
 * construct a `settings` JSON object
 * call `Pryv.Auth.setup(settings)`
 
-For a more fleshed-out example look at the source code of [http://jsfiddle.net/pryv/fr4e834p/](http://jsfiddle.net/pryv/fr4e834p/).
+For a more fleshed-out example look at the source code of [http://codepen.io/pryv/pen/apQJxz](http://codepen.io/pryv/pen/apQJxz).
 
 <a name="webapp.test"></a>Or make your own tests from the page:
 [https://sw.pryv.li:2443/access/test.html](https://sw.pryv.li:2443/access/test.html)

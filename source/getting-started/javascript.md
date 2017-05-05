@@ -12,11 +12,11 @@ A few initial pointers to get going with [our Javacript library](https://github.
 
 ### Quick examples
 
-On JSFiddle:
+On CodePen:
 
-- [Basic example: authenticate & retrieve data](http://jsfiddle.net/pryv/fr4e834p/)
-- [Second step: create notes & numerical values](https://jsfiddle.net/pryv/kmtyxj37/)
-- [Events monitor: manipulate events & monitor changes](http://jsfiddle.net/pryv/bwpv0b3o/)
+- [Basic example: authenticate & retrieve data](http://codepen.io/pryv/pen/apQJxz)
+- [Second step: create notes & numerical values](http://codepen.io/pryv/pen/apQJrO)
+- [Events monitor: manipulate events & monitor changes](http://codepen.io/pryv/pen/rjQygX)
 
 
 ### Install the library
