@@ -185,13 +185,12 @@ module.exports = exports =
                  You can also use the **Access token generator** to obtain an app token:
 
                  ```
-                 http://pryv.github.io/app-web-access/?pryv-reg=reg.{domain}
+                 https://api.pryv.com/app-web-access/?pryv-reg=reg.{domain}
                  ```
 
                  For example:
 
-                 [https://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](https://pryv.github
-                 .io/app-web-access/?pryv-reg=reg.pryv.io)
+                 [https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.io](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.io)
                  """
     examples: [
       title: "HTTP `Authorization` header"
