@@ -4,6 +4,14 @@ title: API change log
 template: default.jade
 ---
 
+## v1.2.4
+
+ - Updates most internal components to more recent versions. 
+ - Improved concurrency behavior. This only surfaces under heavy loads. 
+ - New Deployment Method: This version should be deployed via docker. Pryv is now fully componentized.
+
+NOTE Since this version upgrades the internal database, it cannot easily be downgraded to 1.1.8. Please make a backup of your Pryv data store before running this version the first time. 
+
 ## v1.1.8
 
 Changes:
