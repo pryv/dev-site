@@ -31,3 +31,26 @@ exports.getCurlCall = (params, http) ->
   # use shell variable format to help with quick copy-paste
   return call.replace /({\w+?})/g, (match) ->
     "$#{match}"
+
+exports.changeTrackingProperties = (typeName) ->
+  return [
+    key: "created"
+    type: "[timestamp](#data-structure-timestamp)"
+    readOnly: true
+    description: "The time the #{typeName} was created."
+  ,
+    key: "createdBy"
+    type: "[identifier](#data-structure-identifier)"
+    readOnly: true
+    description: "The id of the access used to create the #{typeName}."
+  ,
+    key: "modified"
+    type: "[timestamp](#data-structure-timestamp)"
+    readOnly: true
+    description: "The time the #{typeName} was last modified."
+  ,
+    key: "modifiedBy"
+    type: "[identifier](#data-structure-identifier)"
+    readOnly: true
+    description: "The id of the last access used to modify the #{typeName}."
+  ]
