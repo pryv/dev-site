@@ -10,9 +10,7 @@ To add items to the lists below [send us a message](mailto:developers@pryv.com).
 
 - Pryv browser – the Pryv web interface and personal dashboard: [app](https://www.pryv.me)
 - Pryv iOS – the Pryv iPhone app: [app](https://itunes.apple.com/us/app/pryv/id826320447?mt=8), [GitHub](https://github.com/pryv/mobile-notes)
-- Web bookmarklet: [GitHub](https://github.com/pryv/bookmarklet)
 - Command-line interface: [GitHub](https://github.com/pryv/cli)
-- Raw data explorer: [GitHub](https://github.com/pryv/explorer)
 - Spreadsheet data importer: [GitHub](https://github.com/pryv/web-data-importer)
 - Service integrations:
   - IFTTT: [IFTTT channel](https://ifttt.com/pryv)
