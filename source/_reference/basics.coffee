@@ -15,14 +15,14 @@ module.exports = exports =
     title: "Root endpoint URL"
     description: """
                  ```
-                 https://{username}.pryv.io
+                 https://{username}.pryv.me
                  ```
 
                  Each user account has a dedicated root API endpoint as it is potentially served from a different location.
 
                  """
     examples: [
-      title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.io`"
+      title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.me`"
     ]
 
   ,
@@ -46,7 +46,7 @@ module.exports = exports =
       content: """
                ```http
                GET /events HTTP/1.1
-               Host: {username}.pryv.io
+               Host: {username}.pryv.me
                Authorization: {token}
                ```
                """
@@ -89,23 +89,23 @@ module.exports = exports =
                    First, load the right Socket.IO client library.
 
                    - For a web app, the Javascript lib is directly served by the API at:
-                     <pre><code>https://{username}.pryv.io/socket.io/socket.io.js</code></pre>
+                     <pre><code>https://{username}.pryv.me/socket.io/socket.io.js</code></pre>
 
                    - For other platforms see the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).
 
                    Then initialize the connection with the URL:
 
                    ```
-                   https://{username}.pryv.io:443/{username}?auth={accessToken}&resource=/{username}
+                   https://{username}.pryv.me:443/{username}?auth={accessToken}&resource=/{username}
                    ```
                    """
       examples: [
         title: "In a web app"
         content: """
                  ```html
-                 <script src="https://#{examples.users.one.username}.pryv.io/socket.io/socket.io.js"></script>
+                 <script src="https://#{examples.users.one.username}.pryv.me/socket.io/socket.io.js"></script>
                  <script>
-                 var socket = io.connect("https://#{examples.users.one.username}.pryv.io:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 var socket = io.connect("https://#{examples.users.one.username}.pryv.me:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
                  });
                  </script>
                  ```
@@ -190,14 +190,14 @@ module.exports = exports =
 
                  For example:
 
-                 [https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.io](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.io)
+                 [https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me)
                  """
     examples: [
       title: "HTTP `Authorization` header"
       content: """
                ```http
                GET /events HTTP/1.1
-               Host: {username}.pryv.io
+               Host: {username}.pryv.me
                Authorization: {token}
                ```
                """
@@ -206,7 +206,7 @@ module.exports = exports =
       content: """
                ```http
                GET /events?auth={token} HTTP/1.1
-               Host: {username}.pryv.io
+               Host: {username}.pryv.me
                ```
                """
     ]
@@ -230,7 +230,7 @@ module.exports = exports =
       title: "Auth request"
       type: "method"
       http:
-        text: "POST to `https://reg.pryv.io/access`"
+        text: "POST to `https://reg.pryv.me/access`"
       httpOnly: true
       params:
         properties: [
@@ -351,7 +351,7 @@ module.exports = exports =
         content: """
                  ```http
                  POST /access HTTP/1.1
-                 Host: reg.pryv.io
+                 Host: reg.pryv.me
 
                  {
                    "requestingAppId": "test-app-id",
@@ -378,8 +378,8 @@ module.exports = exports =
                  ```json
                  {
                    "status": "NEED_SIGNIN",
-                   "url": "https://sw.pryv.io:2443/access/v1/access.html?lang=fr&key=dXRqBezem8v3mNxf&requestingAppId=test-app-id&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.io%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
-                   "poll": "https://reg.pryv.io/access/dXRqBezem8v3mNxf",
+                   "url": "https://sw.pryv.me:2443/access/v1/access.html?lang=fr&key=dXRqBezem8v3mNxf&requestingAppId=test-app-id&returnURL=false&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
+                   "poll": "https://reg.pryv.me/access/dXRqBezem8v3mNxf",
                    "poll_rate_ms": 1000
                  }
                  ```
@@ -389,7 +389,7 @@ module.exports = exports =
         content: """
                  ```http
                  GET /access/dXRqBezem8v3mNxf HTTP/1.1
-                 Host: reg.pryv.io
+                 Host: reg.pryv.me
                  ```
                  """
       ]
@@ -496,7 +496,7 @@ module.exports = exports =
         key: "user-account-relocated"
         http: "301"
         description: """
-                     The user has relocated her account to another server. Both the `Location` header and the error's `data` contain the equivalent URL pointing to the physical server now hosting the user's account. This error can only occur between the moment the account is relocated and the moment your DNS is updated to point to the new server. So we're stretching the HTTP convention a little, in that the returned URL should not be used permanently (only until `{username}.pryv.io` points to the correct server again). It's up to you to decide whether to keep it for the duration of the session (if you use sessions), for a given time, etc.
+                     The user has relocated her account to another server. Both the `Location` header and the error's `data` contain the equivalent URL pointing to the physical server now hosting the user's account. This error can only occur between the moment the account is relocated and the moment your DNS is updated to point to the new server. So we're stretching the HTTP convention a little, in that the returned URL should not be used permanently (only until `{username}.pryv.me` points to the correct server again). It's up to you to decide whether to keep it for the duration of the session (if you use sessions), for a given time, etc.
                      """
       ,
         key: "user-intervention-required"

@@ -27,7 +27,7 @@ exports.getCurlCall = (params, http) ->
   else
     data += "-d '#{JSON.stringify(processedParams)}' "
 
-  call = "curl -i #{request}#{data}https://{username}.pryv.io#{path}#{queryString}"
+  call = "curl -i #{request}#{data}https://{username}.pryv.me#{path}#{queryString}"
   # use shell variable format to help with quick copy-paste
   return call.replace /({\w+?})/g, (match) ->
     "$#{match}"

@@ -10,7 +10,7 @@ withTOC: true
 
 Pryv supports any type of timestamped data, modeling individual pieces as **events** (stuff that happens) and contextualizing them into **streams** and **tags** (the circumstances in which stuff happens).
 
-Storage is decentralized: you access each user account on the server hosting its data (e.g. `https://{username}.pryv.io/`). There can be as many servers as there are accounts.
+Storage is decentralized: you access each user account on the server hosting its data (e.g. `https://{username}.pryv.me/`). There can be as many servers as there are accounts.
 
 Users collect, manipulate and view events on their account (or other users' accounts) via apps, which are granted access to the parts of user data they need (e.g. specific streams). Apps can interoperate provided they support the same event types and are granted access to the same data.
 
