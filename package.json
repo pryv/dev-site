@@ -11,6 +11,9 @@
     "API",
     "documentation"
   ],
+  "scripts": {
+    "webserver": "node node_modules/rec-la/webserver/main.js ./build"
+  },
   "dependencies": {},
   "devDependencies": {
     "coffee-script": "^1.8.0",
@@ -33,7 +36,8 @@
     "metalsmith-watch": "^1.0.1",
     "pryv-service-core": "git+ssh://git@github.com:pryv/service-core.git#production",
     "pryv-style": "git://github.com/pryv/style.git",
-    "unix-timestamp": "^0.2.0"
+    "unix-timestamp": "^0.2.0",
+    "rec-la": "git+https://github.com/pryv/rec-la.git"
   },
   "engines": {
     "node": ">=4.4.3"
