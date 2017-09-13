@@ -258,11 +258,11 @@ module.exports = exports =
           type: "array of [events](##{dataStructure.getDocId("event")})"
           optional: true
           description: """
-                       If requested by `includeHistory`, the event's ordered by modification time.
+                       If requested by `includeHistory`, the history of the event as an array of events, ordered by modification time.
                        """
         ]
       examples: [
-        title: "Fetching the an event's version history"
+        title: "Fetching an event's version history"
         params: {"includeHistory": true}
         result:
           event: examples.events.noteWithHistory
