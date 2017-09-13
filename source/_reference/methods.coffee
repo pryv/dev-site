@@ -227,6 +227,50 @@ module.exports = exports =
           events: [examples.events.mass, examples.itemDeletions[0], examples.itemDeletions[1], examples.itemDeletions[2]]
       ]
 
+    ,
+
+      id: "events.getOne"
+      type: "method"
+      title: "Get one event"
+      http: "GET /events/{id}"
+      description: """
+                   Fetches a specific event. This request is mostly used to fetch an event's version history, allowing to review all the modifications to an event's data.
+                   """
+      params:
+        properties: [
+          key: "includeHistory"
+          type: "boolean"
+          optional: true
+          description: """
+                       If `true`, the event's history will be added to the response. Default: false (don't include the history).
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The event.
+                       """
+        ,
+          key: "history"
+          type: "array of [events](##{dataStructure.getDocId("event")})"
+          optional: true
+          description: """
+                       If requested by `includeHistory`, the history of the event as an array of events, ordered by modification time.
+                       """
+        ]
+      examples: [
+        title: "Fetching an event's version history"
+        params: {"includeHistory": true}
+        result:
+          event: examples.events.noteWithHistory
+          history: [
+            examples.events.noteHistory1,
+            examples.events.noteHistory2
+          ]
+      ]
 
     ,
 

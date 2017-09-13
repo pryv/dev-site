@@ -107,6 +107,39 @@ module.exports =
     createdBy: accesses.app.id
     modified: timestamp.now('+10h')
     modifiedBy: accesses.app.id
+  noteWithHistory:
+    id: generateId()
+    time: timestamp.now('-1h')
+    streamId: streams.diary[0].id
+    tags: []
+    type: "note/text"
+    content: "Hi, I am the most version of this event"
+    created: timestamp.now('-1h')
+    createdBy: accesses.app.id
+    modified: timestamp.now('+2h')
+    modifiedBy: accesses.app.id
+  noteHistory1:
+    id: generateId()
+    time: timestamp.now('-1h')
+    streamId: streams.diary[0].id
+    tags: []
+    type: "note/text"
+    content: "Hi, I am the first modification"
+    created: timestamp.now('-1h')
+    createdBy: accesses.app.id
+    modified: timestamp.now('+1h')
+    modifiedBy: accesses.app.id
+  noteHistory2:
+    id: generateId()
+    time: timestamp.now('-1h')
+    streamId: streams.diary[0].id
+    tags: []
+    type: "note/text"
+    content: "Hi, I was the initial event"
+    created: timestamp.now('-1h')
+    createdBy: accesses.app.id
+    modified: timestamp.now('0h')
+    modifiedBy: accesses.app.id
 
   picture:
     id: generateId()
