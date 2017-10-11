@@ -95,13 +95,18 @@ See also: [App authorization](/reference/#authorizing-your-app)
 var connection = new pryv.Connection(credentials);
 ```
 
-### Fetch the stream structure
+### Fetch the stream structure and access info
 
 ```javascript
-// Required by the monitors
+// This is mandatory for Monitors;
+// Fetches the stream structure
 connection.fetchStructure(function (err, streams) {
   // ...
-})
+});
+// Retrieves the name, type and permissions of the access in use (optional)
+connection.accessInfo(function (err, info) {
+  // ...
+});
 ```
 
 ### Manage events
@@ -123,6 +128,7 @@ var event = {
   type: 'note/txt',
   content: 'This is an example.'
 };
+
 connection.events.create(event, function (err, eventCreated) { 
   // ...
 });
@@ -176,7 +182,7 @@ var options;
 
 // Here we will get all streams (including root and trashed streams)
 options = {
-    // If null, retrieve active streams only
+    // If null, retrieve active (non-trashed) streams only
     state: 'all'
 };
 
@@ -274,31 +280,109 @@ connection.accesses.delete(access, function (err, accessDeletion) {
 
 ```javascript
 var methodsData = [
+  // Retrieve calls
   {
-    'method': 'streams.create',
-    'params': {
-      'id': 'a-new-stream',
-      'name': 'A New Stream'
+    method: 'streams.get',
+    params: {
+      option: {
+        state: 'all'
+      }
     }
   },
   {
-    'method': 'events.create',
-    'params': {
-      'streamId': 'a-new-stream',
-      'type': 'note/txt',
-      'content': 'This is a new event.'
+    method: 'events.get',
+    params: {
+      filter: {
+        limit: 10
+      }
     }
   },
   {
-    'method': 'accesses.create',
-    'params': {
-      'name': 'A New Access',
-      'permissions': [
+    method: 'accesses.get',
+    params: {}
+  },
+
+  // Create calls
+  {
+    method: 'streams.create',
+    params: {
+      name: 'Stream Name',
+      id: 'stream-id'
+    }
+  },
+  {
+    method: 'events.create',
+    params: {
+      streamId: 'valid-stream-id',
+      type: 'note/txt',
+      content: 'The event content.'
+    }
+  },
+  {
+    method: 'accesses.create',
+    params: {
+      name: 'An Access',
+      permissions: [
         {
-          'streamId': 'a-new-stream',
-          'level': 'read'
+          streamId: '*',
+          level: 'manage'
         }
       ]
+    }
+  },
+
+  // Update calls
+  {
+    method: 'streams.update',
+    params: {
+      id: 'valid-stream-id',
+      update: {
+        name: 'Updated Stream Name'
+      }
+    }
+  },
+  {
+    method: 'events.update',
+    params: {
+      id: 'valid-event-id',
+      update: {
+        content: 'The updated event content.'
+      }
+    }
+  },
+  {
+    method: 'accesses.update',
+    params: {
+      id: 'valid-access-id',
+      update: {
+        name: 'An Updated Access',
+        permissions: [
+          {
+            streamId: '*',
+            level: 'read'
+          }
+        ]
+      }
+    }
+  },
+
+  // Delete calls
+  {
+    method: 'streams.delete',
+    params: {
+      id: 'valid-stream-id'
+    }
+  },
+  {
+    method: 'events.delete',
+    params: {
+      id: 'valid-event-id'
+    }
+  },
+  {
+    method: 'accesses.delete',
+    params: {
+      id: 'valid-access-id'
     }
   }
 ];
