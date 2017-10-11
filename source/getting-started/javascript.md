@@ -98,8 +98,8 @@ var connection = new pryv.Connection(credentials);
 ### Fetch the stream structure and access info
 
 ```javascript
-// This is mandatory;
-// Make sure that the structure has been fully fetched before calling any method
+// This is mandatory for Monitors;
+// Fetches the stream structure
 connection.fetchStructure(function (err, streams) {
   // ...
 });
@@ -186,10 +186,10 @@ options = {
     state: 'all'
 };
 
-// This will get a selected set of streams;
-// the parentId field will override the state field;
+// Same as above but in a selected stream
 options = {
     parentId: 'valid-stream-id',
+    state: 'all'
 };
 
 connection.streams.get(options, function (err, streams) {
