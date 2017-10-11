@@ -95,15 +95,15 @@ See also: [App authorization](/reference/#authorizing-your-app)
 var connection = new pryv.Connection(credentials);
 ```
 
-### Fetch the stream structure
+### Fetch the stream structure and access info
 
 ```javascript
 // This is mandatory;
-// make sure the structure has been fully fetched before calling any method
+// Make sure that the structure has been fully fetched before calling any method
 connection.fetchStructure(function (err, streams) {
   // ...
 });
-// This shoule be called before/after fetchStructure if needed
+// Retrieves the name, type and permissions of the access in use (optional)
 connection.accessInfo(function (err, info) {
   // ...
 });
@@ -280,7 +280,7 @@ connection.accesses.delete(access, function (err, accessDeletion) {
 
 ```javascript
 var methodsData = [
-  // Retrieve methods -----------------------
+  // Retrieve calls
   {
     method: 'streams.get',
     params: {
@@ -302,7 +302,7 @@ var methodsData = [
     params: {}
   },
 
-  // Create methods -------------------------
+  // Create calls
   {
     method: 'streams.create',
     params: {
@@ -331,7 +331,7 @@ var methodsData = [
     }
   },
 
-  // Update methods -------------------------
+  // Update calls
   {
     method: 'streams.update',
     params: {
@@ -366,7 +366,7 @@ var methodsData = [
     }
   },
 
-  // Delete methods -------------------------
+  // Delete calls
   {
     method: 'streams.delete',
     params: {
