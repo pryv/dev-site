@@ -8,7 +8,7 @@ exports.sections = [
   require('./data-structure.coffee')
 ];
 
-exports.version = require('pryv-service-core/package.json').version;
+exports.version = '1.2.11';
 exports.helpers = require('./helpers.coffee');
 
 exports.system = require('./system.coffee');
