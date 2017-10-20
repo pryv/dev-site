@@ -310,7 +310,6 @@ connection.streams.delete(stream, new StreamsCallback() {
 #### Retrieve
 
 ```java
-
 connection.accesses.get(new GetCallback<Access>() {
   @Override
   public void onSuccess(String successMessage, List<Access> accesses, Double serverTime) {
@@ -328,7 +327,7 @@ connection.accesses.get(new GetCallback<Access>() {
 
 ```java
 Access newAccess = new Access();
-access.setName("forMyDoctor");
+newAccess.setName("forMyDoctor");
 newAccess.addPermission(new Permission("heartRate", Permission.Level.read, null));
 connection.accesses.create(newAccess, new CreateCallback<Access>() {
   @Override
