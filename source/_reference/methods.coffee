@@ -623,6 +623,11 @@ module.exports = exports =
           id: examples.events.note.id
         result:
           event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.note)
+      ,
+        title: "Deleting"
+        params:
+          id: examples.events.note.id
+        result: {eventDeletion:{id:examples.events.note.id}}
       ]
     ]
 
@@ -838,6 +843,11 @@ module.exports = exports =
           id: examples.streams.health[0].children[2].id
         result:
           event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.streams.health[0].children[2])
+      ,
+        title: "Deleting"
+        params:
+          id: examples.streams.health[0].children[2].id
+        result: {streamDeletion:{id:examples.streams.health[0].children[2].id}}
       ]
     ]
 
