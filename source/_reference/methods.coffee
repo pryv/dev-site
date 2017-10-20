@@ -984,7 +984,7 @@ module.exports = exports =
       examples: [
         params:
           id: examples.accesses.shared.id
-        result: {}
+        result: {accessDeletion:{id:examples.accesses.shared.id}}
       ]
 
     ,
