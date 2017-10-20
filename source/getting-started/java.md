@@ -23,41 +23,7 @@ A few initial pointers to get going with [our Java library](https://github.com/p
 
 ### Install the library
 
-Since this library aims to be compatible with Java and Android environment, it contains a Java library and an Android library that both have a Commons library as dependency. Thus, please import the dependency depending on the platform you are targeting as follows :
-
-#### Gradle
-
-Java project:
-```
-compile 'com.pryv:java:1.0.5'
-```
-
-Android project:
-```
-compile 'com.pryv:android:1.0.5'
-```
-
-#### Maven
-
-Java project:
-```
-<dependency>
-  <groupId>com.pryv</groupId>
-  <artifactId>java</artifactId>
-  <version>1.0.5</version>
-  <type>pom</type>
-</dependency>
-```
-
-Android project:
-```
-<dependency>
-  <groupId>com.pryv</groupId>
-  <artifactId>android</artifactId>
-  <version>1.0.5</version>
-  <type>pom</type>
-</dependency>
-```
+In order to import the library in your project, please follow [these instructions](https://github.com/pryv/lib-java/blob/master/README.md#import).
 
 ### Authorize your app
 
@@ -341,7 +307,75 @@ connection.streams.delete(stream, new StreamsCallback() {
 
 ### Manage accesses
 
-Coming soon!
+#### Retrieve
+
+```java
+
+connection.accesses.get(new GetCallback<Access>() {
+  @Override
+  public void onSuccess(String successMessage, List<Access> accesses, Double serverTime) {
+    // do something
+  }
+
+  @Override
+  public void onError(String errorMessage, Double serverTime) {
+    // do something
+  }
+});
+```
+
+#### Create
+
+```java
+Access newAccess = new Access();
+access.setName("forMyDoctor");
+newAccess.addPermission(new Permission("heartRate", Permission.Level.read, null));
+connection.accesses.create(newAccess, new CreateCallback<Access>() {
+  @Override
+  public void onSuccess(String successMessage, Access access, Double serverTime) {
+    // do something
+  }
+
+  @Override
+  public void onError(String errorMessage, Double serverTime) {
+    // do something
+  }
+});
+
+```
+
+#### Update
+
+```java
+access.setName("forMyFamily");
+connection.accesses.update(access.getId(), access ,new UpdateCallback<Access>() {
+  @Override
+  public void onSuccess(String successMessage, Access access, Double serverTime) {
+    // do something
+  }
+
+  @Override
+  public void onError(String errorMessage, Double serverTime) {
+    // do something
+  }
+});
+```
+
+#### Delete
+
+```java
+connection.accesses.delete(access.getId(), new DeleteCallback<Access>() {
+  @Override
+  public void onSuccess(String successMessage, String id, Double serverTime) {
+    // do something
+  }
+
+  @Override
+  public void onError(String errorMessage, Double serverTime) {
+    // do something
+  }
+});
+```
 
 ### Batch call
 
