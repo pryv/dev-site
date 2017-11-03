@@ -42,18 +42,16 @@ AuthView view = new AuthView() {
 	}
 
 	public void onAuthError(String message) {
-	  // Display error message
+		// Display error message
 	}
 
-    public void onAuthRefused(int reasonId, String message, String detail) {
-  	  // display authentication refused message
-  	  ...
-    }
+	public void onAuthRefused(int reasonId, String message, String detail) {
+		// Display authentication refused message
+	}
 
-    public void displayLoginView(String loginURL) {
-      // generate WebView to load URL to enter credentials
-      ...
-    }
+	public void displayLoginView(String loginURL) {
+		// Generate WebView to load URL and enter credentials
+	}
 };
 
 AuthController authenticator = new AuthControllerImpl(REQUESTING_APP_ID, permissions, language, returnURL, view);
@@ -75,11 +73,11 @@ Connection connection = new Connection(userID, accessToken, domain);
 
 ```java
 try {
-    Filter filter = new Filter().addStream('diary');
-    List<Event> retrievedEvents = connection.events.get(filter);
-		// Do something with the retrieved Events
+	Filter filter = new Filter().addStream('diary');
+	List<Event> retrievedEvents = connection.events.get(filter);
+	// Do something with the retrieved Events
 } catch (IOException e) {
-    // Handle the error
+	// Handle the error
 }
 ```
 
@@ -87,14 +85,14 @@ try {
 
 ```java
 try {
-    Event newEvent = new Event()
-            .setStreamId("diary")
-            .setType("note/txt")
-            .setContent("I track, therefore I am.");
-    newEvent = connection.events.create(newEvent);
-    // Do something with the created Event
+	Event newEvent = new Event()
+		.setStreamId("diary")
+		.setType("note/txt")
+		.setContent("I track, therefore I am.");
+	newEvent = connection.events.create(newEvent);
+	// Do something with the created Event
 } catch (IOException e) {
-    // Handle the error
+	// Handle the error
 }
 ```
 
