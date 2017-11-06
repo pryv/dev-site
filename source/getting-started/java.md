@@ -12,11 +12,7 @@ A few initial pointers to get going with [our Java library](https://github.com/p
 
 ### Examples
 
-- [Java Basic example: authenticate & retrieve data](https://github.com/pryv/app-java-examples/blob/master/BasicExample/src/main/java/BasicExample.java)<br>
-
-- [Java App example: JavaFX app to view user data](https://github.com/pryv/app-java-examples/tree/master/JavaFxApp)<br>
-
-- [Java Backup app: backup one's Pryv data locally to CSV format](https://github.com/pryv/app-java-examples/tree/master/BackupApp)<br>
+- [Java Basic example: authenticate & retrieve data](https://github.com/pryv/app-java-examples/tree/master/BasicExample)<br>
 
 - [Android App example: authenticate, create note Events and retrieve them, with integration guide](https://github.com/pryv/app-android-example)<br>
 
