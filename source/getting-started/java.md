@@ -6,7 +6,13 @@ template: default.jade
 withTOC: true
 ---
 
-A few initial pointers to get going with [our Java library](https://github.com/pryv/lib-java).<br>
+A few initial pointers to get going with [the last release of our Java library](https://github.com/pryv/lib-java).<br>
+
+For previous releases, please look at the following documentation instead:
+* [Getting-started v1](https://github.com/pryv/lib-java/blob/master/getting_started_v1.md)
+* [Java example app v1](https://github.com/pryv/app-java-examples/tree/bcfedf62e54ac56cfc71f47bef63282e29222bcb/BasicExample)
+* [Android example app v1](https://github.com/pryv/app-android-example/tree/a7ca35203e7030b6ca4ef828096fa85e77bc5aa9)
+
 [Feedback and suggestions welcome](http://github.com/pryv/dev-site/issues).
 
 
