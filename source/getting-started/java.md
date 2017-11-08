@@ -6,7 +6,7 @@ template: default.jade
 withTOC: true
 ---
 
-A few initial pointers to get going with [the last release of our Java library](https://github.com/pryv/lib-java).<br>
+A few initial pointers to get going with [the latest release of our Java library](https://github.com/pryv/lib-java).<br>
 
 For previous releases, please look at the following documentation instead:
 * [Getting-started v1](https://github.com/pryv/lib-java/blob/master/getting_started_v1.md)
@@ -66,7 +66,7 @@ See also: [app authorization in the API reference](/reference/#authorizing-your-
 ### Setup connection
 
 ```java
-Connection connection = new Connection(userID, accessToken, domain);
+Connection connection = new Connection(username, accessToken, domain);
 ```
 
 ### Manage events
@@ -74,8 +74,8 @@ Connection connection = new Connection(userID, accessToken, domain);
 #### Retrieve
 
 ```java
+Filter filter = new Filter().addStream('diary');
 try {
-	Filter filter = new Filter().addStream('diary');
 	List<Event> retrievedEvents = connection.events.get(filter);
 	// Do something with the retrieved Events
 } catch (IOException e) {
@@ -86,11 +86,11 @@ try {
 #### Create
 
 ```java
+Event newEvent = new Event()
+	.setStreamId("diary")
+	.setType("note/txt")
+	.setContent("I track, therefore I am.");
 try {
-	Event newEvent = new Event()
-		.setStreamId("diary")
-		.setType("note/txt")
-		.setContent("I track, therefore I am.");
 	newEvent = connection.events.create(newEvent);
 	// Do something with the created Event
 } catch (IOException e) {
@@ -101,8 +101,8 @@ try {
 #### Update
 
 ```java
+newEvent.setContent("updated content");
 try {
-	newEvent.setContent("updated content");
 	Event updatedEvent = connection.events.update(newEvent);
 	// Do something with the updated Event
 } catch (IOException e) {
@@ -126,8 +126,8 @@ try {
 #### Retrieve
 
 ```java
+Filter filter = new Filter().setParentId("myRootStreamId");
 try {
-	Filter filter = new Filter().setParentId("myRootStreamId");
 	Map<String, Stream> retrievedStreams = connection.streams.get(filter);
 	// Do something with the retrieved Streams
 } catch (IOException e) {
@@ -138,10 +138,10 @@ try {
 #### Create
 
 ```java
+Stream newStream = new Stream()
+	.setId("heartRate")
+	.setName("Heart rate");
 try {
-	Stream newStream = new Stream()
-		.setId("heartRate")
-		.setName("Heart rate");
 	newStream = connection.streams.create(newStream);
 	// Do something with the created Stream
 } catch (IOException e) {
@@ -152,8 +152,8 @@ try {
 #### Update
 
 ```java
+newStream.setName("New name");
 try {
-	newStream.setName("New name");
 	Stream updatedStream = connection.streams.update(newStream);
 	// Do something with the updated Stream
 } catch (IOException e) {
@@ -188,10 +188,10 @@ try {
 #### Create
 
 ```java
+Access newAccess = new Access()
+	.setName("forMyDoctor")
+	.addPermission(new Permission("heartRate", Permission.Level.read, null));
 try {
-	Access newAccess = new Access()
-		.setName("forMyDoctor")
-		.addPermission(new Permission("heartRate", Permission.Level.read, null));
 	newAccess = connection.accesses.create(newAccess);
 	// Do something with the created access
 } catch (IOException e) {
@@ -202,8 +202,8 @@ try {
 #### Update
 
 ```java
+newAccess.setName("forMyFamily");
 try {
-	newAccess.setName("forMyFamily");
 	Access updatedAccess = connection.accesses.update(newAccess);
 	// Do something with the updated access
 } catch (IOException e) {
