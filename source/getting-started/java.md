@@ -134,12 +134,12 @@ Stream updatedStream = connection.streams.update(newStream);
 #### Delete
 
 ```java
-// The first delete will only trash the streams
+// The first delete will only trash the stream
 Stream trashedStream = connection.streams.delete(newStream, false);
 trashedStream.isTrashed(); // true
-// The second delete will actually delete the streams
-// If mergeEventsWithParent is true, merge the events in the parent stream.
-// If mergeEventsWithParent is false, also delete the events.
+// The second delete will actually delete the stream
+// If mergeEventsWithParent is true, merge the events in the parent stream
+// If mergeEventsWithParent is false, also delete the events
 Stream deletedStream = connection.streams.delete(trashedStream, mergeEventsWithParent);
 deletedStream.isDeleted(); // true
 ```
@@ -189,7 +189,7 @@ catch (IOException e) {
 }
 
 catch (ApiException e) {
-	// Handle errors originated from Pryv API
+	// Handle exceptions originated from Pryv API
 	String errorId = e.getId();
 	String errorMsg = e.getMsg();
 	String errorData = e.getData();
