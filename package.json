@@ -34,7 +34,7 @@
     "metalsmith-stylus": "^2.0.0",
     "metalsmith-templates": "^0.7.0",
     "metalsmith-watch": "^1.0.1",
-    "pryv-service-core": "git+ssh://git@github.com:pryv/service-core.git#production",
+    "pryv-service-core": "git+ssh://git@github.com:pryv/service-core.git#release-1.1",
     "pryv-style": "git://github.com/pryv/style.git",
     "unix-timestamp": "^0.2.0",
     "rec-la": "git+https://github.com/pryv/rec-la.git"

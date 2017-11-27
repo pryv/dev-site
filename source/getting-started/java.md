@@ -75,12 +75,7 @@ Connection connection = new Connection(username, accessToken, domain);
 
 ```java
 Filter filter = new Filter().addStream('diary');
-try {
-	List<Event> retrievedEvents = connection.events.get(filter);
-	// Do something with the retrieved Events
-} catch (IOException e) {
-	// Handle the error
-}
+List<Event> retrievedEvents = connection.events.get(filter);
 ```
 
 #### Create
@@ -90,35 +85,25 @@ Event newEvent = new Event()
 	.setStreamId("diary")
 	.setType("note/txt")
 	.setContent("I track, therefore I am.");
-try {
-	newEvent = connection.events.create(newEvent);
-	// Do something with the created Event
-} catch (IOException e) {
-	// Handle the error
-}
+newEvent = connection.events.create(newEvent);
 ```
 
 #### Update
 
 ```java
 newEvent.setContent("updated content");
-try {
-	Event updatedEvent = connection.events.update(newEvent);
-	// Do something with the updated Event
-} catch (IOException e) {
-	// Handle the error
-}
+Event updatedEvent = connection.events.update(newEvent);
 ```
 
 #### Delete
 
 ```java
-try {
-	String eventDeletionId = connection.events.delete(newEvent.getId());
-	// Do something with the id of the deleted Event
-} catch (IOException e) {
-	// Handle the error
-}
+// The first delete will only trash the event
+Event trashedEvent = connection.events.delete(newEvent);
+trashedEvent.isTrashed(); // true
+// The second delete will actually delete the event
+Event deletedEvent = connection.events.delete(trashedEvent);
+deletedEvent.isDeleted(); // true
 ```
 
 ### Manage Streams
@@ -127,12 +112,7 @@ try {
 
 ```java
 Filter filter = new Filter().setParentId("myRootStreamId");
-try {
-	Map<String, Stream> retrievedStreams = connection.streams.get(filter);
-	// Do something with the retrieved Streams
-} catch (IOException e) {
-	// Handle the error
-}
+Map<String, Stream> retrievedStreams = connection.streams.get(filter);
 ```
 
 #### Create
@@ -141,35 +121,27 @@ try {
 Stream newStream = new Stream()
 	.setId("heartRate")
 	.setName("Heart rate");
-try {
-	newStream = connection.streams.create(newStream);
-	// Do something with the created Stream
-} catch (IOException e) {
-	// Handle the error
-}
+newStream = connection.streams.create(newStream);
 ```
 
 #### Update
 
 ```java
 newStream.setName("New name");
-try {
-	Stream updatedStream = connection.streams.update(newStream);
-	// Do something with the updated Stream
-} catch (IOException e) {
-	// Handle the error
-}
+Stream updatedStream = connection.streams.update(newStream);
 ```
 
 #### Delete
 
 ```java
-try {
-	String eventDeletionId = connection.streams.delete(newStream.getId(), false);
-	// Do something with the id of the deleted Stream
-} catch (IOException e) {
-	// Handle the error
-}
+// The first delete will only trash the stream
+Stream trashedStream = connection.streams.delete(newStream, false);
+trashedStream.isTrashed(); // true
+// The second delete will actually delete the stream
+// If mergeEventsWithParent is true, merge the events in the parent stream
+// If mergeEventsWithParent is false, also delete the events
+Stream deletedStream = connection.streams.delete(trashedStream, mergeEventsWithParent);
+deletedStream.isDeleted(); // true
 ```
 
 ### Manage accesses
@@ -177,12 +149,7 @@ try {
 #### Retrieve
 
 ```java
-try {
-	List<Access> retrievedAccesses = connection.accesses.get();
-	// Do something with the retrieved accesses
-} catch (IOException e) {
-	// Handle the error
-}
+List<Access> retrievedAccesses = connection.accesses.get();
 ```
 
 #### Create
@@ -191,34 +158,42 @@ try {
 Access newAccess = new Access()
 	.setName("forMyDoctor")
 	.addPermission(new Permission("heartRate", Permission.Level.read, null));
-try {
-	newAccess = connection.accesses.create(newAccess);
-	// Do something with the created access
-} catch (IOException e) {
-	// Handle the error
-}
+newAccess = connection.accesses.create(newAccess);
 ```
 
 #### Update
 
 ```java
 newAccess.setName("forMyFamily");
-try {
-	Access updatedAccess = connection.accesses.update(newAccess);
-	// Do something with the updated access
-} catch (IOException e) {
-	// Handle the error
-}
+Access updatedAccess = connection.accesses.update(newAccess);
 ```
 
 #### Delete
 
 ```java
+Access deletedAccess = connection.accesses.delete(newAccess);
+deletedAccess.isDeleted(); // true
+```
+
+### Handle exceptions
+Each of the above calls (get, create, update, delete) may throw IOExceptions or
+ApiExceptions that you may want to catch and handle in your code:
+
+```java
 try {
-	String deletionId = connection.accesses.delete(newAccess.getId());
-	// Do something with the id of the deleted access
-} catch (IOException e) {
-	// Handle the error
+	connection.events.create(newEvent);
+} 
+
+catch (IOException e) {
+	// Handle standard I/O exceptions
+}
+
+catch (ApiException e) {
+	// Handle exceptions originated from Pryv API
+	String errorId = e.getId();
+	String errorMsg = e.getMsg();
+	String errorData = e.getData();
+	ArrayList<String> subErrors = e.getSubErrors();
 }
 ```
 
