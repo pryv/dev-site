@@ -98,7 +98,12 @@ Event updatedEvent = connection.events.update(newEvent);
 #### Delete
 
 ```java
-String eventDeletionId = connection.events.delete(newEvent.getId());
+// The first delete will only trash the event
+Event trashedEvent = connection.events.delete(newEvent);
+trashedEvent.isTrashed(); // true
+// The second delete will actually delete the event
+Event deletedEvent = connection.events.delete(trashedEvent);
+deletedEvent.isDeleted(); // true
 ```
 
 ### Manage Streams
@@ -129,7 +134,14 @@ Stream updatedStream = connection.streams.update(newStream);
 #### Delete
 
 ```java
-String eventDeletionId = connection.streams.delete(newStream.getId(), false);
+// The first delete will only trash the streams
+Stream trashedStream = connection.streams.delete(newStream, false);
+trashedStream.isTrashed(); // true
+// The second delete will actually delete the streams
+// If mergeEventsWithParent is true, merge the contained events in the parent stream.
+// If mergeEventsWithParent is false, also delete the contained events.
+Stream deletedStream = connection.streams.delete(trashedStream, mergeEventsWithParent);
+deletedStream.isDeleted(); // true
 ```
 
 ### Manage accesses
@@ -159,7 +171,8 @@ Access updatedAccess = connection.accesses.update(newAccess);
 #### Delete
 
 ```java
-String deletionId = connection.accesses.delete(newAccess.getId());
+Access deletedAccess = connection.accesses.delete(newAccess);
+deletedAccess.isDeleted(); // true
 ```
 
 ### Handle exceptions
