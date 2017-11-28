@@ -8,12 +8,12 @@ cd $scriptsFolder/..
 
 # check for well known prereqs that might be missing
 hash git 2>&- || { echo >&2 "I require git."; exit 1; }
-hash npm 2>&- || { echo >&2 "I require node and npm."; exit 1; }
+hash yarn 2>&- || { echo >&2 "I require node and yarn."; exit 1; }
 
 echo "
 Installing Node modules from 'package.json' if necessary...
 "
-npm install
+yarn install
 
 if [ ! -d build ]
 then
