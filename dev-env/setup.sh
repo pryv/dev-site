@@ -10,16 +10,37 @@ cd $scriptsFolder/..
 hash git 2>&- || { echo >&2 "I require git."; exit 1; }
 hash yarn 2>&- || { echo >&2 "I require node and yarn."; exit 1; }
 
-echo "
-Installing Node modules from 'package.json' if necessary...
-"
+# resolve service-core dependency
+if [ ! -d dependencies/core ]
+then
+  echo "Setting up 'dependencies/core' folder for service-core dependency."
+  git clone git@github.com:pryv/service-core.git dependencies/core
+fi
+
+if [ -z "$1" ]
+then
+  # default branch used for service-core dependency
+  coreBranch="release-1.1"
+else
+  coreBranch=$1
+fi
+
+echo "Service-core dependency is targeting the following branch: $coreBranch"
+
+# ensure service-core dependency is up-to-date
+cd dependencies/core
+git checkout $coreBranch
+git pull
+cd $scriptsFolder/..
+
+# install node modules
+echo "Installing Node modules from 'package.json' if necessary."
 yarn install
 
+# setup build folder
 if [ ! -d build ]
 then
-  echo "
-Setting up 'build' folder for publishing to GitHub pages...
-"
+  echo "Setting up 'build' folder for publishing to GitHub pages."
   git clone git@github.com:pryv/pryv.github.io.git build
 fi
 

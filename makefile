@@ -13,7 +13,7 @@ clean:
 	rm -rf build/*
 
 setup:
-	./dev-env/setup.sh
+	./dev-env/setup.sh $(core)
 
 retrieve-types:
 	@echo ""

@@ -424,11 +424,9 @@ debug-log@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debug-log/-/debug-log-1.0.1.tgz#2307632d4c04382b8df8a32f70b895046d52745f"
 
-debug@*, debug@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.0.0.tgz#89bd9df6732b51256bc6705342bba02ed12131ef"
-  dependencies:
-    ms "0.6.2"
+debug@*, "debug@>= 0.7.3 < 1", debug@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-0.8.1.tgz#20ff4d26f5e422cb68a1bacbbb61039ad8c1c130"
 
 debug@0.7.4, debug@~0.7.4:
   version "0.7.4"
@@ -444,15 +442,17 @@ debug@2.6.9:
   dependencies:
     ms "2.0.0"
 
-"debug@>= 0.7.3 < 1", debug@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-0.8.1.tgz#20ff4d26f5e422cb68a1bacbbb61039ad8c1c130"
-
 debug@~1.0.1:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/debug/-/debug-1.0.5.tgz#f7241217430f99dec4c2b473eab92228e874c2ac"
   dependencies:
     ms "2.0.0"
+
+debug@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.0.0.tgz#89bd9df6732b51256bc6705342bba02ed12131ef"
+  dependencies:
+    ms "0.6.2"
 
 delayed-stream@0.0.5:
   version "0.0.5"
@@ -1413,9 +1413,8 @@ proxy-addr@~2.0.2:
     forwarded "~0.1.2"
     ipaddr.js "1.5.2"
 
-"pryv-service-core@git+ssh://git@github.com:pryv/service-core.git#release-1.1":
+"pryv-service-core@file:dependencies/core":
   version "1.1.8"
-  resolved "git+ssh://git@github.com/pryv/service-core.git#6dab276460915c91ea4930adbeaf599515c9c4d6"
   dependencies:
     async "^1.4.2"
     axon "2.0.x"
