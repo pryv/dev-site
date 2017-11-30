@@ -1,6 +1,7 @@
 .DS_Store
 .project
 build
+dependencies
 dev-site.iml
 node_modules
 npm-debug.log

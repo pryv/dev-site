@@ -7,13 +7,15 @@ Source content for api.pryv.com (API reference, recommendations, guides, etc.)
 
 ### Prerequisites
 
-Node v4.4.3+.
+Node v8.3.0+, Yarn v0.21.3+
 
 `make setup` sets up the environment.
 
-### Build & publish
+**Note:** the setup command will install a dependency to pryv/service-core.
+By default, it will target the branch defined inside the setup script.
+If you want to use another branch, use `make setup core=my_branch` instead.
 
-Prerequisite: the source API server working copy must be under `../api-server`.
+### Build & publish
 
 - `make build` generates the website from the source into the `build` folder
 - `make watch` watches the source folder and rebuilds on changes
