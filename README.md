@@ -7,7 +7,7 @@ Source content for api.pryv.com (API reference, recommendations, guides, etc.)
 
 ### Prerequisites
 
-Node v4.4.3+.
+Node v8.3.0+, Yarn v0.21.3+
 
 `make setup` sets up the environment.
 
