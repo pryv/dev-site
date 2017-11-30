@@ -20,7 +20,7 @@ fi
 if [ -z "$1" ]
 then
   # default branch used for service-core dependency
-  coreBranch="release-1.1"
+  coreBranch="release-1.2"
 else
   coreBranch=$1
 fi
