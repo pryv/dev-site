@@ -536,10 +536,11 @@ module.exports = exports =
       result:
         http: "200 OK"
         description: """
-                     The file's contents.
+                     The file's content.
                      """
       examples: [
-
+        params:
+          readToken: examples.events.activityAttachment.attachments[0].readToken
       ]
 
     ,

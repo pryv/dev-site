@@ -42,6 +42,7 @@ module.exports =
       fileName: "travel-expense.jpg"
       type: "image/jpeg"
       size: 1111
+      readToken: "cikxpta3r0hdw1fyq62e7nrdw-FU1y6RpJMHiidf2cyDYr4aC3AYc"
     ]
     created: timestamp.now()
     createdBy: accesses.app.id
