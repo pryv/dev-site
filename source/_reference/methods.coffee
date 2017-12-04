@@ -485,6 +485,16 @@ module.exports = exports =
       description: """
                    Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
                    """
+      params:
+        properties: [
+          key: "file"
+          type: "filename"
+          http:
+            text: "set as multipart/form-data"
+          description: """
+                       The file (binary) to upload.
+                       """
+        ]
       result:
         http: "200 OK"
         properties: [
@@ -498,9 +508,11 @@ module.exports = exports =
         title: "cURL"
         content: """
                  ```bash
-                 curl -i -F "file=@{filename}" https://${username}.pryv.me/events/#{examples.events.picture.id}?auth=${token}
+                 curl -i -F "file=@travel-expense.jpg" https://${username}.pryv.me/events/#{examples.events.activityAttachment.id}?auth=${token}
                  ```
                  """
+        result:
+          event: examples.events.activityAttachment
       ]
 
     ,
