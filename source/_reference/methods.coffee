@@ -487,6 +487,14 @@ module.exports = exports =
                    """
       params:
         properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the event.
+                       """
+        ,
           key: "file"
           type: "filename"
           http:
@@ -527,6 +535,31 @@ module.exports = exports =
                    """
       params:
         properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the event.
+                       """
+        ,
+          key: "fileId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the attached file.
+                       """
+        ,
+          key: "fileName"
+          type: "string"
+          optional: true
+          http:
+            text: "set in request path"
+          description: """
+                       The name of the file.
+                       """
+        ,
           key: "readToken"
           type: "string"
           description: """
