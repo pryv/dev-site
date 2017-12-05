@@ -496,11 +496,11 @@ module.exports = exports =
                        """
         ,
           key: "file"
-          type: "filename"
+          type: "string"
           http:
             text: "set as multipart/form-data"
           description: """
-                       The file (binary) to upload.
+                       The name of the file (binary) to upload.
                        """
         ]
       result:
