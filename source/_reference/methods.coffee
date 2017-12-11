@@ -432,7 +432,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the event's fields: see [event](##{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
                        """
@@ -496,7 +496,7 @@ module.exports = exports =
                        """
         ,
           key: "file"
-          type: "string"
+          type: "binary",
           http:
             text: "set as multipart/form-data"
           description: """
@@ -531,7 +531,9 @@ module.exports = exports =
       httpOnly: true
       http: "GET /events/{id}/{fileId}[/{fileName}]"
       description: """
-                   Gets the attached file. Accepts an arbitrary filename path suffix (ignored) for easier link creation.
+                   Fetches the attached file.
+                   If you use it with the authentication token passed in headers, the filename is not mandatory.
+                   When used with the readToken (for easier sharing), the filename is mandatory.
                    """
       params:
         properties: [
@@ -562,6 +564,9 @@ module.exports = exports =
         ,
           key: "readToken"
           type: "string"
+          optional: true
+          http:
+            text: "set in request path"
           description: """
                        The file read token to authentify the request if not using the `Authorization` HTTP header. See [`event.attachments[].readToken`](##{dataStructure.getDocId("event")}) for more info.
                        """
