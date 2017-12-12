@@ -32,9 +32,11 @@ On CodePen:
 </div>
 
 <div class="col-md-6">
-<h6>Browser, old style</h6>
+<h6>Browser</h6>
 <p>[Download](https://api.pryv.com/lib-javascript/latest/pryv.js) then include the library file:</p>
 <pre><code class="lang-html">&lt;script type="text/javascript" src="pryv.js"&gt;&lt;/script&gt;</code></pre>
+<p>Or direct link to latest version:</p>
+<pre><code class="lang-html">&lt;script type="text/javascript" src="https://api.pryv.com/lib-javascript/latest/pryv.js"&gt;&lt;/script&gt;</code></pre>
 </div>
 
 </div>
