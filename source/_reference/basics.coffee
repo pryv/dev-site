@@ -216,10 +216,25 @@ module.exports = exports =
     id: "authorizing-your-app"
     title: "Authorizing your app"
     description: """
-                 To authenticate users in your app, and thus for users to grant your app access to their data, you must:
+                 Getting an authorization token for your app requires a authentication phase in a trusted web app.
+                 
+                 ### Process
+                 
+                 1. Choose a unique app identifier and define the set of permissions and other parameters to initialize the auth process. 
+                   - the 
+                 2. Your app issue an **Access** request by calling `POST https://access.pryv.me/access/` which return a JSON object *state*. 
+                   - The auth process has a unique **state.key** identifier to follow the process
+                 3. Your app opens a web page provided by the *state.url* property (usually in a webView in the app).
+                 4. Your app waits for the end of the authentication process by tracking the **state.status** change (two methods):
+                   - PREFERED: in the background, your app regularly poll  `POST https://access.pryv.me/access/{state.key}`
+                   - when your app CANNOT do polling, you use the `returnUrl` property during first step to specify the exit page of the authentication process.
 
-                 1. Choose an app identifier (min. length 6 chars)
-                 2. Send an auth request from your app
+                 ![Sequence Diagram](/app-access/custom-auth-sequence.png)
+                 
+                 ### Initial requirements
+
+                 1. Define the settings of your access request
+                 2. Send `POST https://access.pryv.me/access/`
                  3. Open the auth page from the URL returned (e.g. as a popup); the auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one)
                  4. Handle the result by either polling the appropriate URL or directly from the return URL you'll have defined
 
@@ -230,18 +245,18 @@ module.exports = exports =
       title: "Auth request"
       type: "method"
       http:
-        text: "POST to `https://reg.pryv.me/access`"
+        text: "POST to `https://access.pryv.me/access`"
       httpOnly: true
       params:
         properties: [
           key: "requestingAppId"
           type: "string"
           description: """
-                       Your app's identifier.
+                       Your app's identifier  (min. length 6 chars)
                        """
         ,
           key: "requestedPermissions"
-          type: "array of permission request objects"
+          type: "array of permission request objects: [access data structure reference](/reference/#access)."
           description: """
                        The requested permissions. Each permission request has properties:
                        """
@@ -276,11 +291,11 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       The URL to redirect the user to after auth completes. If not set, your app must use polling to retrieve the auth result (see response below). Responses to polling requests are the same as those from the auth request.
+                       The URL to redirect the user to after auth completes. Use this if your app CANNOT use the polling method to retrieve the auth result (see response below).
                        """
         ]
       result: [
-        title: "Result: in progress"
+        title: "Result: in progress or initial state"
         http: "200"
         properties: [
           key: "status"
@@ -299,6 +314,86 @@ module.exports = exports =
           type: "string"
           description: """
                        If using polling: the poll URL to use for retrieving the auth result via an HTTP GET request.
+                       """
+        ,
+          key: "poll_rate_ms"
+          type: "integer"
+          description: """
+                       delay to wait for the next polling request
+                       """
+        ]
+      ]
+      examples: [
+        title: "Auth request"
+        content: """
+                 ```http
+                 POST /access HTTP/1.1
+                 Host: access.pryv.me
+
+                 {
+                 "requestingAppId": "test-app-id",
+                 "requestedPermissions": [
+                 {
+                 "streamId": "diary",
+                 "level": "read",
+                 "defaultName": "Journal"
+                 },
+                 {
+                 "streamId": "position",
+                 "level": "contribute",
+                 "defaultName": "Position"
+                 }
+                 ],
+                 "languageCode": "fr"
+                 }
+                 ```
+                 """
+      ,
+        title: '"In progress" response'
+        content: """
+                 ```json
+                 {
+                 "status": "NEED_SIGNIN",
+                 "url": "https://sw.pryv.me/access/v1/access.html?lang=fr&key=dXRqBezem8v3mNxf&requestingAppId=test-app-id&returnURL=false&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
+                 "poll": "https://access.pryv.me/access/dXRqBezem8v3mNxf",
+                 "poll_rate_ms": 1000
+                 }
+                 ```
+                 """
+      ]
+    ,
+      id: "auth-polling"
+      title: "Auth polling"
+      type: "method"
+      http:
+        text: "GET to `https://access.pryv.me/access/{key}`"
+      httpOnly: true
+      result: [
+        title: "Result: in progress or initial state"
+        http: "200"
+        properties: [
+          key: "status"
+          type: "`NEED_SIGNIN`"
+          description: """
+                       Auth in progress.
+                       """
+        ,
+          key: "url"
+          type: "string"
+          description: """
+                       The URL of the auth page to show the user (e.g. as a popup) into your app.
+                       """
+        ,
+          key: "poll"
+          type: "string"
+          description: """
+                       If using polling: the poll URL to use for retrieving the auth result via an HTTP GET request.
+                       """
+        ,
+          key: "poll_rate_ms"
+          type: "integer"
+          description: """
+                       delay to wait for the next polling request
                        """
         ]
       ,
@@ -347,41 +442,11 @@ module.exports = exports =
         ]
       ]
       examples: [
-        title: "Auth request"
+        title: "Polling - URL is given by the the precedent call"
         content: """
                  ```http
-                 POST /access HTTP/1.1
-                 Host: reg.pryv.me
-
-                 {
-                   "requestingAppId": "test-app-id",
-                   "requestedPermissions": [
-                     {
-                       "streamId": "diary",
-                       "level": "read",
-                       "defaultName": "Journal"
-                     },
-                     {
-                       "streamId": "position",
-                       "level": "contribute",
-                       "defaultName": "Position"
-                     }
-                   ],
-                   "languageCode": "fr"
-                 }
-                 ```
-                 """
-      ,
-        title: '"In progress" response'
-        # TODO: this example is not consistent (url query string doesn't match)
-        content: """
-                 ```json
-                 {
-                   "status": "NEED_SIGNIN",
-                   "url": "https://sw.pryv.me:2443/access/v1/access.html?lang=fr&key=dXRqBezem8v3mNxf&requestingAppId=test-app-id&returnURL=false&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
-                   "poll": "https://reg.pryv.me/access/dXRqBezem8v3mNxf",
-                   "poll_rate_ms": 1000
-                 }
+                 GET /access/{key} HTTP/1.1
+                 Host: access.pryv.me
                  ```
                  """
       ,
