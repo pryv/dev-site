@@ -500,7 +500,15 @@ module.exports = exports =
           http:
             text: "set as multipart/form-data"
           description: """
-                       The name of the file (binary) to upload.
+                       The file to upload.
+                       """
+        ,
+          key: "type"
+          type: "string"
+          http:
+            text: "set as multipart/form-data"
+          description: """
+                       The type of file.
                        """
         ]
       result:
@@ -531,9 +539,8 @@ module.exports = exports =
       httpOnly: true
       http: "GET /events/{id}/{fileId}[/{fileName}]"
       description: """
-                   Fetches the attached file.
-                   If you use it with the authentication token passed in headers, the filename is not mandatory.
-                   When used with the readToken (for easier sharing), the filename is mandatory.
+                   Gets the attached file. Accepts an arbitrary filename path suffix (ignored) for easier link readability.
+                   For this function using the `auth` query parameter is not accepted. You can either use the [access token](##{dataStructure.getDocId("access")}) in the `Authorization` header or provide the `readToken` query parameter.
                    """
       params:
         properties: [
@@ -576,11 +583,6 @@ module.exports = exports =
         description: """
                      The file's content.
                      """
-      examples: [
-        params:
-          readToken: examples.events.activityAttachment.attachments[0].readToken
-      ]
-
     ,
 
       id: "events.deleteAttachment"

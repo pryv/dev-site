@@ -3,6 +3,14 @@ generateId = require("cuid")
 accesses = require("./accesses")
 streams = require("./streams")
 
+generateReadToken = () ->
+  hash = "";
+  dictionnary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for i in [1 .. 27]
+    hash += dictionnary.charAt(Math.floor(Math.random() * dictionnary.length));
+  return generateId() + '-' + hash
+
 module.exports =
   activity:
     id: generateId()
@@ -42,7 +50,7 @@ module.exports =
       fileName: "travel-expense.jpg"
       type: "image/jpeg"
       size: 1111
-      readToken: "cikxpta3r0hdw1fyq62e7nrdw-FU1y6RpJMHiidf2cyDYr4aC3AYc"
+      readToken: generateReadToken()
     ]
     created: timestamp.now()
     createdBy: accesses.app.id
@@ -154,6 +162,7 @@ module.exports =
       fileName: "photo.jpg"
       type: "image/jpeg"
       size: 2561
+      readToken: generateReadToken()
     ]
     created: timestamp.now('-1h')
     createdBy: accesses.shared.id
