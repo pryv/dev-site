@@ -21,7 +21,7 @@ If you want to use another branch, use `make setup core=my_branch` instead.
 - `make watch` watches the source folder and rebuilds on changes
 - `make clean` cleans up the `build` folder (not done by build/watch)
 - `make publish` builds and publishes the website
-- `npm run webserver` to see the site on [https://l.rec.la:4443/](https://l.rec.la:4443/)
+- `yarn run webserver` to see the site on [https://l.rec.la:4443/](https://l.rec.la:4443/)
 
 (Read `makefile` for details.)
 
