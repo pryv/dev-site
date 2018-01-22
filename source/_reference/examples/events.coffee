@@ -113,7 +113,7 @@ module.exports =
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
-    content: "Hi, I am the most version of this event"
+    content: "Hi, I am the latest version of this event"
     created: timestamp.now('-1h')
     createdBy: accesses.app.id
     modified: timestamp.now('+2h')
