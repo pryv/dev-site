@@ -432,7 +432,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the event's fields: see [event](##{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
                        """
@@ -498,9 +498,11 @@ module.exports = exports =
         title: "cURL"
         content: """
                  ```bash
-                 curl -i -F "file=@{filename}" https://${username}.pryv.me/events/#{examples.events.picture.id}?auth=${token}
+                 curl -i -F "file=@travel-expense.jpg" https://${username}.pryv.me/events/#{examples.events.activityAttachment.id}?auth=${token}
                  ```
                  """
+        result:
+          event: examples.events.activityAttachment
       ]
 
     ,
@@ -511,25 +513,24 @@ module.exports = exports =
       httpOnly: true
       http: "GET /events/{id}/{fileId}[/{fileName}]"
       description: """
-                   Gets the attached file. Accepts an arbitrary filename path suffix (ignored) for easier link creation.
+                   Gets the attached file. Accepts an arbitrary filename path suffix (ignored) for easier link readability.
+                   For this function using the `auth` query parameter is not accepted. You can either use the [access token](##{dataStructure.getDocId("access")}) in the `Authorization` header or provide the `readToken` as query parameter.
                    """
       params:
         properties: [
           key: "readToken"
           type: "string"
+          http:
+            text: "set in request path"
           description: """
-                       The file read token to authentify the request if not using the `Authorization` HTTP header. See [`event.attachments[].readToken`](##{dataStructure.getDocId("event")}) for more info.
+                       Required if not using the `Authorization` HTTP header. The file read token to authentify the request. See [`event.attachments[].readToken`](##{dataStructure.getDocId("event")}) for more info.
                        """
         ]
       result:
         http: "200 OK"
         description: """
-                     The file's contents.
+                     The file's content.
                      """
-      examples: [
-
-      ]
-
     ,
 
       id: "events.deleteAttachment"
