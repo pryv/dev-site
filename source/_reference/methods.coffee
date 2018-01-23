@@ -514,7 +514,7 @@ module.exports = exports =
       http: "GET /events/{id}/{fileId}[/{fileName}]"
       description: """
                    Gets the attached file. Accepts an arbitrary filename path suffix (ignored) for easier link readability.
-                   For this function using the `auth` query parameter is not accepted. You can either use the [access token](##{dataStructure.getDocId("access")}) in the `Authorization` header or provide the `readToken` query parameter.
+                   For this function using the `auth` query parameter is not accepted. You can either use the [access token](##{dataStructure.getDocId("access")}) in the `Authorization` header or provide the `readToken` as query parameter.
                    """
       params:
         properties: [
