@@ -571,11 +571,10 @@ module.exports = exports =
         ,
           key: "readToken"
           type: "string"
-          optional: true
           http:
             text: "set in request path"
           description: """
-                       The file read token to authentify the request if not using the `Authorization` HTTP header. See [`event.attachments[].readToken`](##{dataStructure.getDocId("event")}) for more info.
+                       Required if not using the `Authorization` HTTP header. The file read token to authentify the request. See [`event.attachments[].readToken`](##{dataStructure.getDocId("event")}) for more info.
                        """
         ]
       result:
