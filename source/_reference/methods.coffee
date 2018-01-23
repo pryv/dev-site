@@ -485,32 +485,6 @@ module.exports = exports =
       description: """
                    Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.
                    """
-      params:
-        properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the event.
-                       """
-        ,
-          key: "file"
-          type: "binary",
-          http:
-            text: "set as multipart/form-data"
-          description: """
-                       The file to upload.
-                       """
-        ,
-          key: "type"
-          type: "string"
-          http:
-            text: "set as multipart/form-data"
-          description: """
-                       The type of file.
-                       """
-        ]
       result:
         http: "200 OK"
         properties: [
@@ -544,31 +518,6 @@ module.exports = exports =
                    """
       params:
         properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the event.
-                       """
-        ,
-          key: "fileId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the attached file.
-                       """
-        ,
-          key: "fileName"
-          type: "string"
-          optional: true
-          http:
-            text: "set in request path"
-          description: """
-                       The name of the file.
-                       """
-        ,
           key: "readToken"
           type: "string"
           http:
