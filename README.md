@@ -25,7 +25,7 @@ If you want to use another branch, use `make setup core=my_branch` instead.
 
 (Read `makefile` for details.)
 
-**Note:** data types are sourced from repo `pryv/data-types` on `make retrieve-types` and `make publish` into `source/event-types/_source`.
+**Note:** data types are sourced from repo [pryv/data-types](https://github.com/pryv/data-types) on `make retrieve-types` and `make publish` into `source/event-types/_source`.
 
 
 ### Coding conventions
