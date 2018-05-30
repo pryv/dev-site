@@ -9,6 +9,12 @@ exports.getCurlCall = (params, http) ->
 
   request = if method != "GET" then "-X #{method} " else ""
 
+  queryString = 
+    if method == "POST" && path == "/auth/login"
+      ""
+    else
+      "?auth={token}"
+
   processedParams = _.clone(params)
   Object.keys(params).forEach (k) ->
     newPath = path.replace("{#{k}}", params[k])
@@ -17,7 +23,6 @@ exports.getCurlCall = (params, http) ->
       delete processedParams[k]
 
   hasData = (method == "POST" || method == "PUT")
-  queryString = "?auth={token}"
   data = if hasData then "-H 'Content-Type: application/json' " else ""
   if not hasData
     Object.keys(processedParams).forEach (k) ->
