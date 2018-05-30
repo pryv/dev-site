@@ -102,28 +102,24 @@ html.no-js(lang='en')
       //- assumes all headings are within a section with just one h1 per section (the section title)
       script.
         jQuery(document).ready(function($) {
-          var offset = 50;
+          // Header is about 51 pixels. This equals to 'header + fuzz', fuzz was
+          // determined experimentally. 
+          var offset = 100;
 
+          // Display TOC on the left side of the page.
           $('#toc').toc({
             selector: '#main h1:not(.page-title),#main h2,#main h3',
             ulClass: 'nav'
           });
 
-          $('body').scrollspy({
-            target: '#toc',
-            offset: offset
-          });
-
-          // fix offset when navigating
-          $('#toc li a, a.toc-anchor').click(function (e) {
-            e.preventDefault();
-            var target = $(this).attr('href');
-            window.location.hash = target;
-            $(target)[0].scrollIntoView();
-            if ($(window).scrollTop() + $(window).height() !== $(document).height()) {
-              // only adjust when not at bottom
-              scrollBy(0, -offset + 1);
-            }
+          // Synchronise scroll/click motion with TOC display.
+          $(document).ready(function() {
+            // NOTE This is done at onLoad since we need to wait for all CSS 
+            // to appear. 
+            $('body').scrollspy({
+              target: '#toc',
+              offset: offset
+            });
           });
         });
 
