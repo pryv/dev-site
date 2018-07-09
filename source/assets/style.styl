@@ -207,17 +207,15 @@ body.home
       color:$white
 
 #main
-  ul:not(.nav, .dropdown-menu)
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  ul:not(.nav):not(.dropdown-menu)
     li
-      list-style-type: square
+      list-style-type: none
 
-  ul:not(.nav, .dropdown-menu), ol
+  ul:not(.nav):not(.dropdown-menu), 
+  ol
     li
       margin-left: 2.4em
-      padding: 10px 0 10px 0.4em
+      padding: 10px 0 10px 20px
 
   .content
     .meta
