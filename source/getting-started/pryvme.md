@@ -162,7 +162,6 @@ The easiest way to generate an app access token is to use the Pryv Access Token 
 1. Go to [the Pryv Access Token Generator: http://pryv.github.io/app-web-access](http://pryv.github.io/app-web-access)
 2. Set up the required parameters
    1. Enter the Application ID ('demopryv-access')
-
    2. Setup the streams you want to grant access to in the permissions box
       ![Permissions Box](../images/permissions_box.png)
 
@@ -175,15 +174,11 @@ The easiest way to generate an app access token is to use the Pryv Access Token 
         }
       ]
       ~~~
-
    3. Click on '**Request Access**' button
-
 3. Now click on '**Sign in**' button ![sign_in_button](../images/sign_in_button.png) - A new tab will open
-
 4. Sign in with your Pryv account
    ![Sign In Dialog](../images/sign_in.png)
    A popup will open to inform you about the access you are about to grant.
-
 5. Click on '**Accept**' button
 
    By accepting you consent that the 'demopryv-access' application can access the stream 'heart' with a 'manage' access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the 'defaultName' parameter above. 
@@ -191,7 +186,6 @@ The easiest way to generate an app access token is to use the Pryv Access Token 
    For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.IO account in the scope of our example. You will learn more about accesses in [Access Management](#access-management). 
 
    ![Accept Button](../images/accept_button.png)
-
 6. **Your access token has been generated.**
    ![Access Token](../images/access_token.png)
 
@@ -216,7 +210,7 @@ Instead of using the token generator page, it is also possible to implement the 
   }'
   ~~~
 
-  As a response, you should receive information similar to the following :
+  The server should respond with something similar to this: 
   ~~~json
   {
       "status": "NEED_SIGNIN",
@@ -236,26 +230,20 @@ Instead of using the token generator page, it is also possible to implement the 
       "poll_rate_ms": 1000
   }
   ~~~
-
 2. Get the url parameter from the previous response and copy it into your web browser.
 
   ~~~raw
   https://sw.pryv.me/access/access.html?lang=fr&key=Rp3NBpMBnkCOuuAo&requestingAppId=demopryv-access&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22heart%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Heart%22%7D%5D
   ~~~
-
 3. Sign in with your Pryv account:
 
    A popup will open to inform you about the access are about to grant.
-
 4. Click on '**Accept**' button
-
-
 5. Retrieve the poll url from the previous response.
 
   ~~~json
   "poll": "https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo"
   ~~~
-
 6. Poll the access token with  `GET` calls to the polling url:
 
   ~~~bash
