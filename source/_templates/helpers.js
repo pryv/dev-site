@@ -14,7 +14,6 @@ helpers.getRawCall = function (params, http) {
     delete myParams.update; 
     _.merge(myParams, updateParams);
   }
-  console.log(http, myParams);
 
   return JSON.stringify(myParams, null, 2);
 }
