@@ -36,3 +36,7 @@ exports.getCurlCall = (params, http) ->
   # use shell variable format to help with quick copy-paste
   return call.replace /({\w+?})/g, (match) ->
     "$#{match}"
+
+exports.getWebsocketCall = (params) -> 
+  return JSON.stringify(params)
+

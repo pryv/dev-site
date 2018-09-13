@@ -1,4 +1,4 @@
-coreErrors = require('pryv-service-core/components/errors')
+coreErrors = require('../../../dependencies/core/components/errors')
 errors = coreErrors.factory
 errorHandling = coreErrors.errorHandling
 
