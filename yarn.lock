@@ -1218,9 +1218,9 @@ read-metadata@0.0.2:
   dependencies:
     yaml-js "0.0.8"
 
-"rec-la@git+https://github.com/pryv/rec-la.git":
-  version "0.1.3"
-  resolved "git+https://github.com/pryv/rec-la.git#155d18633e834a1a2c840d1c447a95744a243f70"
+rec-la@latest:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/rec-la/-/rec-la-0.1.5.tgz#1a1367fcedfec1ce605d62d9e1ba2d7990dbdbb5"
   dependencies:
     express "^4.14.0"
 
