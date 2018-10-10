@@ -105,6 +105,16 @@ server {
 
 ## System administrators
 
+### docker login X11 error
+
+On a Pryv install using Ubuntu 18.X when running `docker login`: Ubuntu refuses to let you enter the password because it wants you to use a secure means of password entry. The error reads something like 'Cannot autolaunch D-Bus without X11 $DISPLAY' ([docker-compose issue #6023](https://github.com/docker/compose/issues/6023)).   
+Our workaround is:  
+```
+sudo apt-get remove golang-docker-credential-helpers
+sudo apt install docker-compose
+```
+The second line is needed because the first removes docker-compose as well.
+
 ### Are my containers running?
 
 Show running containers: "docker ps", if the container exited, you can use "docker ps -a". This will allow to find the name of the container.
