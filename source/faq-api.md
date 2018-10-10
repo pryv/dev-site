@@ -1,6 +1,6 @@
 ---
 id: faq
-title: "FAQ"
+title: "FAQ - API"
 template: default.jade
 withTOC: true
 ---
@@ -11,54 +11,23 @@ withTOC: true
 
 You can define any custom type as long as it follows [this structure](http://api.pryv.com/event-types/#basics). See [First steps - Date modeling tips](http://api.pryv.com/getting-started/pryvme/#data-modelling-tips/) for more information.
 
-### Are my event contents validated?
+### Are my events content validated?
 
-The types defined in [http://api.pryv.com/event-types](http://api.pryv.com/event-types/) are validate by the core upon creation and modification. To validate custom types, please contact your technical ...
+The default set of validated types is defined in [http://api.pryv.com/event-types](http://api.pryv.com/event-types/), they are validated upon creation and modification. To validate custom types, it is possible to provide a different source of event types, following the [JSON schema format](https://api.pryv.com/event-types/#format-specification).
 
 ## API methods
 
-### create attachment
+### What is the exact structure of the create attachment call?
 
 If you are having issues creating the package for the create attachment with the client/framework/library you are using. You can print the details of the call by using the `-v ` verbose option.
-
-### Login user
-
-I'm getting the following error on the [login call](https://api.pryv.com/reference-full/#login-user) although the payload is correct.
-
-```json
-{
-    "error": {
-        "id": "invalid-credentials",
-        "message": "The app id ("appId") is either missing or not trusted."
-    },
-    "meta": {
-        "apiVersion": "1.2.18",
-        "serverTime": 1531830525.911
-    }
-}
-```
-
-API methods marked as *TRUSTED APPS ONLY* on [https://api.pryv.com/reference-full/](https://api.pryv.com/reference-full/) require to have the Origin or Referer headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent fishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
-
-In order for this to work, the web app must be running on the domain specified by the configuration. By default, this contains: `*.${DOMAIN}*, *.rec.la*, *.pryv.github.io*`.
-
-In mobile apps, this header can be set manually in the HTTP request:
-
-```json
-Origin: "something.${DOMAIN}"
-
-or
-
-Referer: "something.${DOMAIN}"
-```
 
 ## User creation
 
 ### Can we limit access to user creation?
 
-The user creation API call uses a special token, this can be shared to select people.
+The user creation API call uses a token, this can be shared to select people.
 
-### API call
+### Is there an API call for user creation?
 
 The user register call is defined as:
 
@@ -77,29 +46,58 @@ HTTP POST https://reg.${DOMAIN}/user
 
 The `hosting` field must be chosen from https://reg.${DOMAIN}/hostings, defined in the registry configuration.
 
-### Email
+### What if I don't want to store an email the account?
 
-If you do not wish to store an email, we suggest to fill this field with {USERNAME}@${DOMAIN}.
+If you do not wish to store an email, we suggest to fill this field with `${USERNAME}@${DOMAIN}`.
 
-### Programatically create
+### How can I programmatically create user accounts?
 
 It is possible to create users with the aforementioned API call, without having to fill the fields manually.
 
 ## Authentication
 
-### Should I use /auth/login or auth request
+### I'm getting the "invalid credentials" error although my fields are correct
 
-The token obtained after a login request is similar to being `root` on an account. It allows to manipulate resources such as the password and the token has an expiration date.
+I'm getting the following error on the [login call](https://api.pryv.com/reference-full/#login-user) although the payload is correct.
 
-Tokens obtained after an auth request are similar to authorization steps in an oAuth process. They are used for consent delegation and do not expire unless they are cancelled or deleted. They are therefore recommended for mobile apps and 3rd party usage.
+```json
+{
+    "error": {
+        "id": "invalid-credentials",
+        "message": "The app id ("appId") is either missing or not trusted."
+    },
+    "meta": {
+        "apiVersion": "1.2.18",
+        "serverTime": 1531830525.911
+    }
+}
+```
+
+API methods marked as *TRUSTED APPS ONLY* on [https://api.pryv.com/reference-full/](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
+
+In order for this to work, the web app must be running on the domain specified by the configuration. By default, this contains: `*.${DOMAIN}*, *.rec.la*, *.pryv.github.io*`.
+
+In mobile apps, this header can be set manually in the HTTP request:
+
+```json
+Origin: "something.${DOMAIN}"
+
+or
+
+Referer: "something.${DOMAIN}"
+```
+
+### Should I use /auth/login or auth request?
+
+The token obtained after a login request is similar to being `root` on an account. It returns an expirable token that allows to manipulate resources such as the password.
+
+Tokens obtained after an auth request are similar to authorization steps in an oAuth process. They are used to request data access consents and do not expire unless they are cancelled or deleted. They are therefore recommended for mobile apps and external services.
 
 ## Account granularity
 
+### Should I store multiple user data in a single account?
+
 For compliance reasons, Pryv.IO accounts are per-user. Storing multiple people data under the same account bypasses the authorization step which is the technical equivalent of consent.
-
-### How are users grouped to specific studies or organizations?
-
-Pryv IO platforms are user centric, each account accessible through the https://USERNAME.DOMAIN (eg.: https://iliakebets.pryv.me) URL endpoint, the username doesn't have to be identifying. These can be stored in different locations depending on the number of core machines that are deployed in the platform, core machines are the ones actually storing the data.
 
 ### How can researchers and clinicians access other peoples data, i.e study participants?
 

@@ -9,7 +9,7 @@ withTOC: true
 
 Additionally to the **Deployment design guide** document, a Pryv.IO platform requires its own **domain name**, such as pryv.me to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://cobra.pryv.me, this can be totally hidden from the end user.
 
-For communication encryption, we require a **wildcard SSL certificate** for the domain ***.domain**, this can be either bought for around ~100CHF/year or generating one using [let's encrypt](https://letsencrypt.org/), this can currently be done manually, but will be automated in future versions.
+For communication encryption, we require a **wildcard SSL certificate** for the domain ***.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
 
 Since we use our own DNS servers to resolve the domain associated with the platform, it must be possible to **set name servers** for the domain. This must be verified before buying the domain, as some providers do not allow it.
 
@@ -109,25 +109,23 @@ server {
 
 Show running containers: "docker ps", if the container exited, you can use "docker ps -a". This will allow to find the name of the container.
 
-### Container XYZ is not running
+### Why is container XYZ not running?
 
-The issue is most probably with NGINX, which crashes if it cannot find the SSL certificate files. You can see this if its container doesn't appear when running "docker ps" and shows the file path related error when running "docker logs CONTAINER_NAME".
+By default, our containers write logs into `stdout`, the reason for a failure can be printed using `docker logs ${CONTAINER_NAME}`.
 
 ### Permission denied error
 
-`chown -R 9999:9999 pryv/nginx/log`
+During deployment, it is possible that some folders have only write permissions for root. Our containerized apps are run by UID `9999:999`, so this can be fixed by running `chown -R 9999:9999 ${FOLDER}` from the host machine.
 
-### print logs
+### How do I reset data on my Pryv.IO platform?
 
-"docker logs -f --tail 50 CONTAINER_NAME"
-
-### Reset data
+This step will erase all data from your platform. It is not recommended in production platforms.
 
 To erase all data on the platform, you need to delete the contents of the data folders and reboot the services.
 
-On the registry:
+On the registry master:
 
-- `cd PRYV_CONF_ROOT`
+- `cd ${PRYV_CONF_ROOT}`
 
 - `./stop-containers`
 - `rm -rf /var/pryv/reg-master/redis/data/*`
@@ -135,17 +133,15 @@ On the registry:
 
 On core:
 
-- `cd PRYV_CONF_ROOT`
+- `cd ${PRYV_CONF_ROOT}`
 
 - `./stop-containers`
-- `rm -rf /var/pryv/core-v1.3/core/data/*`
-- `rm -rf /var/pryv/core-v1.3/mongodb/data/*`
-- `./run-core-v1.3`
+- `rm -rf /var/pryv/core/core/data/*`
+- `rm -rf /var/pryv/core/mongodb/data/*`
+- `./run-core`
 
-## Do you have a test setup where this could be tested?
+### How can I use the demo dashboard app (*app-web*) on my Pryv.IO platform?
 
-You can try out Pryv IO, using our demo platform pryv.me: https://pryv.com/pryvlab/
+App-web is hosted on GitHub pages and can be accessed as described in [its documentation](https://github.com/pryv/app-web#usage).
 
-## I wish to adapt the dashboard app shown in the demo
-
-App-web is by default delivered with Pryv.IO, but is not part of the product. Some features available on the demo pryv.me platform are not available here such as: integrations with 
+Pryv.IO can be configured to serve it when opening `${USERNAME}.${DOMAIN}` in a browser.
