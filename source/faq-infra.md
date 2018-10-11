@@ -125,7 +125,7 @@ By default, our containers write logs into `stdout`, the reason for a failure ca
 
 ### Permission denied error
 
-During deployment, it is possible that some folders have only write permissions for root. Our containerized apps are run by UID `9999:999`, so this can be fixed by running `chown -R 9999:9999 ${FOLDER}` from the host machine.
+During deployment, it is possible that some folders have only write permissions for root. Our containerized apps are run by UID `9999:9999`, so this can be fixed by running `chown -R 9999:9999 ${FOLDER}` from the host machine.
 
 ### How do I reset data on my Pryv.IO platform?
 
