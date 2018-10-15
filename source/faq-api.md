@@ -33,8 +33,6 @@ The user creation API call uses a token, by not making this token public, it is 
 
 ### Is there an API call for user creation?
 
-**create API doc**
-
 The user register call is defined as:
 
 HTTP POST https://reg.${DOMAIN}/user
@@ -60,15 +58,11 @@ We suggest using the followoing format as a placeholder: `${USERNAME}@${DOMAIN}`
 
 ### How can I programmatically create user accounts?
 
-**link to API doc**
-
-It is possible to create users with the aforementioned API call, without having to fill the fields manually.
+It is possible to create users with an API call, without having to fill the fields manually.
 
 ## Authentication
 
-### I'm getting the "invalid credentials" error although my fields are correct
-
-I'm getting the following error on the [login call](https://api.pryv.com/reference-full/#login-user) although the payload is correct.
+### I'm getting the "invalid credentials" on the auth.login error although my fields are correct
 
 ```json
 {
@@ -83,9 +77,9 @@ I'm getting the following error on the [login call](https://api.pryv.com/referen
 }
 ```
 
-API methods marked as *TRUSTED APPS ONLY* on [https://api.pryv.com/reference-full/](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
+API methods such as `auth.login` marked as *TRUSTED APPS ONLY* on [https://api.pryv.com/reference-full/](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
 
-In order for this to work, the web app must be running on the domain specified by the configuration. By default, this contains: `*.${DOMAIN}*, *.rec.la*, *.pryv.github.io*`.
+In order for this to work, the web app must be running on the domain specified by the configuration. By default, this contains: `https://*.${DOMAIN}*, https://*.rec.la*, https://*.pryv.github.io*`.
 
 In mobile apps, this header can be set manually in the HTTP request:
 
@@ -96,6 +90,8 @@ or
 
 Referer: "something.${DOMAIN}"
 ```
+
+In addition to the host, it is possible to allow this call for a defined set of `appId`.
 
 ### What authentication should I use in a mobile app?
 
