@@ -33,22 +33,7 @@ The user creation API call uses a token, by not making this token public, it is 
 
 ### Is there an API call for user creation?
 
-The user register call is defined as:
-
-HTTP POST https://reg.${DOMAIN}/user
-
-```json
-{
-    "username": "",
-    "password": "",
-    "email": "",
-    "appId": "",
-    "invitationToken": "",
-    "hosting": ""
-}
-```
-
-The `hosting`  field must be chosen from https://reg.${DOMAIN}/hostings, defined in the registry configuration. From this resource, you must use any key of the `hostings` objects. For example, in the [pryv.me platform](https://reg.pryv.me/hostings), you must use `gandi.net-fr` to create an account on the server located in France.
+The API call for user creation is defined in [app-web-auth2](https://github.com/pryv/app-web-auth2/blob/master/src/js/account/register.js#L22), please contact us for more information.
 
 ### What if I don't want to provide an email registration phase?
 
