@@ -7,7 +7,7 @@ withTOC: true
 
 ## Platform prerequisites
 
-In addition to the **Deployment design guide** document, a Pryv.IO platform requires its own **domain name**, such as pryv.me to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://cobra.pryv.me, this can be totally hidden from the end user.
+In addition to the **Deployment design guide** document (available on request), a Pryv.IO platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://cobra.pryv.me. This can be totally hidden from the end user.
 
 To encrypt data in transit, we require a **wildcard SSL certificate** for the domain ***.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
 

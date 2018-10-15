@@ -47,7 +47,7 @@ It is possible to create users with an API call, without having to fill the fiel
 
 ## Authentication
 
-### I'm getting the "invalid credentials" on the auth.login error although my fields are correct
+### I'm getting the "invalid credentials" error on the auth.login call although my fields are correct
 
 ```json
 {
@@ -62,19 +62,11 @@ It is possible to create users with an API call, without having to fill the fiel
 }
 ```
 
-API methods such as `auth.login` marked as *TRUSTED APPS ONLY* on [https://api.pryv.com/reference-full/](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
+API methods such as `auth.login` marked as *TRUSTED APPS ONLY* on [the *full* API reference](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
 
-In order for this to work, the web app must be running on the domain specified by the configuration. By default, this contains: `https://*.${DOMAIN}*, https://*.rec.la*, https://*.pryv.github.io*`.
+In order for this to work, the web app must be running on a domain allowed by the configuration. By default, this contains: `https://*.${DOMAIN}*, https://*.rec.la*, https://*.pryv.github.io*`.
 
-In mobile apps, this header can be set manually in the HTTP request:
-
-```json
-Origin: "something.${DOMAIN}"
-
-or
-
-Referer: "something.${DOMAIN}"
-```
+In mobile apps, the `Origin` and `Referer` headers can be set manually in the HTTP request. For example: `Origin: "auth.${DOMAIN}"`.
 
 In addition to the host, it is possible to allow this call for a defined set of `appId`.
 
