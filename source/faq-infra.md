@@ -7,31 +7,31 @@ withTOC: true
 
 ## Platform prerequisites
 
-Additionally to the **Deployment design guide** document, a Pryv.IO platform requires its own **domain name**, such as pryv.me to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://cobra.pryv.me, this can be totally hidden from the end user.
+In addition to the **Deployment design guide** document, a Pryv.IO platform requires its own **domain name**, such as pryv.me to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://cobra.pryv.me, this can be totally hidden from the end user.
 
-For communication encryption, we require a **wildcard SSL certificate** for the domain ***.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
+To encrypt data in transit, we require a **wildcard SSL certificate** for the domain ***.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
 
 Since we use our own DNS servers to resolve the domain associated with the platform, it must be possible to **set name servers** for the domain. This must be verified before buying the domain, as some providers do not allow it.
 
 ### Do SSL certificates need to be signed by publicly trusted CA or can we use self-signed certificates?
 
-All devices that interact with the Pryv installation must be able to verify the certificates and thus see/trust the CA, even if it is internal. In this project, that would involve: the mobile application, all machines that perform analytics and display of the data collected.
+All devices that interact with the Pryv.IO platform must be able to verify the certificates and thus see/trust the CA, even if it is internal. That would involve: the mobile application, all machines that perform analytics and display of the data collected.
 
 ### SSL certificates are mentioned to be wildcard ones. Are we able to define all the subdomains beforehand and rather create SSL with SANs?
 
 Pryv uses a subdomain per user account that is created. So no, you cannot use SAN certificates unless you're able to know the possible user base ahead of time.
 
-### On what cloud offerings can Pryv IO be installed
+### On what cloud offerings can Pryv.IO be installed?
 
 Pryv can be installed on any cloud offering that runs at least Docker 1.12.6. The real consideration here is compliance and the security of the data storage.
 
-We have run Pryv.IO on the following public clouds: AWS, Azure, Gandi.net, Exoscale.ch, Joyent, Fengqi.asia.
+We have run Pryv.IO on the following public clouds: AWS, Microsoft Azure, Gandi.net, Exoscale.ch, Joyent, Fengqi.asia.
 
-### What constraints should be considered when choosing a host
+### What constraints should be considered when choosing a host?
 
-where (in what countries legislation) the data is stored. should be HIPPA/EU DPD compliant…
+You must take into account the legislation covering the people whose data will be stored in the Pryv.IO platform, such as US HIPAA, EU GDPR, Swiss DPA. This often includes requirements on the geographic location where the data is stored.
 
-### How do you address encryption of the data at rest? As medical records will be stored in the MongoDB, are you using DB encryption or some other application specific encryption?
+### How do you address encryption of the data at rest? As medical records will be stored in MongoDB, are you using DB encryption or some other application specific encryption?
 
 Pryv offers three options here:
 
@@ -39,28 +39,35 @@ Pryv offers three options here:
 - MongoDB encryption: We can provide you with a recent release of MongoDB that will allow you to set up EAR: <https://docs.mongodb.com/manual/core/security-encryption-at-rest/>
 - Disk encryption: Linux has a solid story of disk encryption. If stored on such a disk, Pryv data is encrypted at rest as well.
 
-My take on this is that the last option will probably the easiest to implement. It offers good protection against disks being stolen from the datacenter, while not increasing overall system complexity by much.
+The last option will probably the easiest to implement. It offers good protection against disks being stolen from the datacenter, while not increasing overall system complexity by much.
 
 ### Self-managed top-domain
 
 The DNS running on the registry must resolve all requests for the domain. Entries in the top-domain will look like:
 
 ```
-ns1-domain TTL_SECONDS IN A IP_ADDRESS_REGISTER_MACHINE_1
-ns2-domain TTL_SECONDS IN A IP_ADDRESS_REGISTER_MACHINE_2
+ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
+ns2-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_2}
 
-subdomain	TTL_SECONDS IN NS ns1-domain
-subdomain	TTL_SECONDS IN NS ns2-domain
+${DOMAIN}	TTL_SECONDS IN NS ns1-${DOMAIN}
+${DOMAIN}	TTL_SECONDS IN NS ns2-${DOMAIN}
 ```
 
 On single node or PoC installations, you will have only one registry, both Type A entries for the machine will point to the same IP address:
 
 ```
-ns1-domain TTL_SECONDS IN A IP_ADDRESS_REGISTER_MACHINE_1
-ns2-domain TTL_SECONDS IN A IP_ADDRESS_REGISTER_MACHINE_1
+ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
+ns2-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
 
-subdomain	TTL_SECONDS IN NS ns1-domain
-subdomain	TTL_SECONDS IN NS ns2-domain
+${DOMAIN}	TTL_SECONDS IN NS ns1-${DOMAIN}
+${DOMAIN}	TTL_SECONDS IN NS ns2-${DOMAIN}
+```
+
+You can verify that the registry is set to resolve DNS queries for your domain using: `dig NS ${DOMAIN}`. The answer section must include:
+
+```
+${DOMAIN}		${TTL_SECONDS}	IN		NS		ns1-${DOMAIN}.${TOP_DOMAIN}
+${DOMAIN}		${TTL_SECONDS}	IN		NS		ns2-${DOMAIN}.${TOP_DOMAIN}
 ```
 
 ## Customize registration, login, password-reset pages
@@ -129,29 +136,29 @@ During deployment, it is possible that some folders have only write permissions 
 
 ### How do I reset data on my Pryv.IO platform?
 
-This step will erase all data from your platform. It is not recommended in production platforms.
+This step will erase all data from your platform. Perform this at your own risk and make sure that you know what you are doing.
 
 To erase all data on the platform, you need to delete the contents of the data folders and reboot the services.
 
 On the registry master:
 
-- `cd ${PRYV_CONF_ROOT}`
-
-- `./stop-containers`
-- `rm -rf /var/pryv/reg-master/redis/data/*`
-- `./run-reg-master`
+```
+cd ${PRYV_CONF_ROOT}
+./stop-containers
+rm -rf reg-master/redis/data/*
+./run-reg-master
+```
 
 On core:
 
-- `cd ${PRYV_CONF_ROOT}`
-
-- `./stop-containers`
-- `rm -rf /var/pryv/core/core/data/*`
-- `rm -rf /var/pryv/core/mongodb/data/*`
-- `./run-core`
+```
+cd ${PRYV_CONF_ROOT}
+./stop-containers
+rm -rf core/core/data/*
+rm -rf core/mongodb/data/*
+./run-core
+```
 
 ### How can I use the demo dashboard app (*app-web*) on my Pryv.IO platform?
 
-App-web is hosted on GitHub pages and can be accessed as described in [its documentation](https://github.com/pryv/app-web#usage).
-
-Pryv.IO can be configured to serve it when opening `${USERNAME}.${DOMAIN}` in a browser.
+App-web is hosted on GitHub pages and can be used for your Pryv.IO platform as described in [its documentation](https://github.com/pryv/app-web#usage).
