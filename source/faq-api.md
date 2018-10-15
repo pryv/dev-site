@@ -15,6 +15,10 @@ You can define any custom type as long as it follows [this structure](http://api
 
 The default set of validated types is defined in [https://api.pryv.com/event-types](https://api.pryv.com/event-types/), they are validated upon creation and modification. To validate custom types, it is possible to provide a different source of event types, following the [JSON schema format](https://api.pryv.com/event-types/#format-specification).
 
+### What kind of validation do you perform?
+
+Depending on the `type` field of the event, the content of the fields `content` and `attachments` are validated.
+
 ## API methods
 
 ### What is the exact structure of the create attachment call?
@@ -50,7 +54,7 @@ The `hosting`  field must be chosen from https://reg.${DOMAIN}/hostings, defined
 
 ### What if I don't want to provide an email registration phase?
 
-Account must have an email-like string attached to them. You can make up an email address for you internal app usage, depending on your requirements.
+Account must have an email-like string attached to them. You can make up an email address for you internal app usage, depending on your requirements. Please note that you will not be able to retrieve a lost password using the [reset password request](https://api.pryv.com/reference-full/#request-password-reset).
 
 We suggest using the followoing format as a placeholder: `${USERNAME}@${DOMAIN}`.
 
@@ -63,8 +67,6 @@ It is possible to create users with the aforementioned API call, without having 
 ## Authentication
 
 ### I'm getting the "invalid credentials" error although my fields are correct
-
-*Kaspar's comment: not understood=> `I think we should also explain the second half of the appId (the thing in front of origin).`*
 
 I'm getting the following error on the [login call](https://api.pryv.com/reference-full/#login-user) although the payload is correct.
 
@@ -95,29 +97,25 @@ or
 Referer: "something.${DOMAIN}"
 ```
 
-### Should I use /auth/login or auth request?
+### What authentication should I use in a mobile app?
 
-*TODO: add more*
+You should implement the [auth request](https://api.pryv.com/reference-full/#auth-request), displaying the provided `url` in a web view. Once you obtain the token, save it into the local app storage so you will not have to authenticate each time.
 
-The token obtained after a login request is similar to being `root` on an account. It returns an expirable token that allows to manipulate resources such as the password.
+### How does a person give access to his data?
 
-Tokens obtained after an auth request are similar to authorization steps in an oAuth process. They are used to request data access consent and do not expire unless they are cancelled or deleted. They are therefore recommended for mobile apps and external services.
+Using a token previously obtained, you can generate a new one using the [accesses.create](https://api.pryv.com/reference/#create-access) API call to generate a new token. The permission set associated to this token must be a subset of the permissions set of the access token used for the call.
+
+### How can I request access to someone's data?
+
+In order to request an access to someone's data, one must implement a page that makes an [auth request](http://api.pryv.com/reference/#auth-request) when loaded. The `url` in the response must be displayed to the user. The web page will ask him for his credentials as well as display the list of requested permissions. Upon approval, the app will obtain a valid token in the polling url response.
+
+A simple web app demonstrating this implementation can be seen [here](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me).
 
 ## Account granularity
 
 ### Should I store the data of more than one person in a single Pryv.IO account?
 
 For compliance reasons, Pryv.IO accounts are per-user. Storing multiple people data under the same account bypasses the authorization step which is the technical equivalent of consent.
-
-### How can study participants give access to their data to researchers and clinicians?
-
-*TODO: improve*
-
-Access to people's data is done in multiple ways. When signing in with username/email & password on a trusted app (the owner of the platform defines this), using the obtained token the user can create accesses to any subset of his/her data depending on a streams/tags matrix.
-It is possible to develop "3rd party" apps whose authentification process is oAuth-like, which prompts the user with the request to give access to the said app for the requested streams. The obtained access token can be used to create accesses whose scope are subsets of itself.
-For either way, to give access to people's data to researchers and clinicians, the created tokens need to be stored by a service accessible to them.
-Accesses definition
-The information regarding a user's study or organization belonging can be accessible through such a service as well, with each user's organization(s) & study(ies) stored either there or on the user's Pryv IO account.
 
 ## Sharing access between apps
 
