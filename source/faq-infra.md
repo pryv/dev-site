@@ -92,7 +92,7 @@ The web role is meant for this. It contains a proxy server that can be configure
 
 Using the web role, apps can be served on any path from https://sw.${DOMAIN}/...
 
-This is done by addding the following `location` clause in the `pryv/nginx/conf/site.conf` file:
+This is done by adding the following `location` clause in the `pryv/nginx/conf/site.conf` file:
 
 ```
 server {

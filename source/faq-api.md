@@ -9,7 +9,7 @@ withTOC: true
 
 ### How can I define custom event types?
 
-You can define any custom type as long as it follows [this structure](http://api.pryv.com/event-types/#basics). See [First steps - Date modeling tips](http://api.pryv.com/getting-started/pryvme/#data-modelling-tips/) for more information.
+You can define any custom type as long as it follows [this structure](http://api.pryv.com/event-types/#basics). See [First steps - Date modelling tips](http://api.pryv.com/getting-started/pryvme/#data-modelling-tips/) for more information.
 
 ### Are my events content validated?
 
@@ -39,7 +39,7 @@ The API call for user creation is defined in [app-web-auth2](https://github.com/
 
 Account must have an email-like string attached to them. You can make up an email address for you internal app usage, depending on your requirements. Please note that you will not be able to retrieve a lost password using the [reset password request](https://api.pryv.com/reference-full/#request-password-reset).
 
-We suggest using the followoing format as a placeholder: `${USERNAME}@${DOMAIN}`.
+We suggest using the following format as a placeholder: `${USERNAME}@${DOMAIN}`.
 
 ### How can I programmatically create user accounts?
 
