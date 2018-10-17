@@ -23,7 +23,7 @@ Depending on the `type` field of the event, the content of the fields `content` 
 
 ### What is the exact structure of the create attachment call?
 
-If you are having issues creating the package for the create attachment with the client/framework/library you are using, you can print the details of the call by using the `-v ` verbose option.
+If you are having issues creating the package for the create attachment call with the client/framework/library you are using, you can print the details of the call by using cURL with the `-v ` verbose option.
 
 ## User creation
 
