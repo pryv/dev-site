@@ -9,7 +9,7 @@ withTOC: true
 
 ### How can I define custom event types?
 
-You can define any custom type as long as it follows [this structure](http://api.pryv.com/event-types/#basics). See [First steps - Date modelling tips](http://api.pryv.com/getting-started/pryvme/#data-modelling-tips/) for more information.
+You can define any custom type as long as it follows [this structure](http://api.pryv.com/event-types/#basics). See [First steps - Data modelling tips](http://api.pryv.com/getting-started/pryvme/#data-modelling-tips/) for more information.
 
 ### Are my events content validated?
 
