@@ -19,11 +19,11 @@ All devices that interact with the Pryv.IO platform must be able to verify the c
 
 ### SSL certificates are mentioned to be wildcard ones. Are we able to define all the subdomains beforehand and rather create SSL with SANs?
 
-Pryv uses a subdomain per user account that is created. So no, you cannot use SAN certificates unless you're able to know the possible user base ahead of time.
+Pryv.IO uses a subdomain per user account that is created. So no, you cannot use SAN certificates unless you're able to know the possible user base ahead of time.
 
 ### On what cloud offerings can Pryv.IO be installed?
 
-Pryv can be installed on any cloud offering that runs at least Docker 1.12.6. The real consideration here is compliance and the security of the data storage.
+Pryv.IO can be installed on any cloud offering that runs at least Docker 1.12.6. The real consideration here is compliance and the security of the data storage.
 
 We have run Pryv.IO on the following public clouds: AWS, Microsoft Azure, Gandi.net, Exoscale.ch, Joyent, Fengqi.asia.
 

@@ -98,5 +98,5 @@ This can be done by using the auth request through a consent step or by generati
 
 ## Do you have a test setup where I could experiment with you API?
 
-You can try out Pryv IO using our demo platform pryv.me: https://pryv.com/pryvlab/
+You can try out Pryv.IO using our demo platform pryv.me: https://pryv.com/pryvlab/
 
