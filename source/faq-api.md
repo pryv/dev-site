@@ -96,7 +96,7 @@ For compliance reasons, Pryv.IO accounts are per-user. Storing multiple people d
 
 This can be done by using the auth request through a consent step or by generating a token directly through an API call using a token obtained previously.
 
-## Do you have a test setup where I could experiment with you API?
+## Do you have a test setup where I could experiment with your API?
 
 You can try out Pryv.IO using our demo platform pryv.me: https://pryv.com/pryvlab/
 
