@@ -66,6 +66,11 @@ html.no-js(lang='en')
                 ul.dropdown-menu
                   +menuItem('code-libraries', 'Code libraries')
                   +menuItem('apps-and-services', 'Example apps')
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown') FAQ <b class="caret"></b>
+                ul.dropdown-menu
+                  +menuItem('faq-api', 'API')
+                  +menuItem('faq-infra', 'Infrastructure')
               //li
                 a(href='#') Blog
             .navbar-right
