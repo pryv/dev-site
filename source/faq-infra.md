@@ -72,19 +72,25 @@ ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns2-${DOMAIN}.${TOP_DOMAIN}
 
 ## Customize registration, login, password-reset pages
 
-We deliver the platform with default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-auth2.
+We deliver the platform with default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-auth3.
 
-To customize it, fork the repository, create a symlink `ln -s v2/ ${DOMAIN}` on the `gh-pages` branch as seen [here](https://github.com/pryv/app-web-auth2/tree/gh-pages) and modify the NGINX configuration on the static-web machine `static/nginx/site.conf` (or `pryv/nginx/site.conf` for single node). Change line:
+To customize it, fork the repository, make stub commit on the `gh-pages` branch to activate the [GitHub Pages](https://pages.github.com/).   
+Modify the NGINX configuration on the static-web machine `static/nginx/site.conf` (or `pryv/nginx/site.conf` for single node). Change line:
 
 ```
-proxy_pass        https://pryv.github.io/app-web-auth2/${DOMAIN}/;
+proxy_pass        https://pryv.github.io/app-web-auth3/;
 ```
 
 to:
 
 ```
-proxy_pass        https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth2/${DOMAIN}/;
+proxy_pass        https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth3/;
 ```
+
+The following pages will show the changes that you apply to this repository:
+* Registration: https://sw.${DOMAIN}/access/register.html
+* Reset password: https://sw.${DOMAIN}/access/reset-password.html
+* Consent authorization: https://sw.${DOMAIN}/access/access.html
 
 ## How to host apps, resources on the same domain / reuse the SSL certificate
 
