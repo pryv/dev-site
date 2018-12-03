@@ -866,8 +866,19 @@ module.exports = exports =
       title: "Get accesses"
       http: "GET /accesses"
       description: """
-                   Gets manageable accesses.
+                   Gets manageable accesses. Only returns accesses that can
+                   be managed by the requesting access and that are active when
+                   making the request. To include accesses that have expired, use
+                   the `includeExpired` parameter. 
                    """
+      params:
+        properties: [
+          key: "includeExpired",
+          type: 'boolean'
+          description: """
+            If "true", also include expired accesses. 
+          """
+        ]
       result:
         http: "200 OK"
         properties: [

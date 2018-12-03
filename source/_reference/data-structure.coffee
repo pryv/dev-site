@@ -345,6 +345,28 @@ module.exports = exports =
       optional: true
       readOnly: true
       description: "The time the access was last used."
+    ,
+      key: "expireAfter"
+      type: "number"
+      optional: true
+      readOnly: false
+      description: """
+        (Only on create and update) If set, controls access expiry in seconds.
+        When given a number in this attribute (positive or zero), 
+        the access will expire (and not be accessible any more) after this many
+        seconds. 
+
+        Use `expireAfter=0` to immediately disable an access (without deleting it).
+        """
+    ,
+      key: "expires"
+      type: "[timestamp](#data-structure-timestamp)"
+      optional: true
+      readOnly: true
+      description: """
+        If the access was set to expire: The timestamp after which the access 
+        will be deactivated. 
+        """
     ].concat(changeTrackingProperties("access"))
     examples: [
       title: "An app access"

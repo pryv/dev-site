@@ -4,6 +4,13 @@ title: API change log
 template: default.jade
 ---
 
+## V1.3
+
+Changes: 
+
+ - Accesses can now be made to expire. See the [access data structure 
+   documentation](/reference/#access) for more details. 
+
 ## v1.2.4
 
 Changes: 
