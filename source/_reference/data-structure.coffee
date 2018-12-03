@@ -367,6 +367,14 @@ module.exports = exports =
         If the access was set to expire: The timestamp after which the access 
         will be deactivated. 
         """
+    ,
+      key: "deleted"
+      type: "[timestamp](#data-structure-timestamp)"
+      optional: true
+      readOnly: true
+      description: """
+        If the access has been deleted: The timestamp of the deletion. 
+        """
     ].concat(changeTrackingProperties("access"))
     examples: [
       title: "An app access"

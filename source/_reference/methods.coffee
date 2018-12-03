@@ -873,10 +873,18 @@ module.exports = exports =
                    """
       params:
         properties: [
-          key: "includeExpired",
+          key: "includeExpired"
           type: 'boolean'
+          optional: true
           description: """
-            If "true", also include expired accesses. 
+            If `true`, also includes expired accesses. Defaults to `false`.
+          """
+        ,
+          key: "includeDeletions"
+          type: "boolean"
+          optional: true
+          description: """
+            If `true`, also includes deleted accesses. Defaults to `false`.
           """
         ]
       result:
@@ -886,6 +894,12 @@ module.exports = exports =
           type: "array of [accesses](##{dataStructure.getDocId("access")})"
           description: """
                        All manageable accesses in the user's account, ordered by name.
+                       """
+        ,
+          key: "accessDeletions"
+          type: "array of deleted [accesses](##{dataStructure.getDocId("access")})"
+          description: """
+                       If requested by `includeDeletions`, the access deletions, ordered by deletion time.
                        """
         ]
       examples: [

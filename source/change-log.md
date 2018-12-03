@@ -8,6 +8,7 @@ template: default.jade
 
 Changes: 
 
+ - Deleted accesses can now be retrieved. See [accesses.get method](/reference/#get-accesses) for more details.
  - Accesses can now be made to expire. See the [access data structure 
    documentation](/reference/#access) for more details. 
 
