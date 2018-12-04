@@ -906,6 +906,16 @@ module.exports = exports =
         params: {}
         result:
           accesses: [examples.accesses.shared]
+      ,
+        title: "cURL with deletions"
+        params: """
+                ```bash
+                curl -i https://${username}.pryv.me/accesses?auth=${token}&includeDeletions=true
+                ```
+                """
+        result:
+          accesses: [examples.accesses.shared]
+          accessDeletions: [examples.accesses.deleted]
       ]
 
     ,

@@ -55,3 +55,18 @@ module.exports =
     createdBy: idApp
     modified: timestamp.now()
     modifiedBy: idApp
+
+  deleted:
+    id: generateId()
+    token: generateId()
+    type: "shared"
+    name: "Health parameters survey"
+    permissions: [
+      streamId: "health"
+      level: "read"
+    ]
+    created: timestamp.now('-2m')
+    createdBy: idApp
+    modified: timestamp.now('-2m')
+    modifiedBy: idApp  
+    deleted: timestamp.now('-1m')
