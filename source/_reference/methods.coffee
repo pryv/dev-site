@@ -874,7 +874,7 @@ module.exports = exports =
       params:
         properties: [
           key: "includeExpired"
-          type: 'boolean'
+          type: "boolean"
           optional: true
           description: """
             If `true`, also includes expired accesses. Defaults to `false`.
