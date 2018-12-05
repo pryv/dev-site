@@ -51,22 +51,7 @@ Streams are the fundamental contexts in which events occur. Every event occurs i
 
 ### Tags
 
-Tags provide further context to events. Each event can be labeled with one or more tags. Tags can be plain text tags or typed tags:
-
-- Plain text tags are the usual tags you've encountered elsewhere. They exist simply by referencing them directly from events: `This is a plain text tag`.
-- Typed tags are tags with data, for modelling richer structural concepts such as people, locations, etc. They exist and are managed on their own; events refer to them by their identifier, which differs from a plain text tag by its format: `:example-identifier`.
-  ```
-  {
-    "content": { "this is": "a typed tag", "with": "arbitrary data" },
-    "id": ":example-identifier",
-    "type": "example/arbitrary"
-  }
-  ```
-
-*Note: typed tags are coming in a future version of the API.*
-
-<!-- TODO: See also [standard tag types](#TODO). -->
-
+Tags provide further context to events. Each event can be labeled with one or more tags. Each tag can be no more than 500 characters in size. 
 
 ## Accesses
 
