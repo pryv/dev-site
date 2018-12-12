@@ -94,9 +94,9 @@ The following pages will show the changes that you apply to this repository:
 
 ## How to host apps, resources on the same domain / reuse the SSL certificate
 
-The web role is meant for this. It contains a proxy server that can be configured to serve apps from different sources such as GitHub pages under the same domain, thus allowing 
+The web role is meant for this. It contains a proxy server that can be configured to serve apps from different sources such as GitHub pages under the same domain, thus allowing to reuse the SSL certificate.
 
-Using the web role, apps can be served on any path from https://sw.${DOMAIN}/...
+Using the web role, apps can be served on any path from the hostname https://sw.${DOMAIN}/ such as https://sw.${DOMAIN}/MY_APP/.
 
 This is done by adding the following `location` clause in the `pryv/nginx/conf/site.conf` file:
 
