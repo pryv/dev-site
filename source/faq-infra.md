@@ -1,6 +1,6 @@
 ---
 id: faq
-title: "FAQ - infrastructure"
+title: 'FAQ - infrastructure'
 template: default.jade
 withTOC: true
 ---
@@ -9,7 +9,7 @@ withTOC: true
 
 In addition to the **Deployment design guide** document (available on request), a Pryv.IO platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
 
-To encrypt data in transit, we require a **wildcard SSL certificate** for the domain ***.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
+To encrypt data in transit, we require a **wildcard SSL certificate** for the domain **\*.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
 
 Since we use our own DNS servers to resolve the domain associated with the platform, it must be possible to **set name servers** for the domain. This must be verified before buying the domain, as some providers do not allow it.
 
@@ -35,8 +35,7 @@ You must take into account the legislation covering the people whose data will b
 
 Pryv offers three options here:
 
-- Application-level end-to-end encryption: The application(s) that access Pryv encrypt the data that is stored in Pryv on creation and decrypt it after reading it back. Pryv provides a data type for this usage. See: <http://api.pryv.com/event-types/#encrypted>
-- MongoDB encryption: We can provide you with a recent release of MongoDB that will allow you to set up EAR: <https://docs.mongodb.com/manual/core/security-encryption-at-rest/>
+- Application-level end-to-end encryption: your application(s) that will access Pryv.io encrypt the data before sending it and can decrypt it after reading it back. Pryv.io provides a data type to include metadata concerning the encryption used by your application. See: <http://api.pryv.com/event-types/#encrypted>
 - Disk encryption: Linux has a solid story of disk encryption. If stored on such a disk, Pryv data is encrypted at rest as well.
 
 The last option will probably the easiest to implement. It offers good protection against disks being stolen from the datacenter, while not increasing overall system complexity by much.
@@ -74,7 +73,7 @@ ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns2-${DOMAIN}.${TOP_DOMAIN}
 
 We deliver the platform with default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-auth3.
 
-To customize it, fork the repository, make stub commit on the `gh-pages` branch to activate the [GitHub Pages](https://pages.github.com/).   
+To customize it, fork the repository, make stub commit on the `gh-pages` branch to activate the [GitHub Pages](https://pages.github.com/).
 Modify the NGINX configuration on the static-web machine `static/nginx/site.conf` (or `pryv/nginx/site.conf` for single node). Change line:
 
 ```
@@ -88,9 +87,10 @@ proxy_pass        https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth3/;
 ```
 
 The following pages will show the changes that you apply to this repository:
-* Registration: https://sw.${DOMAIN}/access/register.html
-* Reset password: https://sw.${DOMAIN}/access/reset-password.html
-* Consent authorization: https://sw.${DOMAIN}/access/access.html
+
+- Registration: https://sw.${DOMAIN}/access/register.html
+- Reset password: https://sw.${DOMAIN}/access/reset-password.html
+- Consent authorization: https://sw.${DOMAIN}/access/access.html
 
 ## How to host apps, resources on the same domain / reuse the SSL certificate
 
@@ -104,9 +104,9 @@ This is done by adding the following `location` clause in the `pryv/nginx/conf/s
 server {
  	listen               443;
  	server_name          sw.DOMAIN;
-  
+
   //...
-  
+
 	location /MY_APP/ {
     	proxy_pass            MY_APP_URL_WITH_PROTOCOL;
     	proxy_set_header      X-Real-IP $remote_addr;
@@ -120,12 +120,14 @@ server {
 
 ### docker login X11 error
 
-On a Pryv install using Ubuntu 18.X when running `docker login`: Ubuntu refuses to let you enter the password because it wants you to use a secure means of password entry. The error reads something like 'Cannot autolaunch D-Bus without X11 $DISPLAY' ([docker-compose issue #6023](https://github.com/docker/compose/issues/6023)).   
-Our workaround is:  
+On a Pryv install using Ubuntu 18.X when running `docker login`: Ubuntu refuses to let you enter the password because it wants you to use a secure means of password entry. The error reads something like 'Cannot autolaunch D-Bus without X11 \$DISPLAY' ([docker-compose issue #6023](https://github.com/docker/compose/issues/6023)).
+Our workaround is:
+
 ```
 sudo apt-get remove golang-docker-credential-helpers
 sudo apt install docker-compose
 ```
+
 The second line is needed because the first removes docker-compose as well.
 
 ### Are my containers running?
@@ -165,6 +167,6 @@ rm -rf core/mongodb/data/*
 ./run-core
 ```
 
-### How can I use the demo dashboard app (*app-web*) on my Pryv.IO platform?
+### How can I use the demo dashboard app (_app-web_) on my Pryv.IO platform?
 
 App-web is hosted on GitHub pages and can be used for your Pryv.IO platform as described in [its documentation](https://github.com/pryv/app-web#usage).
