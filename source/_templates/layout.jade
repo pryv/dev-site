@@ -50,8 +50,6 @@ html.no-js(lang='en')
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
                   +menuItem('getting-started/pryvme', 'First Steps')
-                  +menuItem('getting-started/javascript', 'Getting started: Javascript')
-                  +menuItem('getting-started/java', 'Getting started: Java')
                   +menuItem('concepts', 'API concepts')
                   //+menuItem('data-modeling', 'Data modeling') —> into "Concepts"??
               li.dropdown
@@ -64,7 +62,6 @@ html.no-js(lang='en')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Code <b class="caret"></b>
                 ul.dropdown-menu
-                  +menuItem('code-libraries', 'Code libraries')
                   +menuItem('apps-and-services', 'Example apps')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') FAQ <b class="caret"></b>
@@ -108,7 +105,7 @@ html.no-js(lang='en')
       script.
         jQuery(document).ready(function($) {
           // Header is about 51 pixels. This equals to 'header + fuzz', fuzz was
-          // determined experimentally. 
+          // determined experimentally.
           var offset = 100;
 
           // Display TOC on the left side of the page.
@@ -119,8 +116,8 @@ html.no-js(lang='en')
 
           // Synchronise scroll/click motion with TOC display.
           $(document).ready(function() {
-            // NOTE This is done at onLoad since we need to wait for all CSS 
-            // to appear. 
+            // NOTE This is done at onLoad since we need to wait for all CSS
+            // to appear.
             $('body').scrollspy({
               target: '#toc',
               offset: offset
