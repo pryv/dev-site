@@ -30,17 +30,15 @@ module.exports = exports =
 
     id: "account-creation"
     title: "Creating an account"
-    description: """
-                 **Attention, this process will change**: the creation call will no longer happen on the registration server but on the core server, and the registration server will only provide checks and get notified of changes.
-                 """
     sections: [
       id: "process-steps"
       title: "Process steps"
       description: """
-                   1. Client calls registration server with desired new account data (including which core server should host the account)
-                   2. Registration server verifies data, hands it over to specified core server if OK
-                   3. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to registration server
-                   4. Registration server updates directory if OK, returns status to client
+                   1. Client calls the registration server to get a list of available hostings (core server locations)
+                   2. Client calls registration server with desired new account data (including which core server should host the account)
+                   3. Registration server verifies data, hands it over to specified core server if OK
+                   4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to registration server
+                   5. Registration server updates directory if OK, returns status to client
                    """
     ,
       id: "api-methods"
@@ -49,6 +47,24 @@ module.exports = exports =
                    The methods are called via HTTPS on the registration server.
                    """
       sections: [
+        id: ""
+        type: "method"
+        title: "Get hostings"
+        http: "GET /hostings"
+        description: """
+                    Get the list of all available hostings for data storage locations.
+                    """
+        result:
+          http: "200 OK"
+          properties: [
+            key: "regions"
+            type: "Object containing multiple regions, containing themselves multiple zones, containing themselves multiple hostings."
+            description: """
+                        Multiple informations concerning data storage locations configured and available to create new users into.
+                        """
+          ]
+        examples: []
+        ,
         id: "users.create"
         type: "method"
         title: "Create user"
