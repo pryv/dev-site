@@ -18,7 +18,7 @@ The following tutorial is based on REST calls without using any application.
 
 To create a new user, you will need 2 specific information:
 
-- appid: this identifier is chosen by you and has to be unique for the application interacting with Pryv.io, be it a web application, a mobile application or anything else.
+- appId: this identifier is chosen by you and has to be unique for the application interacting with Pryv.io, be it a web application, a mobile application or anything else.
 - hosting: this piece of information will tell Pryv.io on which storage system to create and link the user. More information is available at the [API concepts](http://api.pryv.com/concepts/#servers) page.
 
 ### Get existing hostings
