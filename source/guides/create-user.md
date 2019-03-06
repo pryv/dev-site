@@ -1,7 +1,7 @@
 ---
 id: create-user
 title: 'Create a user'
-template: default.jade
+template: customer.jade
 withTOC: true
 ---
 

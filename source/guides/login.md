@@ -1,7 +1,7 @@
 ---
 id: login
 title: 'Login'
-template: default.jade
+template: customer.jade
 withTOC: true
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: guides
 title: 'Development guides'
-template: default.jade
+template: customer.jade
 withTOC: true
 ---
 

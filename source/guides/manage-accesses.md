@@ -1,7 +1,7 @@
 ---
 id: manage-accesses
 title: 'Manage accesses'
-template: default.jade
+template: customer.jade
 withTOC: true
 ---
 

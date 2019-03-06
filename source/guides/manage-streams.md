@@ -1,7 +1,7 @@
 ---
 id: manage-streams
 title: 'Manage streams'
-template: default.jade
+template: customer.jade
 withTOC: true
 ---
 

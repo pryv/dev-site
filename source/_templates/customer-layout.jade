@@ -1,0 +1,163 @@
+doctype html
+html.no-js(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='description', property='og:description', content='Pryv API reference and resources for developers')
+    meta(name='author', content='Pryv SA')
+    meta(property='og:type', content='website')
+    meta(name='image', property='og:image', content='/assets/images/logo-256.png')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title !{title || 'TODO'} | Pryv API
+    link(rel='icon', href='/assets/images/favicon-black.ico', type='image/x-icon')
+    link(rel='apple-touch-icon', sizes='120x120', href='/assets/images/apple-touch-icon-120x120-black.png')
+    link(rel='apple-touch-icon', sizes='152x152', href='/assets/images/apple-touch-icon-152x152-black.png')
+    link(rel='apple-touch-icon', sizes='180x180', href='/assets/images/apple-touch-icon-180x180-black.png')
+    | <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    | <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    | <!--[if lt IE 9]>
+    |   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    |   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    | <![endif]-->
+    link(rel='stylesheet', type='text/css', href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,400italic|Roboto+Condensed:400,300,700')
+    link(rel='stylesheet', type='text/css', href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/docco.min.css')
+    link(rel='stylesheet', type='text/css', href='/assets/fonts/ss-gizmo.min.css')
+    link(rel='stylesheet', type='text/css', href='/assets/style.css')
+
+  - var bodyClass = (id ? id : '') + (withTOC ? ' with-toc' : '') + (withExamples ? ' with-examples' : '')
+  - var rootContainerClass = withExamples ? 'container-fluid' : ('container' + (id != 'home' ? ' container-narrow' : ''))
+  body(class=bodyClass)
+    header#page-header
+      nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+        div.container-fluid
+          .navbar-header
+            //a.navbar-brand.logo.pryv-home(href='https://pryv.com/customer-resources', title='Pryv home')
+              img(src='/assets/images/icon-home.svg', alt='Pryv home', height='50')
+            a.navbar-brand.logo(href='/customer-resources', title='Developers home')
+              img(src='/assets/images/logo-256-black.png', alt='Developers home')
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#main-nav')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+          #main-nav.collapse.navbar-collapse
+            mixin menuItem(fileId, text, options)
+              - options = options || {}
+              - fullId = (parentId ? parentId + '/' : '') + id
+              - var activeClass = fullId === fileId ? 'active' : ''
+              li(class=activeClass + (options.disabled ? ' disabled' : ''))
+                a(href='/#{fileId}/')= text
+
+            ul.nav.navbar-nav
+              li
+                a(href='/getting-started-customer') Quick start
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
+                ul.dropdown-menu
+                  +menuItem('/guides/authorize-app', 'Authorize App')
+                  +menuItem('/guides/create-user', 'Create User')
+                  +menuItem('/guides/login', 'Login')
+                  +menuItem('/guides/manage-streams', 'Manage streams')
+                  +menuItem('/guides/manage-events', 'Manage events')
+                  +menuItem('/guides/manage-accesses', 'Manage accesses')
+                  +menuItem('/guides/batch-call', 'Batch call of methods')
+                  //+menuItem('/data-modeling', 'Data modeling') —> into "Concepts"??
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown') API <b class="caret"></b>
+                ul.dropdown-menu
+                  +menuItem('/reference', 'API reference')
+                  +menuItem('/change-log', 'API change log')
+                  //+menuItem('/standardStructure')
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown') Resources <b class="caret"></b>
+                ul.dropdown-menu
+                  +menuItem('/concepts', 'API concepts')
+                  +menuItem('/event-types', 'Event types')
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown') FAQ <b class="caret"></b>
+                ul.dropdown-menu
+                  +menuItem('/faq-api', 'API')
+                  +menuItem('/faq-infra', 'Infrastructure')
+              //li
+                a(href='#') Blog
+            .navbar-right
+              p.navbar-text.version
+                a(href='/change-log/', title='View change log') API version: <strong>#{apiReference.version}</strong>
+            block custom-navbar-items
+              //- placeholder for sub-templates
+
+    #main-wrapper(class=rootContainerClass)
+      #main
+        if ! hideTitleHeading
+          h1.page-title=title
+        block content
+      - if (withTOC)
+        nav#toc
+          //- content generated by TOC plugin (see below)
+
+    footer#page-footer
+      nav.navbar.navbar-default
+        div.container-fluid
+          #footer-nav
+            ul.nav.navbar-nav
+              li: a(href='mailto:developers@pryv.com') Send a message
+              li: a(href='https://github.com/pryv') GitHub
+              li: a(href='https://pryv.com') pryv.com
+
+    //- append scripts
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+    script(src='/assets/bootstrap.min.js')
+
+    if withTOC
+      script(src='/assets/js/toc.min.js')
+      // TOC generation
+      //- assumes all headings are within a section with just one h1 per section (the section title)
+      script.
+        jQuery(document).ready(function($) {
+          // Header is about 51 pixels. This equals to 'header + fuzz', fuzz was
+          // determined experimentally.
+          var offset = 100;
+
+          // Display TOC on the left side of the page.
+          $('#toc').toc({
+            selector: '#main h1:not(.page-title),#main h2,#main h3',
+            ulClass: 'nav'
+          });
+
+          // Synchronise scroll/click motion with TOC display.
+          $(document).ready(function() {
+            // NOTE This is done at onLoad since we need to wait for all CSS
+            // to appear.
+            $('body').scrollspy({
+              target: '#toc',
+              offset: offset
+            });
+          });
+        });
+
+    // Code blocks highlighting
+    script(src='//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js')
+    script.
+      hljs.initHighlightingOnLoad();
+
+    block custom-scripts
+      //- placeholder for sub-templates
+
+    // Google Analytics
+    script.
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36589447-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    // Sales-Wings
+    script(type='text/javascript' id='SW-fd71dffa-76e8-479e-a37b-6e915b97b023')
+    script.
+      !function(){function a(){var a=document.createElement("script");
+      a.type="text/javascript",a.async=1,a.src="//go.saleswingsapp.com/assets/javascripts/sw/fd71dffa-76e8-479e-a37b-6e915b97b023";
+      var b=document.getElementById("SW-fd71dffa-76e8-479e-a37b-6e915b97b023");
+      b.parentNode.insertBefore(a,b)}window.attachEvent?window.attachEvent("onload",a):window.addEventListener("load",a,0)}();

@@ -1,7 +1,7 @@
 ---
 id: manage-events
 title: 'Manage events'
-template: default.jade
+template: customer.jade
 withTOC: true
 ---
 
