@@ -1,7 +1,8 @@
 ---
 id: authorize-app
 title: 'Authorization application'
-template: customer.jade
+template: default.jade
+customer: true
 withTOC: true
 ---
 

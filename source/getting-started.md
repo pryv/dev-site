@@ -1,535 +1,620 @@
 ---
 id: getting-started
-title: 'Getting started'
+title: 'Get started with Pryv.IO API'
 template: default.jade
 withTOC: true
 ---
 
-## Prerequisites
+In this tutorial, we will help you to try out and evaluate Pryv.IO API for your
+projects. Throughout these steps, we will use **Pryv.me**, our [Lab platform](http://pryv.com/pryvlab/) for testing Pryv.IO API.
 
-You'll need your own Pryv.io installation to try out its different features.
-If you don't have one yet, please get in contact with our [Sales Team](mailto:sales@pryv.com).
+We will guide you through:
 
-Pryv.io is a middleware. As such, you will have to interact with the server through either a custom application or REST calls using your prefered method (e.g. cURL, Postman, etc.).
+1. [Creating a Pryv.me User](#user-creation)
+2. [Data Modelling](#data-modelling-tips)
+3. [Authorizing your Application](#authorize-your-application)
+4. [Using CRUD operations: Create, Read, Update, Delete](#create-read-update-delete)
+5. [Managing Access](#access-management)
 
-The following tutorial is based on REST calls without using any application.
+# Create a Pryv.me User
 
-## Create user
+By registering with **Pryv.me**, you will have access to a Pryv.IO user and a fully-functional Pryv.IO environment hosted in our laboratory infrastructure, perfect for your first tests.
 
-To create a new user, you will need 2 specific information:
+1. Go to the [registration page](https://sw.pryv.me/access/register.html) (click the link).
+2. Fill in the form, choose [where you want to store your data](http://api.pryv.com/concepts/#servers) and click the '**Create**' button.
 
-- appId: this identifier is chosen by you and has to be unique for the application interacting with Pryv.io, be it a web application, a mobile application or anything else.
-- hosting: this piece of information will tell Pryv.io on which storage system to create and link the user. More information is available at the [API concepts](http://api.pryv.com/concepts/#servers) page.
+That's it! You will receive a welcome email from Pryv.me with your account details.
 
-### Get existing hostings
+/!\ Data in Pryv.IO has a geographical location that doesn't change. This makes it easier to control what legislations apply.
 
-You can query Pryv.io to list the existings hostings know to the system.
+## Sign-in to Pryv.me
 
-Execute the following cURL request to the register URL of your installation.
+Go to the following address to sign-in with your Pryv.IO account:
 
-```bash
-curl -X GET \
-     -H 'Content-Type: application/json' \
-     https://reg.pryv.domain/hostings
-```
+`'https://${username}.pryv.me/#/SignIn'`
 
-An example of an answer follows:
+You have now access to your Pryv.me account through the Pryv.IO demo dashboard. Alternatively, just click [here](https://sw.pryv.me/access/signinhub.html), enter your username and then your password in the second step.
+
+As shown below, the streams for this account are listed, especially a default stream which is automatically created for you: 'Diary'.
+
+![Pryv.me Dashboard: Streams](assets/images/getting-started/streams_dashboard.png)
+
+# Data Modelling Tips
+
+The Pryv.IO data model is composed mainly of two entities: **events** and **streams**.
+
+Here's an example of two Pryv.IO user accounts and their respective streams. Inside each stream, you can see timestamped events.
+
+![Pryv.IO Data Model](assets/images/getting-started/PryvIO.png)
+
+### Events
+
+Events are the primary unit of content in Pryv.IO. An event is a timestamped piece of typed data.
+
+Here's an example of an event:
 
 ```json
 {
-  "regions": {
-    "pilot": {
-      "name": "Pilot",
-      "localizedName": { "fr": "Pilot" },
-      "zones": {
-        "pilot": {
-          "name": "Pilot Core",
-          "localizedName": { "fr": "Pilot Core" },
-          "hostings": {
-            "pilot": {
-              "url": "http://pryv.domain",
-              "name": "Self-Contained Pilot Core",
-              "description": "Local core inside the pilot deployment",
-              "localizedDescription": {},
-              "available": true
-            }
-          }
+  "streamId": "pulseOximeterApp",
+  "type": "frequency/bpm",
+  "content": 90,
+  "time": 1528446260.693,
+  "tags": [],
+  "created": 1528446260.693,
+  "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+  "modified": 1528446260.693,
+  "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+  "id": "cji5pfumt1nu90b40chlpetyp"
+}
+```
+
+[Events](http://api.pryv.com/concepts/#events) either have a type from the list of [standard event types](http://api.pryv.com/event-types/#directory) or they have an application specific type. For more details, see the [events API reference](http://api.pryv.com/reference/#event).
+
+### Streams
+
+Streams are the main way of encoding context for events. Every event occurs in one stream. Streams follow a hierarchical structure. They can have sub-streams and usually match either user-specific, app-specific or organizational levels (e.g. life journal, work projects) or encode data sources (e.g. apps and/or devices).
+
+Here an example of a stream with sub-streams (children):
+
+```json
+{
+  "name": "Heart",
+  "parentId": null,
+  "created": 1528445539.785,
+  "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+  "modified": 1528445581.592,
+  "modifiedBy": "cjhagb5up1b950b40xsbeh5yj",
+  "clientData": {
+    "pryv-browser:bgColor": "#e81034"
+  },
+  "id": "heart",
+  "children": [
+    {
+      "name": "Heart Rate",
+      "parentId": "heart",
+      "created": 1528445684.508,
+      "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+      "modified": 1528445684.508,
+      "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+      "id": "heartRate",
+      "children": [
+        {
+          "name": "Pulse Oximeter App",
+          "parentId": "heartRate",
+          "created": 1528445704.807,
+          "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+          "modified": 1528445704.807,
+          "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+          "id": "pulseOximeterApp",
+          "children": []
         }
-      }
+      ]
     }
-  }
+  ]
 }
 ```
 
-In the previous example, the `hostings` part only contains one hosting deployment which name is `pilot`.
+Imagine an athlete who uses four applications to store data on Pryv.IO. All four applications store their data in a single account:
 
-### New user creation
+- **Nutrition Mobile App**: Tracks the consumption of various types of food ('calories ingested').
+- **Smartwatch A**: Monitors performance during the training ('calories burned', 'pulse rate').
+- **Smartwatch B**: Linked to the same application but only used to monitor the 'calories burned' outside of training.
+- **Pulse Oximeter**: Used at home to check the health of the heart ('pulse rate', 'blood oxygenation / SpO2')
 
-Using the previously found `pilot` hosting and a custom appid `my-own-app`, let's create a new user by sending the following request to the register.
+Here is a list of data generated by the applications and their corresponding Pryv types :
 
-```bash
-curl -X POST \
-     -H 'Content-Type: application/json' \
-     -d '{
-         "appid": "my-own-app",
-         "username": "jsmith",
-         "password": "password",
-         "email": "jsmith@example.com",
-         "hosting": "pilot"
-     }' \
-     https://reg.pryv.domain/user
-```
+| Data              | Type               |
+| ----------------- | :----------------- |
+| Heart rate        | `frequency/bpm`    |
+| Blood oxygenation | `oxygen-rate/spo2` |
+| Nutrition         | `energy/calories`  |
+| Physical activity | `energy/calories`  |
 
-The answer returned will contain the username of the account created and the URL to start using it and manage data for this user.
+Given this situation, we would recommend a streams structure similar to the following:
 
-```json
-{
-  "username": "jsmith",
-  "server": "jsmith.pryv.domain"
-}
-```
+![Example Streams Structure](assets/images/getting-started/example_streams.png)
 
-From this point onward, all queries to Pryv.io will be done using the URL returned, indicating how to interact with a specific user's data.
+This stream structure has multiple benefits:
 
-## Login
+- Provides enough context to the data and thus avoids ambiguities:
+  - between food consumption ('calories ingested') and physical activity ('calories burned')
+  - between consumption of different food ('foodA', 'foodB')
+- Allows interoperability in the case of multiple devices that:
+  - measure the same type of data through different apps ('heartRate from 'pulseOximeterApp' and 'smartwatchA')
+  - use the same app but measure different parameters ('smartwatchA' : 'heartRate' and 'calories burned', 'smartwatchB' : only 'calories burned')
 
-Once the user account has been created you'll be able to login and obtain a personal access token to manage data in this account.
+# Authorize your application
 
-More information on the different access types can be found on the [API concepts](http://api.pryv.com/concepts/#accesses) page.
+Continuing with our previous example we would like the pulse oximeter application to be able to provision our Pryv.me account with streams and events.
 
-The login request will be done toward our custom account for John Smith.
+For this purpose the application first needs to request access to the Pryv.IO account. We present below two methods to generate a new access for our application, which materializes in the form of an app token.
 
-```bash
-curl -X POST \
-     -H 'Content-Type: application/json' \
-     -d '{
-         "appId": "my-own-app",
-         "username": "jsmith",
-         "password": "password"
-     }' \
-     https://jsmith.pryv.domain/auth/login
-```
+For more information about Pryv.IO accesses [see below](#access-management).
 
-The answer will contains a token which is a personal token allowing full management of all data for the account.
+## Use Pryv.IO Access Token Generator
 
-```json
-{
-  "meta": {
-    "apiVersion": "1.3.38",
-    "serverTime": 1550832564.509
-  },
-  "token": "cjsfxo173000111taf99gp3dv",
-  "preferredLanguage": "en"
-}
-```
+The easiest way to generate an app access token is to use the Pryv Access Token Generation page.
 
-From now on, to use the token retrieved and authentify each request made to Pryv.io, you'll need to add an `Authorization` header as shown in the following parts of the tutorial.
+1. Go to [the Pryv Access Token Generator: http://pryv.github.io/app-web-access](http://pryv.github.io/app-web-access)
+2. Set up the required parameters
 
-## Manage data
+   1. Enter the Application ID ('demopryv-access')
+   2. Setup the streams you want to grant access to in the permissions box
+      ![Permissions Box](assets/images/getting-started/permissions_box.png)
 
-As you may already know, data in Pryv.io is modeled using notions of streams and events.
+      ```json
+      [
+        {
+          "streamId": "heart",
+          "level": "manage",
+          "defaultName": "Heart"
+        }
+      ]
+      ```
 
-You can find more information on the API concepts page in the [events section](http://api.pryv.com/concepts/#events) or the [contexts section](http://api.pryv.com/concepts/#contexts).
+   3. Click on '**Request Access**' button
 
-### Creating a stream
+3. Now click on '**Sign in**' button ![sign_in_button](assets/images/getting-started/sign_in_button.png) - A new tab will open
+4. Sign in with your Pryv account
+   ![Sign In Dialog](assets/images/getting-started/sign_in.png)
+   A popup will open to inform you about the access you are about to grant.
+5. Click on '**Accept**' button
 
-Data will be contextualized here using streams.
+   By accepting you consent that the 'demopryv-access' application can access the stream 'heart' with a 'manage' access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the 'defaultName' parameter above.
 
-You can find all available REST actions on streams in the [API reference](http://pryv.github.io/reference/#streams).
+   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.IO account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
 
-We will now create a new stream in which to place our data using the [creation stream action](http://pryv.github.io/reference/#create-stream).
+   ![Accept Button](assets/images/getting-started/accept_button.png)
 
-```bash
-curl -X POST \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     -d '{
-         "name": "My Stream"
-     }' \
-     https://jsmith.pryv.domain/streams
-```
+6. **Your access token has been generated.**
+   ![Access Token](assets/images/getting-started/access_token.png)
 
-The most basic use of this action is to provide a human-readable name for the new stream. A unique and random id will be created upon creation if not provided.
+## Use your own implementation
 
-The `Stream` object manipulated by Pryv.io is detailed in the [data structure reference](http://pryv.github.io/reference/#data-structure-stream).
+Instead of using the token generator page, it is also possible to implement the authorization process in code and obtain an access token by following the steps below.
 
-The answer returned by the server will contain the newly created stream object.
-
-```json
-{
-  "meta": {
-    "apiVersion": "1.3.38",
-    "serverTime": 1550833364.627
-  },
-  "stream": {
-    "name": "My Stream",
-    "parentId": null,
-    "created": 1550833364.622,
-    "createdBy": "cjsfxo17f000211tair7v6atb",
-    "modified": 1550833364.622,
-    "modifiedBy": "cjsfxo17f000211tair7v6atb",
-    "id": "cjsfy56kv000311ta9dy121ni"
-  }
-}
-```
-
-### Creating an event
-
-Actual data will be stored in events.
-
-You can find all available REST actions on events in the [API reference](http://pryv.github.io/reference/#events).
-
-Data can be stored in events and can be structured using event types. You can find a description of all default event types in Pryv.io in the [event types reference](http://pryv.github.io/event-types/). Note that you can also use your own custom types.
-
-Let's create an event with the `note/txt` type which describes a content consisting of a single text content.
-
-Apart from a content field which inner structure can depend on the declared type, an event can contain a number of other fields acting as metadata around the data stored in Pryv.io.
-
-You can find all fields composing an event object in the [data structure reference](http://pryv.github.io/reference/#data-structure-event).
-
-To create a basic `note/txt` event, we only need the `streamId`, `type` and the `content` fields. We will also use the `description` to give meaning to the data stored in a human-readable way.
-
-The `streamId` will reference the previously created Stream object to contextualize the data.
+1. Send an access request with a `POST` call to `https://access.${domain}/access`:
 
 ```bash
-curl -X POST \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     -d '{
-         "streamId": "cjsfy56kv000311ta9dy121ni",
-         "type": "note/txt",
-         "description": "My note event",
-         "content": "This is the content of our note"
-     }' \
-     https://jsmith.pryv.domain/events
-```
-
-The answer returned by the server contains the created event with all additional fields filled in by the server.
-
-```json
-{
-  "meta": {
-    "apiVersion": "1.3.38",
-    "serverTime": 1550841167.771
-  },
-  "event": {
-    "streamId": "cjsfy56kv000311ta9dy121ni",
-    "type": "note/txt",
-    "description": "My note event",
-    "content": "This is the content of our note",
-    "time": 1550841167.72,
-    "tags": [],
-    "created": 1550841167.72,
-    "createdBy": "cjsfxo17f000211tair7v6atb",
-    "modified": 1550841167.721,
-    "modifiedBy": "cjsfxo17f000211tair7v6atb",
-    "id": "cjsg2sfhq000014taogk4y0gv"
-  }
-}
-```
-
-### Get existing data
-
-Pryv.io comes with many operations and filtering possibilities which can be found described in the [API reference](http://pryv.github.io/reference/).
-
-Let's display the previously created note.
-
-```bash
-curl -X GET \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events
-```
-
-The object returned is a list of existing events. In this tutorial we have only one even that can be found in this list.
-
-```json
-{
-  "events": [
+curl -X POST https://reg.pryv.me/access -H 'Content-Type: application/json' \
+  -d '{
+  "requestingAppId": "demopryv-access",
+  "requestedPermissions": [
     {
-      "streamId": "cjsfy56kv000311ta9dy121ni",
-      "type": "note/txt",
-      "description": "My note event",
-      "content": "This is the content of our note",
-      "time": 1550841167.72,
-      "tags": [],
-      "created": 1550841167.72,
-      "createdBy": "cjsfxo17f000211tair7v6atb",
-      "modified": 1550841167.721,
-      "modifiedBy": "cjsfxo17f000211tair7v6atb",
-      "id": "cjsg2sfhq000014taogk4y0gv"
+      "streamId": "heart",
+      "level": "manage",
+      "defaultName": "Heart"
     }
   ],
-  "meta": {
-    "apiVersion": "1.3.38",
-    "serverTime": 1550841828.951
-  }
-}
+  "languageCode": "fr",
+  "returnURL": false
+}'
 ```
 
-Let's try an example of filtering by passing a parameter in our request to filter out all events which happened after the 01.01.2019 at 07:00:00 UTC by using the `toTime` parameter.
-
-This filtering applies to the `time` field which indicates when an event occurred. Note that this is different from the time when the data was stored in Pryv.io, which is encoded in the `created` field. Thus the `time` can be set at the event creation to store data that occurred in the past, or even in the future (e.g. a medical appointment).
-
-```bash
-curl -X GET \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events?toTime=1546326000.000
-```
-
-As exepected, our only event is filtered out:
+The server should respond with something similar to this:
 
 ```json
 {
-  "events": [],
-  "meta": {
-    "apiVersion": "1.3.38",
-    "serverTime": 1550842585.342
-  }
-}
-```
-
-## Manage accesses
-
-One of the core aspects of Pryv.io is the access management to the data, based on an active consent given by the data owner to others using accesses.
-
-You can find the concepts behind the accesses in Pryv.io in the [API concepts](http://api.pryv.com/concepts/#accesses) page.
-
-### Access creation
-
-To allow an other party to access the data, a user has to deliver an token linked to an access object in Pryv.io.
-
-To do that, let's create our first access, using the creation method among the ones provided by the API and described in the [Access methods reference](http://pryv.github.io/reference/#accesses).
-
-The object used as parameter contains some of the desired access fields. A list of all fields can be found in the [Access data structure reference](http://pryv.github.io/reference/#data-structure-access).
-
-We'll create a shared access which is the default type, giving access to the previously created stream with `read` permissions.
-
-```bash
-curl -X POST \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     -d '{
-         "name": "My first access",
-         "permissions": [
-           {
-            "streamId": "cjsfy56kv000311ta9dy121ni",
-            "level": "read"
-           }
-         ]
-     }' \
-     https://jsmith.pryv.domain/accesses
-```
-
-The server will return the created access information, containing the most important token that will be used by whoever we allow to access data using this access.
-
-```json
-{
-  "meta": {
-    "apiVersion": "1.3.38",
-    "serverTime": 1550843240.685
-  },
-  "access": {
-    "name": "My first access",
-    "permissions": [
-      {
-        "streamId": "cjsfy56kv000311ta9dy121ni",
-        "level": "read"
-      }
-    ],
-    "type": "shared",
-    "token": "cjsg40uzv000411ta8r4n7ax1",
-    "created": 1550843240.683,
-    "createdBy": "cjsfxo17f000211tair7v6atb",
-    "modified": 1550843240.683,
-    "modifiedBy": "cjsfxo17f000211tair7v6atb",
-    "id": "cjsg40uzv000511tazp8k74db"
-  }
-}
-```
-
-Now whoever or whatever algorithm or application query data on the user data storage accessible at `https://jsmith.pryv.domain` using this token (`cjsg40uzv000411ta8r4n7ax1`) will have read access to all events linked to the stream named `My Stream` that we created at the beginning of this tutorial.
-
-Let's try that now.
-
-### Creating more data
-
-Before trying to use the shared access, let's add some more data in a different stream to visualize the access control in action.
-
-```bash
-curl -X POST \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     -d '{
-         "name": "My second Stream"
-     }' \
-     https://jsmith.pryv.domain/streams
-```
-
-```json
-{
-  "meta": {
-    "apiVersion": "1.3.38",
-    "serverTime": 1550843657.516
-  },
-  "stream": {
-    "name": "My second Stream",
-    "parentId": null,
-    "created": 1550843657.513,
-    "createdBy": "cjsfxo17f000211tair7v6atb",
-    "modified": 1550843657.513,
-    "modifiedBy": "cjsfxo17f000211tair7v6atb",
-    "id": "cjsg49smi000114tao2ritqsj"
-  }
-}
-```
-
-The second streams is created. Note the `id` of this new stream that will be used in the following query.
-
-Using this new `streamId` let's create another event, this time with a more complex type like the blood pressure type `blood-pressure/mmhg-bpm`.
-
-The reference for this default data type can be found [here](http://pryv.github.io/event-types/#blood-pressure).
-
-```bash
-curl -X POST \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     -d '{
-         "streamId": "cjsg49smi000114tao2ritqsj",
-         "type": "blood-pressure/mmhg-bpm",
-         "description": "My blood pressure",
-         "time": 1549791135.052,
-         "content": {
-		       "systolic": 141,
-		       "diastolic": 82
-	       }
-     }' \
-     https://jsmith.pryv.domain/events
-```
-
-The server returns the new event with all its necessary fields filled.
-
-```json
-{
-  "meta": {
-    "apiVersion": "1.3.38",
-    "serverTime": 1550844023.884
-  },
-  "event": {
-    "streamId": "cjsg49smi000114tao2ritqsj",
-    "type": "blood-pressure/mmhg-bpm",
-    "description": "My blood pressure",
-    "time": 1549791135.052,
-    "content": {
-      "systolic": 141,
-      "diastolic": 82
-    },
-    "tags": [],
-    "created": 1550844023.879,
-    "createdBy": "cjsfxo17f000211tair7v6atb",
-    "modified": 1550844023.879,
-    "modifiedBy": "cjsfxo17f000211tair7v6atb",
-    "id": "cjsg4hnbe000611taaj2vmjua"
-  }
-}
-```
-
-### Getting data using a shared access
-
-It's now time to use the previously obtained shared access token (`cjsg40uzv000411ta8r4n7ax1`).
-
-Let's change the `Authorization` header in the REST query and see that only the note event is returned.
-
-```bash
-curl -X GET \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsg40uzv000411ta8r4n7ax1' \
-     https://jsmith.pryv.domain/events
-```
-
-The server returns the following list of one event.
-
-```json
-{
-  "events": [
+  "status": "NEED_SIGNIN",
+  "code": 201,
+  "key": "Rp3NBpMBnkCOuuAo",
+  "requestingAppId": "demopryv-access",
+  "requestedPermissions": [
     {
-      "streamId": "cjsfy56kv000311ta9dy121ni",
-      "type": "note/txt",
-      "description": "My note event",
-      "content": "This is the content of our note",
-      "time": 1550841167.72,
-      "tags": [],
-      "created": 1550841167.72,
-      "createdBy": "cjsfxo17f000211tair7v6atb",
-      "modified": 1550841167.721,
-      "modifiedBy": "cjsfxo17f000211tair7v6atb",
-      "id": "cjsg2sfhq000014taogk4y0gv"
+      "streamId": "heart",
+      "level": "manage",
+      "defaultName": "Heart"
     }
   ],
-  "meta": { "apiVersion": "1.3.38", "serverTime": 1550844293.294 }
+  "url": "https://sw.pryv.me/access/access.html?lang=fr&key=Rp3NBpMBnkCOuuAo&requestingAppId=demopryv-access&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22heart%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Heart%22%7D%5D",
+  "poll": "https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo",
+  "returnURL": false,
+  "poll_rate_ms": 1000
 }
 ```
 
-The blood pressure event is not returned because it is not contained in the stream to which we have an access for.
+2. Get the url parameter from the previous response and copy it into your web browser.
 
-If we do the same query using the personal token of John Smith, we'll see all existing events.
+```raw
+https://sw.pryv.me/access/access.html?lang=fr&key=Rp3NBpMBnkCOuuAo&requestingAppId=demopryv-access&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22heart%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Heart%22%7D%5D
+```
+
+3. Sign in with your Pryv account:
+
+   A popup will open to inform you about the access are about to grant.
+
+4. Click on '**Accept**' button
+5. Retrieve the poll url from the previous response.
+
+```json
+"poll": "https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo"
+```
+
+6. Poll the access token with `GET` calls to the polling url:
 
 ```bash
-curl -X GET \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events
+curl -i GET https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo
 ```
+
+Once the access is generated, you should get a response with status _Accepted_ and containing the token :
 
 ```json
 {
-  "events": [
+  "status": "ACCEPTED",
+  "username": "demopryv",
+  "token": "cjhj7i2821eq60b40dzcdx6gt",
+  "code": 200
+}
+```
+
+This token represents the access your application has to a users account; it only expires when the user retracts his consent. You should store this token permanently and securely in your application.
+
+# Create, Read, Update, Delete
+
+Now that we've generated an application token, we can use it against Pryv.IO API to manipulate data of the Pryv.me account, still based on the example of our athlete.
+
+## Create Operations
+
+### Streams
+
+Let's setup the context for the Pulse Oximeter measures by attaching child streams to the 'heart' root stream.
+
+We perform a 'POST' call to the streams route, providing the 'id' and 'name' of the stream to create and a 'parentId', the id of the parent stream.
+
+First, we create the 'heartRate' stream :
+
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${token}" \
+  -d '{
+  	"id":"heartRate",
+  	"name":"Heart Rate",
+  	"parentId":"heart"
+	}' \
+  'https://${username}.${domain}/streams'
+```
+
+Do the same for the 'pulseOximeterApp' stream:
+
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${token}" \
+  -d '{
+  	"id":"pulseOximeterApp",
+  	"name":"Pulse Oximeter App",
+  	"parentId":"heartRate"
+	}' \
+	'https://${username}.${domain}/streams'
+```
+
+### Events
+
+Once the streams have been created, we can collect the Pulse Oximeter measures as events.
+
+Create an event of type 'frequency/bpm' with a pulse rate (integer) as content in the Stream 'pulseOximeterApp'.
+
+```bash
+curl -X POST \
+	-H "Content-Type: application/json" \
+	-H "Authorization: ${token}" \
+  -d '{
+		"streamId": "pulseOximeterApp",
+		"type": "frequency/bpm",
+		"content": 90
+	}' \
+	'https://${username}.${domain}/events'
+```
+
+## Read Operations
+
+### Streams
+
+Use a 'GET' call to retrieve the heart stream and its childrens.
+
+```bash
+curl -i -H "Authorization: ${token}" \
+	https://${username}.${domain}/streams
+```
+
+Response:
+
+```json
+{
+  "streams": [
     {
-      "streamId": "cjsfy56kv000311ta9dy121ni",
-      "type": "note/txt",
-      "description": "My note event",
-      "content": "This is the content of our note",
-      "time": 1550841167.72,
-      "tags": [],
-      "created": 1550841167.72,
-      "createdBy": "cjsfxo17f000211tair7v6atb",
-      "modified": 1550841167.721,
-      "modifiedBy": "cjsfxo17f000211tair7v6atb",
-      "id": "cjsg2sfhq000014taogk4y0gv"
-    },
-    {
-      "streamId": "cjsg49smi000114tao2ritqsj",
-      "type": "blood-pressure/mmhg-bpm",
-      "description": "My blood pressure",
-      "time": 1549791135.052,
-      "content": {
-        "systolic": 141,
-        "diastolic": 82
+      "name": "Heart",
+      "created": 1528445539.785,
+      "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+      "modified": 1528445581.592,
+      "modifiedBy": "cjhagb5up1b950b40xsbeh5yj",
+      "clientData": {
+        "pryv-browser:bgColor": "#e81034"
       },
-      "tags": [],
-      "created": 1550844023.879,
-      "createdBy": "cjsfxo17f000211tair7v6atb",
-      "modified": 1550844023.879,
-      "modifiedBy": "cjsfxo17f000211tair7v6atb",
-      "id": "cjsg4hnbe000611taaj2vmjua"
+      "id": "heart",
+      "children": [
+        {
+          "name": "Heart Rate",
+          "parentId": "heart",
+          "created": 1528445684.508,
+          "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+          "modified": 1528445684.508,
+          "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+          "id": "heartRate",
+          "children": [
+            {
+              "name": "Pulse Oximeter App",
+              "parentId": "heartRate",
+              "created": 1528445704.807,
+              "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+              "modified": 1528815172.551,
+              "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+              "id": "pulseOximeterApp",
+              "children": []
+            }
+          ]
+        }
+      ]
     }
   ],
-  "meta": { "apiVersion": "1.3.38", "serverTime": 1550844424.979 }
+  "meta": {
+    "apiVersion": "1.2.18",
+    "serverTime": 1528815903.187
+  }
 }
 ```
 
-The event list contains the 2 events that were created during this tutorial, showing that the access control effectively filtered the events returned by the server based on the actual access rights given by the data owner.
+### Events
 
-## To conclude
+Similarly, retrieve all the Pulse Oximeter events.
 
-This achieves this small tutorial to get acquainted with the Pryv.io API.
+```bash
+curl 	-H "Authorization: ${token}" \
+	-i https://${username}.${domain}/events
+```
 
-Most of the technical information can be found by following these links:
+Response :
 
-- [API concepts](http://api.pryv.com/concepts/)
-- [API reference](http://pryv.github.io/reference/)
+```json
+{
+  "events": [
+    {
+      "streamId": "pulseOximeterApp",
+      "type": "frequency/bpm",
+      "content": 90,
+      "time": 1528447710.816,
+      "tags": [],
+      "created": 1528447710.816,
+      "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+      "modified": 1528447710.816,
+      "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+      "id": "cji5qaxk01nui0b40ec370p94"
+    }
+  ],
+  "meta": {
+    "apiVersion": "1.2.18",
+    "serverTime": 1528467864.397
+  }
+}
+```
 
-More complete reference and further details is accessible for you if you have an active licence.
+## Update Operations
 
-For all further enquiries, please feel free to [contact us](http://pryv.com/helpdesk/).
+### Events
+
+Imagine we want to modify a pulse rate measure from the stream 'pulseOximeterApp':
+
+First, retrieve the id of one event to update from the previous responses of our read operations.
+
+```bash
+${event_id} = cji5qaxk01nui0b40ec370p94
+```
+
+Then, use a 'PUT' call to update the event with a new value.
+
+```bash
+curl -X PUT \
+  -H "Authorization: ${token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+		"content": 80
+	}' \
+	'https://${username}.${domain}/events/${event_id}'
+```
+
+### Streams
+
+Similarly, if we want to update the stream 'pulseOximeterApp' by changing its name, we first retrieve the id of the stream we want to update.
+
+```bash
+${streamId} = pulseOximeterApp
+```
+
+Then, use a `PUT` call to update the name `Pulse Oximeter App` to `Pulse Oximeter Application`.
+
+```bash
+curl -X PUT \
+  -H "Authorization: ${token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+		"name": "Pulse Oximeter Application"
+	}' \
+	'https://${username}.${domain}/streams/${streamId}'
+```
+
+## Delete Operations
+
+The delete operation has two phases:
+
+- Trash - Event/Stream disappears, but can be restored.
+- Delete - Event/Stream disappears forever.
+
+When deleting an event or a stream, it is first flagged as trashed and irreversibly deleted only when repeating the delete operation a second time.
+
+### Events
+
+For example, if we want to delete our Pulse Rate event, we use a 'DELETE' call to trash it first and a second same call to delete it completely.
+
+First we retrieve the id of the event to delete.
+
+```bash
+${event_id} = cji5qaxk01nui0b40ec370p94
+```
+
+Then we trash the event (trashed=true):
+
+```bash
+curl -X DELETE \
+  -H "Authorization: ${token}" \
+  'https://${username}.${domain}/events/${event_id}'
+```
+
+Response:
+
+```json
+{
+  "event": {
+    "streamId": "pulseOximeterApp",
+    "type": "frequency/bpm",
+    "content": 105,
+    "time": 1528878365.385,
+    "tags": [],
+    "created": 1528878365.385,
+    "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+    "modified": 1528895740.264,
+    "modifiedBy": "cjicv106i1q580b40678kjb17",
+    "trashed": true,
+    "id": "cjicupcqx1q530b40oao5ob02"
+  },
+  "meta": {
+    "apiVersion": "1.2.18",
+    "serverTime": 1528895740.267
+  }
+}
+```
+
+Finally, we delete the event completely. The API returns a list of deletion ids.
+
+```bash
+curl -X DELETE \
+  -H "Authorization: ${token}" \
+  'https://${username}.${domain}/events/${event_id}'
+```
+
+Response:
+
+```json
+{
+  "eventDeletion": {
+    "id": "cji5qaxk01nui0b40ec370p94"
+  },
+  "meta": {
+    "apiVersion": "1.2.18",
+    "serverTime": 1528817673.092
+  }
+}
+```
+
+### Streams
+
+Now, we will delete the stream 'pulseOximeterApp'. The procedure looks like deleting an event:
+
+```bash
+${stream_id} = pulseOximeterApp
+```
+
+We repeat the following command two times, one for trashing the stream and another for deleting it :
+
+```bash
+curl -X DELETE \
+  -H "Authorization: ${token}" \
+  'https://${username}.${domain}/streams/${stream_id}'
+```
+
+When trying to delete the stream, you may encounter the following error message:
+
+```json
+{
+  "error": {
+    "id": "invalid-parameters-format",
+    "message": "There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing."
+  },
+  "meta": {
+    "apiVersion": "1.2.18",
+    "serverTime": 1528890640.148
+  }
+}
+```
+
+This means that the stream you are trying to delete still contains some events and Pryv.IO needs to know what to do with them. You can add the 'mergeEventsWithParent' boolean as query parameter of your delete call. Set it to _true_ if you want to merge the events into the parent stream or to _false_ if you want to delete them as well.
+
+Here is the command for deleting the stream and merging the events in the parent stream:
+
+```bash
+curl -X DELETE \
+  -H "Authorization: ${token}" \
+  'https://${username}.${domain}/streams/${streamId}?mergeEventsWithParent=true'
+```
+
+Response:
+
+```json
+{
+  "streamDeletion": {
+    "id": "pulseOximeterApp"
+  },
+  "meta": {
+    "apiVersion": "1.2.18",
+    "serverTime": 1528890935.505
+  }
+}
+```
+
+# Access Management
+
+In our previous examples, we used an app token corresponding to a new access we generated at the end of the [Authorization flow](#authorize-your-application).
+
+Each access is defined by a 'name', a 'type' and a set of 'permissions'.
+
+Pryv.IO distinguishes between these access types:
+
+- _Shared_: used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels, depending on the sharing user's choice. You will not encounter this access type in your applications.
+- _App_: used by applications which don't need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs. This is the type of access we used for our Pulse Oximeter application.
+- _Personal_: used by applications that need to access to the entirety of the user's data and/or manage account settings.
+
+Each permission specifies a 'streamId', the id of the stream to which we want to give access, and an access 'level', which can be one of the following:
+
+- `'read'`: Enable users to view the stream and its contents (sub-streams and events).
+- `'contribute'`: Enable users to contribute to one or multiple events of the stream. Cannot create, update, delete and move streams.
+- `'manage'`: Enable users to fully control the stream. Can create, update, delete and move the stream.
+
+Finally, note that an existing access can be used to create other accesses, but only if the new access has lower permissions (Shared < App < Personal and Read < Contribute < Manage). Also, an access can create other accesses only in the same scope, namely with permissions on the same streams and their childrens.
+
+# What Next?
+
+This concludes our first tour of Pryv.IO and some basic things you can do with it. Where to go from here?
+
+- Our [Java](../java/) and [Javascript](../javascript/) Getting Started guides will show the same operations using one of these languages respectively.
+- The [API Reference](../../reference/) explains all calls you can make to Pryv.IO and their parameters.
+- To obtain your own Pryv.IO installation, please get in contact with our [Sales Team](mailto:sales@pryv.com).

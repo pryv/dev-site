@@ -31,10 +31,14 @@ html.no-js(lang='en')
       nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
         div.container-fluid
           .navbar-header
-            a.navbar-brand.logo.pryv-home(href='https://pryv.com', title='Pryv home')
-              img(src='/assets/images/icon-home.svg', alt='Pryv home', height='50')
-            a.navbar-brand.logo(href='/', title='Developers home')
-              img(src='/assets/images/logo-256-black.png', alt='Developers home')
+            if customer
+              a.navbar-brand.logo(href='/customer-resources', title='Developers home')
+                img(src='/assets/images/logo-256-black.png', alt='Developers home')
+            else
+              a.navbar-brand.logo.pryv-home(href='https://pryv.com', title='Pryv home')
+                img(src='/assets/images/icon-home.svg', alt='Pryv home', height='50')
+              a.navbar-brand.logo(href='/', title='Developers home')
+                img(src='/assets/images/logo-256-black.png', alt='Developers home')
             button.navbar-toggle(type='button', data-toggle='collapse', data-target='#main-nav')
               span.sr-only Toggle navigation
               span.icon-bar
@@ -52,16 +56,32 @@ html.no-js(lang='en')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
-                  +menuItem('getting-started', 'Getting started')
-                  +menuItem('concepts', 'API concepts')
+                  if customer
+                    +menuItem('getting-started-customer', 'Getting started')
+                  else
+                    +menuItem('getting-started', 'Getting started')
+                  if customer
+                    hr
+                    +menuItem('guides/authorize-app', 'Authorize App')
+                    +menuItem('guides/create-user', 'Create User')
+                    +menuItem('guides/login', 'Login')
+                    +menuItem('guides/manage-streams', 'Manage streams')
+                    +menuItem('guides/manage-events', 'Manage events')
+                    +menuItem('guides/manage-accesses', 'Manage accesses')
+                    +menuItem('guides/batch-call', 'Batch call of methods')
                   //+menuItem('data-modeling', 'Data modeling') —> into "Concepts"??
               li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>
+                a.dropdown-toggle(href='#', data-toggle='dropdown') API <b class="caret"></b>
                 ul.dropdown-menu
+                  +menuItem('concepts', 'API concepts')
                   +menuItem('reference', 'API reference')
                   +menuItem('change-log', 'API change log')
-                  +menuItem('event-types', 'Event types')
                   //+menuItem('standardStructure')
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown') Resources <b class="caret"></b>
+                ul.dropdown-menu
+                  +menuItem('event-types', 'Event types')
+                  +menuItem('external-resources', 'External resources')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') FAQ <b class="caret"></b>
                 ul.dropdown-menu

@@ -1,7 +1,8 @@
 ---
 id: batch-call
 title: 'Call methods in a batch'
-template: customer.jade
+template: default.jade
+customer: true
 withTOC: true
 ---
 

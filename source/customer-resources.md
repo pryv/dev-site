@@ -1,7 +1,8 @@
 ---
 id: customer-resources
 title: 'Customer Resources'
-layout: customer.pug
+template: default.jade
+customer: true
 withTOC: true
 ---
 

@@ -1,7 +1,8 @@
 ---
-id: getting-started
+id: getting-started-customer
 title: 'Getting started'
-template: customer.jade
+template: default.jade
+customer: true
 withTOC: true
 ---
 
