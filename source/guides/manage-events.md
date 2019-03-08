@@ -32,7 +32,7 @@ curl -X POST \
          "description": "My note event",
          "content": "This is the content of our note"
      }' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
 The answer returned by the server contains the created event with all additional fields filled in by the server.
@@ -69,7 +69,7 @@ Let's display the previously created note.
 curl -X GET \
      -H 'Content-Type: application/json' \
      -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
 The object returned is a list of existing events. In this tutorial we have only one even that can be found in this list.
@@ -106,7 +106,7 @@ This filtering applies to the `time` field which indicates when an event occurre
 curl -X GET \
      -H 'Content-Type: application/json' \
      -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events?toTime=1546326000.000
+     https://jsmith.{domain}/events?toTime=1546326000.000
 ```
 
 As exepected, our only event is filtered out:

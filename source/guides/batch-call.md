@@ -43,7 +43,7 @@ curl -X POST \
             }
           }
       ]' \
-     https://jsmith.pryv.domain/
+     https://jsmith.{domain}/
 ```
 
 The batch call will return the responses from the calls that succeeded only.

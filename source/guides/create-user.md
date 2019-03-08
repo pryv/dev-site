@@ -20,7 +20,7 @@ Execute the following cURL request to the register URL of your installation.
 ```bash
 curl -X GET \
      -H 'Content-Type: application/json' \
-     https://reg.pryv.domain/hostings
+     https://reg.{domain}/hostings
 ```
 
 An example of an answer follows:
@@ -37,7 +37,7 @@ An example of an answer follows:
           "localizedName": { "fr": "Pilot Core" },
           "hostings": {
             "pilot": {
-              "url": "http://pryv.domain",
+              "url": "http://{domain}",
               "name": "Self-Contained Pilot Core",
               "description": "Local core inside the pilot deployment",
               "localizedDescription": {},
@@ -67,7 +67,7 @@ curl -X POST \
          "email": "jsmith@example.com",
          "hosting": "pilot"
      }' \
-     https://reg.pryv.domain/user
+     https://reg.{domain}/user
 ```
 
 The answer returned will contain the username of the account created and the URL to start using it and manage data for this user.
@@ -75,7 +75,7 @@ The answer returned will contain the username of the account created and the URL
 ```json
 {
   "username": "jsmith",
-  "server": "jsmith.pryv.domain"
+  "server": "jsmith.{domain}"
 }
 ```
 

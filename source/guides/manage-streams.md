@@ -19,7 +19,7 @@ curl -X POST \
      -d '{
          "name": "My Stream"
      }' \
-     https://jsmith.pryv.domain/streams
+     https://jsmith.{domain}/streams
 ```
 
 The most basic use of this action is to provide a human-readable name for the new stream. A unique and random id will be created upon creation if not provided.

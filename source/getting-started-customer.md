@@ -11,9 +11,9 @@ withTOC: true
 You'll need your own Pryv.io installation to try out its different features.
 If you don't have one yet, please get in contact with our [Sales Team](mailto:sales@pryv.com).
 
-Pryv.io is a middleware. As such, you will have to interact with the server through either a custom application or REST calls using your prefered method (e.g. cURL, Postman, etc.).
+Pryv.io is a middleware. As such, you will have to interact with the server through either a custom application or HTTP calls using your prefered method (e.g. cURL, Postman, etc.).
 
-The following tutorial is based on REST calls without using any application.
+The following tutorial is based on HTTP calls without using any application.
 
 ## Create user
 
@@ -30,8 +30,7 @@ Execute the following cURL request to the register URL of your installation.
 
 ```bash
 curl -X GET \
-     -H 'Content-Type: application/json' \
-     https://reg.pryv.domain/hostings
+     https://reg.{domain}/hostings
 ```
 
 An example of an answer follows:
@@ -48,7 +47,7 @@ An example of an answer follows:
           "localizedName": { "fr": "Pilot Core" },
           "hostings": {
             "pilot": {
-              "url": "http://pryv.domain",
+              "url": "http://{domain}",
               "name": "Self-Contained Pilot Core",
               "description": "Local core inside the pilot deployment",
               "localizedDescription": {},
@@ -62,11 +61,11 @@ An example of an answer follows:
 }
 ```
 
-In the previous example, the `hostings` part only contains one hosting deployment which name is `pilot`.
+In the previous example, the `hostings` part contains only one hosting deployment which name is `pilot`.
 
-### New user creation
+### User creation
 
-Using the previously found `pilot` hosting and a custom appid `my-own-app`, let's create a new user by sending the following request to the register.
+Using the previously obtained `pilot` hosting and a custom appid `my-own-app`, let's create a user by sending the following request to the register.
 
 ```bash
 curl -X POST \
@@ -78,19 +77,19 @@ curl -X POST \
          "email": "jsmith@example.com",
          "hosting": "pilot"
      }' \
-     https://reg.pryv.domain/user
+     https://reg.{domain}/user
 ```
 
-The answer returned will contain the username of the account created and the URL to start using it and manage data for this user.
+The returned answer will contain the username of the created account and the URL to start using it and manage data for this user.
 
 ```json
 {
   "username": "jsmith",
-  "server": "jsmith.pryv.domain"
+  "server": "jsmith.{domain}"
 }
 ```
 
-From this point onward, all queries to Pryv.io will be done using the URL returned, indicating how to interact with a specific user's data.
+From this point onward, all queries to Pryv.io will be done using the returned URL, indicating how to interact with a specific user's data.
 
 ## Login
 
@@ -98,20 +97,23 @@ Once the user account has been created you'll be able to login and obtain a pers
 
 More information on the different access types can be found on the [API concepts](http://api.pryv.com/concepts/#accesses) page.
 
-The login request will be done toward our custom account for John Smith.
+The login request will be done toward our John Smith account.
+
+In the following request, replace the variable `{trusted_origin}` by an [Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) that is trusted in your Pryv.io configuration.
 
 ```bash
 curl -X POST \
      -H 'Content-Type: application/json' \
+     -H 'Origin: {trusted_origin}' \
      -d '{
          "appId": "my-own-app",
          "username": "jsmith",
          "password": "password"
      }' \
-     https://jsmith.pryv.domain/auth/login
+     https://jsmith.{domain}/auth/login
 ```
 
-The answer will contains a token which is a personal token allowing full management of all data for the account.
+The answer will contain a token which references a [personal access](http://api.pryv.com/concepts/#accesses) allowing full management data for the account.
 
 ```json
 {
@@ -124,7 +126,7 @@ The answer will contains a token which is a personal token allowing full managem
 }
 ```
 
-From now on, to use the token retrieved and authentify each request made to Pryv.io, you'll need to add an `Authorization` header as shown in the following parts of the tutorial.
+From now on, to use the retrieved token and authorize each request made to Pryv.io, you'll need to add an `Authorization` header as shown in the following parts of the tutorial.
 
 ## Manage data
 
@@ -136,9 +138,9 @@ You can find more information on the API concepts page in the [events section](h
 
 Data will be contextualized here using streams.
 
-You can find all available REST actions on streams in the [API reference](http://pryv.github.io/reference/#streams).
+You can find all available REST actions on streams in the [API reference](http://api.pryv.com/reference/#streams).
 
-We will now create a new stream in which to place our data using the [creation stream action](http://pryv.github.io/reference/#create-stream).
+We will now create a new stream in which to place our data using the [creation stream action](http://api.pryv.com/reference/#create-stream).
 
 ```bash
 curl -X POST \
@@ -147,14 +149,14 @@ curl -X POST \
      -d '{
          "name": "My Stream"
      }' \
-     https://jsmith.pryv.domain/streams
+     https://jsmith.{domain}/streams
 ```
 
-The most basic use of this action is to provide a human-readable name for the new stream. A unique and random id will be created upon creation if not provided.
+The most basic use of this action only requires a `name` parameter to provide a human-readable name for the new stream. A unique and random id will be created upon creation if not provided.
 
 The `Stream` object manipulated by Pryv.io is detailed in the [data structure reference](http://pryv.github.io/reference/#data-structure-stream).
 
-The answer returned by the server will contain the newly created stream object.
+The returned answer will contain the newly created stream object.
 
 ```json
 {
@@ -176,19 +178,19 @@ The answer returned by the server will contain the newly created stream object.
 
 ### Creating an event
 
-Actual data will be stored in events.
+The subject's data will be stored in events.
 
-You can find all available REST actions on events in the [API reference](http://pryv.github.io/reference/#events).
+You can find all available REST actions on events in the [API reference](http://api.pryv.com/reference/#events).
 
-Data can be stored in events and can be structured using event types. You can find a description of all default event types in Pryv.io in the [event types reference](http://pryv.github.io/event-types/). Note that you can also use your own custom types.
+Data is stored in events and structured using event types. You can find a description of all default event types in Pryv.io in the [event types reference](http://api.pryv.com/event-types/). Note that you can also define your own custom types.
 
-Let's create an event with the `note/txt` type which describes a content consisting of a single text content.
+Let's create an event with the `note/txt` type for which the content is a single text string.
 
-Apart from a content field which inner structure can depend on the declared type, an event can contain a number of other fields acting as metadata around the data stored in Pryv.io.
+Apart from a content field which inner structure depends on the declared type, an event can contain a number of other fields acting as metadata around the data stored in Pryv.io.
 
-You can find all fields composing an event object in the [data structure reference](http://pryv.github.io/reference/#data-structure-event).
+You can find all fields composing an event object in the [data structure reference](http://api.pryv.com/reference/#data-structure-event).
 
-To create a basic `note/txt` event, we only need the `streamId`, `type` and the `content` fields. We will also use the `description` to give meaning to the data stored in a human-readable way.
+To create a basic `note/txt` event, we only need to provide the `streamId`, `type` and the `content` fields. We will also use the optional `description` field to give meaning to the data stored in a human-readable way.
 
 The `streamId` will reference the previously created Stream object to contextualize the data.
 
@@ -202,10 +204,10 @@ curl -X POST \
          "description": "My note event",
          "content": "This is the content of our note"
      }' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
-The answer returned by the server contains the created event with all additional fields filled in by the server.
+The returned answer contains the created event with some additional fields filled in by the server.
 
 ```json
 {
@@ -229,20 +231,17 @@ The answer returned by the server contains the created event with all additional
 }
 ```
 
-### Get existing data
-
-Pryv.io comes with many operations and filtering possibilities which can be found described in the [API reference](http://pryv.github.io/reference/).
+### Retrieve existing data
 
 Let's display the previously created note.
 
 ```bash
 curl -X GET \
-     -H 'Content-Type: application/json' \
      -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
-The object returned is a list of existing events. In this tutorial we have only one even that can be found in this list.
+The returned object is a list of existing events. We can find there the previously created event.
 
 ```json
 {
@@ -268,18 +267,19 @@ The object returned is a list of existing events. In this tutorial we have only 
 }
 ```
 
+Pryv.io comes with many operations and filtering possibilities which can be found described in the [API reference](http://pryv.github.io/reference/).
+
 Let's try an example of filtering by passing a parameter in our request to filter out all events which happened after the 01.01.2019 at 07:00:00 UTC by using the `toTime` parameter.
 
 This filtering applies to the `time` field which indicates when an event occurred. Note that this is different from the time when the data was stored in Pryv.io, which is encoded in the `created` field. Thus the `time` can be set at the event creation to store data that occurred in the past, or even in the future (e.g. a medical appointment).
 
 ```bash
 curl -X GET \
-     -H 'Content-Type: application/json' \
      -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events?toTime=1546326000.000
+     https://jsmith.{domain}/events?toTime=1546326000.000
 ```
 
-As exepected, our only event is filtered out:
+As expected, our only event is filtered out:
 
 ```json
 {
@@ -293,19 +293,19 @@ As exepected, our only event is filtered out:
 
 ## Manage accesses
 
-One of the core aspects of Pryv.io is the access management to the data, based on an active consent given by the data owner to others using accesses.
+One of the core aspects of Pryv.io is data access management. It is based on an active consent given by the data owner to others.
 
-You can find the concepts behind the accesses in Pryv.io in the [API concepts](http://api.pryv.com/concepts/#accesses) page.
+You can find the accesses concepts in Pryv.io in the [API concepts](http://api.pryv.com/concepts/#accesses) page.
 
 ### Access creation
 
-To allow an other party to access the data, a user has to deliver an token linked to an access object in Pryv.io.
+To allow another party to access the data, a user has to deliver an token linked to an access object in Pryv.io.
 
-To do that, let's create our first access, using the creation method among the ones provided by the API and described in the [Access methods reference](http://pryv.github.io/reference/#accesses).
+To do that, let's create our first access, using the methods provided by the API and described in the [Access methods reference](http://api.pryv.com/reference/#accesses).
 
-The object used as parameter contains some of the desired access fields. A list of all fields can be found in the [Access data structure reference](http://pryv.github.io/reference/#data-structure-access).
+The object used as parameter contains some of the desired access fields. A list of all fields can be found in the [Access data structure reference](http://api.pryv.com/reference/#data-structure-access).
 
-We'll create a shared access which is the default type, giving access to the previously created stream with `read` permissions.
+We'll create a shared access which is the default type, giving access to the previously created stream with a `read` permissions.
 
 ```bash
 curl -X POST \
@@ -320,10 +320,10 @@ curl -X POST \
            }
          ]
      }' \
-     https://jsmith.pryv.domain/accesses
+     https://jsmith.{domain}/accesses
 ```
 
-The server will return the created access information, containing the most important token that will be used by whoever we allow to access data using this access.
+The server will return the created access information, containing the token that will be used by whoever we allow to access data using this access.
 
 ```json
 {
@@ -350,13 +350,13 @@ The server will return the created access information, containing the most impor
 }
 ```
 
-Now whoever or whatever algorithm or application query data on the user data storage accessible at `https://jsmith.pryv.domain` using this token (`cjsg40uzv000411ta8r4n7ax1`) will have read access to all events linked to the stream named `My Stream` that we created at the beginning of this tutorial.
+Now whoever, whatever algorithm or application can query data accessible at `https://jsmith.{domain}` using this token (`cjsg40uzv000411ta8r4n7ax1`). It will have read access to all events linked to the stream named `My Stream` that we created at the beginning of this tutorial.
 
 Let's try that now.
 
 ### Creating more data
 
-Before trying to use the shared access, let's add some more data in a different stream to visualize the access control in action.
+Before trying to use the shared access, let's add some more data in a different stream to visualize the access control functionality in action.
 
 ```bash
 curl -X POST \
@@ -365,7 +365,7 @@ curl -X POST \
      -d '{
          "name": "My second Stream"
      }' \
-     https://jsmith.pryv.domain/streams
+     https://jsmith.{domain}/streams
 ```
 
 ```json
@@ -386,9 +386,9 @@ curl -X POST \
 }
 ```
 
-The second streams is created. Note the `id` of this new stream that will be used in the following query.
+The second stream is created. Note the `id` of this new stream that will be used in the following query.
 
-Using this new `streamId` let's create another event, this time with a more complex type like the blood pressure type `blood-pressure/mmhg-bpm`.
+Using this new `streamId` let's create another event, this time with a more complex type such as the blood pressure type `blood-pressure/mmhg-bpm`.
 
 The reference for this default data type can be found [here](http://pryv.github.io/event-types/#blood-pressure).
 
@@ -406,10 +406,10 @@ curl -X POST \
 		       "diastolic": 82
 	       }
      }' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
-The server returns the new event with all its necessary fields filled.
+The server returns the new event.
 
 ```json
 {
@@ -444,9 +444,8 @@ Let's change the `Authorization` header in the REST query and see that only the 
 
 ```bash
 curl -X GET \
-     -H 'Content-Type: application/json' \
      -H 'Authorization: cjsg40uzv000411ta8r4n7ax1' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
 The server returns the following list of one event.
@@ -478,9 +477,8 @@ If we do the same query using the personal token of John Smith, we'll see all ex
 
 ```bash
 curl -X GET \
-     -H 'Content-Type: application/json' \
      -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
 ```json

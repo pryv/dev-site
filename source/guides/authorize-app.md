@@ -11,7 +11,7 @@ Before being able to access data from a Pryv.io account, an application should b
 To do so, use the access endpoint
 
 ```bash
-curl -X POST https://access.pryv.domain/access -H 'Content-Type: application/json' \
+curl -X POST https://access.{domain}/access -H 'Content-Type: application/json' \
  -d '{
  "requestingAppId": "demopryv-access",
  "requestedPermissions": [

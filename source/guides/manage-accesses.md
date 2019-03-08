@@ -33,7 +33,7 @@ curl -X POST \
            }
          ]
      }' \
-     https://jsmith.pryv.domain/accesses
+     https://jsmith.{domain}/accesses
 ```
 
 The server will return the created access information, containing the most important token that will be used by whoever we allow to access data using this access.
@@ -63,7 +63,7 @@ The server will return the created access information, containing the most impor
 }
 ```
 
-Now whoever or whatever algorithm or application query data on the user data storage accessible at `https://jsmith.pryv.domain` using this token (`cjsg40uzv000411ta8r4n7ax1`) will have read access to all events linked to the stream named `My Stream` that we created at the beginning of this tutorial.
+Now whoever or whatever algorithm or application query data on the user data storage accessible at `https://jsmith.{domain}` using this token (`cjsg40uzv000411ta8r4n7ax1`) will have read access to all events linked to the stream named `My Stream` that we created at the beginning of this tutorial.
 
 Let's try that now.
 
@@ -78,7 +78,7 @@ curl -X POST \
      -d '{
          "name": "My second Stream"
      }' \
-     https://jsmith.pryv.domain/streams
+     https://jsmith.{domain}/streams
 ```
 
 ```json
@@ -119,7 +119,7 @@ curl -X POST \
 		       "diastolic": 82
 	       }
      }' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
 The server returns the new event with all its necessary fields filled.
@@ -159,7 +159,7 @@ Let's change the `Authorization` header in the REST query and see that only the 
 curl -X GET \
      -H 'Content-Type: application/json' \
      -H 'Authorization: cjsg40uzv000411ta8r4n7ax1' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
 The server returns the following list of one event.
@@ -193,7 +193,7 @@ If we do the same query using the personal token of John Smith, we'll see all ex
 curl -X GET \
      -H 'Content-Type: application/json' \
      -H 'Authorization: cjsfxo173000111taf99gp3dv' \
-     https://jsmith.pryv.domain/events
+     https://jsmith.{domain}/events
 ```
 
 ```json

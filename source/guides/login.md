@@ -20,7 +20,7 @@ curl -X POST \
          "username": "jsmith",
          "password": "password"
      }' \
-     https://jsmith.pryv.domain/auth/login
+     https://jsmith.{domain}/auth/login
 ```
 
 The answer will contains a token which is a personal token allowing full management of all data for the account.

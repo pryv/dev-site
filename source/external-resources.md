@@ -5,7 +5,7 @@ template: default.jade
 withTOC: true
 ---
 
-This page presents some third party and _unsupported_ libraries and example applications which can be used as indications to develop one's own application to interact with Pryv.io.
+This page presents some third party and _unsupported_ libraries as well as _unsupported_ example applications which can be used as indications to develop one's own application to interact with Pryv.io.
 
 ## Example codes to interact with Pryv.io
 
