@@ -88,13 +88,6 @@ module.exports = exports =
                    The tags associated with the event.
                    """
     ,
-      key: "references"
-      type: "array of [identifier](##{_getDocId("identifier")})"
-      optional: true #"(always present in read items)"
-      description: """
-                   Other events associated with the event. *Note: event references are coming in a future version of the API.*
-                   """
-    ,
       key: "description"
       type: "string"
       optional: true
@@ -307,9 +300,9 @@ module.exports = exports =
       readOnly: false
       description: """
         (Only on create and update) If set, controls access expiry in seconds.
-        When given a number in this attribute (positive or zero), 
+        When given a number in this attribute (positive or zero),
         the access will expire (and not be accessible any more) after this many
-        seconds. 
+        seconds.
 
         Use `expireAfter=0` to immediately disable an access (without deleting it).
         """
@@ -319,8 +312,8 @@ module.exports = exports =
       optional: true
       readOnly: true
       description: """
-        If the access was set to expire: The timestamp after which the access 
-        will be deactivated. 
+        If the access was set to expire: The timestamp after which the access
+        will be deactivated.
         """
     ,
       key: "deleted"
@@ -328,7 +321,7 @@ module.exports = exports =
       optional: true
       readOnly: true
       description: """
-        If the access has been deleted: The timestamp of the deletion. 
+        If the access has been deleted: The timestamp of the deletion.
         """
     ].concat(changeTrackingProperties("access"))
     examples: [
