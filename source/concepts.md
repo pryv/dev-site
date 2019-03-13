@@ -22,7 +22,7 @@ User accounts represent people or organizations that use Pryv as data subjects. 
 ## Servers
 
 Each user account is served from one root API endpoint on a Pryv server; one server can host one or more accounts.
-Server hosts can bechosen depending on users' wishes, privacy/legal context and/or other constraints. Data for each account is stored individually, i.e. separately from other accounts.
+Server hosts can be chosen depending on privacy/legal context and other technical constraints. Data for each account is stored individually, i.e. separately from other accounts.
 
 ## Events
 

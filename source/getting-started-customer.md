@@ -80,7 +80,7 @@ curl -X POST \
      https://reg.{domain}/user
 ```
 
-The returned answer will contain the username of the created account and the URL to start using it and manage data for this user.
+The returned answer will contain the username of the created account and its dedicated hostname.
 
 ```json
 {
@@ -89,7 +89,7 @@ The returned answer will contain the username of the created account and the URL
 }
 ```
 
-From this point onward, all queries to Pryv.io will be done using the returned URL, indicating how to interact with a specific user's data.
+From this point onward, all queries to Pryv.io will be done using the hostname provided in the `server` field, indicating how to interact with a specific user's data.
 
 ## Login
 
@@ -100,6 +100,8 @@ More information on the different access types can be found on the [API concepts
 The login request will be done toward our John Smith account.
 
 In the following request, replace the variable `{trusted_origin}` by an [Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) that is trusted in your Pryv.io configuration.
+
+Pryv.io default configuration allows all subdomains as trusted. Hence, you can use for example `https://sw.{domain}` as `Origin`.
 
 ```bash
 curl -X POST \
@@ -113,7 +115,7 @@ curl -X POST \
      https://jsmith.{domain}/auth/login
 ```
 
-The answer will contain a token which references a [personal access](http://api.pryv.com/concepts/#accesses) allowing full management data for the account.
+The answer will contain a token which references a [personal access](http://api.pryv.com/concepts/#accesses) allowing full data management for the account.
 
 ```json
 {
@@ -138,7 +140,7 @@ You can find more information on the API concepts page in the [events section](h
 
 Data will be contextualized here using streams.
 
-You can find all available REST actions on streams in the [API reference](http://api.pryv.com/reference/#streams).
+You can find all available API methods on stream objects in the [API reference](http://api.pryv.com/reference/#streams).
 
 We will now create a new stream in which to place our data using the [creation stream action](http://api.pryv.com/reference/#create-stream).
 
@@ -180,7 +182,7 @@ The returned answer will contain the newly created stream object.
 
 The subject's data will be stored in events.
 
-You can find all available REST actions on events in the [API reference](http://api.pryv.com/reference/#events).
+You can find all available API methods on event objects in the [API reference](http://api.pryv.com/reference/#events).
 
 Data is stored in events and structured using event types. You can find a description of all default event types in Pryv.io in the [event types reference](http://api.pryv.com/event-types/). Note that you can also define your own custom types.
 
@@ -440,7 +442,7 @@ The server returns the new event.
 
 It's now time to use the previously obtained shared access token (`cjsg40uzv000411ta8r4n7ax1`).
 
-Let's change the `Authorization` header in the REST query and see that only the note event is returned.
+Let's change the `Authorization` header in the HTTP query and see that only the note event is returned.
 
 ```bash
 curl -X GET \

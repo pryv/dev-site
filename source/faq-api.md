@@ -98,4 +98,4 @@ This can be done by using the auth request through a consent step or by generati
 
 ## Do you have a test setup where I could experiment with your API?
 
-You can get in touch with our business team to get your own testing licence and deploy the platform on the infrastructure of your choice.
+You can try out Pryv.IO using our demo platform pryv.me: [https://pryv.com/pryvlab/](https://pryv.com/pryvlab/)
