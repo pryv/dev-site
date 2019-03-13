@@ -869,7 +869,7 @@ module.exports = exports =
                    Gets manageable accesses. Only returns accesses that can
                    be managed by the requesting access and that are active when
                    making the request. To include accesses that have expired, use
-                   the `includeExpired` parameter. 
+                   the `includeExpired` parameter.
                    """
       params:
         properties: [
@@ -951,52 +951,6 @@ module.exports = exports =
         params: _.pick(examples.accesses.sharedNew, "name", "permissions")
         result:
           access: examples.accesses.sharedNew
-      ]
-
-    ,
-
-      id: "accesses.update"
-      type: "method"
-      title: "Update access"
-      http: "PUT /accesses/{id}"
-      description: """
-                   Modifies the specified access. You can only modify accesses whose permissions are a subset of those granted to your own access token.
-                   """
-      params:
-        properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the access.
-                       """
-        ,
-          key: "update"
-          type: "object"
-          http:
-            text: "= request body"
-          description: """
-                       New values for the access's fields: see [access](##{dataStructure.getDocId("access")}). All fields are optional, and only modified values must be included.
-                       """
-        ]
-      result:
-        http: "200 OK"
-        properties: [
-          key: "access"
-          type: "[access](##{dataStructure.getDocId("access")})"
-          description: """
-                       The updated access.
-                       """
-        ]
-      examples: [
-        title: "Adjusting permission level"
-        params:
-          id: examples.accesses.sharedNew.id
-          update:
-            permissions: [ _.defaults({level: "contribute"}, examples.accesses.sharedNew.permissions[0])]
-        result:
-          access: _.defaults({ permissions: [ _.defaults({level: "contribute"}, examples.accesses.sharedNew.permissions[0])], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.accesses.sharedNew)
       ]
 
     ,

@@ -1,6 +1,6 @@
 ---
 id: faq
-title: "FAQ - API"
+title: 'FAQ - API'
 template: default.jade
 withTOC: true
 ---
@@ -23,7 +23,7 @@ Depending on the `type` field of the event, the content of the fields `content` 
 
 ### What is the exact structure of the create attachment call?
 
-If you are having issues creating the package for the create attachment call with the client/framework/library you are using, you can print the details of the call by using cURL with the `-v ` verbose option.
+If you are having issues creating the package for the create attachment call with the client/framework/library you are using, you can print the details of the call by using cURL with the `-v` verbose option.
 
 ## User creation
 
@@ -62,7 +62,7 @@ It is possible to create users with an API call, without having to fill the fiel
 }
 ```
 
-API methods such as `auth.login` marked as *TRUSTED APPS ONLY* on [the *full* API reference](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
+API methods such as `auth.login` marked as _TRUSTED APPS ONLY_ on [the _full_ API reference](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
 
 In order for this to work, the web app must be running on a domain allowed by the configuration. By default, this contains: `https://*.${DOMAIN}*, https://*.rec.la*, https://*.pryv.github.io*`.
 
@@ -98,5 +98,4 @@ This can be done by using the auth request through a consent step or by generati
 
 ## Do you have a test setup where I could experiment with your API?
 
-You can try out Pryv.IO using our demo platform pryv.me: https://pryv.com/pryvlab/
-
+You can try out Pryv.IO using our demo platform pryv.me: [https://pryv.com/pryvlab/](https://pryv.com/pryvlab/)

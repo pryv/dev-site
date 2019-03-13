@@ -2,8 +2,11 @@ doctype html
 html.no-js(lang='en')
   head
     meta(charset='UTF-8')
-    meta(name='description', content='TODO')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='description', property='og:description', content='Pryv API reference and resources for developers')
+    meta(name='author', content='Pryv SA')
+    meta(property='og:type', content='website')
+    meta(name='image', property='og:image', content='/assets/images/logo-256.png')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     title !{title || 'TODO'} | Pryv API
     link(rel='icon', href='/assets/images/favicon-black.ico', type='image/x-icon')
@@ -28,10 +31,14 @@ html.no-js(lang='en')
       nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
         div.container-fluid
           .navbar-header
-            a.navbar-brand.logo.pryv-home(href='https://pryv.com', title='Pryv home')
-              img(src='/assets/images/icon-home.svg', alt='Pryv home', height='50')
-            a.navbar-brand.logo(href='/', title='Developers home')
-              img(src='/assets/images/logo-256-black.png', alt='Developers home')
+            if customer
+              a.navbar-brand.logo(href='/customer-resources', title='Developers home')
+                img(src='/assets/images/logo-256-black.png', alt='Developers home')
+            else
+              a.navbar-brand.logo.pryv-home(href='https://pryv.com', title='Pryv home')
+                img(src='/assets/images/icon-home.svg', alt='Pryv home', height='50')
+              a.navbar-brand.logo(href='/', title='Developers home')
+                img(src='/assets/images/logo-256-black.png', alt='Developers home')
             button.navbar-toggle(type='button', data-toggle='collapse', data-target='#main-nav')
               span.sr-only Toggle navigation
               span.icon-bar
@@ -49,23 +56,32 @@ html.no-js(lang='en')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
-                  +menuItem('getting-started/pryvme', 'First Steps')
-                  +menuItem('getting-started/javascript', 'Getting started: Javascript')
-                  +menuItem('getting-started/java', 'Getting started: Java')
-                  +menuItem('concepts', 'API concepts')
+                  if customer
+                    +menuItem('getting-started-customer', 'Getting started')
+                  else
+                    +menuItem('getting-started', 'Getting started')
+                  //if customer
+                    //hr
+                    //+menuItem('guides/authorize-app', 'Authorize App')
+                    //+menuItem('guides/create-user', 'Create User')
+                    //+menuItem('guides/login', 'Login')
+                    //+menuItem('guides/manage-streams', 'Manage streams')
+                    //+menuItem('guides/manage-events', 'Manage events')
+                    //+menuItem('guides/manage-accesses', 'Manage accesses')
+                    //+menuItem('guides/batch-call', 'Batch call of methods')
                   //+menuItem('data-modeling', 'Data modeling') —> into "Concepts"??
               li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>
+                a.dropdown-toggle(href='#', data-toggle='dropdown') API <b class="caret"></b>
                 ul.dropdown-menu
+                  +menuItem('concepts', 'API concepts')
                   +menuItem('reference', 'API reference')
                   +menuItem('change-log', 'API change log')
-                  +menuItem('event-types', 'Event types')
                   //+menuItem('standardStructure')
               li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown') Code <b class="caret"></b>
+                a.dropdown-toggle(href='#', data-toggle='dropdown') Resources <b class="caret"></b>
                 ul.dropdown-menu
-                  +menuItem('code-libraries', 'Code libraries')
-                  +menuItem('apps-and-services', 'Example apps')
+                  +menuItem('event-types', 'Event types')
+                  +menuItem('external-resources', 'External resources')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') FAQ <b class="caret"></b>
                 ul.dropdown-menu
@@ -93,7 +109,7 @@ html.no-js(lang='en')
         div.container-fluid
           #footer-nav
             ul.nav.navbar-nav
-              li: a(href='mailto:developers@pryv.com') Send a message
+              li: a(href='mailto:support@pryv.com') Send a message
               li: a(href='https://github.com/pryv') GitHub
               li: a(href='https://pryv.com') pryv.com
 
@@ -108,7 +124,7 @@ html.no-js(lang='en')
       script.
         jQuery(document).ready(function($) {
           // Header is about 51 pixels. This equals to 'header + fuzz', fuzz was
-          // determined experimentally. 
+          // determined experimentally.
           var offset = 100;
 
           // Display TOC on the left side of the page.
@@ -119,8 +135,8 @@ html.no-js(lang='en')
 
           // Synchronise scroll/click motion with TOC display.
           $(document).ready(function() {
-            // NOTE This is done at onLoad since we need to wait for all CSS 
-            // to appear. 
+            // NOTE This is done at onLoad since we need to wait for all CSS
+            // to appear.
             $('body').scrollspy({
               target: '#toc',
               offset: offset
