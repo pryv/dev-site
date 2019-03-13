@@ -37,6 +37,12 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes some steps to perform regular healthcheck on a running Pryv.io platform.
 
+## Development resources
+
+- Authorization web application (app-web-auth v3): [Github](https://github.com/pryv/app-web-auth3)
+
+  This sample application provides a starting point to implement your own authorization or consent flow application. You might want to fork this repository and modify the code to fit your needs if you want to allow third party applications to interact with your platform.
+
 ## Contact and support
 
 You can get in touch with Pryv's support by sending an email to [support@pryv.com](mailto:support@pryv.com) or filling in the form at [Pryv's Helpdesk](http://pryv.com/helpdesk/)

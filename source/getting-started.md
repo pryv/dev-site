@@ -615,6 +615,6 @@ Finally, note that an existing access can be used to create other accesses, but 
 
 This concludes our first tour of Pryv.IO and some basic things you can do with it. Where to go from here?
 
-- Our [Java](../java/) and [Javascript](../javascript/) Getting Started guides will show the same operations using one of these languages respectively.
-- The [API Reference](../../reference/) explains all calls you can make to Pryv.IO and their parameters.
+- Our [external resources](/external-resources/) page presents some third party and unsupported libraries and sample applications.
+- The [API Reference](/reference/) explains all calls you can make to Pryv.IO and their parameters.
 - To obtain your own Pryv.IO installation, please get in contact with our [Sales Team](mailto:sales@pryv.com).
