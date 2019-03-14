@@ -13,15 +13,15 @@ module.exports = exports =
     id: "overview"
     title: "Overview"
     description: """
-                 This document describes Pryv's "system-level" API, allowing developers to control the creation of user accounts.
+                 This document describes Pryv.io's "system-level" API, allowing developers to control the creation of user accounts.
                  """
     sections: [
       id: "services-involved"
       title: "Services involved"
       description: """
-                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. creation, relocation, deletion) is handled by the core servers _and_ the central registration server (AKA user account directory).
+                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers _and_ the central registration server (AKA user account directory).
 
-                   - The **core servers** own the account management processes, i.e. account creation, migration and deletion
+                   - The **core servers** own the account management processes, i.e. account creation and deletion
                    - The **registration server** maintains the list of account names and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
                    """
     ]
@@ -44,7 +44,7 @@ module.exports = exports =
       id: "api-methods"
       title: "API methods"
       description: """
-                   The methods are called via HTTPS on the registration server.
+                   The methods are called via HTTPS on the registration server: `https://reg.{domain}`
                    """
       sections: [
         id: ""
@@ -101,8 +101,12 @@ module.exports = exports =
             key: "email"
             type: "string"
             description: """
-                         The user's e-mail.
+                         The user's e-mail address, used for password retrieval.
                          """
+          ,
+            key: "invitationtoken"
+            type: "string"
+            description: "An invitation token; used when limiting registration to a specific set of users."
           ,
             key: "languageCode"
             type: "string"
@@ -110,10 +114,6 @@ module.exports = exports =
             description: """
                          The user's preferred language as a 2-letter ISO language code.
                          """
-          ,
-            key: "invitationtoken"
-            type: "string"
-            description: "An invitation token; used when limiting registration to a specific set of users."
           ,
             key: "referer"
             type: "string"
