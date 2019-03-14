@@ -7,7 +7,7 @@ withTOC: true
 
 ## Platform prerequisites
 
-In addition to the **Deployment design guide** document (available on request), a Pryv.IO platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
+In addition to the **Deployment design guide** document (available on request), a Pryv.io platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
 
 To encrypt data in transit, we require a **wildcard SSL certificate** for the domain **\*.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
 
@@ -15,21 +15,21 @@ Since we use our own DNS servers to resolve the domain associated with the platf
 
 ### Do SSL certificates need to be signed by publicly trusted CA or can we use self-signed certificates?
 
-All devices that interact with the Pryv.IO platform must be able to verify the certificates and thus see/trust the CA, even if it is internal. That would involve: the mobile application, all machines that perform analytics and display of the data collected.
+All devices that interact with the Pryv.io platform must be able to verify the certificates and thus see/trust the CA, even if it is internal. That would involve: the mobile application, all machines that perform analytics and display of the data collected.
 
 ### SSL certificates are mentioned to be wildcard ones. Are we able to define all the subdomains beforehand and rather create SSL with SANs?
 
-Pryv.IO uses a subdomain per user account that is created. So no, you cannot use SAN certificates unless you're able to know the possible user base ahead of time.
+Pryv.io uses a subdomain per user account that is created. So no, you cannot use SAN certificates unless you're able to know the possible user base ahead of time.
 
-### On what cloud offerings can Pryv.IO be installed?
+### On what cloud offerings can Pryv.io be installed?
 
-Pryv.IO can be installed on any cloud offering that runs at least Docker 1.12.6. The real consideration here is compliance and the security of the data storage.
+Pryv.io can be installed on any cloud offering that runs at least Docker 1.12.6. The real consideration here is compliance and the security of the data storage.
 
-We have run Pryv.IO on the following public clouds: AWS, Microsoft Azure, Gandi.net, Exoscale.ch, Joyent, Fengqi.asia.
+We have run Pryv.io on the following public clouds: AWS, Microsoft Azure, Gandi.net, Exoscale.ch, Joyent, Fengqi.asia.
 
 ### What constraints should be considered when choosing a host?
 
-You must take into account the legislation covering the people whose data will be stored in the Pryv.IO platform, such as US HIPAA, EU GDPR, Swiss DPA. This often includes requirements on the geographic location where the data is stored.
+You must take into account the legislation covering the people whose data will be stored in the Pryv.io platform, such as US HIPAA, EU GDPR, Swiss DPA. This often includes requirements on the geographic location where the data is stored.
 
 ### How do you address encryption of the data at rest? As medical records will be stored in MongoDB, are you using DB encryption or some other application specific encryption?
 
@@ -142,7 +142,7 @@ By default, our containers write logs into `stdout`, the reason for a failure ca
 
 During deployment, it is possible that some folders have only write permissions for root. Our containerized apps are run by UID `9999:9999`, so this can be fixed by running `chown -R 9999:9999 ${FOLDER}` from the host machine.
 
-### How do I reset data on my Pryv.IO platform?
+### How do I reset data on my Pryv.io platform?
 
 This step will erase all data from your platform. Perform this at your own risk and make sure that you know what you are doing.
 
@@ -167,6 +167,6 @@ rm -rf core/mongodb/data/*
 ./run-core
 ```
 
-### How can I use the demo dashboard app (_app-web_) on my Pryv.IO platform?
+### How can I use the demo dashboard app (_app-web_) on my Pryv.io platform?
 
-App-web is hosted on GitHub pages and can be used for your Pryv.IO platform as described in [its documentation](https://github.com/pryv/app-web#usage).
+App-web is hosted on GitHub pages and can be used for your Pryv.io platform as described in [its documentation](https://github.com/pryv/app-web#usage).

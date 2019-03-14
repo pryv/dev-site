@@ -62,7 +62,7 @@ It is possible to create users with an API call, without having to fill the fiel
 }
 ```
 
-API methods such as `auth.login` marked as _TRUSTED APPS ONLY_ on [the _full_ API reference](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.IO connected apps to steal user credentials.
+API methods such as `auth.login` marked as _TRUSTED APPS ONLY_ on [the _full_ API reference](https://api.pryv.com/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.io connected apps to steal user credentials.
 
 In order for this to work, the web app must be running on a domain allowed by the configuration. By default, this contains: `https://*.${DOMAIN}*, https://*.rec.la*, https://*.pryv.github.io*`.
 
@@ -86,16 +86,16 @@ A simple web app demonstrating this implementation can be seen [here](https://ap
 
 ## Account granularity
 
-### Should I store the data of more than one person in a single Pryv.IO account?
+### Should I store the data of more than one person in a single Pryv.io account?
 
-For compliance reasons, Pryv.IO accounts are per-user. Storing multiple people data under the same account bypasses the authorization step which is the technical equivalent of consent.
+For compliance reasons, Pryv.io accounts are per-user. Storing multiple people data under the same account bypasses the authorization step which is the technical equivalent of consent.
 
 ## Sharing access between apps
 
-### How can I access Pryv.IO resources from another app?
+### How can I access Pryv.io resources from another app?
 
 This can be done by using the auth request through a consent step or by generating a token directly through an API call using a token obtained previously.
 
 ## Do you have a test setup where I could experiment with your API?
 
-You can try out Pryv.IO using our demo platform pryv.me: [https://pryv.com/pryvlab/](https://pryv.com/pryvlab/)
+You can try out Pryv.io using our demo platform pryv.me: [https://pryv.com/pryvlab/](https://pryv.com/pryvlab/)

@@ -1,12 +1,12 @@
 ---
 id: getting-started
-title: 'Get started with Pryv.IO API'
+title: 'Get started with Pryv.io API'
 template: default.jade
 withTOC: true
 ---
 
-In this tutorial, we will help you to try out and evaluate Pryv.IO API for your
-projects. Throughout these steps, we will use **Pryv.me**, our [Lab platform](http://pryv.com/pryvlab/) for testing Pryv.IO API.
+In this tutorial, we will help you to try out and evaluate Pryv.io API for your
+projects. Throughout these steps, we will use **Pryv.me**, our [Lab platform](http://pryv.com/pryvlab/) for testing Pryv.io API.
 
 We will guide you through:
 
@@ -18,22 +18,22 @@ We will guide you through:
 
 # Create a Pryv.me User
 
-By registering with **Pryv.me**, you will have access to a Pryv.IO user and a fully-functional Pryv.IO environment hosted in our laboratory infrastructure, perfect for your first tests.
+By registering with **Pryv.me**, you will have access to a Pryv.io user and a fully-functional Pryv.io environment hosted in our laboratory infrastructure, perfect for your first tests.
 
 1. Go to the [registration page](https://sw.pryv.me/access/register.html) (click the link).
 2. Fill in the form, choose [where you want to store your data](http://api.pryv.com/concepts/#servers) and click the '**Create**' button.
 
 That's it! You will receive a welcome email from Pryv.me with your account details.
 
-/!\ Data in Pryv.IO has a geographical location that doesn't change. This makes it easier to control what legislations apply.
+/!\ Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.
 
 ## Sign-in to Pryv.me
 
-Go to the following address to sign-in with your Pryv.IO account:
+Go to the following address to sign-in with your Pryv.io account:
 
 `'https://${username}.pryv.me/#/SignIn'`
 
-You have now access to your Pryv.me account through the Pryv.IO demo dashboard. Alternatively, just click [here](https://sw.pryv.me/access/signinhub.html), enter your username and then your password in the second step.
+You have now access to your Pryv.me account through the Pryv.io demo dashboard. Alternatively, just click [here](https://sw.pryv.me/access/signinhub.html), enter your username and then your password in the second step.
 
 As shown below, the streams for this account are listed, especially a default stream which is automatically created for you: 'Diary'.
 
@@ -41,15 +41,15 @@ As shown below, the streams for this account are listed, especially a default st
 
 # Data Modelling Tips
 
-The Pryv.IO data model is composed mainly of two entities: **events** and **streams**.
+The Pryv.io data model is composed mainly of two entities: **events** and **streams**.
 
-Here's an example of two Pryv.IO user accounts and their respective streams. Inside each stream, you can see timestamped events.
+Here's an example of two Pryv.io user accounts and their respective streams. Inside each stream, you can see timestamped events.
 
-![Pryv.IO Data Model](/assets/images/getting-started/PryvIO.png)
+![Pryv.io Data Model](/assets/images/getting-started/PryvIO.png)
 
 ### Events
 
-Events are the primary unit of content in Pryv.IO. An event is a timestamped piece of typed data.
+Events are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data.
 
 Here's an example of an event:
 
@@ -114,7 +114,7 @@ Here an example of a stream with sub-streams (children):
 }
 ```
 
-Imagine an athlete who uses four applications to store data on Pryv.IO. All four applications store their data in a single account:
+Imagine an athlete who uses four applications to store data on Pryv.io. All four applications store their data in a single account:
 
 - **Nutrition Mobile App**: Tracks the consumption of various types of food ('calories ingested').
 - **Smartwatch A**: Monitors performance during the training ('calories burned', 'pulse rate').
@@ -147,11 +147,11 @@ This stream structure has multiple benefits:
 
 Continuing with our previous example we would like the pulse oximeter application to be able to provision our Pryv.me account with streams and events.
 
-For this purpose the application first needs to request access to the Pryv.IO account. We present below two methods to generate a new access for our application, which materializes in the form of an app token.
+For this purpose the application first needs to request access to the Pryv.io account. We present below two methods to generate a new access for our application, which materializes in the form of an app token.
 
-For more information about Pryv.IO accesses [see below](#access-management).
+For more information about Pryv.io accesses [see below](#access-management).
 
-## Use Pryv.IO Access Token Generator
+## Use Pryv.io Access Token Generator
 
 The easiest way to generate an app access token is to use the Pryv Access Token Generation page.
 
@@ -182,7 +182,7 @@ The easiest way to generate an app access token is to use the Pryv Access Token 
 
    By accepting you consent that the 'demopryv-access' application can access the stream 'heart' with a 'manage' access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the 'defaultName' parameter above.
 
-   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.IO account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
+   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
 
    ![Accept Button](/assets/images/getting-started/accept_button.png)
 
@@ -271,7 +271,7 @@ This token represents the access your application has to a users account; it onl
 
 # Create, Read, Update, Delete
 
-Now that we've generated an application token, we can use it against Pryv.IO API to manipulate data of the Pryv.me account, still based on the example of our athlete.
+Now that we've generated an application token, we can use it against Pryv.io API to manipulate data of the Pryv.me account, still based on the example of our athlete.
 
 ## Create Operations
 
@@ -567,7 +567,7 @@ When trying to delete the stream, you may encounter the following error message:
 }
 ```
 
-This means that the stream you are trying to delete still contains some events and Pryv.IO needs to know what to do with them. You can add the 'mergeEventsWithParent' boolean as query parameter of your delete call. Set it to _true_ if you want to merge the events into the parent stream or to _false_ if you want to delete them as well.
+This means that the stream you are trying to delete still contains some events and Pryv.io needs to know what to do with them. You can add the 'mergeEventsWithParent' boolean as query parameter of your delete call. Set it to _true_ if you want to merge the events into the parent stream or to _false_ if you want to delete them as well.
 
 Here is the command for deleting the stream and merging the events in the parent stream:
 
@@ -597,7 +597,7 @@ In our previous examples, we used an app token corresponding to a new access we 
 
 Each access is defined by a 'name', a 'type' and a set of 'permissions'.
 
-Pryv.IO distinguishes between these access types:
+Pryv.io distinguishes between these access types:
 
 - _Shared_: used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels, depending on the sharing user's choice. You will not encounter this access type in your applications.
 - _App_: used by applications which don't need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs. This is the type of access we used for our Pulse Oximeter application.
@@ -613,8 +613,8 @@ Finally, note that an existing access can be used to create other accesses, but 
 
 # What Next?
 
-This concludes our first tour of Pryv.IO and some basic things you can do with it. Where to go from here?
+This concludes our first tour of Pryv.io and some basic things you can do with it. Where to go from here?
 
 - Our [external resources](/external-resources/) page presents some third party and unsupported libraries and sample applications.
-- The [API Reference](/reference/) explains all calls you can make to Pryv.IO and their parameters.
-- To obtain your own Pryv.IO installation, please get in contact with our [Sales Team](mailto:sales@pryv.com).
+- The [API Reference](/reference/) explains all calls you can make to Pryv.io and their parameters.
+- To obtain your own Pryv.io installation, please get in contact with our [Sales Team](mailto:sales@pryv.com).
