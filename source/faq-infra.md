@@ -86,6 +86,14 @@ to:
 proxy_pass        https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth3/;
 ```
 
+and add the following in the sw.${DOMAIN} server scope:
+
+```
+if ($request_uri !~* "^/access/static/.*$") {
+	rewrite ^.*$ /access/index.html;
+}
+```
+
 The following pages will show the changes that you apply to this repository:
 
 - Registration: https://sw.${DOMAIN}/access/register.html
