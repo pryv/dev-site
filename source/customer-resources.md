@@ -37,6 +37,10 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes some steps to perform regular healthcheck on a running Pryv.io platform.
 
+- DNS configuration: [PDF](/assets/docs/20190417-dns-config-v1.pdf)
+
+  This document describes how to add entries in your Pryv.io associated domain DNS zone.
+
 ## Development resources
 
 - Authorization web application (app-web-auth v3): [Github](https://github.com/pryv/app-web-auth3)
