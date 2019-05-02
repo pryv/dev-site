@@ -1,0 +1,138 @@
+extends layout
+
+mixin h1(string)
+  if string
+    | !{markdown('# ' + string)}
+
+mixin h2(string)
+  if string
+    | !{markdown('## ' + string)}
+
+mixin h3(string)
+  if string
+    | !{markdown('### ' + string)}
+
+mixin h4(string)
+  if string
+    | !{markdown('#### ' + string)}
+
+mixin h5(string)
+  if string
+    | !{markdown('##### ' + string)}
+
+mixin intro(string)
+  if string
+    .intro
+      | !{markdown(string)}
+
+mixin text(string)
+  if string
+    | !{markdown(string)}
+
+mixin requirementId(id)
+  if id
+    span.method-id
+      span.label id
+      span.label-value: code !{id}
+
+
+mixin typeText(string)
+  if string
+    - var output = markdown(string)
+    -// YES, HACK
+    span.type !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
+
+mixin labelValue(label, cssClass, value)
+  if value
+    span(class='label label-default ' + cssClass)
+      | !{label + (typeof(value) === 'string' ? ' ' + value : '')}
+
+
+mixin properties(properties)
+  if properties
+    table.definitions
+      each prop in properties
+        tr
+          th
+            if prop.key instanceof Array
+              - var i = 0
+              each key in prop.key
+                code !{key}
+                if i < prop.key.length - 1
+                  | |
+                - i++
+            else
+              code !{prop.key}
+          td
+            .header
+              -// TODO make type specification flexible
+              +typeText(prop.type)
+              +labelValue('unique', 'unique', prop.unique)
+              +labelValue('optional', 'optional', prop.optional)
+              +labelValue('read-only', 'read-only', prop.readOnly)
+            .description !{markdown(prop.description)}
+            +properties(prop.properties)
+
+mixin requirements(requirements)
+  if requirements
+    each requirement in requirements
+      +requirementId(requirement.id)
+      table.definitions
+        tr
+          th
+            code !{"Title"}
+          td
+            .header
+              -// TODO make type specification flexible
+              +typeText(requirement.title)
+        tr
+          th
+            code !{"Desc"}
+          td
+            .description !{markdown(requirement.description)}
+
+
+mixin section(section, parentDocId, level)
+  - var docId = apiReference.helpers.getDocId(parentDocId, section.id)
+  - var sectionClass = (section.type || '')
+  section(id='#{docId}', class='#{sectionClass}')
+    if level === 2
+      +h2(section.title)
+    else if level === 3
+      +h3(section.title)
+    else
+      +h4(section.title)
+    .content
+      .meta
+        if isMethod
+          if ! section.httpOnly
+            +methodId(section.id)
+        if section.trustedOnly
+          span.label.trusted-only Trusted apps only
+      +intro(section.description)
+      +requirements(section.requirements)
+      +properties(section.properties)
+      if section.params
+        +h4(section.params.title || 'Parameters')
+        +text(section.params.description)
+        +properties(section.params.properties)
+      if section.errors
+        +h4('Specific errors')
+        +properties(section.errors)
+    if section.sections
+      each subSection in section.sections
+        +section(subSection, docId, level + 1)
+
+block content
+  - var source = sourceOverride ? functionalSpecifications[sourceOverride] : functionalSpecifications
+  each level1Section in source.sections
+    section(id='#{functionalSpecifications.helpers.getDocId(level1Section.id)}')
+      +h1(level1Section.title)
+      +intro(level1Section.description)
+      +properties(level1Section.properties)
+
+      if level1Section.sections
+        each level2Section in level1Section.sections
+          +section(level2Section, level1Section.id, 2)
+
+
