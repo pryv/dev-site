@@ -1,7 +1,0 @@
-section-number:
-  reqNumber: 
-    title: "blabla"
-    description: "bla bla"
-    references:
-      reference-name: "reference URL"
-    available: false
