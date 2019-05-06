@@ -73,10 +73,10 @@ mixin properties(properties)
             .description !{markdown(prop.description)}
             +properties(prop.properties)
 
-mixin requirements(requirements)
+mixin requirements(requirements, reqid)
   if requirements
     each requirement in requirements
-      +requirementId(requirement.id)
+      +requirementId(reqid + requirement.reqid)
       table.definitions
         tr
           th
@@ -89,10 +89,14 @@ mixin requirements(requirements)
           th
             code !{"Desc"}
           td
-            .description !{markdown(requirement.description)}
+            .description !{markdown(requirement.description || '')}
 
-
-mixin section(section, parentDocId, level)
+mixin section(section, parentDocId, level, nreqid)
+  - var reqid = 'REQ_'
+  if nreqid 
+    - reqid = '' + nreqid
+  if section.reqid 
+    - reqid = reqid + section.reqid + '_' 
   - var docId = apiReference.helpers.getDocId(parentDocId, section.id)
   - var sectionClass = (section.type || '')
   section(id='#{docId}', class='#{sectionClass}')
@@ -104,13 +108,8 @@ mixin section(section, parentDocId, level)
       +h4(section.title)
     .content
       .meta
-        if isMethod
-          if ! section.httpOnly
-            +methodId(section.id)
-        if section.trustedOnly
-          span.label.trusted-only Trusted apps only
       +intro(section.description)
-      +requirements(section.requirements)
+      +requirements(section.requirements, reqid)
       +properties(section.properties)
       if section.params
         +h4(section.params.title || 'Parameters')
@@ -121,7 +120,7 @@ mixin section(section, parentDocId, level)
         +properties(section.errors)
     if section.sections
       each subSection in section.sections
-        +section(subSection, docId, level + 1)
+        +section(subSection, docId, level + 1, reqid)
 
 block content
   - var source = sourceOverride ? functionalSpecifications[sourceOverride] : functionalSpecifications
