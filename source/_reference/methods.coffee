@@ -26,7 +26,7 @@ module.exports = exports =
       http: "POST /auth/login"
       description: """
                    Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authentication).   
-                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trustedAppsCheck")}).
+                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
         properties: [
@@ -1444,7 +1444,7 @@ module.exports = exports =
       http: "POST /account/request-password-reset"
       description: """
                    Requests the resetting of the user's password. An e-mail containing an expiring reset token (e.g. in a link) will be sent to the user.  
-                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trustedAppsCheck")}).
+                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
         properties: [
@@ -1470,7 +1470,7 @@ module.exports = exports =
       http: "POST /account/reset-password"
       description: """
                    Resets the user's password, authenticating the request with the given reset token (see [request password reset](##{_getDocId("account", "account.requestPasswordReset")}) ).  
-                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trustedAppsCheck")}).
+                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
         properties: [

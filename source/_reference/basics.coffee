@@ -213,7 +213,7 @@ module.exports = exports =
 
   ,
 
-    id: "trustedAppsCheck"
+    id: "trusted-apps-verification"
     title: "Trusted apps verification"
     trustedOnly: true
     description: """
