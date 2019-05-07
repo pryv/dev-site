@@ -219,7 +219,7 @@ module.exports = exports =
     description: """
                  Requests to certain API methods have a security measure against credentials theft using phishing.
 
-                 These API methods require that the `appId` parameter and `Origin` (or `Referer`) headers are trusted.  
+                 These API methods require that the `appId` parameter and `Origin` (or `Referer`) header are trusted.  
                  This setting can be changed in the Pryv.io servers configuration. By default, any valid `appId` works and the `Origin` (or `Referer`) header must be in the form `https://*.{domain}`.
                  """
     examples: [
