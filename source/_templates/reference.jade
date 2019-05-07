@@ -102,7 +102,7 @@ mixin exampleContent(content)
     else
       pre: code !{helpers.printJSON(content)}
 
--// settings: {id, http, [result.http]} context to generate example forms (e.g. HTTP, cURL...)
+-// settings: {id, http, [result.http], server} context to generate example forms (e.g. HTTP, cURL...)
 mixin examples(examples, settings)
   if examples
     aside
@@ -126,7 +126,7 @@ mixin examples(examples, settings)
               if settings.http
                 .tab-pane.http
                   pre: code.
-                    !{apiReference.helpers.getCurlCall(ex.params, settings.http)}
+                    !{apiReference.helpers.getCurlCall(ex.params, settings.http, settings.server)}
                   if ex.result
                     .step-marker ⬇
                     pre: code.

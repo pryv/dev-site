@@ -13,16 +13,16 @@ module.exports = exports =
     id: "overview"
     title: "Overview"
     description: """
-                 This document describes Pryv.io's "system-level" API, allowing developers to control the creation of user accounts.
+                 This document describes Pryv.io's **system-level** API, allowing developers to create and monitor user accounts.
                  """
     sections: [
       id: "services-involved"
       title: "Services involved"
       description: """
-                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers _and_ the central registration server (AKA user account directory).
+                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central registry server (AKA user account directory).
 
-                   - The **core servers** own the account management processes, i.e. account creation and deletion
-                   - The **registration server** maintains the list of account names and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
+                   - The **core servers** own the account management processes, i.e. data creation and deletion
+                   - The **registry server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
                    """
     ]
 
@@ -34,41 +34,54 @@ module.exports = exports =
       id: "process-steps"
       title: "Process steps"
       description: """
-                   1. Client calls the registration server to get a list of available hostings (core server locations)
-                   2. Client calls registration server with desired new account data (including which core server should host the account)
-                   3. Registration server verifies data, hands it over to specified core server if OK
-                   4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to registration server
-                   5. Registration server updates directory if OK, returns status to client
+                   1. Client calls the registry server to get a list of available hostings (core server locations)
+                   2. Client calls registry server with desired new account data (including which core server should host the account)
+                   3. Registry server verifies data, hands it over to specified core server if OK
+                   4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to registry server
+                   5. Registry server updates directory if OK, returns status to client
                    """
     ,
       id: "api-methods"
       title: "API methods"
       description: """
-                   The methods are called via HTTPS on the registration server: `https://reg.{domain}`
+                   The methods are called via HTTPS on the registry server: `https://reg.{domain}`
                    """
       sections: [
-        id: ""
+
+        id: "hostings.get"
         type: "method"
         title: "Get hostings"
         http: "GET /hostings"
+        server: "register"
         description: """
                     Get the list of all available hostings for data storage locations.
                     """
+        params:
+          properties: []
         result:
           http: "200 OK"
           properties: [
             key: "regions"
-            type: "Object containing multiple regions, containing themselves multiple zones, containing themselves multiple hostings."
+            type: "Object"
             description: """
-                        Multiple informations concerning data storage locations configured and available to create new users into.
+                        Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  
+                        The value you need to use as `hosting` parameter in the `users.create` method is a key of the `hostings` object.
                         """
           ]
-        examples: []
-        ,
+        examples: [
+          title: "Fetching the hostings for a Pryv.io platform"
+          params: {}
+          result:
+            examples.register.hostings[0]
+        ]
+      
+      ,
+
         id: "users.create"
         type: "method"
         title: "Create user"
-        http: "POST /users"
+        http: "POST /user"
+        server: "register"
         description: """
                    Creates a new user account on the specified core server.
                    """
@@ -83,7 +96,7 @@ module.exports = exports =
             key: "hosting"
             type: "string"
             description: """
-                       The name of the core server that should host the account.
+                       The name of the core server that should host the account, see [Get Hostings](##{helpers.getDocId("get.hostings")}).
                        """
           ,
             key: "username"
@@ -106,7 +119,7 @@ module.exports = exports =
           ,
             key: "invitationtoken"
             type: "string"
-            description: "An invitation token; used when limiting registration to a specific set of users."
+            description: "An invitation token, used when limiting registration to a specific set of users."
           ,
             key: "languageCode"
             type: "string"
@@ -135,7 +148,21 @@ module.exports = exports =
                          The hostname of the core server hosting the new account.
                          """
           ]
-        examples: []
+        examples: [
+          title: "Creating a user"
+          params: 
+            appid: examples.register.appids[0]
+            hosting: Object.keys(examples.register.hostings[0].regions.europe.zones.switzerland.hostings)[0]
+            username: examples.users.two.username
+            password: examples.users.two.password
+            email: examples.users.two.email
+            invitationtoken: examples.register.invitationTokens[0]
+            languageCode: examples.register.languageCodes[0]
+            referer: examples.register.referers[0]
+          result:
+            username: examples.users.two.username
+            server: examples.users.two.username + "." + examples.register.platforms[0]
+        ]
       ]
     ]
   ]

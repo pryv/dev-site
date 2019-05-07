@@ -6,3 +6,4 @@ module.exports =
   streams: require('./streams.coffee')
   users: require('./users.coffee')
   itemDeletions: require('./itemDeletions.coffee')
+  register: require('./register.coffee')

@@ -4,16 +4,20 @@ _ = require("lodash")
 exports.getDocId = () ->
   return [].slice.apply(arguments).join('-').replace('.', '-')
 
-exports.getCurlCall = (params, http) ->
+exports.getCurlCall = (params, http, server) ->
   [method, path] = http.split(" ")
-
+  if (server == null)
+    server = "core"
+  
   request = if method != "GET" then "-X #{method} " else ""
 
-  queryString = 
-    if method == "POST" && path == "/auth/login"
-      ""
-    else
-      "?auth={token}"
+  queryString = ""
+  if (server == "core")
+    queryString =  
+      if method == "POST" && path == "/auth/login"
+        ""
+      else
+        "?auth={token}"
 
   processedParams = _.clone(params)
   Object.keys(params).forEach (k) ->
@@ -32,7 +36,12 @@ exports.getCurlCall = (params, http) ->
   else
     data += "-d '#{JSON.stringify(processedParams)}' "
 
-  call = "curl -i #{request}#{data}https://{username}.pryv.me#{path}#{queryString}"
+  call = ""
+  if server == "core"
+    call = "curl -i #{request}#{data}https://{username}.pryv.me#{path}#{queryString}"
+  else if server == "register"
+    call = "curl -i #{request}#{data}https://reg.pryv.me#{path}#{queryString}"
+    
   # use shell variable format to help with quick copy-paste
   return call.replace /({\w+?})/g, (match) ->
     "$#{match}"
