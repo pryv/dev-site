@@ -1,3 +1,4 @@
+basics = require('./basics')
 dataStructure = require('./data-structure.coffee')
 examples = require("./examples")
 helpers = require("./helpers")
@@ -24,7 +25,8 @@ module.exports = exports =
       title: "Login user"
       http: "POST /auth/login"
       description: """
-                   Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authentication).
+                   Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authentication).   
+                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trustedAppsCheck")}).
                    """
       params:
         properties: [
@@ -1441,7 +1443,8 @@ module.exports = exports =
       title: "Request password reset"
       http: "POST /account/request-password-reset"
       description: """
-                   Requests the resetting of the user's password. An e-mail containing an expiring reset token (e.g. in a link) will be sent to the user. This method does not expect an [auth parameter](#basics-authentication).
+                   Requests the resetting of the user's password. An e-mail containing an expiring reset token (e.g. in a link) will be sent to the user.  
+                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trustedAppsCheck")}).
                    """
       params:
         properties: [
@@ -1466,7 +1469,8 @@ module.exports = exports =
       title: "Reset password"
       http: "POST /account/reset-password"
       description: """
-                   Resets the user's password, authenticating the request with the given reset token (see "request password reset" above). This method does not expect an [auth parameter](#basics-authentication).
+                   Resets the user's password, authenticating the request with the given reset token (see "request password reset" above).  
+                   This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trustedAppsCheck")}).
                    """
       params:
         properties: [
