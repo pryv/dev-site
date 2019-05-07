@@ -1469,7 +1469,7 @@ module.exports = exports =
       title: "Reset password"
       http: "POST /account/reset-password"
       description: """
-                   Resets the user's password, authenticating the request with the given reset token (see "request password reset" above).  
+                   Resets the user's password, authenticating the request with the given reset token (see [request password reset](##{_getDocId("account", "account.requestPasswordReset")}) ).  
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trustedAppsCheck")}).
                    """
       params:
