@@ -6,18 +6,18 @@ exports.getDocId = () ->
 
 exports.getCurlCall = (params, http, server) ->
   [method, path] = http.split(" ")
-  if (server == null)
+  if (server == null || server == undefined)
     server = "core"
   
   request = if method != "GET" then "-X #{method} " else ""
 
+  headers = ""
   queryString = ""
   if (server == "core")
-    queryString =  
-      if method == "POST" && path == "/auth/login"
-        ""
-      else
-        "?auth={token}"
+    if (method == "POST" && (path == "/auth/login" || path == "/account/request-password-reset" || path == "/account/reset-password"))
+      headers = "-H 'Origin: https://sw.pryv.me' "
+    else
+      queryString = "?auth={token}"
 
   processedParams = _.clone(params)
   Object.keys(params).forEach (k) ->
@@ -27,7 +27,10 @@ exports.getCurlCall = (params, http, server) ->
       delete processedParams[k]
 
   hasData = (method == "POST" || method == "PUT")
-  data = if hasData then "-H 'Content-Type: application/json' " else ""
+  if hasData
+    headers += "-H 'Content-Type: application/json' "
+  
+  data = ""
   if not hasData
     Object.keys(processedParams).forEach (k) ->
       queryString += "&#{k}=#{processedParams[k]}"
@@ -35,13 +38,14 @@ exports.getCurlCall = (params, http, server) ->
     data += "-d '#{JSON.stringify(processedParams.update)}' "
   else
     data += "-d '#{JSON.stringify(processedParams)}' "
-
+  
   call = ""
-  if server == "core"
-    call = "curl -i #{request}#{data}https://{username}.pryv.me#{path}#{queryString}"
-  else if server == "register"
-    call = "curl -i #{request}#{data}https://reg.pryv.me#{path}#{queryString}"
+  if (server == "core")
+    call = "curl -i #{request}#{headers}#{data}https://{username}.pryv.me#{path}#{queryString}"
+  else if (server == "register")
+    call = "curl -i #{request}#{headers}#{data}https://reg.pryv.me#{path}#{queryString}"
     
+  
   # use shell variable format to help with quick copy-paste
   return call.replace /({\w+?})/g, (match) ->
     "$#{match}"
