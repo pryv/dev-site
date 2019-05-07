@@ -26,18 +26,17 @@ exports.getCurlCall = (params, http, server) ->
       path = newPath
       delete processedParams[k]
 
+  data = ""
   hasData = (method == "POST" || method == "PUT")
   if hasData
     headers += "-H 'Content-Type: application/json' "
-  
-  data = ""
-  if not hasData
+    if method == "PUT" && processedParams.update
+      data += "-d '#{JSON.stringify(processedParams.update)}' "
+    else
+      data += "-d '#{JSON.stringify(processedParams)}' "
+  else 
     Object.keys(processedParams).forEach (k) ->
       queryString += "&#{k}=#{processedParams[k]}"
-  else if method == "PUT" && processedParams.update
-    data += "-d '#{JSON.stringify(processedParams.update)}' "
-  else
-    data += "-d '#{JSON.stringify(processedParams)}' "
   
   call = ""
   if (server == "core")

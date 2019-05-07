@@ -10,7 +10,7 @@ module.exports =
     language: "zh"
   two:
     id: generateId()
-    username: "morgespatient"
-    password: "o1i23oin1o2i3n"
-    email: "morgespatient@" + register.platforms[0]
+    username: "jerome"
+    password: "ChjUzDXwaTG2qdV"
+    email: "jerome@" + register.platforms[0]
     language: "en"

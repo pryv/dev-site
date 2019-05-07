@@ -1,5 +1,3 @@
-generateId = require("cuid")
-
 module.exports =
   hostings: [
     regions:

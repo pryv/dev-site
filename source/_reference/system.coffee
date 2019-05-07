@@ -3,8 +3,8 @@ helpers = require("./helpers")
 _ = require("lodash")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
-_getDocId = (sectionId) ->
-  return helpers.getDocId("system", sectionId)
+_getDocId = (sectionId, subsectionId, methodId) ->
+  return helpers.getDocId("system", sectionId, subsectionId, methodId)
 
 module.exports = exports =
   id: "system"
@@ -96,7 +96,7 @@ module.exports = exports =
             key: "hosting"
             type: "string"
             description: """
-                       The name of the core server that should host the account, see [Get Hostings](##{helpers.getDocId("get.hostings")}).
+                       The name of the core server that should host the account, see [Get Hostings](##{_getDocId("account-creation","api-methods","get.hostings")}).
                        """
           ,
             key: "username"
