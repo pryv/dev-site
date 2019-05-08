@@ -651,13 +651,6 @@ module.exports = exports =
                    """
       params:
         properties: [
-          key: "parentId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          optional: true
-          description: """
-                       The id of the parent stream from which to retrieve streams. Default: `null` (returns all accessible streams from the root level).
-                       """
-        ,
           key: "state"
           type: "`default`|`all`"
           optional: true
