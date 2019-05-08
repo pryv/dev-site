@@ -1,6 +1,6 @@
 
 id: functional-requirements
-title: Functional Requirements
+title: Functional Requirements Specifications
 description: |
   This section describes the functional requirements associated with a specific 
   feature. Each functional requirement specifies functions that a system or 
@@ -9,7 +9,7 @@ description: |
 sections: 
   - id: overall-description
     title: Overall Description
-    description: 
+    description:
       "Pryv.io is a middleware which aims to provide personal data management.
       As a middleware, Pryv.io does not provide User Interfaces (UI), nor physical storage or infrastructure.
       The system is composed of a few components being:
@@ -17,6 +17,7 @@ sections:
       1. One to several core components: responsible for the core functionalities like data storage, access control.
 
       2.	Two to several register component: responsible for linking a data subject’s storage to the corresponding core component responsible for the data management."
+
   - id: connectivity-and-interfaces
     reqid: CON
     title: Connectivity and interfaces
@@ -175,7 +176,7 @@ sections:
           - Deny invalid or expired access
           - Authorize valid access based on their limitation properties
 
-      - reqid: GIVE
+      - reqid: BASE
         title: The system shall manage access control given by the subject to access its data.
         description: | 
           - Create
@@ -194,6 +195,9 @@ sections:
           - Accept
           - Deny
 
+          System: 
+          - Check
+
       - reqid: TYPE
         title: The system shall provide Personal, App and Shared type of accesses.
         description: | 
@@ -210,6 +214,18 @@ sections:
           - **App** 
             - can create Shared accesses within their scope
             - can manage created Shard accesses
+
+      - reqid: REGISTER
+        title: The system shall provide management for received access at a user level
+        description: 
+          The system provides **Followed Slices** to manage received access
+          - Create
+          - Update 
+          - Delete
+          - List
+        refs:
+            - url: https://l.rec.la:4443/reference-full/#followed-slices
+              description: Followed Slices api documentation
 
   - id: notifications
     reqid: NOTIF
@@ -249,7 +265,12 @@ sections:
       - reqid: LOGIN
         title: The system shall provide authentication of user on a login / password pair
         description: |
-          The system provides authentication on login authentication pair
+          The system provides authentication on login with a userid/pass
+
+      - reqid: LOGOUT
+        title: The system shall provide authentication of user to logout
+        description: |
+          The system provides authentication on logout authentication pair
 
       - reqid: EMAIL
         title: The system shall provide email properties management
@@ -288,6 +309,72 @@ sections:
           - reqid: MANY
             title: The system shall provide use-many invitation tokens
             description: The system can take a list of invitation tokens that can be used with no limitations.
+
+      - id: profile
+        reqid: PROFILE
+        title: Profile
+        requirements: 
+          - reqid: PRIVATE
+            title: The system shall provide a storage of properties at a private user level
+            description: The system provide storage of key/value pairs at user account level only available for Personal access
+
+          - reqid: PUBLIC
+            title: The system shall provide a storage of properties at a public user level
+            description: The system provide storage of key/value pairs at user account level avaialble publicly 
+
+          - reqid: APP
+            title: The system shall provide a storage of properties at an App access user level
+            description: The system provide storage of key/value pairs at app level only available by App access
+
+  - id: system
+    reqid: SYSTEM
+    title: System requirements
+    sections:
+      - id: hardware
+        reqid: HWRE
+        title: Hardware
+        requirements: 
+          - reqid: OS
+            title: The system shall run on UNIX system
+            description: 
+              "The following UNIX system are supported:
+                - Ubuntu Server 16.04 LTS"
+
+          - requid: CONTAINER
+            tiltle: The system should be packaged in container for shipment and deployment.
+            description: The system is delivered packaged in **Docker** containers
+            refs:
+              - url: https://www.docker.com/
+                description: Docker.com web site
+
+
+  - id: non-functional
+    title: Non Functional Requirements
+    sections:
+      - id: security
+        reqid: SEC
+        requirements: 
+          - reqid: NOAUTH
+            title: The system shall store in a logfile non authorized API calls
+            description: 
+              "Refusal of access are logged on the hosting operationg system using syslog"
+
+          - reqid: AUTH
+            tiltle: The system shall store in a logfile authorized API calls
+            description: Authorized accesses are logged on the hosting operationg system using syslog with mecanism to identified the used Access token
+
+          - reqid: COM
+            title: The system shall provide encryption of all Inboud communications
+            description: The system is provided with a componenent ensuring SSL termination. This component can be replaced by the customer. 
+
+          - reqid: ENC
+            title: The system shall provide mechanisms for client-side encryption
+            description: The data model supports client-side encryption by encapsulating encrypted data into `encrypted/*` data types.
+            refs:
+              - url: http://api.pryv.com/event-types/#encrypted
+                description: Encrypted data-type reference
+                    
+
 
       
 
