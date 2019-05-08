@@ -682,9 +682,8 @@ module.exports = exports =
                        """
         ]
       examples: [
-        title: "Retrieving streams for work activities"
-        params:
-          parentId: examples.streams.activities[1].id
+        title: "Retrieving non-trashed streams"
+        params: {}
         result:
           streams: examples.streams.activities[1].children
       ]
