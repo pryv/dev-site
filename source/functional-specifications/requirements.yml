@@ -211,6 +211,86 @@ sections:
             - can create Shared accesses within their scope
             - can manage created Shard accesses
 
+  - id: notifications
+    reqid: NOTIF
+    title: Notifications
+    requirements:
+      - reqid: EVENT
+        title: The system shall provide notification capabilities for changes at Event level.
+        description: |
+          The system provides an **Event change** notication when the following occurs at Event level
+            - Creation
+            - Modification
+            - Deletion 
+
+      - reqid: STREAM
+        title: The system shall provide notification capabilities for changes at Stream level.
+        description: |
+          The system provides a **Structure change** notication when the following occurs at Stream level
+            - Creation
+            - Modification
+            - Deletion 
+
+      - reqid: LISTEN
+        title: The system shall provide listener registration capabilities
+        description: |
+          The system provides a web socket based implementation to register a listner 
+
+  - id: user
+    reqid: USER
+    title: User management
+    requirements:
+      - reqid: BASE
+        title: The system shall permit user management through the specified actions.
+        description: |
+            - Creation
+            - Deletion 
+
+      - reqid: LOGIN
+        title: The system shall provide authentication of user on a login / password pair
+        description: |
+          The system provides authentication on login authentication pair
+
+      - reqid: EMAIL
+        title: The system shall provide email properties management
+        description: |
+          - At creation of user
+          - Change of email
+
+      - reqid: EMAILID
+        title: The system shall provide retrieval of userId from an email
+        description: |
+          The system provides discovery of userId by email
+
+      - reqid: LIST
+        title: The system shall provide a list of users (data subject)
+        description: |
+          The system provides a list of user registered on the platform
+      
+    sections:
+      - id: invitations
+        reqid: INV
+        title: Invitations
+        requirements: 
+          - reqid: BASE
+            title: The system shall provide limitation to register to the platforn
+            description: |
+              The system provides a use-once invitation tokens
+          
+          - reqid: LIST
+            title: The system shall provide a list of invitation tokens
+            description: The system provides a list of invitation tokens and their validity
+
+          - reqid: GEN
+            title: The system shall provide generation of new invitations tokens
+            description: The system provides generation of new invitations tokens with a title
+
+          - reqid: MANY
+            title: The system shall provide use-many invitation tokens
+            description: The system can take a list of invitation tokens that can be used with no limitations.
+
+      
+
        
 
 
