@@ -24,6 +24,9 @@ sections:
       - reqid: HTTP
         title: The system shall be accessible through an HTTP API
         description: Access to the system is done using a Web API.
+        refs: 
+          - url: http://api.pryv.com
+            description: Pryv HTTP is desctibed online at http://api.pryv.com
 
   - id: data-types
     reqid: DATA
@@ -47,8 +50,178 @@ sections:
     description: 
       "See: [/concepts/#streams](/concepts/#streams)"
     requirements:
-      - reqid: 01
-        title: A
-        description: B
+      - reqid: BASE
+        title: The system shall permit stream management through the specified actions.
+        description: |
+          The following actions are provided by the system to manage Streams.
+          - Create 
+          - Read 
+          - Edit 
+          - Delete 
+          - Share
+
+  - id: events
+    reqid: EVENT
+    title: Events
+    description: 
+      "See: [/concepts/#events](/concepts/#events)"
+    requirements:
+      - reqid: BASE
+        title: The system shall permit events management through the specified actions.
+        description: |
+          The following actions are provided by the system to manage Events. 
+          - Create
+          - Read
+          - Edit
+          - Delete
+
+  - id: dlc
+    reqid: DLC
+    title: Data life cycle management
+    description: 
+      "Each part of the life cycle is further described."
+    requirements:
+      - reqid: BASE
+        title: The system shall manage all data life cycle parts as described here.
+        description: | 
+          The following actions are provided by the system to manage Streams.
+          1.	Collect and aggregate
+          2.	Structure and store 
+          3.	Use 
+          4.	Share
+          5.	Archive
+          6.	Disposal
+    
+    sections:
+      - id: collect
+        title: Collect
+        requirements:
+          - reqid: COLLECT
+            title: The system shall allow data input through multiple sources.
+            description: | 
+              The following actions are provided by the system to manage Streams.
+              -	Web services
+              -	IoT and other mobile devices
+              - Electronic records
+
+      - id: store
+        title: Store
+        requirements:
+          - reqid: STORE
+            title: The system shall ensure data integrity. 
+            description: | 
+              The system ensure the data entered in the system is keep and 
+              transmited in its original form.
+
+      - id: use
+        title: Use and aggregate
+        requirements:
+          - reqid: USE
+            title: The system shall provide data retrieval and aggregation from different sources
+            description: | 
+              -	Retrieval of data
+              - Selection by:
+                - Time 
+                - Modification date
+                - Stream
+                - Tag
+                - Deletion state
+
+          - reqid: AGG
+            title: The system shall provide methods to aggregate data from multiple subjects
+            description: | 
+              The model of streams and events is designed for merging data from multiple subjects
+
+
+      - id: archiving
+        title: Archiving and disposal
+        requirements:
+          - reqid: DEL
+            title: The system shall ensure deletion of data
+            description: | 
+              - Deleted state
+              - Complete deletion
+              - Track of deleted items for synchronization
+
+          - reqid: MOVE
+            ignore: true
+            title: The system shall ensure that a subject and all its data can be moved to another core component (intra-system migration).
+            description: | 
+              ""
+
+          - reqid: EXPORT
+            title: The system shall provide the possibility to export all the subject’s data out of the system (extra-system migration).
+            description: | 
+              The system provides export capability and tools to export all data of a subject. The exported format facilitate interoperability.
+
+
+  - id: access
+    reqid: ACC
+    title: Access Control
+    requirements:
+      - reqid: SELECT
+        title: The system shall provide granular acces per data subject.
+        description: | 
+          The system provides the following limitation properties to accesses 
+          - Streams list
+          - Tag list 
+          - Expiration date
+          
+          Read and Write levels are provided at a Stream level
+
+      - reqid: ENFORCE
+        title: The system shall enforce access control.
+        description: | 
+          - Deny invalid or expired access
+          - Authorize valid access based on their limitation properties
+
+      - reqid: GIVE
+        title: The system shall manage access control given by the subject to access its data.
+        description: | 
+          - Create
+          - List
+          - Update
+          - Delete
+
+      - reqid: REQUEST
+        title: The system shall provide the application to request access to data by means of access control.
+        description: | 
+          App: 
+            - Request
+            - Obtain
+
+          Subject:
+          - Accept
+          - Deny
+
+      - reqid: TYPE
+        title: The system shall provide Personal, App and Shared type of accesses.
+        description: | 
+          "The system povides Personal, Apps and Shared Access"
+        references: 
+          refs:
+            - url: http://api.pryv.com/concepts/#accesses
+              description: Access concept description
+
+      - reqid: DELEGATE
+        title: The system shall provide delegation of access control
+        description: | 
+          - **Personal** can manage App and Shared accesses
+          - **App** 
+            - can create Shared accesses within their scope
+            - can manage created Shard accesses
+
+       
+
+
+
+
+
+      
+
+
+
+
+
   
 
