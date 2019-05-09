@@ -1,6 +1,6 @@
 
 id: functional-requirements
-title: Functional Requirements Specifications
+title: Functional Requirements 
 description: |
   This section describes the functional requirements associated with a specific 
   feature. Each functional requirement specifies functions that a system or 
@@ -16,7 +16,7 @@ sections:
 
       1. One to several core components: responsible for the core functionalities like data storage, access control.
 
-      2.	Two to several register component: responsible for linking a data subject’s storage to the corresponding core component responsible for the data management."
+      2.	Two to several register components: responsible for linking a data subject’s storage to the corresponding core component responsible for the data management."
 
   - id: connectivity-and-interfaces
     reqid: CON
@@ -27,7 +27,7 @@ sections:
         description: Access to the system is done using a Web API.
         refs: 
           - url: http://api.pryv.com
-            description: Pryv HTTP is desctibed online at http://api.pryv.com
+            description: Pryv HTTP is described online at http://api.pryv.com
 
   - id: data-types
     reqid: DATA
@@ -111,8 +111,8 @@ sections:
           - reqid: STORE
             title: The system shall ensure data integrity. 
             description: | 
-              The system ensure the data entered in the system is keep and 
-              transmited in its original form.
+              The system ensures the data entered in the system is kept and 
+              transmitted in its original form.
 
       - id: use
         title: Use and aggregate
@@ -151,9 +151,9 @@ sections:
               ""
 
           - reqid: EXPORT
-            title: The system shall provide the possibility to export all the subject’s data out of the system (extra-system migration).
+            title: The system shall provide the possibility to export all the subjects’ data out of the system (extra-system migration).
             description: | 
-              The system provides export capability and tools to export all data of a subject. The exported format facilitate interoperability.
+              The system provides export capability and tools to export all data of a subject. The exported format facilitates interoperability.
 
 
   - id: access
@@ -161,7 +161,7 @@ sections:
     title: Access Control
     requirements:
       - reqid: SELECT
-        title: The system shall provide granular acces per data subject.
+        title: The system shall provide granular access per data subject.
         description: | 
           The system provides the following limitation properties to accesses 
           - Streams list
@@ -199,9 +199,9 @@ sections:
           - Check
 
       - reqid: TYPE
-        title: The system shall provide Personal, App and Shared type of accesses.
+        title: The system shall provide Personal, App and Shared type of access.
         description: | 
-          "The system povides Personal, Apps and Shared Access"
+          "The system provides Personal, Apps and Shared Access"
         references: 
           refs:
             - url: http://api.pryv.com/concepts/#accesses
@@ -234,7 +234,7 @@ sections:
       - reqid: EVENT
         title: The system shall provide notification capabilities for changes at Event level.
         description: |
-          The system provides an **Event change** notication when the following occurs at Event level
+          The system provides an **Event change** notification when the following occurs at Event level
             - Creation
             - Modification
             - Deletion 
@@ -242,7 +242,7 @@ sections:
       - reqid: STREAM
         title: The system shall provide notification capabilities for changes at Stream level.
         description: |
-          The system provides a **Structure change** notication when the following occurs at Stream level
+          The system provides a **Structure change** notification when the following occurs at Stream level
             - Creation
             - Modification
             - Deletion 
@@ -273,7 +273,7 @@ sections:
           The system provides authentication on logout authentication pair
 
       - reqid: EMAIL
-        title: The system shall provide email properties management
+        title: The system shall provide email property management
         description: |
           - At creation of user
           - Change of email
@@ -286,7 +286,7 @@ sections:
       - reqid: LIST
         title: The system shall provide a list of users (data subject)
         description: |
-          The system provides a list of user registered on the platform
+          The system provides a list of users registered on the platform
       
     sections:
       - id: invitations
@@ -294,7 +294,7 @@ sections:
         title: Invitations
         requirements: 
           - reqid: BASE
-            title: The system shall provide limitation to register to the platforn
+            title: The system shall provide limitations to register to the platform
             description: |
               The system provides a use-once invitation tokens
           
@@ -303,8 +303,8 @@ sections:
             description: The system provides a list of invitation tokens and their validity
 
           - reqid: GEN
-            title: The system shall provide generation of new invitations tokens
-            description: The system provides generation of new invitations tokens with a title
+            title: The system shall provide a generation of new invitations tokens
+            description: The system provides a generation of new invitations tokens with a title
 
           - reqid: MANY
             title: The system shall provide use-many invitation tokens
@@ -316,15 +316,15 @@ sections:
         requirements: 
           - reqid: PRIVATE
             title: The system shall provide a storage of properties at a private user level
-            description: The system provide storage of key/value pairs at user account level only available for Personal access
+            description: The system provides storage of key/value pairs at user account level only available for Personal access
 
           - reqid: PUBLIC
             title: The system shall provide a storage of properties at a public user level
-            description: The system provide storage of key/value pairs at user account level avaialble publicly 
+            description: The system provides storage of key/value pairs at user account level available publicly 
 
           - reqid: APP
             title: The system shall provide a storage of properties at an App access user level
-            description: The system provide storage of key/value pairs at app level only available by App access
+            description: The system provides storage of key/value pairs at app level only available by App access
 
   - id: system
     reqid: SYSTEM
@@ -341,31 +341,32 @@ sections:
                 - Ubuntu Server 16.04 LTS"
 
           - requid: CONTAINER
-            tiltle: The system should be packaged in container for shipment and deployment.
-            description: The system is delivered packaged in **Docker** containers
+            tiltle: The system should be packaged in a container for shipment and deployment.
+            description: The system is delivered packaged in **Docker** container
             refs:
               - url: https://www.docker.com/
                 description: Docker.com web site
 
 
   - id: non-functional
-    title: Non Functional Requirements
+    title: Non-Functional Requirements
     sections:
       - id: security
         reqid: SEC
+        title: Security
         requirements: 
           - reqid: NOAUTH
-            title: The system shall store in a logfile non authorized API calls
+            title: The system shall store in a log file non-authorized API calls
             description: 
-              "Refusal of access are logged on the hosting operationg system using syslog"
+              "Refusal of access are logged on the hosting operating system using syslog"
 
           - reqid: AUTH
-            tiltle: The system shall store in a logfile authorized API calls
-            description: Authorized accesses are logged on the hosting operationg system using syslog with mecanism to identified the used Access token
+            tiltle: The system shall store in a log file authorized API calls
+            description: Authorized accesses are logged on the hosting operating system using syslog with mechanisms to identify the used Access token.
 
           - reqid: COM
             title: The system shall provide encryption of all Inboud communications
-            description: The system is provided with a componenent ensuring SSL termination. This component can be replaced by the customer. 
+            description: The system is provided with a component ensuring SSL termination. This component can be replaced by the customer. 
 
           - reqid: ENC
             title: The system shall provide mechanisms for client-side encryption
@@ -373,6 +374,33 @@ sections:
             refs:
               - url: http://api.pryv.com/event-types/#encrypted
                 description: Encrypted data-type reference
+
+      - id: audit
+        reqid: AUDIT
+        title: Auditability
+        requirements: 
+            - reqid: AUTHOR
+              title: The system shall provide auditability of data edition. 
+              description: 
+                Events, Streams and Access exposes the date of modifications and the Access token used. The aim is to be able to answer the what and when questions, taken a specific who.
+
+            - reqid: CALLS
+              title: The system shall provide auditability of all API calls by Access token 
+              description: 
+                All HTTP calls POST, PUT, GET, DELETE are logged on the hosting operating system using syslog with mechanisms to identify the used Access token. The aim is to be able to answer the what and when questions, taken a specific who.
+      
+      - id: recoverability
+        reqid: BCKP
+        title: Recoverability
+        requirements: 
+            - reqid: BASE
+              title: The system shall be able to be fully recovered using the latest backup available.  
+              description: 
+                Data not backed up shall not be taken into accounts in the need of recoverability.
+
+
+
+          
                     
 
 
