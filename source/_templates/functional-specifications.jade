@@ -37,7 +37,7 @@ mixin requirementId(id)
 
 mixin reference(ref)
   if ref.url
-    | !{markdown('['+ref.description+']('+ref.url+')')}
+   a(href=ref.url) !{ref.description}
 
 
 mixin typeText(string)
@@ -74,33 +74,36 @@ mixin properties(properties)
             .description !{markdown(prop.description)}
             +properties(prop.properties)
 
-mixin requirements(requirements, reqid)
+mixin requirements(requirements, reqid, parentDocId)
   if requirements
     each requirement in requirements
       if ! requirement.ignore
-        +requirementId(reqid + requirement.reqid)
-        table.definitions
-          tr
-            th
-              code !{"Title"}
-            td
-              .header
-                -// TODO make type specification flexible
-                +typeText(requirement.title)
-          tr
-            th
-              code !{"Desc"}
-            td
-              .description !{markdown(requirement.description || '')}
-          if requirement.refs
+        - var myId = reqid + requirement.reqid
+        - var docId = functionalSpecifications.helpers.getDocId(myId)
+        requirement(id='#{docId}')
+          +requirementId(myId)
+          table.definitions
             tr
               th
-                code !{"Refs"}
+                code !{"Title"}
               td
-                ol
-                  each ref in requirement.refs
-                    li 
-                      +reference(ref)
+                .header
+                  -// TODO make type specification flexible
+                  +typeText(requirement.title)
+            tr
+              th
+                code !{"Desc"}
+              td
+                .description !{markdown(requirement.description || '')}
+            if requirement.refs
+              tr
+                th
+                  code !{"Refs"}
+                td
+                  ol
+                    each ref in requirement.refs
+                      li 
+                        +reference(ref)
 
 
 mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
@@ -129,12 +132,12 @@ mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
         .meta
         +intro(section.description)
         +properties(section.properties)
-        +requirements(section.requirements, reqid)
+        +requirements(section.requirements, reqid, parentDocId)
       if section.sections
         - var subSectionNum = 0
         each subSection in section.sections
           - subSectionNum++
-          +section(subSection, docId, level + 1, reqid, sectionHeader + subSectionNum + '.')
+          +section(subSection, parentDocId, level + 1, reqid, sectionHeader + subSectionNum + '.')
 
 block content
   - var source = sourceOverride ? functionalSpecifications[sourceOverride] : functionalSpecifications
