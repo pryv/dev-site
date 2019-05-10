@@ -109,10 +109,14 @@ sections:
         title: Store
         requirements:
           - reqid: STORE
-            title: The system shall ensure data integrity. - not the same as storage IMO
+            title: The system shall ensure data storage.
             description: | 
-              The system ensures the data entered in the system is kept and 
-              transmitted in its original form.
+              The system store collected data records and associated informations on physical computer storage.
+
+          - reqid: INTEGRITY
+            title: The system shall ensure data integrity.
+            description: | 
+              The system ensures the data records entered in the system is stored in its original form.
 
       - id: use
         title: Use and aggregate
@@ -208,7 +212,7 @@ sections:
         description: The system provides Personal, Apps and Shared Access
         references: 
           refs:
-            - url: http://api.pryv.com/concepts/#accesses
+            - url: https://api.pryv.com/concepts/#accesses
               description: Access concept description
 
       - reqid: DELEGATE
@@ -239,7 +243,7 @@ sections:
       - reqid: EVENT
         title: The system shall provide notification capabilities for changes at Event level.
         description: |
-          The system provides an **Event change** notification when the following occurs at Event level - is it in the scope of an access?
+          The system provides an **Event change** notification when the following occurs at Event level 
             - Creation
             - Modification
             - Deletion 
