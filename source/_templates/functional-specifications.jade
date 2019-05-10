@@ -35,6 +35,10 @@ mixin requirementId(id)
       span.label id
       span.label-value: code !{id}
 
+mixin reference(ref)
+  if ref.url
+    | !{markdown('['+ref.description+']('+ref.url+')')}
+
 
 mixin typeText(string)
   if string
@@ -88,6 +92,16 @@ mixin requirements(requirements, reqid)
               code !{"Desc"}
             td
               .description !{markdown(requirement.description || '')}
+          if requirement.refs
+            tr
+              th
+                code !{"Refs"}
+              td
+                ol
+                  each ref in requirement.refs
+                    li 
+                      +reference(ref)
+
 
 mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
   if ! section.ignore
