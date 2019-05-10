@@ -120,8 +120,8 @@ sections:
           - reqid: USE
             title: The system shall provide data retrieval and aggregation from different sources
             description: | 
-              -	Retrieval of data
-              - Selection by:
+              The system provides retrieval of data independently from the source with a   
+              **Selection by**:
                 - Time 
                 - Modification date
                 - Stream
@@ -139,7 +139,8 @@ sections:
         requirements:
           - reqid: DEL
             title: The system shall ensure deletion of data
-            description: | 
+            description: |
+              The system provides the following informations to check the existence of an item:
               - Deleted state
               - Complete deletion
               - Track of deleted items for synchronization
@@ -170,38 +171,38 @@ sections:
           
           Read and Write levels are provided at a Stream level
 
+      - reqid: CONTRACT
+        title: The system shall provide storage of contractual terms relative an Access.
+        description: | 
+          The system provides extra properties for each Accesses to store contractual terms. These terms should be relative to the limitation of an Access. If terms are displayed to user during an Access request flow and accepted by the User, the contractual terms stored are a proof of Consent.
+
       - reqid: ENFORCE
         title: The system shall enforce access control.
         description: | 
-          - Deny invalid or expired access
-          - Authorize valid access based on their limitation properties
+          The system
+          - denies invalid or expired access
+          - authorizes valid access based on their limitation properties
 
       - reqid: BASE
         title: The system shall manage access control given by the subject to access its data.
         description: | 
+          The following actions are provided by the system to manage Accesses
           - Create
           - List
           - Update
           - Delete
 
       - reqid: REQUEST
-        title: The system shall provide the application to request access to data by means of access control.
+        title: The system shall provide the external services (App) to request access to data by means of access control.
         description: | 
-          App: 
-            - Request
-            - Obtain
-
-          Subject:
-          - Accept
-          - Deny
-
-          System: 
-          - Check
+          Access request and enforcement flow involves the following actors with specific actions: 
+          - **App**: Request, Obtain
+          - **Data Subject**: Accept, Deny
+          - **System**: Check, Enforce
 
       - reqid: TYPE
         title: The system shall provide Personal, App and Shared type of access.
-        description: | 
-          "The system provides Personal, Apps and Shared Access"
+        description: The system provides Personal, Apps and Shared Access
         references: 
           refs:
             - url: http://api.pryv.com/concepts/#accesses
@@ -217,7 +218,7 @@ sections:
 
       - reqid: REGISTER
         title: The system shall provide management for received access at a user level
-        description: 
+        description: |
           The system provides **Followed Slices** to manage received access
           - Create
           - Update 
@@ -259,24 +260,26 @@ sections:
       - reqid: BASE
         title: The system shall permit user management through the specified actions.
         description: |
+          The following actions are provided by the system to manage Users
             - Creation
             - Deletion 
 
       - reqid: LOGIN
         title: The system shall provide authentication of user on a login / password pair
         description: |
-          The system provides authentication on login with a userid/pass
+          The system provides authentication on login with a userid/password pair
 
       - reqid: LOGOUT
-        title: The system shall provide authentication of user to logout
+        title: The system shall provide login out
         description: |
-          The system provides authentication on logout authentication pair
+          The system provides invalidation of authorization resulting in a login out
 
       - reqid: EMAIL
         title: The system shall provide email property management
         description: |
-          - At creation of user
-          - Change of email
+          The system provides email property management at a User level 
+          - at creation of user
+          - an API call to change the email property of a user
 
       - reqid: EMAILID
         title: The system shall provide retrieval of userId from an email
@@ -286,7 +289,9 @@ sections:
       - reqid: LIST
         title: The system shall provide a list of users (data subject)
         description: |
-          The system provides a list of users registered on the platform
+          The system provides a list of users registered on the platform with the following properties:
+          - registration date
+          - invitation token used
       
     sections:
       - id: invitations

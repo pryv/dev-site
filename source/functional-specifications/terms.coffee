@@ -26,7 +26,8 @@ module.exports = exports =
     key: "Data Subject"
     description: """
                   As part of personal data reglementations and policies such as GDPR or HIPAA, refers to any individual who can be identified directly or indirectly by a subset of data, either identifier or factors specific to a person’s identity. By extension, the person whose data is collected, held or processed.
-                  On Pryv.io, each Data Subject's is held on a per Data Subject **User Account**.
+                  On Pryv.io, each Data Subject's is held on a per Data Subject **User Account**. 
+                  Data Subject is also refered as **User**.
                   """
     
 

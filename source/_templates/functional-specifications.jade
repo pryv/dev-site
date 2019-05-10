@@ -73,52 +73,54 @@ mixin properties(properties)
 mixin requirements(requirements, reqid)
   if requirements
     each requirement in requirements
-      +requirementId(reqid + requirement.reqid)
-      table.definitions
-        tr
-          th
-            code !{"Title"}
-          td
-            .header
-              -// TODO make type specification flexible
-              +typeText(requirement.title)
-        tr
-          th
-            code !{"Desc"}
-          td
-            .description !{markdown(requirement.description || '')}
+      if ! requirement.ignore
+        +requirementId(reqid + requirement.reqid)
+        table.definitions
+          tr
+            th
+              code !{"Title"}
+            td
+              .header
+                -// TODO make type specification flexible
+                +typeText(requirement.title)
+          tr
+            th
+              code !{"Desc"}
+            td
+              .description !{markdown(requirement.description || '')}
 
 mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
-  - var reqid = 'REQ_'
-  if nreqid 
-    - reqid = '' + nreqid
-  if section.reqid 
-    - reqid = reqid + section.reqid + '_' 
-  - var sectionHeader = ''
-  if nsectionHeader
-    - sectionHeader = nsectionHeader
-  - var sectionTitle = sectionHeader + ' ' + section.title
-  - var docId = functionalSpecifications.helpers.getDocId(parentDocId, section.id)
-  - var sectionClass = (section.type || '')
-  section(id='#{docId}', class='#{sectionClass}')
-    if level === 1
-      +h1(sectionTitle)
-    else if level === 2
-      +h2(sectionTitle)
-    else if level === 3
-      +h3(sectionTitle)
-    else
-      +h4(sectionTitle)
-    .content
-      .meta
-      +intro(section.description)
-      +properties(section.properties)
-      +requirements(section.requirements, reqid)
-    if section.sections
-      - var subSectionNum = 0
-      each subSection in section.sections
-        - subSectionNum++
-        +section(subSection, docId, level + 1, reqid, sectionHeader + subSectionNum + '.')
+  if ! section.ignore
+    - var reqid = 'REQ_'
+    if nreqid 
+      - reqid = '' + nreqid
+    if section.reqid 
+      - reqid = reqid + section.reqid + '_' 
+    - var sectionHeader = ''
+    if nsectionHeader
+      - sectionHeader = nsectionHeader
+    - var sectionTitle = sectionHeader + ' ' + section.title
+    - var docId = functionalSpecifications.helpers.getDocId(parentDocId, section.id)
+    - var sectionClass = (section.type || '')
+    section(id='#{docId}', class='#{sectionClass}')
+      if level === 1
+        +h1(sectionTitle)
+      else if level === 2
+        +h2(sectionTitle)
+      else if level === 3
+        +h3(sectionTitle)
+      else
+        +h4(sectionTitle)
+      .content
+        .meta
+        +intro(section.description)
+        +properties(section.properties)
+        +requirements(section.requirements, reqid)
+      if section.sections
+        - var subSectionNum = 0
+        each subSection in section.sections
+          - subSectionNum++
+          +section(subSection, docId, level + 1, reqid, sectionHeader + subSectionNum + '.')
 
 block content
   - var source = sourceOverride ? functionalSpecifications[sourceOverride] : functionalSpecifications
