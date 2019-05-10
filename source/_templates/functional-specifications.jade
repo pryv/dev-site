@@ -47,6 +47,29 @@ mixin labelValue(label, cssClass, value)
     span(class='label label-default ' + cssClass)
       | !{label + (typeof(value) === 'string' ? ' ' + value : '')}
 
+
+mixin properties(properties)
+  if properties
+    table.definitions
+      each prop in properties
+        tr
+          th
+            if prop.key instanceof Array
+              - var i = 0
+              each key in prop.key
+                code !{key}
+                if i < prop.key.length - 1
+                  | |
+                - i++
+            else
+              code !{prop.key}
+          td
+            .header
+              -// TODO make type specification flexible
+              +typeText(prop.type)
+            .description !{markdown(prop.description)}
+            +properties(prop.properties)
+
 mixin requirements(requirements, reqid)
   if requirements
     each requirement in requirements
@@ -89,6 +112,7 @@ mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
     .content
       .meta
       +intro(section.description)
+      +properties(section.properties)
       +requirements(section.requirements, reqid)
     if section.sections
       - var subSectionNum = 0

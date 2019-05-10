@@ -8,16 +8,26 @@ _getDocId = (sectionId) ->
 module.exports = exports =
   id: "terms"
   title: "Terms and acryonyms"
-  intro: "Youpla boum"
   sections: []
   properties: [
     key: "Access"
     description: """
-                  a set of access permissions; the access is identified... .
+                  A set of access permissions relative to a user account. The access is identified 
+                  by an Access Id and presented to the API as an Access token.  
+                  See [/concepts/#accesses](Concepts ACCESSES)
                   """
   ,
     key: "Access Token"
     description: """
-                  a string...
+                  A string of characters used for transacation that require Authorization. An acces token
+                  is linked to one Access Token, the content of a token must remain a secret and is set along with each request. Access Tokens are the primary identifier for the AUTHOR of an API call.
                   """
+    
+    key: "Data Subject"
+    description: """
+                  As part of personal data reglementations and policies such as GDPR or HIPAA, refers to any individual who can be identified directly or indirectly by a subset of data, either identifier or factors specific to a person’s identity. By extension, the person whose data is collected, held or processed.
+                  On Pryv.io, each Data Subject's is held on a per Data Subject **User Account**.
+                  """
+    
+
   ]
