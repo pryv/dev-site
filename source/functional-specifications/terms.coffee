@@ -12,9 +12,9 @@ module.exports = exports =
   properties: [
     key: "Access"
     description: """
-                  A set of access permissions relative to a user account. The access is identified 
+                  A set of permissions relative to a user account resources. The access is identified 
                   by an Access Id and presented to the API as an Access token.  
-                  See [/concepts/#accesses](Concepts ACCESSES)
+                  See [Accesses concept](/concepts/#accesses).
                   """
   ,
     key: "Access Token"
@@ -25,9 +25,9 @@ module.exports = exports =
     
     key: "Data Subject"
     description: """
-                  As part of personal data reglementations and policies such as GDPR or HIPAA, refers to any individual who can be identified directly or indirectly by a subset of data, either identifier or factors specific to a person’s identity. By extension, the person whose data is collected, held or processed.
-                  On Pryv.io, each Data Subject's is held on a per Data Subject **User Account**. 
-                  Data Subject is also refered as **User**.
+                  As part of personal data reglementations and policies such as GDPR or HIPAA, refers to any individual who can be identified directly or indirectly by a subset of data, either identifier or factors specific to a person’s identity. By extension, the person whose data is collected, held or processed.  
+
+                  On Pryv.io, each individual's data is held on a per Data Subject **User Account**. Data Subject is also refered as **User**.
                   """
     
 
