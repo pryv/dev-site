@@ -16,7 +16,7 @@ module.exports = exports =
                 | API-Version              | 1.4.8                   |
 
 
-                This document describes the functional specifications for the pryv.io
+                This document describes the functional specifications for the Pryv.io
                 middleware system: the capabilities and functions that the
                 system must be capable of performing.
                """
