@@ -89,6 +89,24 @@ mixin stats(stats)
 
 mixin tests(tests)
   if tests
+    each test in tests
+      tr
+        td
+          code !{test.id}
+        td
+          if typeof(test.duration) === "undefined"
+            | !{"❓"}
+          else if test.err.title
+            | !{"‎❌"}
+          else 
+            | !{"✅"}
+        td
+          +typeText(test.title)
+
+
+mixin testsets(testsets)
+  if testsets
+    +h4('Tests')
     table 
       thead
         tr
@@ -98,29 +116,13 @@ mixin tests(tests)
             | !{"Status"}
           th
             | !{"Test"}
-      
-      tbody 
-        each test in tests
-          - console.log(test)
+      tbody
+        each setTitle in Object.keys(testsets)
           tr
-            td
-              code !{test.id}
-            td
-              if typeof(test.duration) === "undefined"
-                | !{"?"}
-              else 
-                | !{"✓"}
-            td
-              +typeText(test.title)
-
-
-mixin testsets(testsets)
-  if testsets
-    +h4('Tests')
-    each setTitle in Object.keys(testsets)
-      //- console.log(setTitle)
-      +h5(setTitle)
-      +tests(testsets[setTitle].tests)
+            td(colspan=3)
+              b
+               | !{testResults.helpers.ucFirst(setTitle)}
+          +tests(testsets[setTitle].tests)
           
 
 

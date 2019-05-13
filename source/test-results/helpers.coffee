@@ -5,4 +5,9 @@ exports.getDocId = () ->
   return [].slice.apply(arguments).join('-').replace('.', '-')
 
 
+exports.ucFirst = (str) ->
+  return str.charAt(0).toUpperCase() + str.slice(1);
+
+
+
 

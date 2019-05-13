@@ -23,7 +23,6 @@ function loadTests() {
     })
 
   });
-  console.log(result)
   return result;
 }
 
