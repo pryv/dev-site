@@ -9,5 +9,5 @@ module.exports = exports =
   id: "introduction"
   title: "Introduction"
   description: """
-               Test results
+               Test suites is runned for each suite.  
                """
