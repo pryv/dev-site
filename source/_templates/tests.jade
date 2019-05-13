@@ -75,14 +75,28 @@ mixin properties(properties)
             +properties(prop.properties)
 
 mixin stats(stats)
-  +h4('Stats')
+  +h4('Summary')
   table.definitions
-      each key in Object.keys(stats)
         tr
           th
-            code !{key}
+            code !{"Number of tests"}
           td
-             | !{stats[key]}
+             | !{stats['tests']}
+        tr
+          th
+            code !{"Passes ✅"}
+          td
+             | !{stats['passes']}
+        tr
+          th
+            code !{"Pending ❓"}
+          td
+             | !{stats['pending']}
+        tr
+          th
+            code !{"Failures ❌"}
+          td
+             | !{stats['failures']}
 
 
 
@@ -92,7 +106,8 @@ mixin tests(tests)
     each test in tests
       tr
         td
-          code !{test.id}
+          test(id='#{test.id}')
+            code !{test.id}
         td
           if typeof(test.duration) === "undefined"
             | !{"❓"}
