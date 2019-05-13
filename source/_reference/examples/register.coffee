@@ -32,4 +32,8 @@ module.exports =
   ],
   referers: [
     "hospital-A"
+  ],
+  servers: [
+    "core1",
+    "core2"
   ]

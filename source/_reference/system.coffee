@@ -239,6 +239,45 @@ module.exports = exports =
             ]
         ]
 
+      ,
+
+        id: "server.users.get"
+        type: "method"
+        title: "Get users for a specific server"
+        http: "GET /admin/servers/{serverName}/users"
+        server: "register"
+        description: """
+                    Get the list of all users registered on a specific server of the platform.
+                    """
+        params:
+          properties: [
+            key: "serverName"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The name of the server in question.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "users"
+            type: "array"
+            description: """
+                        Array of users (TODO: link to user data structure).
+                        """
+          ]
+        examples: [
+          title: "Fetching the users list for a specifc server of a Pryv.io platform"
+          params: {
+            serverName: examples.users.three.server
+          }
+          result:
+            users: [
+                examples.users.three,
+            ],
+        ]
       ]
     ]
   ]
