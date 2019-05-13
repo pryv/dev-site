@@ -10,10 +10,33 @@ cd $scriptsFolder/..
 hash git 2>&- || { echo >&2 "I require git."; exit 1; }
 hash yarn 2>&- || { echo >&2 "I require node and yarn."; exit 1; }
 
+
+# resolve test-results dependency
+if [ ! -d dependencies/test-results ]
+then
+  echo "Setting up 'source/test-results/_source' folder for test-results dependency."
+  git clone git@github.com:pryv/test-results-pryv.io.git dependencies/test-results
+fi
+
+# ensure service-core dependency is up-to-date
+cd dependencies/test-results
+git checkout master
+git pull
+yarn install
+cd $scriptsFolder/..
+
+if [ -z "$1" ]
+then
+  # default branch used for service-core dependency
+  coreBranch="release-1.2"
+else
+  coreBranch=$1
+fi
+
 # resolve service-core dependency
 if [ ! -d dependencies/core ]
 then
-  echo "Setting up 'dependencies/core' folder for service-core dependency."
+  echo "Setting up 'source/event-types/_source' folder for service-core dependency."
   git clone git@github.com:pryv/service-core.git dependencies/core
 fi
 

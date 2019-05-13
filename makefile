@@ -21,7 +21,13 @@ retrieve-types:
 	@echo ""
 	@cd $(TYPES_SOURCE_TARGET) && curl -LO $(EVENT_TYPES_URL) -LO $(EVENT_EXTRAS_URL)
 
-publish: retrieve-types build
+retrieve-tests:
+	@echo ""
+	@echo "Retrieving tests types from git@github.com:pryv/test-results-pryv.io.git..."
+	@echo ""
+	@cd dependencies/test-results && git pull
+
+publish: retrieve-types retrieve-tests build
 	@cd build && git add . && git add -u . && git commit -m "Updated generated files" && git push
 
 .PHONY: build

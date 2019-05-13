@@ -41,7 +41,8 @@ metalsmith
       '_templates/*',
       'app-access/_sections/*',
       'event-types/_source/*',
-      'functional-specifications/**'
+      'functional-specifications/**',
+      'test-results/**', 'test-results/_source/**', 'test-results/_source/.git'
     ]))
     .use(permalinks({
       // section id is optional in metadata
