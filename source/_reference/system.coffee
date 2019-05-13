@@ -13,7 +13,7 @@ module.exports = exports =
     id: "overview"
     title: "Overview"
     description: """
-                 This document describes Pryv.io's **system-level** API, allowing developers to create and monitor user accounts.
+                 This document describes Pryv.io's **system-level** API, allowing developers to create and manage user accounts.
                  """
     sections: [
       id: "services-involved"
@@ -168,8 +168,8 @@ module.exports = exports =
 
   ,
 
-    id: "account-monitor"
-    title: "Monitor accounts"
+    id: "account-manage"
+    title: "Manage accounts"
     sections: [
       id: "api-methods"
       title: "API methods"
@@ -285,6 +285,86 @@ module.exports = exports =
                 examples.users.three,
             ],
         ]
+
+      ,
+
+        id: "email.check.post"
+        type: "method"
+        title: "Check email availability"
+        http: "POST /email/check"
+        server: "register"
+        description: """
+                    Check the availability of an account's email.
+                    """
+        params:
+          properties: [
+            key: "email"
+            type: "string"
+            description: """
+                        The email address to check.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "true or false"
+            type: "plaintext"
+            description: """
+                        Plaintext `true` if the email address is valid AND free, `false` otherwise.
+                        """
+          ]
+        examples: [
+          title: "Checking the availability of an account's email address."
+          params: {
+            email: examples.users.two.email
+          }
+          result: true
+        ]
+
+      ,
+
+        id: "email.check.get"
+        type: "method"
+        title: "Check email existence"
+        http: "GET /{email}/check_email"
+        server: "register"
+        description: """
+                    Check the existence of an account's email.
+                    """
+        params:
+          properties: [
+            key: "email"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The email address to check.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "exists"
+            type: "boolean"
+            description: """
+                        Set to `true` if the email address is already registered, `false` otherwise.
+                        """
+          ]
+        errors: [
+          key: "INVALID_EMAIL"
+          http: "400"
+          description: """
+                      The email address is invalid because of an unrecognized format.
+                      """
+        ]
+        examples: [
+          title: "Checking the existence of an account's email address."
+          params: {
+            email: examples.users.two.email
+          }
+          result: true
+        ]
+
       ]
     ]
   ]
