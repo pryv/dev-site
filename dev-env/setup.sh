@@ -12,11 +12,10 @@ hash yarn 2>&- || { echo >&2 "I require node and yarn."; exit 1; }
 
 
 # resolve test-results dependency
-if [ ! -d source/test-results/_source ]
+if [ ! -d dependencies/test-results ]
 then
   echo "Setting up 'source/test-results/_source' folder for test-results dependency."
-  mkdirp source/test-results/
-  git clone git@github.com:pryv/test-results-pryv.io.git source/test-results/_source
+  git clone git@github.com:pryv/test-results-pryv.io.git dependencies/test-results
 fi
 
 # ensure service-core dependency is up-to-date

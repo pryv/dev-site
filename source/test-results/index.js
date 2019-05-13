@@ -3,9 +3,20 @@ require('coffee-script').register();
 const fs = require('fs');
 const path = require('path');
 
-function loadTests(filename) {
- 
+const testSrcPath = 'source/test-results/_source/code/'
+
+function loadTests() {
+  const tests = {};
+  fs.readdirSync(testSrcPath).forEach(service => {
+    console.log(service);
+    fs.readdirSync(service).forEach(version => {
+      console.log(version);
+
+    });
+  });
 }
+
+//loadTests();
 
 exports.sections = [
   require('./intro.coffee'),
