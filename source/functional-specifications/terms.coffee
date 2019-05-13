@@ -22,7 +22,7 @@ module.exports = exports =
                   A string of characters used for transacation that require Authorization. An acces token
                   is linked to one Access Token, the content of a token must remain a secret and is set along with each request. Access Tokens are the primary identifier for the AUTHOR of an API call.
                   """
-    
+  , 
     key: "Data Subject"
     description: """
                   As part of personal data reglementations and policies such as GDPR or HIPAA, refers to any individual who can be identified directly or indirectly by a subset of data, either identifier or factors specific to a person’s identity. By extension, the person whose data is collected, held or processed.  
