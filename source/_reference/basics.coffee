@@ -213,6 +213,36 @@ module.exports = exports =
 
   ,
 
+    id: "trusted-apps-verification"
+    title: "Trusted apps verification"
+    trustedOnly: true
+    description: """
+                 These API methods require that the `appId` parameter and `Origin` (or `Referer`) header are trusted.  
+
+                 This setting can be changed in the Pryv.io servers configuration.  
+                 By default, any valid `appId` works and the `Origin` (or `Referer`) header must be in the form `https://*.{domain}`.
+                 """
+    examples: [
+      title: "HTTP `Origin` header"
+      content: """
+               ```http
+               POST /auth/login HTTP/1.1
+               Host: {username}.pryv.me
+               Origin: https://sw.{domain}
+               ```
+               """
+    ,
+      title: "HTTP `Referer` header"
+      content: """
+               ```http
+               POST /auth/login HTTP/1.1
+               Host: {username}.pryv.me
+               Referer: https://sw.{domain}
+               ```
+               """
+    ]
+  ,
+
     id: "authorizing-your-app"
     title: "Authorizing your app"
     description: """
@@ -507,3 +537,11 @@ module.exports = exports =
       ]
     ]
   ]
+
+# Returns the in-doc id of the given type, for safe linking from other doc sections
+exports.getDocId = (typeId) ->
+  typeSection = _.find(exports.sections, (type) -> type.id == typeId)
+  if typeSection
+    return helpers.getDocId(exports.id, typeId)
+  else
+    throw new Error("Unknown type id")

@@ -423,7 +423,7 @@ module.exports = exports =
     id: "item-deletion"
     title: "Item deletion"
     description: """
-                 A record of a deleted item for sync purposes. Item deletions are currently kept for a year.
+                 A record of a deleted item for sync purposes.
                  """
     properties: [
       key: "id"

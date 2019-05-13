@@ -4,16 +4,20 @@ _ = require("lodash")
 exports.getDocId = () ->
   return [].slice.apply(arguments).join('-').replace('.', '-')
 
-exports.getCurlCall = (params, http) ->
+exports.getCurlCall = (params, http, server) ->
   [method, path] = http.split(" ")
-
+  if (server == null || server == undefined)
+    server = "core"
+  
   request = if method != "GET" then "-X #{method} " else ""
 
-  queryString = 
-    if method == "POST" && path == "/auth/login"
-      ""
+  headers = ""
+  queryString = ""
+  if (server == "core")
+    if (method == "POST" && (path == "/auth/login" || path == "/account/request-password-reset" || path == "/account/reset-password"))
+      headers = "-H 'Origin: https://sw.pryv.me' "
     else
-      "?auth={token}"
+      queryString = "?auth={token}"
 
   processedParams = _.clone(params)
   Object.keys(params).forEach (k) ->
@@ -22,17 +26,25 @@ exports.getCurlCall = (params, http) ->
       path = newPath
       delete processedParams[k]
 
+  data = ""
   hasData = (method == "POST" || method == "PUT")
-  data = if hasData then "-H 'Content-Type: application/json' " else ""
-  if not hasData
+  if hasData
+    headers += "-H 'Content-Type: application/json' "
+    if method == "PUT" && processedParams.update
+      data += "-d '#{JSON.stringify(processedParams.update)}' "
+    else
+      data += "-d '#{JSON.stringify(processedParams)}' "
+  else 
     Object.keys(processedParams).forEach (k) ->
       queryString += "&#{k}=#{processedParams[k]}"
-  else if method == "PUT" && processedParams.update
-    data += "-d '#{JSON.stringify(processedParams.update)}' "
-  else
-    data += "-d '#{JSON.stringify(processedParams)}' "
-
-  call = "curl -i #{request}#{data}https://{username}.pryv.me#{path}#{queryString}"
+  
+  call = ""
+  if (server == "core")
+    call = "curl -i #{request}#{headers}#{data}https://{username}.pryv.me#{path}#{queryString}"
+  else if (server == "register")
+    call = "curl -i #{request}#{headers}#{data}https://reg.pryv.me#{path}#{queryString}"
+    
+  
   # use shell variable format to help with quick copy-paste
   return call.replace /({\w+?})/g, (match) ->
     "$#{match}"

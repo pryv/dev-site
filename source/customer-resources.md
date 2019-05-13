@@ -22,6 +22,10 @@ In this space you will find links and reference documents that will help you mak
 
   This reference only contains system management methods' documentation, for the platform owner.
 
+- Functional Requirement Specification: [api.pryv.com/functional-specifications](https://api.pryv.com/functional-specifications/)
+
+  Functional specifications for the Pryv.io middleware system: the capabilities and functions that the system must be capable of performing.
+
 ## Documents
 
 - Deployment Design Guide: [PDF](/assets/docs/deployment_design_guide_v6.pdf)
@@ -37,9 +41,17 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes some steps to perform regular healthcheck on a running Pryv.io platform.
 
-- DNS configuration: [PDF](/assets/docs/20190417-dns-config-v1.pdf)
+- DNS configuration: [PDF](/assets/docs/20190501-dns-config-v3.pdf)
 
   This document describes how to add entries in your Pryv.io associated domain DNS zone.
+
+- Emails configuration: [PDF](/assets/docs/20190508-pryv.io-emails-v4.pdf)
+
+  This document describes how to configure the sending of Pryv.io emails for welcoming new users or resetting lost passwords.
+
+- Audit configuration: [PDF](/assets/docs/20190508-pryv.io-audit-v3.pdf)
+
+  This document describes how to enable audit capabilities for your Pryv.io platform by configuring the Pryv.io router service.
 
 ## Development resources
 
