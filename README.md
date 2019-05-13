@@ -28,6 +28,9 @@ If you want to use another branch, use `make setup core=my_branch` instead.
 **Note:** data types are sourced from repo [pryv/data-types](https://github.com/pryv/data-types) on `make retrieve-types` and `make publish` into `source/event-types/_source`.
 
 
+**Note:** test results are sourced from repo [pryv/test-results-pryv.io](https://github.com/pryv/test-results-pryv.io) on `make retrieve-tests` and `make publish` into `source/event-types/_source`.
+
+
 ### Coding conventions
 
 See the [Pryv guidelines](http://pryv.github.io/guidelines/).

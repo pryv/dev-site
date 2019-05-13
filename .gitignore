@@ -8,4 +8,5 @@ npm-debug.log
 out
 source/event-types/extras.json
 source/event-types/hierarchical.json
+source/test-results/_source
 .idea
