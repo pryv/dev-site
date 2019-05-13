@@ -14,11 +14,13 @@ function loadTests() {
   };
   Object.keys(tests).forEach(service => {
 
-    result.sections.push({
-      id: service,
-      title: service,
-      versions: tests[service]
-    });
+    tests[service].forEach(version => { 
+      result.sections.push({
+        id: service + ' ' + version.version,
+        title: service + ' ' + version.version,
+        version: version
+      });
+    })
 
   });
   console.log(result)

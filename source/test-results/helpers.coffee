@@ -5,3 +5,4 @@ exports.getDocId = () ->
   return [].slice.apply(arguments).join('-').replace('.', '-')
 
 
+

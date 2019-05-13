@@ -29,7 +29,7 @@ mixin text(string)
   if string
     | !{markdown(string)}
 
-mixin requirementId(id)
+mixin testId(id)
   if id
     span.method-id
       span.label id
@@ -75,7 +75,7 @@ mixin properties(properties)
             +properties(prop.properties)
 
 mixin stats(stats)
-  +h5('Stats')
+  +h4('Stats')
   table.definitions
       each key in Object.keys(stats)
         tr
@@ -85,41 +85,48 @@ mixin stats(stats)
              | !{stats[key]}
 
 
-mixin requirements(requirements, reqid, parentDocId)
-  if requirements
-    each requirement in requirements
-      if ! requirement.ignore
-        - var myId = reqid + requirement.reqid
-        - var docId = testResults.helpers.getDocId(myId)
-        requirement(id='#{docId}')
-          +requirementId(myId)
-          table.definitions
-            tr
-              th
-                code !{"Title"}
-              td
-                .header
-                  -// TODO make type specification flexible
-                  +typeText(requirement.title)
-            tr
-              th
-                code !{"Desc"}
-              td
-                .description !{markdown(requirement.description || '')}
-            if requirement.refs
-              tr
-                th
-                  code !{"Refs"}
-                td
-                  ol
-                    each ref in requirement.refs
-                      li 
-                        +reference(ref)
 
 
-mixin test(test)
-  - var sectionTitle = test.componentName
-  - var docId = testResults.helpers.getDocId(parentDocId, test.componentName)
+mixin tests(tests)
+  if tests
+    table 
+      thead
+        tr
+          th 
+            | !{"Id"}
+          th  
+            | !{"Status"}
+          th
+            | !{"Test"}
+      
+      tbody 
+        each test in tests
+          - console.log(test)
+          tr
+            td
+              code !{test.id}
+            td
+              if typeof(test.duration) === "undefined"
+                | !{"?"}
+              else 
+                | !{"✓"}
+            td
+              +typeText(test.title)
+
+
+mixin testsets(testsets)
+  if testsets
+    +h4('Tests')
+    each setTitle in Object.keys(testsets)
+      //- console.log(setTitle)
+      +h5(setTitle)
+      +tests(testsets[setTitle].tests)
+          
+
+
+mixin component(component, parentDocId, level)
+  - var sectionTitle = component.componentName
+  - var docId = testResults.helpers.getDocId(parentDocId, component.componentName)
   - var sectionClass = ''
   section(id='#{docId}', class='#{sectionClass}')
     if level === 1
@@ -132,27 +139,16 @@ mixin test(test)
       +h4(sectionTitle)
      .content
       .meta
-      +stats(test.stats)
+      +stats(component.stats) 
+
+      +testsets(component.sets, parentDocId)
 
 
 mixin version(version, parentDocId, level)
-  - var sectionTitle = version.version + ' ' + version.date
-  - var docId = testResults.helpers.getDocId(parentDocId, version.version)
-  - var sectionClass = ''
-  section(id='#{docId}', class='#{sectionClass}')
-    if level === 1
-      +h1(sectionTitle)
-    else if level === 2
-      +h2(sectionTitle)
-    else if level === 3
-      +h3(sectionTitle)
-    else
-      +h4(sectionTitle)
-     .content
-      .meta
-      if version.tests
-        each test in version.tests
-          +test(test, parentDocId, level + 1)
+  +intro('Date: ' + version.date)
+  if version.components
+    each component in version.components
+      +component(component, parentDocId, level)
        
       
 
@@ -174,13 +170,11 @@ mixin section(section, parentDocId, level)
       .meta
       +intro(section.description)
       +properties(section.properties)
-      +requirements(section.requirements, reqid, parentDocId)
     if section.sections
       each subSection in section.sections
         +section(subSection, parentDocId, level + 1)
-    if section.versions
-      each version in section.versions
-        +version(version, parentDocId, level + 1)
+    if section.version
+        +version(section.version, parentDocId, level + 1)
 
 block content
   - var source = sourceOverride ? testResults[sourceOverride] : testResults
