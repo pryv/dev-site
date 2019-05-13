@@ -1,0 +1,461 @@
+
+id: functional-requirements
+title: Functional Requirements 
+description: |
+  This section describes the functional requirements associated with a specific 
+  feature. Each functional requirement specifies functions that a system or 
+  component must be able to perform and that must be present for the user 
+  to be able to use the services provided by the feature.
+sections: 
+  - id: overall-description
+    title: Overall Description
+    description: |
+      Pryv.io is a middleware which aims to provide personal data management.  
+
+      As a middleware, Pryv.io does not provide User Interfaces (UI), nor physical storage or infrastructure.
+      The system is composed of several components being:
+
+        1. One or multiple core components: responsible for the core functionalities such as data storage and access control.
+
+        2. One or multiple register components: responsible for linking a data subject’s storage to the corresponding core component responsible for its data management.
+
+  - id: connectivity-and-interfaces
+    reqid: CON
+    title: Connectivity and interfaces
+    requirements: 
+      - reqid: HTTP
+        title: The system shall be accessible through an HTTP API
+        description: |
+          Access to the system is done using a Web API.
+        refs: 
+          - url: https://api.pryv.com/
+            description: The Pryv.io HTTP API is described online at https://api.pryv.com/
+
+  - id: data-types
+    reqid: DATA
+    title: Data Types
+    requirements: 
+      - reqid: DEFTYPE
+        title: The system shall provide default data types validation
+        description: |
+          Default data types are available in the system for which content is validated.
+
+      - reqid: CUSTTYPE
+        title: The system shall accept custom data types
+        description: |
+          It is possible to define custom data types.
+      
+      - reqid: CUSTVAL
+        title: The system shall allow to define custom type validation
+        description: |
+          It is possible to define validation rules for custom-defined types.
+
+  - id: streams
+    reqid: STREAM
+    title: Streams
+    description: 
+      "See: [Streams concept](/concepts/#streams)"
+    requirements:
+      - reqid: BASE
+        title: The system shall permit Streams management through the specified actions
+        description: |
+          The following actions are provided by the system to manage Streams:
+            - Create 
+            - Read 
+            - Edit 
+            - Delete 
+            - Share
+
+  - id: events
+    reqid: EVENT
+    title: Events
+    description: 
+      "See: [Events concept](/concepts/#events)"
+    requirements:
+      - reqid: BASE
+        title: The system shall permit Events management through the specified actions
+        description: |
+          The following actions are provided by the system to manage Events: 
+            - Create
+            - Read
+            - Edit
+            - Delete
+            - Share
+
+  - id: dlc
+    reqid: DLC
+    title: Data life cycle management
+    description: |
+      Each part of the life cycle is further described.
+    requirements:
+      - reqid: BASE
+        title: The system shall manage all data life cycle parts as described here
+        description: | 
+          The following actions are provided by the system to manage the data life cycle:
+            1.	Collect and aggregate
+            2.	Store 
+            3.	Use and aggregate
+            4.	Share
+            6.	Disposal
+    
+    sections:
+      - id: collect
+        title: Collect
+        requirements:
+          - reqid: COLLECT
+            title: The system shall allow data input through multiple sources
+            description: | 
+              The system ensures that data can be collected from multiple sources through its HTTP API.  
+
+              Data Sources can be:  
+                -	Web services
+                -	IoT and other mobile devices
+                - Electronic records
+
+      - id: store
+        title: Store
+        requirements:
+          - reqid: STORE
+            title: The system shall ensure data storage
+            description: | 
+              The system stores collected data records and associated information on physical storage.
+
+          - reqid: INTEGRITY
+            ignore: true
+            title: The system shall ensure data integrity
+            description: | 
+              The system ensures the data records entered in the system is stored in its original form.
+
+      - id: use
+        title: Use and aggregate
+        requirements:
+          - reqid: USE
+            title: The system shall provide data retrieval and aggregation from different sources
+            description: | 
+              The system provides retrieval of data independently from the source with a  
+              **Selection by**:
+                - Time 
+                - Stream
+                - Tag
+                - Type
+                - Deletion state
+                - Modification date
+
+          - reqid: AGG
+            title: The system shall provide methods to aggregate data from multiple subjects
+            description: | 
+              The model of Streams and Events is designed to easily merge data from multiple subjects.
+
+      - id: share
+        title: Share
+        requirements:
+            - reqid: SHARE
+              title: The system shall provide data sharing with external actors
+              description: |
+                The system provides a sharing mechanism that allows external actors to access data.
+
+            - reqid: EXPORT
+              title: The system shall provide the possibility to export all the subject's data out of the system    (extra-system migration)
+              description: | 
+                The system provides export capability and tools to export all data of a subject. The exported format facilitates interoperability.
+
+
+      - id: disposal
+        title: Disposal
+        requirements:
+          - reqid: DEL
+            title: The system shall ensure deletion of data
+            description: |
+              The system provides the following information to check the existence of an item:
+                - Deleted state
+                - Complete deletion
+                - Track of deleted items for synchronization
+
+  - id: access
+    reqid: ACC
+    title: Access Control
+    requirements:
+      - reqid: SELECT
+        title: The system shall provide granular access per data subject
+        description: | 
+          The system provides the following parameters to define the permissions of Accesses:  
+            - Streams list
+            - Tag list 
+            - Expiration date
+          
+          Read and Write levels are provided at Stream and Tag levels
+
+      - reqid: CONTRACT
+        title: The system shall provide storage of contractual terms relative to an Access
+        description: | 
+          The system provides extra properties for each Access to store contractual terms. These terms should be relative to the permissions of an Access.  
+
+          If terms are displayed to a user during an Access request flow and accepted, the contractual terms are stored as a proof of Consent.
+
+      - reqid: ENFORCE
+        title: The system shall enforce access control
+        description: | 
+          The system:
+            - denies invalid or expired Accesses
+            - authorizes valid Accesses based on their permissions property
+
+      - reqid: BASE
+        title: The system shall permit accesses management through the specified actions
+        description: | 
+          The following actions are provided by the system to manage Accesses:
+            - Create
+            - List
+            - Update
+            - Delete
+
+      - reqid: REQUEST
+        title: The system shall allow the external services (Apps) to request access to data by means of access control
+        description: | 
+          Access request and enforcement flow involves the following actors with specific actions: 
+          - **App**: Request, Obtain
+          - **Data Subject**: Accept, Deny
+          - **System**: Authenticate, Enforce
+
+      - reqid: TYPE
+        title: The system shall provide Personal, App and Shared type of Accesses
+        description: |
+          The system provides Personal, Apps and Shared Accesses.
+        refs:
+          - url: https://api.pryv.com/concepts/#accesses
+            description: Accesses concept description
+
+      - reqid: DELEGATE
+        title: The system shall provide delegation of access control
+        description: | 
+          - **Personal** 
+            - can manage App and Shared Accesses
+          - **App** 
+            - can create Shared Accesses within their scope
+            - can manage Shared Accesses it created
+
+      - reqid: REGISTER
+        title: The system shall provide management for received Accesses at a user level
+        description: |
+          The system provides **Followed Slices** to manage received Accesses with the following actions:  
+            - Create
+            - Update 
+            - Delete
+            - List
+        refs:
+          - url: https://api.pryv.com/reference-full/#followed-slices
+            description: Followed Slices API documentation
+
+  - id: notifications
+    reqid: NOTIF
+    title: Notifications
+    requirements:
+      - reqid: EVENT
+        title: The system shall provide notification capabilities for changes at Event level
+        description: |
+          The system provides an **Event change** notification when the following occurs at Event level:   
+            - Creation
+            - Modification
+            - Deletion 
+
+      - reqid: STREAM
+        title: The system shall provide notification capabilities for changes at Stream level
+        description: |
+          The system provides a **Structure change** notification when the following occurs at Stream level:
+            - Creation
+            - Modification
+            - Deletion 
+
+      - reqid: LISTEN
+        title: The system shall provide listener registration capabilities
+        description: |
+          The system provides a Websocket based implementation to register a listener. 
+
+  - id: user
+    reqid: USER
+    title: User management
+    requirements:
+      - reqid: BASE
+        title: The system shall permit user management through the specified actions
+        description: |
+          The following actions are provided by the system to manage Users:  
+            - Creation
+            - Deletion 
+
+      - reqid: LOGIN
+        title: The system shall provide authentication of a user upon login
+        description: |
+          The system provides authentication on login with a userId/password pair.
+
+      - reqid: LOGOUT
+        title: The system shall provide logout
+        description: |
+          The system provides invalidation of authorization.
+
+      - reqid: EMAIL
+        title: The system shall provide email property management
+        description: |
+          The system provides email property management at a User level: 
+            - at the creation of a user
+            - using an API call to change the email property of a user
+
+      - reqid: EMAILID
+        title: The system shall provide retrieval of userId provided a email address
+        description: |
+          The system provides discovery of userId by email.
+
+      - reqid: LIST
+        title: The system shall provide a list of Users (Data Subjects)
+        description: |
+          The system provides a list of users registered on the platform with the following properties:
+            - registration date
+            - invitation token used for registration
+      
+    sections:
+      - id: invitations
+        reqid: INV
+        title: Invitations
+        requirements: 
+          - reqid: BASE
+            ignore: true # not acceptance-tested - nor documented
+            title: The system shall provide limitations to register to the platform
+            description: |
+              The system provides a use-once invitation tokens
+          
+          - reqid: LIST
+            ignore: true # not acceptance-tested - nor documented
+            title: The system shall provide a list of invitation tokens
+            description: |
+              The system provides a list of invitation tokens and their validity
+
+          - reqid: GEN
+            ignore: true # not acceptance-tested - nor documented
+            title: The system shall provide a generation of new invitations tokens
+            description: |
+              The system provides a generation of new invitations tokens with a title
+
+          - reqid: MANY
+            title: The system shall provide multiple usage invitation tokens
+            description: |
+              The system can be provided a list of invitation tokens that can be used multiple times.
+
+      - id: profile
+        reqid: PROFILE
+        title: Profile
+        requirements: 
+          - reqid: PRIVATE
+            title: The system shall provide a storage of properties at a private user level
+            description: |
+              The system provides storage of key/value pairs at user account level only available for Personal Accesses.
+
+          - reqid: PUBLIC
+            title: The system shall provide a storage of properties at a public user level
+            description: |
+              The system provides storage of key/value pairs at user account level available publicly. 
+
+          - reqid: APP
+            title: The system shall provide a storage of properties at an App access user level
+            description: |
+              The system provides storage of key/value pairs at app level only available by App Access.
+
+  - id: system
+    reqid: SYSTEM
+    title: System requirements
+    sections:
+      - id: hardware
+        reqid: HWRE
+        title: Hardware
+        requirements: 
+          - reqid: OS
+            title: The system shall run on a UNIX operating system
+            description: |
+              The following UNIX operating systems are supported:  
+                - Ubuntu Server 16.04 LTS
+
+          - reqid: CONTAINER
+            title: The system should be packaged in a container for delivery and deployment
+            description: |
+              The system is delivered packaged in **Docker** containers
+            refs:
+              - url: https://www.docker.com/
+                description: Docker.com web site
+
+
+  - id: non-functional
+    title: Non-Functional Requirements
+    sections:
+      - id: security
+        reqid: SEC
+        title: Security
+        requirements: 
+          - reqid: NOAUTH
+            title: The system shall store in log files unauthorized API calls
+            description: |
+              Unauthorized API calls are logged on the host operating system using syslog.
+
+          - reqid: AUTH
+            title: The system shall store in a log file authorized API calls
+            description: |
+              Authorized API calls are logged on the host operating system using syslog with mechanisms to identify the Access token that was used.
+
+          - reqid: COM
+            title: The system shall provide encryption for all inboud communications
+            description: |
+              The system is provided with a component ensuring SSL termination. This component can be replaced by the customer. 
+
+          - reqid: ENC
+            title: The system shall provide mechanisms for client-side encryption
+            description: |
+              The data model supports client-side encryption by encapsulating encrypted data into the `encrypted/*` data type.
+            refs:
+              - url: https://api.pryv.com/event-types/#encrypted
+                description: Encrypted data-type reference
+
+      - id: audit
+        reqid: AUDIT
+        title: Auditability
+        requirements: 
+            - reqid: AUTHOR
+              title: The system shall provide auditability of data edition 
+              description: |
+                Events, Streams and Accesses expose the date of modification and used Access token.  
+                
+                The goal is to be able to answer the what and when questions, provided a specific who.
+
+            - reqid: CALLS
+              title: The system shall provide auditability of all API calls per Access token 
+              description: |
+                All HTTP calls POST, PUT, GET, DELETE are logged on the host operating system using syslog with mechanisms to identify the used Access token.  
+                
+                The goal is to be able to answer the what and when questions, provided a specific who.
+      
+      - id: recoverability
+        reqid: BCKP
+        title: Recoverability
+        requirements: 
+            - reqid: BASE
+              title: The system shall be fully recoverable using the latest backup available  
+              description: |
+                The system's data shall be recoverable from backup files.
+
+
+
+          
+                    
+
+
+      
+
+       
+
+
+
+
+
+      
+
+
+
+
+
+  
+

@@ -22,6 +22,10 @@ In this space you will find links and reference documents that will help you mak
 
   This reference only contains system management methods' documentation, for the platform owner.
 
+- Functional Requirement Specification: [api.pryv.com/functional-specifications](https://api.pryv.com/functional-specifications/)
+
+  Functional specifications for the Pryv.io middleware system: the capabilities and functions that the system must be capable of performing.
+
 ## Documents
 
 - Deployment Design Guide: [PDF](/assets/docs/deployment_design_guide_v6.pdf)

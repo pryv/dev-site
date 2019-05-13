@@ -14,8 +14,11 @@
   "scripts": {
     "webserver": "node node_modules/rec-la/webserver/main.js ./build"
   },
-  "dependencies": {},
+  "dependencies": {
+   
+  },
   "devDependencies": {
+    "js-yaml": "^3.13.1",
     "coffee-script": "^1.8.0",
     "cuid": "^1.2.4",
     "jade": "^1.8.2",
@@ -35,8 +38,8 @@
     "metalsmith-templates": "^0.7.0",
     "metalsmith-watch": "^1.0.1",
     "pryv-style": "git://github.com/pryv/style.git",
-    "unix-timestamp": "^0.2.0",
-    "rec-la": "latest"
+    "rec-la": "latest",
+    "unix-timestamp": "^0.2.0"
   },
   "engines": {
     "node": ">=4.4.3"
