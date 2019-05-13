@@ -12,11 +12,11 @@ sections:
     description:
       "Pryv.io is a middleware which aims to provide personal data management.
       As a middleware, Pryv.io does not provide User Interfaces (UI), nor physical storage or infrastructure.
-      The system is composed of a few components being:
+      The system is composed of several components being:
 
-      1. One to several core components: responsible for the core functionalities like data storage, access control.
+      1. One or multiple core components: responsible for the core functionalities such as data storage and access control.
 
-      2.	Two to several register components: responsible for linking a data subject’s storage to the corresponding core component responsible for the data management."
+      2. One or multiple register components: responsible for linking a data subject’s storage to the corresponding core component responsible for its data management."
 
   - id: connectivity-and-interfaces
     reqid: CON
@@ -26,16 +26,16 @@ sections:
         title: The system shall be accessible through an HTTP API
         description: Access to the system is done using a Web API.
         refs: 
-          - url: http://api.pryv.com
-            description: Pryv HTTP is described online at http://api.pryv.com
+          - url: https://api.pryv.com/
+            description: The Pryv.io HTTP API is described online at https://api.pryv.com/
 
   - id: data-types
     reqid: DATA
     title: Data Types
     requirements: 
       - reqid: DEFTYPE
-        title: The system shall provide default data types.
-        description: Default data types are available in the system.
+        title: The system shall provide default data types validation.
+        description: Default data types are available in the system for which content is validated.
 
       - reqid: CUSTTYPE
         title: The system shall accept custom data types.
@@ -49,7 +49,7 @@ sections:
     reqid: STREAM
     title: Streams
     description: 
-      "See: [/concepts/#streams](/concepts/#streams)"
+      "See: [Streams concept](/concepts/#streams)"
     requirements:
       - reqid: BASE
         title: The system shall permit stream management through the specified actions.
@@ -65,7 +65,7 @@ sections:
     reqid: EVENT
     title: Events
     description: 
-      "See: [/concepts/#events](/concepts/#events)"
+      "See: [Events concept](/concepts/#events)"
     requirements:
       - reqid: BASE
         title: The system shall permit events management through the specified actions.
@@ -75,22 +75,22 @@ sections:
           - Read
           - Edit
           - Delete
+          - Share
 
   - id: dlc
     reqid: DLC
     title: Data life cycle management
     description: 
-      "Each part of the life cycle is further described."
+      Each part of the life cycle is further described.
     requirements:
       - reqid: BASE
         title: The system shall manage all data life cycle parts as described here.
         description: | 
-          The following actions are provided by the system to manage Streams.
+          The following actions are provided by the system to manage the data life cycle:
           1.	Collect and aggregate
-          2.	Structure and store 
-          3.	Use 
+          2.	Store 
+          3.	Use and aggregate
           4.	Share
-          5.	Archive
           6.	Disposal
     
     sections:
@@ -99,8 +99,8 @@ sections:
         requirements:
           - reqid: COLLECT
             title: The system shall allow data input through multiple sources.
-            description: | 
-              The following actions are provided by the system to manage Streams.
+            description:  
+              The system ensures that data can be collected from multiple sources through its HTTP API. Data Sources can be.  
               -	Web services
               -	IoT and other mobile devices
               - Electronic records
@@ -109,10 +109,14 @@ sections:
         title: Store
         requirements:
           - reqid: STORE
-            title: The system shall ensure data integrity. 
+            title: The system shall ensure data storage.
             description: | 
-              The system ensures the data entered in the system is kept and 
-              transmitted in its original form.
+              The system store collected data records and associated informations on physical computer storage.
+
+          - reqid: INTEGRITY
+            title: The system shall ensure data integrity.
+            description: | 
+              The system ensures the data records entered in the system is stored in its original form.
 
       - id: use
         title: Use and aggregate
@@ -123,39 +127,41 @@ sections:
               The system provides retrieval of data independently from the source with a   
               **Selection by**:
                 - Time 
-                - Modification date
                 - Stream
                 - Tag
+                - Type
                 - Deletion state
+                - Modification date
 
           - reqid: AGG
             title: The system shall provide methods to aggregate data from multiple subjects
             description: | 
-              The model of streams and events is designed for merging data from multiple subjects
+              The model of streams and events is designed to easily merge data from multiple subjects.
+
+      - id: share
+        title: Share
+        requirements:
+            - reqid: SHARE
+              title: The system shall provide data sharing with external actors
+              description:
+                The system provides ...
+
+            - reqid: EXPORT
+              title: The system shall provide the possibility to export all the subjects’ data out of the system    (extra-system migration).
+              description: | 
+                The system provides export capability and tools to export all data of a subject. The exported format facilitates interoperability.
 
 
-      - id: archiving
-        title: Archiving and disposal
+      - id: disposal
+        title: Disposal
         requirements:
           - reqid: DEL
             title: The system shall ensure deletion of data
             description: |
-              The system provides the following informations to check the existence of an item:
+              The system provides the following information to check the existence of an item:
               - Deleted state
               - Complete deletion
               - Track of deleted items for synchronization
-
-          - reqid: MOVE
-            ignore: true
-            title: The system shall ensure that a subject and all its data can be moved to another core component (intra-system migration).
-            description: | 
-              ""
-
-          - reqid: EXPORT
-            title: The system shall provide the possibility to export all the subjects’ data out of the system (extra-system migration).
-            description: | 
-              The system provides export capability and tools to export all data of a subject. The exported format facilitates interoperability.
-
 
   - id: access
     reqid: ACC
@@ -164,27 +170,28 @@ sections:
       - reqid: SELECT
         title: The system shall provide granular access per data subject.
         description: | 
-          The system provides the following limitation properties to accesses 
+          The system provides the following parameters to define the permissions of accesses 
           - Streams list
           - Tag list 
           - Expiration date
           
-          Read and Write levels are provided at a Stream level
+          Read and Write levels are provided at Stream and Tag levels
 
       - reqid: CONTRACT
         title: The system shall provide storage of contractual terms relative an Access.
         description: | 
-          The system provides extra properties for each Accesses to store contractual terms. These terms should be relative to the limitation of an Access. If terms are displayed to user during an Access request flow and accepted by the User, the contractual terms stored are a proof of Consent.
+          The system provides extra properties for each Access to store contractual terms. These terms should be relative to the permissions of an Access.  
+          If terms are displayed to a user during an Access request flow and accepted, the contractual terms are stored as a proof of Consent.
 
       - reqid: ENFORCE
         title: The system shall enforce access control.
         description: | 
           The system
           - denies invalid or expired access
-          - authorizes valid access based on their limitation properties
+          - authorizes valid access based on its permissions property
 
       - reqid: BASE
-        title: The system shall manage access control given by the subject to access its data.
+        title: The system shall permit accesses management through the specified actions.
         description: | 
           The following actions are provided by the system to manage Accesses
           - Create
@@ -193,40 +200,41 @@ sections:
           - Delete
 
       - reqid: REQUEST
-        title: The system shall provide the external services (App) to request access to data by means of access control.
+        title: The system shall provide the external services (Apps) to request access to data by means of access control.
         description: | 
           Access request and enforcement flow involves the following actors with specific actions: 
           - **App**: Request, Obtain
           - **Data Subject**: Accept, Deny
-          - **System**: Check, Enforce
+          - **System**: Authenticate, Enforce
 
       - reqid: TYPE
         title: The system shall provide Personal, App and Shared type of access.
         description: The system provides Personal, Apps and Shared Access
         references: 
           refs:
-            - url: http://api.pryv.com/concepts/#accesses
+            - url: https://api.pryv.com/concepts/#accesses
               description: Access concept description
 
       - reqid: DELEGATE
         title: The system shall provide delegation of access control
         description: | 
-          - **Personal** can manage App and Shared accesses
+          - **Personal** 
+            - can manage App and Shared accesses
           - **App** 
             - can create Shared accesses within their scope
-            - can manage created Shard accesses
+            - can manage Shared accesses it created
 
       - reqid: REGISTER
         title: The system shall provide management for received access at a user level
         description: |
-          The system provides **Followed Slices** to manage received access
+          The system provides **Followed Slices** to manage received access with the following actions
           - Create
           - Update 
           - Delete
           - List
         refs:
-            - url: https://l.rec.la:4443/reference-full/#followed-slices
-              description: Followed Slices api documentation
+            - url: https://api.pryv.com/reference-full/#followed-slices
+              description: Followed Slices API documentation
 
   - id: notifications
     reqid: NOTIF
@@ -235,7 +243,7 @@ sections:
       - reqid: EVENT
         title: The system shall provide notification capabilities for changes at Event level.
         description: |
-          The system provides an **Event change** notification when the following occurs at Event level
+          The system provides an **Event change** notification when the following occurs at Event level 
             - Creation
             - Modification
             - Deletion 
@@ -251,7 +259,7 @@ sections:
       - reqid: LISTEN
         title: The system shall provide listener registration capabilities
         description: |
-          The system provides a web socket based implementation to register a listner 
+          The system provides a Websocket based implementation to register a listener 
 
   - id: user
     reqid: USER
@@ -265,14 +273,14 @@ sections:
             - Deletion 
 
       - reqid: LOGIN
-        title: The system shall provide authentication of user on a login / password pair
+        title: The system shall provide authentication of a user upon login.
         description: |
-          The system provides authentication on login with a userid/password pair
+          The system provides authentication on login with a userId/password pair.
 
       - reqid: LOGOUT
-        title: The system shall provide login out
+        title: The system shall provide logout
         description: |
-          The system provides invalidation of authorization resulting in a login out
+          The system provides invalidation of authorization.
 
       - reqid: EMAIL
         title: The system shall provide email property management
@@ -340,7 +348,7 @@ sections:
         title: Hardware
         requirements: 
           - reqid: OS
-            title: The system shall run on UNIX system
+            title: The system shall run on a UNIX system
             description: 
               "The following UNIX system are supported:
                 - Ubuntu Server 16.04 LTS"
