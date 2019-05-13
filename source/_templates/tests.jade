@@ -111,7 +111,7 @@ mixin tests(tests)
         td
           if typeof(test.duration) === "undefined"
             | !{"❓"}
-          else if test.err.title
+          else if Object.keys(test.err).length > 0
             | !{"‎❌"}
           else 
             | !{"✅"}
