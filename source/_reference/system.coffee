@@ -208,6 +208,37 @@ module.exports = exports =
             error: null
         ]
 
+      ,
+
+        id: "servers.get"
+        type: "method"
+        title: "Get servers"
+        http: "GET /admin/servers"
+        server: "register"
+        description: """
+                    Get the list of all servers with the number of users on them.
+                    """
+        params:
+          properties: []
+        result:
+          http: "200 OK"
+          properties: [
+            key: "servers"
+            type: "object"
+            description: """
+                        Object mapping each available server to a users count.
+                        """
+          ]
+        examples: [
+          title: "Fetching the servers list for a Pryv.io platform"
+          params: {}
+          result:
+            servers: [
+                core1: 42,
+                core2: 1337
+            ]
+        ]
+
       ]
     ]
   ]

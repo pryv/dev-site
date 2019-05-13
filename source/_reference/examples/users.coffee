@@ -32,7 +32,7 @@ module.exports =
     invitationToken: "enjoy"
     referer: "null"
     id: generateId()
-    registeredTimestamp: "1557743399558"
-    server: register.platforms[0]
+    registeredTimestamp: "1536930239805"
+    server: register.platforms[1]
     errors: []
-    registeredDate: "Mon, 13 May 2019 10:29:59 GMT"
+    registeredDate: "Fri, 14 Sep 2018 13:03:59 GMT"
