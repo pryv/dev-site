@@ -187,7 +187,14 @@ module.exports = exports =
                     Get the list of all users registered on the platform.
                     """
         params:
-          properties: []
+          properties: [
+            key: "toHTML"
+            type: "boolean"
+            optional: true
+            description: """
+                        If `true`, format the resulting users list as HTML tables.
+                        """
+          ]
         result:
           http: "200 OK"
           properties: [
