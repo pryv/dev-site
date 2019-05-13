@@ -3,23 +3,31 @@ require('coffee-script').register();
 const fs = require('fs');
 const path = require('path');
 
-const testSrcPath = 'source/test-results/_source/code/'
+
 
 function loadTests() {
-  const tests = {};
-  fs.readdirSync(testSrcPath).forEach(service => {
-    console.log(service);
-    fs.readdirSync(service).forEach(version => {
-      console.log(version);
+  const tests = require('../../dependencies/test-results');
+  const result = {
+    id: 'services',
+    title: 'Services',
+    sections: []
+  };
+  Object.keys(tests).forEach(service => {
 
+    result.sections.push({
+      id: service,
+      title: service,
+      versions: tests[service]
     });
-  });
-}
 
-//loadTests();
+  });
+  console.log(result)
+  return result;
+}
 
 exports.sections = [
   require('./intro.coffee'),
+  loadTests()
 ];
 
 exports.version = '0.0.1';

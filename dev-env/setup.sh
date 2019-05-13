@@ -22,6 +22,7 @@ fi
 cd dependencies/test-results
 git checkout master
 git pull
+yarn install
 cd $scriptsFolder/..
 
 if [ -z "$1" ]
