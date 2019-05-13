@@ -162,13 +162,12 @@ mixin component(component, parentDocId, level)
 
 
 mixin version(version, parentDocId, level)
+  +stats(version.stats) 
   +intro('Date: ' + version.date)
   if version.components
     each component in version.components
       +component(component, parentDocId, level)
        
-      
-
 
 mixin section(section, parentDocId, level)
   - var sectionTitle = section.title

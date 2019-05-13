@@ -9,5 +9,5 @@ module.exports = exports =
   id: "introduction"
   title: "Introduction"
   description: """
-               Results of Pryv.io test suites  
+               Results of Pryv.io test suites
                """
