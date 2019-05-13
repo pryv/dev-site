@@ -165,4 +165,49 @@ module.exports = exports =
         ]
       ]
     ]
+
+  ,
+
+    id: "account-monitor"
+    title: "Monitor accounts"
+    sections: [
+      id: "api-methods"
+      title: "API methods"
+      description: """
+                   The methods are called via HTTPS on the registry server: `https://reg.{domain}`
+                   """
+      sections: [
+
+        id: "users.get"
+        type: "method"
+        title: "Get users"
+        http: "GET /admin/users"
+        server: "register"
+        description: """
+                    Get the list of all users registered on the platform.
+                    """
+        params:
+          properties: []
+        result:
+          http: "200 OK"
+          properties: [
+            key: "users"
+            type: "array"
+            description: """
+                        Array of users (TODO: link to user data structure).
+                        """
+          ]
+        examples: [
+          title: "Fetching the users list for a Pryv.io platform"
+          params: {}
+          result:
+            users: [
+                examples.users.three,
+                examples.users.four
+            ],
+            error: null
+        ]
+
+      ]
+    ]
   ]
