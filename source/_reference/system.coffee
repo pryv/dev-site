@@ -250,7 +250,7 @@ module.exports = exports =
 
         id: "server.users.get"
         type: "method"
-        title: "Get users for a specific server"
+        title: "Get users on server"
         http: "GET /admin/servers/{serverName}/users"
         server: "register"
         description: """
@@ -363,6 +363,43 @@ module.exports = exports =
             email: examples.users.two.email
           }
           result: true
+        ]
+
+      ,
+
+        id: "email.uid.get"
+        type: "method"
+        title: "Get username from email"
+        http: "GET /{email}/uid"
+        server: "register"
+        description: """
+                    Get the username of a Pryv.io account according to the given email.
+                    """
+        params:
+          properties: [
+            key: "email"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The email address to look for.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "uid"
+            type: "string"
+            description: """
+                        The username linked to the provided email.
+                        """
+          ]
+        examples: [
+          title: "Retrieving a username from a given email."
+          params: {
+            email: examples.users.two.email
+          }
+          result: examples.users.two.username
         ]
 
       ]
