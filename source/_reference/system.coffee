@@ -508,6 +508,42 @@ module.exports = exports =
             "apps": examples.register.apps
         ]
 
+      ,
+
+        id: "app.get"
+        type: "method"
+        title: "Get app"
+        http: "GET /apps/{appid}"
+        server: "register"
+        description: """
+                    Retrieve specific information about a given application.
+                    """
+        params:
+          properties: [
+            key: "appid"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The id of the application to look for.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "app"
+            type: "object"
+            description: """
+                        An object listing information about the given application.
+                        """
+          ]
+        examples: [
+          title: "Retrieving information about a given application."
+          params: {}
+          result: 
+            "app": examples.register.apps[0]
+        ]
+
       ]
     ]
   ]
