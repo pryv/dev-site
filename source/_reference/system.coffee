@@ -394,12 +394,20 @@ module.exports = exports =
                         The username linked to the provided email.
                         """
           ]
+        errors: [
+          key: "UNKNOWN_EMAIL"
+          http: "404"
+          description: """
+                      The given email address is unknown.
+                      """
+        ]
         examples: [
           title: "Retrieving a username from a given email."
           params: {
             email: examples.users.two.email
           }
-          result: examples.users.two.username
+          result: 
+            "uid": examples.users.two.username
         ]
 
       ]
