@@ -410,6 +410,76 @@ module.exports = exports =
             "uid": examples.users.two.username
         ]
 
+      ,
+
+        id: "service.infos.get"
+        type: "method"
+        title: "Get service infos"
+        http: "GET /service/infos"
+        server: "register"
+        description: """
+                    Retrieve service information.
+                    """
+        params:
+          properties: []
+        result:
+          http: "200 OK"
+          properties: [
+            key: "version"
+            type: "string"
+            description: """
+                        The API version.
+                        """
+          ,
+            key: "register"
+            type: "string"
+            description: """
+                        The URL of the registry service.
+                        """
+          ,
+            key: "access"
+            type: "string"
+            description: """
+                        The URL of the access page.
+                        """
+          ,
+            key: "api"
+            type: "string"
+            description: """
+                        The base URL of the API.
+                        """
+          ,
+            key: "name"
+            type: "string"
+            description: """
+                        The platform name.
+                        """
+          ,
+            key: "home"
+            type: "string"
+            description: """
+                        The URL of the platform's home page.
+                        """
+          ,
+            key: "support"
+            type: "string"
+            description: """
+                        The URL of the suppport page.
+                        """
+          ,
+            key: "terms"
+            type: "string"
+            description: """
+                        The URL of the terms and conditions page.
+                        """
+          ]
+        examples: [
+          title: "Retrieving service information."
+          params: {}
+          result: 
+            examples.register.serviceInfos
+        ]
+
       ]
     ]
   ]
