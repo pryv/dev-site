@@ -480,6 +480,34 @@ module.exports = exports =
             examples.register.serviceInfos
         ]
 
+      ,
+
+        id: "apps.get"
+        type: "method"
+        title: "Get apps"
+        http: "GET /apps"
+        server: "register"
+        description: """
+                    Retrieve the list of applications connected to the platform.
+                    """
+        params:
+          properties: []
+        result:
+          http: "200 OK"
+          properties: [
+            key: "apps"
+            type: "array"
+            description: """
+                        An array listing all the applications connected to the Pryv.io platform.
+                        """
+          ]
+        examples: [
+          title: "Retrieving the list of applications connected to the platform."
+          params: {}
+          result: 
+            "apps": examples.register.apps
+        ]
+
       ]
     ]
   ]
