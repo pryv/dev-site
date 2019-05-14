@@ -391,7 +391,7 @@ module.exports = exports =
             key: "uid"
             type: "string"
             description: """
-                        The username linked to the provided email.
+                        The username linked to the given email.
                         """
           ]
         errors: [
@@ -542,6 +542,60 @@ module.exports = exports =
           params: {}
           result: 
             "app": examples.register.apps[0]
+        ]
+
+      ,
+
+        id: "username.check.get"
+        type: "method"
+        title: "Check username"
+        http: "GET /{username}/check_username"
+        server: "register"
+        description: """
+                    Check the availability and validity of a given username.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The username to check.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "reserved"
+            type: "boolean"
+            description: """
+                        Set to `true` if the given username is already taken, `false` otherwise.
+                        """
+          ,
+            key: "reason"
+            type: "string"
+            optional: true
+            description: """
+                        Optional indication of the reason why the username is reserved.
+                        If it mentions `RESERVED_USER_NAME`, this means that the given username is part of
+                        the reserved usernames list configured within the registry service.
+                        """
+          ]
+        errors: [
+          key: "INVALID_USER_NAME"
+          http: "400"
+          description: """
+                      The given username is invalid because of an unrecognized format.
+                      """
+        ]
+        examples: [
+          title: "Checking availability and validity of a given username"
+          params: {
+            username: examples.users.two.username
+          }
+          result:
+            "reserved": false
         ]
 
       ]
