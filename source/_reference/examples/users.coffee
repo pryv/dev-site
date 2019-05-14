@@ -36,3 +36,8 @@ module.exports =
     server: register.servers[1]
     errors: []
     registeredDate: "Fri, 14 Sep 2018 13:03:59 GMT"
+  invalid:
+    username: "abc"
+    email: "invalid_email"
+  reserved:
+    username: "pryvpryv"

@@ -362,7 +362,15 @@ module.exports = exports =
           params: {
             email: examples.users.two.email
           }
-          result: true
+          result:
+            exists: false
+        ,
+          title: "Error case where the email address is invalid."
+          params: {
+            email: examples.users.invalid.email
+          }
+          result:
+            examples.errors.invalidEmail
         ]
 
       ,
@@ -398,7 +406,7 @@ module.exports = exports =
           key: "UNKNOWN_EMAIL"
           http: "404"
           description: """
-                      The given email address is unknown.
+                      The given email address is unknown (unregistered).
                       """
         ]
         examples: [
@@ -408,6 +416,13 @@ module.exports = exports =
           }
           result: 
             "uid": examples.users.two.username
+        ,
+          title: "Error case where the email address is unknown."
+          params: {
+            email: examples.users.one.email
+          }
+          result: 
+            examples.errors.unknownEmail
         ]
 
       ,
@@ -596,6 +611,20 @@ module.exports = exports =
           }
           result:
             "reserved": false
+        ,
+          title: "Special case where the username is part of the reserved list."
+          params: {
+            username: examples.users.reserved.username
+          }
+          result:
+            examples.errors.reservedUsername
+        ,
+          title: "Error case where the username is invalid."
+          params: {
+            username: examples.users.invalid.username
+          }
+          result:
+            examples.errors.invalidUsername
         ]
 
       ]
