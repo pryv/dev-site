@@ -81,7 +81,7 @@ module.exports = exports =
             key: "users"
             type: "array"
             description: """
-                        Array of users (TODO: link to user data structure).
+                        Array of users.
                         """
           ]
         examples: [
@@ -148,7 +148,7 @@ module.exports = exports =
             key: "users"
             type: "array"
             description: """
-                        Array of users (TODO: link to user data structure).
+                        Array of users.
                         """
           ]
         examples: [
