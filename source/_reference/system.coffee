@@ -239,7 +239,7 @@ module.exports = exports =
                         """
           ]
         errors: [
-          key: "INVALID_EMAIL"
+          key: examples.errors.invalidEmail.id
           http: "400"
           description: """
                       The email address is invalid because of an unrecognized format.
@@ -289,7 +289,7 @@ module.exports = exports =
                         """
           ]
         errors: [
-          key: "UNKNOWN_EMAIL"
+          key: examples.errors.unknownEmail.id
           http: "404"
           description: """
                       The given email address is unknown (unregistered).
@@ -757,7 +757,7 @@ module.exports = exports =
                         """
           ]
         errors: [
-          key: "INVALID_USER_NAME"
+          key: examples.errors.invalidUsername.id
           http: "400"
           description: """
                       The given username is invalid because of an unrecognized format.
