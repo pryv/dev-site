@@ -30,7 +30,7 @@ module.exports = exports =
       description: """
                   The steps for creating a new Pryv.io account are the following:
 
-                   1. Client calls the registry server to get a list of available hostings (core server locations), see [Get hostings](#get-hostings).
+                   1. Client calls the registry server to get a list of available hostings (core server locations), see [Get Hostings](#get-hostings).
                    2. Client calls registry server with desired new account data (including which core server should host the account), see [Create user](#create-user).
                    3. Registry server verifies data, hands it over to specified core server if OK
                    4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to registry server
@@ -300,6 +300,33 @@ module.exports = exports =
             examples.register.serviceInfos
         ]
       ,
+        id: "hostings.get"
+        type: "method"
+        title: "Get hostings"
+        http: "GET /hostings"
+        server: "register"
+        description: """
+                    Get the list of all available hostings for data storage locations.
+                    """
+        params:
+          properties: []
+        result:
+          http: "200 OK"
+          properties: [
+            key: "regions"
+            type: "Object"
+            description: """
+                        Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  
+                        The value you need to use as `hosting` parameter in the `users.create` method is a key of the `hostings` object.
+                        """
+          ]
+        examples: [
+          title: "Fetching the hostings for a Pryv.io platform"
+          params: {}
+          result:
+            examples.register.hostings[0]
+        ]
+      ,
         id: "apps.get"
         type: "method"
         title: "Get apps"
@@ -359,33 +386,6 @@ module.exports = exports =
           result: 
             "app": examples.register.apps[0]
         ]
-      ,
-        id: "hostings.get"
-        type: "method"
-        title: "Get hostings"
-        http: "GET /hostings"
-        server: "register"
-        description: """
-                    Get the list of all available hostings for data storage locations.
-                    """
-        params:
-          properties: []
-        result:
-          http: "200 OK"
-          properties: [
-            key: "regions"
-            type: "Object"
-            description: """
-                        Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  
-                        The value you need to use as `hosting` parameter in the `users.create` method is a key of the `hostings` object.
-                        """
-          ]
-        examples: [
-          title: "Fetching the hostings for a Pryv.io platform"
-          params: {}
-          result:
-            examples.register.hostings[0]
-        ]
       ]
     ,
       id: "users"
@@ -413,7 +413,7 @@ module.exports = exports =
             key: "hosting"
             type: "string"
             description: """
-                        The name of the core server that should host the account, see [Get Hostings](##{_getDocId("account-creation","api-methods","get.hostings")}).
+                        The name of the core server that should host the account, see [Get Hostings](#get-hostings).
                         """
           ,
             key: "username"
