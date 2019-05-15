@@ -170,6 +170,68 @@ module.exports = exports =
                 examples.users.three,
             ],
         ]
+      ,
+        id: "server.rename"
+        type: "method"
+        title: "Rename core server"
+        http: "GET /admin/servers/{srcServerName}/rename/{dstServerName}"
+        trustedOnly: "Admin only"
+        server: "register"
+        description: """
+                    Rename a core server.
+                    """
+        params:
+          properties: [
+            key: "srcServerName"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The current name of the core server to rename.
+                        """
+          ,
+            key: "dstServerName"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The new name of the core server.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "count"
+            type: "number"
+            description: """
+                        The count of renamed occurrences.
+                        It can be 0 if `srcServerName` did not match any existing core server.
+                        """
+          ]
+        errors: [
+          key: examples.errors.invalidServerName.id
+          http: "400"
+          description: """
+                      The server name (source or destination) is invalid because of an unrecognized format.
+                      """
+        ]
+        examples: [
+          title: "Renaming a core server."
+          params: {
+            srcServerName: examples.register.servers[0]
+            dstServerName: examples.register.servers[1]
+          }
+          result:
+            count: 1
+        ,
+          title: "Error case where the provided server name is invalid."
+          params: {
+            srcServerName: examples.register.servers[0]
+            dstServerName: "invalid!server!"
+          }
+          result:
+            examples.errors.invalidServerName
+        ]
       ]
     ,
       id: "email"

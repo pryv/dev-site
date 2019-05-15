@@ -27,3 +27,8 @@ module.exports =
   reservedUsername:
     reserved: true
     reason: "RESERVED_USER_NAME"
+  invalidServerName:
+    id: "INVALID_DATA"
+    message: "dstServerName invalid"
+    detail: "Some of the data transmited is invalid."
+    errors: []
