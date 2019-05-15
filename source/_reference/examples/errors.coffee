@@ -10,9 +10,14 @@ module.exports =
     detail: "E-mail address format not recognized"
     errors: []
   unknownEmail:
-    id: "UNKNOWN_EMAIL",
-    message: "Unknown e-mail",
-    detail: "",
+    id: "UNKNOWN_EMAIL"
+    message: "Unknown e-mail"
+    detail: ""
+    errors: []
+  unknownUsername:
+    id: "UNKNOWN_USER_NAME"
+    message: "Unknown user name"
+    detail: ""
     errors: []
   invalidUsername: 
     id: "INVALID_USER_NAME"

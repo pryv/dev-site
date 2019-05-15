@@ -107,12 +107,12 @@ module.exports = exports =
       ,
         id: "servers.get"
         type: "method"
-        title: "Get servers"
+        title: "Get core servers"
         http: "GET /admin/servers"
         trustedOnly: "Admin only"
         server: "register"
         description: """
-                    Get the list of all servers with the number of users on them.
+                    Get the list of all core servers with the number of users on them.
                     """
         params:
           properties: []
@@ -122,27 +122,24 @@ module.exports = exports =
             key: "servers"
             type: "object"
             description: """
-                        Object mapping each available server to a users count.
+                        Object mapping each available core server to a users count.
                         """
           ]
         examples: [
-          title: "Fetching the servers list for a Pryv.io platform"
+          title: "Fetching the core servers list for a Pryv.io platform"
           params: {}
           result:
-            servers: [
-                core1: 42,
-                core2: 1337
-            ]
+            servers: examples.register.usersCount
         ]
       ,
         id: "server.users.get"
         type: "method"
-        title: "Get users on server"
+        title: "Get users on core server"
         http: "GET /admin/servers/{serverName}/users"
         trustedOnly: "Admin only"
         server: "register"
         description: """
-                    Get the list of all users registered on a specific server of the platform.
+                    Get the list of all users registered on a specific core server.
                     """
         params:
           properties: [
@@ -151,7 +148,7 @@ module.exports = exports =
             http:
               text: "set in request path"
             description: """
-                        The name of the server in question.
+                        The name of the core server in question.
                         """
           ]
         result:
@@ -164,7 +161,7 @@ module.exports = exports =
                         """
           ]
         examples: [
-          title: "Fetching the users list for a specifc server of a Pryv.io platform"
+          title: "Fetching the users list for a specifc core server."
           params: {
             serverName: examples.users.three.server
           }
@@ -321,6 +318,62 @@ module.exports = exports =
                   Methods for managing servers.
                   """
       sections: [
+        id: "server.uid"
+        type: "method"
+        title: "Get core server for user"
+        http: "POST /{uid}/server"
+        server: "register"
+        description: """
+                    Find the core server hosting a given user.
+                    """
+        params:
+          properties: [
+            key: "uid"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The username of the user to look for.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "server"
+            type: "string"
+            description: """
+                        The core server hosting the given user.
+                        """
+          ,
+            key: "alias"
+            type: "string"
+            description: """
+                        The API endpoint for the given user, in the form `username.domain`.
+                        """
+          ]
+        errors: [
+          key: examples.errors.unknownUsername.id
+          http: "404"
+          description: """
+                      The given username is unknown (unregistered).
+                      """
+        ]
+        examples: [
+          title: "Find the core server hosting a given user."
+          params: {
+            uid: examples.users.two.username
+          }
+          result: 
+            server: examples.register.servers[0]
+            alias: examples.users.two.username + "." + examples.register.platforms[0]
+        ,
+          title: "Error case where the username is unknown."
+          params: {
+            uid: examples.users.one.username
+          }
+          result: 
+            examples.errors.unknownUsername
+        ]
       ]
     ,
       id: "service"

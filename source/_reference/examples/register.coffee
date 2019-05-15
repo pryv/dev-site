@@ -34,9 +34,13 @@ module.exports =
     "hospital-A"
   ],
   servers: [
-    "core1"
-    "core2"
+    "core1.pryv.me"
+    "core2.pryv.me"
   ],
+  usersCount:
+    "core1.pryv.me": 1337
+    "core2.pryv.me": 42
+  ,
   serviceInfos:
     version: "0.1.0"
     register: "https://reg.pryv.me"
