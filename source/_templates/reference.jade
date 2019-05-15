@@ -162,7 +162,10 @@ mixin section(section, parentDocId, level)
               +methodId(section.id)
             +http(section.http, section.httpOnly)
           if section.trustedOnly
-            span.label.trusted-only Trusted apps only
+            if typeof(section.trustedOnly) === 'string'
+              span.label.trusted-only !{section.trustedOnly}
+            else
+              span.label.trusted-only Trusted apps only
         +intro(section.description)
         +properties(section.properties)
         if section.params

@@ -62,6 +62,7 @@ module.exports = exports =
         type: "method"
         title: "Get users"
         http: "GET /admin/users"
+        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all users registered on the platform.
@@ -99,6 +100,7 @@ module.exports = exports =
         type: "method"
         title: "Get servers"
         http: "GET /admin/servers"
+        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all servers with the number of users on them.
@@ -128,6 +130,7 @@ module.exports = exports =
         type: "method"
         title: "Get users on server"
         http: "GET /admin/servers/{serverName}/users"
+        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all users registered on a specific server of the platform.
@@ -570,6 +573,7 @@ module.exports = exports =
         type: "method"
         title: "Delete user"
         http: "DELETE /users/{username}"
+        trustedOnly: "System only"
         server: "register"
         description: """
                     Delete a given user.
