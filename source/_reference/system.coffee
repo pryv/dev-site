@@ -234,214 +234,10 @@ module.exports = exports =
         ]
       ]
     ,
-      id: "email"
-      title: "Email"
-      description: """
-                  Methods for managing emails.
-                  """
-      sections: [
-        id: "email.check.post"
-        type: "method"
-        title: "Check email availability"
-        http: "POST /email/check"
-        server: "register"
-        description: """
-                    Check the availability of an account's email.
-                    """
-        params:
-          properties: [
-            key: "email"
-            type: "string"
-            description: """
-                        The email address to check.
-                        """
-          ]
-        result:
-          http: "200 OK"
-          properties: [
-            key: "true or false"
-            type: "plaintext"
-            description: """
-                        Plaintext `true` if the email address is valid AND free, `false` otherwise.
-                        """
-          ]
-        examples: [
-          title: "Checking the availability of an account's email address."
-          params: {
-            email: examples.users.two.email
-          }
-          result: true
-        ]
-      ,
-        id: "email.check.get"
-        type: "method"
-        title: "Check email existence"
-        http: "GET /{email}/check_email"
-        server: "register"
-        description: """
-                    Check the existence of an account's email.
-                    """
-        params:
-          properties: [
-            key: "email"
-            type: "string"
-            http:
-              text: "set in request path"
-            description: """
-                        The email address to check.
-                        """
-          ]
-        result:
-          http: "200 OK"
-          properties: [
-            key: "exists"
-            type: "boolean"
-            description: """
-                        Set to `true` if the email address is already registered, `false` otherwise.
-                        """
-          ]
-        errors: [
-          key: examples.errors.invalidEmail.id
-          http: "400"
-          description: """
-                      The email address is invalid because of an unrecognized format.
-                      """
-        ]
-        examples: [
-          title: "Checking the existence of an account's email address."
-          params: {
-            email: examples.users.two.email
-          }
-          result:
-            exists: false
-        ,
-          title: "Error case where the email address is invalid."
-          params: {
-            email: examples.users.invalid.email
-          }
-          result:
-            examples.errors.invalidEmail
-        ]
-      ,
-        id: "email.uid.get"
-        type: "method"
-        title: "Get username from email"
-        http: "GET /{email}/uid"
-        server: "register"
-        description: """
-                    Get the username of a Pryv.io account according to the given email.
-                    """
-        params:
-          properties: [
-            key: "email"
-            type: "string"
-            http:
-              text: "set in request path"
-            description: """
-                        The email address to look for.
-                        """
-          ]
-        result:
-          http: "200 OK"
-          properties: [
-            key: "uid"
-            type: "string"
-            description: """
-                        The username linked to the given email.
-                        """
-          ]
-        errors: [
-          key: examples.errors.unknownEmail.id
-          http: "404"
-          description: """
-                      The given email address is unknown (unregistered).
-                      """
-        ]
-        examples: [
-          title: "Retrieving a username from a given email."
-          params: {
-            email: examples.users.two.email
-          }
-          result: 
-            "uid": examples.users.two.username
-        ,
-          title: "Error case where the email address is unknown."
-          params: {
-            email: examples.users.one.email
-          }
-          result: 
-            examples.errors.unknownEmail
-        ]
-      ]
-    ,
-      id: "server"
-      title: "Server"
-      description: """
-                  Methods for managing servers.
-                  """
-      sections: [
-        id: "server.uid"
-        type: "method"
-        title: "Get core server for user"
-        http: "POST /{uid}/server"
-        server: "register"
-        description: """
-                    Find the core server hosting a given user.
-                    """
-        params:
-          properties: [
-            key: "uid"
-            type: "string"
-            http:
-              text: "set in request path"
-            description: """
-                        The username of the user to look for.
-                        """
-          ]
-        result:
-          http: "200 OK"
-          properties: [
-            key: "server"
-            type: "string"
-            description: """
-                        The core server hosting the given user.
-                        """
-          ,
-            key: "alias"
-            type: "string"
-            description: """
-                        The API endpoint for the given user, in the form `username.domain`.
-                        """
-          ]
-        errors: [
-          key: examples.errors.unknownUsername.id
-          http: "404"
-          description: """
-                      The given username is unknown (unregistered).
-                      """
-        ]
-        examples: [
-          title: "Find the core server hosting a given user."
-          params: {
-            uid: examples.users.two.username
-          }
-          result: 
-            server: examples.register.servers[0]
-            alias: examples.users.two.username + "." + examples.register.platforms[0]
-        ,
-          title: "Error case where the username is unknown."
-          params: {
-            uid: examples.users.one.username
-          }
-          result: 
-            examples.errors.unknownUsername
-        ]
-      ]
-    ,
       id: "service"
       title: "Service"
       description: """
-                  Methods for managing external services.
+                  Methods for collecting service information.
                   """
       sections: [
         id: "service.infos.get"
@@ -846,6 +642,196 @@ module.exports = exports =
           }
           result:
             examples.errors.invalidUsername
+        ]
+      ,
+        id: "server.uid"
+        type: "method"
+        title: "Get core server"
+        http: "POST /{uid}/server"
+        server: "register"
+        description: """
+                    Find the core server hosting a given user.
+                    """
+        params:
+          properties: [
+            key: "uid"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The username of the user to look for.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "server"
+            type: "string"
+            description: """
+                        The core server hosting the given user.
+                        """
+          ,
+            key: "alias"
+            type: "string"
+            description: """
+                        The API endpoint for the given user, in the form `username.domain`.
+                        """
+          ]
+        errors: [
+          key: examples.errors.unknownUsername.id
+          http: "404"
+          description: """
+                      The given username is unknown (unregistered).
+                      """
+        ]
+        examples: [
+          title: "Find the core server hosting a given user."
+          params: {
+            uid: examples.users.two.username
+          }
+          result: 
+            server: examples.register.servers[0]
+            alias: examples.users.two.username + "." + examples.register.platforms[0]
+        ,
+          title: "Error case where the username is unknown."
+          params: {
+            uid: examples.users.one.username
+          }
+          result: 
+            examples.errors.unknownUsername
+        ]
+      ,
+        id: "email.check.post"
+        type: "method"
+        title: "Check email availability"
+        http: "POST /email/check"
+        server: "register"
+        description: """
+                    Check the availability of an account's email.
+                    """
+        params:
+          properties: [
+            key: "email"
+            type: "string"
+            description: """
+                        The email address to check.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "true or false"
+            type: "plaintext"
+            description: """
+                        Plaintext `true` if the email address is valid AND free, `false` otherwise.
+                        """
+          ]
+        examples: [
+          title: "Checking the availability of an account's email address."
+          params: {
+            email: examples.users.two.email
+          }
+          result: true
+        ]
+      ,
+        id: "email.check.get"
+        type: "method"
+        title: "Check email existence"
+        http: "GET /{email}/check_email"
+        server: "register"
+        description: """
+                    Check the existence of an account's email.
+                    """
+        params:
+          properties: [
+            key: "email"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The email address to check.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "exists"
+            type: "boolean"
+            description: """
+                        Set to `true` if the email address is already registered, `false` otherwise.
+                        """
+          ]
+        errors: [
+          key: examples.errors.invalidEmail.id
+          http: "400"
+          description: """
+                      The email address is invalid because of an unrecognized format.
+                      """
+        ]
+        examples: [
+          title: "Checking the existence of an account's email address."
+          params: {
+            email: examples.users.two.email
+          }
+          result:
+            exists: false
+        ,
+          title: "Error case where the email address is invalid."
+          params: {
+            email: examples.users.invalid.email
+          }
+          result:
+            examples.errors.invalidEmail
+        ]
+      ,
+        id: "email.uid.get"
+        type: "method"
+        title: "Get username from email"
+        http: "GET /{email}/uid"
+        server: "register"
+        description: """
+                    Get the username of a Pryv.io account according to the given email.
+                    """
+        params:
+          properties: [
+            key: "email"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The email address to look for.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "uid"
+            type: "string"
+            description: """
+                        The username linked to the given email.
+                        """
+          ]
+        errors: [
+          key: examples.errors.unknownEmail.id
+          http: "404"
+          description: """
+                      The given email address is unknown (unregistered).
+                      """
+        ]
+        examples: [
+          title: "Retrieving a username from a given email."
+          params: {
+            email: examples.users.two.email
+          }
+          result: 
+            "uid": examples.users.two.username
+        ,
+          title: "Error case where the email address is unknown."
+          params: {
+            email: examples.users.one.email
+          }
+          result: 
+            examples.errors.unknownEmail
         ]
       ]
     ]
