@@ -36,15 +36,6 @@ module.exports = exports =
                    4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to registry server
                    5. Registry server updates directory if OK, returns status to client
                    """
-    ,
-      id: "admin-system"
-      title: "Admin and system calls"
-      description: """
-                  Some of the calls below are limited to accredited persons and are flagged as `Admin only` or `System only`.
-                  
-                  These specific calls must carry an admin key, respectively a system key, in the HTTP `Authorization` header.
-                  Such keys are defined within the registry configuration (auth:authorizedKeys).
-                  """
     ]
   ,
     id: "api-methods"
@@ -53,18 +44,15 @@ module.exports = exports =
               The methods are called via HTTPS on the registry server: `https://reg.{domain}`
               """
     sections: [
-      id: "access"
-      title: "Access"
-      description: """
-                  Methods for managing app accesses.
-                  """
-      sections: [
-      ]
-    ,
       id: "admin"
       title: "Admin"
       description: """
                   Methods for admin management of the platform.
+
+                  These calls are limited to accredited persons and are flagged as `Admin only`.
+                  
+                  They must carry an admin key, in the HTTP `Authorization` header.
+                  Such keys are defined within the registry configuration (auth:authorizedKeys).
                   """
       sections: [
         id: "users.get"
