@@ -209,7 +209,7 @@ module.exports = exports =
                         """
           ]
         errors: [
-          key: examples.errors.invalidServerName.id
+          key: "INVALID_DATA"
           http: "400"
           description: """
                       The server name (source or destination) is invalid because of an unrecognized format.
@@ -223,14 +223,6 @@ module.exports = exports =
           }
           result:
             count: 1
-        ,
-          title: "Error case where the provided server name is invalid."
-          params: {
-            srcServerName: examples.register.servers[0]
-            dstServerName: "invalid!server!"
-          }
-          result:
-            examples.errors.invalidServerName
         ]
       ]
     ,
@@ -489,95 +481,6 @@ module.exports = exports =
             server: examples.users.two.username + "." + examples.register.platforms[0]
         ]
       ,
-        id: "users.delete"
-        type: "method"
-        title: "Delete user"
-        http: "DELETE /users/{username}"
-        trustedOnly: "System only"
-        server: "register"
-        description: """
-                    Delete a given user.
-                    """
-        params:
-          properties: [
-            key: "username"
-            type: "string"
-            http:
-              text: "set in request path"
-            description: """
-                        The username of the user to delete.
-                        """
-          ,
-            key: "onlyReg"
-            type: "boolean"
-            http:
-              text: "set in query string"
-            description: """
-                        If `true`, the user is only deleted from the registry.
-                        WARNING: For now, the delete user call only support onlyReg=true.
-                        """
-          ,
-            key: "dryRun"
-            type: "boolean"
-            http:
-              text: "set in query string"
-            description: """
-                        If `true`, the system will check if the user can be deleted but will not delete it. 
-                        """
-          ]
-        result:
-          http: "200 OK"
-          properties: [
-            key: "result"
-            type: "object"
-            description: """
-                        Result object with a `deleted` field that informs about the status of the deletion.
-                        It also contains the `dryRun` field to remind if it was a real deletion or not.
-                        """
-          ]
-        errors: [
-          key: "NO_SUCH_FUNCTION"
-          http: "421"
-          description: """
-                      The parameter onlyReg was not set to `true`.
-                      For now, the delete user call only support onlyReg=true.
-                      """
-        ,
-          key: "NO_SUCH_USER"
-          http: "404"
-          description: """
-                      The given user can not be deleted since it does not exist.
-                      """
-        ]
-        examples: [
-          title: "Deleting an existing username from the registry (without dry run)."
-          params: {
-            username: examples.users.two.username
-            regOnly: true
-          }
-          result:
-            result:
-              dryRun: false
-              deleted: true
-        ,
-          title: "Error case where the user does not exist."
-          params: {
-            username: "does_not_exist"
-          }
-          result:
-            id: "NO_SUCH_USER"
-            message: "No such user ('does_not_exist')"
-        ,
-          title: "Error case where regOnly is not set to true (not supported for now)."
-          params: {
-            username: examples.users.invalid.username
-            regOnly: false
-          }
-          result:
-            id: "NO_SUCH_FUNCTION",
-            message: "This method needs onlyReg=true for now (query)."
-        ]
-      ,
         id: "username.check.get"
         type: "method"
         title: "Check username"
@@ -615,7 +518,7 @@ module.exports = exports =
                         """
           ]
         errors: [
-          key: examples.errors.invalidUsername.id
+          key: "INVALID_USERNAME"
           http: "400"
           description: """
                       The given username is invalid because of an unrecognized format.
@@ -627,21 +530,15 @@ module.exports = exports =
             username: examples.users.two.username
           }
           result:
-            "reserved": false
+            reserved: false
         ,
           title: "Special case where the username is part of the reserved list."
           params: {
             username: examples.users.reserved.username
           }
           result:
-            examples.errors.reservedUsername
-        ,
-          title: "Error case where the username is invalid."
-          params: {
-            username: examples.users.invalid.username
-          }
-          result:
-            examples.errors.invalidUsername
+            reserved: true
+            reason: "RESERVED_USER_NAME"
         ]
       ,
         id: "server.uid"
@@ -678,7 +575,7 @@ module.exports = exports =
                         """
           ]
         errors: [
-          key: examples.errors.unknownUsername.id
+          key: "UNKNOWN_USER_NAME"
           http: "404"
           description: """
                       The given username is unknown (unregistered).
@@ -692,13 +589,6 @@ module.exports = exports =
           result: 
             server: examples.register.servers[0]
             alias: examples.users.two.username + "." + examples.register.platforms[0]
-        ,
-          title: "Error case where the username is unknown."
-          params: {
-            uid: examples.users.one.username
-          }
-          result: 
-            examples.errors.unknownUsername
         ]
       ,
         id: "email.check.post"
@@ -762,7 +652,7 @@ module.exports = exports =
                         """
           ]
         errors: [
-          key: examples.errors.invalidEmail.id
+          key: "INVALID_EMAIL"
           http: "400"
           description: """
                       The email address is invalid because of an unrecognized format.
@@ -775,13 +665,6 @@ module.exports = exports =
           }
           result:
             exists: false
-        ,
-          title: "Error case where the email address is invalid."
-          params: {
-            email: examples.users.invalid.email
-          }
-          result:
-            examples.errors.invalidEmail
         ]
       ,
         id: "email.uid.get"
@@ -812,7 +695,7 @@ module.exports = exports =
                         """
           ]
         errors: [
-          key: examples.errors.unknownEmail.id
+          key: "UNKNOWN_EMAIL"
           http: "404"
           description: """
                       The given email address is unknown (unregistered).
@@ -825,13 +708,6 @@ module.exports = exports =
           }
           result: 
             "uid": examples.users.two.username
-        ,
-          title: "Error case where the email address is unknown."
-          params: {
-            email: examples.users.one.email
-          }
-          result: 
-            examples.errors.unknownEmail
         ]
       ]
     ]
