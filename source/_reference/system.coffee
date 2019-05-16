@@ -528,56 +528,6 @@ module.exports = exports =
             reason: "RESERVED_USER_NAME"
         ]
       ,
-        id: "server.uid"
-        type: "method"
-        title: "Get core server"
-        http: "POST /{uid}/server"
-        server: "register"
-        description: """
-                    Find the core server hosting a given user.
-                    """
-        params:
-          properties: [
-            key: "uid"
-            type: "string"
-            http:
-              text: "set in request path"
-            description: """
-                        The username of the user to look for.
-                        """
-          ]
-        result:
-          http: "200 OK"
-          properties: [
-            key: "server"
-            type: "string"
-            description: """
-                        The core server hosting the given user.
-                        """
-          ,
-            key: "alias"
-            type: "string"
-            description: """
-                        The API endpoint for the given user.
-                        """
-          ]
-        errors: [
-          key: "UNKNOWN_USER_NAME"
-          http: "404"
-          description: """
-                      The given username is unknown (unregistered).
-                      """
-        ]
-        examples: [
-          title: "Find the core server hosting a given user."
-          params: {
-            uid: examples.users.two.username
-          }
-          result: 
-            server: examples.register.servers[0]
-            alias: examples.users.two.username + "." + examples.register.platforms[0]
-        ]
-      ,
         id: "emails.check"
         type: "method"
         title: "Check email existence"
@@ -621,10 +571,10 @@ module.exports = exports =
             exists: false
         ]
       ,
-        id: "email.uid.get"
+        id: "email.username.get"
         type: "method"
         title: "Get username from email"
-        http: "GET /{email}/uid"
+        http: "GET /{email}/username"
         server: "register"
         description: """
                     Get the username of a Pryv.io account according to the given email.
@@ -642,7 +592,7 @@ module.exports = exports =
         result:
           http: "200 OK"
           properties: [
-            key: "uid"
+            key: "username"
             type: "string"
             description: """
                         The username linked to the given email.
@@ -661,7 +611,7 @@ module.exports = exports =
             email: examples.users.two.email
           }
           result: 
-            "uid": examples.users.two.username
+            "username": examples.users.two.username
         ]
       ]
     ]
