@@ -47,11 +47,11 @@ module.exports = exports =
       id: "admin"
       title: "Admin"
       description: """
-                  Methods for admin management of the platform.
+                  Methods for platform administration.
 
                   These calls are limited to accredited persons and are flagged as `Admin only`.
                   
-                  They must carry an admin key, in the HTTP `Authorization` header.
+                  They must carry an admin key in the HTTP `Authorization` header.
                   Such keys are defined within the registry configuration (auth:authorizedKeys).
                   """
       sections: [
@@ -79,7 +79,7 @@ module.exports = exports =
             key: "users"
             type: "array"
             description: """
-                        Array of users.
+                        Array of user data.
                         """
           ]
         examples: [
@@ -87,10 +87,9 @@ module.exports = exports =
           params: {}
           result:
             users: [
-                examples.users.three,
-                examples.users.four
-            ],
-            error: null
+              examples.users.three,
+              examples.users.four
+            ]
         ]
       ,
         id: "servers.get"
@@ -110,7 +109,7 @@ module.exports = exports =
             key: "servers"
             type: "object"
             description: """
-                        Object mapping each available core server to a users count.
+                        Object mapping each available core server to its user count.
                         """
           ]
         examples: [
@@ -136,7 +135,7 @@ module.exports = exports =
             http:
               text: "set in request path"
             description: """
-                        The name of the core server in question.
+                        The name of the core server.
                         """
           ]
         result:
@@ -145,7 +144,7 @@ module.exports = exports =
             key: "users"
             type: "array"
             description: """
-                        Array of users.
+                        Array of user data.
                         """
           ]
         examples: [
@@ -166,7 +165,7 @@ module.exports = exports =
         trustedOnly: "Admin only"
         server: "register"
         description: """
-                    Rename a core server.
+                    Rename a core server, thus reassigning the users from srcServer to dstServer.
                     """
         params:
           properties: [
@@ -192,7 +191,7 @@ module.exports = exports =
             key: "count"
             type: "number"
             description: """
-                        The count of renamed occurrences.
+                        The count of reassigned users.
                         It can be 0 if `srcServerName` did not match any existing core server.
                         """
           ]
@@ -217,7 +216,7 @@ module.exports = exports =
       id: "service"
       title: "Service"
       description: """
-                  Methods for collecting service information.
+                  Methods for collecting service information such as details about the platform and the API, connected apps or hostings (core server locations).
                   """
       sections: [
         id: "service.infos.get"
@@ -226,7 +225,7 @@ module.exports = exports =
         http: "GET /service/infos"
         server: "register"
         description: """
-                    Retrieve service information.
+                    Retrieve service information such as details about the platform and the API, as well as various useful URLs.
                     """
         params:
           properties: []
@@ -254,7 +253,7 @@ module.exports = exports =
             key: "api"
             type: "string"
             description: """
-                        The base URL of the API.
+                        The API endpoint format.
                         """
           ,
             key: "name"
@@ -469,7 +468,7 @@ module.exports = exports =
             server: examples.users.two.username + "." + examples.register.platforms[0]
         ]
       ,
-        id: "username.check.get"
+        id: "username.check"
         type: "method"
         title: "Check username"
         http: "GET /{username}/check_username"
@@ -559,7 +558,7 @@ module.exports = exports =
             key: "alias"
             type: "string"
             description: """
-                        The API endpoint for the given user, in the form `username.domain`.
+                        The API endpoint for the given user.
                         """
           ]
         errors: [
@@ -612,7 +611,7 @@ module.exports = exports =
           result: true
         ]
       ,
-        id: "email.check.get"
+        id: "emails.check"
         type: "method"
         title: "Check email existence"
         http: "GET /{email}/check_email"

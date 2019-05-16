@@ -306,14 +306,15 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       The URL to redirect the user to after auth completes. If not set, your app must use polling to retrieve the auth result (see response below). Responses to polling requests are the same as those from the auth request.
+                       The URL to redirect the user to after auth completes.
+                       If not set, your app must use polling to retrieve the auth result (see Result below).
                        """
         ,
           key: "clientData"
           type: "[key-value](##{dataStructure.getDocId("key-value")})"
           optional: true
           description: """
-                       Additional client data that will be transmitted alongside the auth request.
+                       Additional client data that will be transmitted alongside the auth request (see Result below).
                        """
         ]
       result: [
@@ -335,19 +336,22 @@ module.exports = exports =
           key: "key"
           type: "string"
           description: """
-                       The key identifiying the auth request.
+                       The key used to identify the auth request. It is also part of the poll URL described just below.
                        """
         ,
           key: "poll"
           type: "string"
           description: """
-                       If using polling: the poll URL to use for retrieving the auth result via an HTTP GET request.
+                       The poll URL to use for retrieving the auth result via an HTTP GET request.
+                       This is only useful when not using returnUrl.
+                       Responses to polling requests are the same as those from the auth request.
                        """
         ,
           key: "poll_rate_ms"
           type: "number"
           description: """
-                       If using polling: the rate at which the poll URL can be polled, in milliseconds.
+                       The rate at which the poll URL can be polled, in milliseconds.
+                       This is only useful when not using returnUrl.
                        """
         ,
           key: "requestingAppId"
