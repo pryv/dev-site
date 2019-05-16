@@ -120,7 +120,7 @@ module.exports = exports =
             servers: examples.register.usersCount
         ]
       ,
-        id: "server.users.get"
+        id: "servers.users.get"
         type: "method"
         title: "Get users on core server"
         http: "GET /admin/servers/{serverName}/users"
@@ -159,7 +159,7 @@ module.exports = exports =
             ],
         ]
       ,
-        id: "server.rename"
+        id: "servers.rename"
         type: "method"
         title: "Rename core server"
         http: "GET /admin/servers/{srcServerName}/rename/{dstServerName}"
@@ -341,13 +341,13 @@ module.exports = exports =
             "apps": examples.register.apps
         ]
       ,
-        id: "app.get"
+        id: "apps.getOne"
         type: "method"
         title: "Get app"
         http: "GET /apps/{appid}"
         server: "register"
         description: """
-                    Retrieve specific information about a given application.
+                    Retrieve information about a given application.
                     """
         params:
           properties: [
