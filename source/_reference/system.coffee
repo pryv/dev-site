@@ -578,39 +578,6 @@ module.exports = exports =
             alias: examples.users.two.username + "." + examples.register.platforms[0]
         ]
       ,
-        id: "email.check.post"
-        type: "method"
-        title: "Check email availability"
-        http: "POST /email/check"
-        server: "register"
-        description: """
-                    Check the availability of an account's email.
-                    """
-        params:
-          properties: [
-            key: "email"
-            type: "string"
-            description: """
-                        The email address to check.
-                        """
-          ]
-        result:
-          http: "200 OK"
-          properties: [
-            key: "true or false"
-            type: "plaintext"
-            description: """
-                        Plaintext `true` if the email address is valid AND free, `false` otherwise.
-                        """
-          ]
-        examples: [
-          title: "Checking the availability of an account's email address."
-          params: {
-            email: examples.users.two.email
-          }
-          result: true
-        ]
-      ,
         id: "emails.check"
         type: "method"
         title: "Check email existence"
