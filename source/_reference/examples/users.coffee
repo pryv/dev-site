@@ -23,7 +23,6 @@ module.exports =
     id: generateId()
     registeredTimestamp: "1557743399558"
     server: register.servers[0]
-    errors: []
     registeredDate: "Mon, 13 May 2019 10:29:59 GMT"
   four:
     username: "user2"
@@ -34,7 +33,6 @@ module.exports =
     id: generateId()
     registeredTimestamp: "1536930239805"
     server: register.servers[1]
-    errors: []
     registeredDate: "Fri, 14 Sep 2018 13:03:59 GMT"
   invalid:
     username: "abc"
