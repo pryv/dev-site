@@ -250,8 +250,10 @@ module.exports = exports =
 
                  1. Choose an app identifier (min. length 6 chars)
                  2. Send an auth request from your app
-                 3. Open the auth page from the URL returned (e.g. as a popup); the auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one)
-                 4. Handle the result by either polling the appropriate URL or directly from the return URL you'll have defined
+                 3. Open the `url` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
+                 4. The result of the sign in process: a valid Access token or a refusal can be obtained in two ways: 
+                  - by polling the URL obtained in the `poll` field of the HTTP response to the auth request
+                  - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
                  **Note: this auth flow will very likely undergo some changes in the near future.**
                  """
@@ -307,7 +309,7 @@ module.exports = exports =
           optional: true
           description: """
                        The URL to redirect the user to after auth completes.
-                       If not set, your app must use polling to retrieve the auth result (see Result below).
+                       Required if you are not using polling to retrieve the auth result (see Result below).
                        """
         ,
           key: "clientData"
@@ -330,7 +332,7 @@ module.exports = exports =
           key: "url"
           type: "string"
           description: """
-                       The URL of the auth page to show the user (e.g. as a popup) from your app.
+                       The URL of the auth page to show the user from your app as popup or webframe.
                        """
         ,
           key: "key"
@@ -342,8 +344,7 @@ module.exports = exports =
           key: "poll"
           type: "string"
           description: """
-                       The poll URL to use for retrieving the auth result via an HTTP GET request.
-                       This is only useful when not using returnUrl.
+                       The poll URL to use for retrieving the auth result via an HTTP GET request.  
                        Responses to polling requests are the same as those from the auth request.
                        """
         ,
@@ -351,7 +352,6 @@ module.exports = exports =
           type: "number"
           description: """
                        The rate at which the poll URL can be polled, in milliseconds.
-                       This is only useful when not using returnUrl.
                        """
         ,
           key: "requestingAppId"
