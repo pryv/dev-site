@@ -250,8 +250,10 @@ module.exports = exports =
 
                  1. Choose an app identifier (min. length 6 chars)
                  2. Send an auth request from your app
-                 3. Open the auth page from the URL returned (e.g. as a popup); the auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one)
-                 4. Handle the result by either polling the appropriate URL or directly from the return URL you'll have defined
+                 3. Open the `url` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
+                 4. The result of the sign in process: a valid Access token or a refusal can be obtained in two ways: 
+                  - by polling the URL obtained in the `poll` field of the HTTP response to the auth request
+                  - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
                  **Note: this auth flow will very likely undergo some changes in the near future.**
                  """
@@ -306,7 +308,15 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       The URL to redirect the user to after auth completes. If not set, your app must use polling to retrieve the auth result (see response below). Responses to polling requests are the same as those from the auth request.
+                       The URL to redirect the user to after auth completes.
+                       Required if you are not using polling to retrieve the auth result (see Result below).
+                       """
+        ,
+          key: "clientData"
+          type: "[key-value](##{dataStructure.getDocId("key-value")})"
+          optional: true
+          description: """
+                       Additional client data that will be transmitted alongside the auth request (see Result below).
                        """
         ]
       result: [
@@ -322,13 +332,59 @@ module.exports = exports =
           key: "url"
           type: "string"
           description: """
-                       The URL of the auth page to show the user (e.g. as a popup) from your app.
+                       The URL of the auth page to show the user from your app as popup or webframe.
+                       """
+        ,
+          key: "key"
+          type: "string"
+          description: """
+                       The key used to identify the auth request. It is also part of the poll URL described just below.
                        """
         ,
           key: "poll"
           type: "string"
           description: """
-                       If using polling: the poll URL to use for retrieving the auth result via an HTTP GET request.
+                       The poll URL to use for retrieving the auth result via an HTTP GET request.  
+                       Responses to polling requests are the same as those from the auth request.
+                       """
+        ,
+          key: "poll_rate_ms"
+          type: "number"
+          description: """
+                       The rate at which the poll URL can be polled, in milliseconds.
+                       """
+        ,
+          key: "requestingAppId"
+          type: "string"
+          description: """
+                       The app identifier provided during the auth request.
+                       """
+        ,
+          key: "requestedPermissions"
+          type: "string"
+          description: """
+                       The permissions provided during the auth request.
+                       """
+        ,
+          key: "lang"
+          type: "string"
+          optional: true
+          description: """
+                       The language code provided during the auth request.
+                       """
+        ,
+          key: "returnURL"
+          type: "string"
+          optional: true
+          description: """
+                       The return URL provided during the auth request.
+                       """
+        ,
+          key: "clientData"
+          type: "[key-value](##{dataStructure.getDocId("key-value")})"
+          optional: true
+          description: """
+                       The client data provided during the auth request.
                        """
         ]
       ,
@@ -403,22 +459,38 @@ module.exports = exports =
                  """
       ,
         title: '"In progress" response'
-        # TODO: this example is not consistent (url query string doesn't match)
         content: """
                  ```json
                  {
-                   "status": "NEED_SIGNIN",
-                   "url": "https://sw.pryv.me:2443/access/v1/access.html?lang=fr&key=dXRqBezem8v3mNxf&requestingAppId=test-app-id&returnURL=false&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22diary%22%2C%22defaultName%22%3A%22Journal%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22notes%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Notes%22%7D%5D%7D%2C%7B%22streamId%22%3A%22position%22%2C%22defaultName%22%3A%22Position%22%2C%22level%22%3A%22read%22%2C%22folderPermissions%22%3A%5B%7B%22streamId%22%3A%22iphone%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22iPhone%22%7D%5D%7D%5D",
-                   "poll": "https://reg.pryv.me/access/dXRqBezem8v3mNxf",
-                   "poll_rate_ms": 1000
-                 }
+                    "status": "NEED_SIGNIN",
+                    "code": 201,
+                    "key": "6CInm4R2TLaoqtl4",
+                    "requestingAppId": "test-app-id",
+                    "requestedPermissions": [
+                        {
+                            "streamId": "diary",
+                            "level": "read",
+                            "defaultName": "Journal"
+                        },
+                        {
+                            "streamId": "position",
+                            "level": "contribute",
+                            "defaultName": "Position"
+                        }
+                    ],
+                    "url": "https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4",
+                    "poll": "https://reg.pryv.me/access/6CInm4R2TLaoqtl4",
+                    "oauthState": null,
+                    "poll_rate_ms": 1000,
+                    "lang": "fr"
+                }
                  ```
                  """
       ,
         title: 'Polling request'
         content: """
                  ```http
-                 GET /access/dXRqBezem8v3mNxf HTTP/1.1
+                 GET /access/6CInm4R2TLaoqtl4 HTTP/1.1
                  Host: reg.pryv.me
                  ```
                  """

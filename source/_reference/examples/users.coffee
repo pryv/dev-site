@@ -14,3 +14,28 @@ module.exports =
     password: "ChjUzDXwaTG2qdV"
     email: "jerome@" + register.platforms[0]
     language: "en"
+  three:
+    username: "user1"
+    email: "user1@gmail.com"
+    language: "en"
+    invitationToken: "enjoy"
+    referer: "null"
+    id: generateId()
+    registeredTimestamp: "1557743399558"
+    server: register.servers[0]
+    registeredDate: "Mon, 13 May 2019 10:29:59 GMT"
+  four:
+    username: "user2"
+    email: "user2@gmail.com"
+    language: "fr"
+    invitationToken: "enjoy"
+    referer: "null"
+    id: generateId()
+    registeredTimestamp: "1536930239805"
+    server: register.servers[1]
+    registeredDate: "Fri, 14 Sep 2018 13:03:59 GMT"
+  invalid:
+    username: "abc"
+    email: "invalid_email"
+  reserved:
+    username: "pryvpryv"

@@ -323,6 +323,13 @@ module.exports = exports =
       description: """
         If the access has been deleted: The timestamp of the deletion.
         """
+    ,
+      key: "clientData"
+      type: "[key-value](##{_getDocId("key-value")})"
+      optional: true
+      description: """
+                   Additional client data for the access.
+                   """
     ].concat(changeTrackingProperties("access"))
     examples: [
       title: "An app access"
