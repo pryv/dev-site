@@ -1039,6 +1039,76 @@ module.exports = exports =
 
   ,
 
+    id: "webhooks"
+    title: "Webhooks"
+    description: """
+                 Methods to retrieve and manipulate [webhooks](##{dataStructure.getDocId("webhook")}).
+                 """
+    sections: [
+      id: "webhooks.get"
+      type: "method"
+      title: "Get webhooks"
+      http: "GET /webhooks"
+      description: """
+                   Gets manageable webhooks. Only returns webhooks that were created by the access, unless you are using a personal access which returns all existing webhooks in the user's account.
+                   """
+      params:
+        properties: [
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "webhooks"
+          type: "array of [webhooks](##{dataStructure.getDocId("webhook")})"
+          description: """
+                       All manageable webhooks in the user's account, ordered by modified date.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          webhooks: [examples.webhooks.simple]
+      ]
+
+    ,
+
+      id: "webhooks.create"
+      type: "method"
+      title: "Create webhook"
+      http: "POST /webhooks"
+      description: """
+                   Creates a new webhook. You can only create webhooks with app accesses. They will always match the permission of the access used at creation.
+                   """
+      params:
+        description: """
+                     An object with the new webhook's data: see [webhook](##{dataStructure.getDocId("webhook")}).
+                     """
+      result:
+        http: "201 Created"
+        properties: [
+          key: "webhook"
+          type: "[webhook](##{dataStructure.getDocId("webhook")})"
+          description: """
+                       The created webhook.
+                       """
+        ]
+      errors: [
+        key: "iteam-already-exists"
+        http: "400"
+        description: """
+                     
+                     """
+      ]
+      examples: [
+        params: _.pick(examples.webhooks.simple, "url")
+        result:
+          webhook: examples.webhooks.simple
+      ]
+
+    ]
+
+  ,
+
     id: "followed-slices"
     title: "Followed slices"
     trustedOnly: true

@@ -427,6 +427,94 @@ module.exports = exports =
 
   ,
 
+    id: "webhook"
+    title: "Webhook"
+    description: """
+                 Webhooks provide push notifications to servers using HTTP POST requests.
+                 """
+    properties: [
+      key: "id"
+      type: "[identifier](##{_getDocId("identifier")})"
+      readOnly: true
+      description: """
+                   The identifier of the Webhook.
+                   """
+    ,
+      key: "accessId"
+      type: "[identifier](##{_getDocId("identifier")})"
+      readOnly: true
+      description: """
+                   The identifier of the Access that was used to create the Webhook.
+                   """
+    ,
+      key: "url"
+      type: "string"
+      description: """
+                   The URL where the HTTP POST request will be made. It is 
+                   """
+    ,
+      key: "minIntervalMs"
+      type: "number"
+      description: """
+                   The minimum interval between subsequent HTTP calls in Milliseconds.
+                   """
+    ,
+      key: "maxRetries"
+      type: "number"
+      description: """
+                   The maximum number of retries executed after a failed HTTP call.
+                   """
+    ,
+      key: "currentRetries"
+      type: "number"
+      description: """
+                   The number of retries iterations since the last failed HTTP call. This number should be 0 if the last HTTP call was successful.
+                   """
+    ,
+      key: "state"
+      type: "`active`|`inActive`"
+      description: """
+                   The current state of the Webhook. An inactive Webhook will make no HTTP call when changes occur. It must be activated manually.
+                   """
+    ,
+      key: "runCount"
+      type: "number"
+      description: """
+                   The number of times the Webhooks has been run, including failures.
+                   """
+    ,
+      key: "failCount"
+      type: "number"
+      description: """
+                   The number of times the Webhook has failed making HTTP calls.
+                   """
+    ,
+      key: "runs"
+      type: "array of Run objects"
+      description: """
+                   Array of Run object comprised HTTP response status and timestamps of all the Webhook's calls in inverse chronological order (newest first).  
+                   Each Run object has the following structure:
+                   """
+      properties: [
+        key: "status"
+        type: "number"
+        description: """
+                     The HTTP response status of the call.
+                     """
+      ,
+        key: "timestamp"
+        type: "[timestamp](#data-structure-timestamp)"
+        description: """
+                     The time the call was started.
+                     """
+      ]
+    ].concat(changeTrackingProperties("webhook"))
+    examples: [
+      title: "A simple Webhook"
+      content: examples.webhooks.simple
+    ]
+  ,
+
     id: "item-deletion"
     title: "Item deletion"
     description: """
