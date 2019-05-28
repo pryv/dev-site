@@ -472,7 +472,7 @@ module.exports = exports =
                    """
     ,
       key: "state"
-      type: "`active`|`inActive`"
+      type: "`active`|`inactive`"
       description: """
                    The current state of the Webhook. An inactive Webhook will make no HTTP call when changes occur. It must be activated manually.
                    """

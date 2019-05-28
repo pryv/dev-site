@@ -1,9 +1,6 @@
 timestamp = require("unix-timestamp")
 generateId = require("cuid")
 
-idA = generateId()
-idB = generateId()
-
 module.exports = exports =
   simple: 
     id: generateId()
