@@ -53,6 +53,14 @@ Custom applications can access Pryv user accounts via accesses. Each access defi
 Accesses can be made to expire after some time; see the `expireAfter` and `expires`
 attributes for more information. To disable an access please use `expireAfter=0`.
 
+## Webhooks
+
+External web services can register to data changes by setting up webhooks.  
+
+Webhooks can only be created by app accesses. Once created, they will run, executing a HTTP POST request to the corresponding URL for each data change in the user account. Currently, we support notifications of data changes, a subsequent API call is necessary to fetch the changes content.  
+In case of failure to send a request, the webhook will retry a defined number of times at a certain interval before becoming inactive after too many succeeding failures.  
+All runs are saved which allows to monitor a webhook's health. 
+
 <!-- TODO: See also [registering your app](#TODO). -->
 
 <!-- TODO: Rewrite this part....
