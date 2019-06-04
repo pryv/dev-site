@@ -53,6 +53,14 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to enable audit capabilities for your Pryv.io platform by configuring the Pryv.io router service.
 
+- Core migration: [PDF](/assets/docs/20190604-migrate-core-v1.pdf)
+
+  This document describes how to migrate a Pryv.io core service to a different machine.
+
+- Register migration: [PDF](/assets/docs/20190604-migrate-register-v1.pdf)
+
+  This document describes how to migrate a Pryv.io register service to a different machine.
+
 ## Development resources
 
 - Authorization web application (app-web-auth v3): [Github](https://github.com/pryv/app-web-auth3)
