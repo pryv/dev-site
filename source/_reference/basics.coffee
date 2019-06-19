@@ -515,6 +515,13 @@ module.exports = exports =
         description: """
                      The version of the API in the form `{major}.{minor}.{revision}`. Mirrored in method results as `meta.apiVersion`.
                      """
+      ,
+        key: "Pryv-Access-Id"
+        optional: true
+        description: """
+                     The id of the [Access](##{dataStructure.getDocId("access")}) used for the API call.
+                     Only present if a valid access token has been provided.
+                     """
       ]
     ,
       id: "method-results"
