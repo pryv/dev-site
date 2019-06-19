@@ -489,11 +489,10 @@ module.exports = exports =
                    The number of times the Webhook has failed making HTTP calls.
                    """
     ,
-      key: "runs"
-      type: "array of Run objects"
+      key: "lastRun"
+      type: "Run object"
       description: """
-                   Array of Run object comprised HTTP response status and timestamps of all the Webhook's calls in inverse chronological order (newest first).  
-                   Each Run object has the following structure:
+                   Represents the last Webhook call, comprised of HTTP response status and timestamp.
                    """
       properties: [
         key: "status"
@@ -508,6 +507,13 @@ module.exports = exports =
                      The time the call was started.
                      """
       ]
+    ,
+      key: "runs"
+      type: "array of Run objects"
+      description: """
+                   Array of Run objects in inverse chronological order (newest first).  
+                   Each Run object has the following structure:
+                   """
     ].concat(changeTrackingProperties("webhook"))
     examples: [
       title: "A simple Webhook"

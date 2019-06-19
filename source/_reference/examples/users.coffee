@@ -10,13 +10,13 @@ module.exports =
     language: "zh"
   two:
     id: generateId()
-    username: "jerome"
+    username: "user-123-abc"
     password: "ChjUzDXwaTG2qdV"
-    email: "jerome@" + register.platforms[0]
+    email: "joseph-brenner@" + register.platforms[0]
     language: "en"
   three:
     username: "user1"
-    email: "user1@gmail.com"
+    email: "red.miller@mail.ch"
     language: "en"
     invitationToken: "enjoy"
     referer: "null"
