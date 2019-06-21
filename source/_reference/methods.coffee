@@ -1062,7 +1062,7 @@ module.exports = exports =
           key: "webhooks"
           type: "array of [webhooks](##{dataStructure.getDocId("webhook")})"
           description: """
-                       All manageable webhooks in the user's account, ordered by modified date.
+                       All manageable webhooks by the given access, ordered by modified date.
                        """
         ]
       examples: [
@@ -1081,7 +1081,7 @@ module.exports = exports =
       title: "Get one webhook"
       http: "GET /webhooks/{id}"
       description: """
-                   Fetches a specific webhook. Only returns webhooks if they were created by the access, unless you are using a personal access which is allowed to fetch any existing webhook in the user's account.
+                   Fetches a specific webhook. Only returns a webhook if it was created by the access, unless you are using a personal access which is allowed to fetch any existing webhook in the user's account.
                    """
       params:
         properties: [

@@ -15,6 +15,9 @@ module.exports = exports =
     state: 'active'
     runCount: 2
     failCount: 0
+    lastRun:
+      status: 200,
+      timestamp: timestamp.now('-1h')
     runs: [
       status: 200
       timestamp: timestamp.now('-1h')
@@ -36,6 +39,9 @@ module.exports = exports =
     state: 'active'
     runCount: 8
     failCount: 2
+    lastRun:
+      status: 200,
+      timestamp: timestamp.now('-5s')
     runs: [
       status: 500
       timestamp: timestamp.now('-5s')
@@ -75,6 +81,7 @@ module.exports = exports =
     state: 'active'
     runCount: 0
     failCount: 0
+    lastRun: {}
     runs: []
     created: timestamp.now('-5s')
     createdBy: secondId
@@ -90,6 +97,9 @@ module.exports = exports =
     state: 'inactive'
     runCount: 5
     failCount: 5
+    lastRun:
+      status: 500,
+      timestamp: timestamp.now('-5s')
     runs: [
       status: 500
       timestamp: timestamp.now('-5s')
