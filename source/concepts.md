@@ -58,7 +58,7 @@ attributes for more information. To disable an access please use `expireAfter=0`
 External web services can register to data changes by setting up webhooks.  
 
 Webhooks can only be created by app accesses. Once created, they will run, executing a HTTP POST request to the corresponding URL for each data change in the user account. Currently, we support notifications of data changes, a subsequent API call is necessary to fetch the changes content.  
-In case of failure to send a request, the webhook will retry a defined number of times at a certain interval before becoming inactive after too many succeeding failures.  
+In case of failure to send a request, the webhook will retry a defined number of times at a growing interval of time before becoming inactive after too many succeeding failures. The webhooks run rate is throttled to a minimum time between notifications, sending an array of events that occured during this period.  
 All runs are saved which allows to monitor a webhook's health. 
 
 <!-- TODO: See also [registering your app](#TODO). -->
