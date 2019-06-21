@@ -429,6 +429,7 @@ module.exports = exports =
 
     id: "webhook"
     title: "Webhook"
+    previewOnly: true
     description: """
                  Webhooks provide push notifications to servers using HTTP POST requests.
                  """
@@ -467,6 +468,7 @@ module.exports = exports =
     ,
       key: "currentRetries"
       type: "number"
+      readOnly: true
       description: """
                    The number of retries iterations since the last failed HTTP call. This number should be 0 if the last HTTP call was successful.
                    """
@@ -479,18 +481,21 @@ module.exports = exports =
     ,
       key: "runCount"
       type: "number"
+      readOnly: true
       description: """
                    The number of times the Webhooks has been run, including failures.
                    """
     ,
       key: "failCount"
       type: "number"
+      readOnly: true
       description: """
                    The number of times the Webhook has failed making HTTP calls.
                    """
     ,
       key: "lastRun"
       type: "Run object"
+      readOnly: true
       description: """
                    Represents the last Webhook call, comprised of HTTP response status and timestamp.
                    """
@@ -510,6 +515,7 @@ module.exports = exports =
     ,
       key: "runs"
       type: "array of Run objects"
+      readOnly: true
       description: """
                    Array of Run objects in inverse chronological order (newest first).  
                    Each Run object has the following structure:

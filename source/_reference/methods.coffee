@@ -1041,6 +1041,7 @@ module.exports = exports =
 
     id: "webhooks"
     title: "Webhooks"
+    previewOnly: true
     description: """
                  Methods to retrieve and manipulate [webhooks](##{dataStructure.getDocId("webhook")}). These methods are forbidden to shared accesses.
                  """
