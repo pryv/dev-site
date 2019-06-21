@@ -431,7 +431,8 @@ module.exports = exports =
     title: "Webhook"
     previewOnly: true
     description: """
-                 Webhooks provide push notifications to servers using HTTP POST requests.
+                 Webhooks provide push notifications to servers using HTTP POST requests.  
+                 See also: [core concepts](/concepts/#webhooks).
                  """
     properties: [
       key: "id"
@@ -451,7 +452,7 @@ module.exports = exports =
       key: "url"
       type: "string"
       description: """
-                   The URL where the HTTP POST request will be made. It is 
+                   The URL where the HTTP POST request will be made.
                    """
     ,
       key: "minIntervalMs"
@@ -490,7 +491,7 @@ module.exports = exports =
       type: "number"
       readOnly: true
       description: """
-                   The number of times the Webhook has failed making HTTP calls.
+                   The number of times the Webhook has failed making HTTP calls. Failed runs are HTTP requests that responded with a status outside of the 200-299 range.
                    """
     ,
       key: "lastRun"
@@ -518,7 +519,6 @@ module.exports = exports =
       readOnly: true
       description: """
                    Array of Run objects in inverse chronological order (newest first).  
-                   Each Run object has the following structure:
                    """
     ].concat(changeTrackingProperties("webhook"))
     examples: [

@@ -1081,7 +1081,7 @@ module.exports = exports =
       title: "Get one webhook"
       http: "GET /webhooks/{id}"
       description: """
-                   Fetches a specific webhook. Only returns webhooks if they were created by the access, unless you are using a personal access which is allowed to fetch any existing webhook.
+                   Fetches a specific webhook. Only returns webhooks if they were created by the access, unless you are using a personal access which is allowed to fetch any existing webhook in the user's account.
                    """
       params:
         properties: [
@@ -1150,7 +1150,7 @@ module.exports = exports =
       title: "Update webhook"
       http: "PUT /webhooks/{id}"
       description: """
-                   Modifies the webhook. You can only modify webhooks with the app access that was used to create them, unless you use a personal token.
+                   Modifies the webhook. You can only modify webhooks with the app access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [
@@ -1199,7 +1199,7 @@ module.exports = exports =
       title: "Delete webhook"
       http: "DELETE /webhooks/{id}"
       description: """
-                   Deletes the specified webhook. You can only delete webhooks with the app access that was used to create them, unless you use a personal token.
+                   Deletes the specified webhook. You can only delete webhooks with the app access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [
@@ -1233,7 +1233,7 @@ module.exports = exports =
       title: "Test webhook"
       http: "POST /webhooks/{id}/test"
       description: """
-                   Sends a post request to the URL of the specified webhook with a test message. You can only test webhooks with the app access that was used to create them, unless you use a personal token.
+                   Sends a post request to the URL of the specified webhook with a test message. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [
