@@ -147,7 +147,11 @@ mixin section(section, parentDocId, level)
   - var isMethod = section.type === 'method'
   - var docId = apiReference.helpers.getDocId(parentDocId, section.id)
   - var sectionClass = (section.type || '')
-  if ! section.trustedOnly || showTrustedOnlyContent
+  // it's either:
+  // !trusted & !preview
+  // !preview & -full
+  // -preview
+  if (!section.trustedOnly && !section.previewOnly) || (!section.previewOnly && showTrustedOnlyContent) || showPreviewOnlyContent
     section(id='#{docId}', class='#{sectionClass}')
       if level === 2
         +h2(section.title)
@@ -164,8 +168,10 @@ mixin section(section, parentDocId, level)
           if section.trustedOnly
             if typeof(section.trustedOnly) === 'string'
               span.label.trusted-only !{section.trustedOnly}
-            else
+            else 
               span.label.trusted-only Trusted apps only
+          if section.previewOnly
+            span.label.trusted-only Preview 
         +intro(section.description)
         +properties(section.properties)
         if section.params
@@ -185,7 +191,7 @@ mixin section(section, parentDocId, level)
       if section.sections
         each subSection in section.sections
           +section(subSection, docId, level + 1)
-
+  
 block content
   - var source = sourceOverride ? apiReference[sourceOverride] : apiReference
   each level1Section in source.sections

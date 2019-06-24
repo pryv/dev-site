@@ -58,7 +58,7 @@ module.exports = exports =
       key: "time"
       type: "[timestamp](##{_getDocId("timestamp")})"
       description: """
-                   The event's time. For period events, this is the time the event started.
+                   The event's time. For period events, this is the time the event started. Automatically set to the server time if not provided when creating the event.
                    """
     ,
       key: "duration"
@@ -425,6 +425,111 @@ module.exports = exports =
     ]
     examples: []
 
+  ,
+
+    id: "webhook"
+    title: "Webhook"
+    previewOnly: true
+    description: """
+                 Webhooks provide push notifications to servers using HTTP POST requests.  
+                 
+                 Webhooks can only be created by app accesses. Once created, they will run, executing a HTTP POST request to the provided URL for each data change in the user account. Currently, we support notifications for data changes, a subsequent API call is necessary to fetch the changes content.  
+
+                 In case of failure to send a request, the webhook will retry a defined number of times at a growing interval of time before becoming inactive after too many successive failures. The webhooks run rate is throttled by a minimum time between notifications, sending an array of events that occured during this period.  
+                
+                 All runs are saved which allows to monitor a webhook's health. 
+                 """
+    properties: [
+      key: "id"
+      type: "[identifier](##{_getDocId("identifier")})"
+      readOnly: true
+      description: """
+                   The identifier of the Webhook. Automatically generated if not set when creating the stream.
+                   """
+    ,
+      key: "accessId"
+      type: "[identifier](##{_getDocId("identifier")})"
+      readOnly: true
+      description: """
+                   The identifier of the access that was used to create the Webhook.
+                   """
+    ,
+      key: "url"
+      type: "string"
+      description: """
+                   The URL where the HTTP POST request will be made.
+                   """
+    ,
+      key: "minIntervalMs"
+      type: "number"
+      description: """
+                   The minimum interval between subsequent HTTP calls in milliseconds. Defaults to the time set by the admin. 
+                   """
+    ,
+      key: "maxRetries"
+      type: "number"
+      description: """
+                   The maximum number of retries executed after a failed HTTP call. Defaults to the number set by the admin.
+                   """
+    ,
+      key: "currentRetries"
+      type: "number"
+      readOnly: true
+      description: """
+                   The number of retries iterations since the last failed HTTP call. This number is 0 if the last HTTP call was successful.
+                   """
+    ,
+      key: "state"
+      type: "`active`|`inactive`"
+      description: """
+                   The current state of the Webhook. An inactive Webhook will not make any HTTP call when changes occur. It must be activated using the [update webhook](#methods-webhooks-webhooks-update) method.
+                   """
+    ,
+      key: "runCount"
+      type: "number"
+      readOnly: true
+      description: """
+                   The number of times the Webhooks has been run, including failures.
+                   """
+    ,
+      key: "failCount"
+      type: "number"
+      readOnly: true
+      description: """
+                   The number of times the Webhook has failed making HTTP calls. Failed runs are HTTP requests that responded with a status outside of 200-299 range.
+                   """
+    ,
+      key: "lastRun"
+      type: "Run object"
+      readOnly: true
+      description: """
+                   Represents the last Webhook call, comprised of HTTP response status and timestamp.
+                   """
+      properties: [
+        key: "status"
+        type: "number"
+        description: """
+                     The HTTP response status of the call.
+                     """
+      ,
+        key: "timestamp"
+        type: "[timestamp](#data-structure-timestamp)"
+        description: """
+                     The time the call was started.
+                     """
+      ]
+    ,
+      key: "runs"
+      type: "array of Run objects"
+      readOnly: true
+      description: """
+                   Array of Run objects in inverse chronological order (newest first).  
+                   """
+    ].concat(changeTrackingProperties("webhook"))
+    examples: [
+      title: "A simple Webhook"
+      content: examples.webhooks.simple
+    ]
   ,
 
     id: "item-deletion"

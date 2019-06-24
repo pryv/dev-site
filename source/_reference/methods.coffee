@@ -1047,6 +1047,231 @@ module.exports = exports =
 
   ,
 
+    id: "webhooks"
+    title: "Webhooks"
+    previewOnly: true
+    description: """
+                 Methods to retrieve and manipulate [webhooks](##{dataStructure.getDocId("webhook")}). These methods are forbidden to shared accesses.
+                 """
+    sections: [
+      id: "webhooks.get"
+      type: "method"
+      title: "Get webhooks"
+      http: "GET /webhooks"
+      description: """
+                   Gets manageable webhooks. Only returns webhooks that were created by the access, unless you are using a personal access which returns all existing webhooks in the user's account.
+                   """
+      params:
+        properties: [
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "webhooks"
+          type: "array of [webhooks](##{dataStructure.getDocId("webhook")})"
+          description: """
+                       All manageable webhooks by the given access, ordered by modified date.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          webhooks: [
+            examples.webhooks.simple
+          ,
+            examples.webhooks.failing
+          ]
+      ]
+
+    ,
+      id: "webhooks.getOne"
+      type: "method"
+      title: "Get one webhook"
+      http: "GET /webhooks/{id}"
+      description: """
+                   Fetches a specific webhook. Only returns a webhook if it was created by the access, unless you are using a personal access which is allowed to fetch any existing webhook in the user's account.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the webhook.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "webhook"
+          type: "[webhook](##{dataStructure.getDocId("webhook")})"
+          description: """
+                       The webhook.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          webhook: examples.webhooks.simple
+      ]
+
+    ,
+
+      id: "webhooks.create"
+      type: "method"
+      title: "Create webhook"
+      http: "POST /webhooks"
+      description: """
+                   Creates a new webhook. You can only create webhooks with app accesses. Its permissions will always match the permissions of the access used to create it.
+                   """
+      params:
+        description: """
+                     An object with the new webhook's data: see [webhook](##{dataStructure.getDocId("webhook")}).
+                     """
+      result:
+        http: "201 Created"
+        properties: [
+          key: "webhook"
+          type: "[webhook](##{dataStructure.getDocId("webhook")})"
+          description: """
+                       The created webhook.
+                       """
+        ]
+      errors: [
+        key: "item-already-exists"
+        http: "400"
+        description: """
+                     There is already a webhook for this URL created by the given access.
+                     """
+      ]
+      examples: [
+        params: _.pick(examples.webhooks.new, "url")
+        result:
+          webhook: examples.webhooks.new
+      ]
+
+    ,
+
+      id: "webhooks.update"
+      type: "method"
+      title: "Update webhook"
+      http: "PUT /webhooks/{id}"
+      description: """
+                   Modifies the webhook. You can only modify webhooks with the app access that was used to create them, unless you are using a personal token.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the webhook.
+                       """
+        ,
+          key: "update"
+          type: "object"
+          http:
+            text: "request body"
+          description: """
+                       New values for the webhook's fields: see [webhook](##{dataStructure.getDocId("webhook")}). All fields are optional, and only modified values must be included.
+                       """
+        ]
+      result:
+        http: "200 Created"
+        properties: [
+          key: "webhook"
+          type: "[webhook](##{dataStructure.getDocId("webhook")})"
+          description: """
+                       The created webhook.
+                       """
+        ]
+      errors: [
+        key: "item-already-exists"
+        http: "400"
+        description: """
+                     There is already a webhook for this URL created by the given access.
+                     """
+      ]
+      examples: [
+        params: _.pick(examples.webhooks.failing, "url")
+        result:
+          webhook: examples.webhooks.failing
+      ]
+    
+    ,
+
+      id: "webhooks.delete"
+      type: "method"
+      title: "Delete webhook"
+      http: "DELETE /webhooks/{id}"
+      description: """
+                   Deletes the specified webhook. You can only delete webhooks with the app access that was used to create them, unless you are using a personal token.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the webhook.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "webhookDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The deletion record.
+                       """
+        ]
+      examples: [
+        params:
+          id: examples.webhooks.new.id
+        result: {webhookDeletion:{id:examples.webhooks.new.id}}
+      ]
+
+    ,
+
+      id: "webhooks.test"
+      type: "method"
+      title: "Test webhook"
+      http: "POST /webhooks/{id}/test"
+      description: """
+                   Sends a post request to the URL of the specified webhook with a test message. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the webhook.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "webhook"
+          type: "[webhook](##{dataStructure.getDocId("webhook")})"
+          description: """
+                       The webhook.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          webhook: examples.webhooks.new
+      ]
+
+    ]
+
+  ,
+
     id: "followed-slices"
     title: "Followed slices"
     trustedOnly: true
