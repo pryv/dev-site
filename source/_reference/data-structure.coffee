@@ -444,7 +444,7 @@ module.exports = exports =
       type: "[identifier](##{_getDocId("identifier")})"
       readOnly: true
       description: """
-                   The identifier of the Webhook.
+                   The identifier of the Webhook. Automatically generated if not set when creating the stream.
                    """
     ,
       key: "accessId"
@@ -463,13 +463,13 @@ module.exports = exports =
       key: "minIntervalMs"
       type: "number"
       description: """
-                   The minimum interval between subsequent HTTP calls in milliseconds.
+                   The minimum interval between subsequent HTTP calls in milliseconds. Defaults to the time set by the admin. 
                    """
     ,
       key: "maxRetries"
       type: "number"
       description: """
-                   The maximum number of retries executed after a failed HTTP call.
+                   The maximum number of retries executed after a failed HTTP call. Defaults to the number set by the admin.
                    """
     ,
       key: "currentRetries"
@@ -482,7 +482,7 @@ module.exports = exports =
       key: "state"
       type: "`active`|`inactive`"
       description: """
-                   The current state of the Webhook. An inactive Webhook will not make any HTTP call when changes occur. It must be activated using the `webhooks.update` method.
+                   The current state of the Webhook. An inactive Webhook will not make any HTTP call when changes occur. It must be activated using the [update webhook](#methods-webhooks-webhooks-update) method.
                    """
     ,
       key: "runCount"
