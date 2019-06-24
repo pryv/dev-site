@@ -58,7 +58,7 @@ module.exports = exports =
       key: "time"
       type: "[timestamp](##{_getDocId("timestamp")})"
       description: """
-                   The event's time. For period events, this is the time the event started.
+                   The event's time. For period events, this is the time the event started. Automatically set to the server time if not provided when creating the event.
                    """
     ,
       key: "duration"
