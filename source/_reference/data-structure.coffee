@@ -432,7 +432,12 @@ module.exports = exports =
     previewOnly: true
     description: """
                  Webhooks provide push notifications to servers using HTTP POST requests.  
-                 See also: [core concepts](/concepts/#webhooks).
+                 
+                 Webhooks can only be created by app accesses. Once created, they will run, executing a HTTP POST request to the provided URL for each data change in the user account. Currently, we support notifications for data changes, a subsequent API call is necessary to fetch the changes content.  
+
+                 In case of failure to send a request, the webhook will retry a defined number of times at a growing interval of time before becoming inactive after too many successive failures. The webhooks run rate is throttled by a minimum time between notifications, sending an array of events that occured during this period.  
+                
+                 All runs are saved which allows to monitor a webhook's health. 
                  """
     properties: [
       key: "id"
@@ -446,7 +451,7 @@ module.exports = exports =
       type: "[identifier](##{_getDocId("identifier")})"
       readOnly: true
       description: """
-                   The identifier of the Access that was used to create the Webhook.
+                   The identifier of the access that was used to create the Webhook.
                    """
     ,
       key: "url"
@@ -458,7 +463,7 @@ module.exports = exports =
       key: "minIntervalMs"
       type: "number"
       description: """
-                   The minimum interval between subsequent HTTP calls in Milliseconds.
+                   The minimum interval between subsequent HTTP calls in milliseconds.
                    """
     ,
       key: "maxRetries"
@@ -471,13 +476,13 @@ module.exports = exports =
       type: "number"
       readOnly: true
       description: """
-                   The number of retries iterations since the last failed HTTP call. This number should be 0 if the last HTTP call was successful.
+                   The number of retries iterations since the last failed HTTP call. This number is 0 if the last HTTP call was successful.
                    """
     ,
       key: "state"
       type: "`active`|`inactive`"
       description: """
-                   The current state of the Webhook. An inactive Webhook will not make any HTTP call when changes occur. It must be activated manually.
+                   The current state of the Webhook. An inactive Webhook will not make any HTTP call when changes occur. It must be activated using the `webhooks.update` method.
                    """
     ,
       key: "runCount"
@@ -491,7 +496,7 @@ module.exports = exports =
       type: "number"
       readOnly: true
       description: """
-                   The number of times the Webhook has failed making HTTP calls. Failed runs are HTTP requests that responded with a status outside of the 200-299 range.
+                   The number of times the Webhook has failed making HTTP calls. Failed runs are HTTP requests that responded with a status outside of 200-299 range.
                    """
     ,
       key: "lastRun"
