@@ -20,11 +20,15 @@ In this space you will find links and reference documents that will help you mak
 
 - API Reference for system management: [api.pryv.com/reference-system](https://api.pryv.com/reference-system/)
 
-  This reference only contains system management methods' documentation, for the platform owner.
+  This reference contains system management methods' documentation, for the platform owner.
 
 - Functional Requirement Specification: [api.pryv.com/functional-specifications](https://api.pryv.com/functional-specifications/)
 
   Functional specifications for the Pryv.io middleware system: the capabilities and functions that the system must be capable of performing.
+
+- API reference including incoming features: [api.pryv.com/reference-preview](https://api.pryv.com/reference-preview/)
+
+  In addition to the full reference, this includes upcoming features marked with a `PREVIEW` label.
 
 ## Documents
 
