@@ -1047,6 +1047,126 @@ module.exports = exports =
 
   ,
 
+    id: "audit"
+    title: "Audit"
+    previewOnly: true
+    description: """
+                 Methods to retrieve audit records. These methods expect a token in the 'Auhtorization' header.
+                 """
+    sections: [
+      id: "audit.get"
+      type: "method"
+      title: "Get audit records"
+      http: "GET /audit/accesses/:accessId"
+      description: """
+                   Fetches accessible audit records.
+                   By default, only returns records that imply the access id corresponding to the provided authorization token (self-auditing).
+                   """
+      params:
+        properties: [
+          key: "accessId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          optional: true
+          http:
+            text: "set in request path"
+          description: """
+                       The id of a specific access to audit.
+                       If a specific accessId is set in request path, it fetches instead the audit records that imply this given access id.
+                       It has to correspond to a valid sub-access regarding to the provided authorization token.
+                       """
+        ,
+          key: "fromTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       The start time of the timeframe you want to retrieve audit records for.
+                       It only considers year, mounth and day (ignores time).
+                       """
+        ,
+          key: "toTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       The end time of the timeframe you want to retrieve audit records for.
+                       It only considers year, mounth and day (ignore time).
+                       """
+        ,
+          key: "status"
+          type: "number"
+          optional: true
+          description: """
+                       Filters audit records by HTTP code.
+                       Expects either a 3-digits number, or 2-digits/1-digit number, in which case
+                       the digit(s) not specified will be wildcarded.
+                       """
+        ,
+          key: "ip"
+          type: "string"
+          optional: true
+          description: """
+                       Filters audit records by IP present in the forwarded_for header.
+                       """
+        ,
+          key: "port"
+          type: "number"
+          optional: true
+          description: """
+                       Filters audit records by port present in the forwarded_for header.
+                       """
+        ,
+          key: "httpVerb"
+          type: "string"
+          optional: true
+          description: """
+                       Filters audit records by HTTP verb (GET, POST, ...) present in the audited actions.
+                       """
+        ,
+          key: "endpoint"
+          type: "string"
+          optional: true
+          description: """
+                       Filters audit records by API endpoint present in the audited actions (e.g. /events).
+                       """
+        ,
+          key: "errorId"
+          type: "string"
+          optional: true
+          description: """
+                       Filters audit records by error id.
+                       It is similar to 'status' but allows greater precision.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "events"
+          type: "array of audit Events"
+          description: """
+                       Resulting audit records in a form similar to [Events](##{dataStructure.getDocId("event")}).
+                       The Event type is fixed to 'audit/core', the time corresponds to the record creation time and
+                       the content includes the audit log details.
+                       """
+        ]
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Authorization token is not authorized to audit the given access.
+                     
+                     When providing a specific access id, if the result of [Get Accesses](##{_getDocId("accesses", "accesses.get")})
+                     using the provided Authorization token does not contain the given access, then it is not auditable.
+                     """
+        ]
+      examples: [
+        params: {}
+        result:
+          events: examples.audit.record
+      ]
+
+    ]
+
+  ,
+
     id: "webhooks"
     title: "Webhooks"
     previewOnly: true

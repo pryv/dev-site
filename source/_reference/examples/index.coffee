@@ -8,3 +8,4 @@ module.exports =
   itemDeletions: require('./itemDeletions.coffee')
   register: require('./register.coffee')
   webhooks: require('./webhooks.coffee')
+  audit: require('./audit.coffee')
