@@ -1104,14 +1104,7 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       Filters audit records by IP present in the forwarded_for header.
-                       """
-        ,
-          key: "port"
-          type: "number"
-          optional: true
-          description: """
-                       Filters audit records by port present in the forwarded_for header.
+                       Filters audit records by client IP present in the forwarded_for property.
                        """
         ,
           key: "httpVerb"

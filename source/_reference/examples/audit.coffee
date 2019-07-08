@@ -8,7 +8,7 @@ module.exports =
     type: "audit/core",
     time: 1561988300,
     content: [
-      forwarded_for: "172.18.0.7:40150",
+      forwarded_for: "172.18.0.7",
       action: "GET /events",
       username: "testuser2",
       query: "fromTime=-1000000000,toTime=10000000000,limit=100,modifiedSince=-100000000,state=all",
