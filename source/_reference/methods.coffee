@@ -1057,7 +1057,7 @@ module.exports = exports =
       id: "audit.get"
       type: "method"
       title: "Get audit records"
-      http: "GET /audit/accesses/:accessId"
+      http: "GET /audit/logs"
       description: """
                    Fetches accessible audit records.
                    By default, only returns records that imply the access id corresponding to the provided authorization token (self-auditing).
@@ -1067,11 +1067,9 @@ module.exports = exports =
           key: "accessId"
           type: "[identifier](##{dataStructure.getDocId("identifier")})"
           optional: true
-          http:
-            text: "set in request path"
           description: """
                        The id of a specific access to audit.
-                       If a specific accessId is set in request path, it fetches instead the audit records that imply this given access id.
+                       When specified, it fetches instead the audit records that imply this given access id.
                        It has to correspond to a valid sub-access regarding to the provided authorization token.
                        """
         ,
@@ -1135,9 +1133,12 @@ module.exports = exports =
           key: "events"
           type: "array of audit Events"
           description: """
-                       Resulting audit records in a form similar to [Events](##{dataStructure.getDocId("event")}).
-                       The Event type is fixed to 'audit/core', the time corresponds to the record creation time and
-                       the content includes the audit log details.
+                       Array of resulting audit records, presented in a form similar to [Events](##{dataStructure.getDocId("event")}), as follows:
+                        - id: corresponds to the id of the request that generates this record
+                        - streamId: corresponds to the concatenation of '#accessId/' and the access id
+                        - type: fixed to 'audit/core'
+                        - time: corresponds to the record creation time
+                        - content: includes the audit record details
                        """
         ]
       errors: [
