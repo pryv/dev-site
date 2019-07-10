@@ -163,6 +163,119 @@ module.exports = exports =
 
   ,
 
+    id: "service-infos"
+    title: "Service infos"
+    http: "GET /service/infos"
+
+    description: """
+                 /service/infos is a unfied way for third party services to access the necessary informations related to a Pryv.io implementation as this route is served by any Pryv.io API endpoint.
+
+                 For many applications the first step is to Authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.
+                 Fetching `https://{any_endpoint}/service/infos` will return you a list of usefull informations such as `access` containing the path to access.
+
+                 Example
+                 ```js
+                 // Requires
+                 const superagent = require('superagent');
+                 const express = require('express');
+
+                 // Fetch infos from register Service Infos
+                 const registerUrl = 'https://reg.pryv.li';
+                 const serviceInfos = await superagent.get(registerUrl + '/service/infos');
+
+                 // Extract `access` info
+                 const accessUrl = serviceInfos.access;
+
+                 // Listen to GET calls on the `access` url.
+                 const expressApp = express();
+                 expressApp.get(accessUrl, function (req: express$Request, res, next) {
+                    api.call('accesses.get', reSpecific errors
+                    q.context, req.query, methodCallback(res, next, 200));
+                 });
+                ```
+                 """
+    params:
+      properties: []
+    result:
+      http: "200 OK"
+      properties: [
+        key: "version"
+        type: "string"
+        description: """
+                    The API version.
+                    """
+      ,
+        key: "register"
+        type: "string"
+        description: """
+                    The URL of the registry service.
+                    """
+      ,
+        key: "access"
+        type: "string"
+        description: """
+                    The URL of the access page.
+                    """
+      ,
+        key: "api"
+        type: "string"
+        description: """
+                    The API endpoint format.
+                    """
+      ,
+        key: "name"
+        type: "string"
+        description: """
+                    The platform name.
+                    """
+      ,
+        key: "home"
+        type: "string"
+        description: """
+                    The URL of the platform's home page.
+                    """
+      ,
+        key: "support"
+        type: "string"
+        description: """
+                    The URL or email of the suppport page.
+                    """
+      ,
+        key: "terms"
+        type: "string"
+        description: """
+                    The URL or plain text of the terms and conditions page.
+                    """
+      ,
+        key: "eventTypes"
+        type: "string"
+        description: """
+                    The URL of the list of event types.
+                    """
+      ,
+        key: "data"
+        type: "any type"
+        description: """
+                    Custom field for you to store any additional data.
+                    i.e. Platform-dependant information (Android / iOS), ...
+                    """
+      ,
+        key: "meta"
+        type: "any type"
+        description: """
+                    Meta-data is given with each api response and is now enhanced with a `serial` field.
+                    The serial will change each time core or register is updated, if you compare it with the serial of a previous response and see a difference you should reload core configuration.
+                    """
+      ]
+    examples: [
+          title: "Retrieving service information."
+          params: {}
+          result:
+            examples.serviceInfos.infos
+        ]
+
+  ,
+
     id: "data-format"
     title: "Data format"
     description: """

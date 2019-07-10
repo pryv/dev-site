@@ -7,4 +7,5 @@ module.exports =
   users: require('./users.coffee')
   itemDeletions: require('./itemDeletions.coffee')
   register: require('./register.coffee')
+  serviceInfos: require('./serviceInfos.coffee')
   webhooks: require('./webhooks.coffee')
