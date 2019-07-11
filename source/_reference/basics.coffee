@@ -168,12 +168,12 @@ module.exports = exports =
     http: "GET /service/infos"
 
     description: """
-                 /service/infos is a unfied way for third party services to access the necessary informations related to a Pryv.io implementation as this route is served by any Pryv.io API endpoint.
+                 /service/infos is a unified way for third party services to access the necessary information related to a Pryv.io implementation as this route is served by any Pryv.io API endpoint.
 
-                 For many applications the first step is to Authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.
-                 Fetching `https://{any_endpoint}/service/infos` will return you a list of usefull informations such as `access` containing the path to access.
+                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.
+                 Fetching `https://{any_endpoint}/service/infos` will return you a list of useful informations, such as `access`, containing the path to access.
 
-                 Example
+                 For example :
                  ```js
                  // Requires
                  const superagent = require('superagent');
@@ -238,7 +238,7 @@ module.exports = exports =
         key: "support"
         type: "string"
         description: """
-                    The URL or email of the suppport page.
+                    The URL or email of the support page.
                     """
       ,
         key: "terms"
@@ -253,18 +253,11 @@ module.exports = exports =
                     The URL of the list of event types.
                     """
       ,
-        key: "data"
-        type: "any type"
-        description: """
-                    Custom field for you to store any additional data.
-                    i.e. Platform-dependant information (Android / iOS), ...
-                    """
-      ,
         key: "meta"
         type: "any type"
         description: """
-                    Meta-data is given with each api response and is now enhanced with a `serial` field.
-                    The serial will change each time core or register is updated, if you compare it with the serial of a previous response and see a difference you should reload core configuration.
+                    Meta-data is given with each API response and is now enhanced with a serial field.
+                    The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the core configuration.
                     """
       ]
     examples: [
