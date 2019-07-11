@@ -1051,7 +1051,7 @@ module.exports = exports =
     title: "Audit"
     previewOnly: true
     description: """
-                 Methods to retrieve audit records. These methods expect a token in the 'Auhtorization' header.
+                 Methods to retrieve audit records. These methods expect a token in the 'Authorization' header or as 'auth' query parameter.
                  """
     sections: [
       id: "audit.get"
@@ -1070,7 +1070,7 @@ module.exports = exports =
           description: """
                        The id of a specific access to audit.
                        When specified, it fetches instead the audit records that imply this given access id.
-                       It has to correspond to a valid sub-access regarding to the provided authorization token.
+                       It has to correspond to a valid sub-access in regards to the provided authorization token.
                        """
         ,
           key: "fromTime"
@@ -1094,8 +1094,8 @@ module.exports = exports =
           optional: true
           description: """
                        Filters audit records by HTTP code.
-                       Expects either a 3-digits number, or 2-digits/1-digit number, in which case
-                       the digit(s) not specified will be wildcarded.
+                       Expects either a 3-digits number, or a 2-digits/1-digit number, in which case
+                       the unspecified digit(s) will be wildcarded.
                        """
         ,
           key: "ip"
@@ -1109,14 +1109,14 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       Filters audit records by HTTP verb (GET, POST, ...) present in the audited actions.
+                       Filters audit records by HTTP verb present in the audited actions.
                        """
         ,
           key: "endpoint"
           type: "string"
           optional: true
           description: """
-                       Filters audit records by API endpoint present in the audited actions (e.g. /events).
+                       Filters audit records by API endpoint present in the audited actions.
                        """
         ,
           key: "errorId"
@@ -1124,7 +1124,6 @@ module.exports = exports =
           optional: true
           description: """
                        Filters audit records by error id.
-                       It is similar to 'status' but allows greater precision.
                        """
         ]
       result:
@@ -1152,9 +1151,24 @@ module.exports = exports =
                      """
         ]
       examples: [
-        params: {}
+        params: {
+          "auth": examples.audit.auth,
+          "accessId": examples.audit.record1.content.access_id,
+          "fromTime": 1561000000,
+          "toTime": 1562000000,
+          "status": examples.audit.record1.content.status,
+          "ip": examples.audit.record1.content.forwarded_for,
+          "httpVerb": "GET",
+          "endpoint": "/events",
+          "errorId": examples.audit.record1.content.error_id
+        }
+
         result:
-          events: examples.audit.record
+          events: [
+            examples.audit.record1,
+            examples.audit.record2,
+            examples.audit.record3
+          ]
       ]
 
     ]
