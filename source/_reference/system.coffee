@@ -423,7 +423,12 @@ module.exports = exports =
           ,
             key: "invitationtoken"
             type: "string"
-            description: "An invitation token, used when limiting registration to a specific set of users."
+            optional: true
+            description: """
+                          An invitation token, necessary when users registration is limited to a specific set of users.
+                          Platform administrators may limit users registration by configuring a list of authorized invitation tokens.
+                          If this is not the case, users registration is open to everyone and this parameter can be omitted.
+                          """
           ,
             key: "languageCode"
             type: "string"
