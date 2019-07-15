@@ -1153,14 +1153,14 @@ module.exports = exports =
       examples: [
         params: {
           "auth": examples.audit.auth,
-          "accessId": examples.audit.record1.content.access_id,
+          "accessId": examples.audit.record1.content.accessId,
           "fromTime": 1561000000,
           "toTime": 1562000000,
           "status": examples.audit.record1.content.status,
-          "ip": examples.audit.record1.content.forwarded_for,
+          "ip": examples.audit.record1.content.forwardedFor,
           "httpVerb": "GET",
           "endpoint": "/events",
-          "errorId": examples.audit.record1.content.error_id
+          "errorId": examples.audit.record1.content.errorId
         }
 
         result:
