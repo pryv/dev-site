@@ -1051,16 +1051,16 @@ module.exports = exports =
     title: "Audit"
     previewOnly: true
     description: """
-                 Methods to retrieve audit records. These methods expect a token in the 'Authorization' header or as 'auth' query parameter.
+                 Methods to retrieve audit logs. These methods expect a token in the 'Authorization' header or as 'auth' query parameter.
                  """
     sections: [
       id: "audit.get"
       type: "method"
-      title: "Get audit records"
+      title: "Get audit logs"
       http: "GET /audit/logs"
       description: """
-                   Fetches accessible audit records.
-                   By default, only returns records that imply the access id corresponding to the provided authorization token (self-auditing).
+                   Fetches accessible audit logs.
+                   By default, only returns logs that imply the access id corresponding to the provided authorization token (self-auditing).
                    """
       params:
         properties: [
@@ -1069,7 +1069,7 @@ module.exports = exports =
           optional: true
           description: """
                        The id of a specific access to audit.
-                       When specified, it fetches instead the audit records that imply this given access id.
+                       When specified, it fetches instead the audit logs that imply this given access id.
                        It has to correspond to a valid sub-access in regards to the provided authorization token.
                        """
         ,
@@ -1077,7 +1077,7 @@ module.exports = exports =
           type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
-                       The start time of the timeframe you want to retrieve audit records for.
+                       The start time of the timeframe you want to retrieve audit logs for.
                        It only considers year, mounth and day (ignores time).
                        """
         ,
@@ -1085,7 +1085,7 @@ module.exports = exports =
           type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
-                       The end time of the timeframe you want to retrieve audit records for.
+                       The end time of the timeframe you want to retrieve audit logs for.
                        It only considers year, mounth and day (ignore time).
                        """
         ,
@@ -1093,7 +1093,7 @@ module.exports = exports =
           type: "number"
           optional: true
           description: """
-                       Filters audit records by HTTP code.
+                       Filters audit logs by HTTP code.
                        Expects either a 3-digits number, or a 2-digits/1-digit number, in which case
                        the unspecified digit(s) will be wildcarded.
                        """
@@ -1102,42 +1102,42 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       Filters audit records by client IP present in the forwarded_for property.
+                       Filters audit logs by client IP present in the forwarded_for property.
                        """
         ,
           key: "httpVerb"
           type: "string"
           optional: true
           description: """
-                       Filters audit records by HTTP verb present in the audited actions.
+                       Filters audit logs by HTTP verb present in the audited actions.
                        """
         ,
           key: "endpoint"
           type: "string"
           optional: true
           description: """
-                       Filters audit records by API endpoint present in the audited actions.
+                       Filters audit logs by API endpoint present in the audited actions.
                        """
         ,
           key: "errorId"
           type: "string"
           optional: true
           description: """
-                       Filters audit records by error id.
+                       Filters audit logs by error id.
                        """
         ]
       result:
         http: "200 OK"
         properties: [
           key: "events"
-          type: "array of audit Events"
+          type: "array of audit logs"
           description: """
-                       Array of resulting audit records, presented in a form similar to [Events](##{dataStructure.getDocId("event")}), as follows:
-                        - id: corresponds to the id of the request that generates this record
+                       Array of resulting audit logs, presented in a form similar to [Events](##{dataStructure.getDocId("event")}), as follows:
+                        - id: corresponds to the id of the request that generates this log
                         - streamId: corresponds to the concatenation of '#accessId/' and the access id
                         - type: fixed to 'audit/core'
-                        - time: corresponds to the record creation time
-                        - content: includes the audit record details
+                        - time: corresponds to the log creation time
+                        - content: includes the audit log details
                        """
         ]
       errors: [
@@ -1153,21 +1153,21 @@ module.exports = exports =
       examples: [
         params: {
           "auth": examples.audit.auth,
-          "accessId": examples.audit.record1.content.accessId,
+          "accessId": examples.audit.log1.content.accessId,
           "fromTime": 1561000000,
           "toTime": 1562000000,
-          "status": examples.audit.record1.content.status,
-          "ip": examples.audit.record1.content.forwardedFor,
+          "status": examples.audit.log1.content.status,
+          "ip": examples.audit.log1.content.forwardedFor,
           "httpVerb": "GET",
           "endpoint": "/events",
-          "errorId": examples.audit.record1.content.errorId
+          "errorId": examples.audit.log1.content.errorId
         }
 
         result:
           events: [
-            examples.audit.record1,
-            examples.audit.record2,
-            examples.audit.record3
+            examples.audit.log1,
+            examples.audit.log2,
+            examples.audit.log3
           ]
       ]
 

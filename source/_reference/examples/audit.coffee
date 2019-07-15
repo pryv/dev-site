@@ -4,7 +4,7 @@ accessId = generateId();
 
 module.exports =
   auth: generateId(),
-  record1:
+  log1:
     id: generateId(),
     streamId: "#accessId/"+accessId,
     type: "audit/core",
@@ -18,7 +18,7 @@ module.exports =
       status: 403,
       message: "Access session has expired.",
       errorId: "forbidden",
-  record2:
+  log2:
     id: generateId(),
     streamId: "#accessId/"+accessId,
     type: "audit/core",
@@ -32,7 +32,7 @@ module.exports =
       status: 403,
       message: "Access session has expired.",
       errorId: "forbidden",
-  record3:
+  log3:
     id: generateId(),
     streamId: "#accessId/"+accessId,
     type: "audit/core",
