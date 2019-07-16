@@ -1051,7 +1051,8 @@ module.exports = exports =
     title: "Audit"
     previewOnly: true
     description: """
-                 Methods to retrieve audit logs. These methods expect a token in the 'Authorization' header or as 'auth' query parameter.
+                 Methods to retrieve [Audit logs](##{dataStructure.getDocId("audit-log")}).
+                 These methods expect a token in the 'Authorization' header or as 'auth' query parameter.
                  """
     sections: [
       id: "audit.get"
@@ -1060,7 +1061,7 @@ module.exports = exports =
       http: "GET /audit/logs"
       description: """
                    Fetches accessible audit logs.
-                   By default, only returns logs that imply the access id corresponding to the provided authorization token (self-auditing).
+                   By default, only returns logs that involve the access id corresponding to the provided authorization token (self-auditing).
                    """
       params:
         properties: [
@@ -1069,7 +1070,7 @@ module.exports = exports =
           optional: true
           description: """
                        The id of a specific access to audit.
-                       When specified, it fetches instead the audit logs that imply this given access id.
+                       When specified, it fetches instead the audit logs that involve the given access id.
                        It has to correspond to a valid sub-access in regards to the provided authorization token.
                        """
         ,
@@ -1130,14 +1131,9 @@ module.exports = exports =
         http: "200 OK"
         properties: [
           key: "events"
-          type: "array of audit logs"
+          type: "array of [Audit logs](##{dataStructure.getDocId("audit-log")})"
           description: """
-                       Array of resulting audit logs, presented in a form similar to [Events](##{dataStructure.getDocId("event")}), as follows:
-                        - id: corresponds to the id of the request that generates this log
-                        - streamId: corresponds to the concatenation of '#accessId/' and the access id
-                        - type: fixed to 'audit/core'
-                        - time: corresponds to the log creation time
-                        - content: includes the audit log details
+                       The accessible audit logs.
                        """
         ]
       errors: [
