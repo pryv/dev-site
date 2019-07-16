@@ -238,26 +238,19 @@ module.exports = exports =
         key: "support"
         type: "string"
         description: """
-                    The URL or email of the support page.
+                    The email or URL of the support page.
                     """
       ,
         key: "terms"
         type: "string"
         description: """
-                    The URL or plain text of the terms and conditions page.
+                    The terms and conditions, in plain text or the URL displaying them.
                     """
       ,
         key: "eventTypes"
         type: "string"
         description: """
-                    The URL of the list of event types.
-                    """
-      ,
-        key: "meta"
-        type: "any type"
-        description: """
-                    Meta-data is given with each API response and is now enhanced with a serial field.
-                    The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the core configuration.
+                    The URL of the list of validated event types.
                     """
       ]
     examples: [
@@ -644,6 +637,11 @@ module.exports = exports =
         key: "meta.serverTime"
         description: """
                      The current server time as a [timestamp](##{dataStructure.getDocId("timestamp")}). Keeping track of server time is necessary to properly handle time in API calls.
+                     """
+      ,
+        key: "meta.serial"
+        description: """
+                     The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the core configuration.
                      """
       ]
     ]
