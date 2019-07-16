@@ -1078,7 +1078,7 @@ module.exports = exports =
           optional: true
           description: """
                        The start time of the timeframe you want to retrieve audit logs for.
-                       It only considers year, mounth and day (ignores time).
+                       Timestamps are considered with a year/month/day precision.
                        """
         ,
           key: "toTime"
@@ -1086,23 +1086,23 @@ module.exports = exports =
           optional: true
           description: """
                        The end time of the timeframe you want to retrieve audit logs for.
-                       It only considers year, mounth and day (ignore time).
+                       Timestamps are considered with a year/month/day precision.
                        """
         ,
           key: "status"
           type: "number"
           optional: true
           description: """
-                       Filters audit logs by HTTP code.
-                       Expects either a 3-digits number, or a 2-digits/1-digit number, in which case
-                       the unspecified digit(s) will be wildcarded.
+                       Filters audit logs by HTTP code, a 3-digits number.
+                       It is possible to provide only the first or two first digit(s),
+                       in which case the unspecified digit(s) will be wildcarded.
                        """
         ,
           key: "ip"
           type: "string"
           optional: true
           description: """
-                       Filters audit logs by client IP present in the forwarded_for property.
+                       Filters audit logs by client IP present in the forwardedFor property.
                        """
         ,
           key: "httpVerb"
