@@ -163,15 +163,15 @@ module.exports = exports =
 
   ,
 
-    id: "service-infos"
-    title: "Service infos"
-    http: "GET /service/infos"
+    id: "service-info"
+    title: "Service info"
+    http: "GET /service/info"
 
     description: """
-                 /service/infos is a unified way for third party services to access the necessary information related to a Pryv.io implementation as this route is served by any Pryv.io API endpoint.
+                 /service/info is a unified way for third party services to access the necessary information related to a Pryv.io implementation as this route is served by any Pryv.io API endpoint.
 
                  For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.
-                 Fetching `https://{any_endpoint}/service/infos` will return you a list of useful informations, such as `access`, containing the path to access.
+                 Fetching `https://{any_endpoint}/service/info` will return you a list of useful informations, such as `access`, containing the path to access.
 
                  For example :
                  ```js
@@ -179,12 +179,12 @@ module.exports = exports =
                  const superagent = require('superagent');
                  const express = require('express');
 
-                 // Fetch infos from register Service Infos
+                 // Fetch informations from register Service Info
                  const registerUrl = 'https://reg.pryv.li';
-                 const serviceInfos = await superagent.get(registerUrl + '/service/infos');
+                 const serviceInfo = await superagent.get(registerUrl + '/service/info');
 
                  // Extract `access` info
-                 const accessUrl = serviceInfos.access;
+                 const accessUrl = serviceInfo.access;
 
                  // Listen to GET calls on the `access` url.
                  const expressApp = express();
@@ -257,7 +257,7 @@ module.exports = exports =
           title: "Retrieving service information."
           params: {}
           result:
-            examples.serviceInfos.infos
+            examples.serviceInfo.info
         ]
 
   ,

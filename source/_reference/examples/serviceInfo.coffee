@@ -1,7 +1,7 @@
 timestamp = require("unix-timestamp")
 
 module.exports =
-  infos:
+  info:
     register: "https://reg.pryv.li"
     access: "https://access.pryv.li/access"
     api: "https://{username}.pryv.li/"
