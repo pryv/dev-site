@@ -168,31 +168,10 @@ module.exports = exports =
     http: "GET /service/info"
 
     description: """
-                 /service/info is a unified way for third party services to access the necessary information related to a Pryv.io implementation as this route is served by any Pryv.io API endpoint.
+                 Service information provides a unified way for third party services to access the necessary information related to a Pryv.io platform as this route is served by any Pryv.io API endpoint.
 
-                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.
-                 Fetching `https://{any_endpoint}/service/info` will return you a list of useful informations, such as `access`, containing the path to access.
-
-                 For example :
-                 ```js
-                 // Requires
-                 const superagent = require('superagent');
-                 const express = require('express');
-
-                 // Fetch informations from register Service Info
-                 const registerUrl = 'https://reg.pryv.li';
-                 const serviceInfo = await superagent.get(registerUrl + '/service/info');
-
-                 // Extract `access` info
-                 const accessUrl = serviceInfo.access;
-
-                 // Listen to GET calls on the `access` url.
-                 const expressApp = express();
-                 expressApp.get(accessUrl, function (req: express$Request, res, next) {
-                    api.call('accesses.get', reSpecific errors
-                    q.context, req.query, methodCallback(res, next, 200));
-                 });
-                ```
+                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.  
+                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access.                 
                  """
     params:
       properties: []
