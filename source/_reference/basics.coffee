@@ -163,15 +163,15 @@ module.exports = exports =
 
   ,
 
-    id: "service-infos"
-    title: "Service infos"
-    http: "GET /service/infos"
+    id: "service-info"
+    title: "Service info"
+    http: "GET /service/info"
 
     description: """
                  Service information provides a unified way for third party services to access the necessary information related to a Pryv.io platform as this route is served by any Pryv.io API endpoint.
 
                  For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.  
-                 Fetching the path `/service/infos` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access.                 
+                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access.                 
                  """
     params:
       properties: []
@@ -217,33 +217,26 @@ module.exports = exports =
         key: "support"
         type: "string"
         description: """
-                    The URL or email of the support page.
+                    The email or URL of the support page.
                     """
       ,
         key: "terms"
         type: "string"
         description: """
-                    The URL or plain text of the terms and conditions page.
+                    The terms and conditions, in plain text or the URL displaying them.
                     """
       ,
         key: "eventTypes"
         type: "string"
         description: """
-                    The URL of the list of event types.
-                    """
-      ,
-        key: "meta"
-        type: "any type"
-        description: """
-                    Meta-data is given with each API response and is now enhanced with a serial field.
-                    The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the core configuration.
+                    The URL of the list of validated event types.
                     """
       ]
     examples: [
           title: "Retrieving service information."
           params: {}
           result:
-            examples.serviceInfos.infos
+            examples.serviceInfo.info
         ]
 
   ,
@@ -623,6 +616,11 @@ module.exports = exports =
         key: "meta.serverTime"
         description: """
                      The current server time as a [timestamp](##{dataStructure.getDocId("timestamp")}). Keeping track of server time is necessary to properly handle time in API calls.
+                     """
+      ,
+        key: "meta.serial"
+        description: """
+                     The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the core configuration.
                      """
       ]
     ]
