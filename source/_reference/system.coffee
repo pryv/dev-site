@@ -219,74 +219,6 @@ module.exports = exports =
                   Methods for collecting service information such as details about the platform and the API, connected apps or hostings (core server locations).
                   """
       sections: [
-        id: "service.infos.get"
-        type: "method"
-        title: "Get service infos"
-        http: "GET /service/infos"
-        server: "register"
-        description: """
-                    Retrieve service information such as details about the platform and the API, as well as various useful URLs.
-                    """
-        params:
-          properties: []
-        result:
-          http: "200 OK"
-          properties: [
-            key: "version"
-            type: "string"
-            description: """
-                        The API version.
-                        """
-          ,
-            key: "register"
-            type: "string"
-            description: """
-                        The URL of the registry service.
-                        """
-          ,
-            key: "access"
-            type: "string"
-            description: """
-                        The URL of the access page.
-                        """
-          ,
-            key: "api"
-            type: "string"
-            description: """
-                        The API endpoint format.
-                        """
-          ,
-            key: "name"
-            type: "string"
-            description: """
-                        The platform name.
-                        """
-          ,
-            key: "home"
-            type: "string"
-            description: """
-                        The URL of the platform's home page.
-                        """
-          ,
-            key: "support"
-            type: "string"
-            description: """
-                        The URL of the suppport page.
-                        """
-          ,
-            key: "terms"
-            type: "string"
-            description: """
-                        The URL of the terms and conditions page.
-                        """
-          ]
-        examples: [
-          title: "Retrieving service information."
-          params: {}
-          result: 
-            examples.register.serviceInfos
-        ]
-      ,
         id: "hostings.get"
         type: "method"
         title: "Get hostings"
@@ -423,7 +355,12 @@ module.exports = exports =
           ,
             key: "invitationtoken"
             type: "string"
-            description: "An invitation token, used when limiting registration to a specific set of users."
+            optional: true
+            description: """
+                          An invitation token, necessary when users registration is limited to a specific set of users.
+                          Platform administrators may limit users registration by configuring a list of authorized invitation tokens.
+                          If this is not the case, users registration is open to everyone and this parameter can be omitted.
+                          """
           ,
             key: "languageCode"
             type: "string"

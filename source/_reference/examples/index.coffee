@@ -9,3 +9,4 @@ module.exports =
   register: require('./register.coffee')
   webhooks: require('./webhooks.coffee')
   audit: require('./audit.coffee')
+  serviceInfo: require('./serviceInfo.coffee')

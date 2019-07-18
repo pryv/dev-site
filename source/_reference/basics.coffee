@@ -163,6 +163,84 @@ module.exports = exports =
 
   ,
 
+    id: "service-info"
+    title: "Service info"
+    http: "GET /service/info"
+
+    description: """
+                 Service information provides a unified way for third party services to access the necessary information related to a Pryv.io platform as this route is served by any Pryv.io API endpoint.
+
+                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.  
+                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access.                 
+                 """
+    params:
+      properties: []
+    result:
+      http: "200 OK"
+      properties: [
+        key: "version"
+        type: "string"
+        description: """
+                    The API version.
+                    """
+      ,
+        key: "register"
+        type: "string"
+        description: """
+                    The URL of the registry service.
+                    """
+      ,
+        key: "access"
+        type: "string"
+        description: """
+                    The URL of the access page.
+                    """
+      ,
+        key: "api"
+        type: "string"
+        description: """
+                    The API endpoint format.
+                    """
+      ,
+        key: "name"
+        type: "string"
+        description: """
+                    The platform name.
+                    """
+      ,
+        key: "home"
+        type: "string"
+        description: """
+                    The URL of the platform's home page.
+                    """
+      ,
+        key: "support"
+        type: "string"
+        description: """
+                    The email or URL of the support page.
+                    """
+      ,
+        key: "terms"
+        type: "string"
+        description: """
+                    The terms and conditions, in plain text or the URL displaying them.
+                    """
+      ,
+        key: "eventTypes"
+        type: "string"
+        description: """
+                    The URL of the list of validated event types.
+                    """
+      ]
+    examples: [
+          title: "Retrieving service information."
+          params: {}
+          result:
+            examples.serviceInfo.info
+        ]
+
+  ,
+
     id: "data-format"
     title: "Data format"
     description: """
@@ -538,6 +616,11 @@ module.exports = exports =
         key: "meta.serverTime"
         description: """
                      The current server time as a [timestamp](##{dataStructure.getDocId("timestamp")}). Keeping track of server time is necessary to properly handle time in API calls.
+                     """
+      ,
+        key: "meta.serial"
+        description: """
+                     The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the core configuration.
                      """
       ]
     ]

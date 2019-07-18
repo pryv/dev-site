@@ -41,15 +41,6 @@ module.exports =
     "core1.pryv.me": 1337
     "core2.pryv.me": 42
   ,
-  serviceInfos:
-    version: "0.1.0"
-    register: "https://reg.pryv.me"
-    access: "https://access.pryv.io/access"
-    api: "https://{username}.pryv.io/"
-    name: "Pryv Lab"
-    home: "https://sw.pryv.me"
-    support: "http://pryv.com/helpdesk"
-    terms: "http://pryv.com/pryv-lab-terms-of-use/"
   apps: [
     id: "pryv-csv-importer"
     displayName: "CSV Importer"
