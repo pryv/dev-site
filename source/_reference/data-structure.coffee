@@ -453,64 +453,59 @@ module.exports = exports =
       type: "[timestamp](#data-structure-timestamp)"
       readOnly: true
       description: """
-                   The time the log was generated.
+                   The time the API call was executed.
                    """
     ,
-      key: "content"
-      type: "object"
+      key: "forwardedFor"
+      type: "string"
       readOnly: true
       description: """
-                   Contains the audit log details.
-                   """
-      properties: [
-        key: "forwardedFor"
-        type: "string"
-        description: """
-                     The IP of the client who performed the audited action.
-                     """
-      ,
-        key: "action"
-        type: "string"
-        description: """
-                     The audited action, composed by the http verb and the API endpoint.
-                     """
-      ,
-        key: "username"
-        type: "string"
-        description: """
-                     The username of the Pryv.io account targeted by the audited action.
-                     """
-      ,
-        key: "query"
-        type: "string"
-        description: """
-                     The query string that accompanied the audited action, if any.
-                     """
-      ,
-        key: "accessId"
-        type: "string"
-        description: """
-                     The identifier for the access used to perform the audited action.
-                     """
-      ,
-        key: "status"
-        type: "number"
-        description: """
-                     The status resulting from the audited action, as HTTP code.
-                     """
-      ,
-        key: "message"
-        type: "string"
-        description: """
-                     The success or error message resulting from the audited action.
-                     """
-      ,
-        key: "errorId"
-        type: "string"
-        description: """
-                     The identifier for the error resulting from the audited action, if any.
-                     """
-      ]
+                    The IP address of the client who performed the audited action.
+                    """
+    ,
+      key: "action"
+      type: "string"
+      readOnly: true
+      description: """
+                    The audited action, typically an API method call, composed by the HTTP verb and the API resource.
+                    """
+    ,
+      key: "query"
+      type: "string"
+      readOnly: true
+      description: """
+                    The query string that accompanied the audited action, if any.
+                    """
+    ,
+      key: "accessId"
+      type: "string"
+      readOnly: true
+      description: """
+                    The identifier for the access used to perform the audited action.
+                    """
+    ,
+      key: "status"
+      type: "number"
+      readOnly: true
+      description: """
+                    The HTTP response status resulting from the audited action.
+                    """
+    ,
+      key: "errorMessage"
+      type: "string"
+      readOnly: true
+      optional: true
+      description: """
+                    The error message resulting from the audited action, if any.
+                    """
+    ,
+      key: "errorId"
+      type: "string"
+      readOnly: true
+      optional: true
+      description: """
+                    The identifier for the error resulting from the audited action, if any.
+                    """
     ]
     examples: [
       title: "A single audit log"

@@ -1052,7 +1052,6 @@ module.exports = exports =
     previewOnly: true
     description: """
                  Methods to retrieve [Audit logs](##{dataStructure.getDocId("audit-log")}).
-                 These methods expect a token in the 'Authorization' header or as 'auth' query parameter.
                  """
     sections: [
       id: "audit.get"
@@ -1061,7 +1060,7 @@ module.exports = exports =
       http: "GET /audit/logs"
       description: """
                    Fetches accessible audit logs.
-                   By default, only returns logs that involve the access id corresponding to the provided authorization token (self-auditing).
+                   By default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).
                    """
       params:
         properties: [
@@ -1070,8 +1069,8 @@ module.exports = exports =
           optional: true
           description: """
                        The id of a specific access to audit.
-                       When specified, it fetches instead the audit logs that involve the given access id.
-                       It has to correspond to a valid sub-access in regards to the provided authorization token.
+                       When specified, it fetches the audit logs that involve the matching access instead of the one used to authenticate this call.
+                       It has to correspond to a sub-access (expired and deleted included) in regards to the provided authorization token.
                        """
         ,
           key: "fromTime"
@@ -1079,7 +1078,7 @@ module.exports = exports =
           optional: true
           description: """
                        The start time of the timeframe you want to retrieve audit logs for.
-                       Timestamps are considered with a year/month/day precision.
+                       Timestamps are considered with a day precision.
                        """
         ,
           key: "toTime"
@@ -1087,37 +1086,38 @@ module.exports = exports =
           optional: true
           description: """
                        The end time of the timeframe you want to retrieve audit logs for.
-                       Timestamps are considered with a year/month/day precision.
+                       Timestamps are considered with a day precision.
                        """
         ,
           key: "status"
           type: "number"
           optional: true
           description: """
-                       Filters audit logs by HTTP code, a 3-digits number.
-                       It is possible to provide only the first or two first digit(s),
-                       in which case the unspecified digit(s) will be wildcarded.
+                       Filters audit logs by HTTP response status, a 3-digits number.
+                       It is possible to provide only the first digit,
+                       in which case the two unspecified digits will be wildcarded.
+                       For example, `status=4` will return all logs with status between 400 and 499.
                        """
         ,
           key: "ip"
           type: "string"
           optional: true
           description: """
-                       Filters audit logs by client IP present in the forwardedFor property.
+                       Filters audit logs by client IP address present in the `forwardedFor` property.
                        """
         ,
           key: "httpVerb"
           type: "string"
           optional: true
           description: """
-                       Filters audit logs by HTTP verb present in the audited actions.
+                       Filters audit logs by HTTP verb present in the `action` property.
                        """
         ,
-          key: "endpoint"
+          key: "resource"
           type: "string"
           optional: true
           description: """
-                       Filters audit logs by API endpoint present in the audited actions.
+                       Filters audit logs by API resource present in the `action` property.
                        """
         ,
           key: "errorId"
@@ -1130,7 +1130,7 @@ module.exports = exports =
       result:
         http: "200 OK"
         properties: [
-          key: "events"
+          key: "auditLogs"
           type: "array of [Audit logs](##{dataStructure.getDocId("audit-log")})"
           description: """
                        The accessible audit logs.
@@ -1149,18 +1149,18 @@ module.exports = exports =
       examples: [
         params: {
           "auth": examples.audit.auth,
-          "accessId": examples.audit.log1.content.accessId,
+          "accessId": examples.audit.log1.accessId,
           "fromTime": 1561000000,
           "toTime": 1562000000,
-          "status": examples.audit.log1.content.status,
-          "ip": examples.audit.log1.content.forwardedFor,
+          "status": examples.audit.log1.status,
+          "ip": examples.audit.log1.forwardedFor,
           "httpVerb": "GET",
-          "endpoint": "/events",
-          "errorId": examples.audit.log1.content.errorId
+          "resource": "/events",
+          "errorId": examples.audit.log1.errorId
         }
 
         result:
-          events: [
+          auditLogs: [
             examples.audit.log1,
             examples.audit.log2,
             examples.audit.log3
