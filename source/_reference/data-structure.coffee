@@ -427,6 +427,92 @@ module.exports = exports =
 
   ,
 
+    id: "audit-log"
+    title: "Audit log"
+    previewOnly: true
+    description: """
+                 Audit logs keep track of details about the actions performed by clients against Pryv.io accounts through the Pryv.io API.
+                 These logs can be fetched by presenting an authorization token, allowing to audit the actions that involved a given token.
+                 """
+    properties: [
+      key: "id"
+      type: "[identifier](##{_getDocId("identifier")})"
+      readOnly: true
+      description: """
+                   The identifier for the action that generated this log.
+                   """
+    ,
+      key: "type"
+      type: "string"
+      readOnly: true
+      description: """
+                   The type of log.
+                   """
+    ,
+      key: "time"
+      type: "[timestamp](#data-structure-timestamp)"
+      readOnly: true
+      description: """
+                   The time the API call was executed.
+                   """
+    ,
+      key: "forwardedFor"
+      type: "string"
+      readOnly: true
+      description: """
+                    The IP address of the client who performed the audited action.
+                    """
+    ,
+      key: "action"
+      type: "string"
+      readOnly: true
+      description: """
+                    The audited action, typically an API method call, composed by the HTTP verb and the API resource.
+                    """
+    ,
+      key: "query"
+      type: "string"
+      readOnly: true
+      description: """
+                    The query string that accompanied the audited action, if any.
+                    """
+    ,
+      key: "accessId"
+      type: "string"
+      readOnly: true
+      description: """
+                    The identifier for the access used to perform the audited action.
+                    """
+    ,
+      key: "status"
+      type: "number"
+      readOnly: true
+      description: """
+                    The HTTP response status resulting from the audited action.
+                    """
+    ,
+      key: "errorMessage"
+      type: "string"
+      readOnly: true
+      optional: true
+      description: """
+                    The error message resulting from the audited action, if any.
+                    """
+    ,
+      key: "errorId"
+      type: "string"
+      readOnly: true
+      optional: true
+      description: """
+                    The identifier for the error resulting from the audited action, if any.
+                    """
+    ]
+    examples: [
+      title: "A single audit log"
+      content: examples.audit.log1
+    ]
+  ,
+
     id: "webhook"
     title: "Webhook"
     previewOnly: true

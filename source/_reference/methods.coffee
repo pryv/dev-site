@@ -1047,6 +1047,130 @@ module.exports = exports =
 
   ,
 
+    id: "audit"
+    title: "Audit"
+    previewOnly: true
+    description: """
+                 Methods to retrieve [Audit logs](##{dataStructure.getDocId("audit-log")}).
+                 """
+    sections: [
+      id: "audit.get"
+      type: "method"
+      title: "Get audit logs"
+      http: "GET /audit/logs"
+      description: """
+                   Fetches accessible audit logs.
+                   By default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).
+                   """
+      params:
+        properties: [
+          key: "accessId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          optional: true
+          description: """
+                       The id of a specific access to audit.
+                       When specified, it fetches the audit logs that involve the matching access instead of the one used to authenticate this call.
+                       It has to correspond to a sub-access (expired and deleted included) in regards to the provided authorization token.
+                       """
+        ,
+          key: "fromTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       The start time of the timeframe you want to retrieve audit logs for.
+                       Timestamps are considered with a day precision.
+                       """
+        ,
+          key: "toTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       The end time of the timeframe you want to retrieve audit logs for.
+                       Timestamps are considered with a day precision.
+                       """
+        ,
+          key: "status"
+          type: "number"
+          optional: true
+          description: """
+                       Filters audit logs by HTTP response status, a 3-digits number.
+                       It is possible to provide only the first digit,
+                       in which case the two unspecified digits will be wildcarded.
+                       For example, `status=4` will return all logs with status between 400 and 499.
+                       """
+        ,
+          key: "ip"
+          type: "string"
+          optional: true
+          description: """
+                       Filters audit logs by client IP address present in the `forwardedFor` property.
+                       """
+        ,
+          key: "httpVerb"
+          type: "string"
+          optional: true
+          description: """
+                       Filters audit logs by HTTP verb present in the `action` property.
+                       """
+        ,
+          key: "resource"
+          type: "string"
+          optional: true
+          description: """
+                       Filters audit logs by API resource present in the `action` property.
+                       """
+        ,
+          key: "errorId"
+          type: "string"
+          optional: true
+          description: """
+                       Filters audit logs by error id.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "auditLogs"
+          type: "array of [Audit logs](##{dataStructure.getDocId("audit-log")})"
+          description: """
+                       The accessible audit logs.
+                       """
+        ]
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Authorization token is not authorized to audit the given access.
+                     
+                     When providing a specific access id, if the result of [Get Accesses](##{_getDocId("accesses", "accesses.get")})
+                     using the provided Authorization token does not contain the given access, then it is not auditable.
+                     """
+        ]
+      examples: [
+        params: {
+          "auth": examples.audit.auth,
+          "accessId": examples.audit.log1.accessId,
+          "fromTime": 1561000000,
+          "toTime": 1562000000,
+          "status": examples.audit.log1.status,
+          "ip": examples.audit.log1.forwardedFor,
+          "httpVerb": "GET",
+          "resource": "/events",
+          "errorId": examples.audit.log1.errorId
+        }
+
+        result:
+          auditLogs: [
+            examples.audit.log1,
+            examples.audit.log2,
+            examples.audit.log3
+          ]
+      ]
+
+    ]
+
+  ,
+
     id: "webhooks"
     title: "Webhooks"
     previewOnly: true
