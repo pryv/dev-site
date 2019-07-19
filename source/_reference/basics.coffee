@@ -178,16 +178,11 @@ module.exports = exports =
     result:
       http: "200 OK"
       properties: [
-        key: "version"
-        type: "string"
-        description: """
-                    The API version.
-                    """
-      ,
+
         key: "register"
         type: "string"
         description: """
-                    The URL of the registry service.
+                    The URL of the register service.
                     """
       ,
         key: "access"
@@ -620,7 +615,7 @@ module.exports = exports =
       ,
         key: "meta.serial"
         description: """
-                     The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the core configuration.
+                     The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the service information.
                      """
       ]
     ]
