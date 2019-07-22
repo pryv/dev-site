@@ -1293,7 +1293,7 @@ read-metadata@0.0.2:
   dependencies:
     yaml-js "0.0.8"
 
-rec-la@^0.1.6:
+rec-la@latest:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/rec-la/-/rec-la-0.1.6.tgz#b5963a2aadbf5d0e206ed7b0eb6cada2650afebc"
   integrity sha512-tY4cg2OInmT2kcezQIQV2VeVGH8ivgLDyUVz09Kwn6ciuhmlhEy6cUDWOgp0EVQKMG1eVGx2bRSOo0qBEV2haw==
