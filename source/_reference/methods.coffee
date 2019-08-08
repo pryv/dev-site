@@ -1300,15 +1300,16 @@ module.exports = exports =
             text: "request body"
           description: """
                        New values for the webhook's fields: see [webhook](##{dataStructure.getDocId("webhook")}). All fields are optional, and only modified values must be included.
+                       Updating the `state` to `active` resets the `currentRetries` counter.
                        """
         ]
       result:
-        http: "200 Created"
+        http: "200 OK"
         properties: [
           key: "webhook"
           type: "[webhook](##{dataStructure.getDocId("webhook")})"
           description: """
-                       The created webhook.
+                       The updated webhook.
                        """
         ]
       errors: [
@@ -1365,7 +1366,7 @@ module.exports = exports =
       title: "Test webhook"
       http: "POST /webhooks/{id}/test"
       description: """
-                   Sends a post request to the URL of the specified webhook with a test message. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.
+                   Sends a post request containing an event called `test` to the URL of the specified webhook's `url`. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [
@@ -1391,6 +1392,13 @@ module.exports = exports =
         result:
           webhook: examples.webhooks.new
       ]
+      errors: [
+        key: "unknown-referenced-resource"
+        http: "400"
+        description: """
+                     The webhook's `url` is either unreachable or responds with a 4xx/5xx response.
+                     """
+        ]
 
     ]
 
