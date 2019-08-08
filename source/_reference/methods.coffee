@@ -1299,7 +1299,7 @@ module.exports = exports =
           http:
             text: "request body"
           description: """
-                       New values for the webhook's fields: see [webhook](##{dataStructure.getDocId("webhook")}). All fields are optional, and only modified values must be included.
+                       New values for the webhook's fields: see [webhook](##{dataStructure.getDocId("webhook")}). All fields are optional, and only modified values must be included.  
                        Updating the `state` to `active` resets the `currentRetries` counter.
                        """
         ]
@@ -1396,7 +1396,7 @@ module.exports = exports =
         key: "unknown-referenced-resource"
         http: "400"
         description: """
-                     The webhook's `url` is either unreachable or responds with a 4xx/5xx response.
+                     The webhook's `url` is either unreachable or responds with a 4xx/5xx status.
                      """
         ]
 
