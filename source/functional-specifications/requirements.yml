@@ -268,7 +268,7 @@ sections:
       - reqid: LISTEN
         title: The system shall provide listener registration capabilities
         description: |
-          The system provides a Websocket based implementation to register a listener. 
+          The system provides Websocket and Webhooks based implementations to register a listener. 
 
   - id: user
     reqid: USER
@@ -436,26 +436,3 @@ sections:
               title: The system shall be fully recoverable using the latest backup available  
               description: |
                 The system's data shall be recoverable from backup files.
-
-
-
-          
-                    
-
-
-      
-
-       
-
-
-
-
-
-      
-
-
-
-
-
-  
-
