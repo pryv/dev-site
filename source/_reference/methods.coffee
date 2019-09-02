@@ -1282,7 +1282,8 @@ module.exports = exports =
       title: "Update webhook"
       http: "PUT /webhooks/{id}"
       description: """
-                   Modifies the webhook. You can only modify webhooks with the app access that was used to create them, unless you are using a personal token.
+                   Modifies the webhook. You can only modify webhooks with the app access that was used to create them, unless you are using a personal token.  
+                   Updating the `state` to `active` resets the `currentRetries` counter.
                    """
       params:
         properties: [
@@ -1300,7 +1301,6 @@ module.exports = exports =
             text: "request body"
           description: """
                        New values for the webhook's fields: see [webhook](##{dataStructure.getDocId("webhook")}). All fields are optional, and only modified values must be included.  
-                       Updating the `state` to `active` resets the `currentRetries` counter.
                        """
         ]
       result:

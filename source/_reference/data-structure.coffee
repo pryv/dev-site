@@ -1,6 +1,7 @@
 examples = require("./examples")
 helpers = require("./helpers")
 _ = require("lodash")
+timestamp = require('unix-timestamp')
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
 _getDocId = (typeId) ->
@@ -521,9 +522,38 @@ module.exports = exports =
                  
                  Webhooks can only be created by app accesses. Once created, they will run, executing a HTTP POST request to the provided URL for each data change in the user account. Currently, we support notifications for data changes, a subsequent API call is necessary to fetch the changes content.  
 
-                 In case of failure to send a request, the webhook will retry a defined number of times at a growing interval of time before becoming inactive after too many successive failures. The webhooks run rate is throttled by a minimum time between notifications, sending an array of events that occured during this period.  
+                 The notification payload has the following structure:
+                 
+                 ```json
+                 {
+                   "messages": [
+                     "eventsChanged",
+                     "streamsChanged"
+                   ],
+                   "meta": {
+                     "apiVersion": "1.4.11",
+                     "serial": "20190802",
+                     "serverTime": #{timestamp.now()}
+                   }
+                 }
+                 ```
+
+                 In case of failure to send a request, the webhook will retry `maxRetries` times at a growing interval of time before becoming `inactive` after too many successive failures. The webhooks run rate is throttled by a minimum interval between notifications, sending an array of events that occured during this period.  
                 
-                 All runs are saved which allows to monitor a webhook's health. 
+                 A certain amount of last runs statuses are saved which allows to monitor a webhook's health. 
+
+                 When the webhooks service is booted, it will send a `webhooksServiceBoot` message to all active webhooks. This allows to query the API for possibly lost notifications during its down time.
+
+                 Only the app access used to create the webhook or a personal access can retrieve and modify it. This is meant to separate the responsibilities between the actor that sets the webhooks and the one(s) that consume the data following the webhook setting.
+                 
+                 To identify the source of the webhook on your notifications server, you can currently use the `url`'s hostname, path or query parameters. For example: 
+
+                 ```json
+                 {
+                   "url": "https://${username}.my-notifications.com/${my-secret}/?param1=value1&param2=value2"
+                 }
+                 ```
+
                  """
     properties: [
       key: "id"
@@ -542,6 +572,8 @@ module.exports = exports =
     ,
       key: "url"
       type: "string"
+      unique: true
+      readOnly: "(except at creation)"
       description: """
                    The URL where the HTTP POST request will be made.
                    """
