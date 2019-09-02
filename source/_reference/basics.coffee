@@ -143,23 +143,51 @@ module.exports = exports =
                  ```
                  """
       ]
-    ,
-      id: "subscribing-to-changes"
-      title: "Subscribing to changes"
-      description: """
-                   Get notified when data changes by subscribing to messages `eventsChanged` and `streamsChanged`.
-                   """
-      examples: [
-        title: "Subscribing to events changes (Javascript)"
-        content: """
-                 ```javascript
-                 socket.on('eventsChanged', function() {
-                   // retrieve latest changes and update
-                 });
-                 ```
-                 """
-      ]
     ]
+  ,
+  id: "subscribe-to-changes"
+  title: "Subscribe to changes"
+  description: """
+                Get notified when data changes by subscribing to messages. 
+                Available messages are: 
+                  - `eventsChanged`
+                  - `streamsChanged`
+                  - `accessesChanged`
+                """
+  sections: [
+    id: "with websockets"
+    title: "With websockets"
+    description: """
+                 Get notified of data changes in a web application using websockets.
+                 """
+    examples: [
+      title: "Subscribe to events changes (Javascript)"
+      content: """
+                ```javascript
+                socket.on('eventsChanged', function() {
+                  // retrieve latest changes and act accordingly
+                });
+                ```
+                """
+    ]
+  ,
+    id: "with webhooks"
+    title: "With webhooks"
+    previewOnly: true
+    description: """
+                 Get notified of data changes in a web service using [webhooks](#webhook).
+                 """
+    examples: [
+      title: "Subscribe to all changes ([webhooks.create](##create-webhook))"
+      content: """
+               ```json
+               {
+                 "url": "https://my-server.com/notifications/username/some-id"
+               }
+               ```
+               """
+    ]
+  ]
 
   ,
 
