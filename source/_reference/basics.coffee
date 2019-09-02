@@ -27,8 +27,8 @@ module.exports = exports =
 
   ,
 
-    id: "calling-with-http"
-    title: "Calling with HTTP"
+    id: "call-with-http"
+    title: "Call with HTTP"
     description: """
                  The API serves regular REST-like HTTP requests, with the usual verbs for reading and manipulating data:
 
@@ -77,8 +77,8 @@ module.exports = exports =
 
   ,
 
-    id: "calling-with-websockets"
-    title: "Calling with websockets"
+    id: "call-with-websockets"
+    title: "Call with websockets"
     description: """
                  The API supports real-time interaction by accepting websocket connections via [Socket.IO](http://socket.io).
                  """
@@ -112,8 +112,8 @@ module.exports = exports =
                  """
       ]
     ,
-      id: "calling-methods"
-      title: "Calling methods"
+      id: "call-methods"
+      title: "Call methods"
       description: """
                    You call API methods by sending a corresponding Socket.IO `{method-id}` message, passing a parameters object and a callback:
 
