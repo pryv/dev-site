@@ -152,7 +152,6 @@ module.exports = exports =
                 Available messages are: 
                   - `eventsChanged`
                   - `streamsChanged`
-                  - `accessesChanged`
 
                 Messages describe what type of resource has been changed (created, updated or deleted). It does not include the contents of the change, which must be retrieved through the API using a valid access token.
                 """
