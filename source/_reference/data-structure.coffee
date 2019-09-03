@@ -520,23 +520,12 @@ module.exports = exports =
     description: """
                  Webhooks provide push notifications to web servers using HTTP POST requests.  
                  
-                 Once created, they will run, executing a HTTP POST request to the provided URL for each [data change](#with-webhooks) in the user account.
+                 Once created, they will run, executing a HTTP POST request to the provided URL for each [data change](#with-webhooks) in the user account. 
 
-                 In case of failure to send a request, the webhook will retry `maxRetries` times at a growing interval of time before becoming `inactive` after too many successive failures. The webhooks run rate is throttled by a minimum interval between notifications, sending an array of events that occured during this period.  
-                
-                 A certain amount of last runs statuses are saved which allows to monitor a webhook's health. 
+                 When the webhooks service is booted, it will send a `webhooksServiceBoot` message to all active webhooks. This allows to query the API for possibly missed notifications during its down time.
 
-                 When the webhooks service is booted, it will send a `webhooksServiceBoot` message to all active webhooks. This allows to query the API for possibly lost notifications during its down time.
-
-                 Only the app access used to create the webhook or a personal access can retrieve and modify it. This is meant to separate the responsibilities between the actor that sets the webhooks and the one(s) that consume the data following the webhook setting.
+                 Only the app access used to create the webhook or a personal access can retrieve and modify it. This is meant to separate the responsibilities between the actor that sets the webhooks and the one(s) that consume the data following the webhook setup.
                  
-                 To identify the source of the webhook on your notifications server, you can currently use the `url`'s hostname, path or query parameters. For example: 
-
-                 ```json
-                 {
-                   "url": "https://${username}.my-notifications.com/${my-secret}/?param1=value1&param2=value2"
-                 }
-                 ```
 
                  """
     properties: [
@@ -559,19 +548,25 @@ module.exports = exports =
       unique: "per access"
       readOnly: "(except at creation)"
       description: """
-                   The URL where the HTTP POST request will be made.
+                   The URL where the HTTP POST requests will be made. To identify the source of the webhook on your notifications server, you can currently use the `url`'s hostname, path or query parameters. For example: 
+
+                   ```json
+                   {
+                     "url": "https://${username}.my-notifications.com/${my-secret}/?param1=value1&param2=value2"
+                   }
+                   ```
                    """
     ,
       key: "minIntervalMs"
       type: "number"
       description: """
-                   The minimum interval between subsequent HTTP calls in milliseconds. Defaults to the time set by the admin. 
+                   The webhooks run rate is throttled by a minimum interval between HTTP in milliseconds, sending an array of events that occured during this period. Defaults to the time set by the admin. 
                    """
     ,
       key: "maxRetries"
       type: "number"
       description: """
-                   The maximum number of retries executed after a failed HTTP call. Defaults to the number set by the admin.
+                   In case of failure to send a request, the webhook will retry `maxRetries` times at a growing interval of time before becoming `inactive` after too many successive failures. Defaults to the number set by the admin.
                    """
     ,
       key: "currentRetries"
@@ -625,7 +620,7 @@ module.exports = exports =
       type: "array of Run objects"
       readOnly: true
       description: """
-                   Array of Run objects in inverse chronological order (newest first).  
+                   Array of Run objects in inverse chronological order (newest first) which allows to monitor a webhook's health. 
                    """
     ].concat(changeTrackingProperties("webhook"))
     examples: [
