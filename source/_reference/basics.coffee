@@ -2,6 +2,7 @@ dataStructure = require("./data-structure.coffee")
 examples = require("./examples")
 helpers = require("./helpers")
 _ = require("lodash")
+timestamp = require('unix-timestamp')
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
 _getDocId = (sectionId) ->
@@ -179,11 +180,19 @@ module.exports = exports =
                  Get notified of data changes in a web service using [webhooks](#webhook).
                  """
     examples: [
-      title: "Subscribe to all changes ([webhooks.create](##create-webhook))"
+      title: "Webhooks data changes payload"
       content: """
                ```json
                {
-                 "url": "https://my-server.com/notifications/username/some-id"
+                 "messages": [
+                   "eventsChanged",
+                   "streamsChanged"
+                 ],
+                 "meta": {
+                   "apiVersion": "1.4.11",
+                   "serial": "20190802",
+                   "serverTime": #{timestamp.now()}
+                 }
                }
                ```
                """

@@ -520,23 +520,7 @@ module.exports = exports =
     description: """
                  Webhooks provide push notifications to web servers using HTTP POST requests.  
                  
-                 Webhooks can only be created by app accesses. Once created, they will run, executing a HTTP POST request to the provided URL for each data change in the user account. Currently, we support notifications for data changes, a subsequent API call is necessary to fetch the changes content.  
-
-                 The notification payload has the following structure:
-                 
-                 ```json
-                 {
-                   "messages": [
-                     "eventsChanged",
-                     "streamsChanged"
-                   ],
-                   "meta": {
-                     "apiVersion": "1.4.11",
-                     "serial": "20190802",
-                     "serverTime": #{timestamp.now()}
-                   }
-                 }
-                 ```
+                 Once created, they will run, executing a HTTP POST request to the provided URL for each [data change](#with-webhooks) in the user account.
 
                  In case of failure to send a request, the webhook will retry `maxRetries` times at a growing interval of time before becoming `inactive` after too many successive failures. The webhooks run rate is throttled by a minimum interval between notifications, sending an array of events that occured during this period.  
                 
