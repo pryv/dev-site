@@ -29,12 +29,41 @@ module.exports = exports =
     createdBy: firstId
     modified: timestamp.now('-1d')
     modifiedBy: firstId
+  hasFailed:
+    id: generateId()
+    accessId: firstId
+    url: 'https://notifications.pryv.io/myusername/ui3HDAw43'
+    minIntervalMs: 5000
+    maxRetries: 5
+    state: 'active'
+    currentRetries: 0
+    runCount: 5
+    failCount: 5
+    lastRun: 
+      status: 404
+      timestamp: timestamp.now('-15s')
+    runs: [
+      status: 404
+      timestamp: timestamp.now('-15s')
+    ,
+      status: 404
+      timestamp: timestamp.now('-55s')
+    ,
+      status: 404
+      timestamp: timestamp.now('-1m15s')
+    ,
+      status: 404
+      timestamp: timestamp.now('-1m25s')
+    ,
+      status: 404
+      timestamp: timestamp.now('-1m30s')
+    ]
   failing:
     id: generateId()
     accessId: firstId
     url: 'https://notifications.pryv.io/webhooks'
-    minIntervalMs: 5000,
-    maxRetries: 10,
+    minIntervalMs: 5000
+    maxRetries: 10
     currentRetries: 2
     state: 'active'
     runCount: 8

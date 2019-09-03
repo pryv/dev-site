@@ -1320,9 +1320,11 @@ module.exports = exports =
                      """
       ]
       examples: [
-        params: _.pick(examples.webhooks.failing, "url")
+        title: "Reactivating a webhook"
+        params: 
+          state: 'active'
         result:
-          webhook: examples.webhooks.failing
+          webhook: examples.webhooks.hasFailed
       ]
     
     ,
