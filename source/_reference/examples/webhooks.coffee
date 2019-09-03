@@ -32,7 +32,7 @@ module.exports = exports =
   hasFailed:
     id: generateId()
     accessId: firstId
-    url: 'https://notifications.pryv.io/myusername/ui3HDAw43'
+    url: 'https://notifications.pryv.me/myusername/ui3HDAw43'
     minIntervalMs: 5000
     maxRetries: 5
     state: 'active'
@@ -61,7 +61,7 @@ module.exports = exports =
   failing:
     id: generateId()
     accessId: firstId
-    url: 'https://notifications.pryv.io/webhooks'
+    url: 'https://notifications.pryv.me/webhooks'
     minIntervalMs: 5000
     maxRetries: 10
     currentRetries: 2
