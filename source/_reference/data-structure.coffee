@@ -533,7 +533,7 @@ module.exports = exports =
       type: "[identifier](##{_getDocId("identifier")})"
       readOnly: true
       description: """
-                   The identifier of the Webhook. Automatically generated if not set when creating the stream.
+                   The identifier of the Webhook.
                    """
     ,
       key: "accessId"
@@ -545,10 +545,10 @@ module.exports = exports =
     ,
       key: "url"
       type: "string"
-      unique: "per access"
+      unique: "per app access"
       readOnly: "(except at creation)"
       description: """
-                   The URL where the HTTP POST requests will be made. To identify the source of the webhook on your notifications server, you can currently use the `url`'s hostname, path or query parameters. For example: 
+                   The URL where the HTTP POST requests will be made. To identify the source of the webhook on your notifications server, you can use the `url`'s hostname, path or query parameters. For example: 
 
                    ```json
                    {
@@ -559,12 +559,14 @@ module.exports = exports =
     ,
       key: "minIntervalMs"
       type: "number"
+      readOnly: true
       description: """
-                   The webhooks run rate is throttled by a minimum interval between HTTP in milliseconds, sending an array of events that occured during this period. Defaults to the time set by the admin. 
+                   The webhooks run rate is throttled by a minimum interval between HTTP calls in milliseconds, sending an array of changes that occured during this period. Defaults to the time set by the admin. 
                    """
     ,
       key: "maxRetries"
       type: "number"
+      readOnly: true
       description: """
                    In case of failure to send a request, the webhook will retry `maxRetries` times at a growing interval of time before becoming `inactive` after too many successive failures. Defaults to the number set by the admin.
                    """
@@ -593,14 +595,14 @@ module.exports = exports =
       type: "number"
       readOnly: true
       description: """
-                   The number of times the Webhook has failed making HTTP calls. Failed runs are HTTP requests that responded with a status outside of 200-299 range.
+                   The number of times the Webhook has failed making HTTP calls. Failed runs are HTTP requests that responded with a status outside of the 200-299 range.
                    """
     ,
       key: "lastRun"
       type: "Run object"
       readOnly: true
       description: """
-                   Represents the last Webhook call, comprised of HTTP response status and timestamp.
+                   Represents the last Webhook call, comprised of its HTTP response status and timestamp.
                    """
       properties: [
         key: "status"
