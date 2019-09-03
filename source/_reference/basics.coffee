@@ -157,7 +157,7 @@ module.exports = exports =
                 Messages describe what type of resource has been changed (created, updated or deleted). It does not include the contents of the change, which must be retrieved through the API using a valid access token.
                 """
   sections: [
-    id: "with websockets"
+    id: "with-websockets"
     title: "With websockets"
     description: """
                  Get notified of data changes in a web application using websockets.
@@ -173,7 +173,7 @@ module.exports = exports =
                 """
     ]
   ,
-    id: "with webhooks"
+    id: "with-webhooks"
     title: "With webhooks"
     previewOnly: true
     description: """

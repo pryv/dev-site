@@ -268,7 +268,7 @@ sections:
       - reqid: LISTEN
         title: The system shall provide listener registration capabilities
         description: |
-          The system provides Websocket and Webhooks based implementations to register a listener. 
+          The system provides Websockets and Webhooks based implementations to register a listener. 
 
   - id: user
     reqid: USER

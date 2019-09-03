@@ -518,7 +518,7 @@ module.exports = exports =
     title: "Webhook"
     previewOnly: true
     description: """
-                 Webhooks provide push notifications to servers using HTTP POST requests.  
+                 Webhooks provide push notifications to web servers using HTTP POST requests.  
                  
                  Webhooks can only be created by app accesses. Once created, they will run, executing a HTTP POST request to the provided URL for each data change in the user account. Currently, we support notifications for data changes, a subsequent API call is necessary to fetch the changes content.  
 
@@ -572,7 +572,7 @@ module.exports = exports =
     ,
       key: "url"
       type: "string"
-      unique: true
+      unique: "per access"
       readOnly: "(except at creation)"
       description: """
                    The URL where the HTTP POST request will be made.
