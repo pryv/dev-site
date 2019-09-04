@@ -9,7 +9,7 @@ module.exports = exports =
     id: generateId()
     accessId: firstId
     url: 'https://notifications.service.com/pryv'
-    minIntervalMs: 15000
+    minIntervalMs: 5000
     maxRetries: 5
     currentRetries: 0
     state: 'active'
@@ -63,7 +63,7 @@ module.exports = exports =
     accessId: firstId
     url: 'https://notifications.pryv.me/webhooks'
     minIntervalMs: 5000
-    maxRetries: 10
+    maxRetries: 5
     currentRetries: 2
     state: 'active'
     runCount: 8

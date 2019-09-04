@@ -175,7 +175,6 @@ module.exports = exports =
   ,
     id: "with-webhooks"
     title: "With webhooks"
-    previewOnly: true
     description: """
                  Get notified of data changes in a web service using [webhooks](#webhook).
                  """

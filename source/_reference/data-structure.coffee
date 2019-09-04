@@ -516,13 +516,12 @@ module.exports = exports =
 
     id: "webhook"
     title: "Webhook"
-    previewOnly: true
     description: """
                  Webhooks provide push notifications to web servers using HTTP POST requests.  
                  
                  Once created, they will run, executing a HTTP POST request to the provided URL for each [data change](#with-webhooks) in the user account. 
 
-                 When the webhooks service is booted, it will send a `webhooksServiceBoot` message to all active webhooks. This allows to query the API for possibly missed notifications during its down time.
+                 When the webhooks service is booted, it will send a `webhooksServiceBoot` message to all active webhooks. This allows to query the API for potentially missed notifications during its down time.
 
                  Only the app access used to create the webhook or a personal access can retrieve and modify it. This is meant to separate the responsibilities between the actor that sets the webhooks and the one(s) that consume the data following the webhook setup.
                  
@@ -588,14 +587,14 @@ module.exports = exports =
       type: "number"
       readOnly: true
       description: """
-                   The number of times the Webhooks has been run, including failures.
+                   The number of times the Webhook has been run, including failures.
                    """
     ,
       key: "failCount"
       type: "number"
       readOnly: true
       description: """
-                   The number of times the Webhook has failed making HTTP calls. Failed runs are HTTP requests that responded with a status outside of the 200-299 range.
+                   The number of times the Webhook has failed HTTP calls. Failed runs are HTTP requests that received a response with a status outside of the 200-299 range or no response at all.
                    """
     ,
       key: "lastRun"

@@ -1173,7 +1173,6 @@ module.exports = exports =
 
     id: "webhooks"
     title: "Webhooks"
-    previewOnly: true
     description: """
                  Methods to retrieve and manipulate [webhooks](##{dataStructure.getDocId("webhook")}). These methods are only allowed for app and personal accesses.
                  """
@@ -1247,7 +1246,7 @@ module.exports = exports =
       title: "Create webhook"
       http: "POST /webhooks"
       description: """
-                   Creates a new webhook. You can only create webhooks with app accesses. Its permissions will always match the permissions of the access used to create it.
+                   Creates a new webhook. You can only create webhooks with app accesses.
                    """
       params:
         description: """
@@ -1262,13 +1261,7 @@ module.exports = exports =
                        The created webhook.
                        """
         ]
-      errors: [
-        key: "item-already-exists"
-        http: "400"
-        description: """
-                     There is already a webhook for this URL created by the given access.
-                     """
-      ]
+      errors: []
       examples: [
         params: _.pick(examples.webhooks.new, "url")
         result:
@@ -1368,7 +1361,7 @@ module.exports = exports =
       title: "Test webhook"
       http: "POST /webhooks/{id}/test"
       description: """
-                   Sends a post request containing an event called `test` to the URL of the specified webhook's `url`. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.
+                   Sends a post request containing a message called `test` to the URL of the specified webhook's `url`. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [
