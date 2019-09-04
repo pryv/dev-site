@@ -561,14 +561,14 @@ module.exports = exports =
       type: "number"
       readOnly: true
       description: """
-                   The webhooks run rate is throttled by a minimum interval between HTTP calls in milliseconds, sending an array of changes that occured during this period. Defaults to the time set by the admin. 
+                   The webhooks run rate is throttled by a minimum interval between HTTP calls in milliseconds, sending an array of changes that occured during this period. Its value is set by the platform admin. 
                    """
     ,
       key: "maxRetries"
       type: "number"
       readOnly: true
       description: """
-                   In case of failure to send a request, the webhook will retry `maxRetries` times at a growing interval of time before becoming `inactive` after too many successive failures. Defaults to the number set by the admin.
+                   In case of failure to send a request, the webhook will retry `maxRetries` times at a growing interval of time before becoming `inactive` after too many successive failures. Its value is set by the platform admin.
                    """
     ,
       key: "currentRetries"
@@ -622,7 +622,7 @@ module.exports = exports =
       type: "array of Run objects"
       readOnly: true
       description: """
-                   Array of Run objects in inverse chronological order (newest first) which allows to monitor a webhook's health. 
+                   Array of Run objects in inverse chronological order (newest first) which allows to monitor a webhook's health. Its length is set by the platform admin. 
                    """
     ].concat(changeTrackingProperties("webhook"))
     examples: [
