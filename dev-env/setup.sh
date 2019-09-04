@@ -43,7 +43,7 @@ fi
 if [ -z "$1" ]
 then
   # default branch used for service-core dependency
-  coreBranch="release-1.2"
+  coreBranch="release-1.4"
 else
   coreBranch=$1
 fi
@@ -59,6 +59,9 @@ cd $scriptsFolder/..
 # install node modules
 echo "Installing Node modules from 'package.json' if necessary."
 yarn install
+
+echo "Creating dist."
+yarn release
 
 # setup build folder
 if [ ! -d build ]

@@ -1,4 +1,4 @@
-coreErrors = require('../../../dependencies/core/components/errors')
+coreErrors = require('../../../dependencies/core/dist/components/errors')
 errors = coreErrors.factory
 errorHandling = coreErrors.errorHandling
 
