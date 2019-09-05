@@ -6,75 +6,34 @@ template: default.jade
 
 ## V1.4
 
-### 1.4.15
+New features:
 
-- Official release of webhooks
-
-### 1.4.14
-
-- Preview release of webhooks
-
-### 1.4.13
-
-- Fix config loading in pryv-cli
-
-### 1.4.12
-
-- Add route /service/info that provides a unified way for third party services to access the necessary information related to a Pryv.io platform
-
-### 1.4.11
-
-- Fix pryv-cli delete-user so that it works for single-node setups and prevent it to abort if the username is already deleted on register
-
-### 1.4.10
-
-- Most API calls now present a 'Pryv-Access-Id' response header that contains the id of the access used for the call. This is the case only when a valid authorization token has been provided during the request (even if the token is expired)
-
-### 1.4.9
-
-- Improve the update account API call, in particular when it applies a change of email address. It now correctly checks if the email address is not already in use before updating the account and throws consistent errors
-
-### 1.4.6
-
-- Increase MongoDB driver reconnection window
-
-### 1.4.5
-
-- Refactor mongo duplicates management into storage layer
-
-### 1.4.4
-
-- Events, Streams, Accesses, Profiles and FollowedSlices are now stored in single collections on MongoDB. This results in smaller per-user RAM usage.
-
-## V1.3
+ - Release of webhooks to notify of data changes. See Webhook [data structure](https://api.pryv.com/reference/#webhook) and [methods](https://api.pryv.com/reference/#webhooks) for more details
+ - Add route /service/info that provides a unified way for third party services to access the necessary information related to a Pryv.io platform. See [description](https://api.pryv.com/reference/#service-info) for more details.
+ - Most API calls now present a 'Pryv-Access-Id' response header that contains the id of the access used for the call. This is the case only when a valid authorization token has been provided during the request (even if the token is expired). See [metadata](https://api.pryv.com/reference/#in-http-headers) for more details.
 
 Changes:
 
+ - Improve the update account API call, in particular when it applies a change of email address. It now correctly checks if the email address is not already in use before updating the account and throws consistent errors
+
+## V1.3
+
+New features:
+
  - High Frequency events allow storing data at high frequency and high data density. Create them by using types that start with 'series:X', where X is a normal Pryv type. The API also supports inputting data into multiple series at once, this is called a 'seriesBatch' (POST /series/batch)
- - The API is internally using multiple processes to offload request handling and JSON serialisation. This should allow much higher request rates, but your mileage may vary. Storage IOPS matter
- - Some invalid requests that used to return a HTTP status code of 401 (Unauthorized) now return a 403 (Forbidden). Only the requests that are missing some form of authentication will return a 401 code
- - `updates.ignoreProtectedFields` is now off by default. This means that updates that address protected fields will result in an error being returned
- - Accesses can now be set to expire via the `expireAfter` attribute. Expiry for accesses gives you an easy way of limiting the damage that can be done using a stolen access
- - We've rehauled the 'delete-user' command of the Pryv.IO cli admin tool. It now operates more explicitly and allows automation
- - Improvements related to MongoDB:
-   - Implement user pool to anticipate users creation burst through two new API routes:
-    POST 'system/pool/create-user' and GET 'system/pool/size'
-   - Make nightly tasks manually triggereable by sysadmins
- - Critical Security Fixes: 
-   - 2018022101, 2018022102: Fixes to DNS server closing minor vulnerabilities: 
-      DNS could be - under certain circumstances - used to exploit other systems 
-   - 2018091401: Fixes to the password reset mechanism; a bug would allow an attacker to change passwords under certain circumstances
- - Implement fetch deleted accesses using `includeDeletions` in accesses.get API method
- - Add clientData field to Accesses and create/update methods
- - Fix a bug which prevented accesses with root ("streamId":"*") permission from managing sub-accesses correctly
- - Remove some chown -R commands in our boot scripts, since it had the effect of delaying the start of the core node processes, for example if the data folder contains a lot of files (attachments). From now on, the recommendation is to run these commands independently in a sanitization script when installing or updating of the platform.
+ - Add `clientData` field to Accesses.
  - Add `httpOnly` flag to server-side cookie sent in response to successful `/auth/login` request
  - Deleted accesses can now be retrieved. See [accesses.get method](/reference/#get-accesses) for more details
  - Accesses can now be made to expire. See the [access data structure documentation](/reference/#access) for more details
 
-## v1.2.4
+Changes:
 
-Changes: 
+ - Some invalid requests that used to return a HTTP status code of 401 (Unauthorized) now return a 403 (Forbidden). Only the requests that are missing some form of authentication will return a 401 code
+ - `updates.ignoreProtectedFields` is now off by default. This means that updates that address protected fields will result in an error being returned
+
+## v1.2
+
+Changes:
 
  - Fix login with Firefox (and other browsers using Referer but no Origin)
  - Security fix 2018020801: 'accesses.update' was missing an authorisation check
@@ -82,19 +41,8 @@ Changes:
  - Fix events.get JSON formatting
  - Add configuration options to disable resetPassword and welcome emails
  - Add configuration option to ignore updates of read-only fields
- - Updates to latest nodejs version as a reaction to advisory 
-  https://nodejs.org/en/blog/vulnerability/oct-2017-dos/
- - Security fixes to various parts of Pryv: Now doesn't log passwords or password
-  hashes as part of normal operation. 
  - Tags have a maximum length of 500 characters. An error is returned from the 
-  API when this limit is exceeded. 
- - When two users would log in at almost the same time, we had a insert/update 
-  data race. This is be fixed now. 
- - Updates most internal components to more recent versions. 
- - Improved concurrency behavior. This only surfaces under heavy loads. 
- - New Deployment Method: This version should be deployed via docker. Pryv is now fully componentized.
-
-**NOTE** Since this version upgrades the internal database, it cannot easily be downgraded to 1.1.8. Please make a backup of your Pryv data store before running this version the first time. 
+  API when this limit is exceeded.
 
 ## v1.1.8
 
