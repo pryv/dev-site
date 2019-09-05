@@ -8,41 +8,40 @@ template: default.jade
 
 New features:
 
- - Release of webhooks to notify of data changes. See Webhook [data structure](https://api.pryv.com/reference/#webhook) and [methods](https://api.pryv.com/reference/#webhooks) for more details
- - Add route /service/info that provides a unified way for third party services to access the necessary information related to a Pryv.io platform. See [description](https://api.pryv.com/reference/#service-info) for more details.
- - Most API calls now present a 'Pryv-Access-Id' response header that contains the id of the access used for the call. This is the case only when a valid authorization token has been provided during the request (even if the token is expired). See [metadata](https://api.pryv.com/reference/#in-http-headers) for more details.
+ - Release of webhooks to notify of data changes. See Webhook [data structure](https://api.pryv.com/reference/#webhook) and [methods](https://api.pryv.com/reference/#webhooks) for more details.
+ - Add route `/service/info` that provides a unified way for third party services to access the necessary information related to a Pryv.io platform. See [description](https://api.pryv.com/reference/#service-info) for more details.
+ - Most API calls now present a `Pryv-Access-Id` response header that contains the id of the access used for the call. This is the case only when a valid authorization token has been provided during the request (even if the token is expired). See [metadata](https://api.pryv.com/reference/#in-http-headers) for more details.
 
 Changes:
 
- - Improve the update account API call, in particular when it applies a change of email address. It now correctly checks if the email address is not already in use before updating the account and throws consistent errors
+ - Improve the update account API call, in particular when it applies a change of email address. It now correctly checks if the email address is not already in use before updating the account and throws consistent errors.
 
 ## V1.3
 
 New features:
 
- - High Frequency events allow storing data at high frequency and high data density. Create them by using types that start with 'series:X', where X is a normal Pryv type. The API also supports inputting data into multiple series at once, this is called a 'seriesBatch' (POST /series/batch)
+ - High Frequency events allow storing data at high frequency and high data density. Create them by using types that start with `series:X`, where X is a normal Pryv type. The API also supports inputting data into multiple series at once, this is called a 'seriesBatch' (POST `/series/batch`).
  - Add `clientData` field to Accesses.
- - Add `httpOnly` flag to server-side cookie sent in response to successful `/auth/login` request
- - Deleted accesses can now be retrieved. See [accesses.get method](/reference/#get-accesses) for more details
- - Accesses can now be made to expire. See the [access data structure documentation](/reference/#access) for more details
+ - Add `httpOnly` flag to server-side cookie sent in response to successful `/auth/login` request.
+ - Deleted accesses can now be retrieved. See [accesses.get method](/reference/#get-accesses) for more details.
+ - Accesses can now be made to expire. See the [access data structure documentation](/reference/#access) for more details.
 
 Changes:
 
- - Some invalid requests that used to return a HTTP status code of 401 (Unauthorized) now return a 403 (Forbidden). Only the requests that are missing some form of authentication will return a 401 code
- - `updates.ignoreProtectedFields` is now off by default. This means that updates that address protected fields will result in an error being returned
+ - Some invalid requests that used to return a HTTP status code of 401 (Unauthorized) now return a 403 (Forbidden). Only the requests that are missing some form of authentication will return a 401 code.
+ - `updates.ignoreProtectedFields` is now off by default. This means that updates that address protected fields will result in an error being returned.
 
 ## v1.2
 
 Changes:
 
- - Fix login with Firefox (and other browsers using Referer but no Origin)
- - Security fix 2018020801: 'accesses.update' was missing an authorisation check
- - Update of the API version in API responses
- - Fix events.get JSON formatting
- - Add configuration options to disable resetPassword and welcome emails
- - Add configuration option to ignore updates of read-only fields
- - Tags have a maximum length of 500 characters. An error is returned from the 
-  API when this limit is exceeded.
+ - Fix login with Firefox (and other browsers using Referer but no Origin).
+ - Security fix 2018020801: 'accesses.update' was missing an authorisation check.
+ - Update of the API version in API responses.
+ - Fix events.get JSON formatting.
+ - Add configuration options to disable resetPassword and welcome emails.
+ - Add configuration option to ignore updates of read-only fields.
+ - Tags have a maximum length of 500 characters. An error is returned from the API when this limit is exceeded.
 
 ## v1.1.8
 
@@ -50,7 +49,7 @@ Changes:
 
 - Fix edge-case behaviour on very large `streams.delete` operations.
 - Direct `events.get` API call now supports really large results. Changes made have improved this call's performance by around 30%. As a by-product of this change, we now do not send the 'Content-Size' HTTP header anymore.
-- Allow custom cuid-like ids when creating events
+- Allow custom cuid-like ids when creating events.
 
 ## v1.1
 
@@ -70,8 +69,8 @@ Validated initial set of API features.
 Changes:
 
 - Deletion methods now:
-    - Reply to permanent deletions with a `{item}Deletion` field confirming the deleted item's identifier
-    - Always return code 200 on HTTP (that's a rollback of the v0.7.x change which was a bit too zealous to be practical)
+    - Reply to permanent deletions with a `{item}Deletion` field confirming the deleted item's identifier.
+    - Always return code 200 on HTTP (that's a rollback of the v0.7.x change which was a bit too zealous to be practical).
 
 New features:
 
