@@ -11,9 +11,11 @@ Node v8.3.0+, Yarn v0.21.3+
 
 `make setup` sets up the environment.
 
-**Note:** the setup command will install a dependency to pryv/service-core.
-By default, it will target the branch defined inside the setup script.
-If you want to use another branch, use `make setup core=my_branch` instead.
+**Note:** The setup command will install the node dependencies as well as the following external dependencies:
+- pryv/service-core
+- pryv/test-results
+
+See `dev-env/setup.sh` for more details.
 
 ### Build & publish
 
