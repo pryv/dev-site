@@ -51,7 +51,39 @@ permalink: false
       ul.nav.nav-tabs
         li.active: a(href='#api-example-http', data-toggle='tab') HTTP
         li: a(href='#api-example-sockets', data-toggle='tab') Socket.IO
+        li.active: a(href='#api-example-httpAuth', data-toggle='tab') HTTP
       .tab-content
+        #api-example-httpAuth.tab-pane.active
+          :marked
+            ```http
+            GET /events?auth={token} HTTP/1.1
+            Host: {user}.pryv.me
+            Accept: application/json
+            ```
+          .step-marker ⬇
+          :marked
+            ```json
+            {
+              "events": [
+                {
+                  "time": 1369143391.115,
+                  "type": "temperature/c",
+                  "content": 27.7,
+                  "...": "..."
+                },
+                {
+                  "time": 1369140027.36,
+                  "type": "position/wgs84",
+                  "content": {
+                    "latitude": 46.517699,
+                    "longitude": 6.562671
+                  },
+                  "...": "..."
+                },
+                ...
+              ]
+            }
+            ```
         #api-example-http.tab-pane.active
           :marked
             ```http
