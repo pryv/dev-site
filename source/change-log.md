@@ -8,6 +8,7 @@ template: default.jade
 
 New features:
 
+ - Pryv.io API now supports the Basic HTTP Authentication scheme.
  - Release of webhooks to notify of data changes. See Webhook [data structure](https://api.pryv.com/reference/#webhook) and [methods](https://api.pryv.com/reference/#webhooks) for more details.
  - Add route `/service/info` that provides a unified way for third party services to access the necessary information related to a Pryv.io platform. See [description](https://api.pryv.com/reference/#service-info) for more details.
  - Most API calls now present a `Pryv-Access-Id` response header that contains the id of the access used for the call. This is the case only when a valid authorization token has been provided during the request (even if the token is expired). See [metadata](https://api.pryv.com/reference/#in-http-headers) for more details.
