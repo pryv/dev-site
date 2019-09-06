@@ -325,20 +325,20 @@ module.exports = exports =
                ```
                """
     ,
-      title: "HTTP `auth` query string parameter"
-      content: """
-               ```http
-               GET /events?auth={token} HTTP/1.1
-               Host: {username}.pryv.me
-               ```
-               """
-    ,
       title: "HTTP `Basic HTTP` authorization header"
       content: """
                ```http
                GET /events HTTP/1.1
                Host: {username}.pryv.me
                Authorization: Basic {Base64 encoded token}
+               ```
+               """
+    ,
+      title: "HTTP `auth` query string parameter"
+      content: """
+               ```http
+               GET /events?auth={token} HTTP/1.1
+               Host: {username}.pryv.me
                ```
                """
     ]
