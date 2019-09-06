@@ -4,7 +4,7 @@ _ = require("lodash")
 exports.getDocId = () ->
   return [].slice.apply(arguments).join('-').replace('.', '-')
 
-exports.getCurlCall = (params, http, server) ->
+exports.getCurlCall = (params, http, server, auth) ->
   [method, path] = http.split(" ")
   if (server == null || server == undefined)
     server = "core"
@@ -13,11 +13,15 @@ exports.getCurlCall = (params, http, server) ->
 
   headers = ""
   queryString = ""
+  basicAuth = ""
   if (server == "core")
     if (method == "POST" && (path == "/auth/login" || path == "/account/request-password-reset" || path == "/account/reset-password"))
       headers = "-H 'Origin: https://sw.pryv.me' "
-    else
-      queryString = "?auth={token}"
+    else 
+      if (auth)
+        queryString = "?auth={token}"
+      else
+        basicAuth = "{token}@"
 
   processedParams = _.clone(params)
   Object.keys(params).forEach (k) ->
@@ -40,7 +44,7 @@ exports.getCurlCall = (params, http, server) ->
   
   call = ""
   if (server == "core")
-    call = "curl -i #{request}#{headers}#{data}https://{username}.pryv.me#{path}#{queryString}"
+    call = "curl -i #{request}#{headers}#{data}https://#{basicAuth}{username}.pryv.me#{path}#{queryString}"
   else if (server == "register")
     call = "curl -i #{request}#{headers}#{data}https://reg.pryv.me#{path}#{queryString}"
     

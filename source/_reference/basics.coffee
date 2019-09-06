@@ -288,19 +288,32 @@ module.exports = exports =
     id: "authentication"
     title: "Authentication"
     description: """
-                 All requests for retrieving and manipulating activity data must carry a valid [access token](##{dataStructure.getDocId("access")}) in the HTTP `Authorization` header or, alternatively, in the query string's `auth` parameter. With Socket.IO the token is passed in the handshake.
+                 All requests for retrieving and manipulating activity data must carry a valid [access token](##{dataStructure.getDocId("access")}). 
+                 The preferred method is to use the HTTP `Authorization` header. 
 
                  Access tokens are obtained via the [app authorization](#authorizing-your-app) or from sharing.
-
-                 You can also use the **Access token generator** to obtain an app token:
-
+                 
+                 **Alternative methods:**
+              
+                 1- Pryv.io supports **Basic HTTP** Authentication Scheme This allows to present 
+                 a Pryv.io endpoint as a single URL without exposing the token in query parameters. 
                  ```
-                 https://api.pryv.com/app-web-access/?pryv-reg=reg.{domain}
+                 curl https://{token}@{username}.pryv.me/access-info
                  ```
 
-                 For example:
+                 This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://visionmedia.github.io/superagent/) 
+                 or [Postman](https://www.getpostman.com)
 
-                 [https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me)
+                 Note that Pryv.io does not require a username, so only the token should be Base64 
+                 encoded. For more information see [RFC671](https://tools.ietf.org/html/rfc7617 ). 
+
+                 2- The access token can be provided in the query string's `auth` parameter, for example during Socket.IO handshake or for a direct get call in a browser.
+                 
+                 ```
+                 https://{username}.pryv.me/access-info?auth={token}.pryv.me
+                 ```
+
+
                  """
     examples: [
       title: "HTTP `Authorization` header"
@@ -317,6 +330,15 @@ module.exports = exports =
                ```http
                GET /events?auth={token} HTTP/1.1
                Host: {username}.pryv.me
+               ```
+               """
+    ,
+      title: "HTTP `Basic HTTP` authorization header"
+      content: """
+               ```http
+               GET /events HTTP/1.1
+               Host: {username}.pryv.me
+               Authorization: Basic {Base64 encoded token}
                ```
                """
     ]
@@ -366,6 +388,21 @@ module.exports = exports =
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
                  **Note: this auth flow will very likely undergo some changes in the near future.**
+
+                 #### Generate token app
+
+                 You can also use the **Access token generator** to obtain an app token:
+
+                 ```
+                 https://api.pryv.com/app-web-access/?pryv-reg=reg.{domain}
+                 ```
+
+                 For example:
+
+                 [https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me)
+
+
+                 
                  """
     sections: [
       id: "auth-request"

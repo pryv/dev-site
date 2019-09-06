@@ -126,7 +126,7 @@ mixin examples(examples, settings)
               if settings.http
                 .tab-pane.http
                   pre: code.
-                    !{apiReference.helpers.getCurlCall(ex.params, settings.http, settings.server)}
+                    !{apiReference.helpers.getCurlCall(ex.params, settings.http, settings.server, false)}
                   if ex.result
                     .step-marker ⬇
                     pre: code.
@@ -135,6 +135,7 @@ mixin examples(examples, settings)
                       API-Version: !{apiReference.version}
 
                       !{helpers.printJSON(ex.result)}
+             
               if settings.id
                 .tab-pane.sockets
                   pre: code.
@@ -142,6 +143,20 @@ mixin examples(examples, settings)
                   if ex.result
                     .step-marker ⬇
                     pre: code !{helpers.printJSON(ex.result)}
+
+
+              if settings.httpAuth
+              .tab-pane.httpAuth
+                pre: code.
+                  !{apiReference.helpers.getCurlCall(ex.params, settings.http, settings.server, true)}
+                if ex.result
+                  .step-marker ⬇
+                  pre: code.
+                    HTTP/1.1 !{ex.resultHTTP || settings.result.http || settings.result[0].http}
+                    Content-Type: application/json; charset=utf-8
+                    API-Version: !{apiReference.version}
+
+                    !{helpers.printJSON(ex.result)}
 
 mixin section(section, parentDocId, level)
   - var isMethod = section.type === 'method'
@@ -214,6 +229,7 @@ block custom-navbar-items
         option(value='json', selected='selected') Raw JSON
         option(value='http') cURL
         option(value='sockets') Socket.IO
+        option(value='httpAuth') cURL auth
 
 block custom-scripts
   // Code examples format switch
@@ -226,7 +242,7 @@ block custom-scripts
     });
     function setExamplesFormat(format) {
       var removeSelectors = [];
-      ['json', 'http', 'sockets'].forEach(function (f) {
+      ['json', 'http', 'sockets', 'httpAuth'].forEach(function (f) {
         if (format !== f) {
           removeSelectors.push('.example .tab-pane.' + f + '.active');
         }
