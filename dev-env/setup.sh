@@ -25,14 +25,6 @@ git pull
 yarn install
 cd $scriptsFolder/..
 
-if [ -z "$1" ]
-then
-  # default branch used for service-core dependency
-  coreBranch="release-1.2"
-else
-  coreBranch=$1
-fi
-
 # resolve service-core dependency
 if [ ! -d dependencies/core ]
 then
@@ -40,13 +32,7 @@ then
   git clone git@github.com:pryv/service-core.git dependencies/core
 fi
 
-if [ -z "$1" ]
-then
-  # default branch used for service-core dependency
-  coreBranch="release-1.4"
-else
-  coreBranch=$1
-fi
+coreBranch="release-1.4"
 
 echo "Service-core dependency is targeting the following branch: $coreBranch"
 
@@ -54,14 +40,16 @@ echo "Service-core dependency is targeting the following branch: $coreBranch"
 cd dependencies/core
 git checkout $coreBranch
 git pull
-cd $scriptsFolder/..
-
-# install node modules
 echo "Installing Node modules from 'package.json' if necessary."
 yarn install
-
 echo "Creating dist."
 yarn release
+
+
+cd $scriptsFolder/..
+
+# install this repository's dependencies
+yarn install
 
 # setup build folder
 if [ ! -d build ]
