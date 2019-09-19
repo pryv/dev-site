@@ -65,6 +65,10 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to migrate a Pryv.io register service to a different machine.
 
+- User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
+
+  This document presents a tool which allows to delete Pryv.io users.
+
 ## Development resources
 
 - Authorization web application (app-web-auth v3): [Github](https://github.com/pryv/app-web-auth3)
