@@ -586,11 +586,11 @@ module.exports = exports =
       description: """
                    Creates a new data point for a high-frequency series event. 
 
-                   The high-frequency series data store will only store one set of values for any given timestamp. This means you can update existing data points by 'creating' new data with the original timestamps.  
+                   The high-frequency series data will only store one set of values for any given timestamp. This means you can update existing data points by 'creating' new data with the original timestamps.  
                    """
       params:
         description: """
-                     The new high-frequency serie's data point, formatted in the 'flatJSON' format.
+                     The new high-frequency series' data point, formatted in the 'flatJSON' format.
                      """
       result:
         http: "200 OK"
@@ -605,7 +605,7 @@ module.exports = exports =
         key: "invalid-operation"
         http: "400"
         description: """
-                     The event is not a high frequency serie.
+                     The event is not a high frequency series.
                      """
       ]
       examples: [
@@ -614,6 +614,7 @@ module.exports = exports =
         result:
           status: "ok"
       ]
+
     ,
 
       id: "events.getHFseriesPoints"
@@ -636,7 +637,7 @@ module.exports = exports =
           type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
-                       Only return data points earlier than this timestamp. If no value is given the server returns only data that is in the past.
+                       Only returns data points earlier than this timestamp. If no value is given the server will return only data that is in the past.
                        """
         ]
       result:
@@ -645,7 +646,7 @@ module.exports = exports =
           key: "format"
           type: "string"
           description: """
-                       The data format, for now we only support "flatJSON".
+                       The data format (for now only "flatJSON" format is supported).
                        """
         ,
           key: "fields"
