@@ -182,3 +182,19 @@ module.exports =
     createdBy: accesses.personal.id
     modified: timestamp.now('-2h')
     modifiedBy: accesses.personal.id
+
+  series:
+    positionSingle:
+      format: "flatJSON",
+      fields: ["timestamp", "latitude", "longitude", "altitude"],
+      points: [
+        [1519314345, 10.2, 11.2, 500]
+      ]
+    positionMultiple:
+      format: "flatJSON", 
+      fields: ["timestamp", "latitude", "longitude", "altitude"], 
+      points: [
+        [1519314345, 10.2, 11.2, 500], 
+        [1519314346, 10.2, 11.2, 510],
+        [1519314347, 10.2, 11.2, 520],
+      ]

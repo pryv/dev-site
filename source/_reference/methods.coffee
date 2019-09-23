@@ -579,6 +579,97 @@ module.exports = exports =
 
     ,
 
+      id: "events.createHfSeriePoint"
+      type: "method"
+      title: "Create high-frequency series data point"
+      http: "POST /events/{id}/series"
+      description: """
+                   Creates a new data point for a high-frequency series event. 
+
+                   The high-frequency series data store will only store one set of values for any given timestamp. This means you can update existing data points by 'creating' new data with the original timestamps.  
+                   """
+      params:
+        description: """
+                     The new high-frequency serie's data point, formatted in the 'flatJSON' format.
+                     """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "status"
+          type: "string"
+          description: """
+                       OK.
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The event is not a high frequency serie.
+                     """
+      ]
+      examples: [
+        title: "Capturing a single high-frequency data point"
+        params: examples.events.series.positionSingle
+        result:
+          status: "ok"
+      ]
+    ,
+
+      id: "events.getHFseriesPoints"
+      type: "method"
+      title: "Get high-frequency series data points"
+      http: "GET /events/{event_id}/series"
+      description: """
+                   Queries data from a series event. Returns data in order of ascending timestamps between "fromTime" and "toTime". Data is returned as input, no sampling or aggregation is performed. Data is returned in the "flatJSON" format.
+                   """
+      params:
+        properties: [
+          key: "fromTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       Only returns data points later than this timestamp. If no value is given the query will return data starting at the earliest timestamp in the series.
+                       """
+        ,
+          key: "toTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       Only return data points earlier than this timestamp. If no value is given the server returns only data that is in the past.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "format"
+          type: "string"
+          description: """
+                       The data format, for now we only support "flatJSON".
+                       """
+        ,
+          key: "fields"
+          type: "The list of fields in the points array"
+          description: """
+                       The "fields" array lists all the fields that you will be submitting, including the "timestamp" field in first position. If the data type contains a single field (ex.: `mass/kg`), the second field is "value", otherwise, it is the list of fields with the required ones first.
+                       """
+        ,
+          key: "points"
+          type: "Array of data points"
+          description: """
+                       The "points" array contains all the data points, each data point is represented by a simple array. This makes the bulk of the message (your data points) very space-efficient; values are encoded positionally. The first value corresponds to the first field, and so on. 
+                       """
+        ]
+      examples: [
+        title: "Fetching high-frequency series data points"
+        params: {}
+        result:
+          examples.events.series.positionMultiple
+      ]
+
+    ,
+
+
       id: "events.delete"
       type: "method"
       title: "Delete event"
@@ -633,6 +724,7 @@ module.exports = exports =
         result: {eventDeletion:{id:examples.events.note.id}}
       ]
     ]
+  
 
   ,
 

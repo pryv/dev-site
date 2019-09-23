@@ -38,6 +38,16 @@ Streams are the fundamental contexts in which events occur. Every event occurs i
 
 <!-- TODO: See also [standard streams](/standard-structure/). -->
 
+### Series
+
+Series are collections of homogenous data points. They should be used instead of events when the structure of the data doesn't change and you expect a high volume of data at possibly high speeds (O(1Hz)).
+
+To store a data series in Pryv.io, you first create an event that has the type "series:X". The created series will store many values that all have the type X. Then you can start adding data to the series. 
+
+Each data point in a series has a `"timestamp"` field containing the timestamp for the data point. For [types](https://api.pryv.com/event-types/#directory) that store a single value (like "mass/kg") they contain a single additional field called `"value"`. Types that contain multiple fields (like "position/wgs84") will possibly have many fields, whose names can be inferred from the [type reference](https://api.pryv.com/event-types/#position). In the above example ("position/wgs84") there would be the fields `"latitude"`, `"longitude"` and possibly one of the optional fields `"altitude"`, `"horizontalAccuracy"`, `"verticalAccuracy"`, `"speed"`, `"bearing"`. Optional fields can either be given or not; missing values will be returned as null.
+
+Series data can be encoded in transit in one of the following data formats.
+
 ### Tags
 
 Tags can provide further context to events. Each event can be labeled with one or more tags. Each tag can be no more than 500 characters in size.
