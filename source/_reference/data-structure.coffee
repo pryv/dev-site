@@ -557,10 +557,10 @@ module.exports = exports =
         event: examples.events.series.holderEvent
     ,
       title: "High-frequency data series for the type 'mass/kg', encoded as flatJSON"
-      content: examples.events.series.massMultiple
+      content: examples.events.series.mass
     ,
       title: "High-frequency data series for the type 'position/wgs84', encoded as flatJSON"
-      content: examples.events.series.positionMultiple
+      content: examples.events.series.position
     ]
   ,
     id: "webhook"

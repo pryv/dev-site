@@ -670,7 +670,7 @@ module.exports = exports =
         title: "Fetching high-frequency series data points"
         params: {}
         result:
-          examples.events.series.positionMultiple
+          examples.events.series.position
       ]
 
     ,
