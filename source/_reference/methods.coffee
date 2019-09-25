@@ -579,18 +579,19 @@ module.exports = exports =
 
     ,
 
-      id: "events.createHfSeriePoint"
+      id: "events.addHFSeries"
       type: "method"
-      title: "Create high-frequency series data point"
+      httpOnly: true
+      title: "Add high-frequency series data points"
       http: "POST /events/{id}/series"
       description: """
-                   Creates a new data point for a high-frequency series event. 
+                   Adds new data point(s) to a high-frequency series Event.
 
-                   The high-frequency series data will only store one set of values for any given timestamp. This means you can update existing data points by 'creating' new data with the original timestamps.  
+                   The high-frequency series data will only store one set of values for any given timestamp. This means you can update existing data points by 'adding' new data with the original timestamps.  
                    """
       params:
         description: """
-                     The new high-frequency series' data point, formatted in the 'flatJSON' format.
+                     The new high-frequency series data point(s), formatted in the 'flatJSON' format.
                      """
       result:
         http: "200 OK"
@@ -609,8 +610,8 @@ module.exports = exports =
                      """
       ]
       examples: [
-        title: "Capturing a single high-frequency data point"
-        params: examples.events.series.positionSingle
+        title: "Adding high-frequency data points to a series:position/wgs84 Event"
+        params: examples.events.series.position
         result:
           status: "ok"
       ]

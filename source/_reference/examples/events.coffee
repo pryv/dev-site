@@ -184,13 +184,7 @@ module.exports =
     modifiedBy: accesses.personal.id
 
   series:
-    positionSingle:
-      format: "flatJSON",
-      fields: ["timestamp", "latitude", "longitude", "altitude"],
-      points: [
-        [1519314345, 10.2, 11.2, 500]
-      ]
-    positionMultiple:
+    position:
       format: "flatJSON", 
       fields: ["timestamp", "latitude", "longitude", "altitude"], 
       points: [
@@ -198,7 +192,7 @@ module.exports =
         [1519314346, 10.2, 11.2, 510],
         [1519314347, 10.2, 11.2, 520],
       ]
-    massMultiple:
+    mass:
       format: "flatJSON", 
       fields: ["timestamp", "value"], 
       points: [
