@@ -227,3 +227,26 @@ module.exports =
       createdBy: accesses.app.id
       modified: timestamp.now()
       modifiedBy: accesses.app.id
+    batch:
+      format: "seriesBatch"
+      data: [
+        eventId: generateId()
+        data:
+          format: "flatJSON", 
+          fields: ["timestamp", "value"], 
+          points: [
+            [1519314345, 70], 
+            [1519314346, 71],
+            [1519314347, 72],
+          ]
+      ,
+        eventId: generateId()
+        data:
+          format: "flatJSON", 
+          fields: ["timestamp", "latitude", "longitude", "altitude"], 
+          points: [
+            [1519314345, 10.2, 11.2, 500], 
+            [1519314346, 10.2, 11.2, 510],
+            [1519314347, 10.2, 11.2, 520],
+          ]
+      ]

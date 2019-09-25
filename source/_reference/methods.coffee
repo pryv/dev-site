@@ -628,46 +628,6 @@ module.exports = exports =
       ]
 
     ,
-
-      id: "events.addHFSeries"
-      type: "method"
-      httpOnly: true
-      title: "Add HF series data points"
-      http: "POST /events/{id}/series"
-      description: """
-                   Adds new data point(s) to a high-frequency series event.
-
-                   The high-frequency series data will only store one set of values for any given timestamp. This means you can update existing data points by 'adding' new data with the original timestamps.  
-                   """
-      params:
-        description: """
-                     The new high-frequency series data point(s), see [HF series](##{dataStructure.getDocId("hf-series")}).
-                     """
-      result:
-        http: "200 OK"
-        properties: [
-          key: "status"
-          type: "string"
-          description: """
-                       The string "ok".
-                       """
-        ]
-      errors: [
-        key: "invalid-operation"
-        http: "400"
-        description: """
-                     The event is not a high frequency series.
-                     """
-      ]
-      examples: [
-        title: "Adding high-frequency data points to a series:position/wgs84 event"
-        params: examples.events.series.position
-        result:
-          status: "ok"
-      ]
-
-    ,
-
       id: "events.getHFSeries"
       type: "method"
       httpOnly: true
@@ -712,6 +672,121 @@ module.exports = exports =
 
     ,
 
+      id: "events.addHFSeries"
+      type: "method"
+      httpOnly: true
+      title: "Add HF series data points"
+      http: "POST /events/{id}/series"
+      description: """
+                   Adds new data point(s) to a high-frequency series event.
+
+                   The high-frequency series data will only store one set of values for any given timestamp. This means you can update existing data points by 'adding' new data with the original timestamps.  
+                   """
+      params:
+        description: """
+                     The new high-frequency series data point(s), see [HF series](##{dataStructure.getDocId("hf-series")}).
+                     """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "status"
+          type: "string"
+          description: """
+                       The string "ok".
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The event is not a high frequency series.
+                     """
+      ]
+      examples: [
+        title: "Adding high-frequency data points to a series:position/wgs84 event"
+        params: examples.events.series.position
+        result:
+          status: "ok"
+      ]
+
+    ,
+
+      id: "events.addHFSeriesBatch"
+      type: "method"
+      httpOnly: true
+      title: "Add HF series batch"
+      http: "POST /series/batch"
+      description: """
+                    Adds data to multiple series (stored in multiple HF events) in a single atomic operation. This is the fastest way to append data to Pryv; it allows transferring many data points in a single request.
+
+                    For this operation to be successful, all of the following conditions must be fulfilled:
+
+                      - The access token needs write permissions to all series identified by "eventId".
+                      - All events referred to must be series events (type starts with the string "series:").
+                      - Fields identified in each individual message must match those specified by the type of the series event; there must be no duplicates.
+                      - All the values in every data point must conform to the type specification. The data point matrix in every message must be rectangular.
+
+                    If any part of the batch message is invalid, the entire batch is aborted and the returned result body identifies the error.
+                   """
+      params:
+        description: """
+                     Request body should contain the data to be appended to the various series encoded as JSON text ("application/json"). The overall format of this message should be as follows:
+                     """
+        properties: [
+          key: "format"
+          type: "string"
+          description: """
+                       The format string "seriesBatch".
+                       """
+        ,
+          key: "data"
+          type: "array"
+          description: """
+                       Array of batch entries. Each batch entry is defined as follows:
+                       """
+          properties: [
+            key: "eventId"
+            type: "string"
+            description: """
+                        The id of the HF event.
+                        """
+          ,
+            key: "data"
+            type: "object"
+            description: """
+                        Data to add to the HF series.
+                        """
+          ]
+        ]
+      result:
+        http: "201 Created"
+        properties: [
+          key: "status"
+          type: "string"
+          description: """
+                       The string "ok".
+                       """
+        ]
+      errors: [
+        key: "invalid-request-structure"
+        http: "400"
+        description: """
+                     The request was malformed and could not be executed. The entire operation was aborted.
+                     """
+      ,
+        key: "forbidden"
+        http: "403"
+        description: """
+                     The authorization provided to Pryv was not valid or doesn't have the access rights to store series data.
+                     """
+      ]
+      examples: [
+        title: "Adding a batch of high-frequency data points to multiple HF events"
+        params: examples.events.series.batch
+        result:
+          status: "ok"
+      ]
+    ,
 
       id: "events.delete"
       type: "method"
