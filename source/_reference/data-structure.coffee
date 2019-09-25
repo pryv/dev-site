@@ -520,7 +520,7 @@ module.exports = exports =
                  High-frequency series are collections of homogenous data points. 
 
                  To store a high-frequency data series in Pryv.io, you must create a holder Event that defines the type of the data points, prefixed with `series:`.
-                 For example, to store high-frequency series of `mass/kg` data points, you must first create an event with the type `series:mass/kg`.
+                 For example, to store high-frequency series of `mass/kg` data points, you must first [create an Event](#create-event). with the type `series:mass/kg`.
 
                  Series data is encoded in the "flatJSON" format:
                  - Each data point in a series has a `"timestamp"` field containing the timestamp (as seconds since unix epoch) for the data point.
