@@ -618,12 +618,16 @@ module.exports = exports =
 
     ,
 
-      id: "events.getHFseriesPoints"
+      id: "events.getHFSeries"
       type: "method"
+      httpOnly: true
       title: "Get high-frequency series data points"
       http: "GET /events/{event_id}/series"
       description: """
-                   Queries data from a series event. Returns data in order of ascending timestamps between "fromTime" and "toTime". Data is returned as input, no sampling or aggregation is performed. Data is returned in the "flatJSON" format.
+                   Retrieves data points from a series Event.
+                   Returns data in order of ascending timestamps between "fromTime" and "toTime".
+                   Data is returned as input, no sampling or aggregation is performed.
+                   Data is returned in the "flatJSON" format.
                    """
       params:
         properties: [
