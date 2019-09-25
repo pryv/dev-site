@@ -42,7 +42,7 @@ Streams are the fundamental contexts in which events occur. Every event occurs i
 
 Tags can provide further context to events. Each event can be labeled with one or more tags. Each tag can be no more than 500 characters in size.
 
-### HF Series
+### HF series
 
 High-frequency series are collections of homogenous data points. They should be used when the structure of the data doesn't change and when a high volume of data at possibly high speeds (O(1Hz)) is expected.
 

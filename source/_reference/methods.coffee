@@ -582,7 +582,7 @@ module.exports = exports =
       id: "events.addHFSeries"
       type: "method"
       httpOnly: true
-      title: "Add high-frequency series data points"
+      title: "Add HF series data points"
       http: "POST /events/{id}/series"
       description: """
                    Adds new data point(s) to a high-frequency series Event.
@@ -621,10 +621,10 @@ module.exports = exports =
       id: "events.getHFSeries"
       type: "method"
       httpOnly: true
-      title: "Get high-frequency series data points"
+      title: "Get HF series data points"
       http: "GET /events/{event_id}/series"
       description: """
-                   Retrieves data points from a series Event.
+                   Retrieves data points from a high-frequency series Event.
                    Returns data in order of ascending timestamps between "fromTime" and "toTime".
                    Data is returned as input, no sampling or aggregation is performed.
                    Data is returned in the "flatJSON" format.
