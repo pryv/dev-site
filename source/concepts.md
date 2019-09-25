@@ -44,7 +44,7 @@ Tags can provide further context to events. Each event can be labeled with one o
 
 ### HF Series
 
-High-frequency series are collections of homogenous data points. They should be used instead of events when the structure of the data doesn't change and when a high volume of data at possibly high speeds (O(1Hz)) is expected.
+High-frequency series are collections of homogenous data points. They should be used when the structure of the data doesn't change and when a high volume of data at possibly high speeds (O(1Hz)) is expected.
 
 See also [HF Series data structure](reference/#data-structure-series).
 
