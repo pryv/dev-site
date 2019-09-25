@@ -591,7 +591,7 @@ module.exports = exports =
                    """
       params:
         description: """
-                     The new high-frequency series data point(s), formatted in the 'flatJSON' format.
+                     The new high-frequency series data point(s), see [HF series](##{dataStructure.getDocId("hf-series")}).
                      """
       result:
         http: "200 OK"
@@ -627,7 +627,6 @@ module.exports = exports =
                    Retrieves data points from a high-frequency series Event.
                    Returns data in order of ascending timestamps between "fromTime" and "toTime".
                    Data is returned as input, no sampling or aggregation is performed.
-                   Data is returned in the "flatJSON" format.
                    """
       params:
         properties: [
@@ -648,26 +647,14 @@ module.exports = exports =
       result:
         http: "200 OK"
         properties: [
-          key: "format"
-          type: "string"
+          key: "series"
+          type: "[HF series](##{dataStructure.getDocId("hf-series")})"
           description: """
-                       The data format (for now only "flatJSON" format is supported).
-                       """
-        ,
-          key: "fields"
-          type: "The list of fields in the points array"
-          description: """
-                       The "fields" array lists all the fields that you will be submitting, including the "timestamp" field in first position. If the data type contains a single field (ex.: `mass/kg`), the second field is "value", otherwise, it is the list of fields with the required ones first.
-                       """
-        ,
-          key: "points"
-          type: "Array of data points"
-          description: """
-                       The "points" array contains all the data points, each data point is represented by a simple array. This makes the bulk of the message (your data points) very space-efficient; values are encoded positionally. The first value corresponds to the first field, and so on. 
+                       The high-frequency series.
                        """
         ]
       examples: [
-        title: "Fetching high-frequency series data points"
+        title: "Retrieving data points in a high-frequency series"
         params: {}
         result:
           examples.events.series.position

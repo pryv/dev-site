@@ -515,7 +515,7 @@ module.exports = exports =
   ,
 
     id: "hf-series"
-    title: "HF Series"
+    title: "HF series"
     description: """
                  High-frequency series are collections of homogenous data points. 
 
