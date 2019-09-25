@@ -522,11 +522,11 @@ module.exports = exports =
                  To store a high-frequency data series in Pryv.io, you must create a holder Event that defines the type of the data points, prefixed with `series:`.
                  For example, to store high-frequency series of `mass/kg` data points, you must first create an event with the type `series:mass/kg`.
 
-                 Series data is encoded in the "flatJSON" format.
-                 Each data point in a series has a `"timestamp"` field containing the timestamp (as seconds since unix epoch) for the data point.
-                 For [types](https://api.pryv.com/event-types/#directory) that store a single value (e.g. "mass/kg"), a single additional field named `"value"` is created.
-                 Types that contain multiple fields (e.g. "position/wgs84") will possibly have many fields, whose names can be inferred from the [type reference](https://api.pryv.com/event-types/#position).
-                 Optional fields can either be given or not; missing values will be returned as null.
+                 Series data is encoded in the "flatJSON" format:
+                 - Each data point in a series has a `"timestamp"` field containing the timestamp (as seconds since unix epoch) for the data point.
+                 - For [types](https://api.pryv.com/event-types/#directory) that store a single value (e.g. "mass/kg"), a single additional field named `"value"` is created.
+                 - Types that contain multiple fields (e.g. "position/wgs84") will possibly have many fields, whose names can be inferred from the [type reference](https://api.pryv.com/event-types/#position).
+                 - Optional fields can either be given or not; missing values will be returned as null.
                  """
     properties: [
       key: "format"
@@ -552,7 +552,7 @@ module.exports = exports =
     ]
     examples: [
       title: "Creation of a holder Event for high-frequency data series"
-      params: _.pick(examples.events.series.holderEvent, "type", "streamId")
+      content: _.pick(examples.events.series.holderEvent, "streamId", "type")
       result:
         event: examples.events.series.holderEvent
     ,
