@@ -198,3 +198,38 @@ module.exports =
         [1519314346, 10.2, 11.2, 510],
         [1519314347, 10.2, 11.2, 520],
       ]
+    massMultiple:
+      format: "flatJSON", 
+      fields: ["timestamp", "value"], 
+      points: [
+        [1519314345, 70], 
+        [1519314346, 71],
+        [1519314347, 72],
+      ]
+    holderEvent:
+      id: generateId()
+      time: timestamp.now()
+      streamId: "position"
+      tags: []
+      type: "series:position/wgs84"
+      content:
+        elementType: "position/wgs84",
+        fields: [
+          "timestamp",
+          "latitude",
+          "longitude",
+          "altitude",
+          "horizontalAccuracy",
+          "verticalAccuracy",
+          "speed",
+          "bearing"
+        ],
+        required: [
+          "timestamp",
+          "latitude",
+          "longitude"
+        ]
+      created: timestamp.now()
+      createdBy: accesses.app.id
+      modified: timestamp.now()
+      modifiedBy: accesses.app.id

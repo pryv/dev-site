@@ -598,7 +598,7 @@ module.exports = exports =
           key: "status"
           type: "string"
           description: """
-                       OK.
+                       The string "ok".
                        """
         ]
       errors: [

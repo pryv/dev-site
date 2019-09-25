@@ -514,6 +514,55 @@ module.exports = exports =
     ]
   ,
 
+    id: "hf-series"
+    title: "HF Series"
+    description: """
+                 High-frequency series are collections of homogenous data points. 
+
+                 To store a high-frequency data series in Pryv.io, you must create a holder Event that defines the type of the data points, prefixed with `series:`.
+                 For example, to store high-frequency series of `mass/kg` data points, you must first create an event with the type `series:mass/kg`.
+
+                 Series data is encoded in the "flatJSON" format.
+                 Each data point in a series has a `"timestamp"` field containing the timestamp (as seconds since unix epoch) for the data point.
+                 For [types](https://api.pryv.com/event-types/#directory) that store a single value (e.g. "mass/kg"), a single additional field named `"value"` is created.
+                 Types that contain multiple fields (e.g. "position/wgs84") will possibly have many fields, whose names can be inferred from the [type reference](https://api.pryv.com/event-types/#position).
+                 Optional fields can either be given or not; missing values will be returned as null.
+                 """
+    properties: [
+      key: "format"
+      type: "string"
+      description: """
+                   The data format (for now only "flatJSON" format is supported).
+                   """
+    ,
+      key: "fields"
+      type: "Array of fields"
+      description: """
+                   The "fields" array lists all the fields that you will be providing in the "points" array, including the "timestamp" field in first position.
+                   If the data type contains a single field (ex.: mass/kg), the second field is "value", otherwise, it is the list of fields with the required ones first.
+                   """
+    ,
+      key: "points"
+      type: "Array of data points"
+      description: """
+                   The "points" array contains all the data points, each data point is represented by a simple array.
+                   This makes the bulk of the message (your data points) very space-efficient; values are encoded positionally.
+                   The first value corresponds to the first field, and so on.
+                   """
+    ]
+    examples: [
+      title: "Creation of a holder Event for high-frequency data series"
+      params: _.pick(examples.events.series.holderEvent, "type", "streamId")
+      result:
+        event: examples.events.series.holderEvent
+    ,
+      title: "High-frequency data series for the type 'mass/kg', encoded as flatJSON"
+      content: examples.events.series.massMultiple
+    ,
+      title: "High-frequency data series for the type 'position/wgs84', encoded as flatJSON"
+      content: examples.events.series.positionMultiple
+    ]
+  ,
     id: "webhook"
     title: "Webhook"
     description: """
