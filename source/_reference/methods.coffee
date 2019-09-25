@@ -576,6 +576,56 @@ module.exports = exports =
         result:
           event: _.omit(examples.events.activityAttachment, "attachments")
       ]
+    ,
+
+      id: "events.createHF"
+      type: "method"
+      title: "Create HF event"
+      http: "POST /events"
+      description: """
+                   Creates a new event that will be holding [high-frequency data series](##{dataStructure.getDocId("hf-series")}).
+                   """
+      params:
+        description: """
+                     The new event's data: see [Event](##{dataStructure.getDocId("event")}).
+
+                     With the particularity that HF events are created with null content and type corresponding to the type of the series data points, prefixed with `series:`.
+                     """
+      result:
+        http: "201 Created"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The created event.
+                       """
+        ,
+          key: "stoppedId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          description: """
+                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
+                     """
+      ,
+        key: "periods-overlap"
+        http: "400"
+        description: """
+                     Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+                     """
+      ]
+      examples: [
+        title: "Creating a holder Event for high-frequency data series"
+        content: _.pick(examples.events.series.holderEvent, "streamId", "type")
+        result:
+          event: examples.events.series.holderEvent
+
+      ]
 
     ,
 
@@ -585,7 +635,7 @@ module.exports = exports =
       title: "Add HF series data points"
       http: "POST /events/{id}/series"
       description: """
-                   Adds new data point(s) to a high-frequency series Event.
+                   Adds new data point(s) to a high-frequency series event.
 
                    The high-frequency series data will only store one set of values for any given timestamp. This means you can update existing data points by 'adding' new data with the original timestamps.  
                    """
@@ -610,7 +660,7 @@ module.exports = exports =
                      """
       ]
       examples: [
-        title: "Adding high-frequency data points to a series:position/wgs84 Event"
+        title: "Adding high-frequency data points to a series:position/wgs84 event"
         params: examples.events.series.position
         result:
           status: "ok"
@@ -624,7 +674,7 @@ module.exports = exports =
       title: "Get HF series data points"
       http: "GET /events/{event_id}/series"
       description: """
-                   Retrieves data points from a high-frequency series Event.
+                   Retrieves data points from a high-frequency series event.
                    Returns data in order of ascending timestamps between "fromTime" and "toTime".
                    Data is returned as input, no sampling or aggregation is performed.
                    """
