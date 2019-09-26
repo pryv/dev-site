@@ -15,20 +15,45 @@ methodsRoot.sections.forEach(section => {
       api.path[path] = {}
     }
 
-    const httpMethod = parseBy(method.http, ' ', 0)
+    const httpMethod = parseBy(method.http, ' ', 0).toLowerCase();
 
-    api.path[path][httpMethod.toLowerCase()] = {
+    api.path[path][httpMethod] = {
       description: method.description,
-      parameters: [
-        {
-          name: 
-        }
-      ]
+      operationId: method.id,
+      parameters: []
     };
+
+    function isGetOrDelete(verb) {
+      return verb == 'get' || verb == 'delete';
+    }
+    function hasParams(method) {
+      return method.params != null && method.params.properties != null;
+    }
+
+    // handle query params
+    if (hasParams(method) && isGetOrDelete(httpMethod)) {
+      const queryParamsRaw = extractQueryParams(method.params.properties);
+      api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(queryParamsRaw);
+    }
+    
+
+    // handle path params
+    const pathParamsRaw = extractPathParams(path)
+    const pathParams = [];
+    pathParamsRaw.forEach(p => {
+      pathParams.push({
+        name: p,
+
+      })
+    })
+    api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(pathParams);
+    
+
+
   });
 });
 
-console.log(methodsRoot.sections[0].sections);
+//console.log(methodsRoot.sections[0].sections);
 
 writeToOutput();
 
@@ -36,7 +61,31 @@ function parseBy(string, sep, pos) {
   return string.split(sep)[pos];
 }
 
+function extractQueryParams(properties) {
+  const params = [];
+  properties.forEach(p => {
+    params.push({
+      description: p.description,
+      required: ! p.optional,
+      name: p.key,
+      schema: p.type,
+    })
+  });
+  return params;
+}
 
+function extractPathParams(path) {
+  // /events/{id}
+  const params = [];
+  let indexStart;
+  let indexEnd = 0;
+  while (path.indexOf('{', indexEnd) > -1) {
+    indexStart = path.indexOf('{', indexEnd);
+    indexEnd = path.indexOf('}', indexStart);
+    params.push(path.substring(indexStart+1, indexEnd));
+  }
+  return params;
+}
 
 function writeToOutput() {
   fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api));
