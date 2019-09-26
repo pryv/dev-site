@@ -589,7 +589,8 @@ module.exports = exports =
         description: """
                      The new event's data: see [Event](##{dataStructure.getDocId("event")}).
 
-                     With the particularity that HF events are created with null content and type corresponding to the type of the series data points, prefixed with `series:`.
+                     With the particularity that you do not need to provide any content for HF events.
+                     However, the event type should corresponds to the type of the series data points, prefixed with `series:`.
                      """
       result:
         http: "201 Created"
