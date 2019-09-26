@@ -1,0 +1,13 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "transpile": "./node_modules/.bin/coffee -c -o transpiled ../source/_reference && ./scripts/replace-links.sh",
+    "export": "node src/main"
+  },
+  "dependencies": {
+    "coffeescript": "^2.4.1"
+  }
+}
