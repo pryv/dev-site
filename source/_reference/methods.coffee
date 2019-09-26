@@ -600,24 +600,12 @@ module.exports = exports =
           description: """
                        The created event.
                        """
-        ,
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
-                       """
         ]
       errors: [
         key: "invalid-operation"
         http: "400"
         description: """
                      The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
-                     """
-      ,
-        key: "periods-overlap"
-        http: "400"
-        description: """
-                     Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
                      """
       ]
       examples: [
