@@ -646,13 +646,9 @@ module.exports = exports =
         ]
       result:
         http: "200 OK"
-        properties: [
-          key: "series"
-          type: "[HF series](##{dataStructure.getDocId("hf-series")})"
-          description: """
-                       The high-frequency series.
-                       """
-        ]
+        description: """
+              The [high-frequency series](##{dataStructure.getDocId("hf-series")}).
+              """
       examples: [
         title: "Retrieving data points in a high-frequency series"
         params: {}
