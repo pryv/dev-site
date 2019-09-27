@@ -519,7 +519,7 @@ module.exports = exports =
     description: """
                  High-frequency series are collections of homogenous data points. 
 
-                 To store a high-frequency data series in Pryv.io, you must first [create a HF event](#create-hf-event).
+                 To store a HF series in Pryv.io, you must first [create a HF event](#create-hf-event).
 
                  Series data is encoded in the "flatJSON" format:
                  - Each data point in a series has a `"deltaTime"` field that indicates the time difference in seconds (or fraction of seconds) between the event time and the data point measurement time.
@@ -550,10 +550,10 @@ module.exports = exports =
                    """
     ]
     examples: [
-      title: "High-frequency data series for the type 'mass/kg', encoded as flatJSON"
+      title: "High-frequency series for the type 'mass/kg', encoded as flatJSON"
       content: examples.events.series.mass
     ,
-      title: "High-frequency data series for the type 'position/wgs84', encoded as flatJSON"
+      title: "High-frequency series for the type 'position/wgs84', encoded as flatJSON"
       content: examples.events.series.position
     ]
   ,

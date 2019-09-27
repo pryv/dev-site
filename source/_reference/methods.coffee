@@ -637,7 +637,7 @@ module.exports = exports =
   id: "hfs"
   title: "HF events"
   description: """
-                Methods to manipulate [high-frequency data series](##{dataStructure.getDocId("high-frequency-series")}).
+                Methods to manipulate high-frequency data through HF events and [HF series](##{dataStructure.getDocId("high-frequency-series")}).
                """
   sections: [
       id: "hfs.create"
@@ -645,15 +645,15 @@ module.exports = exports =
       title: "Create HF event"
       http: "POST /events"
       description: """
-                   Creates a new event that will be holding [high-frequency data series](##{dataStructure.getDocId("high-frequency-series")}).
+                   Creates a new event that will be holding [HF series](##{dataStructure.getDocId("high-frequency-series")}).
                    """
       params:
         description: """
                      The new event's data: see [Event](##{dataStructure.getDocId("event")}).
 
                      With the particularity that you do not need to provide any content for HF events.
-                     However, the event type should corresponds to the type of the data points, prefixed with `series:`.
-                     For example, to store high-frequency series of `mass/kg` data points, the type of the holder event should be `series:mass/kg`.
+                     However, the event type should corresponds to the type of the data points in the series, prefixed with `series:`.
+                     For example, to store HF series of `mass/kg` data points, the type of the holder event should be `series:mass/kg`.
                      """
       result:
         http: "201 Created"
@@ -672,7 +672,7 @@ module.exports = exports =
                      """
       ]
       examples: [
-        title: "Creating a holder Event for high-frequency data series"
+        title: "Creating a new HF event that will hold HF series"
         content: _.pick(examples.events.series.holderEvent, "streamId", "type")
         result:
           event: examples.events.series.holderEvent
@@ -686,33 +686,33 @@ module.exports = exports =
       title: "Get HF series data points"
       http: "GET /events/{event_id}/series"
       description: """
-                   Retrieves data points from a high-frequency series event.
-                   Returns data in order of ascending timestamps between "fromTime" and "toTime".
+                   Retrieves HF series data points from a HF event.
+                   Returns data in order of ascending deltaTime between "fromTime" and "toTime".
                    Data is returned as input, no sampling or aggregation is performed.
                    """
       params:
         properties: [
-          key: "fromTime"
-          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          key: "fromDeltaTime"
+          type: "[deltaTime](##{dataStructure.getDocId("high-frequency-series")})"
           optional: true
           description: """
-                       Only returns data points later than this timestamp. If no value is given the query will return data starting at the earliest timestamp in the series.
+                       Only returns data points later than this deltaTime. If no value is given the query will return data starting at the earliest deltaTime in the series.
                        """
         ,
-          key: "toTime"
-          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          key: "toDeltaTime"
+          type: "[deltaTime](##{dataStructure.getDocId("high-frequency-series")})"
           optional: true
           description: """
-                       Only returns data points earlier than this timestamp. If no value is given the server will return only data that is in the past.
+                       Only returns data points earlier than this deltaTime. If no value is given the server will return only data that is in the past.
                        """
         ]
       result:
         http: "200 OK"
         description: """
-              The [high-frequency series](##{dataStructure.getDocId("high-frequency-series")}).
+              The [HF series data points](##{dataStructure.getDocId("high-frequency-series")}).
               """
       examples: [
-        title: "Retrieving data points in a high-frequency series"
+        title: "Retrieving HF series data points from a HF event"
         params: {}
         result:
           examples.events.series.position
@@ -726,13 +726,13 @@ module.exports = exports =
       title: "Add HF series data points"
       http: "POST /events/{id}/series"
       description: """
-                   Adds new data point(s) to a high-frequency series event.
+                   Adds new HF series data point(s) to a HF event.
 
-                   The high-frequency series data will only store one set of values for any given timestamp. This means you can update existing data points by 'adding' new data with the original timestamps.  
+                   The HF series data will only store one set of values for any given deltaTime. This means you can update existing data points by 'adding' new data with the original deltaTime.  
                    """
       params:
         description: """
-                     The new high-frequency series data point(s), see [HF series](##{dataStructure.getDocId("high-frequency-series")}).
+                     The new HF series data point(s), see [HF series](##{dataStructure.getDocId("high-frequency-series")}).
                      """
       result:
         http: "200 OK"
@@ -747,11 +747,11 @@ module.exports = exports =
         key: "invalid-operation"
         http: "400"
         description: """
-                     The event is not a high frequency series.
+                     The event is not a HF event.
                      """
       ]
       examples: [
-        title: "Adding high-frequency data points to a series:position/wgs84 event"
+        title: "Adding new HF series data points to a HF event"
         params: examples.events.series.position
         result:
           status: "ok"
@@ -765,13 +765,13 @@ module.exports = exports =
       title: "Add HF series batch"
       http: "POST /series/batch"
       description: """
-                    Adds data to multiple series (stored in multiple HF events) in a single atomic operation. This is the fastest way to append data to Pryv; it allows transferring many data points in a single request.
+                    Adds data to multiple HF series (stored in multiple HF events) in a single atomic operation. This is the fastest way to append data to Pryv; it allows transferring many data points in a single request.
 
                     For this operation to be successful, all of the following conditions must be fulfilled:
 
                       - The access token needs write permissions to all series identified by "eventId".
-                      - All events referred to must be series events (type starts with the string "series:").
-                      - Fields identified in each individual message must match those specified by the type of the series event; there must be no duplicates.
+                      - All events referred to must be HF events (type starts with the string "series:").
+                      - Fields identified in each individual message must match those specified by the type of the HF event; there must be no duplicates.
                       - All the values in every data point must conform to the type specification. The data point matrix in every message must be rectangular.
 
                     If any part of the batch message is invalid, the entire batch is aborted and the returned result body identifies the error.
@@ -802,7 +802,7 @@ module.exports = exports =
             key: "data"
             type: "object"
             description: """
-                        Data to add to the HF series.
+                        HF series data to add to the HF event.
                         """
           ]
         ]
@@ -829,7 +829,7 @@ module.exports = exports =
                      """
       ]
       examples: [
-        title: "Adding a batch of high-frequency data points to multiple HF events"
+        title: "Adding a batch of HF series data to multiple HF events"
         params: examples.events.series.batch
         result:
           status: "ok"
