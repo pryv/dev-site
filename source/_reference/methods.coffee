@@ -635,9 +635,9 @@ module.exports = exports =
   ,
 
   id: "hfs"
-  title: "HF series"
+  title: "HF events"
   description: """
-                Methods to manipulate [high-frequency data series](##{dataStructure.getDocId("hf-series")}).
+                Methods to manipulate [high-frequency data series](##{dataStructure.getDocId("high-frequency-series")}).
                """
   sections: [
       id: "hfs.create"
@@ -645,7 +645,7 @@ module.exports = exports =
       title: "Create HF event"
       http: "POST /events"
       description: """
-                   Creates a new event that will be holding [high-frequency data series](##{dataStructure.getDocId("hf-series")}).
+                   Creates a new event that will be holding [high-frequency data series](##{dataStructure.getDocId("high-frequency-series")}).
                    """
       params:
         description: """
@@ -709,7 +709,7 @@ module.exports = exports =
       result:
         http: "200 OK"
         description: """
-              The [high-frequency series](##{dataStructure.getDocId("hf-series")}).
+              The [high-frequency series](##{dataStructure.getDocId("high-frequency-series")}).
               """
       examples: [
         title: "Retrieving data points in a high-frequency series"
@@ -732,7 +732,7 @@ module.exports = exports =
                    """
       params:
         description: """
-                     The new high-frequency series data point(s), see [HF series](##{dataStructure.getDocId("hf-series")}).
+                     The new high-frequency series data point(s), see [HF series](##{dataStructure.getDocId("high-frequency-series")}).
                      """
       result:
         http: "200 OK"
