@@ -578,7 +578,69 @@ module.exports = exports =
       ]
     ,
 
-      id: "events.createHF"
+      id: "events.delete"
+      type: "method"
+      title: "Delete event"
+      http: "DELETE /events/{id}"
+      description: """
+                   Trashes or deletes the specified event, depending on its current state:
+
+                   - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+                   - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the event.
+                       """
+        ]
+      result: [
+        title: "Result: trashed"
+        http: "200 OK"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The trashed event.
+                       """
+        ]
+      ,
+        title: "Result: deleted"
+        http: "200 OK"
+        properties: [
+          key: "eventDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The event deletion record.
+                       """
+        ]
+      ]
+      examples: [
+        title: "Trashing"
+        params:
+          id: examples.events.note.id
+        result:
+          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.note)
+      ,
+        title: "Deleting"
+        params:
+          id: examples.events.note.id
+        result: {eventDeletion:{id:examples.events.note.id}}
+      ]
+    ]
+  ,
+
+  id: "hfs"
+  title: "HF series"
+  description: """
+                Methods to manipulate [high-frequency data series](##{dataStructure.getDocId("hf-series")}).
+               """
+  sections: [
+      id: "hfs.create"
       type: "method"
       title: "Create HF event"
       http: "POST /events"
@@ -618,7 +680,7 @@ module.exports = exports =
       ]
 
     ,
-      id: "events.getHFSeries"
+      id: "hfs.get"
       type: "method"
       httpOnly: true
       title: "Get HF series data points"
@@ -658,7 +720,7 @@ module.exports = exports =
 
     ,
 
-      id: "events.addHFSeries"
+      id: "hfs.add"
       type: "method"
       httpOnly: true
       title: "Add HF series data points"
@@ -697,7 +759,7 @@ module.exports = exports =
 
     ,
 
-      id: "events.addHFSeriesBatch"
+      id: "hfs.addBatch"
       type: "method"
       httpOnly: true
       title: "Add HF series batch"
@@ -772,63 +834,7 @@ module.exports = exports =
         result:
           status: "ok"
       ]
-    ,
-
-      id: "events.delete"
-      type: "method"
-      title: "Delete event"
-      http: "DELETE /events/{id}"
-      description: """
-                   Trashes or deletes the specified event, depending on its current state:
-
-                   - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
-                   - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
-                   """
-      params:
-        properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the event.
-                       """
-        ]
-      result: [
-        title: "Result: trashed"
-        http: "200 OK"
-        properties: [
-          key: "event"
-          type: "[event](##{dataStructure.getDocId("event")})"
-          description: """
-                       The trashed event.
-                       """
-        ]
-      ,
-        title: "Result: deleted"
-        http: "200 OK"
-        properties: [
-          key: "eventDeletion"
-          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
-          description: """
-                       The event deletion record.
-                       """
-        ]
-      ]
-      examples: [
-        title: "Trashing"
-        params:
-          id: examples.events.note.id
-        result:
-          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.note)
-      ,
-        title: "Deleting"
-        params:
-          id: examples.events.note.id
-        result: {eventDeletion:{id:examples.events.note.id}}
-      ]
-    ]
-  
+  ]
 
   ,
 

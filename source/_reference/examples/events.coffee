@@ -186,19 +186,19 @@ module.exports =
   series:
     position:
       format: "flatJSON", 
-      fields: ["timestamp", "latitude", "longitude", "altitude"], 
+      fields: ["deltaTime", "latitude", "longitude", "altitude"], 
       points: [
-        [1519314345, 10.2, 11.2, 500], 
-        [1519314346, 10.2, 11.2, 510],
-        [1519314347, 10.2, 11.2, 520],
+        [0, 10.2, 11.2, 500], 
+        [1, 10.2, 11.2, 510],
+        [2, 10.2, 11.2, 520],
       ]
     mass:
       format: "flatJSON", 
-      fields: ["timestamp", "value"], 
+      fields: ["deltaTime", "value"], 
       points: [
-        [1519314345, 70], 
-        [1519314346, 71],
-        [1519314347, 72],
+        [0, 70], 
+        [1, 71],
+        [2, 72],
       ]
     holderEvent:
       id: generateId()
@@ -209,7 +209,7 @@ module.exports =
       content:
         elementType: "position/wgs84",
         fields: [
-          "timestamp",
+          "deltaTime",
           "latitude",
           "longitude",
           "altitude",
@@ -219,7 +219,7 @@ module.exports =
           "bearing"
         ],
         required: [
-          "timestamp",
+          "deltaTime",
           "latitude",
           "longitude"
         ]
@@ -233,20 +233,20 @@ module.exports =
         eventId: generateId()
         data:
           format: "flatJSON", 
-          fields: ["timestamp", "value"], 
+          fields: ["deltaTime", "value"], 
           points: [
-            [1519314345, 70], 
-            [1519314346, 71],
-            [1519314347, 72],
+            [0, 70], 
+            [1, 71],
+            [2, 72],
           ]
       ,
         eventId: generateId()
         data:
           format: "flatJSON", 
-          fields: ["timestamp", "latitude", "longitude", "altitude"], 
+          fields: ["deltaTime", "latitude", "longitude", "altitude"], 
           points: [
-            [1519314345, 10.2, 11.2, 500], 
-            [1519314346, 10.2, 11.2, 510],
-            [1519314347, 10.2, 11.2, 520],
+            [0, 10.2, 11.2, 500], 
+            [2, 10.2, 11.2, 510],
+            [1, 10.2, 11.2, 520],
           ]
       ]
