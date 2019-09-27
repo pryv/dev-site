@@ -470,7 +470,6 @@ module.exports = exports =
       examples: [
         title: "Adding a tag"
         params:
-          id: examples.events.position.id
           update:
             tags: ["home"]
         result:
