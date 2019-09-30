@@ -693,14 +693,14 @@ module.exports = exports =
       params:
         properties: [
           key: "fromDeltaTime"
-          type: "[deltaTime](##{dataStructure.getDocId("high-frequency-series")})"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
                        Only returns data points later than this deltaTime. If no value is given the query will return data starting at the earliest deltaTime in the series.
                        """
         ,
           key: "toDeltaTime"
-          type: "[deltaTime](##{dataStructure.getDocId("high-frequency-series")})"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
                        Only returns data points earlier than this deltaTime. If no value is given the server will return only data that is in the past.
