@@ -38,10 +38,10 @@ methodsRoot.sections.forEach(section => {
 
     // handle body params
     if (hasParams(method) && isPostorPut(httpMethod)) {
-      const bodyParamsRaw = extractQueryParams(method.params.properties);
-      bodyParamsRaw
-      api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(queryParamsRaw);
+      api.path[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
     }
+
+    
 
     // handle query params
     if (hasParams(method) && isGetOrDelete(httpMethod)) {
@@ -86,6 +86,29 @@ function extractQueryParams(properties) {
     })
   });
   return params;
+}
+
+
+function extractBodyParams(params) {
+  const requestBody = {
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {}
+        }
+      }
+    }
+  };
+  params.forEach(param => {
+    requestBody.content['application/json'].schema.properties[
+      param.key
+    ] = {
+        description: param.description,
+        type: param.type
+      };
+  });
+  return requestBody;
 }
 
 function extractPathParams(path) {
