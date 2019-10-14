@@ -20,14 +20,27 @@ methodsRoot.sections.forEach(section => {
     api.path[path][httpMethod] = {
       description: method.description,
       operationId: method.id,
-      parameters: []
+      parameters: [], 
+      responses: [], //to be defined
+      tags: [], //optional
+      requestBody: [] //to be defined
     };
 
     function isGetOrDelete(verb) {
       return verb == 'get' || verb == 'delete';
     }
+    function isPostorPut(verb){
+      return verb == 'post' || verb == 'put';
+    }
     function hasParams(method) {
       return method.params != null && method.params.properties != null;
+    }
+
+    // handle body params
+    if (hasParams(method) && isPostorPut(httpMethod)) {
+      const bodyParamsRaw = extractQueryParams(method.params.properties);
+      bodyParamsRaw
+      api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(queryParamsRaw);
     }
 
     // handle query params
@@ -53,7 +66,7 @@ methodsRoot.sections.forEach(section => {
   });
 });
 
-//console.log(methodsRoot.sections[0].sections);
+console.log(methodsRoot.sections[0].sections);
 
 writeToOutput();
 
@@ -65,10 +78,11 @@ function extractQueryParams(properties) {
   const params = [];
   properties.forEach(p => {
     params.push({
+      name: p.key, // key.forEach ?
       description: p.description,
       required: ! p.optional,
-      name: p.key,
-      schema: p.type,
+      in: 'query',
+      // schema: p.type ?
     })
   });
   return params;
@@ -87,6 +101,27 @@ function extractPathParams(path) {
   return params;
 }
 
+// function extractRequestBody(path){
+//  if (hasParams(method) && isPostorPut(httpMethod)) 
+
+//}
+
+function extractResponses(path){
+  const responses = [];
+  responses.push({
+   'methods.result.http' :  //
+    headers = properties.forEach(p => {
+      params.push({
+        //p.key: 
+          //description: p.description,
+          //schema: p.type,
+        });
+      }),
+    });
+  return responses;
+}
+
 function writeToOutput() {
   fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api));
 }
+
