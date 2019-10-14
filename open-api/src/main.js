@@ -21,10 +21,12 @@ methodsRoot.sections.forEach(section => {
       description: method.description,
       operationId: method.id,
       parameters: [], 
-      responses: [], //to be defined
-      tags: [], //optional
-      requestBody: [] //to be defined
+      responses: [],
     };
+
+    // good response
+
+    // erronous response
 
     function isGetOrDelete(verb) {
       return verb == 'get' || verb == 'delete';
@@ -40,8 +42,6 @@ methodsRoot.sections.forEach(section => {
     if (hasParams(method) && isPostorPut(httpMethod)) {
       api.path[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
     }
-
-    
 
     // handle query params
     if (hasParams(method) && isGetOrDelete(httpMethod)) {
