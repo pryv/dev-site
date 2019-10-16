@@ -41,6 +41,8 @@ As shown below, the streams for this account are listed, especially a default st
 
 # Data Modelling Tips
 
+You can find this chapter [here](/guides/data-modelling)
+
 The Pryv.io data model is composed mainly of two entities: **events** and **streams**.
 
 Here's an example of two Pryv.io user accounts and their respective streams. Inside each stream, you can see timestamped events.
