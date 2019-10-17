@@ -65,6 +65,10 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to migrate a Pryv.io register service to a different machine.
 
+- User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
+
+  This document presents a tool which allows to delete Pryv.io users.
+
 - How to backup: [PDF](/assets/docs/20191007-pryv.io-backup-v1.pdf)
 
   This document describes how to perform a backup of your Pryv.io platform and how to restore it in case of any data loss.
