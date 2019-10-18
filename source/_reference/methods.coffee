@@ -635,7 +635,6 @@ module.exports = exports =
 
   id: "hfs"
   title: "HF events"
-  previewOnly: true
   description: """
                 Methods to manipulate high-frequency data through HF events and [HF series](##{dataStructure.getDocId("high-frequency-series")}).
                """
