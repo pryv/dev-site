@@ -833,6 +833,126 @@ module.exports = exports =
         result:
           status: "ok"
       ]
+
+    ,
+
+      id: "hfs.update"
+      type: "method"
+      title: "Update HF event"
+      http: "PUT /events/{id}"
+      description: """
+                   Modifies the HF event.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the event.
+                       """
+        ,
+          key: "update"
+          type: "object"
+          http:
+            text: "request body"
+          description: """
+                       New values for the event's fields: see [event](##{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The updated event.
+                       """
+        ,
+          key: "stoppedId"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          description: """
+                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
+                     """
+      ,
+        key: "periods-overlap"
+        http: "400"
+        description: """
+                     Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
+                     """
+      ]
+      examples: [
+        title: "Adding a tag"
+        params:
+          update:
+            tags: ["home"]
+        result:
+          event: _.defaults({ tags: ["home"], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
+      ]
+
+    ,
+
+      id: "hfs.delete"
+      type: "method"
+      title: "Delete HF event"
+      http: "DELETE /events/{id}"
+      description: """
+                   Trashes or deletes the specified event, depending on its current state:
+
+                   - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+                   - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The id of the event.
+                       """
+        ]
+      result: [
+        title: "Result: trashed"
+        http: "200 OK"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The trashed event.
+                       """
+        ]
+      ,
+        title: "Result: deleted"
+        http: "200 OK"
+        properties: [
+          key: "eventDeletion"
+          type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
+          description: """
+                       The event deletion record.
+                       """
+        ]
+      ]
+      examples: [
+        title: "Trashing"
+        params:
+          id: examples.events.note.id
+        result:
+          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.note)
+      ,
+        title: "Deleting"
+        params:
+          id: examples.events.note.id
+        result: {eventDeletion:{id:examples.events.note.id}}
+      ]
   ]
 
   ,
