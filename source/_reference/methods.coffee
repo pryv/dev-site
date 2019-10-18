@@ -652,7 +652,7 @@ module.exports = exports =
                      The new event's data: see [Event](##{dataStructure.getDocId("event")}).
 
                      With the particularity that you do not need to provide any content for HF events.
-                     However, the event type should corresponds to the type of the data points in the series, prefixed with `series:`.
+                     However, the event type should correspond to the type of the data points in the series, prefixed with `series:`.
                      For example, to store HF series of `mass/kg` data points, the type of the holder event should be `series:mass/kg`.
                      """
       result:
