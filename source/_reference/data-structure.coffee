@@ -430,7 +430,6 @@ module.exports = exports =
 
     id: "audit-log"
     title: "Audit log"
-    previewOnly: true
     description: """
                  Audit logs keep track of details about the actions performed by clients against Pryv.io accounts through the Pryv.io API.
                  These logs can be fetched by presenting an authorization token, allowing to audit the actions that involved a given token.

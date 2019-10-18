@@ -1251,7 +1251,6 @@ module.exports = exports =
 
     id: "audit"
     title: "Audit"
-    previewOnly: true
     description: """
                  Methods to retrieve [Audit logs](##{dataStructure.getDocId("audit-log")}).
                  """
