@@ -37,7 +37,12 @@ methodsRoot.sections.forEach(section => {
     function hasParams(method) {
       return method.params != null && method.params.properties != null;
     }
-
+    function hasResult(method) {
+      return method.result != null;
+    }
+    function hasError(method) {
+      return method.errors != null;
+    }
     // handle body params
     if (hasParams(method) && isPostorPut(httpMethod)) {
       api.path[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
@@ -49,19 +54,24 @@ methodsRoot.sections.forEach(section => {
       api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(queryParamsRaw);
     }
     
-
     // handle path params
     const pathParamsRaw = extractPathParams(path)
     const pathParams = [];
     pathParamsRaw.forEach(p => {
       pathParams.push({
         name: p,
-
       })
     })
+  
     api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(pathParams);
     
-
+   // handle responses
+    if (hasResult(method)) {
+      api.path[path][httpMethod].responses = extractResult(method.result)
+    }
+    if (hasError(method)) {
+      api.path[path][httpMethod].responses = extractError(method.errors)
+    }
 
   });
 });
@@ -78,11 +88,10 @@ function extractQueryParams(properties) {
   const params = [];
   properties.forEach(p => {
     params.push({
-      name: p.key, // key.forEach ?
+      name: p.key, 
       description: p.description,
       required: ! p.optional,
       in: 'query',
-      // schema: p.type ?
     })
   });
   return params;
