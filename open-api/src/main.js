@@ -65,22 +65,94 @@ methodsRoot.sections.forEach(section => {
   
     api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(pathParams);
     
-   // handle responses
+    // handle responses - result
     if (hasResult(method)) {
-      api.path[path][httpMethod].responses = extractResult(method.result)
+      if (!Array.isArray(method.result)) {
+        method.result = [ method.result ];
+      }
+      api.path[path][httpMethod].responses = extractResult(method)
     }
+    // handle responses - errors
     if (hasError(method)) {
-      api.path[path][httpMethod].responses = extractError(method.errors)
+      api.path[path][httpMethod].responses = api.path[path][httpMethod].responses.concat(extractError(method))
     }
 
   });
 });
 
-console.log(methodsRoot.sections[0].sections);
+//console.log(methodsRoot.sections[0].sections);
 
 writeToOutput();
 
-function parseBy(string, sep, pos) {
+function extractError(method) {
+  
+  const errors = method.errors;
+  const responses = [];
+  console.log('errors', method);
+  if (! errors) return responses;
+  
+  errors.forEach(e => {
+    const response = {}
+    response[e.http] = {
+      description: e.key
+    };
+    responses.push(response);
+  });
+  return responses;
+}
+
+function extractResult(method) {
+
+  const result = method.result
+  const responses = [];
+  result.forEach(r => {
+    const status = parseBy(r.http, ' ', 0);
+    const response = {}
+    response[status] = {};
+
+    if (r.description) {
+      response[status].description = parseBy(r.http, ' ', 1);
+    }
+    if (r.properties) {
+      response[status].content = {
+        'application/json': {
+          schema: arrayOrNot(r.properties)
+        }
+      }
+    }
+    responses.push(response);
+  });
+  
+  return responses;
+
+  function arrayOrNot(props) {
+    const schemaItems = [];
+    props.forEach(p => {
+      schemaItems.push(arrayOrNotSingle(p));
+    });
+    return schemaItems;
+  }
+
+  function arrayOrNotSingle(props) {
+    let schema = {};
+    if (props.type.startsWith('array of')) {
+      schema.type = 'array';
+      schema.items = parseBy(props.type, ' ', 2, 3);
+    } else {
+      schema = {
+        '$ref': props.type
+      }
+    }
+    return schema;
+  }
+  
+}
+
+
+function parseBy(string, sep, pos, end) {
+  if (end) {
+    return string.split(sep).splice(pos, end+1).join(' ');
+  }
   return string.split(sep)[pos];
 }
 
