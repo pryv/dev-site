@@ -11,13 +11,13 @@ const api = {
 methodsRoot.sections.forEach(section => {
   section.sections.forEach(method => {
     const path = parseBy(method.http, ' ', 1);
-    if (api.path[path] == null) {
-      api.path[path] = {}
+    if (api.paths[path] == null) {
+      api.paths[path] = {};
     }
 
     const httpMethod = parseBy(method.http, ' ', 0).toLowerCase();
 
-    api.path[path][httpMethod] = {
+    api.paths[path][httpMethod] = {
       description: method.description,
       operationId: method.id,
       parameters: [], 
@@ -45,13 +45,13 @@ methodsRoot.sections.forEach(section => {
     }
     // handle body params
     if (hasParams(method) && isPostorPut(httpMethod)) {
-      api.path[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
+      api.paths[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
     }
 
     // handle query params
     if (hasParams(method) && isGetOrDelete(httpMethod)) {
       const queryParamsRaw = extractQueryParams(method.params.properties);
-      api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(queryParamsRaw);
+      api.paths[path][httpMethod].parameters = api.paths[path][httpMethod].parameters.concat(queryParamsRaw);
     }
     
     // handle path params
@@ -63,18 +63,18 @@ methodsRoot.sections.forEach(section => {
       })
     })
   
-    api.path[path][httpMethod].parameters = api.path[path][httpMethod].parameters.concat(pathParams);
+    api.paths[path][httpMethod].parameters = api.paths[path][httpMethod].parameters.concat(pathParams);
     
     // handle responses - result
     if (hasResult(method)) {
       if (!Array.isArray(method.result)) {
         method.result = [ method.result ];
       }
-      api.path[path][httpMethod].responses = extractResult(method)
+      api.paths[path][httpMethod].responses = extractResult(method)
     }
     // handle responses - errors
     if (hasError(method)) {
-      api.path[path][httpMethod].responses = api.path[path][httpMethod].responses.concat(extractError(method))
+      api.paths[path][httpMethod].responses = api.paths[path][httpMethod].responses.concat(extractError(method))
     }
 
   });
@@ -88,7 +88,6 @@ function extractError(method) {
   
   const errors = method.errors;
   const responses = [];
-  console.log('errors', method);
   if (! errors) return responses;
   
   errors.forEach(e => {
