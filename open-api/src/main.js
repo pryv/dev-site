@@ -5,7 +5,7 @@ const fs = require('fs');
 const OUTPUT_FILE = 'open-api-format/api.yaml';
 
 const api = {
-  path: {},
+  paths: {},
 };
 
 methodsRoot.sections.forEach(section => {
