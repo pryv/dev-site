@@ -467,15 +467,6 @@ module.exports = exports =
           description: """
                        Additional client data that will be transmitted alongside the auth request (see Result below).
                        """
-        ,
-          key: "authUrl"
-          type: "string"
-          optional: true
-          description: """
-                       Specify a custom url for the authentication process.
-                       The url domain name must belong to the list of configuration's trusted domains.
-                       This list usually includes plateform domain.
-                       """
         ]
       result: [
         title: "Result: in progress"
