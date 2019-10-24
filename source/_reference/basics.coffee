@@ -473,7 +473,8 @@ module.exports = exports =
           optional: true
           description: """
                        Specify a custom url for the authentication process.
-                       Must be on the same domain as the main application.
+                       The url domain name must belong to the list of configuration's trusted domains.
+                       This list usually includes plateform domain.
                        """
         ]
       result: [
