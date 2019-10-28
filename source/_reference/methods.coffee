@@ -841,61 +841,15 @@ module.exports = exports =
       title: "Update HF event"
       http: "PUT /events/{id}"
       description: """
-                   Modifies the HF event.
+                    Similar to the standard [Update event](##{_getDocId("events", "events.update")}) method.
+                    With the only difference that HF event's content can not be modified.
                    """
-      params:
-        properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the event.
-                       """
-        ,
-          key: "update"
-          type: "object"
-          http:
-            text: "request body"
-          description: """
-                       New values for the event's fields: see [event](##{dataStructure.getDocId("event")}). All fields are optional, and only modified values must be included.
-                       """
-        ]
-      result:
-        http: "200 OK"
-        properties: [
-          key: "event"
-          type: "[event](##{dataStructure.getDocId("event")})"
-          description: """
-                       The updated event.
-                       """
-        ,
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
-                       """
-        ]
       errors: [
-        key: "invalid-operation"
+        key: "invalid-parameters-format"
         http: "400"
         description: """
-                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
+                     The event content's format is invalid. Events of type High-frequency have a read-only content.
                      """
-      ,
-        key: "periods-overlap"
-        http: "400"
-        description: """
-                     Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
-                     """
-      ]
-      examples: [
-        title: "Adding a tag"
-        params:
-          update:
-            tags: ["home"]
-        result:
-          event: _.defaults({ tags: ["home"], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
       ]
 
     ,
