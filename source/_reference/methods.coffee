@@ -650,7 +650,7 @@ module.exports = exports =
         description: """
                      The new event's data: see [Event](##{dataStructure.getDocId("event")}).
 
-                     With the particularity that you do not need to provide any content for HF events.
+                     With the particularity that the content of HF events is read-only, so you should not provide any content.
                      However, the event type should correspond to the type of the data points in the series, prefixed with `series:`.
                      For example, to store HF series of `mass/kg` data points, the type of the holder event should be `series:mass/kg`.
                      """
@@ -668,6 +668,12 @@ module.exports = exports =
         http: "400"
         description: """
                      The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
+                     """
+      ,
+        key: "invalid-parameters-format"
+        http: "400"
+        description: """
+                     The event content's format is invalid. Events of type High-frequency have a read-only content.
                      """
       ]
       examples: [
