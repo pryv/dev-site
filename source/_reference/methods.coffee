@@ -754,6 +754,12 @@ module.exports = exports =
         description: """
                      The event is not a HF event.
                      """
+      ,
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Access to trashed or deleted series is forbidden.
+                     """
       ]
       examples: [
         title: "Adding new HF series data points to a HF event"
