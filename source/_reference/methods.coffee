@@ -854,7 +854,8 @@ module.exports = exports =
       http: "PUT /events/{id}"
       description: """
                     Similar to the standard [Update event](##{_getDocId("events", "events.update")}) method.
-                    With the only difference that HF event's content can not be modified.
+
+                    With the particularity that the content of HF events is read-only, so it can not be modified.
                    """
       errors: [
         key: "invalid-parameters-format"
