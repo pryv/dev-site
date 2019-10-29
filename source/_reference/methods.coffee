@@ -635,7 +635,6 @@ module.exports = exports =
 
   id: "hfs"
   title: "HF events"
-  previewOnly: true
   description: """
                 Methods to manipulate high-frequency data through HF events and [HF series](##{dataStructure.getDocId("high-frequency-series")}).
                """
@@ -651,8 +650,8 @@ module.exports = exports =
         description: """
                      The new event's data: see [Event](##{dataStructure.getDocId("event")}).
 
-                     With the particularity that you do not need to provide any content for HF events.
-                     However, the event type should corresponds to the type of the data points in the series, prefixed with `series:`.
+                     The content of HF events is read-only, so you should not provide any content.
+                     However, the event type should correspond to the type of the data points in the series, prefixed with `series:`.
                      For example, to store HF series of `mass/kg` data points, the type of the holder event should be `series:mass/kg`.
                      """
       result:
@@ -670,10 +669,16 @@ module.exports = exports =
         description: """
                      The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
                      """
+      ,
+        key: "invalid-parameters-format"
+        http: "400"
+        description: """
+                     The event content's format is invalid. Events of type High-frequency have a read-only content.
+                     """
       ]
       examples: [
         title: "Creating a new HF event that will hold HF series"
-        content: _.pick(examples.events.series.holderEvent, "streamId", "type")
+        params: _.pick(examples.events.series.holderEvent, "streamId", "type")
         result:
           event: examples.events.series.holderEvent
 
@@ -684,7 +689,7 @@ module.exports = exports =
       type: "method"
       httpOnly: true
       title: "Get HF series data points"
-      http: "GET /events/{event_id}/series"
+      http: "GET /events/{id}/series"
       description: """
                    Retrieves HF series data points from a HF event.
                    Returns data in order of ascending deltaTime between "fromTime" and "toTime".
@@ -726,7 +731,7 @@ module.exports = exports =
       title: "Add HF series data points"
       http: "POST /events/{id}/series"
       description: """
-                   Adds new HF series data point(s) to a HF event.
+                   Adds new HF series data points to a HF event.
 
                    The HF series data will only store one set of values for any given deltaTime. This means you can update existing data points by 'adding' new data with the original deltaTime.  
                    """
@@ -748,6 +753,12 @@ module.exports = exports =
         http: "400"
         description: """
                      The event is not a HF event.
+                     """
+      ,
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The referenced HF event is in the trash, and we prevent the recording of new data points into trashed events.
                      """
       ]
       examples: [
@@ -772,14 +783,11 @@ module.exports = exports =
                       - The access token needs write permissions to all series identified by "eventId".
                       - All events referred to must be HF events (type starts with the string "series:").
                       - Fields identified in each individual message must match those specified by the type of the HF event; there must be no duplicates.
-                      - All the values in every data point must conform to the type specification. The data point matrix in every message must be rectangular.
+                      - All the values in every data point must conform to the type specification.
 
                     If any part of the batch message is invalid, the entire batch is aborted and the returned result body identifies the error.
                    """
       params:
-        description: """
-                     Request body should contain the data to be appended to the various series encoded as JSON text ("application/json"). The overall format of this message should be as follows:
-                     """
         properties: [
           key: "format"
           type: "string"
@@ -821,12 +829,6 @@ module.exports = exports =
         description: """
                      The request was malformed and could not be executed. The entire operation was aborted.
                      """
-      ,
-        key: "forbidden"
-        http: "403"
-        description: """
-                     The authorization provided to Pryv was not valid or doesn't have the access rights to store series data.
-                     """
       ]
       examples: [
         title: "Adding a batch of HF series data to multiple HF events"
@@ -834,6 +836,35 @@ module.exports = exports =
         result:
           status: "ok"
       ]
+
+    ,
+
+      id: "hfs.update"
+      type: "method"
+      title: "Update HF event"
+      http: "PUT /events/{id}"
+      description: """
+                    Similar to the standard [Update event](##{_getDocId("events", "events.update")}) method.
+
+                    You may update all non read-only fields, except `content` which is read-only for HF events.
+                   """
+      errors: [
+        key: "invalid-parameters-format"
+        http: "400"
+        description: """
+                     The event content's format is invalid. Events of type High-frequency have a read-only content.
+                     """
+      ]
+
+    ,
+
+      id: "hfs.delete"
+      type: "method"
+      title: "Delete HF event"
+      http: "DELETE /events/{id}"
+      description: """
+                   Similar to the standard [Delete event](##{_getDocId("events", "events.delete")}) method.
+                   """
   ]
 
   ,
