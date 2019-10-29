@@ -544,7 +544,7 @@ module.exports = exports =
       key: "points"
       type: "Array of data points"
       description: """
-                   The "points" array contains all the data points, each data point is represented by a simple array.
+                   The "points" array contains the data points, each data point is represented by a simple array.
                    This makes the bulk of the message (your data points) very space-efficient; values are encoded positionally.
                    The first value corresponds to the first field, and so on.
                    """
