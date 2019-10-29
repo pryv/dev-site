@@ -678,7 +678,7 @@ module.exports = exports =
       ]
       examples: [
         title: "Creating a new HF event that will hold HF series"
-        content: _.pick(examples.events.series.holderEvent, "streamId", "type")
+        params: _.pick(examples.events.series.holderEvent, "streamId", "type")
         result:
           event: examples.events.series.holderEvent
 
