@@ -650,7 +650,7 @@ module.exports = exports =
         description: """
                      The new event's data: see [Event](##{dataStructure.getDocId("event")}).
 
-                     With the particularity that the content of HF events is read-only, so you should not provide any content.
+                     The content of HF events is read-only, so you should not provide any content.
                      However, the event type should correspond to the type of the data points in the series, prefixed with `series:`.
                      For example, to store HF series of `mass/kg` data points, the type of the holder event should be `series:mass/kg`.
                      """
@@ -755,10 +755,10 @@ module.exports = exports =
                      The event is not a HF event.
                      """
       ,
-        key: "forbidden"
-        http: "403"
+        key: "invalid-operation"
+        http: "400"
         description: """
-                     Access to trashed or deleted series is forbidden.
+                     The referenced HF event is in the trash, and we prevent the recording of new data points into trashed events.
                      """
       ]
       examples: [
@@ -855,7 +855,7 @@ module.exports = exports =
       description: """
                     Similar to the standard [Update event](##{_getDocId("events", "events.update")}) method.
 
-                    With the particularity that the content of HF events is read-only, so it can not be modified.
+                    The only difference is that the content of HF events is read-only, so it can not be modified.
                    """
       errors: [
         key: "invalid-parameters-format"
