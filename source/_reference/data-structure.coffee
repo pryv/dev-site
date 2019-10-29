@@ -521,11 +521,11 @@ module.exports = exports =
                  To store a HF series in Pryv.io, you must first [create a HF event](#create-hf-event).
 
                  Series data is encoded in the "flatJSON" format:
-                 - Each data point in a series has a `"deltaTime"` field that indicates its measurement [timestamp](#data-structure-timestamp), since the event time as reference.
-                   If a `"timestamp"` field is instead provided, the corresponding `"deltaTime"` will be automatically deduced from the event time.
+                 - Each data point in a series has a `"deltaTime"` field that indicates its time difference, since the holder event's [timestamp](#data-structure-timestamp).
+                   If a `"timestamp"` field is instead provided, the corresponding `"deltaTime"` will be automatically computed from the holder event's timestamp.
                  - For [types](https://api.pryv.com/event-types/#directory) that store a single value (e.g. "mass/kg"), a single additional field named `"value"` is created.
-                 - Types that contain multiple fields (e.g. "position/wgs84") will possibly have many fields, whose names can be inferred from the [type reference](https://api.pryv.com/event-types/#position).
-                 - Optional fields can either be given or not; missing values will be returned as null.
+                 - Types that contain multiple properties (e.g. "position/wgs84") will have many fields, whose names can be inferred from the [type reference](https://api.pryv.com/event-types/#position).
+                 - Optional fields can either be provided or not; omitted values will be set as null.
                  """
     properties: [
       key: "format"
