@@ -689,7 +689,7 @@ module.exports = exports =
       type: "method"
       httpOnly: true
       title: "Get HF series data points"
-      http: "GET /events/{event_id}/series"
+      http: "GET /events/{id}/series"
       description: """
                    Retrieves HF series data points from a HF event.
                    Returns data in order of ascending deltaTime between "fromTime" and "toTime".
@@ -731,7 +731,7 @@ module.exports = exports =
       title: "Add HF series data points"
       http: "POST /events/{id}/series"
       description: """
-                   Adds new HF series data point(s) to a HF event.
+                   Adds new HF series data points to a HF event.
 
                    The HF series data will only store one set of values for any given deltaTime. This means you can update existing data points by 'adding' new data with the original deltaTime.  
                    """
@@ -783,14 +783,11 @@ module.exports = exports =
                       - The access token needs write permissions to all series identified by "eventId".
                       - All events referred to must be HF events (type starts with the string "series:").
                       - Fields identified in each individual message must match those specified by the type of the HF event; there must be no duplicates.
-                      - All the values in every data point must conform to the type specification. The data point matrix in every message must be rectangular.
+                      - All the values in every data point must conform to the type specification.
 
                     If any part of the batch message is invalid, the entire batch is aborted and the returned result body identifies the error.
                    """
       params:
-        description: """
-                     Request body should contain the data to be appended to the various series encoded as JSON text ("application/json"). The overall format of this message should be as follows:
-                     """
         properties: [
           key: "format"
           type: "string"
@@ -832,12 +829,6 @@ module.exports = exports =
         description: """
                      The request was malformed and could not be executed. The entire operation was aborted.
                      """
-      ,
-        key: "forbidden"
-        http: "403"
-        description: """
-                     The authorization provided to Pryv was not valid or doesn't have the access rights to store series data.
-                     """
       ]
       examples: [
         title: "Adding a batch of HF series data to multiple HF events"
@@ -855,7 +846,7 @@ module.exports = exports =
       description: """
                     Similar to the standard [Update event](##{_getDocId("events", "events.update")}) method.
 
-                    The only difference is that the content of HF events is read-only, so it can not be modified.
+                    You may update all non read-only fields, except `content` which is read-only for HF events.
                    """
       errors: [
         key: "invalid-parameters-format"
