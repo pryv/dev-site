@@ -6,8 +6,8 @@ customer: true
 withTOC: true
 ---
 
-Events are the primary unit of content in Pryv.io model. They are timestamped piece of typed data, containing different fields that can be found in the [data structure reference](reference/#data-structure-event). 
-All available API methods to work on events are described in the [API reference](reference/#events).
+Events are the primary unit of content in Pryv.io model. They are timestamped piece of typed data, containing different fields that can be found in the [data structure reference](/reference/#data-structure-event). 
+All available API methods to work on events are described in the [API reference](/reference/#events).
 
 We provide here concrete examples on how to manipulate events : **create**, **get**, **update** and **delete** events.
 
@@ -245,4 +245,4 @@ The method ```start```is equivalent to starting an event with a null ```duration
 
 In ```singleActivity```streams, ```events.start```will automatically stop the previously running period event if any, while ```events.stop``` guarantees that only one event is running at any given time.
 
-You can find more information on this method in the [API methods reference](reference/#start-period).
+You can find more information on this method in the [API methods reference](/reference/#start-period).

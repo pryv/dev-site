@@ -40,13 +40,14 @@ As shown below, the streams for this account are listed, especially a default st
 
 # Data Modelling
 
-To design your own data model and implement it under Pryv's conventions, please check the [**dedicated page**](guides/data-modelling) providing examples and scenarios of how the data model should be structured depending on the end use.
+To design your own data model and implement it under Pryv's conventions, please check the [**dedicated page**](/guides/data-modelling) providing examples and scenarios of how the data model should be structured depending on the end use.
 
 Pryv.io data model is composed of two entities: **events** and **streams**. 
+
 All the data that you collect and aggregate should follow an organisation in streams and events. 
 Inside each stream can be found timestamped events : 
 
-![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
+![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png | width=400)
 
 ### Streams
 
@@ -92,14 +93,14 @@ Here is an example of a stream with sub-streams (children), accordingly to the s
 }
 ```
 
-To learn how to perform CRUD (create, read, update, delete) operations on streams, please refer to the guide ["How to manipulate streams?"](guides/manage-streams).
+To learn how to perform CRUD (create, read, update, delete) operations on streams, please refer to the guide ["How to manipulate streams?"](/guides/manage-streams).
 
 
 ### Events
 
 
 **Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in one stream. 
-Events either have a type from the list of [standard event types](event-types/#directory) to allow interoperability, or an application specific type. 
+Events either have a type from the list of [standard event types](/event-types/#directory) to allow interoperability, or an application specific type. 
 
 Our athlete will therefore be adding different types of events, each related to specific streams:
 
@@ -108,10 +109,10 @@ Our athlete will therefore be adding different types of events, each related to 
 Pryv offers the possibility to manipulate a broad range of event types :
 -  add **attachments** to events, for example for our athlete to post pictures of his meals in the stream "FoodA". These events will have the type `picture/attached`.
 -  use **high-frequency data** to collect a high volume of data, for example for the smartwatch A to collect GPS position in real-time of the athlete. 
-More information on HF series is provided in the [API reference](reference-preview/#hf-series).
-- **start** and **stop** events. This allows to specify time periods for events, or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [here](reference/#start-period).
+More information on HF series is provided in the [API reference](/reference-preview/#hf-series).
+- **start** and **stop** events. This allows to specify time periods for events, or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [here](/reference/#start-period).
 
-To get more details on the event types, see the [events API reference](reference/#event).
+To get more details on the event types, see the [events API reference](/reference/#event).
 
 Here's an example of an event, corresponding to the heart rate collected by the Pulse Oximeter App as described in the streams structure above :
 
@@ -130,7 +131,7 @@ Here's an example of an event, corresponding to the heart rate collected by the 
 }
 ```
 
-To learn how to perform CRUD (create, read, update, delete) operations on events, please refer to the guide ["How to manipulate events?"](guides/manage-events).
+To learn how to perform CRUD (create, read, update, delete) operations on events, please refer to the guide ["How to manipulate events?"](/guides/manage-events).
 
 
 # Authorize your application
@@ -277,7 +278,7 @@ Let's imagine that our athlete wants to share the pictures of the meals he is ta
 
 ![Access distribution](/assets/images/getting-started/access.png)
 
-You can easily grant permissions to third parties with Pryv.io and we provide you some concrete examples on how to do so in the command line on the dedicated page ["Access delegation"](guides/manage-accesses).
+You can easily grant permissions to third parties with Pryv.io and we provide you some concrete examples on how to do so in the command line on the dedicated page ["Access delegation"](/guides/manage-accesses).
 
 Each permission specifies a 'streamId', the id of the stream to which we want to give access, and an access 'level', which can be one of the following:
 
