@@ -9,7 +9,7 @@ withTOC: true
 Events are the primary unit of content in Pryv.io model. They are timestamped piece of typed data, containing different fields that can be found in the [data structure reference](/reference/#data-structure-event). 
 All available API methods to work on events are described in the [API reference](/reference/#events).
 
-We provide here concrete examples on how to manipulate events : **create**, **get**, **update** and **delete** events.
+We provide here concrete examples on how to manipulate events : **create**, **get**, **update**, **delete** and **start/stop** events.
 
 ### Create an event 
 
