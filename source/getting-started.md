@@ -47,7 +47,7 @@ Pryv.io data model is composed of two entities: **events** and **streams**.
 All the data that you collect and aggregate should follow an organisation in streams and events. 
 Inside each stream can be found timestamped events : 
 
-![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png | width=400)
+![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
 
 ### Streams
 
