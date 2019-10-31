@@ -6,8 +6,8 @@ customer: true
 withTOC: true
 ---
 
-Events are the primary unit of content in Pryv.io model. They are timestamped piece of typed data, containing different fields that can be found in the [data structure reference](http://pryv.github.io/reference/#data-structure-event). 
-All available API methods to work on events are described in the [API reference](http://pryv.github.io/reference/#events).
+Events are the primary unit of content in Pryv.io model. They are timestamped piece of typed data, containing different fields that can be found in the [data structure reference](reference/#data-structure-event). 
+All available API methods to work on events are described in the [API reference](reference/#events).
 
 We provide here concrete examples on how to manipulate events : **create**, **get**, **update** and **delete** events.
 
@@ -15,10 +15,11 @@ We provide here concrete examples on how to manipulate events : **create**, **ge
 
 Let's suppose that the structure of streams follows the one displayed below :
 
-![Pryv.me Data Model : Streams](/assets/images/getting-started/streams_structure_v1.png)
+![Pryv.me Data Model : Streams](/assets/images/getting-started/streams_structure_v2.png)
 
 The stream 'heartRate' contains a substream 'pulseOximeterApp' in which events related to the heart rate measured by the Pulse Oximeter App can be added. 
-To create an event of type 'frequency/bpm' with a pulse rate (integer) as content in the stream 'pulseOximeterApp', we use a ```POST ``` call such as :
+
+To create an event of type ```frequency/bpm``` with a pulse rate (integer) as content in the stream 'pulseOximeterApp', we use a ```POST ``` call such as :
 
 ```bash
 curl -X POST \
@@ -53,6 +54,67 @@ The answer returned by the server contains the created event with all additional
     "id": "cji5qaxk01nui0b40ec370p94"
   }
 }
+
+```
+Imagine now that out athlete wants to add a picture of his meal in the stream 'FoodA'. This time, he will need to add an attachment to his event :
+
+```bash
+curl -i -F "file=@meal.jpg" https://${username}.pryv.me/events/ck2bzkjdt000ne64d8g73xkkh?auth=${token}
+```
+And then create the corresponding event in the stream 'FoodA' :
+
+```bash
+curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Authorization: ${token}" \
+  -d '{
+        "streamId": "foodA",
+        "type": "picture/attached",
+        "content": null,
+        "attachments": [
+          {
+            "id": "ck2bzkjdt000oe64dh7mm17zx",
+            "fileName": "meal.jpg",
+            "type": "image/jpeg",
+            "size": 1111,
+            "readToken": "ck2bzkjdt000pe64dbbyvk81j-SGC2ZzVf1i4yFp50umdlOlOoeYA"
+          }
+    ],
+    }'  \
+    'https://${username}.${domain}/events'
+```
+
+We can also create a HF event to collect real-time GPS position of our athlete from the smartwatch A.
+The event type needs to correspond to the type of the data points in the series (here `position/wgs84`), prefixed with `series:`. 
+We do a ```POST ``` call such as :
+
+```bash
+curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "Authorization: ${token}" \
+  -d '{
+        "streamId": "smartwatchA",
+        "type": "series:position/wgs84",
+        "content": {
+      "elementType": "position/wgs84",
+      "fields": [
+        "deltaTime",
+        "latitude",
+        "longitude",
+        "altitude",
+        "horizontalAccuracy",
+        "verticalAccuracy",
+        "speed",
+        "bearing"
+      ],
+      "required": [
+        "deltaTime",
+        "latitude",
+        "longitude"
+      ]
+    },
+    }' \
+    'https://${username}.${domain}/events'
 ```
 
 ### Get an event
@@ -176,3 +238,11 @@ The API should return a list of deletion :
   }
 }
 ```
+### Start/stop an event
+
+The ```start``` or ```stop``` operations enable to define the period of an event.
+The method ```start```is equivalent to starting an event with a null ```duration```, while the ```stop```method enables to finish the running period event of the specified event.
+
+In ```singleActivity```streams, ```events.start```will automatically stop the previously running period event if any, while ```events.stop``` guarantees that only one event is running at any given time.
+
+You can find more information on this method in the [API methods reference](reference/#start-period).
