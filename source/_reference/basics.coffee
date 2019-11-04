@@ -467,6 +467,14 @@ module.exports = exports =
           description: """
                        Additional client data that will be transmitted alongside the auth request (see Result below).
                        """
+        ,
+          key: "authUrl"
+          type: "string"
+          optional: true
+          description: """
+                       Specify a custom url for the authentication process.
+                       The authUrl's beginning must match with one of the trusted URLs set in the Register's configuration.
+                       """
         ]
       result: [
         title: "Result: in progress"
