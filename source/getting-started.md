@@ -11,32 +11,77 @@ projects. Throughout these steps, we will use **Pryv.me**, our [Lab platform](ht
 We will guide you through:
 
 1. [Creating a Pryv.me User](#user-creation)
-2. [Data Modelling](#data-modelling)
-3. [Authorizing your Application](#authorize-your-application)
+2. [Obtaining a Pryv.io Access Token](#token-generator)
+3. [Data Modelling](#data-modelling)
 4. [Managing Access](#access-management)
 
 # Create a Pryv.me User
 
 By registering with **Pryv.me**, you will have access to a Pryv.io user and a fully-functional Pryv.io environment hosted in our laboratory infrastructure, perfect for your first tests.
 
-1. Go to the [registration page](https://sw.pryv.me/access/register.html) (click the link).
-2. Fill in the form, choose [where you want to store your data](http://api.pryv.com/concepts/#servers) and click the '**Create**' button.
-
-That's it! You will receive a welcome email from Pryv.me with your account details.
+1. Go to the [registration page](https://sw.pryv.me/access/register.html) (click on the link).
+2. Fill in the form, choose [where you want to store your data](http://api.pryv.com/concepts/#servers) and click on the '**Create**' button.
 
 /!\ Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.
 
-# Sign-in to Pryv.me
-
-Go to the following address to sign-in with your Pryv.io account:
+Once this is done, you will receive a welcome email from Pryv.me with your account details. You can sign-in with your Pryv.io account on the following link:
 
 `'https://${username}.pryv.me/#/SignIn'`
 
-You have now access to your Pryv.me account through the Pryv.io demo dashboard. Alternatively, just click [here](https://sw.pryv.me/access/signinhub.html), enter your username and then your password in the second step.
+Or alternatively, just click [**here**](https://sw.pryv.me/access/signinhub.html), enter your username and your password in the second step.
 
-As shown below, the streams for this account are listed, especially a default stream which is automatically created for you: 'Diary'.
+You have now access to your Pryv.me account through the Pryv.io demo dashboard. 
+
+## Pryv.io demo Dashboard
+
+Pryv.io demo dashboard is a data visualization tool. It enables you to create "events", corresponding to timestamped data - that can be in the form of notes, images, gps location, data points, etc - and to organize it into "streams", while managing the access level to this data.
+To get more information on Pryv data model, you can check the [**dedicated page**](/getting-started/data-modelling).
+
+The dashboard can then be used to visualize the data you will create and add to your account throughout this guide. 
+As shown below, once you connect to your account, the home page of your dashboard displays the list of streams of your account, where a default stream 'Diary' is automatically created.
 
 ![Pryv.me Dashboard: Streams](/assets/images/getting-started/streams_dashboard.png)
+
+# Obtain a Pryv.io Access Token
+
+You will need to generate a token to be able to give access to third-parties to your user account.
+This token represents the access your application has to a users account; it only expires when the user retracts his consent. You should store this token permanently and securely in your application.
+
+The easiest way to generate an app access token is to use the **Pryv Access Token Generation** page.
+
+1. Go to [the Pryv Access Token Generator: http://pryv.github.io/app-web-access](http://pryv.github.io/app-web-access)
+2. Set up the required parameters :
+
+   1. Enter the Application ID ('demopryv-access')
+   2. Setup the streams you want to grant access to in the permissions box
+      ![Permissions Box](/assets/images/getting-started/permissions_box.png)
+
+      ```json
+      [
+        {
+          "streamId": "heart",
+          "level": "manage",
+          "defaultName": "Heart"
+        }
+      ]
+      ```
+
+   3. Click on '**Request Access**' button
+
+3. Now click on '**Sign in**' button ![sign_in_button](/assets/images/getting-started/sign_in_button.png) - A new tab will open
+4. Sign in with your Pryv account
+   ![Sign In Dialog](/assets/images/getting-started/sign_in.png)
+   A popup will open to inform you about the access you are about to grant.
+5. Click on '**Accept**' button
+
+   By accepting, you consent that the 'demopryv-access' application can access the stream 'heart' with a 'manage' access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the 'defaultName' parameter above.
+
+   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
+
+   ![Accept Button](/assets/images/getting-started/accept_button.png)
+
+6. **Your access token has been generated.**
+   ![Access Token](/assets/images/getting-started/access_token.png)
 
 # Data Modelling
 
@@ -53,7 +98,11 @@ Inside each stream can be found timestamped events :
 
 **Streams** are the main way of encoding context for events and are organised in a hierarchical way. They can have sub-streams and usually match either user-specific, app-specific or organizational levels (e.g. life journal, blood pressure recording, etc.) or encode data sources (e.g. apps and/or devices).
 
-Here is an example of a stream with sub-streams (children), accordingly to the stream structure presented above. The Pulse Oximeter App has a dedicated substream, which collects "events" such as the heart rate measurements.
+To learn how to perform CRUD (create, read, update, delete) operations on streams, please refer to the guide ["**How to manipulate streams?**"](/guides/manage-streams).
+
+![Stream example](/assets/images/getting-started/stream_level_1.png)
+
+Here is an example of a **stream** with sub-streams (children): the **Pulse Oximeter App** has a dedicated substream, which collects "events" such as the heart rate measurements.
 
 ```json
 {
@@ -93,14 +142,12 @@ Here is an example of a stream with sub-streams (children), accordingly to the s
 }
 ```
 
-To learn how to perform CRUD (create, read, update, delete) operations on streams, please refer to the guide ["How to manipulate streams?"](/guides/manage-streams).
-
-
 ### Events
 
-
 **Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in one stream. 
-Events either have a type from the list of [standard event types](/event-types/#directory) to allow interoperability, or an application specific type. 
+Events either have a type from the list of [**standard event types**](/event-types/#directory) to allow interoperability, or an application specific type. 
+
+To learn how to perform CRUD (create, read, update, delete) operations on events, please refer to the guide ["**How to manipulate events?**"](/guides/manage-events).
 
 Our athlete will therefore be adding different types of events, each related to specific streams:
 
@@ -108,11 +155,15 @@ Our athlete will therefore be adding different types of events, each related to 
 
 Pryv offers the possibility to manipulate a broad range of event types :
 -  add **attachments** to events, for example for our athlete to post pictures of his meals in the stream "FoodA". These events will have the type `picture/attached`.
--  use **high-frequency data** to collect a high volume of data, for example for the smartwatch A to collect GPS position in real-time of the athlete. 
-More information on HF series is provided in the [API reference](/reference-preview/#hf-series).
-- **start** and **stop** events. This allows to specify time periods for events, or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [here](/reference/#start-period).
+![Attachment](/assets/images/getting-started/attachment_example.png)
 
-To get more details on the event types, see the [events API reference](/reference/#event).
+-  use **high-frequency data** to collect a high volume of data, for example for the smartwatch A to collect GPS position in real-time of the athlete. 
+More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
+![HF](/assets/images/getting-started/hf_example.png)
+
+- **start** and **stop** events. This can be very useful for the time-tracking capability, enabling the athlete to track in real-time different activities (running, cycling, exercising, etc) and report on them. This allows to specify time periods for events, or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [here](/reference/#start-period).
+
+To get more details on the event types, see the [**events API reference**](/reference/#event).
 
 Here's an example of an event, corresponding to the heart rate collected by the Pulse Oximeter App as described in the streams structure above :
 
@@ -131,139 +182,9 @@ Here's an example of an event, corresponding to the heart rate collected by the 
 }
 ```
 
-To learn how to perform CRUD (create, read, update, delete) operations on events, please refer to the guide ["How to manipulate events?"](/guides/manage-events).
-
-
-# Authorize your application
-
-Continuing with our previous example we would like the Pulse Oximeter Application to be able to provision our Pryv.me account with streams and events.
-
-For this purpose the application first needs to request access to the Pryv.io account. We present below two methods to generate a new access for our application, which materializes in the form of an app token.
-
-For more information about Pryv.io accesses [see below](#access-management).
-
-## Use Pryv.io Access Token Generator
-
-The easiest way to generate an app access token is to use the Pryv Access Token Generation page.
-
-1. Go to [the Pryv Access Token Generator: http://pryv.github.io/app-web-access](http://pryv.github.io/app-web-access)
-2. Set up the required parameters
-
-   1. Enter the Application ID ('demopryv-access')
-   2. Setup the streams you want to grant access to in the permissions box
-      ![Permissions Box](/assets/images/getting-started/permissions_box.png)
-
-      ```json
-      [
-        {
-          "streamId": "heart",
-          "level": "manage",
-          "defaultName": "Heart"
-        }
-      ]
-      ```
-
-   3. Click on '**Request Access**' button
-
-3. Now click on '**Sign in**' button ![sign_in_button](/assets/images/getting-started/sign_in_button.png) - A new tab will open
-4. Sign in with your Pryv account
-   ![Sign In Dialog](/assets/images/getting-started/sign_in.png)
-   A popup will open to inform you about the access you are about to grant.
-5. Click on '**Accept**' button
-
-   By accepting you consent that the 'demopryv-access' application can access the stream 'heart' with a 'manage' access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the 'defaultName' parameter above.
-
-   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
-
-   ![Accept Button](/assets/images/getting-started/accept_button.png)
-
-6. **Your access token has been generated.**
-   ![Access Token](/assets/images/getting-started/access_token.png)
-
-## Use your own implementation
-
-Instead of using the token generator page, it is also possible to implement the authorization process in code and obtain an access token by following the steps below.
-
-1. Send an access request with a `POST` call to `https://access.${domain}/access`:
-
-```bash
-curl -X POST https://reg.pryv.me/access -H 'Content-Type: application/json' \
-  -d '{
-  "requestingAppId": "demopryv-access",
-  "requestedPermissions": [
-    {
-      "streamId": "heart",
-      "level": "manage",
-      "defaultName": "Heart"
-    }
-  ],
-  "languageCode": "fr",
-  "returnURL": false
-}'
-```
-
-The server should respond with something similar to this:
-
-```json
-{
-  "status": "NEED_SIGNIN",
-  "code": 201,
-  "key": "Rp3NBpMBnkCOuuAo",
-  "requestingAppId": "demopryv-access",
-  "requestedPermissions": [
-    {
-      "streamId": "heart",
-      "level": "manage",
-      "defaultName": "Heart"
-    }
-  ],
-  "url": "https://sw.pryv.me/access/access.html?lang=fr&key=Rp3NBpMBnkCOuuAo&requestingAppId=demopryv-access&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22heart%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Heart%22%7D%5D",
-  "poll": "https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo",
-  "returnURL": false,
-  "poll_rate_ms": 1000
-}
-```
-
-2. Get the url parameter from the previous response and copy it into your web browser.
-
-```raw
-https://sw.pryv.me/access/access.html?lang=fr&key=Rp3NBpMBnkCOuuAo&requestingAppId=demopryv-access&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22heart%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Heart%22%7D%5D
-```
-
-3. Sign in with your Pryv account:
-
-   A popup will open to inform you about the access are about to grant.
-
-4. Click on '**Accept**' button
-5. Retrieve the poll url from the previous response.
-
-```json
-"poll": "https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo"
-```
-
-6. Poll the access token with `GET` calls to the polling url:
-
-```bash
-curl -i GET https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo
-```
-
-Once the access is generated, you should get a response with status _Accepted_ and containing the token :
-
-```json
-{
-  "status": "ACCEPTED",
-  "username": "demopryv",
-  "token": "cjhj7i2821eq60b40dzcdx6gt",
-  "code": 200
-}
-```
-
-This token represents the access your application has to a users account; it only expires when the user retracts his consent. You should store this token permanently and securely in your application.
-
-
 # Access Management
 
-In our previous examples, we used an app token corresponding to a new access we generated at the end of the [Authorization flow](#authorize-your-application).
+In our example, we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. 
 
 Each access is defined by a 'name', a 'type' and a set of 'permissions'.
 
@@ -293,5 +214,5 @@ Finally, note that an existing access can be used to create other accesses, but 
 This concludes our first tour of Pryv.io and some basic things you can do with it. Where to go from here?
 
 - Our [external resources](/external-resources/) page presents some third party and unsupported libraries and sample applications.
-- The [API Reference](/reference/) explains all calls you can make to Pryv.io and their parameters.
+- The [API Reference](/reference/) explains all the calls you can make to Pryv.io and their parameters.
 - To obtain your own Pryv.io installation, please get in contact with our [Sales Team](mailto:sales@pryv.com).
