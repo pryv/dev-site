@@ -93,7 +93,8 @@ The easiest way to generate an app access token is to use the **Pryv Access Toke
 # Data Modelling
 
 In this section, we provide you information on the basic concepts of Pryv.io data model.
-When adding data to your Pryv.me account, you need to make it under Pryv's conventions, but organizing it into "streams" and "events".
+When adding data to your Pryv.me account, you need to comply with Pryv's conventions by organizing it into "streams" and "events".
+
 To see examples and possible scenarios you might encounter, please check the [**dedicated page**](/guides/data-modelling) to learn how the data model should be structured and implemented depending on the end use.
 
 Pryv.io data model is composed of two entities: **events** and **streams**. 
