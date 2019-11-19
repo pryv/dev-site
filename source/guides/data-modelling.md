@@ -7,11 +7,13 @@ withTOC: true
 ---
 
 In the following section, you will find all the necessary information to design your own model and implement it under Pryv's conventions.
-We describe two basic end uses : data collection to store and aggregate data from multiple data sources for a subject, and consent aggregation of multiple subjects that granted permission to access their data.
+
+We describe two basic end uses : **data collection** to store and aggregate data from multiple data sources for a subject, and **consent aggregation** of multiple subjects that granted permission to access their data.
 
 ### Data collection
 
-Let's take the case of an athlete who uses four applications to store data on Pryv.io. All four applications store their data in a single account:
+Let's take the case of an athlete who uses four applications to store data on Pryv.io. 
+All four applications store their data in a single account:
 
 - **Nutrition Mobile App**: Tracks the consumption of various types of food ('calories ingested') through pictures of meals.
 - **Smartwatch A**: Collects the GPS position of the athlete during the training ('position/wgs84'), which represents a high volume of data.
@@ -89,7 +91,36 @@ You will therefore need a "campaign" stream structure which allows you to store 
 
 ![Example Campaign Structure](/assets/images/getting-started/campaign.png)
 
-In the stream "Campaign description" you will store the requested permissions (the "streamId" you want to access e.g. "heartRate", the level of permission e.g. "read"/"manage"/…), the consent information, the app identifiers. The stream "Patient accesses" will contain the "username" and "token" for every subject that granted you access to their data.
+The "campaign" data structure described below will contain the following streams :
+
+- The stream **"Campaign description"**, where you will store the requested permissions (the "streamId" you want to access e.g. "heartRate", the level of permission e.g. "read"/"manage"/…), the consent information, the app identifiers. 
+
+```json
+{
+  "streamId": "campaign-123-description",
+  "type": "campaign/sempryv",
+  "name": "Campaign description",
+  "parentId": "campaign-123",
+  "content": {
+    "requestedPermissions": {}, //...
+    "consentText": "", //...
+    "appId": "", //
+    } 
+}
+```
+- The stream **"Patient accesses"** that will contain the "username" and "token" for every subject that granted access to their data.
+```json
+{
+      "streamId": "campaign-123-description",
+      "type": "access/pryv",
+      "name": "Patient accesses",
+      "parentId": "campaign-123",
+      "content": {
+      "username": "subject01",
+      "token": "ck0qmnwo40007a8ivbxn12zt7",
+      } 
+}
+```
 
 Similarly as before, you can create the streams one by one as explained [here](/guides/manipulate-streams) or all in one by doing a "batch call" : 
 
@@ -120,7 +151,7 @@ Similarly as before, you can create the streams one by one as explained [here](/
   }
 ]
 ```
-And add several events in different streams at once :
+You can then add events to the different streams at once by doing an `events.create` call, and store the campaign data in one stream, and the username and token of the subject in another stream:
 
 ```json
 [
@@ -140,12 +171,20 @@ And add several events in different streams at once :
   {
     "method": "events.create",
     "params": {
-      "time": 1385046854.282,
-      "streamId": "heart",
-      "type": "frequency/bpm",
-      "content": 90
+    "time": 1385046854.282,
+    "streamId": "campaign-123-patient-accesses",
+    "type": "access/pryv",
+    "content": {
+      "access": {
+        "id": "ck0qmmwo40006a8ive8nkv9es",
+        "username": "subject01",
+        "token": "ck0qmmwo40007a8ivbxnl2zt7", 
+        "urlEndpoint": "${PATIENT_USERNAME}.${PATIENT_DOMAIN}",
+        "type": "shared",
+        } 
+      }
     }
-    }
+  }
 ]
 ```
 

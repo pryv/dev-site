@@ -16,7 +16,7 @@ We provide here concrete examples on how to manipulate streams : **create**, **g
 
 Let's suppose that the structure of streams follows the one displayed below :
 
-![Pryv.me Data Model : Streams](/assets/images/getting-started/streams_structure_v1.png)
+![Pryv.me Data Model : Streams](/assets/images/getting-started/streams_structure_v2.png)
 
 We need first to create the root stream "heart".
 

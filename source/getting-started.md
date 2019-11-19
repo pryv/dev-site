@@ -22,19 +22,21 @@ By registering with **Pryv.me**, you will have access to a Pryv.io user and a fu
 1. Go to the [registration page](https://sw.pryv.me/access/register.html) (click on the link).
 2. Fill in the form, choose [where you want to store your data](http://api.pryv.com/concepts/#servers) and click on the '**Create**' button.
 
-/!\ Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.
+*Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.*
 
-Once this is done, you will receive a welcome email from Pryv.me with your account details. You can sign-in with your Pryv.io account on the following link:
+Once this is done, you will receive a welcome email from **Pryv.me** with your account details. You can sign-in with your Pryv.io account on the following link:
 
 `'https://${username}.pryv.me/#/SignIn'`
 
 Or alternatively, just click [**here**](https://sw.pryv.me/access/signinhub.html), enter your username and your password in the second step.
 
-You have now access to your Pryv.me account through the Pryv.io demo dashboard. 
+You have now access to your **Pryv.me** account through the Pryv.io demo dashboard. 
 
 ## Pryv.io demo Dashboard
 
-Pryv.io demo dashboard is a data visualization tool. It enables you to create "events", corresponding to timestamped data - that can be in the form of notes, images, gps location, data points, etc - and to organize it into "streams", while managing the access level to this data.
+Pryv.io demo dashboard is a data visualization tool. 
+
+It enables you to create "events", corresponding to timestamped data - that can be in the form of notes, images, gps location, data points, etc - and to organize it into "streams", while managing the access level to this data.
 To get more information on Pryv data model, you can check the [**dedicated page**](/getting-started/data-modelling).
 
 The dashboard can then be used to visualize the data you will create and add to your account throughout this guide. 
@@ -85,7 +87,8 @@ The easiest way to generate an app access token is to use the **Pryv Access Toke
 
 # Data Modelling
 
-To design your own data model and implement it under Pryv's conventions, please check the [**dedicated page**](/guides/data-modelling) providing examples and scenarios of how the data model should be structured depending on the end use.
+In this section, we provide you information on the basic concepts of Pryv.io data model.
+To see examples and possible scenarios, please check the [**dedicated page**](/guides/data-modelling) to learn how the data model should be structured and implemented depending on the end use.
 
 Pryv.io data model is composed of two entities: **events** and **streams**. 
 
@@ -154,14 +157,57 @@ Our athlete will therefore be adding different types of events, each related to 
 ![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
 
 Pryv offers the possibility to manipulate a broad range of event types :
--  add **attachments** to events, for example for our athlete to post pictures of his meals in the stream "FoodA". These events will have the type `picture/attached`.
+-  add **attachments** to events, for example for our athlete to post pictures of his meals in the stream "FoodA". 
 ![Attachment](/assets/images/getting-started/attachment_example.png)
 
+These events will have the type `picture/attached` :
+
+```json
+{
+  "id": "ck2bzkjdt000ze64d8u9z4pha",
+  "streamId": "foodA",
+  "type": "picture/attached",
+  "content": null,
+  "time": 1572358119.329,
+  "tags": [],
+  "attachments": [
+    {
+      "id": "ck2bzkjdt000ze64d8u9z4pha",
+      "fileName": "meal1.jpg",
+      "type": "image/jpeg",
+      "size": 2561,
+      "readToken": "ck2bzkjdt0010e64dwu4sy8fe-3yTvQTD630qVT4qBFYtWDwrQ8mb"
+    }
+  ]
+}
+```
+
 -  use **high-frequency data** to collect a high volume of data, for example for the smartwatch A to collect GPS position in real-time of the athlete. 
-More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
 ![HF](/assets/images/getting-started/hf_example.png)
 
-- **start** and **stop** events. This can be very useful for the time-tracking capability, enabling the athlete to track in real-time different activities (running, cycling, exercising, etc) and report on them. This allows to specify time periods for events, or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [here](/reference/#start-period).
+More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
+This data will have the type `position/wgs84` :
+
+```json
+{
+  "id": "ck2klss8v00124yjx45s3jp5r",
+    "time": 1572882785.023,
+    "streamId": "position",
+    "tags": [],
+    "type": "series:position/wgs84",
+    "content": {
+      "elementType": "position/wgs84",
+      "fields": [
+        "deltaTime",
+        "latitude",
+        "longitude"
+      ],
+  }
+}
+```
+
+- **start** and **stop** events. This can be very useful for the time-tracking capability, enabling the athlete to track and report in real-time his activities (running, cycling, exercising, etc).
+This allows to specify time periods for events, or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [**here**](/reference/#start-period).
 
 To get more details on the event types, see the [**events API reference**](/reference/#event).
 
@@ -193,7 +239,6 @@ Pryv.io distinguishes between these access types:
 - _Shared_: used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels, depending on the sharing user's choice. You will not encounter this access type in your applications.
 - _App_: used by applications which don't need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs. This is the type of access we used for our Pulse Oximeter application.
 - _Personal_: used by applications that need to access to the entirety of the user's data and/or manage account settings.
-
 
 Let's imagine that our athlete wants to share the pictures of the meals he is taking with his dietitian Tom. To do so, he needs to give permission to doctor Tom to "read" the stream 'FoodA' on which the pictures of his meals are uploaded :
 
