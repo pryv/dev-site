@@ -36,17 +36,22 @@ You have now access to your **Pryv.me** account through the Pryv.io demo dashboa
 
 Pryv.io demo dashboard is a data visualization tool. 
 
-It enables you to create "events", corresponding to timestamped data - that can be in the form of notes, images, gps location, data points, etc - and to organize it into "streams", while managing the access level to this data.
-To get more information on Pryv data model, you can check the [**dedicated page**](/getting-started/data-modelling).
+It enables you to visualize the "events" you created, corresponding to timestamped data - that can be in the form of notes, images, gps location, data points, etc - and to organize it into "streams", while managing the access level to this data.
+To get more information on Pryv data model of events and streams, you can check the [**dedicated page**](/getting-started/data-modelling).
 
-The dashboard can then be used to visualize the data you will create and add to your account throughout this guide. 
+The dashboard will therefore be used to get a visual display of the data you will create and add to your account throughout this guide. 
 As shown below, once you connect to your account, the home page of your dashboard displays the list of streams of your account, where a default stream 'Diary' is automatically created.
 
 ![Pryv.me Dashboard: Streams](/assets/images/getting-started/streams_dashboard.png)
 
+You can easily add content (Note, Picture, Position) directly from the dashboard and select in which stream to put it.
+Once data is added to your account, you can select which streams to visualize on the dashboard, and which time period to display.
+
+![Johann Dashboard](/assets/images/getting-started/dashboard_johann.png)
+
 # Obtain a Pryv.io Access Token
 
-You will need to generate a token to be able to give access to third-parties to your user account.
+Now that your Pryv.me account has been created and that you can start adding data, you might want to give permissions to applications and third-parties to access and manage your account (by reading data, or adding new data). To do so, you will need to generate a token to be able to give access to third-parties to your user account.
 This token represents the access your application has to a users account; it only expires when the user retracts his consent. You should store this token permanently and securely in your application.
 
 The easiest way to generate an app access token is to use the **Pryv Access Token Generation** page.
@@ -88,7 +93,8 @@ The easiest way to generate an app access token is to use the **Pryv Access Toke
 # Data Modelling
 
 In this section, we provide you information on the basic concepts of Pryv.io data model.
-To see examples and possible scenarios, please check the [**dedicated page**](/guides/data-modelling) to learn how the data model should be structured and implemented depending on the end use.
+When adding data to your Pryv.me account, you need to make it under Pryv's conventions, but organizing it into "streams" and "events".
+To see examples and possible scenarios you might encounter, please check the [**dedicated page**](/guides/data-modelling) to learn how the data model should be structured and implemented depending on the end use.
 
 Pryv.io data model is composed of two entities: **events** and **streams**. 
 
