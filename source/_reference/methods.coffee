@@ -993,7 +993,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the stream's fields: see [stream](##{dataStructure.getDocId("stream")}). All fields are optional, and only modified values must be included.
                        """
@@ -1702,7 +1702,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the followed slice's fields: see [followed slice](##{dataStructure.getDocId("followed-slice")}). All fields are optional, and only modified values must be included.
                        """
@@ -1798,7 +1798,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        An object with the desired key changes (see above).
                        """
@@ -1863,7 +1863,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        An object with the desired key changes (see above).
                        """
@@ -1970,7 +1970,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the account information's fields: see [account information](##{dataStructure.getDocId("account")}). All fields are optional, and only modified values must be included.
                        """
