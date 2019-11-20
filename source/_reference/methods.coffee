@@ -1757,65 +1757,6 @@ module.exports = exports =
                  Methods to read and write profile sets. Profile sets are plain key-value stores of user-level settings.
                  """
     sections: [
-      id: "profile.getPublic"
-      type: "method"
-      title: "Get public profile"
-      http: "GET /profile/public"
-      description: """
-                   Gets the public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.
-                   """
-      result:
-        http: "200 OK"
-        properties: [
-          key: "profile"
-          type: "object"
-          description: """
-                       The public profile set.
-                       """
-        ]
-      examples: [
-        params: {}
-        result:
-          profile: examples.profileSets.public
-      ]
-
-    ,
-
-      id: "profile.updatePublic"
-      type: "method"
-      title: "Update public profile"
-      http: "PUT /profile/public"
-      description: """
-                   Adds, updates or delete public profile keys. Available to personal accesses.
-
-                   - To add or update a key, just set its value
-                   - To delete a key, set its value to `null`
-
-                   Existing keys not included in the update are left untouched.
-                   """
-      params:
-        properties: [
-          key: "update"
-          type: "object"
-          http:
-            text: "= request body"
-          description: """
-                       An object with the desired key changes (see above).
-                       """
-        ]
-      result:
-        http: "200 OK"
-        properties: [
-          key: "profile"
-          type: "object"
-          description: """
-                       The updated public profile set.
-                       """
-        ]
-      examples: []
-
-    ,
-
       id: "profile.getApp"
       type: "method"
       title: "Get app profile"
@@ -1881,9 +1822,67 @@ module.exports = exports =
 
     ,
 
+      id: "profile.getPublic"
+      type: "method"
+      title: "Get public profile"
+      http: "GET /profile/public"
+      description: """
+                   Gets the public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The public profile set.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          profile: examples.profileSets.public
+      ]
+
+    ,
+
+      id: "profile.updatePublic"
+      type: "method"
+      title: "Update public profile"
+      http: "PUT /profile/public"
+      description: """
+                   Adds, updates or delete public profile keys. Available to personal accesses.
+
+                   - To add or update a key, just set its value
+                   - To delete a key, set its value to `null`
+
+                   Existing keys not included in the update are left untouched.
+                   """
+      params:
+        properties: [
+          key: "update"
+          type: "object"
+          http:
+            text: "= request body"
+          description: """
+                       An object with the desired key changes (see above).
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The updated public profile set.
+                       """
+        ]
+      examples: []
+
+    ,
+
       id: "profile.getPrivate"
       type: "method"
-      trustedOnly: true
       title: "Get private profile"
       http: "GET /profile/private"
       description: """
@@ -1904,7 +1903,6 @@ module.exports = exports =
 
       id: "profile.updatePrivate"
       type: "method"
-      trustedOnly: true
       title: "Update private profile"
       http: "PUT /profile/private"
       description: """
