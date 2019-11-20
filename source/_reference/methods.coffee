@@ -993,7 +993,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the stream's fields: see [stream](##{dataStructure.getDocId("stream")}). All fields are optional, and only modified values must be included.
                        """
@@ -1702,7 +1702,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the followed slice's fields: see [followed slice](##{dataStructure.getDocId("followed-slice")}). All fields are optional, and only modified values must be included.
                        """
@@ -1757,36 +1757,12 @@ module.exports = exports =
                  Methods to read and write profile sets. Profile sets are plain key-value stores of user-level settings.
                  """
     sections: [
-      id: "profile.getPublic"
-      type: "method"
-      title: "Get public user profile"
-      http: "GET /profile/public"
-      description: """
-                   Gets the user's public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.
-                   """
-      result:
-        http: "200 OK"
-        properties: [
-          key: "profile"
-          type: "object"
-          description: """
-                       The user's current public profile set.
-                       """
-        ]
-      examples: [
-        params: {}
-        result:
-          profile: examples.profileSets.public
-      ]
-
-    ,
-
       id: "profile.getApp"
       type: "method"
       title: "Get app profile"
       http: "GET /profile/app"
       description: """
-                   Gets the app's dedicated user profile set, which contains app-level settings for the user. Available to app accesses.
+                   Gets the app's dedicated profile set, which contains app-level settings for the user. Available to app accesses.
                    """
       result:
         http: "200 OK"
@@ -1794,7 +1770,7 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The app's current profile set. (Empty if the app never defined any setting.)
+                       The app profile set. (Empty if the app never defined any setting.)
                        """
         ]
       examples: [
@@ -1810,7 +1786,7 @@ module.exports = exports =
       title: "Update app profile"
       http: "PUT /profile/app"
       description: """
-                   Adds, updates or delete app profile keys.
+                   Adds, updates or delete app profile keys. Available to app accesses.
 
                    - To add or update a key, just set its value
                    - To delete a key, set its value to `null`
@@ -1822,7 +1798,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        An object with the desired key changes (see above).
                        """
@@ -1833,7 +1809,7 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The app's updated profile set.
+                       The updated app profile set.
                        """
         ]
       examples: [
@@ -1846,44 +1822,36 @@ module.exports = exports =
 
     ,
 
-      id: "profile.get"
+      id: "profile.getPublic"
       type: "method"
-      trustedOnly: true
-      title: "Get profile"
-      http: "GET /profile/{id}"
+      title: "Get public profile"
+      http: "GET /profile/public"
       description: """
-                   Gets the specified user profile set.
+                   Gets the public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.
                    """
-      params:
-        properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the profile set.
-                       """
-        ]
       result:
         http: "200 OK"
         properties: [
           key: "profile"
           type: "object"
           description: """
-                       The profile set.
+                       The public profile set.
                        """
         ]
-      examples: []
+      examples: [
+        params: {}
+        result:
+          profile: examples.profileSets.public
+      ]
 
     ,
 
-      id: "profile.update"
+      id: "profile.updatePublic"
       type: "method"
-      trustedOnly: true
-      title: "Update profile"
-      http: "PUT /profile/{id}"
+      title: "Update public profile"
+      http: "PUT /profile/public"
       description: """
-                   Adds, updates or delete profile keys.
+                   Adds, updates or delete public profile keys. Available to personal accesses.
 
                    - To add or update a key, just set its value
                    - To delete a key, set its value to `null`
@@ -1892,18 +1860,10 @@ module.exports = exports =
                    """
       params:
         properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the profile set.
-                       """
-        ,
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        An object with the desired key changes (see above).
                        """
@@ -1914,7 +1874,52 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The updated profile set.
+                       The updated public profile set.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "profile.getPrivate"
+      type: "method"
+      title: "Get private profile"
+      http: "GET /profile/private"
+      description: """
+                   Gets the private profile set. Available to personal accesses.
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The private profile set.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "profile.updatePrivate"
+      type: "method"
+      title: "Update private profile"
+      http: "PUT /profile/private"
+      description: """
+                   Adds, updates or delete private profile keys. Available to personal accesses.
+
+                   - To add or update a key, just set its value
+                   - To delete a key, set its value to `null`
+
+                   Existing keys not included in the update are left untouched.
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The updated private profile set.
                        """
         ]
       examples: []
@@ -1965,7 +1970,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the account information's fields: see [account information](##{dataStructure.getDocId("account")}). All fields are optional, and only modified values must be included.
                        """
