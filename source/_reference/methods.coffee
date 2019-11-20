@@ -1759,10 +1759,10 @@ module.exports = exports =
     sections: [
       id: "profile.getPublic"
       type: "method"
-      title: "Get public user profile"
+      title: "Get public profile"
       http: "GET /profile/public"
       description: """
-                   Gets the user's public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.
+                   Gets the public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.
                    """
       result:
         http: "200 OK"
@@ -1770,7 +1770,7 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The user's current public profile set.
+                       The public profile set.
                        """
         ]
       examples: [
@@ -1781,12 +1781,47 @@ module.exports = exports =
 
     ,
 
+      id: "profile.updatePublic"
+      type: "method"
+      title: "Update public profile"
+      http: "PUT /profile/public"
+      description: """
+                   Adds, updates or delete public profile keys. Available to personal accesses.
+
+                   - To add or update a key, just set its value
+                   - To delete a key, set its value to `null`
+
+                   Existing keys not included in the update are left untouched.
+                   """
+      params:
+        properties: [
+          key: "update"
+          type: "object"
+          http:
+            text: "= request body"
+          description: """
+                       An object with the desired key changes (see above).
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The updated public profile set.
+                       """
+        ]
+      examples: []
+
+    ,
+
       id: "profile.getApp"
       type: "method"
       title: "Get app profile"
       http: "GET /profile/app"
       description: """
-                   Gets the app's dedicated user profile set, which contains app-level settings for the user. Available to app accesses.
+                   Gets the app's dedicated profile set, which contains app-level settings for the user. Available to app accesses.
                    """
       result:
         http: "200 OK"
@@ -1794,7 +1829,7 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The app's current profile set. (Empty if the app never defined any setting.)
+                       The app profile set. (Empty if the app never defined any setting.)
                        """
         ]
       examples: [
@@ -1810,7 +1845,7 @@ module.exports = exports =
       title: "Update app profile"
       http: "PUT /profile/app"
       description: """
-                   Adds, updates or delete app profile keys.
+                   Adds, updates or delete app profile keys. Available to app accesses.
 
                    - To add or update a key, just set its value
                    - To delete a key, set its value to `null`
@@ -1833,7 +1868,7 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The app's updated profile set.
+                       The updated app profile set.
                        """
         ]
       examples: [
@@ -1846,75 +1881,47 @@ module.exports = exports =
 
     ,
 
-      id: "profile.get"
+      id: "profile.getPrivate"
       type: "method"
       trustedOnly: true
-      title: "Get profile"
-      http: "GET /profile/{id}"
+      title: "Get private profile"
+      http: "GET /profile/private"
       description: """
-                   Gets the specified user profile set.
+                   Gets the private profile set. Available to personal accesses.
                    """
-      params:
-        properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the profile set.
-                       """
-        ]
       result:
         http: "200 OK"
         properties: [
           key: "profile"
           type: "object"
           description: """
-                       The profile set.
+                       The private profile set.
                        """
         ]
       examples: []
 
     ,
 
-      id: "profile.update"
+      id: "profile.updatePrivate"
       type: "method"
       trustedOnly: true
-      title: "Update profile"
-      http: "PUT /profile/{id}"
+      title: "Update private profile"
+      http: "PUT /profile/private"
       description: """
-                   Adds, updates or delete profile keys.
+                   Adds, updates or delete private profile keys. Available to personal accesses.
 
                    - To add or update a key, just set its value
                    - To delete a key, set its value to `null`
 
                    Existing keys not included in the update are left untouched.
                    """
-      params:
-        properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the profile set.
-                       """
-        ,
-          key: "update"
-          type: "object"
-          http:
-            text: "= request body"
-          description: """
-                       An object with the desired key changes (see above).
-                       """
-        ]
       result:
         http: "200 OK"
         properties: [
           key: "profile"
           type: "object"
           description: """
-                       The updated profile set.
+                       The updated private profile set.
                        """
         ]
       examples: []
