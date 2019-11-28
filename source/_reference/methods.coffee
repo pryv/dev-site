@@ -2105,32 +2105,21 @@ module.exports = exports =
       title: "Get current access info"
       http: "GET /access-info"
       description: """
-                   Retrieves the name, type and permissions of the access in use.
+                   Retrieves information about the access in use.
                    """
       result:
         http: "200 OK"
+        description: """
+              The current [Access properties](##{dataStructure.getDocId("access")}), as well as:
+              """
         properties: [
-          key: "name"
-          type: "string"
-          description: """
-                       The access' name.
-                       """
-        ,
-          key: "type"
-          type: "[access](##{dataStructure.getDocId("access")}).type"
-          description: """
-                       The access' type.
-                       """
-        ,
-          key: "permissions"
-          type: "[access](##{dataStructure.getDocId("access")}).permissions"
-          description: """
-                       The access' permissions.
-                       """
+          key: "calls"
+          type: "[key-value](##{_getDocId("key-value")})"
+          description: "A map of API methods and the number of time each of them was called using the current access."
         ]
       examples: [
         params: {}
-        result: _.pick(examples.accesses.app, "name", "type", "permissions")
+        result: examples.accesses.info
       ]
 
     ,
