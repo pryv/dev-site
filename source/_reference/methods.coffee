@@ -89,6 +89,175 @@ module.exports = exports =
 
   ,
 
+    id: "mfa"
+    title: "Multi-factor authentication"
+    trustedOnly: true
+    description: """
+                 Methods for handling multi-factor authentication (MFA) on top of the usual [Login method](##{_getDocId("auth", "auth.login")}).
+                 """
+    sections: [
+      id: "mfa.login"
+      type: "method"
+      title: "Login user"
+      http: "POST /auth/login"
+      description: """
+                   Proxied login call that performs MFA authentication,
+                   when MFA is activated for the current user.
+                   """
+      params:
+        description: """
+                       Similar to the usual [Login method](##{_getDocId("auth", "auth.login")}).
+                       """
+      result:
+        http: "302 Found"
+        properties: [
+          key: "mfaToken"
+          type: "string"
+          description: """
+                       An expiring MFA session token to be used all along the MFA flow (challenge, verification).
+                       """
+        ]
+      examples: [
+        params:
+          username: examples.users.one.username
+          password: examples.users.one.password
+          appId: "my-app-id"
+        result:
+          mfaToken: '215bcc40-1296-11ea-9ff7-453ff2437834'
+      ]
+
+    ,
+
+      id: "mfa.activate"
+      type: "method"
+      title: "Activate MFA"
+      http: "POST /mfa/activate"
+      description: """
+                   Begins the MFA activation flow for a given Pryv.io user by triggering the MFA challenge.
+                   Requires a personal token as `Authorization`, which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
+                   """
+      params:
+        description: """
+              The parameters depend entirely on the chosen MFA method.
+              """
+      result:
+        http: "302 Found"
+        properties: [
+          key: "mfaToken"
+          type: "string"
+          description: """
+                       An expiring MFA session token to be used all along the MFA flow (challenge, verification).
+                       """
+        ]
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Invalid MFA session token.
+                     """
+      ]
+      examples: [
+        params:
+          phone_number: '41791234567'
+        result:
+          mfaToken: '215bcc40-1296-11ea-9ff7-453ff2437834'
+      ]
+
+    ,
+
+      id: "mfa.confirm"
+      type: "method"
+      title: "Confirm MFA activation"
+      http: "POST /mfa/confirm"
+      description: """
+                   Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
+                   Requires a MFA session token as `Authorization`.
+                   """
+      params:
+        description: """
+              The parameters depend entirely on the chosen MFA method.
+              """
+      result:
+        http: "200 OK"
+        description: """
+                   'MFA activated.'
+                   """
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Invalid MFA session token.
+                     """
+      ]
+      examples: [
+        params:
+          code: '1234'
+        result:
+          'MFA activated.'
+      ]
+
+    ,
+
+      id: "mfa.challenge"
+      type: "method"
+      title: "Trigger MFA challenge"
+      http: "POST /mfa/challenge"
+      description: """
+                   Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).
+                   Requires a MFA session token as `Authorization`.
+                   """
+      result:
+        http: "200 OK"
+        description: """
+            'Please verify MFA challenge.'
+            """
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Invalid MFA session token.
+                     """
+      ]
+    ,
+
+      id: "mfa.verify"
+      type: "method"
+      title: "Verify MFA challenge"
+      http: "POST /mfa/verify"
+      description: """
+                   Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
+                   Requires a MFA session token as `Authorization`.
+                   """
+      params:
+        description: """
+              The parameters depend entirely on the chosen MFA method.
+              """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "token"
+          type: "string"
+          description: """
+                       The personal access token to use for further API calls.
+                       """
+        ]
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Invalid MFA session token.
+                     """
+      ]
+      examples: [
+        params:
+          code: '1234'
+        result:
+          token: examples.accesses.personal.token
+      ]
+    ]
+
+  ,
+
     id: "events"
     title: "Events"
     description: """
