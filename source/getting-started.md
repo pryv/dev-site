@@ -163,6 +163,23 @@ Our athlete will therefore be adding different types of events, each related to 
 
 ![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
 
+Here's an example of an event, corresponding to the heart rate collected by the Pulse Oximeter App as described in the streams structure above :
+
+```json
+{
+  "streamId": "pulseOximeterApp",
+  "type": "frequency/bpm",
+  "content": 90,
+  "time": 1528446260.693,
+  "tags": [],
+  "created": 1528446260.693,
+  "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+  "modified": 1528446260.693,
+  "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+  "id": "cji5pfumt1nu90b40chlpetyp"
+}
+```
+
 Pryv offers the possibility to manipulate a broad range of event types :
 -  add **attachments** to events, for example for our athlete to post pictures of his meals in the stream "FoodA". 
 ![Attachment](/assets/images/getting-started/attachment_example.png)
@@ -218,22 +235,6 @@ This allows to specify time periods for events, or to guarantee that only one ev
 
 To get more details on the event types, see the [**events API reference**](/reference/#event).
 
-Here's an example of an event, corresponding to the heart rate collected by the Pulse Oximeter App as described in the streams structure above :
-
-```json
-{
-  "streamId": "pulseOximeterApp",
-  "type": "frequency/bpm",
-  "content": 90,
-  "time": 1528446260.693,
-  "tags": [],
-  "created": 1528446260.693,
-  "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-  "modified": 1528446260.693,
-  "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-  "id": "cji5pfumt1nu90b40chlpetyp"
-}
-```
 
 # Access Management
 
