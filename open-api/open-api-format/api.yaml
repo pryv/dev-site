@@ -1,0 +1,1002 @@
+paths:
+  /auth/login:
+    post:
+      description: >-
+        Authenticates the user against the provided credentials, opening a
+        personal access session. This is one of the only API methods that do not
+        expect an [auth parameter](#basics-authentication).   
+
+        This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).
+      operationId: auth.login
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: string
+                  - $ref: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  description: The user's username.
+                  type: string
+                password:
+                  description: The user's password.
+                  type: string
+                appId:
+                  description: Your app's unique identifier.
+                  type: string
+  /auth/logout:
+    post:
+      description: Terminates a personal access session by invalidating its access token
+        (the user will have to login again).
+      operationId: auth.logout
+      parameters: []
+      responses:
+        - "200": {}
+  /events:
+    get:
+      description: Queries accessible events.
+      operationId: events.get
+      parameters:
+        - name: fromTime
+          description: The start time of the timeframe you want to retrieve events for.
+            Default is 24 hours before `toTime` if the latter is set; otherwise
+            it is not taken into account.
+          required: false
+          in: query
+        - name: toTime
+          description: "The end time of the timeframe you want to retrieve events for.
+            Default is the current time. Note: events are considered to be
+            within a given timeframe based on their `time` only (`duration` is
+            not considered)."
+          required: false
+          in: query
+        - name: streams
+          description: If set, only events assigned to the specified streams and their
+            sub-streams will be returned. By default, all accessible events are
+            returned regardless of their stream.
+          required: false
+          in: query
+        - name: tags
+          description: If set, only events assigned to any of the listed tags will be
+            returned.
+          required: false
+          in: query
+        - name: types
+          description: If set, only events of any of the listed types will be returned.
+          required: false
+          in: query
+        - name: running
+          description: If `true`, only running period events will be returned.
+          required: false
+          in: query
+        - name: sortAscending
+          description: "If `true`, events will be sorted from oldest to newest. Default:
+            false (sort descending)."
+          required: false
+          in: query
+        - name: skip
+          description: The number of items to skip in the results.
+          required: false
+          in: query
+        - name: limit
+          description: The number of items to return in the results. A default value of 20
+            items is used if no other range limiting parameter is specified
+            (`fromTime`, `toTime`).
+          required: false
+          in: query
+        - name: state
+          description: Indicates what items to return depending on their state. By default,
+            only items that are not in the trash are returned; `trashed` returns
+            only items in the trash, while `all` return all items regardless of
+            their state.
+          required: false
+          in: query
+        - name: modifiedSince
+          description: If specified, only events modified since that time will be returned.
+          required: false
+          in: query
+        - name: includeDeletions
+          description: Whether to include event deletions since `modifiedSince` for sync
+            purposes (only applies when `modifiedSince` is set). Defaults to
+            `false`.
+          required: false
+          in: query
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - type: array
+                    items: "[events](#data-structure-event)"
+                  - type: array
+                    items: "[item deletions](#data-structure-item-deletion)"
+    post:
+      description: >-
+        Records a new event. It is recommended that events recorded this way are
+        completed events, i.e. either period events with a known duration or
+        mark events. To start a running period event, use [Start
+        period](#methods-events-events-start) instead.
+
+
+        In addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
+      operationId: events.create
+      parameters: []
+      responses:
+        - "201":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[event](#data-structure-event)"
+                  - $ref: "[identifier](#data-structure-identifier)"
+        - "400":
+            description: invalid-operation
+        - "400":
+            description: periods-overlap
+  "/events/{id}":
+    get:
+      description: Fetches a specific event. This request is mostly used to fetch an
+        event's version history, allowing to review all the modifications to an
+        event's data.
+      operationId: events.getOne
+      parameters:
+        - name: includeHistory
+          description: "If `true`, the event's history will be added to the response.
+            Default: false (don't include the history)."
+          required: false
+          in: query
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[event](#data-structure-event)"
+                  - type: array
+                    items: "[events](#data-structure-event)"
+    put:
+      description: Modifies the event.
+      operationId: events.update
+      parameters:
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[event](#data-structure-event)"
+                  - $ref: "[identifier](#data-structure-identifier)"
+        - "400":
+            description: invalid-operation
+        - "400":
+            description: periods-overlap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: The id of the event.
+                  type: "[identifier](#data-structure-identifier)"
+                update:
+                  description: "New values for the event's fields: see
+                    [event](#data-structure-event). All fields are optional, and
+                    only modified values must be included."
+                  type: object
+    post:
+      description: Adds one or more file attachments to the event. This request expects
+        standard multipart/form-data content, with all content parts being the
+        attached files.
+      operationId: events.addAttachment
+      parameters:
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[event](#data-structure-event)"
+    delete:
+      description: >-
+        Trashes or deletes the specified event, depending on its current state:
+
+
+        - If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+
+        - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
+      operationId: events.delete
+      parameters:
+        - name: id
+          description: The id of the event.
+          required: true
+          in: query
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[event](#data-structure-event)"
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[item deletion](#data-structure-item-deletion)"
+  /events/start:
+    post:
+      description: >-
+        Starts a new period event. This is equivalent to starting an event with
+        a null `duration`. In `singleActivity` streams, also stops the
+        previously running period event if any.
+
+
+        See [Create event](#methods-events-events-create) for details.
+      operationId: events.start
+      parameters: []
+      responses: []
+  /events/stop:
+    post:
+      description: Stops a running period event. In `singleActivity` streams, which
+        guarantee that only one event is running at any given time, that event
+        is automatically determined; for regular streams, the event to stop (or
+        its type) must be specified.
+      operationId: events.stop
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[identifier](#data-structure-identifier)"
+        - "400":
+            description: invalid-operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                streamId:
+                  description: The id of the `singleActivity` stream in which to stop the
+                    running event. Either this or `id` must be specified.
+                  type: "[identifier](#data-structure-identifier)"
+                id:
+                  description: The id of the event to stop. Either this or `streamId` (and
+                    possibly `type`) must be specified.
+                  type: "[identifier](#data-structure-identifier)"
+                type:
+                  description: The type of the event to stop. `streamId` must be specified
+                    as well. If there are multiple running events matching, the
+                    closest one (by time) will be stopped.
+                  type: string
+                time:
+                  description: "The stop time. Default: now."
+                  type: "[timestamp](#data-structure-timestamp)"
+  "/events/{id}/{fileId}[/{fileName}]":
+    get:
+      description: >-
+        Gets the attached file. Accepts an arbitrary filename path suffix
+        (ignored) for easier link readability.
+
+        For this function using the `auth` query parameter is not accepted. You can either use the [access token](#data-structure-access) in the `Authorization` header or provide the `readToken` as query parameter.
+      operationId: events.getAttachment
+      parameters:
+        - name: readToken
+          description: Required if not using the `Authorization` HTTP header. The file read
+            token to authentify the request. See
+            [`event.attachments[].readToken`](#data-structure-event) for more
+            info.
+          required: true
+          in: query
+        - name: id
+        - name: fileId
+        - name: fileName
+      responses:
+        - "200":
+            description: OK
+  "/events/{id}/{fileId}":
+    delete:
+      description: Irreversibly deletes the attached file.
+      operationId: events.deleteAttachment
+      parameters:
+        - name: id
+          description: The id of the event.
+          required: true
+          in: query
+        - name: fileId
+          description: The id of the attached file.
+          required: true
+          in: query
+        - name: id
+        - name: fileId
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[event](#data-structure-event)"
+  /streams:
+    get:
+      description: Gets the accessible streams hierarchy.
+      operationId: streams.get
+      parameters:
+        - name: parentId
+          description: "The id of the parent stream from which to retrieve streams.
+            Default: `null` (returns all accessible streams from the root
+            level)."
+          required: false
+          in: query
+        - name: state
+          description: By default, only items that are not in the trash are returned; `all`
+            return all items regardless of their state.
+          required: false
+          in: query
+        - name: includeDeletionsSince
+          description: Whether to include stream deletions since that time for sync
+            purposes.
+          required: false
+          in: query
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - type: array
+                    items: "[streams](#data-structure-stream)"
+                  - type: array
+                    items: "[item deletions](#data-structure-item-deletion)"
+    post:
+      description: Creates a new stream.
+      operationId: streams.create
+      parameters: []
+      responses:
+        - "201":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[stream](#data-structure-stream)"
+        - "400":
+            description: item-already-exists
+        - "400":
+            description: invalid-item-id
+  "/streams/{id}":
+    put:
+      description: Modifies the stream.
+      operationId: streams.update
+      parameters:
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[stream](#data-structure-stream)"
+        - "400":
+            description: item-already-exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: The id of the stream.
+                  type: "[identifier](#data-structure-identifier)"
+                update:
+                  description: "New values for the stream's fields: see
+                    [stream](#data-structure-stream). All fields are optional,
+                    and only modified values must be included."
+                  type: object
+    delete:
+      description: >-
+        Trashes or deletes the specified stream, depending on its current state:
+
+
+        - If the stream is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)
+
+        - If the stream is already in the trash, it will be irreversibly deleted with its descendants (if any). If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`.
+      operationId: streams.delete
+      parameters:
+        - name: id
+          description: The id of the stream.
+          required: true
+          in: query
+        - name: mergeEventsWithParent
+          description: Required if actually deleting the item and if it (or any of its
+            descendants) has linked events, ignored otherwise. If `true`, the
+            linked events will be assigned to the parent of the deleted item; if
+            `false`, the linked events will be deleted.
+          required: true
+          in: query
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[stream](#data-structure-stream)"
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[item deletion](#data-structure-item-deletion)"
+  /accesses:
+    get:
+      description: |-
+        Gets manageable accesses. Only returns accesses that can
+        be managed by the requesting access and that are active when
+        making the request. To include accesses that have expired, use
+        the `includeExpired` parameter.
+      operationId: accesses.get
+      parameters:
+        - name: includeExpired
+          description: If `true`, also includes expired accesses. Defaults to `false`.
+          required: false
+          in: query
+        - name: includeDeletions
+          description: If `true`, also includes deleted accesses. Defaults to `false`.
+          required: false
+          in: query
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - type: array
+                    items: "[accesses](#data-structure-access)"
+                  - type: array
+                    items: deleted [accesses](#data-structure-access)
+    post:
+      description: Creates a new access. You can only create accesses whose permissions are
+        a subset of those granted to your own access token.
+      operationId: accesses.create
+      parameters: []
+      responses:
+        - "201":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[access](#data-structure-access)"
+        - "400":
+            description: invalid-item-id
+  "/accesses/{id}":
+    delete:
+      description: Deletes the specified access. You can only delete accesses whose
+        permissions are a subset of those granted to your own access token.
+      operationId: accesses.delete
+      parameters:
+        - name: id
+          description: The id of the access.
+          required: true
+          in: query
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[item deletion](#data-structure-item-deletion)"
+  /accesses/check-app:
+    post:
+      description: For the app authorization process. Checks if the app requesting
+        authorization already has access with the same permissions (and on the
+        same device, if applicable), and returns details of the requested
+        permissions' streams (for display) if not.
+      operationId: accesses.checkApp
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - type: array
+                    items: permission request objects
+                  - $ref: "[access](#data-structure-access)"
+                  - $ref: "[access](#data-structure-access)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requestingAppId:
+                  description: The id of the app requesting authorization.
+                  type: string
+                deviceName:
+                  description: The name of the device running the app requesting
+                    authorization, if applicable.
+                  type: string
+                requestedPermissions:
+                  description: An array of permission request objects, which are identical
+                    to stream permission objects of
+                    [accesses](#data-structure-access) except that each stream
+                    permission object must have a `defaultName` property
+                    specifying the name the stream should be created with later
+                    if missing.
+                  type: array of permission request objects
+  /audit/logs:
+    get:
+      description: >-
+        Fetches accessible audit logs.
+
+        By default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).
+      operationId: audit.get
+      parameters:
+        - name: accessId
+          description: >-
+            The id of a specific access to audit.
+
+            When specified, it fetches the audit logs that involve the matching access instead of the one used to authenticate this call.
+
+            It has to correspond to a sub-access (expired and deleted included) in regards to the provided authorization token.
+          required: false
+          in: query
+        - name: fromTime
+          description: |-
+            The start time of the timeframe you want to retrieve audit logs for.
+            Timestamps are considered with a day precision.
+          required: false
+          in: query
+        - name: toTime
+          description: |-
+            The end time of the timeframe you want to retrieve audit logs for.
+            Timestamps are considered with a day precision.
+          required: false
+          in: query
+        - name: status
+          description: >-
+            Filters audit logs by HTTP response status, a 3-digits number.
+
+            It is possible to provide only the first digit,
+
+            in which case the two unspecified digits will be wildcarded.
+
+            For example, `status=4` will return all logs with status between 400 and 499.
+          required: false
+          in: query
+        - name: ip
+          description: Filters audit logs by client IP address present in the
+            `forwardedFor` property.
+          required: false
+          in: query
+        - name: httpVerb
+          description: Filters audit logs by HTTP verb present in the `action` property.
+          required: false
+          in: query
+        - name: resource
+          description: Filters audit logs by API resource present in the `action` property.
+          required: false
+          in: query
+        - name: errorId
+          description: Filters audit logs by error id.
+          required: false
+          in: query
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - type: array
+                    items: "[Audit logs](#data-structure-audit-log)"
+        - "403":
+            description: forbidden
+  /webhooks:
+    get:
+      description: Gets manageable webhooks. Only returns webhooks that were created by the
+        access, unless you are using a personal access which returns all
+        existing webhooks in the user's account.
+      operationId: webhooks.get
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - type: array
+                    items: "[webhooks](#data-structure-webhook)"
+    post:
+      description: Creates a new webhook. You can only create webhooks with app accesses.
+      operationId: webhooks.create
+      parameters: []
+      responses:
+        - "201":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[webhook](#data-structure-webhook)"
+  "/webhooks/{id}":
+    get:
+      description: Fetches a specific webhook. Only returns a webhook if it was created by
+        the access, unless you are using a personal access which is allowed to
+        fetch any existing webhook in the user's account.
+      operationId: webhooks.getOne
+      parameters:
+        - name: id
+          description: The id of the webhook.
+          required: true
+          in: query
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[webhook](#data-structure-webhook)"
+    put:
+      description: >-
+        Modifies the webhook. You can only modify webhooks with the app access
+        that was used to create them, unless you are using a personal token.  
+
+        Updating the `state` to `active` resets the `currentRetries` counter.
+      operationId: webhooks.update
+      parameters:
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[webhook](#data-structure-webhook)"
+        - "400":
+            description: item-already-exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: The id of the webhook.
+                  type: "[identifier](#data-structure-identifier)"
+                update:
+                  description: "New values for the webhook's fields: see
+                    [webhook](#data-structure-webhook). All fields are optional,
+                    and only modified values must be included.  "
+                  type: object
+    delete:
+      description: Deletes the specified webhook. You can only delete webhooks with the app
+        access that was used to create them, unless you are using a personal
+        token.
+      operationId: webhooks.delete
+      parameters:
+        - name: id
+          description: The id of the webhook.
+          required: true
+          in: query
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[item deletion](#data-structure-item-deletion)"
+  "/webhooks/{id}/test":
+    post:
+      description: Sends a post request containing a message called `test` to the URL of
+        the specified webhook's `url`. You can only test webhooks with the app
+        access that was used to create them, unless you are using a personal
+        token.
+      operationId: webhooks.test
+      parameters:
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[webhook](#data-structure-webhook)"
+        - "400":
+            description: unknown-referenced-resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: The id of the webhook.
+                  type: "[identifier](#data-structure-identifier)"
+  /followed-slices:
+    get:
+      description: Gets followed slices.
+      operationId: followedSlices.get
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - type: array
+                    items: "[followed slices](#data-structure-followed-slice)"
+    post:
+      description: Creates a new followed slice.
+      operationId: followedSlices.create
+      parameters: []
+      responses:
+        - "201":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[followed slice](#data-structure-followed-slice)"
+  "/followed-slices/{id}":
+    put:
+      description: Modifies the specified followed slice.
+      operationId: followedSlices.update
+      parameters:
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[followed slice](#data-structure-followed-slice)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: The id of the followed slice.
+                  type: "[identifier](#data-structure-identifier)"
+                update:
+                  description: "New values for the followed slice's fields: see [followed
+                    slice](#data-structure-followed-slice). All fields are
+                    optional, and only modified values must be included."
+                  type: object
+    delete:
+      description: Deletes the specified followed slice.
+      operationId: followedSlices.delete
+      parameters:
+        - name: id
+          description: The id of the followed slice.
+          required: true
+          in: query
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[item deletion](#data-structure-item-deletion)"
+  /profile/public:
+    get:
+      description: Gets the user's public profile set, which contains the information the
+        user makes publicly available (e.g. avatar image). Available to all
+        accesses.
+      operationId: profile.getPublic
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: object
+  /profile/app:
+    get:
+      description: Gets the app's dedicated user profile set, which contains app-level
+        settings for the user. Available to app accesses.
+      operationId: profile.getApp
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: object
+    put:
+      description: |-
+        Adds, updates or delete app profile keys.
+
+        - To add or update a key, just set its value
+        - To delete a key, set its value to `null`
+
+        Existing keys not included in the update are left untouched.
+      operationId: profile.updateApp
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                update:
+                  description: An object with the desired key changes (see above).
+                  type: object
+  "/profile/{id}":
+    get:
+      description: Gets the specified user profile set.
+      operationId: profile.get
+      parameters:
+        - name: id
+          description: The id of the profile set.
+          required: true
+          in: query
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: object
+    put:
+      description: |-
+        Adds, updates or delete profile keys.
+
+        - To add or update a key, just set its value
+        - To delete a key, set its value to `null`
+
+        Existing keys not included in the update are left untouched.
+      operationId: profile.update
+      parameters:
+        - name: id
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: The id of the profile set.
+                  type: "[identifier](#data-structure-identifier)"
+                update:
+                  description: An object with the desired key changes (see above).
+                  type: object
+  /account:
+    get:
+      description: Retrieves the user's account information.
+      operationId: account.get
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[account information](#data-structure-account)"
+    put:
+      description: Modifies the user's account information.
+      operationId: account.update
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: "[account information](#data-structure-account)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                update:
+                  description: "New values for the account information's fields: see
+                    [account information](#data-structure-account). All fields
+                    are optional, and only modified values must be included."
+                  type: object
+  /account/change-password:
+    post:
+      description: Modifies the user's password.
+      operationId: account.changePassword
+      parameters: []
+      responses:
+        - "200": {}
+        - "400":
+            description: invalid-operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  description: The current password.
+                  type: string
+                newPassword:
+                  description: The new password.
+                  type: string
+  /account/request-password-reset:
+    post:
+      description: >-
+        Requests the resetting of the user's password. An e-mail containing an
+        expiring reset token (e.g. in a link) will be sent to the user.  
+
+        This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).
+      operationId: account.requestPasswordReset
+      parameters: []
+      responses:
+        - "200": {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appId:
+                  description: Your app's unique identifier.
+                  type: string
+  /account/reset-password:
+    post:
+      description: >-
+        Resets the user's password, authenticating the request with the given
+        reset token (see [request password
+        reset](#methods-account-account-requestPasswordReset) ).  
+
+        This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).
+      operationId: account.resetPassword
+      parameters: []
+      responses:
+        - "200": {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resetToken:
+                  description: The expiring reset token that was sent to the user after
+                    requesting the password reset.
+                  type: string
+                newPassword:
+                  description: The new password.
+                  type: string
+                appId:
+                  description: Your app's unique identifier.
+                  type: string
+  /access-info:
+    get:
+      description: Retrieves the name, type and permissions of the access in use.
+      operationId: getAccessInfo
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - $ref: string
+                  - $ref: "[access](#data-structure-access).type"
+                  - $ref: "[access](#data-structure-access).permissions"
+  /:
+    post:
+      description: Sends a batch of API methods calls in one go (e.g. for to syncing
+        offline changes when resuming connectivity).
+      operationId: callBatch
+      parameters: []
+      responses:
+        - "200":
+            content:
+              application/json:
+                schema:
+                  - type: array
+                    items: call results
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                method:
+                  description: The method id.
+                  type: string
+                params:
+                  description: The call parameters as required by the method.
+                  type: object or array
