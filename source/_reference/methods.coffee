@@ -101,7 +101,7 @@ module.exports = exports =
       title: "Login user"
       http: "POST /auth/login"
       description: """
-                   Proxied login call that performs MFA authentication,
+                   Proxied login call that initiates MFA authentication,
                    when MFA is activated for the current user.
                    """
       params:
@@ -118,6 +118,7 @@ module.exports = exports =
                        """
         ]
       examples: [
+        title: "Login when MFA is activated."
         params:
           username: examples.users.one.username
           password: examples.users.one.password
@@ -133,12 +134,12 @@ module.exports = exports =
       title: "Activate MFA"
       http: "POST /mfa/activate"
       description: """
-                   Begins the MFA activation flow for a given Pryv.io user by triggering the MFA challenge.
-                   Requires a personal token as `Authorization`, which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
+                   Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.
+                   Requires a personal token as [authentication](#basics-authentication), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
                    """
       params:
         description: """
-              The parameters depend entirely on the chosen MFA method.
+              The parameters depend entirely on the chosen MFA method and will be forwarded to the service generating the challenge.
               """
       result:
         http: "302 Found"
@@ -157,6 +158,7 @@ module.exports = exports =
                      """
       ]
       examples: [
+        title: "Initiating the MFA activation using a phone number."
         params:
           phone_number: '41791234567'
         result:
@@ -171,11 +173,11 @@ module.exports = exports =
       http: "POST /mfa/confirm"
       description: """
                    Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
-                   Requires a MFA session token as `Authorization`.
+                   Requires a MFA session token as [authentication](#basics-authentication).
                    """
       params:
         description: """
-              The parameters depend entirely on the chosen MFA method.
+              The parameters depend entirely on the chosen MFA method and will be forwarded to the service verifying the challenge.
               """
       result:
         http: "200 OK"
@@ -190,6 +192,7 @@ module.exports = exports =
                      """
       ]
       examples: [
+        title: "Finalizing the MFA activation."
         params:
           code: '1234'
         result:
@@ -204,7 +207,7 @@ module.exports = exports =
       http: "POST /mfa/challenge"
       description: """
                    Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).
-                   Requires a MFA session token as `Authorization`.
+                   Requires a MFA session token as [authentication](#basics-authentication).
                    """
       result:
         http: "200 OK"
@@ -226,11 +229,11 @@ module.exports = exports =
       http: "POST /mfa/verify"
       description: """
                    Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
-                   Requires a MFA session token as `Authorization`.
+                   Requires a MFA session token as [authentication](#basics-authentication).
                    """
       params:
         description: """
-              The parameters depend entirely on the chosen MFA method.
+              The parameters depend entirely on the chosen MFA method and will be forwarded to the service verifying the challenge.
               """
       result:
         http: "200 OK"
@@ -249,6 +252,7 @@ module.exports = exports =
                      """
       ]
       examples: [
+        title: "Verifying the MFA challenge."
         params:
           code: '1234'
         result:

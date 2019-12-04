@@ -75,7 +75,7 @@ In this space you will find links and reference documents that will help you mak
 
 - MFA configuration: [PDF](/assets/docs/20191129-pryv.io-mfa-v1.pdf)
 
-  This document describes how to enable and perform multi-factor authentication on top of Pryv.io logins.
+  This document describes how to enable and configure multi-factor authentication on top of Pryv.io logins.
 
 ## Development resources
 
