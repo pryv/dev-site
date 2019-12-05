@@ -15,7 +15,7 @@ exports.getCurlCall = (params, http, server, auth) ->
   queryString = ""
   basicAuth = ""
   if (server == "core")
-    if (method == "POST" && (path == "/auth/login" || path == "/account/request-password-reset" || path == "/account/reset-password" || path == path == "/mfa/recover"))
+    if (method == "POST" && (path == "/auth/login" || path == "/account/request-password-reset" || path == "/account/reset-password" || path == "/mfa/recover"))
       headers = "-H 'Origin: https://sw.pryv.me' "
     else 
       if (auth)
