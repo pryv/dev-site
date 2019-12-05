@@ -8,8 +8,8 @@ template: default.jade
 
 New features:
 
- - Add multi-factor authentication on top of Pryv.io logins thanks to the optional mfa service. See the [MFA API methods](https://api.pryv.com/reference-full/#multi-factor-authentication), as well as the [customer resources](https://api.pryv.com/customer-resources/#documents) for the configuration guide.
- - Add audit capabilities through the router service and the audit API. See the [Audit API methods](https://api.pryv.com/reference/#audit), as well as the [customer resources](https://api.pryv.com/customer-resources/#documents) for the configuration guide.
+ - Add multi-factor authentication for login using the optional MFA service. See the [MFA API methods](https://api.pryv.com/reference-full/#multi-factor-authentication) for more details.
+ - Add auditing capabilities through the Audit API. See the [Audit API methods](https://api.pryv.com/reference/#audit) for more details.
  - Pryv.io API now supports the Basic HTTP Authentication scheme.
  - Release of webhooks to notify of data changes. See Webhook [data structure](https://api.pryv.com/reference/#webhook) and [methods](https://api.pryv.com/reference/#webhooks) for more details.
  - Add route `/service/info` that provides a unified way for third party services to access the necessary information related to a Pryv.io platform. See [description](https://api.pryv.com/reference/#service-info) for more details.
@@ -17,6 +17,7 @@ New features:
 
 Changes:
 
+ - Enrich [access-info](#get-current-access-info) result with exhaustive access properties.
  - Improve the update account API call, in particular when it applies a change of email address. It now correctly checks if the email address is not already in use before updating the account and throws consistent errors.
 
 ## V1.3
