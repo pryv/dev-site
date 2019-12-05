@@ -8,6 +8,8 @@ template: default.jade
 
 New features:
 
+ - Add multi-factor authentication on top of Pryv.io logins thanks to the optional mfa service. See the [MFA API methods](https://api.pryv.com/reference-full/#multi-factor-authentication), as well as the [customer resources](https://api.pryv.com/customer-resources/#documents) for the configuration guide.
+ - Add audit capabilities through the router service and the audit API. See the [Audit API methods](https://api.pryv.com/reference/#audit), as well as the [customer resources](https://api.pryv.com/customer-resources/#documents) for the configuration guide.
  - Pryv.io API now supports the Basic HTTP Authentication scheme.
  - Release of webhooks to notify of data changes. See Webhook [data structure](https://api.pryv.com/reference/#webhook) and [methods](https://api.pryv.com/reference/#webhooks) for more details.
  - Add route `/service/info` that provides a unified way for third party services to access the necessary information related to a Pryv.io platform. See [description](https://api.pryv.com/reference/#service-info) for more details.
