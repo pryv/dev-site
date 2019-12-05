@@ -187,7 +187,7 @@ module.exports = exports =
           key: "recoveryCodes"
           type: "array of strings"
           description: """
-                       An array of recovery codes that allow to deactivate MFA.
+                       An array of recovery codes that can be used for the [MFA recover method](##{_getDocId("mfa", "mfa.recover")}).
                        """
         ]
       errors: [
@@ -310,7 +310,7 @@ module.exports = exports =
       description: """
                    Deactivate MFA for a given Pryv.io user using a MFA recovery code.
                    
-                   This is useful when you do not have a valid personal token, thus [Deactivate MFA](##{_getDocId("mfa", "mfa.deactivate")}) can not be used.
+                   This is useful when [Deactivate MFA](##{_getDocId("mfa", "mfa.deactivate")}) can not be used (in case of 2nd factor loss).
                    Instead, requires a MFA recovery code (obtained when [confirming the MFA activation](##{_getDocId("mfa", "mfa.confirm")})), as well as the usual [Login](##{_getDocId("auth", "auth.login")}) parameters.
                    """
       params:
