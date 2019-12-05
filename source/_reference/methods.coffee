@@ -106,7 +106,7 @@ module.exports = exports =
                    """
       params:
         description: """
-                       Similar to the usual [Login method](##{_getDocId("auth", "auth.login")}).
+                       Similar to the usual [Login](##{_getDocId("auth", "auth.login")}) parameters.
                        """
       result:
         http: "302 Found"
@@ -135,6 +135,7 @@ module.exports = exports =
       http: "POST /mfa/activate"
       description: """
                    Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.
+                   
                    Requires a personal token as [authentication](#basics-authentication), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
                    """
       params:
@@ -173,6 +174,7 @@ module.exports = exports =
       http: "POST /mfa/confirm"
       description: """
                    Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
+                   
                    Requires a MFA session token as [authentication](#basics-authentication).
                    """
       params:
@@ -181,9 +183,13 @@ module.exports = exports =
               """
       result:
         http: "200 OK"
-        description: """
-                   'MFA activated.'
-                   """
+        properties: [
+          key: "recoveryCodes"
+          type: "array of strings"
+          description: """
+                       An array of recovery codes that allow to deactivate MFA.
+                       """
+        ]
       errors: [
         key: "forbidden"
         http: "403"
@@ -196,7 +202,18 @@ module.exports = exports =
         params:
           code: '1234'
         result:
-          'MFA activated.'
+          recoveryCodes: [ 
+            'fba6e1f6-9f8f-4a0a-9c4f-8cf3458b4c55',
+            'eb81be18-3168-4a44-8914-d97187df991c',
+            'f7d7e863-0589-4779-8ddd-6c7e33df66af',
+            'fb1d579f-2b92-42e3-82fa-8d7154c334f6',
+            '52d3f019-3712-41d3-8c13-4924c3a7a703',
+            'ac9de48c-a47d-46db-b276-e045ba693672',
+            'de1072aa-6ed9-46a7-962c-1f8bb88ece2e',
+            'cb5277cf-af86-47c3-a03e-7cc5011314ac',
+            '16055dff-bc09-4262-b276-d70df82a9a2b',
+            '36c7dd9b-5d23-4fb9-8504-c3e04aeb62c0'
+            ]
       ]
 
     ,
@@ -207,13 +224,18 @@ module.exports = exports =
       http: "POST /mfa/challenge"
       description: """
                    Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).
+                   
                    Requires a MFA session token as [authentication](#basics-authentication).
                    """
       result:
         http: "200 OK"
-        description: """
-            'Please verify MFA challenge.'
-            """
+        properties: [
+          key: "message"
+          type: "string"
+          description: """
+                       "Please verify the MFA challenge."
+                       """
+        ]
       errors: [
         key: "forbidden"
         http: "403"
@@ -229,6 +251,7 @@ module.exports = exports =
       http: "POST /mfa/verify"
       description: """
                    Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
+                   
                    Requires a MFA session token as [authentication](#basics-authentication).
                    """
       params:
@@ -257,6 +280,81 @@ module.exports = exports =
           code: '1234'
         result:
           token: examples.accesses.personal.token
+      ]
+    ,
+
+      id: "mfa.deactivate"
+      type: "method"
+      title: "Deactivate MFA"
+      http: "POST /mfa/deactivate"
+      description: """
+                   Deactivate MFA for a given Pryv.io user.
+                   
+                   Requires a personal token as [authentication](#basics-authentication).
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "message"
+          type: "string"
+          description: """
+                       "MFA deactivated."
+                       """
+        ]
+    , 
+
+      id: "mfa.recover"
+      type: "method"
+      title: "Recover MFA"
+      http: "POST /mfa/recover"
+      description: """
+                   Deactivate MFA for a given Pryv.io user using a MFA recovery code.
+                   
+                   This is useful when you do not have a valid personal token, thus [Deactivate MFA](##{_getDocId("mfa", "mfa.deactivate")}) can not be used.
+                   Instead, requires a MFA recovery code (obtained when [confirming the MFA activation](##{_getDocId("mfa", "mfa.confirm")})), as well as the usual [Login](##{_getDocId("auth", "auth.login")}) parameters.
+                   """
+      params:
+        description: """
+                     Similar to the usual [Login](##{_getDocId("auth", "auth.login")}) parameters, as well as:
+                     """
+        properties: [
+          key: "recoveryCode"
+          type: "string"
+          description: """
+                       One MFA recovery code.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "message"
+          type: "string"
+          description: """
+                       "MFA deactivated."
+                       """
+        ]
+      errors: [
+        key: "missing-parameter"
+        http: "400"
+        description: """
+                     Missing parameter: recoveryCode.
+                     """
+      ,
+        key: "invalid-parameter"
+        http: "400"
+        description: """
+                     Invalid recovery code.
+                     """
+      ]
+      examples: [
+        title: "Deactivate MFA using a recovery code."
+        params:
+          recoveryCode: 'fba6e1f6-9f8f-4a0a-9c4f-8cf3458b4c55'
+          username: examples.users.one.username
+          password: examples.users.one.password
+          appId: "my-app-id"
+        result:
+          message: "MFA deactivated."
       ]
     ]
 
