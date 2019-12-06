@@ -73,6 +73,10 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to perform a backup of your Pryv.io platform and how to restore it in case of any data loss.
 
+- MFA configuration: [PDF](/assets/docs/20191205-pryv.io-mfa-v2.pdf)
+
+  This document describes how to enable and configure multi-factor authentication on top of Pryv.io logins.
+
 ## Development resources
 
 - Authorization web application (app-web-auth v3): [Github](https://github.com/pryv/app-web-auth3)
