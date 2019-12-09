@@ -11,9 +11,48 @@ dataStructureRoot.sections.forEach(s => {
   dataStructureMap[s.id] = s;
 })
 
-
 const api = metadata;
 api.paths = {};
+
+
+// SCHEMAS (DATA STRUCTURES)
+
+const schemas = {};
+
+dataStructureRoot.sections.forEach(ds => {
+  const struct = {
+    type: 'object',
+    properties: {}
+  };
+  if (ds.properties != null) {
+    ds.properties.forEach(p => {
+      struct.properties[p.key] = {
+        uniqueItems: p.unique,
+        readOnly: p.readOnly,
+        required: !p.optional,
+        description: p.description,
+        $ref: buildSchemaParams(p.type) ? translateSchemaLink(buildSchemaParams(p.type)) : null,
+      }
+    });
+  }
+  
+  schemas[ds.id] = struct;
+});
+
+api.components = {
+  schemas: schemas,
+};
+
+/**
+ * [identifier](#${_getDocId("identifier")})
+ * ->
+ * #/components/schemas/Identifier
+ */
+function translateSchemaLink(type) {
+  return '#/components/schemas/' + type;
+}
+
+// METHODS
 
 methodsRoot.sections.forEach(section => {
   section.sections.forEach(method => {
@@ -92,8 +131,6 @@ methodsRoot.sections.forEach(section => {
 
   });
 });
-
-//console.log(methodsRoot.sections[0].sections);
 
 writeToOutput();
 
