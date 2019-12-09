@@ -68,10 +68,6 @@ methodsRoot.sections.forEach(section => {
       responses: [],
     };
 
-    // good response
-
-    // erronous response
-
     function isGetOrDelete(verb) {
       return verb == 'get' || verb == 'delete';
     }
@@ -144,7 +140,6 @@ methodsRoot.sections.forEach(section => {
 api = removeNulls(api);
 writeToOutput();
 
-// parses 
 function parseDataStructName(text, endPad) {
   const token = '#data-structure-';
   let tokenLength = token.length;
@@ -196,7 +191,6 @@ function extractResult(method) {
   
   return responses;
 
-  
   function arrayOrNot(props) {
     const schemaItems = [];
     props.forEach(p => {
@@ -223,7 +217,6 @@ function arrayOrNotSingle(type) {
   }
   return schema;
 }
-
 
 function parseBy(string, sep, pos, end) {
   if (end) {
