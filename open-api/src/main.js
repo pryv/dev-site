@@ -44,13 +44,6 @@ api.components = {
   schemas: schemas,
 };
 
-api = removeNulls(api);
-
-/**
- * [identifier](#${_getDocId("identifier")})
- * ->
- * #/components/schemas/Identifier
- */
 function translateSchemaLink(type) {
   return '#/components/schemas/' + type;
 }
@@ -135,9 +128,10 @@ methodsRoot.sections.forEach(section => {
   });
 });
 
+api = removeNulls(api);
 writeToOutput();
 
-// The new event's data: see [Event](#data-structure-event)
+// parses 
 function parseDataStructName(text, endPad) {
   const token = '#data-structure-';
   let tokenLength = token.length;
