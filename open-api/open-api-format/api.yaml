@@ -251,37 +251,37 @@ paths:
         examples:
           - title: A picture
             content:
-              id: ck3ygocpi000ycfpvx3kmr9dg
-              time: 1575893888.982
+              id: ck3yhui6e000ygmpvmqey9m13
+              time: 1575895855.622
               streamId: diary
               tags: []
               type: picture/attached
               content: null
               attachments:
-                - id: ck3ygocpi000zcfpv1a5layrv
+                - id: ck3yhui6e000zgmpvincs3ez2
                   fileName: photo.jpg
                   type: image/jpeg
                   size: 2561
-                  readToken: ck3ygocpi0010cfpvs9sf7o9b-yMXfuGNnPiB0G56pfUfUekLNJv4
-              created: 1575893888.982
-              createdBy: ck3ygocoq0004cfpvh228n0ga
-              modified: 1575893888.982
-              modifiedBy: ck3ygocoq0004cfpvh228n0ga
+                  readToken: ck3yhui6e0010gmpvd5d27uqh-Ub6WRfIKHGEAJoaqZA3vvEcvB8n
+              created: 1575895855.622
+              createdBy: ck3yhui5n0004gmpv2osq16nb
+              modified: 1575895855.622
+              modifiedBy: ck3yhui5n0004gmpv2osq16nb
           - title: An activity
             content:
-              id: ck3ygocpi000lcfpvmkcugdno
-              time: 1575897488.982
+              id: ck3yhui6d000lgmpvruyiqglb
+              time: 1575899455.621
               streamId: jogging
               tags: []
               type: activity/pryv
               content: null
-              created: 1575897488.982
-              createdBy: ck3ygocop0001cfpva6k3rqw1
-              modified: 1575897488.982
-              modifiedBy: ck3ygocop0001cfpva6k3rqw1
+              created: 1575899455.621
+              createdBy: ck3yhui5m0001gmpvgali9qd2
+              modified: 1575899455.621
+              modifiedBy: ck3yhui5m0001gmpvgali9qd2
           - title: A position
             content:
-              id: ck3ygocpi0011cfpvl5j2144q
+              id: ck3yhui6e0011gmpv1aw3a8lh
               time: 1350373077.359
               streamId: diary
               tags: []
@@ -289,10 +289,10 @@ paths:
               content:
                 latitude: 40.714728
                 longitude: -73.998672
-              created: 1575890288.982
-              createdBy: ck3ygocoo0000cfpv5id23y0w
-              modified: 1575890288.982
-              modifiedBy: ck3ygocoo0000cfpv5id23y0w
+              created: 1575892255.622
+              createdBy: ck3yhui5m0000gmpvfwi2pwq3
+              modified: 1575892255.622
+              modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
   "/events/{id}":
     get:
       description: Fetches a specific event. This request is mostly used to fetch an
@@ -587,87 +587,87 @@ paths:
                     name: Jogging
                     parentId: sport
                     children: []
-                    created: 1512783586.7334087
-                    createdBy: ck3ygocoo0000cfpv5id23y0w
-                    modified: 1512783680.3107934
-                    modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                    created: 1512785560.0335133
+                    createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                    modified: 1512785744.3218782
+                    modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
                   - id: bicycling
                     name: Bicycling
                     parentId: sport
                     children: []
-                    created: 1512783586.7334087
-                    createdBy: ck3ygocoo0000cfpv5id23y0w
-                    modified: 1512783947.7260516
-                    modifiedBy: ck3ygocoo0000cfpv5id23y0w
-                created: 1512783584.982
-                createdBy: ck3ygocoo0000cfpv5id23y0w
-                modified: 1512783853.4886832
-                modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                    created: 1512785560.0335133
+                    createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                    modified: 1512785836.969704
+                    modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                created: 1512785551.621
+                createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                modified: 1512785816.8242483
+                modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
               - id: work
                 name: Work
                 parentId: null
                 singleActivity: true
                 children:
-                  - id: ck3ygocph000acfpvkhfi0et1
+                  - id: ck3yhui6d000agmpv9c8znc4v
                     name: Noble Works Co.
                     parentId: work
                     children:
-                      - id: ck3ygocph000ccfpvupa1fc48
+                      - id: ck3yhui6d000cgmpvwufabc6i
                         name: Last Be First
-                        parentId: ck3ygocph000acfpvkhfi0et1
+                        parentId: ck3yhui6d000agmpv9c8znc4v
                         children: []
-                        created: 1512783611.7632134
-                        createdBy: ck3ygocoo0000cfpv5id23y0w
-                        modified: 1512783791.1199565
-                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
-                      - id: ck3ygocph000dcfpv3c4m6ops
+                        created: 1512785573.4246194
+                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                        modified: 1512785670.2200823
+                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                      - id: ck3yhui6d000dgmpv1vfebmf9
                         name: Big Tree
-                        parentId: ck3ygocph000acfpvkhfi0et1
+                        parentId: ck3yhui6d000agmpv9c8znc4v
                         children: []
-                        created: 1512783611.7632134
-                        createdBy: ck3ygocoo0000cfpv5id23y0w
-                        modified: 1512783710.2618814
-                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
-                      - id: ck3ygocph000ecfpvv7d4n0ik
+                        created: 1512785573.4246194
+                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                        modified: 1512785767.5408447
+                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                      - id: ck3yhui6d000egmpvpiovo0pq
                         name: Inner Light
-                        parentId: ck3ygocph000acfpvkhfi0et1
+                        parentId: ck3yhui6d000agmpv9c8znc4v
                         children: []
-                        created: 1512783611.7632134
-                        createdBy: ck3ygocoo0000cfpv5id23y0w
-                        modified: 1512783784.7185655
-                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
-                    created: 1512783599.092737
-                    createdBy: ck3ygocoo0000cfpv5id23y0w
-                    modified: 1512783928.0347672
-                    modifiedBy: ck3ygocoo0000cfpv5id23y0w
-                  - id: ck3ygocph000bcfpv5drufeq6
+                        created: 1512785573.4246194
+                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                        modified: 1512785574.809425
+                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                    created: 1512785555.8152168
+                    createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                    modified: 1512785869.678685
+                    modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                  - id: ck3yhui6d000bgmpvu4kiprv0
                     name: Freelancing
                     parentId: work
                     children:
-                      - id: ck3ygocph000fcfpvsnyx2znv
+                      - id: ck3yhui6d000fgmpvv0i3c9a7
                         name: Funky Veggies
-                        parentId: ck3ygocph000bcfpv5drufeq6
+                        parentId: ck3yhui6d000bgmpvu4kiprv0
                         children: []
-                        created: 1512783624.2005987
-                        createdBy: ck3ygocoo0000cfpv5id23y0w
-                        modified: 1512783905.5533237
-                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
-                      - id: ck3ygocph000gcfpvk3m213v2
+                        created: 1512785585.7948663
+                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                        modified: 1512785728.0961673
+                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                      - id: ck3yhui6d000ggmpvj90yooak
                         name: Jojo Lapin & sons
-                        parentId: ck3ygocph000bcfpv5drufeq6
+                        parentId: ck3yhui6d000bgmpvu4kiprv0
                         children: []
-                        created: 1512783624.2005987
-                        createdBy: ck3ygocoo0000cfpv5id23y0w
-                        modified: 1512783861.2253964
-                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
-                    created: 1512783599.092737
-                    createdBy: ck3ygocoo0000cfpv5id23y0w
-                    modified: 1512783856.1799126
-                    modifiedBy: ck3ygocoo0000cfpv5id23y0w
-                created: 1512783584.982
-                createdBy: ck3ygocoo0000cfpv5id23y0w
-                modified: 1512783653.242782
-                modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                        created: 1512785585.7948663
+                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                        modified: 1512785751.6465461
+                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                    created: 1512785555.8152168
+                    createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                    modified: 1512785808.0297596
+                    modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                created: 1512785551.621
+                createdBy: ck3yhui5m0000gmpvfwi2pwq3
+                modified: 1512785731.8729339
+                modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
   "/streams/{id}":
     put:
       description: Modifies the stream.
@@ -879,17 +879,17 @@ paths:
         examples:
           - title: An app access
             content:
-              id: ck3ygocop0001cfpva6k3rqw1
-              token: ck3ygocoq0003cfpvtgejp8he
+              id: ck3yhui5m0001gmpvgali9qd2
+              token: ck3yhui5n0003gmpv7tkr0znl
               type: app
               name: my-app-id
               permissions:
                 - streamId: health
                   level: contribute
-              created: 1575811088.954
-              createdBy: ck3ygocoo0000cfpv5id23y0w
-              modified: 1575811088.954
-              modifiedBy: ck3ygocoo0000cfpv5id23y0w
+              created: 1575813055.595
+              createdBy: ck3yhui5m0000gmpvfwi2pwq3
+              modified: 1575813055.595
+              modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
   "/accesses/{id}":
     delete:
       description: Deletes the specified access. You can only delete accesses whose
@@ -1148,8 +1148,8 @@ paths:
         examples:
           - title: A simple Webhook
             content:
-              id: ck3ygocpk001bcfpv82zro7y0
-              accessId: ck3ygocpk0019cfpva7221gan
+              id: ck3yhui6g001bgmpvxbxsdchc
+              accessId: ck3yhui6g0019gmpvx00ffp3i
               url: https://notifications.service.com/pryv
               minIntervalMs: 5000
               maxRetries: 5
@@ -1159,16 +1159,16 @@ paths:
               failCount: 0
               lastRun:
                 status: 200
-                timestamp: 1575893888.984
+                timestamp: 1575895855.624
               runs:
                 - status: 200
-                  timestamp: 1575893888.984
+                  timestamp: 1575895855.624
                 - status: 200
-                  timestamp: 1575890288.984
-              created: 1575811088.984
-              createdBy: ck3ygocpk0019cfpva7221gan
-              modified: 1575811088.984
-              modifiedBy: ck3ygocpk0019cfpva7221gan
+                  timestamp: 1575892255.624
+              created: 1575813055.624
+              createdBy: ck3yhui6g0019gmpvx00ffp3i
+              modified: 1575813055.624
+              modifiedBy: ck3yhui6g0019gmpvx00ffp3i
   "/webhooks/{id}":
     get:
       description: Fetches a specific webhook. Only returns a webhook if it was created by
@@ -1571,3 +1571,387 @@ paths:
                   - type: array
                     items: call results
       requestBody: null
+components:
+  schemas:
+    event:
+      type: object
+      properties:
+        id:
+          uniqueItems: true
+          readOnly: (except at creation)
+          required: true
+          description: The identifier ([collision-resistant cuid](https://usecuid.org/))
+            for the event. Automatically generated if not set when creating the
+            event.
+        streamId:
+          required: true
+          description: The id of the belonging stream.
+        time:
+          required: true
+          description: The event's time. For period events, this is the time the event
+            started. Automatically set to the server time if not provided when
+            creating the event.
+        duration:
+          description: If present and non-zero, indicates that the event is a period event.
+            **Running period events have a duration set to `null`**. **A
+            duration set to zero is equivalent to no duration**. (We use a
+            dedicated field for duration—instead of using the `content` field—as
+            we do specific processing of event durations, intervals and
+            overlapping.)
+        type:
+          required: true
+          description: The type of the event. See the [event type
+            directory](/event-types/#directory) for a list of standard types.
+        content:
+          description: The `type`-specific content of the event, if any.
+        tags:
+          description: The tags associated with the event.
+        description:
+          description: User description or comment for the event.
+        attachments:
+          readOnly: true
+          description: "An array describing the files attached to the event. Each item has
+            the following structure:"
+        clientData:
+          description: Additional client data for the event.
+        trashed:
+          description: "`true` if the event is in the trash."
+        created:
+          readOnly: true
+          required: true
+          description: The time the event was created.
+        createdBy:
+          readOnly: true
+          required: true
+          description: The id of the access used to create the event.
+        modified:
+          readOnly: true
+          required: true
+          description: The time the event was last modified.
+        modifiedBy:
+          readOnly: true
+          required: true
+          description: The id of the last access used to modify the event.
+    stream:
+      type: object
+      properties:
+        id:
+          uniqueItems: true
+          readOnly: (except at creation)
+          required: true
+          description: The identifier for the stream. Automatically generated if not set
+            when creating the stream; **slugified if necessary**.
+        name:
+          uniqueItems: among siblings
+          required: true
+          description: A name identifying the stream for users. The name must be unique
+            among the stream's siblings in the streams tree structure.
+        parentId:
+          description: The identifier of the stream's parent, if any. A value of `null`
+            indicates that the stream has no parent (i.e. root stream).
+        singleActivity:
+          description: If specified and `true`, the system will ensure that period events
+            in this stream and its children never overlap.
+        clientData:
+          description: Additional client data for the stream.
+        children:
+          readOnly: true
+          required: true
+          description: "The stream's sub-streams, if any. This field cannot be set in
+            requests creating a new streams: streams are created individually by
+            design."
+        trashed:
+          description: "`true` if the stream is in the trash."
+        created:
+          readOnly: true
+          required: true
+          description: The time the stream was created.
+        createdBy:
+          readOnly: true
+          required: true
+          description: The id of the access used to create the stream.
+        modified:
+          readOnly: true
+          required: true
+          description: The time the stream was last modified.
+        modifiedBy:
+          readOnly: true
+          required: true
+          description: The id of the last access used to modify the stream.
+    access:
+      type: object
+      properties:
+        id:
+          uniqueItems: true
+          readOnly: true
+          required: true
+          description: The identifier for the access.
+        token:
+          uniqueItems: true
+          readOnly: (except at creation)
+          required: true
+          description: The token identifying the access. Automatically generated if not set
+            when creating the access; **slugified if necessary**.
+        type:
+          readOnly: (except at creation)
+          description: "The type — or usage — of the access. Default: `shared`."
+        name:
+          uniqueItems: per type and device
+          required: true
+          description: The name identifying the access for the user. (For personal and app
+            access, the name is used as a technical identifier and not shown
+            as-is to the user.)
+        deviceName:
+          uniqueItems: per type and name
+          description: For app accesses only. The name of the client device running the
+            app, if applicable.
+        permissions:
+          required: true
+          description: 'Ignored for personal accesses. If permission levels conflict (e.g.
+            stream set to "manage" and child stream set to "contribute"), only
+            the highest level is considered. Each permission object has the
+            following structure:'
+        lastUsed:
+          readOnly: true
+          description: The time the access was last used.
+        expireAfter:
+          readOnly: false
+          description: >-
+            (Only on create and update) If set, controls access expiry in
+            seconds.
+
+            When given a number in this attribute (positive or zero),
+
+            the access will expire (and not be accessible any more) after this many
+
+            seconds.
+
+
+            Use `expireAfter=0` to immediately disable an access (without deleting it).
+        expires:
+          readOnly: true
+          description: >-
+            If the access was set to expire: The timestamp after which the
+            access
+
+            will be deactivated.
+        deleted:
+          readOnly: true
+          description: "If the access has been deleted: The timestamp of the deletion."
+        clientData:
+          description: Additional client data for the access.
+        created:
+          readOnly: true
+          required: true
+          description: The time the access was created.
+        createdBy:
+          readOnly: true
+          required: true
+          description: The id of the access used to create the access.
+        modified:
+          readOnly: true
+          required: true
+          description: The time the access was last modified.
+        modifiedBy:
+          readOnly: true
+          required: true
+          description: The id of the last access used to modify the access.
+    followed-slice:
+      type: object
+      properties:
+        id:
+          uniqueItems: true
+          readOnly: true
+          required: true
+          description: The server-assigned identifier for the followed slice.
+        name:
+          uniqueItems: true
+          required: true
+          description: A name identifying the followed slice for the user.
+        url:
+          required: true
+          description: The URL of the API endpoint of the account hosting the slice. Not
+            modifiable after creation.
+        accessToken:
+          required: true
+          description: The token of the shared access itself. Not modifiable after creation.
+    account:
+      type: object
+      properties:
+        username:
+          uniqueItems: true
+          readOnly: true
+          required: true
+          description: The user's username.
+        email:
+          uniqueItems: true
+          required: true
+          description: The user's contact e-mail address.
+        language:
+          required: true
+          description: The user's preferred language as a 2-letter ISO language code.
+        storageUsed:
+          required: true
+          description: The current storage size used by the user account.
+    audit-log:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          required: true
+          description: The identifier for the action that generated this log.
+        type:
+          readOnly: true
+          required: true
+          description: The type of log.
+        time:
+          readOnly: true
+          required: true
+          description: The time the API call was executed.
+        forwardedFor:
+          readOnly: true
+          required: true
+          description: The IP address of the client who performed the audited action.
+        action:
+          readOnly: true
+          required: true
+          description: The audited action, typically an API method call, composed by the
+            HTTP verb and the API resource.
+        query:
+          readOnly: true
+          required: true
+          description: The query string that accompanied the audited action, if any.
+        accessId:
+          readOnly: true
+          required: true
+          description: The identifier for the access used to perform the audited action.
+        status:
+          readOnly: true
+          required: true
+          description: The HTTP response status resulting from the audited action.
+        errorMessage:
+          readOnly: true
+          description: The error message resulting from the audited action, if any.
+        errorId:
+          readOnly: true
+          description: The identifier for the error resulting from the audited action, if
+            any.
+    webhook:
+      type: object
+      properties:
+        id:
+          readOnly: true
+          required: true
+          description: The identifier of the Webhook.
+        accessId:
+          readOnly: true
+          required: true
+          description: The identifier of the access that was used to create the Webhook.
+        url:
+          uniqueItems: per app access
+          readOnly: (except at creation)
+          required: true
+          description: >-
+            The URL where the HTTP POST requests will be made. To identify the
+            source of the webhook on your notifications server, you can use the
+            `url`'s hostname, path or query parameters. For example: 
+
+
+            ```json
+
+            {
+              "url": "https://${username}.my-notifications.com/${my-secret}/?param1=value1&param2=value2"
+            }
+
+            ```
+        minIntervalMs:
+          readOnly: true
+          required: true
+          description: "The webhooks run rate is throttled by a minimum interval between
+            HTTP calls in milliseconds, sending an array of changes that occured
+            during this period. Its value is set by the platform admin. "
+        maxRetries:
+          readOnly: true
+          required: true
+          description: In case of failure to send a request, the webhook will retry
+            `maxRetries` times at a growing interval of time before becoming
+            `inactive` after too many successive failures. Its value is set by
+            the platform admin.
+        currentRetries:
+          readOnly: true
+          required: true
+          description: The number of retries iterations since the last failed HTTP call.
+            This number is 0 if the last HTTP call was successful.
+        state:
+          required: true
+          description: The current state of the Webhook. An inactive Webhook will not make
+            any HTTP call when changes occur. It must be activated using the
+            [update webhook](#methods-webhooks-webhooks-update) method.
+        runCount:
+          readOnly: true
+          required: true
+          description: The number of times the Webhook has been run, including failures.
+        failCount:
+          readOnly: true
+          required: true
+          description: The number of times the Webhook has failed HTTP calls. Failed runs
+            are HTTP requests that received a response with a status outside of
+            the 200-299 range or no response at all.
+        lastRun:
+          readOnly: true
+          required: true
+          description: Represents the last Webhook call, comprised of its HTTP response
+            status and timestamp.
+        runs:
+          readOnly: true
+          required: true
+          description: "Array of Run objects in inverse chronological order (newest first)
+            which allows to monitor a webhook's health. Its length is set by the
+            platform admin. "
+        created:
+          readOnly: true
+          required: true
+          description: The time the webhook was created.
+        createdBy:
+          readOnly: true
+          required: true
+          description: The id of the access used to create the webhook.
+        modified:
+          readOnly: true
+          required: true
+          description: The time the webhook was last modified.
+        modifiedBy:
+          readOnly: true
+          required: true
+          description: The id of the last access used to modify the webhook.
+    item-deletion:
+      type: object
+      properties:
+        id:
+          required: true
+          description: The identifier of the deleted item.
+        deleted:
+          description: The time the item was deleted.
+    key-value:
+      type: object
+      properties: {}
+    error:
+      type: object
+      properties:
+        id:
+          required: true
+          description: Identifier for the error.
+        message:
+          required: true
+          description: A human-readable description of the error.
+        data:
+          description: Additional machine-readable details (specified for each error if
+            relevant).
+        subErrors:
+          description: Lists the detailed causes of the main error, if any.
+    identifier:
+      type: object
+      properties: {}
+    timestamp:
+      type: object
+      properties: {}

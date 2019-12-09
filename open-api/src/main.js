@@ -3,6 +3,7 @@ const dataStructureRoot = require('../transpiled/data-structure');
 const yaml = require('yaml');
 const fs = require('fs');
 const metadata = require('./metadata');
+const removeNulls = require('./cleanup').removeNulls;
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
 
@@ -11,7 +12,7 @@ dataStructureRoot.sections.forEach(s => {
   dataStructureMap[s.id] = s;
 })
 
-const api = metadata;
+let api = metadata;
 api.paths = {};
 
 
@@ -29,7 +30,7 @@ dataStructureRoot.sections.forEach(ds => {
       struct.properties[p.key] = {
         uniqueItems: p.unique,
         readOnly: p.readOnly,
-        required: !p.optional,
+        required: p.optional ? null : true,
         description: p.description,
         $ref: buildSchemaParams(p.type) ? translateSchemaLink(buildSchemaParams(p.type)) : null,
       }
@@ -42,6 +43,8 @@ dataStructureRoot.sections.forEach(ds => {
 api.components = {
   schemas: schemas,
 };
+
+api = removeNulls(api);
 
 /**
  * [identifier](#${_getDocId("identifier")})
