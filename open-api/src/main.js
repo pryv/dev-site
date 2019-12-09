@@ -32,7 +32,7 @@ dataStructureRoot.sections.forEach(ds => {
         readOnly: p.readOnly,
         required: p.optional ? null : true,
         description: p.description,
-        $ref: buildSchemaParams(p.type) ? translateSchemaLink(buildSchemaParams(p.type)) : null,
+        '$ref': parseDataStructName(p.type, 1) ? translateSchemaLink(parseDataStructName(p.type, 1)) : null,
       }
     });
   }
@@ -100,7 +100,7 @@ methodsRoot.sections.forEach(section => {
       api.paths[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
     }
     if (hasSchemaParams(method)) {
-      api.paths[path][httpMethod].requestBody = buildSchemaParams(method.params.description);
+      api.paths[path][httpMethod].requestBody = dataStructureMap[parseDataStructName(method.params.description, 2)];
     }
 
     // handle query params
@@ -138,12 +138,15 @@ methodsRoot.sections.forEach(section => {
 writeToOutput();
 
 // The new event's data: see [Event](#data-structure-event)
-function buildSchemaParams(description) {
+function parseDataStructName(text, endPad) {
   const token = '#data-structure-';
   let tokenLength = token.length;
-  let index = description.indexOf(token) + tokenLength;
-  const schema = description.substring(index, description.length - 2);
-  return dataStructureMap[schema];
+  const startIndex = text.indexOf(token);
+  if (startIndex < 0) return false;
+  
+  let schemaIndex = startIndex + tokenLength;
+  const schema = text.substring(schemaIndex, text.length - endPad);
+  return schema;
 }
 
 function extractError(method) {

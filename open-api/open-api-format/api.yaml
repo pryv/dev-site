@@ -251,37 +251,37 @@ paths:
         examples:
           - title: A picture
             content:
-              id: ck3yhui6e000ygmpvmqey9m13
-              time: 1575895855.622
+              id: ck3ykq9e2000ymkpvll1vrqjr
+              time: 1575900696.458
               streamId: diary
               tags: []
               type: picture/attached
               content: null
               attachments:
-                - id: ck3yhui6e000zgmpvincs3ez2
+                - id: ck3ykq9e2000zmkpv37dro1yu
                   fileName: photo.jpg
                   type: image/jpeg
                   size: 2561
-                  readToken: ck3yhui6e0010gmpvd5d27uqh-Ub6WRfIKHGEAJoaqZA3vvEcvB8n
-              created: 1575895855.622
-              createdBy: ck3yhui5n0004gmpv2osq16nb
-              modified: 1575895855.622
-              modifiedBy: ck3yhui5n0004gmpv2osq16nb
+                  readToken: ck3ykq9e20010mkpvv84w5l1i-JaeTG99jAtdeMe2poQxxEYqjgTJ
+              created: 1575900696.458
+              createdBy: ck3ykq9db0004mkpvqojzilfr
+              modified: 1575900696.458
+              modifiedBy: ck3ykq9db0004mkpvqojzilfr
           - title: An activity
             content:
-              id: ck3yhui6d000lgmpvruyiqglb
-              time: 1575899455.621
+              id: ck3ykq9e1000lmkpvsf8sslxj
+              time: 1575904296.457
               streamId: jogging
               tags: []
               type: activity/pryv
               content: null
-              created: 1575899455.621
-              createdBy: ck3yhui5m0001gmpvgali9qd2
-              modified: 1575899455.621
-              modifiedBy: ck3yhui5m0001gmpvgali9qd2
+              created: 1575904296.457
+              createdBy: ck3ykq9db0001mkpvy32ulv5x
+              modified: 1575904296.457
+              modifiedBy: ck3ykq9db0001mkpvy32ulv5x
           - title: A position
             content:
-              id: ck3yhui6e0011gmpv1aw3a8lh
+              id: ck3ykq9e20011mkpveefl2olc
               time: 1350373077.359
               streamId: diary
               tags: []
@@ -289,10 +289,10 @@ paths:
               content:
                 latitude: 40.714728
                 longitude: -73.998672
-              created: 1575892255.622
-              createdBy: ck3yhui5m0000gmpvfwi2pwq3
-              modified: 1575892255.622
-              modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+              created: 1575897096.458
+              createdBy: ck3ykq9da0000mkpvn1easxq9
+              modified: 1575897096.458
+              modifiedBy: ck3ykq9da0000mkpvn1easxq9
   "/events/{id}":
     get:
       description: Fetches a specific event. This request is mostly used to fetch an
@@ -587,87 +587,87 @@ paths:
                     name: Jogging
                     parentId: sport
                     children: []
-                    created: 1512785560.0335133
-                    createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                    modified: 1512785744.3218782
-                    modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                    created: 1512790402.5899696
+                    createdBy: ck3ykq9da0000mkpvn1easxq9
+                    modified: 1512790598.2890756
+                    modifiedBy: ck3ykq9da0000mkpvn1easxq9
                   - id: bicycling
                     name: Bicycling
                     parentId: sport
                     children: []
-                    created: 1512785560.0335133
-                    createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                    modified: 1512785836.969704
-                    modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
-                created: 1512785551.621
-                createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                modified: 1512785816.8242483
-                modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                    created: 1512790402.5899696
+                    createdBy: ck3ykq9da0000mkpvn1easxq9
+                    modified: 1512790607.764881
+                    modifiedBy: ck3ykq9da0000mkpvn1easxq9
+                created: 1512790392.457
+                createdBy: ck3ykq9da0000mkpvn1easxq9
+                modified: 1512790553.9508576
+                modifiedBy: ck3ykq9da0000mkpvn1easxq9
               - id: work
                 name: Work
                 parentId: null
                 singleActivity: true
                 children:
-                  - id: ck3yhui6d000agmpv9c8znc4v
+                  - id: ck3ykq9e1000amkpvw2agrv0n
                     name: Noble Works Co.
                     parentId: work
                     children:
-                      - id: ck3yhui6d000cgmpvwufabc6i
+                      - id: ck3ykq9e1000cmkpv7j5z35tb
                         name: Last Be First
-                        parentId: ck3yhui6d000agmpv9c8znc4v
+                        parentId: ck3ykq9e1000amkpvw2agrv0n
                         children: []
-                        created: 1512785573.4246194
-                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                        modified: 1512785670.2200823
-                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
-                      - id: ck3yhui6d000dgmpv1vfebmf9
+                        created: 1512790423.513456
+                        createdBy: ck3ykq9da0000mkpvn1easxq9
+                        modified: 1512790681.6001434
+                        modifiedBy: ck3ykq9da0000mkpvn1easxq9
+                      - id: ck3ykq9e1000dmkpvxbyhxcal
                         name: Big Tree
-                        parentId: ck3yhui6d000agmpv9c8znc4v
+                        parentId: ck3ykq9e1000amkpvw2agrv0n
                         children: []
-                        created: 1512785573.4246194
-                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                        modified: 1512785767.5408447
-                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
-                      - id: ck3yhui6d000egmpvpiovo0pq
+                        created: 1512790423.513456
+                        createdBy: ck3ykq9da0000mkpvn1easxq9
+                        modified: 1512790711.1108491
+                        modifiedBy: ck3ykq9da0000mkpvn1easxq9
+                      - id: ck3ykq9e1000emkpv44p7fzee
                         name: Inner Light
-                        parentId: ck3yhui6d000agmpv9c8znc4v
+                        parentId: ck3ykq9e1000amkpvw2agrv0n
                         children: []
-                        created: 1512785573.4246194
-                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                        modified: 1512785574.809425
-                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
-                    created: 1512785555.8152168
-                    createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                    modified: 1512785869.678685
-                    modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
-                  - id: ck3yhui6d000bgmpvu4kiprv0
+                        created: 1512790423.513456
+                        createdBy: ck3ykq9da0000mkpvn1easxq9
+                        modified: 1512790455.4629388
+                        modifiedBy: ck3ykq9da0000mkpvn1easxq9
+                    created: 1512790402.323752
+                    createdBy: ck3ykq9da0000mkpvn1easxq9
+                    modified: 1512790525.6052268
+                    modifiedBy: ck3ykq9da0000mkpvn1easxq9
+                  - id: ck3ykq9e1000bmkpv3hqcjacv
                     name: Freelancing
                     parentId: work
                     children:
-                      - id: ck3yhui6d000fgmpvv0i3c9a7
+                      - id: ck3ykq9e1000fmkpvazga0uuu
                         name: Funky Veggies
-                        parentId: ck3yhui6d000bgmpvu4kiprv0
+                        parentId: ck3ykq9e1000bmkpv3hqcjacv
                         children: []
-                        created: 1512785585.7948663
-                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                        modified: 1512785728.0961673
-                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
-                      - id: ck3yhui6d000ggmpvj90yooak
+                        created: 1512790431.61952
+                        createdBy: ck3ykq9da0000mkpvn1easxq9
+                        modified: 1512790775.6774914
+                        modifiedBy: ck3ykq9da0000mkpvn1easxq9
+                      - id: ck3ykq9e1000gmkpv4gmwevu8
                         name: Jojo Lapin & sons
-                        parentId: ck3yhui6d000bgmpvu4kiprv0
+                        parentId: ck3ykq9e1000bmkpv3hqcjacv
                         children: []
-                        created: 1512785585.7948663
-                        createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                        modified: 1512785751.6465461
-                        modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
-                    created: 1512785555.8152168
-                    createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                    modified: 1512785808.0297596
-                    modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
-                created: 1512785551.621
-                createdBy: ck3yhui5m0000gmpvfwi2pwq3
-                modified: 1512785731.8729339
-                modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+                        created: 1512790431.61952
+                        createdBy: ck3ykq9da0000mkpvn1easxq9
+                        modified: 1512790521.1097205
+                        modifiedBy: ck3ykq9da0000mkpvn1easxq9
+                    created: 1512790402.323752
+                    createdBy: ck3ykq9da0000mkpvn1easxq9
+                    modified: 1512790760.6736593
+                    modifiedBy: ck3ykq9da0000mkpvn1easxq9
+                created: 1512790392.457
+                createdBy: ck3ykq9da0000mkpvn1easxq9
+                modified: 1512790751.168445
+                modifiedBy: ck3ykq9da0000mkpvn1easxq9
   "/streams/{id}":
     put:
       description: Modifies the stream.
@@ -879,17 +879,17 @@ paths:
         examples:
           - title: An app access
             content:
-              id: ck3yhui5m0001gmpvgali9qd2
-              token: ck3yhui5n0003gmpv7tkr0znl
+              id: ck3ykq9db0001mkpvy32ulv5x
+              token: ck3ykq9db0003mkpvtt6ppk14
               type: app
               name: my-app-id
               permissions:
                 - streamId: health
                   level: contribute
-              created: 1575813055.595
-              createdBy: ck3yhui5m0000gmpvfwi2pwq3
-              modified: 1575813055.595
-              modifiedBy: ck3yhui5m0000gmpvfwi2pwq3
+              created: 1575817896.431
+              createdBy: ck3ykq9da0000mkpvn1easxq9
+              modified: 1575817896.431
+              modifiedBy: ck3ykq9da0000mkpvn1easxq9
   "/accesses/{id}":
     delete:
       description: Deletes the specified access. You can only delete accesses whose
@@ -1148,8 +1148,8 @@ paths:
         examples:
           - title: A simple Webhook
             content:
-              id: ck3yhui6g001bgmpvxbxsdchc
-              accessId: ck3yhui6g0019gmpvx00ffp3i
+              id: ck3ykq9e4001bmkpvuv3v1sbe
+              accessId: ck3ykq9e40019mkpvseppt9vs
               url: https://notifications.service.com/pryv
               minIntervalMs: 5000
               maxRetries: 5
@@ -1159,16 +1159,16 @@ paths:
               failCount: 0
               lastRun:
                 status: 200
-                timestamp: 1575895855.624
+                timestamp: 1575900696.46
               runs:
                 - status: 200
-                  timestamp: 1575895855.624
+                  timestamp: 1575900696.46
                 - status: 200
-                  timestamp: 1575892255.624
-              created: 1575813055.624
-              createdBy: ck3yhui6g0019gmpvx00ffp3i
-              modified: 1575813055.624
-              modifiedBy: ck3yhui6g0019gmpvx00ffp3i
+                  timestamp: 1575897096.46
+              created: 1575817896.46
+              createdBy: ck3ykq9e40019mkpvseppt9vs
+              modified: 1575817896.46
+              modifiedBy: ck3ykq9e40019mkpvseppt9vs
   "/webhooks/{id}":
     get:
       description: Fetches a specific webhook. Only returns a webhook if it was created by
@@ -1583,14 +1583,17 @@ components:
           description: The identifier ([collision-resistant cuid](https://usecuid.org/))
             for the event. Automatically generated if not set when creating the
             event.
+          $ref: "#/components/schemas/identifier"
         streamId:
           required: true
           description: The id of the belonging stream.
+          $ref: "#/components/schemas/identifier"
         time:
           required: true
           description: The event's time. For period events, this is the time the event
             started. Automatically set to the server time if not provided when
             creating the event.
+          $ref: "#/components/schemas/timestamp"
         duration:
           description: If present and non-zero, indicates that the event is a period event.
             **Running period events have a duration set to `null`**. **A
@@ -1598,6 +1601,7 @@ components:
             dedicated field for duration—instead of using the `content` field—as
             we do specific processing of event durations, intervals and
             overlapping.)
+          $ref: "#/components/schemas/timestamp"
         type:
           required: true
           description: The type of the event. See the [event type
@@ -1614,24 +1618,29 @@ components:
             the following structure:"
         clientData:
           description: Additional client data for the event.
+          $ref: "#/components/schemas/key-value"
         trashed:
           description: "`true` if the event is in the trash."
         created:
           readOnly: true
           required: true
           description: The time the event was created.
+          $ref: "#/components/schemas/timestamp"
         createdBy:
           readOnly: true
           required: true
           description: The id of the access used to create the event.
+          $ref: "#/components/schemas/identifier"
         modified:
           readOnly: true
           required: true
           description: The time the event was last modified.
+          $ref: "#/components/schemas/timestamp"
         modifiedBy:
           readOnly: true
           required: true
           description: The id of the last access used to modify the event.
+          $ref: "#/components/schemas/identifier"
     stream:
       type: object
       properties:
@@ -1641,6 +1650,7 @@ components:
           required: true
           description: The identifier for the stream. Automatically generated if not set
             when creating the stream; **slugified if necessary**.
+          $ref: "#/components/schemas/identifier"
         name:
           uniqueItems: among siblings
           required: true
@@ -1649,11 +1659,13 @@ components:
         parentId:
           description: The identifier of the stream's parent, if any. A value of `null`
             indicates that the stream has no parent (i.e. root stream).
+          $ref: "#/components/schemas/identifier"
         singleActivity:
           description: If specified and `true`, the system will ensure that period events
             in this stream and its children never overlap.
         clientData:
           description: Additional client data for the stream.
+          $ref: "#/components/schemas/key-value"
         children:
           readOnly: true
           required: true
@@ -1666,18 +1678,22 @@ components:
           readOnly: true
           required: true
           description: The time the stream was created.
+          $ref: "#/components/schemas/timestamp"
         createdBy:
           readOnly: true
           required: true
           description: The id of the access used to create the stream.
+          $ref: "#/components/schemas/identifier"
         modified:
           readOnly: true
           required: true
           description: The time the stream was last modified.
+          $ref: "#/components/schemas/timestamp"
         modifiedBy:
           readOnly: true
           required: true
           description: The id of the last access used to modify the stream.
+          $ref: "#/components/schemas/identifier"
     access:
       type: object
       properties:
@@ -1686,6 +1702,7 @@ components:
           readOnly: true
           required: true
           description: The identifier for the access.
+          $ref: "#/components/schemas/identifier"
         token:
           uniqueItems: true
           readOnly: (except at creation)
@@ -1714,6 +1731,7 @@ components:
         lastUsed:
           readOnly: true
           description: The time the access was last used.
+          $ref: "#/components/schemas/timestamp"
         expireAfter:
           readOnly: false
           description: >-
@@ -1735,27 +1753,34 @@ components:
             access
 
             will be deactivated.
+          $ref: "#/components/schemas/timestamp"
         deleted:
           readOnly: true
           description: "If the access has been deleted: The timestamp of the deletion."
+          $ref: "#/components/schemas/timestamp"
         clientData:
           description: Additional client data for the access.
+          $ref: "#/components/schemas/key-value"
         created:
           readOnly: true
           required: true
           description: The time the access was created.
+          $ref: "#/components/schemas/timestamp"
         createdBy:
           readOnly: true
           required: true
           description: The id of the access used to create the access.
+          $ref: "#/components/schemas/identifier"
         modified:
           readOnly: true
           required: true
           description: The time the access was last modified.
+          $ref: "#/components/schemas/timestamp"
         modifiedBy:
           readOnly: true
           required: true
           description: The id of the last access used to modify the access.
+          $ref: "#/components/schemas/identifier"
     followed-slice:
       type: object
       properties:
@@ -1764,6 +1789,7 @@ components:
           readOnly: true
           required: true
           description: The server-assigned identifier for the followed slice.
+          $ref: "#/components/schemas/identifier"
         name:
           uniqueItems: true
           required: true
@@ -1800,6 +1826,7 @@ components:
           readOnly: true
           required: true
           description: The identifier for the action that generated this log.
+          $ref: "#/components/schemas/identifier"
         type:
           readOnly: true
           required: true
@@ -1808,6 +1835,7 @@ components:
           readOnly: true
           required: true
           description: The time the API call was executed.
+          $ref: "#/components/schemas/timestamp"
         forwardedFor:
           readOnly: true
           required: true
@@ -1843,10 +1871,12 @@ components:
           readOnly: true
           required: true
           description: The identifier of the Webhook.
+          $ref: "#/components/schemas/identifier"
         accessId:
           readOnly: true
           required: true
           description: The identifier of the access that was used to create the Webhook.
+          $ref: "#/components/schemas/identifier"
         url:
           uniqueItems: per app access
           readOnly: (except at creation)
@@ -1912,26 +1942,32 @@ components:
           readOnly: true
           required: true
           description: The time the webhook was created.
+          $ref: "#/components/schemas/timestamp"
         createdBy:
           readOnly: true
           required: true
           description: The id of the access used to create the webhook.
+          $ref: "#/components/schemas/identifier"
         modified:
           readOnly: true
           required: true
           description: The time the webhook was last modified.
+          $ref: "#/components/schemas/timestamp"
         modifiedBy:
           readOnly: true
           required: true
           description: The id of the last access used to modify the webhook.
+          $ref: "#/components/schemas/identifier"
     item-deletion:
       type: object
       properties:
         id:
           required: true
           description: The identifier of the deleted item.
+          $ref: "#/components/schemas/identifier"
         deleted:
           description: The time the item was deleted.
+          $ref: "#/components/schemas/timestamp"
     key-value:
       type: object
       properties: {}
