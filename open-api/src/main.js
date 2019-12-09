@@ -33,7 +33,9 @@ dataStructureRoot.sections.forEach(ds => {
         required: p.optional ? null : true,
         description: p.description,
         '$ref': parseDataStructName(p.type, 1) ? translateSchemaLink(parseDataStructName(p.type, 1)) : null,
+        type: !parseDataStructName(p.type, 1) ? arrayOrNotSingle(p.type) : null,
       }
+
     });
   }
   
@@ -198,27 +200,28 @@ function extractResult(method) {
   function arrayOrNot(props) {
     const schemaItems = [];
     props.forEach(p => {
-      schemaItems.push(arrayOrNotSingle(p));
+      schemaItems.push(arrayOrNotSingle(p.type));
     });
     return schemaItems;
   }
-
-  // if array, type=array, type is extracted
-  // if not array, just returns $ref
-  function arrayOrNotSingle(props) {
-    let schema = {};
-    if (props.type.startsWith('array of')) {
-      schema.type = 'array';
-      schema.items = parseBy(props.type, ' ', 2, 3);
-    } else {
-      schema = {
-        // "[stream](#data-structure-stream)"
-        $ref: parseDataStructName(props.type, 1) ? translateSchemaLink(parseDataStructName(props.type, 1)) : props.type,
-      };
-    }
-    return schema;
-  }
   
+}
+
+// if array, type=array, type is extracted
+// if not array, just returns $ref
+function arrayOrNotSingle(type) {
+  let schema = {};
+  if (type.startsWith('array of')) {
+    schema.type = 'array';
+    schema.items = parseBy(type, ' ', 2, 3);
+  } else {
+    if (parseDataStructName(type, 1)) {
+      schema['$ref'] = parseDataStructName(type, 1) ? translateSchemaLink(parseDataStructName(type, 1)) : type
+    } else {
+      schema.type = type;
+    }
+  }
+  return schema;
 }
 
 
