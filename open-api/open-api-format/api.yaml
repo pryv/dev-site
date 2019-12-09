@@ -1,3 +1,14 @@
+openapi: 3.0.0
+info:
+  description: Description of Pryv.io API in Open API 3.0 standard format
+  version: 1.0.0
+  title: Open API Pryv
+  termsOfService: http://pryv.com/pryv-lab-terms-of-use/
+  contact:
+    email: hsupport@pryv.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 paths:
   /auth/login:
     post:
@@ -139,6 +150,149 @@ paths:
             description: invalid-operation
         - "400":
             description: periods-overlap
+      requestBody:
+        id: event
+        title: Event
+        description: "See also: [core concepts](/concepts/#events)."
+        properties:
+          - key: id
+            type: "[identifier](#data-structure-identifier)"
+            unique: true
+            readOnly: (except at creation)
+            description: The identifier ([collision-resistant cuid](https://usecuid.org/))
+              for the event. Automatically generated if not set when creating
+              the event.
+          - key: streamId
+            type: "[identifier](#data-structure-identifier)"
+            description: The id of the belonging stream.
+          - key: time
+            type: "[timestamp](#data-structure-timestamp)"
+            description: The event's time. For period events, this is the time the event
+              started. Automatically set to the server time if not provided when
+              creating the event.
+          - key: duration
+            type: "[timestamp](#data-structure-timestamp)"
+            optional: true
+            description: If present and non-zero, indicates that the event is a period
+              event. **Running period events have a duration set to `null`**.
+              **A duration set to zero is equivalent to no duration**. (We use a
+              dedicated field for duration—instead of using the `content`
+              field—as we do specific processing of event durations, intervals
+              and overlapping.)
+          - key: type
+            type: string
+            description: The type of the event. See the [event type
+              directory](/event-types/#directory) for a list of standard types.
+          - key: content
+            type: any type
+            optional: true
+            description: The `type`-specific content of the event, if any.
+          - key: tags
+            type: array of strings
+            optional: (always present in read items)
+            description: The tags associated with the event.
+          - key: description
+            type: string
+            optional: true
+            description: User description or comment for the event.
+          - key: attachments
+            type: array of attachment objects
+            optional: true
+            readOnly: true
+            description: "An array describing the files attached to the event. Each item
+              has the following structure:"
+            properties:
+              - key: id
+                type: "[identifier](#data-structure-identifier)"
+                description: The file's id. The attached file's URL is obtained by
+                  appending this id to the event's resource URL.
+              - key: fileName
+                type: string
+                description: The file's name as uploaded.
+              - key: type
+                type: string
+                description: The MIME type of the file.
+              - key: size
+                type: number
+                description: The size of the file, in bytes.
+              - key: readToken
+                type: string
+                description: The auth token to pass in the query string when reading the
+                  file (instead of the regular `auth` parameter). The token is
+                  unique for the file and the access used to read it. This is a
+                  security measure in situations where it is impractical to use
+                  the `Authorization` HTTP header and/or where the file's URL is
+                  likely to be exposed. See also events method [get
+                  attachment](#methods-events-events-getAttachment).
+          - key: clientData
+            type: "[key-value](#data-structure-key-value)"
+            optional: true
+            description: Additional client data for the event.
+          - key: trashed
+            type: boolean
+            optional: true
+            description: "`true` if the event is in the trash."
+          - key: created
+            type: "[timestamp](#data-structure-timestamp)"
+            readOnly: true
+            description: The time the event was created.
+          - key: createdBy
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The id of the access used to create the event.
+          - key: modified
+            type: "[timestamp](#data-structure-timestamp)"
+            readOnly: true
+            description: The time the event was last modified.
+          - key: modifiedBy
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The id of the last access used to modify the event.
+        examples:
+          - title: A picture
+            content:
+              id: ck3ygocpi000ycfpvx3kmr9dg
+              time: 1575893888.982
+              streamId: diary
+              tags: []
+              type: picture/attached
+              content: null
+              attachments:
+                - id: ck3ygocpi000zcfpv1a5layrv
+                  fileName: photo.jpg
+                  type: image/jpeg
+                  size: 2561
+                  readToken: ck3ygocpi0010cfpvs9sf7o9b-yMXfuGNnPiB0G56pfUfUekLNJv4
+              created: 1575893888.982
+              createdBy: ck3ygocoq0004cfpvh228n0ga
+              modified: 1575893888.982
+              modifiedBy: ck3ygocoq0004cfpvh228n0ga
+          - title: An activity
+            content:
+              id: ck3ygocpi000lcfpvmkcugdno
+              time: 1575897488.982
+              streamId: jogging
+              tags: []
+              type: activity/pryv
+              content: null
+              created: 1575897488.982
+              createdBy: ck3ygocop0001cfpva6k3rqw1
+              modified: 1575897488.982
+              modifiedBy: ck3ygocop0001cfpva6k3rqw1
+          - title: A position
+            content:
+              id: ck3ygocpi0011cfpvl5j2144q
+              time: 1350373077.359
+              streamId: diary
+              tags: []
+              type: position/wgs84
+              content:
+                latitude: 40.714728
+                longitude: -73.998672
+              created: 1575890288.982
+              createdBy: ck3ygocoo0000cfpv5id23y0w
+              modified: 1575890288.982
+              modifiedBy: ck3ygocoo0000cfpv5id23y0w
   "/events/{id}":
     get:
       description: Fetches a specific event. This request is mostly used to fetch an
@@ -366,6 +520,154 @@ paths:
             description: item-already-exists
         - "400":
             description: invalid-item-id
+      requestBody:
+        id: stream
+        title: Stream
+        description: "See also: [core concepts](/concepts/#streams)."
+        properties:
+          - key: id
+            type: "[identifier](#data-structure-identifier)"
+            unique: true
+            readOnly: (except at creation)
+            description: The identifier for the stream. Automatically generated if not set
+              when creating the stream; **slugified if necessary**.
+          - key: name
+            type: string
+            unique: among siblings
+            description: A name identifying the stream for users. The name must be unique
+              among the stream's siblings in the streams tree structure.
+          - key: parentId
+            type: "[identifier](#data-structure-identifier)"
+            optional: true
+            description: The identifier of the stream's parent, if any. A value of `null`
+              indicates that the stream has no parent (i.e. root stream).
+          - key: singleActivity
+            type: boolean
+            optional: true
+            description: If specified and `true`, the system will ensure that period events
+              in this stream and its children never overlap.
+          - key: clientData
+            type: "[key-value](#data-structure-key-value)"
+            optional: true
+            description: Additional client data for the stream.
+          - key: children
+            type: array of streams
+            readOnly: true
+            description: "The stream's sub-streams, if any. This field cannot be set in
+              requests creating a new streams: streams are created individually
+              by design."
+          - key: trashed
+            type: boolean
+            optional: true
+            description: "`true` if the stream is in the trash."
+          - key: created
+            type: "[timestamp](#data-structure-timestamp)"
+            readOnly: true
+            description: The time the stream was created.
+          - key: createdBy
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The id of the access used to create the stream.
+          - key: modified
+            type: "[timestamp](#data-structure-timestamp)"
+            readOnly: true
+            description: The time the stream was last modified.
+          - key: modifiedBy
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The id of the last access used to modify the stream.
+        examples:
+          - title: A structure for activities
+            content:
+              - id: sport
+                name: Sport
+                parentId: null
+                children:
+                  - id: jogging
+                    name: Jogging
+                    parentId: sport
+                    children: []
+                    created: 1512783586.7334087
+                    createdBy: ck3ygocoo0000cfpv5id23y0w
+                    modified: 1512783680.3107934
+                    modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                  - id: bicycling
+                    name: Bicycling
+                    parentId: sport
+                    children: []
+                    created: 1512783586.7334087
+                    createdBy: ck3ygocoo0000cfpv5id23y0w
+                    modified: 1512783947.7260516
+                    modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                created: 1512783584.982
+                createdBy: ck3ygocoo0000cfpv5id23y0w
+                modified: 1512783853.4886832
+                modifiedBy: ck3ygocoo0000cfpv5id23y0w
+              - id: work
+                name: Work
+                parentId: null
+                singleActivity: true
+                children:
+                  - id: ck3ygocph000acfpvkhfi0et1
+                    name: Noble Works Co.
+                    parentId: work
+                    children:
+                      - id: ck3ygocph000ccfpvupa1fc48
+                        name: Last Be First
+                        parentId: ck3ygocph000acfpvkhfi0et1
+                        children: []
+                        created: 1512783611.7632134
+                        createdBy: ck3ygocoo0000cfpv5id23y0w
+                        modified: 1512783791.1199565
+                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                      - id: ck3ygocph000dcfpv3c4m6ops
+                        name: Big Tree
+                        parentId: ck3ygocph000acfpvkhfi0et1
+                        children: []
+                        created: 1512783611.7632134
+                        createdBy: ck3ygocoo0000cfpv5id23y0w
+                        modified: 1512783710.2618814
+                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                      - id: ck3ygocph000ecfpvv7d4n0ik
+                        name: Inner Light
+                        parentId: ck3ygocph000acfpvkhfi0et1
+                        children: []
+                        created: 1512783611.7632134
+                        createdBy: ck3ygocoo0000cfpv5id23y0w
+                        modified: 1512783784.7185655
+                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                    created: 1512783599.092737
+                    createdBy: ck3ygocoo0000cfpv5id23y0w
+                    modified: 1512783928.0347672
+                    modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                  - id: ck3ygocph000bcfpv5drufeq6
+                    name: Freelancing
+                    parentId: work
+                    children:
+                      - id: ck3ygocph000fcfpvsnyx2znv
+                        name: Funky Veggies
+                        parentId: ck3ygocph000bcfpv5drufeq6
+                        children: []
+                        created: 1512783624.2005987
+                        createdBy: ck3ygocoo0000cfpv5id23y0w
+                        modified: 1512783905.5533237
+                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                      - id: ck3ygocph000gcfpvk3m213v2
+                        name: Jojo Lapin & sons
+                        parentId: ck3ygocph000bcfpv5drufeq6
+                        children: []
+                        created: 1512783624.2005987
+                        createdBy: ck3ygocoo0000cfpv5id23y0w
+                        modified: 1512783861.2253964
+                        modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                    created: 1512783599.092737
+                    createdBy: ck3ygocoo0000cfpv5id23y0w
+                    modified: 1512783856.1799126
+                    modifiedBy: ck3ygocoo0000cfpv5id23y0w
+                created: 1512783584.982
+                createdBy: ck3ygocoo0000cfpv5id23y0w
+                modified: 1512783653.242782
+                modifiedBy: ck3ygocoo0000cfpv5id23y0w
   "/streams/{id}":
     put:
       description: Modifies the stream.
@@ -466,6 +768,128 @@ paths:
                   - $ref: "[access](#data-structure-access)"
         - "400":
             description: invalid-item-id
+      requestBody:
+        id: access
+        title: Access
+        description: "See also: [core concepts](/concepts/#accesses)."
+        properties:
+          - key: id
+            type: "[identifier](#data-structure-identifier)"
+            unique: true
+            readOnly: true
+            description: The identifier for the access.
+          - key: token
+            type: string
+            unique: true
+            readOnly: (except at creation)
+            description: The token identifying the access. Automatically generated if not
+              set when creating the access; **slugified if necessary**.
+          - key: type
+            type: "`personal`|`app`|`shared`"
+            readOnly: (except at creation)
+            optional: true
+            description: "The type — or usage — of the access. Default: `shared`."
+          - key: name
+            type: string
+            unique: per type and device
+            description: The name identifying the access for the user. (For personal and
+              app access, the name is used as a technical identifier and not
+              shown as-is to the user.)
+          - key: deviceName
+            type: string
+            optional: true
+            unique: per type and name
+            description: For app accesses only. The name of the client device running the
+              app, if applicable.
+          - key: permissions
+            type: array of permission objects
+            description: 'Ignored for personal accesses. If permission levels conflict
+              (e.g. stream set to "manage" and child stream set to
+              "contribute"), only the highest level is considered. Each
+              permission object has the following structure:'
+            properties:
+              - key:
+                  - streamId
+                  - tag
+                type: "[identifier](#data-structure-identifier) | string"
+                description: The id of the stream or the tag the permission applies to, or
+                  `*` for all streams/tags. Stream permissions are recursively
+                  applied to child streams.
+              - key: level
+                type: "`read`|`contribute`|`manage`"
+                description: The level of access to the stream. With `contribute`, one can
+                  see and record events for the stream/tag (and child streams
+                  for stream permissions); with `manage`, one can in addition
+                  create, modify and delete child streams.
+          - key: lastUsed
+            type: "[timestamp](#data-structure-timestamp)"
+            optional: true
+            readOnly: true
+            description: The time the access was last used.
+          - key: expireAfter
+            type: number
+            optional: true
+            readOnly: false
+            description: >-
+              (Only on create and update) If set, controls access expiry in
+              seconds.
+
+              When given a number in this attribute (positive or zero),
+
+              the access will expire (and not be accessible any more) after this many
+
+              seconds.
+
+
+              Use `expireAfter=0` to immediately disable an access (without deleting it).
+          - key: expires
+            type: "[timestamp](#data-structure-timestamp)"
+            optional: true
+            readOnly: true
+            description: >-
+              If the access was set to expire: The timestamp after which the
+              access
+
+              will be deactivated.
+          - key: deleted
+            type: "[timestamp](#data-structure-timestamp)"
+            optional: true
+            readOnly: true
+            description: "If the access has been deleted: The timestamp of the deletion."
+          - key: clientData
+            type: "[key-value](#data-structure-key-value)"
+            optional: true
+            description: Additional client data for the access.
+          - key: created
+            type: "[timestamp](#data-structure-timestamp)"
+            readOnly: true
+            description: The time the access was created.
+          - key: createdBy
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The id of the access used to create the access.
+          - key: modified
+            type: "[timestamp](#data-structure-timestamp)"
+            readOnly: true
+            description: The time the access was last modified.
+          - key: modifiedBy
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The id of the last access used to modify the access.
+        examples:
+          - title: An app access
+            content:
+              id: ck3ygocop0001cfpva6k3rqw1
+              token: ck3ygocoq0003cfpvtgejp8he
+              type: app
+              name: my-app-id
+              permissions:
+                - streamId: health
+                  level: contribute
+              created: 1575811088.954
+              createdBy: ck3ygocoo0000cfpv5id23y0w
+              modified: 1575811088.954
+              modifiedBy: ck3ygocoo0000cfpv5id23y0w
   "/accesses/{id}":
     delete:
       description: Deletes the specified access. You can only delete accesses whose
@@ -611,6 +1035,140 @@ paths:
               application/json:
                 schema:
                   - $ref: "[webhook](#data-structure-webhook)"
+      requestBody:
+        id: webhook
+        title: Webhook
+        description: >+
+          Webhooks provide push notifications to web servers using HTTP POST
+          requests.  
+
+
+          Once created, they will run, executing a HTTP POST request to the provided URL for each [data change](#with-webhooks) in the user account. 
+
+
+          When the webhooks service is booted, it will send a `webhooksServiceBoot` message to all active webhooks. This allows to query the API for potentially missed notifications during its down time.
+
+
+          Only the app access used to create the webhook or a personal access can retrieve and modify it. This is meant to separate the responsibilities between the actor that sets the webhooks and the one(s) that consume the data following the webhook setup.
+
+        properties:
+          - key: id
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The identifier of the Webhook.
+          - key: accessId
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The identifier of the access that was used to create the Webhook.
+          - key: url
+            type: string
+            unique: per app access
+            readOnly: (except at creation)
+            description: >-
+              The URL where the HTTP POST requests will be made. To identify the
+              source of the webhook on your notifications server, you can use
+              the `url`'s hostname, path or query parameters. For example: 
+
+
+              ```json
+
+              {
+                "url": "https://${username}.my-notifications.com/${my-secret}/?param1=value1&param2=value2"
+              }
+
+              ```
+          - key: minIntervalMs
+            type: number
+            readOnly: true
+            description: "The webhooks run rate is throttled by a minimum interval between
+              HTTP calls in milliseconds, sending an array of changes that
+              occured during this period. Its value is set by the platform
+              admin. "
+          - key: maxRetries
+            type: number
+            readOnly: true
+            description: In case of failure to send a request, the webhook will retry
+              `maxRetries` times at a growing interval of time before becoming
+              `inactive` after too many successive failures. Its value is set by
+              the platform admin.
+          - key: currentRetries
+            type: number
+            readOnly: true
+            description: The number of retries iterations since the last failed HTTP call.
+              This number is 0 if the last HTTP call was successful.
+          - key: state
+            type: "`active`|`inactive`"
+            description: The current state of the Webhook. An inactive Webhook will not
+              make any HTTP call when changes occur. It must be activated using
+              the [update webhook](#methods-webhooks-webhooks-update) method.
+          - key: runCount
+            type: number
+            readOnly: true
+            description: The number of times the Webhook has been run, including failures.
+          - key: failCount
+            type: number
+            readOnly: true
+            description: The number of times the Webhook has failed HTTP calls. Failed runs
+              are HTTP requests that received a response with a status outside
+              of the 200-299 range or no response at all.
+          - key: lastRun
+            type: Run object
+            readOnly: true
+            description: Represents the last Webhook call, comprised of its HTTP response
+              status and timestamp.
+            properties:
+              - key: status
+                type: number
+                description: The HTTP response status of the call.
+              - key: timestamp
+                type: "[timestamp](#data-structure-timestamp)"
+                description: The time the call was started.
+          - key: runs
+            type: array of Run objects
+            readOnly: true
+            description: "Array of Run objects in inverse chronological order (newest
+              first) which allows to monitor a webhook's health. Its length is
+              set by the platform admin. "
+          - key: created
+            type: "[timestamp](#data-structure-timestamp)"
+            readOnly: true
+            description: The time the webhook was created.
+          - key: createdBy
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The id of the access used to create the webhook.
+          - key: modified
+            type: "[timestamp](#data-structure-timestamp)"
+            readOnly: true
+            description: The time the webhook was last modified.
+          - key: modifiedBy
+            type: "[identifier](#data-structure-identifier)"
+            readOnly: true
+            description: The id of the last access used to modify the webhook.
+        examples:
+          - title: A simple Webhook
+            content:
+              id: ck3ygocpk001bcfpv82zro7y0
+              accessId: ck3ygocpk0019cfpva7221gan
+              url: https://notifications.service.com/pryv
+              minIntervalMs: 5000
+              maxRetries: 5
+              currentRetries: 0
+              state: active
+              runCount: 2
+              failCount: 0
+              lastRun:
+                status: 200
+                timestamp: 1575893888.984
+              runs:
+                - status: 200
+                  timestamp: 1575893888.984
+                - status: 200
+                  timestamp: 1575890288.984
+              created: 1575811088.984
+              createdBy: ck3ygocpk0019cfpva7221gan
+              modified: 1575811088.984
+              modifiedBy: ck3ygocpk0019cfpva7221gan
   "/webhooks/{id}":
     get:
       description: Fetches a specific webhook. Only returns a webhook if it was created by
@@ -725,6 +1283,30 @@ paths:
               application/json:
                 schema:
                   - $ref: "[followed slice](#data-structure-followed-slice)"
+      requestBody:
+        id: followed-slice
+        title: Followed slice
+        trustedOnly: true
+        description: "See also: [core concepts](/concepts/#followed-slices)."
+        properties:
+          - key: id
+            type: "[identifier](#data-structure-identifier)"
+            unique: true
+            readOnly: true
+            description: The server-assigned identifier for the followed slice.
+          - key: name
+            type: string
+            unique: true
+            description: A name identifying the followed slice for the user.
+          - key: url
+            type: URL
+            description: The URL of the API endpoint of the account hosting the slice. Not
+              modifiable after creation.
+          - key: accessToken
+            type: string
+            description: The token of the shared access itself. Not modifiable after
+              creation.
+        examples: []
   "/followed-slices/{id}":
     put:
       description: Modifies the specified followed slice.
@@ -988,15 +1570,4 @@ paths:
                 schema:
                   - type: array
                     items: call results
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                method:
-                  description: The method id.
-                  type: string
-                params:
-                  description: The call parameters as required by the method.
-                  type: object or array
+      requestBody: null

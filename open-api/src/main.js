@@ -2,6 +2,7 @@ const methodsRoot = require('../transpiled/methods');
 const dataStructureRoot = require('../transpiled/data-structure');
 const yaml = require('yaml');
 const fs = require('fs');
+const metadata = require('./metadata');
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
 
@@ -11,9 +12,8 @@ dataStructureRoot.sections.forEach(s => {
 })
 
 
-const api = {
-  paths: {},
-};
+const api = metadata;
+api.paths = {};
 
 methodsRoot.sections.forEach(section => {
   section.sections.forEach(method => {
@@ -247,4 +247,3 @@ function extractResponses(path){
 function writeToOutput() {
   fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api));
 }
-
