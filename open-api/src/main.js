@@ -194,6 +194,7 @@ function extractResult(method) {
   
   return responses;
 
+  
   function arrayOrNot(props) {
     const schemaItems = [];
     props.forEach(p => {
@@ -202,6 +203,8 @@ function extractResult(method) {
     return schemaItems;
   }
 
+  // if array, type=array, type is extracted
+  // if not array, just returns $ref
   function arrayOrNotSingle(props) {
     let schema = {};
     if (props.type.startsWith('array of')) {
@@ -209,8 +212,9 @@ function extractResult(method) {
       schema.items = parseBy(props.type, ' ', 2, 3);
     } else {
       schema = {
-        '$ref': props.type
-      }
+        // "[stream](#data-structure-stream)"
+        $ref: parseDataStructName(props.type, 1) ? translateSchemaLink(parseDataStructName(props.type, 1)) : props.type,
+      };
     }
     return schema;
   }

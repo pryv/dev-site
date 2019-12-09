@@ -144,8 +144,8 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[event](#data-structure-event)"
-                  - $ref: "[identifier](#data-structure-identifier)"
+                  - $ref: "#/components/schemas/event"
+                  - $ref: "#/components/schemas/identifier"
         - "400":
             description: invalid-operation
         - "400":
@@ -175,7 +175,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[event](#data-structure-event)"
+                  - $ref: "#/components/schemas/event"
                   - type: array
                     items: "[events](#data-structure-event)"
     put:
@@ -188,8 +188,8 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[event](#data-structure-event)"
-                  - $ref: "[identifier](#data-structure-identifier)"
+                  - $ref: "#/components/schemas/event"
+                  - $ref: "#/components/schemas/identifier"
         - "400":
             description: invalid-operation
         - "400":
@@ -220,7 +220,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[event](#data-structure-event)"
+                  - $ref: "#/components/schemas/event"
     delete:
       description: >-
         Trashes or deletes the specified event, depending on its current state:
@@ -241,12 +241,12 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[event](#data-structure-event)"
+                  - $ref: "#/components/schemas/event"
         - "200":
             content:
               application/json:
                 schema:
-                  - $ref: "[item deletion](#data-structure-item-deletion)"
+                  - $ref: "#/components/schemas/item-deletion"
   /events/start:
     post:
       description: >-
@@ -272,7 +272,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[identifier](#data-structure-identifier)"
+                  - $ref: "#/components/schemas/identifier"
         - "400":
             description: invalid-operation
       requestBody:
@@ -339,7 +339,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[event](#data-structure-event)"
+                  - $ref: "#/components/schemas/event"
   /streams:
     get:
       description: Gets the accessible streams hierarchy.
@@ -379,7 +379,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[stream](#data-structure-stream)"
+                  - $ref: "#/components/schemas/stream"
         - "400":
             description: item-already-exists
         - "400":
@@ -402,7 +402,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[stream](#data-structure-stream)"
+                  - $ref: "#/components/schemas/stream"
         - "400":
             description: item-already-exists
       requestBody:
@@ -446,12 +446,12 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[stream](#data-structure-stream)"
+                  - $ref: "#/components/schemas/stream"
         - "200":
             content:
               application/json:
                 schema:
-                  - $ref: "[item deletion](#data-structure-item-deletion)"
+                  - $ref: "#/components/schemas/item-deletion"
   /accesses:
     get:
       description: |-
@@ -488,7 +488,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[access](#data-structure-access)"
+                  - $ref: "#/components/schemas/access"
         - "400":
             description: invalid-item-id
       requestBody:
@@ -514,7 +514,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[item deletion](#data-structure-item-deletion)"
+                  - $ref: "#/components/schemas/item-deletion"
   /accesses/check-app:
     post:
       description: For the app authorization process. Checks if the app requesting
@@ -530,8 +530,8 @@ paths:
                 schema:
                   - type: array
                     items: permission request objects
-                  - $ref: "[access](#data-structure-access)"
-                  - $ref: "[access](#data-structure-access)"
+                  - $ref: "#/components/schemas/access"
+                  - $ref: "#/components/schemas/access"
       requestBody:
         content:
           application/json:
@@ -642,7 +642,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[webhook](#data-structure-webhook)"
+                  - $ref: "#/components/schemas/webhook"
       requestBody:
         description: An object with the new webhook's data
         required: true
@@ -667,7 +667,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[webhook](#data-structure-webhook)"
+                  - $ref: "#/components/schemas/webhook"
     put:
       description: >-
         Modifies the webhook. You can only modify webhooks with the app access
@@ -682,7 +682,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[webhook](#data-structure-webhook)"
+                  - $ref: "#/components/schemas/webhook"
         - "400":
             description: item-already-exists
       requestBody:
@@ -715,7 +715,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[item deletion](#data-structure-item-deletion)"
+                  - $ref: "#/components/schemas/item-deletion"
   "/webhooks/{id}/test":
     post:
       description: Sends a post request containing a message called `test` to the URL of
@@ -730,7 +730,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[webhook](#data-structure-webhook)"
+                  - $ref: "#/components/schemas/webhook"
         - "400":
             description: unknown-referenced-resource
       requestBody:
@@ -763,7 +763,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[followed slice](#data-structure-followed-slice)"
+                  - $ref: "#/components/schemas/followed-slice"
       requestBody:
         description: An object with the new followed slice's data
         required: true
@@ -782,7 +782,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[followed slice](#data-structure-followed-slice)"
+                  - $ref: "#/components/schemas/followed-slice"
       requestBody:
         content:
           application/json:
@@ -811,7 +811,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[item deletion](#data-structure-item-deletion)"
+                  - $ref: "#/components/schemas/item-deletion"
   /profile/public:
     get:
       description: Gets the user's public profile set, which contains the information the
@@ -917,7 +917,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[account information](#data-structure-account)"
+                  - $ref: "#/components/schemas/account"
     put:
       description: Modifies the user's account information.
       operationId: account.update
@@ -927,7 +927,7 @@ paths:
             content:
               application/json:
                 schema:
-                  - $ref: "[account information](#data-structure-account)"
+                  - $ref: "#/components/schemas/account"
       requestBody:
         content:
           application/json:
@@ -1019,8 +1019,8 @@ paths:
               application/json:
                 schema:
                   - $ref: string
-                  - $ref: "[access](#data-structure-access).type"
-                  - $ref: "[access](#data-structure-access).permissions"
+                  - $ref: "#/components/schemas/access).typ"
+                  - $ref: "#/components/schemas/access).permission"
   /:
     post:
       description: Sends a batch of API methods calls in one go (e.g. for to syncing
