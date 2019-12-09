@@ -1,8 +1,15 @@
 const methodsRoot = require('../transpiled/methods');
+const dataStructureRoot = require('../transpiled/data-structure');
 const yaml = require('yaml');
 const fs = require('fs');
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
+
+const dataStructureMap = {};
+dataStructureRoot.sections.forEach(s => {
+  dataStructureMap[s.id] = s;
+})
+
 
 const api = {
   paths: {},
@@ -37,6 +44,9 @@ methodsRoot.sections.forEach(section => {
     function hasParams(method) {
       return method.params != null && method.params.properties != null;
     }
+    function hasSchemaParams(method) {
+      return method.params != null && method.params.description != null;
+    }
     function hasResult(method) {
       return method.result != null;
     }
@@ -46,6 +56,9 @@ methodsRoot.sections.forEach(section => {
     // handle body params
     if (hasParams(method) && isPostorPut(httpMethod)) {
       api.paths[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
+    }
+    if (hasSchemaParams(method)) {
+      api.paths[path][httpMethod].requestBody = buildSchemaParams(method.params.description);
     }
 
     // handle query params
@@ -83,6 +96,15 @@ methodsRoot.sections.forEach(section => {
 //console.log(methodsRoot.sections[0].sections);
 
 writeToOutput();
+
+// The new event's data: see [Event](#data-structure-event)
+function buildSchemaParams(description) {
+  const token = '#data-structure-';
+  let tokenLength = token.length;
+  let index = description.indexOf(token) + tokenLength;
+  const schema = description.substring(index, description.length - 2);
+  return dataStructureMap[schema];
+}
 
 function extractError(method) {
   
@@ -181,12 +203,10 @@ function extractBodyParams(params) {
     }
   };
   params.forEach(param => {
-    requestBody.content['application/json'].schema.properties[
-      param.key
-    ] = {
-        description: param.description,
-        type: param.type
-      };
+    requestBody.content['application/json'].schema.properties[param.key] = {
+      description: param.description,
+      type: param.type
+    };
   });
   return requestBody;
 }
