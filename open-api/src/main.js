@@ -133,12 +133,24 @@ methodsRoot.sections.forEach(section => {
     if (hasError(method)) {
       api.paths[path][httpMethod].responses = api.paths[path][httpMethod].responses.concat(extractError(method))
     }
+    // make responses unique per HTTP status (currently overwriting previous responses)
+    api.paths[path][httpMethod].responses = responsesPerStatus(api.paths[path][httpMethod].responses);
 
   });
 });
 
 api = removeNulls(api);
 writeToOutput();
+
+function responsesPerStatus(responses) {
+  const objectResponses = {};
+  let status;
+  responses.forEach(r => {
+    status = Object.keys(r)[0];
+    objectResponses[status] = r[status];
+  })
+  return objectResponses;
+}
 
 function parseDataStructName(text, endPad) {
   const token = '#data-structure-';

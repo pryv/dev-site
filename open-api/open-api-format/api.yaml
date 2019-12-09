@@ -21,12 +21,12 @@ paths:
       operationId: auth.login
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: string
-                  - type: string
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: string
+                - type: string
       requestBody:
         content:
           application/json:
@@ -49,7 +49,7 @@ paths:
       operationId: auth.logout
       parameters: []
       responses:
-        - "200": {}
+        "200": {}
   /events:
     get:
       description: Queries accessible events.
@@ -120,14 +120,14 @@ paths:
           required: false
           in: query
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: array
-                    items: "[events](#data-structure-event)"
-                  - type: array
-                    items: "[item deletions](#data-structure-item-deletion)"
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: "[events](#data-structure-event)"
+                - type: array
+                  items: "[item deletions](#data-structure-item-deletion)"
     post:
       description: >-
         Records a new event. It is recommended that events recorded this way are
@@ -140,16 +140,14 @@ paths:
       operationId: events.create
       parameters: []
       responses:
-        - "201":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/event"
-                  - $ref: "#/components/schemas/identifier"
-        - "400":
-            description: invalid-operation
-        - "400":
-            description: periods-overlap
+        "201":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/event"
+                - $ref: "#/components/schemas/identifier"
+        "400":
+          description: periods-overlap
       requestBody:
         description: The new event's data
         required: true
@@ -171,29 +169,27 @@ paths:
           in: query
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/event"
-                  - type: array
-                    items: "[events](#data-structure-event)"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/event"
+                - type: array
+                  items: "[events](#data-structure-event)"
     put:
       description: Modifies the event.
       operationId: events.update
       parameters:
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/event"
-                  - $ref: "#/components/schemas/identifier"
-        - "400":
-            description: invalid-operation
-        - "400":
-            description: periods-overlap
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/event"
+                - $ref: "#/components/schemas/identifier"
+        "400":
+          description: periods-overlap
       requestBody:
         content:
           application/json:
@@ -216,11 +212,11 @@ paths:
       parameters:
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/event"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/event"
     delete:
       description: >-
         Trashes or deletes the specified event, depending on its current state:
@@ -237,16 +233,11 @@ paths:
           in: query
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/event"
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/item-deletion"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/item-deletion"
   /events/start:
     post:
       description: >-
@@ -258,7 +249,7 @@ paths:
         See [Create event](#methods-events-events-create) for details.
       operationId: events.start
       parameters: []
-      responses: []
+      responses: {}
   /events/stop:
     post:
       description: Stops a running period event. In `singleActivity` streams, which
@@ -268,13 +259,13 @@ paths:
       operationId: events.stop
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/identifier"
-        - "400":
-            description: invalid-operation
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/identifier"
+        "400":
+          description: invalid-operation
       requestBody:
         content:
           application/json:
@@ -317,8 +308,8 @@ paths:
         - name: fileId
         - name: fileName
       responses:
-        - "200":
-            description: OK
+        "200":
+          description: OK
   "/events/{id}/{fileId}":
     delete:
       description: Irreversibly deletes the attached file.
@@ -335,11 +326,11 @@ paths:
         - name: id
         - name: fileId
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/event"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/event"
   /streams:
     get:
       description: Gets the accessible streams hierarchy.
@@ -362,28 +353,26 @@ paths:
           required: false
           in: query
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: array
-                    items: "[streams](#data-structure-stream)"
-                  - type: array
-                    items: "[item deletions](#data-structure-item-deletion)"
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: "[streams](#data-structure-stream)"
+                - type: array
+                  items: "[item deletions](#data-structure-item-deletion)"
     post:
       description: Creates a new stream.
       operationId: streams.create
       parameters: []
       responses:
-        - "201":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/stream"
-        - "400":
-            description: item-already-exists
-        - "400":
-            description: invalid-item-id
+        "201":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/stream"
+        "400":
+          description: invalid-item-id
       requestBody:
         description: The new stream's data
         required: true
@@ -398,13 +387,13 @@ paths:
       parameters:
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/stream"
-        - "400":
-            description: item-already-exists
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/stream"
+        "400":
+          description: item-already-exists
       requestBody:
         content:
           application/json:
@@ -442,16 +431,11 @@ paths:
           in: query
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/stream"
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/item-deletion"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/item-deletion"
   /accesses:
     get:
       description: |-
@@ -470,27 +454,27 @@ paths:
           required: false
           in: query
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: array
-                    items: "[accesses](#data-structure-access)"
-                  - type: array
-                    items: deleted [accesses](#data-structure-access)
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: "[accesses](#data-structure-access)"
+                - type: array
+                  items: deleted [accesses](#data-structure-access)
     post:
       description: Creates a new access. You can only create accesses whose permissions are
         a subset of those granted to your own access token.
       operationId: accesses.create
       parameters: []
       responses:
-        - "201":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/access"
-        - "400":
-            description: invalid-item-id
+        "201":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/access"
+        "400":
+          description: invalid-item-id
       requestBody:
         description: An object with the new access's data
         required: true
@@ -510,11 +494,11 @@ paths:
           in: query
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/item-deletion"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/item-deletion"
   /accesses/check-app:
     post:
       description: For the app authorization process. Checks if the app requesting
@@ -524,14 +508,14 @@ paths:
       operationId: accesses.checkApp
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: array
-                    items: permission request objects
-                  - $ref: "#/components/schemas/access"
-                  - $ref: "#/components/schemas/access"
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: permission request objects
+                - $ref: "#/components/schemas/access"
+                - $ref: "#/components/schemas/access"
       requestBody:
         content:
           application/json:
@@ -611,14 +595,14 @@ paths:
           required: false
           in: query
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: array
-                    items: "[Audit logs](#data-structure-audit-log)"
-        - "403":
-            description: forbidden
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: "[Audit logs](#data-structure-audit-log)"
+        "403":
+          description: forbidden
   /webhooks:
     get:
       description: Gets manageable webhooks. Only returns webhooks that were created by the
@@ -627,22 +611,22 @@ paths:
       operationId: webhooks.get
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: array
-                    items: "[webhooks](#data-structure-webhook)"
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: "[webhooks](#data-structure-webhook)"
     post:
       description: Creates a new webhook. You can only create webhooks with app accesses.
       operationId: webhooks.create
       parameters: []
       responses:
-        - "201":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/webhook"
+        "201":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/webhook"
       requestBody:
         description: An object with the new webhook's data
         required: true
@@ -663,11 +647,11 @@ paths:
           in: query
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/webhook"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/webhook"
     put:
       description: >-
         Modifies the webhook. You can only modify webhooks with the app access
@@ -678,13 +662,13 @@ paths:
       parameters:
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/webhook"
-        - "400":
-            description: item-already-exists
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/webhook"
+        "400":
+          description: item-already-exists
       requestBody:
         content:
           application/json:
@@ -711,11 +695,11 @@ paths:
           in: query
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/item-deletion"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/item-deletion"
   "/webhooks/{id}/test":
     post:
       description: Sends a post request containing a message called `test` to the URL of
@@ -726,13 +710,13 @@ paths:
       parameters:
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/webhook"
-        - "400":
-            description: unknown-referenced-resource
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/webhook"
+        "400":
+          description: unknown-referenced-resource
       requestBody:
         content:
           application/json:
@@ -748,22 +732,22 @@ paths:
       operationId: followedSlices.get
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: array
-                    items: "[followed slices](#data-structure-followed-slice)"
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: "[followed slices](#data-structure-followed-slice)"
     post:
       description: Creates a new followed slice.
       operationId: followedSlices.create
       parameters: []
       responses:
-        - "201":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/followed-slice"
+        "201":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/followed-slice"
       requestBody:
         description: An object with the new followed slice's data
         required: true
@@ -778,11 +762,11 @@ paths:
       parameters:
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/followed-slice"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/followed-slice"
       requestBody:
         content:
           application/json:
@@ -807,11 +791,11 @@ paths:
           in: query
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/item-deletion"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/item-deletion"
   /profile/public:
     get:
       description: Gets the user's public profile set, which contains the information the
@@ -820,11 +804,11 @@ paths:
       operationId: profile.getPublic
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: object
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: object
   /profile/app:
     get:
       description: Gets the app's dedicated user profile set, which contains app-level
@@ -832,11 +816,11 @@ paths:
       operationId: profile.getApp
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: object
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: object
     put:
       description: |-
         Adds, updates or delete app profile keys.
@@ -848,11 +832,11 @@ paths:
       operationId: profile.updateApp
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: object
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: object
       requestBody:
         content:
           application/json:
@@ -873,11 +857,11 @@ paths:
           in: query
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: object
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: object
     put:
       description: |-
         Adds, updates or delete profile keys.
@@ -890,11 +874,11 @@ paths:
       parameters:
         - name: id
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: object
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: object
       requestBody:
         content:
           application/json:
@@ -913,21 +897,21 @@ paths:
       operationId: account.get
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/account"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/account"
     put:
       description: Modifies the user's account information.
       operationId: account.update
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - $ref: "#/components/schemas/account"
+        "200":
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schemas/account"
       requestBody:
         content:
           application/json:
@@ -945,9 +929,9 @@ paths:
       operationId: account.changePassword
       parameters: []
       responses:
-        - "200": {}
-        - "400":
-            description: invalid-operation
+        "200": {}
+        "400":
+          description: invalid-operation
       requestBody:
         content:
           application/json:
@@ -970,7 +954,7 @@ paths:
       operationId: account.requestPasswordReset
       parameters: []
       responses:
-        - "200": {}
+        "200": {}
       requestBody:
         content:
           application/json:
@@ -991,7 +975,7 @@ paths:
       operationId: account.resetPassword
       parameters: []
       responses:
-        - "200": {}
+        "200": {}
       requestBody:
         content:
           application/json:
@@ -1014,13 +998,13 @@ paths:
       operationId: getAccessInfo
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: string
-                  - $ref: "#/components/schemas/access).typ"
-                  - $ref: "#/components/schemas/access).permission"
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: string
+                - $ref: "#/components/schemas/access).typ"
+                - $ref: "#/components/schemas/access).permission"
   /:
     post:
       description: Sends a batch of API methods calls in one go (e.g. for to syncing
@@ -1028,12 +1012,12 @@ paths:
       operationId: callBatch
       parameters: []
       responses:
-        - "200":
-            content:
-              application/json:
-                schema:
-                  - type: array
-                    items: call results
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: call results
       requestBody:
         description: Array of method call objects, each defined as follows
         required: true
