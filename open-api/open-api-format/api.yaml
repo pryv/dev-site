@@ -19,7 +19,6 @@ paths:
 
         This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).
       operationId: auth.login
-      parameters: []
       responses:
         "200":
           content:
@@ -47,7 +46,6 @@ paths:
       description: Terminates a personal access session by invalidating its access token
         (the user will have to login again).
       operationId: auth.logout
-      parameters: []
       responses:
         "200": {}
   /events:
@@ -138,7 +136,6 @@ paths:
 
         In addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
       operationId: events.create
-      parameters: []
       responses:
         "201":
           content:
@@ -248,7 +245,6 @@ paths:
 
         See [Create event](#methods-events-events-create) for details.
       operationId: events.start
-      parameters: []
       responses: {}
   /events/stop:
     post:
@@ -257,7 +253,6 @@ paths:
         is automatically determined; for regular streams, the event to stop (or
         its type) must be specified.
       operationId: events.stop
-      parameters: []
       responses:
         "200":
           content:
@@ -364,7 +359,6 @@ paths:
     post:
       description: Creates a new stream.
       operationId: streams.create
-      parameters: []
       responses:
         "201":
           content:
@@ -466,7 +460,6 @@ paths:
       description: Creates a new access. You can only create accesses whose permissions are
         a subset of those granted to your own access token.
       operationId: accesses.create
-      parameters: []
       responses:
         "201":
           content:
@@ -506,7 +499,6 @@ paths:
         same device, if applicable), and returns details of the requested
         permissions' streams (for display) if not.
       operationId: accesses.checkApp
-      parameters: []
       responses:
         "200":
           content:
@@ -609,7 +601,6 @@ paths:
         access, unless you are using a personal access which returns all
         existing webhooks in the user's account.
       operationId: webhooks.get
-      parameters: []
       responses:
         "200":
           content:
@@ -620,7 +611,6 @@ paths:
     post:
       description: Creates a new webhook. You can only create webhooks with app accesses.
       operationId: webhooks.create
-      parameters: []
       responses:
         "201":
           content:
@@ -730,7 +720,6 @@ paths:
     get:
       description: Gets followed slices.
       operationId: followedSlices.get
-      parameters: []
       responses:
         "200":
           content:
@@ -741,7 +730,6 @@ paths:
     post:
       description: Creates a new followed slice.
       operationId: followedSlices.create
-      parameters: []
       responses:
         "201":
           content:
@@ -802,7 +790,6 @@ paths:
         user makes publicly available (e.g. avatar image). Available to all
         accesses.
       operationId: profile.getPublic
-      parameters: []
       responses:
         "200":
           content:
@@ -814,7 +801,6 @@ paths:
       description: Gets the app's dedicated user profile set, which contains app-level
         settings for the user. Available to app accesses.
       operationId: profile.getApp
-      parameters: []
       responses:
         "200":
           content:
@@ -830,7 +816,6 @@ paths:
 
         Existing keys not included in the update are left untouched.
       operationId: profile.updateApp
-      parameters: []
       responses:
         "200":
           content:
@@ -895,7 +880,6 @@ paths:
     get:
       description: Retrieves the user's account information.
       operationId: account.get
-      parameters: []
       responses:
         "200":
           content:
@@ -905,7 +889,6 @@ paths:
     put:
       description: Modifies the user's account information.
       operationId: account.update
-      parameters: []
       responses:
         "200":
           content:
@@ -927,7 +910,6 @@ paths:
     post:
       description: Modifies the user's password.
       operationId: account.changePassword
-      parameters: []
       responses:
         "200": {}
         "400":
@@ -952,7 +934,6 @@ paths:
 
         This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).
       operationId: account.requestPasswordReset
-      parameters: []
       responses:
         "200": {}
       requestBody:
@@ -973,7 +954,6 @@ paths:
 
         This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).
       operationId: account.resetPassword
-      parameters: []
       responses:
         "200": {}
       requestBody:
@@ -996,7 +976,6 @@ paths:
     get:
       description: Retrieves the name, type and permissions of the access in use.
       operationId: getAccessInfo
-      parameters: []
       responses:
         "200":
           content:
@@ -1010,7 +989,6 @@ paths:
       description: Sends a batch of API methods calls in one go (e.g. for to syncing
         offline changes when resuming connectivity).
       operationId: callBatch
-      parameters: []
       responses:
         "200":
           content:
