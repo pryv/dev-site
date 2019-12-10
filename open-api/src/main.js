@@ -210,7 +210,6 @@ function extractResult(method) {
     });
     return schemaItems;
   }
-  
 }
 
 // if array, type=array, type is extracted
@@ -250,7 +249,6 @@ function extractQueryParams(properties) {
   return params;
 }
 
-
 function extractBodyParams(params) {
   const requestBody = {
     content: {
@@ -283,11 +281,6 @@ function extractPathParams(path) {
   }
   return params;
 }
-
-// function extractRequestBody(path){
-//  if (hasParams(method) && isPostorPut(httpMethod)) 
-
-//}
 
 function extractResponses(path){
   const responses = [];
