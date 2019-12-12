@@ -6,31 +6,33 @@ customer: true
 withTOC: true
 ---
 
-Events are the primary unit of content in Pryv.io model. They are timestamped piece of typed data, containing different fields that can be found in the [data structure reference](/reference/#data-structure-event). 
-All available API methods to work on events are described in the [API reference](/reference/#events).
+Actual data will be stored in events.
 
-We provide here concrete examples on how to manipulate events : **create**, **get**, **update**, **delete** and **start/stop** events.
+You can find all available REST actions on events in the [API reference](http://pryv.github.io/reference/#events).
 
-### Create an event 
+Data can be stored in events and can be structured using event types. You can find a description of all default event types in Pryv.io in the [event types reference](http://pryv.github.io/event-types/). Note that you can also use your own custom types.
 
-Let's suppose that the structure of streams follows the one displayed below :
+Let's create an event with the `note/txt` type which describes a content consisting of a single text content.
 
-![Pryv.me Data Model : Streams](/assets/images/getting-started/streams_structure_v2.png)
+Apart from a content field which inner structure can depend on the declared type, an event can contain a number of other fields acting as metadata around the data stored in Pryv.io.
 
-The stream 'heartRate' contains a substream 'pulseOximeterApp' in which events related to the heart rate measured by the Pulse Oximeter App can be added. 
+You can find all fields composing an event object in the [data structure reference](http://pryv.github.io/reference/#data-structure-event).
 
-To create an event of type ```frequency/bpm``` with a pulse rate (integer) as content in the stream 'pulseOximeterApp', we use a ```POST ``` call such as :
+To create a basic `note/txt` event, we only need the `streamId`, `type` and the `content` fields. We will also use the `description` to give meaning to the data stored in a human-readable way.
+
+The `streamId` will reference the previously created Stream object to contextualize the data.
 
 ```bash
 curl -X POST \
-    -H "Content-Type: application/json" \
-    -H "Authorization: ${token}" \
-  -d '{
-        "streamId": "pulseOximeterApp",
-        "type": "frequency/bpm",
-        "content": 90
-    }' \
-    'https://${username}.${domain}/events'
+     -H 'Content-Type: application/json' \
+     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
+     -d '{
+         "streamId": "cjsfy56kv000311ta9dy121ni",
+         "type": "note/txt",
+         "description": "My note event",
+         "content": "This is the content of our note"
+     }' \
+     https://jsmith.{domain}/events
 ```
 
 The answer returned by the server contains the created event with all additional fields filled in by the server.
@@ -42,207 +44,79 @@ The answer returned by the server contains the created event with all additional
     "serverTime": 1550841167.771
   },
   "event": {
-    "streamId": "pulseOximeterApp",
-    "type": "frequency/bpm",
-    "content": 90,
-    "time": 1528447710.816,
+    "streamId": "cjsfy56kv000311ta9dy121ni",
+    "type": "note/txt",
+    "description": "My note event",
+    "content": "This is the content of our note",
+    "time": 1550841167.72,
     "tags": [],
-    "created": 1528447710.816,
-    "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-    "modified": 1528447710.816,
-    "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-    "id": "cji5qaxk01nui0b40ec370p94"
+    "created": 1550841167.72,
+    "createdBy": "cjsfxo17f000211tair7v6atb",
+    "modified": 1550841167.721,
+    "modifiedBy": "cjsfxo17f000211tair7v6atb",
+    "id": "cjsg2sfhq000014taogk4y0gv"
   }
 }
-
 ```
-Imagine now that out athlete wants to add a picture of his meal in the stream 'FoodA'. This time, he will need to add an attachment to his event :
+
+## Get existing data
+
+Pryv.io comes with many operations and filtering possibilities which can be found described in the [API reference](http://pryv.github.io/reference/).
+
+Let's display the previously created note.
 
 ```bash
-curl -i -F "file=@meal.jpg" https://${username}.pryv.me/events/ck2bzkjdt000ne64d8g73xkkh?auth=${token}
-```
-And then create the corresponding event in the stream 'FoodA' :
-
-```bash
-curl -X POST \
-    -H "Content-Type: application/json" \
-    -H "Authorization: ${token}" \
-  -d '{
-        "streamId": "foodA",
-        "type": "picture/attached",
-        "content": null,
-        "attachments": [
-          {
-            "id": "ck2bzkjdt000oe64dh7mm17zx",
-            "fileName": "meal.jpg",
-            "type": "image/jpeg",
-            "size": 1111,
-            "readToken": "ck2bzkjdt000pe64dbbyvk81j-SGC2ZzVf1i4yFp50umdlOlOoeYA"
-          }
-    ],
-    }'  \
-    'https://${username}.${domain}/events'
+curl -X GET \
+     -H 'Content-Type: application/json' \
+     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
+     https://jsmith.{domain}/events
 ```
 
-We can also create a HF event to collect real-time GPS position of our athlete from the smartwatch A.
-The event type needs to correspond to the type of the data points in the series (here `position/wgs84`), prefixed with `series:`. 
-We do a ```POST ``` call such as :
-
-```bash
-curl -X POST \
-    -H "Content-Type: application/json" \
-    -H "Authorization: ${token}" \
-  -d '{
-        "streamId": "smartwatchA",
-        "type": "series:position/wgs84",
-        "content": {
-      "elementType": "position/wgs84",
-      "fields": [
-        "deltaTime",
-        "latitude",
-        "longitude",
-        "altitude",
-        "horizontalAccuracy",
-        "verticalAccuracy",
-        "speed",
-        "bearing"
-      ],
-      "required": [
-        "deltaTime",
-        "latitude",
-        "longitude"
-      ]
-    },
-    }' \
-    'https://${username}.${domain}/events'
-```
-
-### Get an event
-
-The events from a stream can be easily retrieved using a ```GET``` call in the command line :
-
-```bash
-curl     -H "Authorization: ${token}" \
-    -i https://${username}.${domain}/events
-```
-
-Response :
+The object returned is a list of existing events. In this tutorial we have only one even that can be found in this list.
 
 ```json
 {
   "events": [
     {
-      "streamId": "pulseOximeterApp",
-      "type": "frequency/bpm",
-      "content": 90,
-      "time": 1528447710.816,
+      "streamId": "cjsfy56kv000311ta9dy121ni",
+      "type": "note/txt",
+      "description": "My note event",
+      "content": "This is the content of our note",
+      "time": 1550841167.72,
       "tags": [],
-      "created": 1528447710.816,
-      "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-      "modified": 1528447710.816,
-      "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-      "id": "cji5qaxk01nui0b40ec370p94"
+      "created": 1550841167.72,
+      "createdBy": "cjsfxo17f000211tair7v6atb",
+      "modified": 1550841167.721,
+      "modifiedBy": "cjsfxo17f000211tair7v6atb",
+      "id": "cjsg2sfhq000014taogk4y0gv"
     }
   ],
   "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528467864.397
+    "apiVersion": "1.3.38",
+    "serverTime": 1550841828.951
   }
 }
 ```
 
-### Update an event
+Let's try an example of filtering by passing a parameter in our request to filter out all events which happened after the 01.01.2019 at 07:00:00 UTC by using the `toTime` parameter.
 
-Let's imagine now that we want to modify the heart rate measurement from the stream 'pulseOximeterApp'. 
-
-We first retrieve the id of the event that we want to update, and we save the id of the concerned event in the variable **${event_id}**. To find this id, you can perform a ```GET``` call as above to save the event id from the response.
+This filtering applies to the `time` field which indicates when an event occurred. Note that this is different from the time when the data was stored in Pryv.io, which is encoded in the `created` field. Thus the `time` can be set at the event creation to store data that occurred in the past, or even in the future (e.g. a medical appointment).
 
 ```bash
-${event_id} = cji5qaxk01nui0b40ec370p94
+curl -X GET \
+     -H 'Content-Type: application/json' \
+     -H 'Authorization: cjsfxo173000111taf99gp3dv' \
+     https://jsmith.{domain}/events?toTime=1546326000.000
 ```
 
-Then, we use a ```PUT``` call to update the event with a new value, for instance a heart rate of "80".
-
-```bash
-curl -X PUT \
-  -H "Authorization: ${token}" \
-  -H "Content-Type: application/json" \
-  -d '{
-        "content": 80
-    }' \
-    'https://${username}.${domain}/events/${event_id}'
-```
-
-### Delete an event
-
-The ```delete``` operation is divided into two phases : trash and delete. When deleting an event or a stream, it is first flagged as trashed (and can still be retrieved) and irreversibly deleted only when repeating the delete operation a second time. 
-
-As an example, we will show how to delete a specific heart rate event from the stream 'pulseOximeterApp'.  We first retrieve the id of the event we want to delete (by doing a ```GET``` call as above) and we save it in the variable **${event_id}**.
-
-```bash
-${event_id} = cji5qaxk01nui0b40ec370p94
-```
-
-We will use a ```DELETE``` call to trash it first and a second ```DELETE``` call to delete it completely. 
-
-```bash
-curl -X DELETE \
-  -H "Authorization: ${token}" \
-  'https://${username}.${domain}/events/${event_id}'
-```
-
-Response:
+As exepected, our only event is filtered out:
 
 ```json
 {
-  "event": {
-    "streamId": "pulseOximeterApp",
-    "type": "frequency/bpm",
-    "content": 90,
-    "time": 1528878365.385,
-    "tags": [],
-    "created": 1528878365.385,
-    "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-    "modified": 1528895740.264,
-    "modifiedBy": "cjicv106i1q580b40678kjb17",
-    "trashed": true,
-    "id": "cjicupcqx1q530b40oao5ob02"
-  },
+  "events": [],
   "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528895740.267
+    "apiVersion": "1.3.38",
+    "serverTime": 1550842585.342
   }
 }
 ```
-
-As we trashed the event, the boolean response "trashed" is true.
-
-Finally, we delete the event completely by a second ```DELETE``` call. 
-
-```bash
-curl -X DELETE \
-  -H "Authorization: ${token}" \
-  'https://${username}.${domain}/events/${event_id}'
-```
-
-The API should return a list of deletion :
-
-```json
-{
-  "eventDeletion": {
-    "id": "cji5qaxk01nui0b40ec370p94"
-  },
-  "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528817673.092
-  }
-}
-```
-### Start/stop an event
-
-The ```start``` or ```stop``` operations enable to define the period of an event.
-The method ```start```is equivalent to starting an event with a null ```duration```, while the ```stop```method enables to finish the running period event of the specified event.
-
-In ```singleActivity```streams, ```events.start```will automatically stop the previously running period event if any, while ```events.stop``` guarantees that only one event is running at any given time.
-
-You can find more information on this method in the [API methods reference](/reference/#start-period).
