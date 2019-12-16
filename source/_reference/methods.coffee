@@ -151,13 +151,6 @@ module.exports = exports =
                        An expiring MFA session token to be used all along the MFA flow (challenge, verification).
                        """
         ]
-      errors: [
-        key: "forbidden"
-        http: "403"
-        description: """
-                     Invalid MFA session token.
-                     """
-      ]
       examples: [
         title: "Initiating the MFA activation using a phone number."
         params:
