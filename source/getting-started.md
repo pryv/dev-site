@@ -10,12 +10,12 @@ projects. Throughout these steps, we will use our [Lab platform](https://pryv.co
 
 We will guide you through:
 
-1. [Creating a User](#create-user)
-2. [Obtaining an Access Token](#obtain-token)
+1. [Creating a User](#create-a-pryv-lab-user)
+2. [Obtaining an Access Token](#obtain-an-access-token)
 3. [Data Modelling](#data-modelling)
 4. [Managing Access](#access-management)
 
-<a name="create-user"></a> # Create a Pryv Lab User
+# Create a Pryv Lab User
 
 By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
 
@@ -45,11 +45,11 @@ As shown below, once you connect to your account, the home page of your dashboar
 ![Pryv Lab Dashboard: Streams](/assets/images/getting-started/streams_dashboard.png)
 
 You can easily add content (notes, pictures, positions) directly from the dashboard and select in which stream to put it.
-Once data is added to your account, you can select which streams to visualize on the dashboard and which time period to display.
+Once data is added to your account, you can select which streams to visualize on the dashboard and which time period to display by using the scroll bar on the bottom of the dashboard.
 
 ![Johann Dashboard](/assets/images/getting-started/dashboard_johann.png)
 
-<a name="obtain-token"></a> # Obtain an Access Token
+# Obtain an Access Token
 
 Now that your Pryv Lab account has been created, you can start adding data. In order to do so using code or API clients such as cURL or Postman, you need to obtain an access token.
 
@@ -89,7 +89,7 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
 6. **Your access token has been generated.**
    ![Access Token](/assets/images/getting-started/access_token.png)
 
-<a name="data-modelling"></a># Data Modelling
+# Data Modelling
 
 In this section, we provide you information on the basic concepts of the Pryv.io data model.
 When adding data to your account, you need to comply with Pryv's conventions by organizing it into "streams" and "events".
@@ -182,7 +182,7 @@ Here's an example of an event, corresponding to the heart rate collected by the 
 Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](http://api.pryv.com/event-types/). 
 
 Basic event types include :
-- [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `count/steps` can be used record the counting of objects (eggs, apples, steps etc.). In the case of our athlete, we can use this type to count the daily number of steps recorded by the smartwatch A;
+- [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `count/steps` can be used to record the counting of objects (eggs, apples, steps etc.). In the case of our athlete, we can use this type to count the daily number of steps recorded by the smartwatch A;
 
 ```json
 {
@@ -197,9 +197,24 @@ Basic event types include :
 
 - [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activites and measurements. In the case of our athlete, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has two parameters : the pressure stored in mmHg, and the heart rate in bpm.
 
+```json
+{
+  "id": "c4jghrjkj011ez46d8u4y3pah",
+  "streamId": "pulseOximeterApp",
+  "type": "blood-pressure/bpm-mmhg",
+  "content": {
+      "systolic": 100, 
+      "diastolic": 70, 
+      "rate": 75
+      }
+  "time": 1682359123.3923,
+  "tags": []
+}
+```
+
 More specific event types also involve :
 
--  add **attachments** to events, for example for our athlete to post pictures of his meals in the stream "FoodA". 
+-  **attachments** that can be added to events, for example for our athlete to post pictures of his meals in the stream "FoodA". 
 ![Attachment](/assets/images/getting-started/attachment_example.png)
 
 These events will have the type `picture/attached` :
@@ -224,10 +239,9 @@ These events will have the type `picture/attached` :
 }
 ```
 
--  use **high-frequency series** to collect a high volume of data. This data structure, described in the [**corresponding section**](http://api.pryv.com/reference/#data-structure-high-frequency-series) is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch A to collect GPS position in real-time of the athlete. 
+-  **high-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](http://api.pryv.com/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch A to collect GPS position in real-time of the athlete. 
 ![HF](/assets/images/getting-started/hf_example.png)
 
-More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series) 
 This data will have the type `position/wgs84` :
 
 ```json
@@ -248,13 +262,15 @@ This data will have the type `position/wgs84` :
 }
 ```
 
+More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
+
 - **start** and **stop** events. This can be very useful for time-tracking, enabling the athlete to track and report his activities in real-time (ex.: running, cycling, exercising, etc).
 This allows to specify time durations for events or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [**here**](/reference/#start-period).
 
-To get more details on the event types, see the [**events API reference**](/reference/#event).
+To get more details on all possible event types, see the [**events API reference**](/reference/#event).
 
 
-<a name="access-management"></a> # Access Management
+# Access Management
 
 `Make this chapter about providing permissions to apps and actors. DO use cases of actors who need to access/give permissions. Present different levels and reference them (add links)`
 
