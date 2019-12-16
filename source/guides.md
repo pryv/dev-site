@@ -15,3 +15,4 @@ This section provides many development guides presenting ways of interacting wit
 - Manage data using events: [Guide](/guides/manage-events)
 - Manage data accesses: [Guide](/guides/manage-accesses)
 - Multiple actions in one call to Pryv.io API: [Guide](/guides/batch-call)
+- General Guidelines for applications and libs: [Guide](/guides/app-guidelines)
