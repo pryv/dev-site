@@ -272,32 +272,57 @@ To get more details on all possible event types, see the [**events API reference
 
 # Access Management
 
-`Make this chapter about providing permissions to apps and actors. DO use cases of actors who need to access/give permissions. Present different levels and reference them (add links)`
+You might want to give permissions to applications and third-parties to access and manage your account (by reading or adding new data).
+In a previous [section](#obtain-an-access-token), we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. This token represents the access your application has to a user account; it only expires when the user retracts his consent. This token should be stored permanently and securely in your application.
 
-You might want to give permissions to your applications and third-parties to access and manage your account (by reading or adding new data).
-This token represents the access your application has to a users account; it only expires when the user retracts his consent. You should store this token permanently and securely in your application.
+Pryv.io enables you to define different accesses with different levels of permissions for third-parties to interact with your data, or only particular folders of your data.
+Let's imagine that our athlete wants to share pictures of his meals with his nutritionist Bob, and enable his doctor Tom to check the evolution of his blood oxygenation. 
 
-In our example, we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. 
+To do so, he needs to give permission to his nutritionist Bob to "manage" the stream `FoodA` on which the pictures of his meals are uploaded. The level "manage" will enable Bob to not only consult the pictures, but also create, modify and delete child streams of `FoodA`, by adding his comments on a new child stream of `FoodA`, e.g `Nutritionist Notes`. 
 
-Each access is defined by a 'name', a 'type' and a set of 'permissions'.
+![Access distribution for Bob](/assets/images/getting-started/access_bob.png)
 
-Pryv.io distinguishes between these access types:
+The access for the nutritionist Bob will be created by a `POST` call on accesses (see [API reference](http://api.pryv.com/reference/#accesses) ):
 
-- _Shared_: used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels, depending on the sharing user's choice. You will not encounter this access type in your applications.
-- _App_: used by applications which don't need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs. This is the type of access we used for our Pulse Oximeter application.
-- _Personal_: used by applications that need to access to the entirety of the user's data and/or manage account settings.
+```json
+{
+  "name": "For Nutritionist Bob",
+  "permissions": [
+    {
+      "streamId": "FoodA",
+      "level": "manage"
+    }
+  ]
+}
+```
+Similarly, the athlete will give access to the stream `bloodOxygenation` to doctor Tom on a "read" level for the doctor to be able to consult the evolution of the blood oxygenation.
 
-Let's imagine that our athlete wants to share the pictures of the meals he is taking with his dietitian Tom. To do so, he needs to give permission to doctor Tom to "read" the stream 'FoodA' on which the pictures of his meals are uploaded :
+![Access distribution for Tom](/assets/images/getting-started/access_tom.png)
 
-![Access distribution](/assets/images/getting-started/access.png)
+This will be translated into the creation of a new read access on the stream `bloodOxygenation`:
 
-You can easily grant permissions to third parties with Pryv.io and we provide you some concrete examples on how to do so in the command line on the dedicated page ["Access delegation"](/guides/manage-accesses).
+```json
+{
+  "name": "For Doctor Tom",
+  "permissions": [
+    {
+      "streamId": "bloodOxygenation",
+      "level": "read"
+    }
+  ]
+}
+```
 
-Each permission specifies a `streamId`, the id of the stream to which we want to give access, and an access "level", which can be one of the following:
+Thus, each access is defined by a "name", a set of "permissions" and a "type" that is optional.
 
-- `'read'`: Enable users to view the stream and its contents (sub-streams and events).
-- `'contribute'`: Enable users to contribute to one or multiple events of the stream. Cannot create, update, delete and move streams.
-- `'manage'`: Enable users to fully control the stream. Can create, update, delete and move the stream.
+Pryv.io distinguishes between three access types ("shared", "app" and "personal") which are explained in the corresponding [section](http://api.pryv.com/concepts/#accesses).
+
+As you can see from the example above, each permission specifies a `streamId`, the id of the stream to which we want to give access, and an access `level`, which can be one of the following:
+- `read`: Enables users to view the stream and its contents (sub-streams and events).
+- `contribute`: Enables users to contribute to one or multiple events of the stream. Cannot create, update, delete and move streams.
+- `manage`: Enables users to fully control the stream. Can create, update, delete and move the stream.
+
+A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](http://api.pryv.com/reference/#access).
 
 Finally, note that an existing access can be used to create other accesses, but only if the new access has lower permissions (Shared < App < Personal and Read < Contribute < Manage). Also, an access can create other accesses only in the same scope, namely with permissions on the same streams and their childrens.
 
