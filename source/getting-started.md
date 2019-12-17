@@ -274,7 +274,8 @@ To get more details on all possible event types, see the [**events API reference
 
 You might want to give permissions to applications and third-parties to access and manage your account (by reading or adding new data).
 
-In a previous [section](#obtain-an-access-token), we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. This token represents the access your application has to a user account; it only expires when the user retracts his consent. This token should be stored permanently and securely in your application.
+In a previous [section](#obtain-an-access-token), we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. This token represents the access your application has to a user account; it only expires when the user retracts his consent. 
+This token should be stored permanently and securely in your application.
 
 Pryv.io enables you to define different accesses with different levels of permissions for third-parties to interact with your data, or only particular folders of your data.
 
@@ -284,7 +285,7 @@ To do so, he needs to give permission to his nutritionist Bob to "manage" the st
 
 ![Access distribution for Bob](/assets/images/getting-started/access_bob.png)
 
-The access for the nutritionist Bob will be created by a `POST` call on accesses (see [create.accesses](https://api.pryv.com/reference/#create-access)):
+The access for the nutritionist Bob will be created by a `POST` call on accesses (see [accesses.create](https://api.pryv.com/reference/#create-access)):
 
 ```json
 {
@@ -301,7 +302,7 @@ Similarly, the athlete will give access to the stream `bloodOxygenation` to doct
 
 ![Access distribution for Tom](/assets/images/getting-started/access_tom.png)
 
-This will be translated into the creation of a new read access on the stream `bloodOxygenation`(see [create.accesses](https://api.pryv.com/reference/#create-access)):
+This will be translated into the creation of a new read access on the stream `bloodOxygenation`(see [accesses.create](https://api.pryv.com/reference/#create-access)):
 
 ```json
 {
