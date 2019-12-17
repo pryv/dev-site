@@ -80,7 +80,7 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
    A popup will open to inform you about the access you are about to grant.
 5. Click on '**Accept**' button
 
-   By accepting, you consent that the 'demopryv-access' application can access the stream 'heart' with a 'manage' access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the 'defaultName' parameter above.
+   By accepting, you consent that the 'demopryv-access' application can access the stream `Heart` with a "manage" access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the `defaultName` parameter above.
 
    For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
 
@@ -195,7 +195,7 @@ Basic event types include :
 }
 ```
 
-- [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activites and measurements. In the case of our athlete, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has two parameters : the pressure stored in mmHg, and the heart rate in bpm.
+- [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activities and measurements. In the case of our athlete, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has three properties : the systolic and diastolic blood pressure stored in mmHg, and the heart rate in bpm.
 
 ```json
 {
@@ -206,7 +206,7 @@ Basic event types include :
       "systolic": 100, 
       "diastolic": 70, 
       "rate": 75
-      }
+      },
   "time": 1682359123.3923,
   "tags": []
 }
@@ -214,7 +214,7 @@ Basic event types include :
 
 More specific event types also involve :
 
--  **attachments** that can be added to events, for example for our athlete to post pictures of his meals in the stream "FoodA". 
+-  **attachments** that can be added to events, for example for our athlete to post pictures of his meals in the stream `FoodA`. 
 ![Attachment](/assets/images/getting-started/attachment_example.png)
 
 These events will have the type `picture/attached` :
@@ -293,7 +293,7 @@ Let's imagine that our athlete wants to share the pictures of the meals he is ta
 
 You can easily grant permissions to third parties with Pryv.io and we provide you some concrete examples on how to do so in the command line on the dedicated page ["Access delegation"](/guides/manage-accesses).
 
-Each permission specifies a 'streamId', the id of the stream to which we want to give access, and an access 'level', which can be one of the following:
+Each permission specifies a `streamId`, the id of the stream to which we want to give access, and an access "level", which can be one of the following:
 
 - `'read'`: Enable users to view the stream and its contents (sub-streams and events).
 - `'contribute'`: Enable users to contribute to one or multiple events of the stream. Cannot create, update, delete and move streams.
