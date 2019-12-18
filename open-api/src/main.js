@@ -71,6 +71,12 @@ function parseType(property) {
       // primary type
       typeToMerge.items.type = type;
     }
+  } else if (isEnum(property.type)) {
+    typeToMerge.schema = {
+      type: 'string',
+      enum: parseEnum(property.type)
+    };
+
   } else {
     if (struct) {
       // referenced component
@@ -83,6 +89,17 @@ function parseType(property) {
     }
   }
   return typeToMerge;
+}
+
+function isEnum(type) {
+  return type.indexOf('|') >= 0;
+}
+
+function parseEnum(type) {
+  const enums = type.split('|');
+  return enums.map(e => {
+    return e.substring(1, e.length - 1);
+  });
 }
 
 function parseArrayType(type) {

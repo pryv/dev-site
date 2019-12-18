@@ -1161,7 +1161,12 @@ components:
         type:
           readOnly: (except at creation)
           description: "The type — or usage — of the access. Default: `shared`."
-          type: "`personal`|`app`|`shared`"
+          schema:
+            type: string
+            enum:
+              - personal
+              - app
+              - shared
         name:
           uniqueItems: per type and device
           required: true
@@ -1392,7 +1397,11 @@ components:
           description: The current state of the Webhook. An inactive Webhook will not make
             any HTTP call when changes occur. It must be activated using the
             [update webhook](#methods-webhooks-webhooks-update) method.
-          type: "`active`|`inactive`"
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
         runCount:
           readOnly: true
           required: true
