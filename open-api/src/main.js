@@ -4,13 +4,14 @@ const yaml = require('yaml');
 const fs = require('fs');
 const metadata = require('./metadata');
 const removeNulls = require('./cleanup').removeNulls;
+const _ = require('lodash');
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
 
 const dataStructureMap = {};
 dataStructureRoot.sections.forEach(s => {
   dataStructureMap[s.id] = s;
-})
+});
 
 let api = metadata;
 api.paths = {};
@@ -32,9 +33,8 @@ dataStructureRoot.sections.forEach(ds => {
         readOnly: p.readOnly,
         required: p.optional ? null : true,
         description: p.description,
-        '$ref': parseDataStructName(p.type, 1) ? translateSchemaLink(parseDataStructName(p.type, 1)) : null,
-        type: !parseDataStructName(p.type, 1) ? arrayOrNotSingle(p.type) : null,
       }
+      _.merge(struct.properties[p.key], parseType(p));
 
     });
   }
@@ -48,6 +48,66 @@ api.components = {
 
 function translateSchemaLink(type) {
   return '#/components/schemas/' + type;
+}
+
+function parseType(property) {
+
+  let typeToMerge = {};
+  let struct = parseDataStructName(property.type, 1);
+
+  // array
+  if (isArray(property.type)) {
+    typeToMerge = {
+      type: 'array',
+      items: {}
+    }
+    const type = parseArrayType(property.type);
+    if (struct) {
+      // referenced component
+      typeToMerge.items.type = {
+        $ref: translateSchemaLink(struct)
+      };
+    } else {
+      // primary type
+      typeToMerge.items.type = type;
+    }
+  } else {
+    if (struct) {
+      // referenced component
+      typeToMerge = {
+        '$ref': translateSchemaLink(struct)
+      };
+    } else {
+      // primary type
+      typeToMerge.type = property.type;
+    }
+  }
+  return typeToMerge;
+}
+
+function parseArrayType(type) {
+  return parseBy(type, ' ', 2, 3);
+}
+
+function isArray(type) {
+  return type.startsWith('array of');
+}
+
+/**
+ * checks if the provided text is a data structure definition:
+ * - returns false if it is not
+ * - returns the data structure id if yes
+ * - removes endPad letters from the end of the string. This is useful when it ends by ")"
+ */
+function parseDataStructName(text, endPad) {
+  const token = '#data-structure-';
+  let tokenLength = token.length;
+  const startIndex = text.indexOf(token);
+  if (startIndex < 0) return false;
+
+  let schemaIndex = startIndex + tokenLength;
+  const schema = text.substring(schemaIndex, text.length - endPad);
+  return schema;
 }
 
 // METHODS
@@ -152,17 +212,6 @@ function responsesPerStatus(responses) {
   return objectResponses;
 }
 
-function parseDataStructName(text, endPad) {
-  const token = '#data-structure-';
-  let tokenLength = token.length;
-  const startIndex = text.indexOf(token);
-  if (startIndex < 0) return false;
-  
-  let schemaIndex = startIndex + tokenLength;
-  const schema = text.substring(schemaIndex, text.length - endPad);
-  return schema;
-}
-
 function extractError(method) {
   
   const errors = method.errors;
@@ -223,7 +272,7 @@ function arrayOrNotSingle(type) {
     if (parseDataStructName(type, 1)) {
       schema['$ref'] = parseDataStructName(type, 1) ? translateSchemaLink(parseDataStructName(type, 1)) : type
     } else {
-      schema = type;
+      schema.type = type;
     }
   }
   return schema;
@@ -296,16 +345,6 @@ function extractResponses(path){
     });
   return responses;
 }
-
-function parseType(property) {
-
-  
-}
-
-function isStruct(property) {
-  return property['$ref'] != null;
-}
-function isArray()
 
 function writeToOutput() {
   fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api));

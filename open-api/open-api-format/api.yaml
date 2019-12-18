@@ -1038,35 +1038,31 @@ components:
           required: true
           description: The type of the event. See the [event type
             directory](/event-types/#directory) for a list of standard types.
-          type:
-            type: string
+          type: string
         content:
           description: The `type`-specific content of the event, if any.
-          type:
-            type: any type
+          type: any type
         tags:
           description: The tags associated with the event.
-          type:
-            type: array
-            items: strings
+          type: array
+          items:
+            type: strings
         description:
           description: User description or comment for the event.
-          type:
-            type: string
+          type: string
         attachments:
           readOnly: true
           description: "An array describing the files attached to the event. Each item has
             the following structure:"
-          type:
-            type: array
-            items: attachment objects
+          type: array
+          items:
+            type: attachment objects
         clientData:
           description: Additional client data for the event.
           $ref: "#/components/schemas/key-value"
         trashed:
           description: "`true` if the event is in the trash."
-          type:
-            type: boolean
+          type: boolean
         created:
           readOnly: true
           required: true
@@ -1102,8 +1098,7 @@ components:
           required: true
           description: A name identifying the stream for users. The name must be unique
             among the stream's siblings in the streams tree structure.
-          type:
-            type: string
+          type: string
         parentId:
           description: The identifier of the stream's parent, if any. A value of `null`
             indicates that the stream has no parent (i.e. root stream).
@@ -1111,8 +1106,7 @@ components:
         singleActivity:
           description: If specified and `true`, the system will ensure that period events
             in this stream and its children never overlap.
-          type:
-            type: boolean
+          type: boolean
         clientData:
           description: Additional client data for the stream.
           $ref: "#/components/schemas/key-value"
@@ -1122,13 +1116,12 @@ components:
           description: "The stream's sub-streams, if any. This field cannot be set in
             requests creating a new streams: streams are created individually by
             design."
-          type:
-            type: array
-            items: streams
+          type: array
+          items:
+            type: streams
         trashed:
           description: "`true` if the stream is in the trash."
-          type:
-            type: boolean
+          type: boolean
         created:
           readOnly: true
           required: true
@@ -1164,36 +1157,32 @@ components:
           required: true
           description: The token identifying the access. Automatically generated if not set
             when creating the access; **slugified if necessary**.
-          type:
-            type: string
+          type: string
         type:
           readOnly: (except at creation)
           description: "The type — or usage — of the access. Default: `shared`."
-          type:
-            type: "`personal`|`app`|`shared`"
+          type: "`personal`|`app`|`shared`"
         name:
           uniqueItems: per type and device
           required: true
           description: The name identifying the access for the user. (For personal and app
             access, the name is used as a technical identifier and not shown
             as-is to the user.)
-          type:
-            type: string
+          type: string
         deviceName:
           uniqueItems: per type and name
           description: For app accesses only. The name of the client device running the
             app, if applicable.
-          type:
-            type: string
+          type: string
         permissions:
           required: true
           description: 'Ignored for personal accesses. If permission levels conflict (e.g.
             stream set to "manage" and child stream set to "contribute"), only
             the highest level is considered. Each permission object has the
             following structure:'
-          type:
-            type: array
-            items: permission objects
+          type: array
+          items:
+            type: permission objects
         lastUsed:
           readOnly: true
           description: The time the access was last used.
@@ -1212,8 +1201,7 @@ components:
 
 
             Use `expireAfter=0` to immediately disable an access (without deleting it).
-          type:
-            type: number
+          type: number
         expires:
           readOnly: true
           description: >-
@@ -1262,19 +1250,16 @@ components:
           uniqueItems: true
           required: true
           description: A name identifying the followed slice for the user.
-          type:
-            type: string
+          type: string
         url:
           required: true
           description: The URL of the API endpoint of the account hosting the slice. Not
             modifiable after creation.
-          type:
-            type: URL
+          type: URL
         accessToken:
           required: true
           description: The token of the shared access itself. Not modifiable after creation.
-          type:
-            type: string
+          type: string
     account:
       type: object
       properties:
@@ -1283,24 +1268,20 @@ components:
           readOnly: true
           required: true
           description: The user's username.
-          type:
-            type: string
+          type: string
         email:
           uniqueItems: true
           required: true
           description: The user's contact e-mail address.
-          type:
-            type: string
+          type: string
         language:
           required: true
           description: The user's preferred language as a 2-letter ISO language code.
-          type:
-            type: string
+          type: string
         storageUsed:
           required: true
           description: The current storage size used by the user account.
-          type:
-            type: object
+          type: object
     audit-log:
       type: object
       properties:
@@ -1313,8 +1294,7 @@ components:
           readOnly: true
           required: true
           description: The type of log.
-          type:
-            type: string
+          type: string
         time:
           readOnly: true
           required: true
@@ -1324,44 +1304,37 @@ components:
           readOnly: true
           required: true
           description: The IP address of the client who performed the audited action.
-          type:
-            type: string
+          type: string
         action:
           readOnly: true
           required: true
           description: The audited action, typically an API method call, composed by the
             HTTP verb and the API resource.
-          type:
-            type: string
+          type: string
         query:
           readOnly: true
           required: true
           description: The query string that accompanied the audited action, if any.
-          type:
-            type: string
+          type: string
         accessId:
           readOnly: true
           required: true
           description: The identifier for the access used to perform the audited action.
-          type:
-            type: string
+          type: string
         status:
           readOnly: true
           required: true
           description: The HTTP response status resulting from the audited action.
-          type:
-            type: number
+          type: number
         errorMessage:
           readOnly: true
           description: The error message resulting from the audited action, if any.
-          type:
-            type: string
+          type: string
         errorId:
           readOnly: true
           description: The identifier for the error resulting from the audited action, if
             any.
-          type:
-            type: string
+          type: string
     webhook:
       type: object
       properties:
@@ -1392,16 +1365,14 @@ components:
             }
 
             ```
-          type:
-            type: string
+          type: string
         minIntervalMs:
           readOnly: true
           required: true
           description: "The webhooks run rate is throttled by a minimum interval between
             HTTP calls in milliseconds, sending an array of changes that occured
             during this period. Its value is set by the platform admin. "
-          type:
-            type: number
+          type: number
         maxRetries:
           readOnly: true
           required: true
@@ -1409,52 +1380,46 @@ components:
             `maxRetries` times at a growing interval of time before becoming
             `inactive` after too many successive failures. Its value is set by
             the platform admin.
-          type:
-            type: number
+          type: number
         currentRetries:
           readOnly: true
           required: true
           description: The number of retries iterations since the last failed HTTP call.
             This number is 0 if the last HTTP call was successful.
-          type:
-            type: number
+          type: number
         state:
           required: true
           description: The current state of the Webhook. An inactive Webhook will not make
             any HTTP call when changes occur. It must be activated using the
             [update webhook](#methods-webhooks-webhooks-update) method.
-          type:
-            type: "`active`|`inactive`"
+          type: "`active`|`inactive`"
         runCount:
           readOnly: true
           required: true
           description: The number of times the Webhook has been run, including failures.
-          type:
-            type: number
+          type: number
         failCount:
           readOnly: true
           required: true
           description: The number of times the Webhook has failed HTTP calls. Failed runs
             are HTTP requests that received a response with a status outside of
             the 200-299 range or no response at all.
-          type:
-            type: number
+          type: number
         lastRun:
           readOnly: true
           required: true
           description: Represents the last Webhook call, comprised of its HTTP response
             status and timestamp.
-          type:
-            type: Run object
+          type: Run object
         runs:
           readOnly: true
           required: true
           description: "Array of Run objects in inverse chronological order (newest first)
             which allows to monitor a webhook's health. Its length is set by the
             platform admin. "
-          type:
-            type: array
-            items: Run objects
+          type: array
+          items:
+            type: Run objects
         created:
           readOnly: true
           required: true
@@ -1494,23 +1459,20 @@ components:
         id:
           required: true
           description: Identifier for the error.
-          type:
-            type: string
+          type: string
         message:
           required: true
           description: A human-readable description of the error.
-          type:
-            type: string
+          type: string
         data:
           description: Additional machine-readable details (specified for each error if
             relevant).
-          type:
-            type: any type
+          type: any type
         subErrors:
           description: Lists the detailed causes of the main error, if any.
-          type:
-            type: array
-            items: errors
+          type: array
+          items:
+            type: errors
     identifier:
       type: object
       properties: {}
