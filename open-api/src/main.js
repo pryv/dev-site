@@ -223,7 +223,7 @@ function arrayOrNotSingle(type) {
     if (parseDataStructName(type, 1)) {
       schema['$ref'] = parseDataStructName(type, 1) ? translateSchemaLink(parseDataStructName(type, 1)) : type
     } else {
-      schema.type = type;
+      schema = type;
     }
   }
   return schema;
@@ -296,6 +296,16 @@ function extractResponses(path){
     });
   return responses;
 }
+
+function parseType(property) {
+
+  
+}
+
+function isStruct(property) {
+  return property['$ref'] != null;
+}
+function isArray()
 
 function writeToOutput() {
   fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api));

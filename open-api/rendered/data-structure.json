@@ -1,0 +1,903 @@
+{
+  "id": "data-structure",
+  "title": "Data structure",
+  "description": "",
+  "sections": [
+    {
+      "id": "event",
+      "title": "Event",
+      "description": "See also: [core concepts](/concepts/#events).",
+      "properties": [
+        {
+          "key": "id",
+          "type": "[identifier](#data-structure-identifier)",
+          "unique": true,
+          "readOnly": "(except at creation)",
+          "description": "The identifier ([collision-resistant cuid](https://usecuid.org/)) for the event. Automatically generated if not set when creating the event."
+        },
+        {
+          "key": "streamId",
+          "type": "[identifier](#data-structure-identifier)",
+          "description": "The id of the belonging stream."
+        },
+        {
+          "key": "time",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "description": "The event's time. For period events, this is the time the event started. Automatically set to the server time if not provided when creating the event."
+        },
+        {
+          "key": "duration",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "optional": true,
+          "description": "If present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)"
+        },
+        {
+          "key": "type",
+          "type": "string",
+          "description": "The type of the event. See the [event type directory](/event-types/#directory) for a list of standard types."
+        },
+        {
+          "key": "content",
+          "type": "any type",
+          "optional": true,
+          "description": "The `type`-specific content of the event, if any."
+        },
+        {
+          "key": "tags",
+          "type": "array of strings",
+          "optional": "(always present in read items)",
+          "description": "The tags associated with the event."
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "optional": true,
+          "description": "User description or comment for the event."
+        },
+        {
+          "key": "attachments",
+          "type": "array of attachment objects",
+          "optional": true,
+          "readOnly": true,
+          "description": "An array describing the files attached to the event. Each item has the following structure:",
+          "properties": [
+            {
+              "key": "id",
+              "type": "[identifier](#data-structure-identifier)",
+              "description": "The file's id. The attached file's URL is obtained by appending this id to the event's resource URL."
+            },
+            {
+              "key": "fileName",
+              "type": "string",
+              "description": "The file's name as uploaded."
+            },
+            {
+              "key": "type",
+              "type": "string",
+              "description": "The MIME type of the file."
+            },
+            {
+              "key": "size",
+              "type": "number",
+              "description": "The size of the file, in bytes."
+            },
+            {
+              "key": "readToken",
+              "type": "string",
+              "description": "The auth token to pass in the query string when reading the file (instead of the regular `auth` parameter). The token is unique for the file and the access used to read it. This is a security measure in situations where it is impractical to use the `Authorization` HTTP header and/or where the file's URL is likely to be exposed. See also events method [get attachment](#methods-events-events-getAttachment)."
+            }
+          ]
+        },
+        {
+          "key": "clientData",
+          "type": "[key-value](#data-structure-key-value)",
+          "optional": true,
+          "description": "Additional client data for the event."
+        },
+        {
+          "key": "trashed",
+          "type": "boolean",
+          "optional": true,
+          "description": "`true` if the event is in the trash."
+        },
+        {
+          "key": "created",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the event was created."
+        },
+        {
+          "key": "createdBy",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The id of the access used to create the event."
+        },
+        {
+          "key": "modified",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the event was last modified."
+        },
+        {
+          "key": "modifiedBy",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The id of the last access used to modify the event."
+        }
+      ],
+      "examples": [
+        {
+          "title": "A picture",
+          "content": {
+            "id": "ck4b1gi1e000y0upvkfjkkxwf",
+            "time": 1576654388.69,
+            "streamId": "diary",
+            "tags": [],
+            "type": "picture/attached",
+            "content": null,
+            "attachments": [
+              {
+                "id": "ck4b1gi1e000z0upvnmiykjeb",
+                "fileName": "photo.jpg",
+                "type": "image/jpeg",
+                "size": 2561,
+                "readToken": "ck4b1gi1e00100upv11ndg9em-OoNEru60aLCNh1zo0QtvRZmqTTl"
+              }
+            ],
+            "created": 1576654388.69,
+            "createdBy": "ck4b1gi0o00040upvhxbgfvfn",
+            "modified": 1576654388.69,
+            "modifiedBy": "ck4b1gi0o00040upvhxbgfvfn"
+          }
+        },
+        {
+          "title": "An activity",
+          "content": {
+            "id": "ck4b1gi1e000l0upvcxx8x7du",
+            "time": 1576657988.69,
+            "streamId": "jogging",
+            "tags": [],
+            "type": "activity/pryv",
+            "content": null,
+            "created": 1576657988.69,
+            "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+            "modified": 1576657988.69,
+            "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+          }
+        },
+        {
+          "title": "A position",
+          "content": {
+            "id": "ck4b1gi1e00110upv253hzix9",
+            "time": 1350373077.359,
+            "streamId": "diary",
+            "tags": [],
+            "type": "position/wgs84",
+            "content": {
+              "latitude": 40.714728,
+              "longitude": -73.998672
+            },
+            "created": 1576650788.69,
+            "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+            "modified": 1576650788.69,
+            "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stream",
+      "title": "Stream",
+      "description": "See also: [core concepts](/concepts/#streams).",
+      "properties": [
+        {
+          "key": "id",
+          "type": "[identifier](#data-structure-identifier)",
+          "unique": true,
+          "readOnly": "(except at creation)",
+          "description": "The identifier for the stream. Automatically generated if not set when creating the stream; **slugified if necessary**."
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "unique": "among siblings",
+          "description": "A name identifying the stream for users. The name must be unique among the stream's siblings in the streams tree structure."
+        },
+        {
+          "key": "parentId",
+          "type": "[identifier](#data-structure-identifier)",
+          "optional": true,
+          "description": "The identifier of the stream's parent, if any. A value of `null` indicates that the stream has no parent (i.e. root stream)."
+        },
+        {
+          "key": "singleActivity",
+          "type": "boolean",
+          "optional": true,
+          "description": "If specified and `true`, the system will ensure that period events in this stream and its children never overlap."
+        },
+        {
+          "key": "clientData",
+          "type": "[key-value](#data-structure-key-value)",
+          "optional": true,
+          "description": "Additional client data for the stream."
+        },
+        {
+          "key": "children",
+          "type": "array of streams",
+          "readOnly": true,
+          "description": "The stream's sub-streams, if any. This field cannot be set in requests creating a new streams: streams are created individually by design."
+        },
+        {
+          "key": "trashed",
+          "type": "boolean",
+          "optional": true,
+          "description": "`true` if the stream is in the trash."
+        },
+        {
+          "key": "created",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the stream was created."
+        },
+        {
+          "key": "createdBy",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The id of the access used to create the stream."
+        },
+        {
+          "key": "modified",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the stream was last modified."
+        },
+        {
+          "key": "modifiedBy",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The id of the last access used to modify the stream."
+        }
+      ],
+      "examples": [
+        {
+          "title": "A structure for activities",
+          "content": [
+            {
+              "id": "sport",
+              "name": "Sport",
+              "parentId": null,
+              "children": [
+                {
+                  "id": "jogging",
+                  "name": "Jogging",
+                  "parentId": "sport",
+                  "children": [],
+                  "created": 1513544087.8907416,
+                  "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                  "modified": 1513544319.709924,
+                  "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                },
+                {
+                  "id": "bicycling",
+                  "name": "Bicycling",
+                  "parentId": "sport",
+                  "children": [],
+                  "created": 1513544087.8907416,
+                  "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                  "modified": 1513544451.2621686,
+                  "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                }
+              ],
+              "created": 1513544084.689,
+              "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+              "modified": 1513544440.5555465,
+              "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+            },
+            {
+              "id": "work",
+              "name": "Work",
+              "parentId": null,
+              "singleActivity": true,
+              "children": [
+                {
+                  "id": "ck4b1gi1d000a0upvpv58cdib",
+                  "name": "Noble Works Co.",
+                  "parentId": "work",
+                  "children": [
+                    {
+                      "id": "ck4b1gi1d000c0upvnywi3dyr",
+                      "name": "Last Be First",
+                      "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                      "children": [],
+                      "created": 1513544118.86092,
+                      "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                      "modified": 1513544342.0347326,
+                      "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    },
+                    {
+                      "id": "ck4b1gi1d000d0upv5thr9lmp",
+                      "name": "Big Tree",
+                      "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                      "children": [],
+                      "created": 1513544118.86092,
+                      "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                      "modified": 1513544354.7582746,
+                      "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    },
+                    {
+                      "id": "ck4b1gi1d000e0upv24xluy9u",
+                      "name": "Inner Light",
+                      "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                      "children": [],
+                      "created": 1513544118.86092,
+                      "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                      "modified": 1513544233.955431,
+                      "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    }
+                  ],
+                  "created": 1513544101.7839296,
+                  "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                  "modified": 1513544303.441415,
+                  "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                },
+                {
+                  "id": "ck4b1gi1d000b0upvlmy3jk8j",
+                  "name": "Freelancing",
+                  "parentId": "work",
+                  "children": [
+                    {
+                      "id": "ck4b1gi1d000f0upvb07hgdql",
+                      "name": "Funky Veggies",
+                      "parentId": "ck4b1gi1d000b0upvlmy3jk8j",
+                      "children": [],
+                      "created": 1513544118.4245403,
+                      "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                      "modified": 1513544171.8580246,
+                      "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    },
+                    {
+                      "id": "ck4b1gi1d000g0upvrfu4b3ox",
+                      "name": "Jojo Lapin & sons",
+                      "parentId": "ck4b1gi1d000b0upvlmy3jk8j",
+                      "children": [],
+                      "created": 1513544118.4245403,
+                      "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                      "modified": 1513544341.1739607,
+                      "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    }
+                  ],
+                  "created": 1513544101.7839296,
+                  "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                  "modified": 1513544372.8757694,
+                  "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                }
+              ],
+              "created": 1513544084.689,
+              "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+              "modified": 1513544250.1698344,
+              "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "access",
+      "title": "Access",
+      "description": "See also: [core concepts](/concepts/#accesses).",
+      "properties": [
+        {
+          "key": "id",
+          "type": "[identifier](#data-structure-identifier)",
+          "unique": true,
+          "readOnly": true,
+          "description": "The identifier for the access."
+        },
+        {
+          "key": "token",
+          "type": "string",
+          "unique": true,
+          "readOnly": "(except at creation)",
+          "description": "The token identifying the access. Automatically generated if not set when creating the access; **slugified if necessary**."
+        },
+        {
+          "key": "type",
+          "type": "`personal`|`app`|`shared`",
+          "readOnly": "(except at creation)",
+          "optional": true,
+          "description": "The type — or usage — of the access. Default: `shared`."
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "unique": "per type and device",
+          "description": "The name identifying the access for the user. (For personal and app access, the name is used as a technical identifier and not shown as-is to the user.)"
+        },
+        {
+          "key": "deviceName",
+          "type": "string",
+          "optional": true,
+          "unique": "per type and name",
+          "description": "For app accesses only. The name of the client device running the app, if applicable."
+        },
+        {
+          "key": "permissions",
+          "type": "array of permission objects",
+          "description": "Ignored for personal accesses. If permission levels conflict (e.g. stream set to \"manage\" and child stream set to \"contribute\"), only the highest level is considered. Each permission object has the following structure:",
+          "properties": [
+            {
+              "key": [
+                "streamId",
+                "tag"
+              ],
+              "type": "[identifier](#data-structure-identifier) | string",
+              "description": "The id of the stream or the tag the permission applies to, or `*` for all streams/tags. Stream permissions are recursively applied to child streams."
+            },
+            {
+              "key": "level",
+              "type": "`read`|`contribute`|`manage`",
+              "description": "The level of access to the stream. With `contribute`, one can see and record events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams."
+            }
+          ]
+        },
+        {
+          "key": "lastUsed",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "optional": true,
+          "readOnly": true,
+          "description": "The time the access was last used."
+        },
+        {
+          "key": "expireAfter",
+          "type": "number",
+          "optional": true,
+          "readOnly": false,
+          "description": "(Only on create and update) If set, controls access expiry in seconds.\nWhen given a number in this attribute (positive or zero),\nthe access will expire (and not be accessible any more) after this many\nseconds.\n\nUse `expireAfter=0` to immediately disable an access (without deleting it)."
+        },
+        {
+          "key": "expires",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "optional": true,
+          "readOnly": true,
+          "description": "If the access was set to expire: The timestamp after which the access\nwill be deactivated."
+        },
+        {
+          "key": "deleted",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "optional": true,
+          "readOnly": true,
+          "description": "If the access has been deleted: The timestamp of the deletion."
+        },
+        {
+          "key": "clientData",
+          "type": "[key-value](#data-structure-key-value)",
+          "optional": true,
+          "description": "Additional client data for the access."
+        },
+        {
+          "key": "created",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the access was created."
+        },
+        {
+          "key": "createdBy",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The id of the access used to create the access."
+        },
+        {
+          "key": "modified",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the access was last modified."
+        },
+        {
+          "key": "modifiedBy",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The id of the last access used to modify the access."
+        }
+      ],
+      "examples": [
+        {
+          "title": "An app access",
+          "content": {
+            "id": "ck4b1gi0n00010upvpj6y4j0n",
+            "token": "ck4b1gi0o00030upvn97z3d92",
+            "type": "app",
+            "name": "my-app-id",
+            "permissions": [
+              {
+                "streamId": "health",
+                "level": "contribute"
+              }
+            ],
+            "created": 1576571588.664,
+            "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+            "modified": 1576571588.664,
+            "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "followed-slice",
+      "title": "Followed slice",
+      "trustedOnly": true,
+      "description": "See also: [core concepts](/concepts/#followed-slices).",
+      "properties": [
+        {
+          "key": "id",
+          "type": "[identifier](#data-structure-identifier)",
+          "unique": true,
+          "readOnly": true,
+          "description": "The server-assigned identifier for the followed slice."
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "unique": true,
+          "description": "A name identifying the followed slice for the user."
+        },
+        {
+          "key": "url",
+          "type": "URL",
+          "description": "The URL of the API endpoint of the account hosting the slice. Not modifiable after creation."
+        },
+        {
+          "key": "accessToken",
+          "type": "string",
+          "description": "The token of the shared access itself. Not modifiable after creation."
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "account",
+      "title": "Account information",
+      "trustedOnly": true,
+      "description": "User account information.",
+      "properties": [
+        {
+          "key": "username",
+          "type": "string",
+          "unique": true,
+          "readOnly": true,
+          "description": "The user's username."
+        },
+        {
+          "key": "email",
+          "type": "string",
+          "unique": true,
+          "description": "The user's contact e-mail address."
+        },
+        {
+          "key": "language",
+          "type": "string",
+          "description": "The user's preferred language as a 2-letter ISO language code."
+        },
+        {
+          "key": "storageUsed",
+          "type": "object",
+          "description": "The current storage size used by the user account.",
+          "properties": [
+            {
+              "key": "dbDocuments",
+              "type": "number",
+              "description": "Bytes used by documents (records) in the database."
+            },
+            {
+              "key": "attachedFiles",
+              "type": "number",
+              "description": "Bytes used by attached files."
+            }
+          ]
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "audit-log",
+      "title": "Audit log",
+      "previewOnly": true,
+      "description": "Audit logs keep track of details about the actions performed by clients against Pryv.io accounts through the Pryv.io API.\nThese logs can be fetched by presenting an authorization token, allowing to audit the actions that involved a given token.",
+      "properties": [
+        {
+          "key": "id",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The identifier for the action that generated this log."
+        },
+        {
+          "key": "type",
+          "type": "string",
+          "readOnly": true,
+          "description": "The type of log."
+        },
+        {
+          "key": "time",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the API call was executed."
+        },
+        {
+          "key": "forwardedFor",
+          "type": "string",
+          "readOnly": true,
+          "description": "The IP address of the client who performed the audited action."
+        },
+        {
+          "key": "action",
+          "type": "string",
+          "readOnly": true,
+          "description": "The audited action, typically an API method call, composed by the HTTP verb and the API resource."
+        },
+        {
+          "key": "query",
+          "type": "string",
+          "readOnly": true,
+          "description": "The query string that accompanied the audited action, if any."
+        },
+        {
+          "key": "accessId",
+          "type": "string",
+          "readOnly": true,
+          "description": "The identifier for the access used to perform the audited action."
+        },
+        {
+          "key": "status",
+          "type": "number",
+          "readOnly": true,
+          "description": "The HTTP response status resulting from the audited action."
+        },
+        {
+          "key": "errorMessage",
+          "type": "string",
+          "readOnly": true,
+          "optional": true,
+          "description": "The error message resulting from the audited action, if any."
+        },
+        {
+          "key": "errorId",
+          "type": "string",
+          "readOnly": true,
+          "optional": true,
+          "description": "The identifier for the error resulting from the audited action, if any."
+        }
+      ],
+      "examples": [
+        {
+          "title": "A single audit log",
+          "content": {
+            "id": "ck4b1gi1h001i0upvz3mpez8p",
+            "type": "audit/core",
+            "time": 1561988300,
+            "forwardedFor": "172.18.0.7",
+            "action": "GET /events",
+            "query": "streamId=diary",
+            "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+            "status": 403,
+            "errorMessage": "Access session has expired.",
+            "errorId": "forbidden"
+          }
+        }
+      ]
+    },
+    {
+      "id": "webhook",
+      "title": "Webhook",
+      "description": "Webhooks provide push notifications to web servers using HTTP POST requests.  \n\nOnce created, they will run, executing a HTTP POST request to the provided URL for each [data change](#with-webhooks) in the user account. \n\nWhen the webhooks service is booted, it will send a `webhooksServiceBoot` message to all active webhooks. This allows to query the API for potentially missed notifications during its down time.\n\nOnly the app access used to create the webhook or a personal access can retrieve and modify it. This is meant to separate the responsibilities between the actor that sets the webhooks and the one(s) that consume the data following the webhook setup.\n\n",
+      "properties": [
+        {
+          "key": "id",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The identifier of the Webhook."
+        },
+        {
+          "key": "accessId",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The identifier of the access that was used to create the Webhook."
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "unique": "per app access",
+          "readOnly": "(except at creation)",
+          "description": "The URL where the HTTP POST requests will be made. To identify the source of the webhook on your notifications server, you can use the `url`'s hostname, path or query parameters. For example: \n\n```json\n{\n  \"url\": \"https://${username}.my-notifications.com/${my-secret}/?param1=value1&param2=value2\"\n}\n```"
+        },
+        {
+          "key": "minIntervalMs",
+          "type": "number",
+          "readOnly": true,
+          "description": "The webhooks run rate is throttled by a minimum interval between HTTP calls in milliseconds, sending an array of changes that occured during this period. Its value is set by the platform admin. "
+        },
+        {
+          "key": "maxRetries",
+          "type": "number",
+          "readOnly": true,
+          "description": "In case of failure to send a request, the webhook will retry `maxRetries` times at a growing interval of time before becoming `inactive` after too many successive failures. Its value is set by the platform admin."
+        },
+        {
+          "key": "currentRetries",
+          "type": "number",
+          "readOnly": true,
+          "description": "The number of retries iterations since the last failed HTTP call. This number is 0 if the last HTTP call was successful."
+        },
+        {
+          "key": "state",
+          "type": "`active`|`inactive`",
+          "description": "The current state of the Webhook. An inactive Webhook will not make any HTTP call when changes occur. It must be activated using the [update webhook](#methods-webhooks-webhooks-update) method."
+        },
+        {
+          "key": "runCount",
+          "type": "number",
+          "readOnly": true,
+          "description": "The number of times the Webhook has been run, including failures."
+        },
+        {
+          "key": "failCount",
+          "type": "number",
+          "readOnly": true,
+          "description": "The number of times the Webhook has failed HTTP calls. Failed runs are HTTP requests that received a response with a status outside of the 200-299 range or no response at all."
+        },
+        {
+          "key": "lastRun",
+          "type": "Run object",
+          "readOnly": true,
+          "description": "Represents the last Webhook call, comprised of its HTTP response status and timestamp.",
+          "properties": [
+            {
+              "key": "status",
+              "type": "number",
+              "description": "The HTTP response status of the call."
+            },
+            {
+              "key": "timestamp",
+              "type": "[timestamp](#data-structure-timestamp)",
+              "description": "The time the call was started."
+            }
+          ]
+        },
+        {
+          "key": "runs",
+          "type": "array of Run objects",
+          "readOnly": true,
+          "description": "Array of Run objects in inverse chronological order (newest first) which allows to monitor a webhook's health. Its length is set by the platform admin. "
+        },
+        {
+          "key": "created",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the webhook was created."
+        },
+        {
+          "key": "createdBy",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The id of the access used to create the webhook."
+        },
+        {
+          "key": "modified",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "readOnly": true,
+          "description": "The time the webhook was last modified."
+        },
+        {
+          "key": "modifiedBy",
+          "type": "[identifier](#data-structure-identifier)",
+          "readOnly": true,
+          "description": "The id of the last access used to modify the webhook."
+        }
+      ],
+      "examples": [
+        {
+          "title": "A simple Webhook",
+          "content": {
+            "id": "ck4b1gi1g001b0upv1lkm9na0",
+            "accessId": "ck4b1gi1g00190upvo9kggyps",
+            "url": "https://notifications.service.com/pryv",
+            "minIntervalMs": 5000,
+            "maxRetries": 5,
+            "currentRetries": 0,
+            "state": "active",
+            "runCount": 2,
+            "failCount": 0,
+            "lastRun": {
+              "status": 200,
+              "timestamp": 1576654388.692
+            },
+            "runs": [
+              {
+                "status": 200,
+                "timestamp": 1576654388.692
+              },
+              {
+                "status": 200,
+                "timestamp": 1576650788.692
+              }
+            ],
+            "created": 1576571588.692,
+            "createdBy": "ck4b1gi1g00190upvo9kggyps",
+            "modified": 1576571588.692,
+            "modifiedBy": "ck4b1gi1g00190upvo9kggyps"
+          }
+        }
+      ]
+    },
+    {
+      "id": "item-deletion",
+      "title": "Item deletion",
+      "description": "A record of a deleted item for sync purposes.",
+      "properties": [
+        {
+          "key": "id",
+          "type": "[identifier](#data-structure-identifier)",
+          "description": "The identifier of the deleted item."
+        },
+        {
+          "key": "deleted",
+          "type": "[timestamp](#data-structure-timestamp)",
+          "optional": true,
+          "description": "The time the item was deleted."
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "key-value",
+      "title": "Key-value",
+      "description": "An object (key-value map) for client apps to store additional data about the containing item (stream, event, etc.), such as a color, a reference to an associated icon, or other app-specific metadata.\n\n### Adding, updating and removing client data\n\nWhen the containing item is updated, additional data fields can be added, updated and removed as follows:\n\n- To add or update a field, just set its value; for example: `{\"clientData\": {\"keyToAddOrUpdate\": \"value\"}}`\n- To delete a field, set its value to `null`; for example: `{\"clientData\": {\"keyToDelete\": null}}`\n\nFields you don't specify in the update are left untouched.\n\n### Naming convention\n\nThe convention is that each app names the keys it uses with an `{app-id}:` prefix. For example, an app with id \"riki\" would store its data in fields such as `\"riki:key\": \"some value\"`.",
+      "examples": []
+    },
+    {
+      "id": "error",
+      "title": "Error",
+      "description": "",
+      "properties": [
+        {
+          "key": "id",
+          "type": "string",
+          "description": "Identifier for the error."
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "description": "A human-readable description of the error."
+        },
+        {
+          "key": "data",
+          "type": "any type",
+          "optional": true,
+          "description": "Additional machine-readable details (specified for each error if relevant)."
+        },
+        {
+          "key": "subErrors",
+          "type": "array of errors",
+          "optional": true,
+          "description": "Lists the detailed causes of the main error, if any."
+        }
+      ],
+      "examples": []
+    },
+    {
+      "id": "identifier",
+      "title": "Item identifier",
+      "description": "A string uniquely identifying an item for a given user. For some types of items (e.g. \"structural\" ones such as streams), the identifier can be optionally set by API clients; otherwise it is generated by the server. **Event ids are always [collision-resistant cuids](https://usecuid.org/).**",
+      "examples": []
+    },
+    {
+      "id": "timestamp",
+      "title": "Timestamp",
+      "description": "A positive floating-point number representing a number of seconds since any reference date and time, **independently from the time zone**. Because date and time synchronization between server time and client time is done by the client simply comparing the current server timestamp with its own, the reference date and time does not actually matter (but we do use standard Unix epoch time).",
+      "examples": [
+        {
+          "title": "Getting a valid timestamp:",
+          "content": "- JavaScript: `Date.now() / 1000`\n- PHP (5+): `microtime(true)`\n- TODO: more"
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "transpile": "./node_modules/.bin/coffee -c -o transpiled ../source/_reference && ./scripts/replace-links.sh",
+    "transpile": "./node_modules/.bin/coffee -c -o transpiled ../source/_reference && ./scripts/replace-links.sh && node src/render",
     "export": "node src/main"
   },
   "dependencies": {

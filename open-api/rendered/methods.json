@@ -1,0 +1,2682 @@
+{
+  "id": "methods",
+  "title": "API methods",
+  "sections": [
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "trustedOnly": true,
+      "description": "Methods for trusted apps to login/logout users.",
+      "sections": [
+        {
+          "id": "auth.login",
+          "type": "method",
+          "title": "Login user",
+          "http": "POST /auth/login",
+          "description": "Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authentication).   \nThis method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).",
+          "params": {
+            "properties": [
+              {
+                "key": "username",
+                "type": "string",
+                "description": "The user's username."
+              },
+              {
+                "key": "password",
+                "type": "string",
+                "description": "The user's password."
+              },
+              {
+                "key": "appId",
+                "type": "string",
+                "description": "Your app's unique identifier."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "token",
+                "type": "string",
+                "description": "The personal access token to use for further API calls."
+              },
+              {
+                "key": "preferredLanguage",
+                "type": "string",
+                "description": "The user's preferred language as a 2-letter ISO language code."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {
+                "username": "chuangzi",
+                "password": "B|_|tt3rfly!",
+                "appId": "my-app-id"
+              },
+              "result": {
+                "token": "ck4b1gi0n00020upvgyca2ias",
+                "preferredLanguage": "zh"
+              }
+            }
+          ]
+        },
+        {
+          "id": "auth.logout",
+          "type": "method",
+          "title": "Logout user",
+          "http": "POST /auth/logout",
+          "description": "Terminates a personal access session by invalidating its access token (the user will have to login again).",
+          "result": {
+            "http": "200 OK"
+          },
+          "examples": []
+        }
+      ]
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "description": "Methods to retrieve and manipulate [events](#data-structure-event).",
+      "sections": [
+        {
+          "id": "events.get",
+          "type": "method",
+          "title": "Get events",
+          "http": "GET /events",
+          "description": "Queries accessible events.",
+          "params": {
+            "properties": [
+              {
+                "key": "fromTime",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "The start time of the timeframe you want to retrieve events for. Default is 24 hours before `toTime` if the latter is set; otherwise it is not taken into account."
+              },
+              {
+                "key": "toTime",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered)."
+              },
+              {
+                "key": "streams",
+                "type": "array of [identifier](#data-structure-identifier)",
+                "optional": true,
+                "description": "If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream."
+              },
+              {
+                "key": "tags",
+                "type": "array of strings",
+                "optional": true,
+                "description": "If set, only events assigned to any of the listed tags will be returned."
+              },
+              {
+                "key": "types",
+                "type": "array of strings",
+                "optional": true,
+                "description": "If set, only events of any of the listed types will be returned."
+              },
+              {
+                "key": "running",
+                "type": "boolean",
+                "optional": true,
+                "description": "If `true`, only running period events will be returned."
+              },
+              {
+                "key": "sortAscending",
+                "type": "`true`|`false`",
+                "optional": true,
+                "description": "If `true`, events will be sorted from oldest to newest. Default: false (sort descending)."
+              },
+              {
+                "key": "skip",
+                "type": "number",
+                "optional": true,
+                "description": "The number of items to skip in the results."
+              },
+              {
+                "key": "limit",
+                "type": "number",
+                "optional": true,
+                "description": "The number of items to return in the results. A default value of 20 items is used if no other range limiting parameter is specified (`fromTime`, `toTime`)."
+              },
+              {
+                "key": "state",
+                "type": "`default`|`trashed`|`all`",
+                "optional": true,
+                "description": "Indicates what items to return depending on their state. By default, only items that are not in the trash are returned; `trashed` returns only items in the trash, while `all` return all items regardless of their state."
+              },
+              {
+                "key": "modifiedSince",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "If specified, only events modified since that time will be returned."
+              },
+              {
+                "key": "includeDeletions",
+                "type": "boolean",
+                "optional": true,
+                "description": "Whether to include event deletions since `modifiedSince` for sync purposes (only applies when `modifiedSince` is set). Defaults to `false`."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "events",
+                "type": "array of [events](#data-structure-event)",
+                "description": "The accessible events ordered by time (see `sortAscending` above)."
+              },
+              {
+                "key": "eventDeletions",
+                "type": "array of [item deletions](#data-structure-item-deletion)",
+                "optional": true,
+                "description": "If requested by `includeDeletions`, the event deletions since `modifiedSince`, ordered by deletion time."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "title": "Fetching the last 20 events (default call)",
+              "params": {},
+              "result": {
+                "events": [
+                  {
+                    "id": "ck4b1gi1e000y0upvkfjkkxwf",
+                    "time": 1576654388.69,
+                    "streamId": "diary",
+                    "tags": [],
+                    "type": "picture/attached",
+                    "content": null,
+                    "attachments": [
+                      {
+                        "id": "ck4b1gi1e000z0upvnmiykjeb",
+                        "fileName": "photo.jpg",
+                        "type": "image/jpeg",
+                        "size": 2561,
+                        "readToken": "ck4b1gi1e00100upv11ndg9em-OoNEru60aLCNh1zo0QtvRZmqTTl"
+                      }
+                    ],
+                    "created": 1576654388.69,
+                    "createdBy": "ck4b1gi0o00040upvhxbgfvfn",
+                    "modified": 1576654388.69,
+                    "modifiedBy": "ck4b1gi0o00040upvhxbgfvfn"
+                  },
+                  {
+                    "id": "ck4b1gi1e000l0upvcxx8x7du",
+                    "time": 1576657988.69,
+                    "streamId": "jogging",
+                    "tags": [],
+                    "type": "activity/pryv",
+                    "content": null,
+                    "created": 1576657988.69,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576657988.69,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  },
+                  {
+                    "id": "ck4b1gi1e00110upv253hzix9",
+                    "time": 1350373077.359,
+                    "streamId": "diary",
+                    "tags": [],
+                    "type": "position/wgs84",
+                    "content": {
+                      "latitude": 40.714728,
+                      "longitude": -73.998672
+                    },
+                    "created": 1576650788.69,
+                    "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                    "modified": 1576650788.69,
+                    "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                  }
+                ]
+              }
+            },
+            {
+              "title": "cURL for multiple streams",
+              "params": "```bash\ncurl -i https://${username}.pryv.me/events?auth=${token}&streams[]=diary&streams[]=weight\n```",
+              "result": {
+                "events": [
+                  {
+                    "id": "ck4b1gi1e000y0upvkfjkkxwf",
+                    "time": 1576654388.69,
+                    "streamId": "diary",
+                    "tags": [],
+                    "type": "picture/attached",
+                    "content": null,
+                    "attachments": [
+                      {
+                        "id": "ck4b1gi1e000z0upvnmiykjeb",
+                        "fileName": "photo.jpg",
+                        "type": "image/jpeg",
+                        "size": 2561,
+                        "readToken": "ck4b1gi1e00100upv11ndg9em-OoNEru60aLCNh1zo0QtvRZmqTTl"
+                      }
+                    ],
+                    "created": 1576654388.69,
+                    "createdBy": "ck4b1gi0o00040upvhxbgfvfn",
+                    "modified": 1576654388.69,
+                    "modifiedBy": "ck4b1gi0o00040upvhxbgfvfn"
+                  },
+                  {
+                    "id": "ck4b1gi1e000u0upvenvhvbit",
+                    "time": 1576654388.69,
+                    "streamId": "diary",
+                    "tags": [],
+                    "type": "note/text",
+                    "content": "道可道非常道。。。",
+                    "created": 1576654388.69,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576693988.69,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  },
+                  {
+                    "id": "ck4b1gi1e00110upv253hzix9",
+                    "time": 1350373077.359,
+                    "streamId": "diary",
+                    "tags": [],
+                    "type": "position/wgs84",
+                    "content": {
+                      "latitude": 40.714728,
+                      "longitude": -73.998672
+                    },
+                    "created": 1576650788.69,
+                    "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                    "modified": 1576650788.69,
+                    "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                  },
+                  {
+                    "id": "ck4b1gi1e000t0upvsoylfp82",
+                    "time": 1576657988.69,
+                    "streamId": "weight",
+                    "tags": [],
+                    "type": "mass/kg",
+                    "content": 90,
+                    "created": 1576657988.69,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576657988.69,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  }
+                ]
+              }
+            },
+            {
+              "title": "cURL with deletions",
+              "params": "```bash\ncurl -i https://${username}.pryv.me/events?auth=${token}&includeDeletions=true&modifiedSince=1576571588.72\n```",
+              "result": {
+                "events": [
+                  {
+                    "id": "ck4b1gi1e000t0upvsoylfp82",
+                    "time": 1576657988.69,
+                    "streamId": "weight",
+                    "tags": [],
+                    "type": "mass/kg",
+                    "content": 90,
+                    "created": 1576657988.69,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576657988.69,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  },
+                  {
+                    "id": "ck4b1gi1g00160upve9f5rysc",
+                    "deleted": 1576654388.692
+                  },
+                  {
+                    "id": "ck4b1gi1g00170upvz9y2e7hd",
+                    "deleted": 1576621988.692
+                  },
+                  {
+                    "id": "ck4b1gi1g00180upvueu35sa3",
+                    "deleted": 1576585988.692
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "events.getOne",
+          "type": "method",
+          "title": "Get one event",
+          "http": "GET /events/{id}",
+          "description": "Fetches a specific event. This request is mostly used to fetch an event's version history, allowing to review all the modifications to an event's data.",
+          "params": {
+            "properties": [
+              {
+                "key": "includeHistory",
+                "type": "boolean",
+                "optional": true,
+                "description": "If `true`, the event's history will be added to the response. Default: false (don't include the history)."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "event",
+                "type": "[event](#data-structure-event)",
+                "description": "The event."
+              },
+              {
+                "key": "history",
+                "type": "array of [events](#data-structure-event)",
+                "optional": true,
+                "description": "If requested by `includeHistory`, the history of the event as an array of events, ordered by modification time."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "title": "Fetching an event's version history",
+              "params": {
+                "includeHistory": true
+              },
+              "result": {
+                "event": {
+                  "id": "ck4b1gi1e000v0upviyxs3emx",
+                  "time": 1576654388.69,
+                  "streamId": "diary",
+                  "tags": [],
+                  "type": "note/text",
+                  "content": "Hi, I am the latest version of this event",
+                  "created": 1576654388.69,
+                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1576665188.69,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                },
+                "history": [
+                  {
+                    "id": "ck4b1gi1e000w0upvfrywoh2u",
+                    "time": 1576654388.69,
+                    "streamId": "diary",
+                    "tags": [],
+                    "type": "note/text",
+                    "content": "Hi, I am the first modification",
+                    "created": 1576654388.69,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576661588.69,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  },
+                  {
+                    "id": "ck4b1gi1e000x0upv3fq9a65k",
+                    "time": 1576654388.69,
+                    "streamId": "diary",
+                    "tags": [],
+                    "type": "note/text",
+                    "content": "Hi, I was the initial event",
+                    "created": 1576654388.69,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576657988.69,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "events.create",
+          "type": "method",
+          "title": "Create event",
+          "http": "POST /events",
+          "description": "Records a new event. It is recommended that events recorded this way are completed events, i.e. either period events with a known duration or mark events. To start a running period event, use [Start period](#methods-events-events-start) instead.\n\nIn addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.",
+          "params": {
+            "description": "The new event's data: see [Event](#data-structure-event)."
+          },
+          "result": {
+            "http": "201 Created",
+            "properties": [
+              {
+                "key": "event",
+                "type": "[event](#data-structure-event)",
+                "description": "The created event."
+              },
+              {
+                "key": "stoppedId",
+                "type": "[identifier](#data-structure-identifier)",
+                "description": "Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "The referenced stream is in the trash, and we prevent the recording of new events into trashed streams."
+            },
+            {
+              "key": "periods-overlap",
+              "http": "400",
+              "description": "Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Capturing a simple number value",
+              "params": {
+                "streamId": "weight",
+                "type": "mass/kg",
+                "content": 90
+              },
+              "result": {
+                "event": {
+                  "id": "ck4b1gi1e000t0upvsoylfp82",
+                  "time": 1576657988.69,
+                  "streamId": "weight",
+                  "tags": [],
+                  "type": "mass/kg",
+                  "content": 90,
+                  "created": 1576657988.69,
+                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1576657988.69,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                }
+              }
+            },
+            {
+              "title": "cURL with attachment",
+              "content": "```bash\ncurl -i -F 'event={\"streamId\":\"diary\",\"type\":\"picture/attached\"}'  -F \"file=@photo.jpg\" https://${username}.pryv.me/events?auth=${token}\n```",
+              "result": {
+                "event": {
+                  "id": "ck4b1gi1e000y0upvkfjkkxwf",
+                  "time": 1576654388.69,
+                  "streamId": "diary",
+                  "tags": [],
+                  "type": "picture/attached",
+                  "content": null,
+                  "attachments": [
+                    {
+                      "id": "ck4b1gi1e000z0upvnmiykjeb",
+                      "fileName": "photo.jpg",
+                      "type": "image/jpeg",
+                      "size": 2561,
+                      "readToken": "ck4b1gi1e00100upv11ndg9em-OoNEru60aLCNh1zo0QtvRZmqTTl"
+                    }
+                  ],
+                  "created": 1576654388.69,
+                  "createdBy": "ck4b1gi0o00040upvhxbgfvfn",
+                  "modified": 1576654388.69,
+                  "modifiedBy": "ck4b1gi0o00040upvhxbgfvfn"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "events.start",
+          "type": "method",
+          "title": "Start period",
+          "http": "POST /events/start",
+          "description": "Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.\n\nSee [Create event](#methods-events-events-create) for details.",
+          "examples": [
+            {
+              "title": "Starting an activity",
+              "params": {
+                "streamId": "bicycling",
+                "type": "activity/pryv"
+              },
+              "resultHTTP": "201 Created",
+              "result": {
+                "event": {
+                  "id": "ck4b1gi1e000m0upvcy4h9pdw",
+                  "time": 1576657988.69,
+                  "duration": null,
+                  "streamId": "bicycling",
+                  "tags": [],
+                  "type": "activity/pryv",
+                  "content": null,
+                  "created": 1576657988.69,
+                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1576657988.69,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "events.stop",
+          "type": "method",
+          "title": "Stop period",
+          "http": "POST /events/stop",
+          "description": "Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop (or its type) must be specified.",
+          "params": {
+            "properties": [
+              {
+                "key": "streamId",
+                "type": "[identifier](#data-structure-identifier)",
+                "description": "The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified."
+              },
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "description": "The id of the event to stop. Either this or `streamId` (and possibly `type`) must be specified."
+              },
+              {
+                "key": "type",
+                "type": "string",
+                "description": "The type of the event to stop. `streamId` must be specified as well. If there are multiple running events matching, the closest one (by time) will be stopped."
+              },
+              {
+                "key": "time",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "The stop time. Default: now."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "stoppedId",
+                "type": "[identifier](#data-structure-identifier)",
+                "description": "The id of the event that was stopped or null if no running event was found."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "The specified event is not a running period event."
+            }
+          ],
+          "examples": [
+            {
+              "params": {
+                "streamId": "bicycling",
+                "time": 1576657988.722
+              },
+              "result": {
+                "stoppedId": "ck4b1gi1e000m0upvcy4h9pdw"
+              }
+            }
+          ]
+        },
+        {
+          "id": "events.update",
+          "type": "method",
+          "title": "Update event",
+          "http": "PUT /events/{id}",
+          "description": "Modifies the event.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the event."
+              },
+              {
+                "key": "update",
+                "type": "object",
+                "http": {
+                  "text": "request body"
+                },
+                "description": "New values for the event's fields: see [event](#data-structure-event). All fields are optional, and only modified values must be included."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "event",
+                "type": "[event](#data-structure-event)",
+                "description": "The updated event."
+              },
+              {
+                "key": "stoppedId",
+                "type": "[identifier](#data-structure-identifier)",
+                "description": "Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event."
+            },
+            {
+              "key": "periods-overlap",
+              "http": "400",
+              "description": "Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Adding a tag",
+              "params": {
+                "id": "ck4b1gi1e00110upv253hzix9",
+                "update": {
+                  "tags": [
+                    "home"
+                  ]
+                }
+              },
+              "result": {
+                "event": {
+                  "tags": [
+                    "home"
+                  ],
+                  "modified": 1576657988.722,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "id": "ck4b1gi1e00110upv253hzix9",
+                  "time": 1350373077.359,
+                  "streamId": "diary",
+                  "type": "position/wgs84",
+                  "content": {
+                    "latitude": 40.714728,
+                    "longitude": -73.998672
+                  },
+                  "created": 1576650788.69,
+                  "createdBy": "ck4b1gi0n00000upv5vdz95d2"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "events.addAttachment",
+          "type": "method",
+          "title": "Add attachment(s)",
+          "httpOnly": true,
+          "http": "POST /events/{id}",
+          "description": "Adds one or more file attachments to the event. This request expects standard multipart/form-data content, with all content parts being the attached files.",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "event",
+                "type": "[event](#data-structure-event)",
+                "description": "The updated event."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "title": "cURL",
+              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" https://${username}.pryv.me/events/ck4b1gi1e000n0upv3hkpo45y?auth=${token}\n```",
+              "result": {
+                "event": {
+                  "id": "ck4b1gi1e000n0upv3hkpo45y",
+                  "time": 1576657988.69,
+                  "duration": null,
+                  "streamId": "ck4b1gi1d000b0upvlmy3jk8j",
+                  "tags": [],
+                  "type": "activity/pryv",
+                  "content": null,
+                  "attachments": [
+                    {
+                      "id": "ck4b1gi1e000o0upvls5ps7wr",
+                      "fileName": "travel-expense.jpg",
+                      "type": "image/jpeg",
+                      "size": 1111,
+                      "readToken": "ck4b1gi1e000p0upv80m5v584-weEAIGpH17yzjpqpUQGcCT4dggo"
+                    }
+                  ],
+                  "created": 1576657988.69,
+                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1576657988.69,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "events.getAttachment",
+          "type": "method",
+          "title": "Get attachment",
+          "httpOnly": true,
+          "http": "GET /events/{id}/{fileId}[/{fileName}]",
+          "description": "Gets the attached file. Accepts an arbitrary filename path suffix (ignored) for easier link readability.\nFor this function using the `auth` query parameter is not accepted. You can either use the [access token](#data-structure-access) in the `Authorization` header or provide the `readToken` as query parameter.",
+          "params": {
+            "properties": [
+              {
+                "key": "readToken",
+                "type": "string",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "Required if not using the `Authorization` HTTP header. The file read token to authentify the request. See [`event.attachments[].readToken`](#data-structure-event) for more info."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "description": "The file's content."
+          }
+        },
+        {
+          "id": "events.deleteAttachment",
+          "type": "method",
+          "title": "Delete attachment",
+          "http": "DELETE /events/{id}/{fileId}",
+          "description": "Irreversibly deletes the attached file.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the event."
+              },
+              {
+                "key": "fileId",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the attached file."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "event",
+                "type": "[event](#data-structure-event)",
+                "description": "The updated event."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {
+                "id": "ck4b1gi1e000n0upv3hkpo45y",
+                "fileId": "ck4b1gi1e000o0upvls5ps7wr"
+              },
+              "result": {
+                "event": {
+                  "id": "ck4b1gi1e000n0upv3hkpo45y",
+                  "time": 1576657988.69,
+                  "duration": null,
+                  "streamId": "ck4b1gi1d000b0upvlmy3jk8j",
+                  "tags": [],
+                  "type": "activity/pryv",
+                  "content": null,
+                  "created": 1576657988.69,
+                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1576657988.69,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "events.delete",
+          "type": "method",
+          "title": "Delete event",
+          "http": "DELETE /events/{id}",
+          "description": "Trashes or deletes the specified event, depending on its current state:\n\n- If the event is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)\n- If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the event."
+              }
+            ]
+          },
+          "result": [
+            {
+              "title": "Result: trashed",
+              "http": "200 OK",
+              "properties": [
+                {
+                  "key": "event",
+                  "type": "[event](#data-structure-event)",
+                  "description": "The trashed event."
+                }
+              ]
+            },
+            {
+              "title": "Result: deleted",
+              "http": "200 OK",
+              "properties": [
+                {
+                  "key": "eventDeletion",
+                  "type": "[item deletion](#data-structure-item-deletion)",
+                  "description": "The event deletion record."
+                }
+              ]
+            }
+          ],
+          "examples": [
+            {
+              "title": "Trashing",
+              "params": {
+                "id": "ck4b1gi1e000u0upvenvhvbit"
+              },
+              "result": {
+                "event": {
+                  "trashed": true,
+                  "modified": 1576657988.723,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "id": "ck4b1gi1e000u0upvenvhvbit",
+                  "time": 1576654388.69,
+                  "streamId": "diary",
+                  "tags": [],
+                  "type": "note/text",
+                  "content": "道可道非常道。。。",
+                  "created": 1576654388.69,
+                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n"
+                }
+              }
+            },
+            {
+              "title": "Deleting",
+              "params": {
+                "id": "ck4b1gi1e000u0upvenvhvbit"
+              },
+              "result": {
+                "eventDeletion": {
+                  "id": "ck4b1gi1e000u0upvenvhvbit"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "streams",
+      "title": "Streams",
+      "description": "Methods to retrieve and manipulate [streams](#data-structure-stream).",
+      "sections": [
+        {
+          "id": "streams.get",
+          "type": "method",
+          "title": "Get streams",
+          "http": "GET /streams",
+          "description": "Gets the accessible streams hierarchy.",
+          "params": {
+            "properties": [
+              {
+                "key": "parentId",
+                "type": "[identifier](#data-structure-identifier)",
+                "optional": true,
+                "description": "The id of the parent stream from which to retrieve streams. Default: `null` (returns all accessible streams from the root level)."
+              },
+              {
+                "key": "state",
+                "type": "`default`|`all`",
+                "optional": true,
+                "description": "By default, only items that are not in the trash are returned; `all` return all items regardless of their state."
+              },
+              {
+                "key": "includeDeletionsSince",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "Whether to include stream deletions since that time for sync purposes."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "streams",
+                "type": "array of [streams](#data-structure-stream)",
+                "description": "The tree of the accessible streams, sorted by name."
+              },
+              {
+                "key": "streamDeletions",
+                "type": "array of [item deletions](#data-structure-item-deletion)",
+                "optional": true,
+                "description": "If requested by `includeDeletionsSince`, the stream deletions since then, ordered by deletion time."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "title": "Retrieving streams for work activities",
+              "params": {
+                "parentId": "work"
+              },
+              "result": {
+                "streams": [
+                  {
+                    "id": "ck4b1gi1d000a0upvpv58cdib",
+                    "name": "Noble Works Co.",
+                    "parentId": "work",
+                    "children": [
+                      {
+                        "id": "ck4b1gi1d000c0upvnywi3dyr",
+                        "name": "Last Be First",
+                        "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                        "children": [],
+                        "created": 1513544118.86092,
+                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                        "modified": 1513544342.0347326,
+                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                      },
+                      {
+                        "id": "ck4b1gi1d000d0upv5thr9lmp",
+                        "name": "Big Tree",
+                        "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                        "children": [],
+                        "created": 1513544118.86092,
+                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                        "modified": 1513544354.7582746,
+                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                      },
+                      {
+                        "id": "ck4b1gi1d000e0upv24xluy9u",
+                        "name": "Inner Light",
+                        "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                        "children": [],
+                        "created": 1513544118.86092,
+                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                        "modified": 1513544233.955431,
+                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                      }
+                    ],
+                    "created": 1513544101.7839296,
+                    "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                    "modified": 1513544303.441415,
+                    "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                  },
+                  {
+                    "id": "ck4b1gi1d000b0upvlmy3jk8j",
+                    "name": "Freelancing",
+                    "parentId": "work",
+                    "children": [
+                      {
+                        "id": "ck4b1gi1d000f0upvb07hgdql",
+                        "name": "Funky Veggies",
+                        "parentId": "ck4b1gi1d000b0upvlmy3jk8j",
+                        "children": [],
+                        "created": 1513544118.4245403,
+                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                        "modified": 1513544171.8580246,
+                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                      },
+                      {
+                        "id": "ck4b1gi1d000g0upvrfu4b3ox",
+                        "name": "Jojo Lapin & sons",
+                        "parentId": "ck4b1gi1d000b0upvlmy3jk8j",
+                        "children": [],
+                        "created": 1513544118.4245403,
+                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                        "modified": 1513544341.1739607,
+                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                      }
+                    ],
+                    "created": 1513544101.7839296,
+                    "createdBy": "ck4b1gi0n00000upv5vdz95d2",
+                    "modified": 1513544372.8757694,
+                    "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "streams.create",
+          "type": "method",
+          "title": "Create stream",
+          "http": "POST /streams",
+          "description": "Creates a new stream.",
+          "params": {
+            "description": "The new stream's data: see [stream](#data-structure-stream)."
+          },
+          "result": {
+            "http": "201 Created",
+            "properties": [
+              {
+                "key": "stream",
+                "type": "[stream](#data-structure-stream)",
+                "description": "The created stream."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "item-already-exists",
+              "http": "400",
+              "description": "A similar stream already exists. The error's `data` contains the conflicting properties."
+            },
+            {
+              "key": "invalid-item-id",
+              "http": "400",
+              "description": "The specified id is invalid (e.g. it's a reserved word such as `null`)."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Create sub-stream 'diastolic' of 'heart'",
+              "params": {
+                "id": "diastolic",
+                "name": "Diastolic pressure",
+                "parentId": "heart"
+              },
+              "result": {
+                "stream": {
+                  "id": "diastolic",
+                  "name": "Diastolic pressure",
+                  "parentId": "heart",
+                  "children": [],
+                  "created": 1576657988.689,
+                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1576657988.689,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "streams.update",
+          "type": "method",
+          "title": "Update stream",
+          "http": "PUT /streams/{id}",
+          "description": "Modifies the stream.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the stream."
+              },
+              {
+                "key": "update",
+                "type": "object",
+                "http": {
+                  "text": "= request body"
+                },
+                "description": "New values for the stream's fields: see [stream](#data-structure-stream). All fields are optional, and only modified values must be included."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "stream",
+                "type": "[stream](#data-structure-stream)",
+                "description": "The updated stream (without child streams)."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "item-already-exists",
+              "http": "400",
+              "description": "A similar stream already exists. The error's `data` contains the conflicting properties."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Renaming a stream",
+              "params": {
+                "id": "sport",
+                "update": {
+                  "name": "Slothing"
+                }
+              },
+              "result": {
+                "stream": {
+                  "name": "Slothing",
+                  "modified": 1576657988.723,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "id": "sport",
+                  "parentId": null,
+                  "created": 1513544084.689,
+                  "createdBy": "ck4b1gi0n00000upv5vdz95d2"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "streams.delete",
+          "type": "method",
+          "title": "Delete stream",
+          "http": "DELETE /streams/{id}",
+          "description": "Trashes or deletes the specified stream, depending on its current state:\n\n- If the stream is not already in the trash, it will be moved to the trash (i.e. flagged as `trashed`)\n- If the stream is already in the trash, it will be irreversibly deleted with its descendants (if any). If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the stream."
+              },
+              {
+                "key": "mergeEventsWithParent",
+                "type": "`true`|`false`",
+                "description": "Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted."
+              }
+            ]
+          },
+          "result": [
+            {
+              "title": "Result: trashed",
+              "http": "200 OK",
+              "properties": [
+                {
+                  "key": "stream",
+                  "type": "[stream](#data-structure-stream)",
+                  "description": "The trashed stream."
+                }
+              ]
+            },
+            {
+              "title": "Result: deleted",
+              "http": "200 OK",
+              "properties": [
+                {
+                  "key": "streamDeletion",
+                  "type": "[item deletion](#data-structure-item-deletion)",
+                  "description": "The stream deletion record."
+                }
+              ]
+            }
+          ],
+          "examples": [
+            {
+              "title": "Trashing",
+              "params": {
+                "id": "weight"
+              },
+              "result": {
+                "event": {
+                  "trashed": true,
+                  "modified": 1576657988.723,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "id": "weight",
+                  "name": "Weight",
+                  "parentId": "health",
+                  "children": [],
+                  "created": 1513544113.9300365,
+                  "createdBy": "ck4b1gi0n00000upv5vdz95d2"
+                }
+              }
+            },
+            {
+              "title": "Deleting",
+              "params": {
+                "id": "weight"
+              },
+              "result": {
+                "streamDeletion": {
+                  "id": "weight"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "accesses",
+      "title": "Accesses",
+      "description": "Methods to retrieve and manipulate [accesses](#data-structure-access), e.g. for sharing.\nAny app can manage shared accesses whose permissions are a subset of its own. (Full access management is available to trusted apps.)",
+      "sections": [
+        {
+          "id": "accesses.get",
+          "type": "method",
+          "title": "Get accesses",
+          "http": "GET /accesses",
+          "description": "Gets manageable accesses. Only returns accesses that can\nbe managed by the requesting access and that are active when\nmaking the request. To include accesses that have expired, use\nthe `includeExpired` parameter.",
+          "params": {
+            "properties": [
+              {
+                "key": "includeExpired",
+                "type": "boolean",
+                "optional": true,
+                "description": "If `true`, also includes expired accesses. Defaults to `false`."
+              },
+              {
+                "key": "includeDeletions",
+                "type": "boolean",
+                "optional": true,
+                "description": "If `true`, also includes deleted accesses. Defaults to `false`."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "accesses",
+                "type": "array of [accesses](#data-structure-access)",
+                "description": "All manageable accesses in the user's account, ordered by name."
+              },
+              {
+                "key": "accessDeletions",
+                "type": "array of deleted [accesses](#data-structure-access)",
+                "description": "If requested by `includeDeletions`, the access deletions, ordered by deletion time."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "accesses": [
+                  {
+                    "id": "ck4b1gi0o00040upvhxbgfvfn",
+                    "token": "ck4b1gi0o00050upvuq3kyp95",
+                    "type": "shared",
+                    "name": "Arthur",
+                    "permissions": [
+                      {
+                        "streamId": "family",
+                        "level": "contribute"
+                      }
+                    ],
+                    "created": 1576614788.664,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576614788.664,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  }
+                ]
+              }
+            },
+            {
+              "title": "cURL with deletions",
+              "params": "```bash\ncurl -i https://${username}.pryv.me/accesses?auth=${token}&includeDeletions=true\n```",
+              "result": {
+                "accesses": [
+                  {
+                    "id": "ck4b1gi0o00040upvhxbgfvfn",
+                    "token": "ck4b1gi0o00050upvuq3kyp95",
+                    "type": "shared",
+                    "name": "Arthur",
+                    "permissions": [
+                      {
+                        "streamId": "family",
+                        "level": "contribute"
+                      }
+                    ],
+                    "created": 1576614788.664,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576614788.664,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  }
+                ],
+                "accessDeletions": [
+                  {
+                    "id": "ck4b1gi0o00080upvib6aihag",
+                    "token": "ck4b1gi0o00090upvxwx9rp46",
+                    "type": "shared",
+                    "name": "Health parameters survey",
+                    "permissions": [
+                      {
+                        "streamId": "health",
+                        "level": "read"
+                      }
+                    ],
+                    "created": 1576657868.664,
+                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "modified": 1576657868.664,
+                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
+                    "deleted": 1576657928.664
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "accesses.create",
+          "type": "method",
+          "title": "Create access",
+          "http": "POST /accesses",
+          "description": "Creates a new access. You can only create accesses whose permissions are a subset of those granted to your own access token.",
+          "params": {
+            "description": "An object with the new access's data: see [access](#data-structure-access)."
+          },
+          "result": {
+            "http": "201 Created",
+            "properties": [
+              {
+                "key": "access",
+                "type": "[access](#data-structure-access)",
+                "description": "The created access."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "invalid-item-id",
+              "http": "400",
+              "description": "The specified token is invalid (e.g. it's a reserved word such as `null`)."
+            }
+          ],
+          "examples": [
+            {
+              "params": {
+                "name": "For colleagues",
+                "permissions": [
+                  {
+                    "streamId": "work",
+                    "level": "read"
+                  }
+                ]
+              },
+              "result": {
+                "access": {
+                  "id": "ck4b1gi0o00060upvo9ldx09e",
+                  "token": "ck4b1gi0o00070upvfyy5izxu",
+                  "type": "shared",
+                  "name": "For colleagues",
+                  "permissions": [
+                    {
+                      "streamId": "work",
+                      "level": "read"
+                    }
+                  ],
+                  "created": 1576657988.664,
+                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1576657988.664,
+                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "accesses.delete",
+          "type": "method",
+          "title": "Delete access",
+          "http": "DELETE /accesses/{id}",
+          "description": "Deletes the specified access. You can only delete accesses whose permissions are a subset of those granted to your own access token.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the access."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "accessDeletion",
+                "type": "[item deletion](#data-structure-item-deletion)",
+                "description": "The deletion record."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {
+                "id": "ck4b1gi0o00040upvhxbgfvfn"
+              },
+              "result": {
+                "accessDeletion": {
+                  "id": "ck4b1gi0o00040upvhxbgfvfn"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "accesses.checkApp",
+          "type": "method",
+          "trustedOnly": true,
+          "title": "Check app authorization",
+          "http": "POST /accesses/check-app",
+          "description": "For the app authorization process. Checks if the app requesting authorization already has access with the same permissions (and on the same device, if applicable), and returns details of the requested permissions' streams (for display) if not.",
+          "params": {
+            "properties": [
+              {
+                "key": "requestingAppId",
+                "type": "string",
+                "description": "The id of the app requesting authorization."
+              },
+              {
+                "key": "deviceName",
+                "type": "string",
+                "optional": true,
+                "description": "The name of the device running the app requesting authorization, if applicable."
+              },
+              {
+                "key": "requestedPermissions",
+                "type": "array of permission request objects",
+                "description": "An array of permission request objects, which are identical to stream permission objects of [accesses](#data-structure-access) except that each stream permission object must have a `defaultName` property specifying the name the stream should be created with later if missing."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "checkedPermissions",
+                "type": "array of permission request objects",
+                "description": "Set if no matching access already exists.\nA updated copy of the `requestedPermissions` parameter, with the `defaultName` property of stream permissions replaced by `name` for each existing stream (set to the actual name of the item). (For missing streams the `defaultName` property is left untouched.) If streams already exist with the same name but a different `id`, `defaultName` is updated with a valid alternative proposal (in such cases the result also has an `error` property to signal the issue)."
+              },
+              {
+                "key": "mismatchingAccess",
+                "type": "[access](#data-structure-access)",
+                "description": "Set if an access already exists for the requesting app, but with different permissions than those requested."
+              },
+              {
+                "key": "matchingAccess",
+                "type": "[access](#data-structure-access)",
+                "description": "Set if an access already exists for the requesting app with matching permissions. The existing [access](#data-structure-access)."
+              }
+            ]
+          },
+          "examples": []
+        }
+      ]
+    },
+    {
+      "id": "audit",
+      "title": "Audit",
+      "previewOnly": true,
+      "description": "Methods to retrieve [Audit logs](#data-structure-audit-log).",
+      "sections": [
+        {
+          "id": "audit.get",
+          "type": "method",
+          "title": "Get audit logs",
+          "http": "GET /audit/logs",
+          "description": "Fetches accessible audit logs.\nBy default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).",
+          "params": {
+            "properties": [
+              {
+                "key": "accessId",
+                "type": "[identifier](#data-structure-identifier)",
+                "optional": true,
+                "description": "The id of a specific access to audit.\nWhen specified, it fetches the audit logs that involve the matching access instead of the one used to authenticate this call.\nIt has to correspond to a sub-access (expired and deleted included) in regards to the provided authorization token."
+              },
+              {
+                "key": "fromTime",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "The start time of the timeframe you want to retrieve audit logs for.\nTimestamps are considered with a day precision."
+              },
+              {
+                "key": "toTime",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "The end time of the timeframe you want to retrieve audit logs for.\nTimestamps are considered with a day precision."
+              },
+              {
+                "key": "status",
+                "type": "number",
+                "optional": true,
+                "description": "Filters audit logs by HTTP response status, a 3-digits number.\nIt is possible to provide only the first digit,\nin which case the two unspecified digits will be wildcarded.\nFor example, `status=4` will return all logs with status between 400 and 499."
+              },
+              {
+                "key": "ip",
+                "type": "string",
+                "optional": true,
+                "description": "Filters audit logs by client IP address present in the `forwardedFor` property."
+              },
+              {
+                "key": "httpVerb",
+                "type": "string",
+                "optional": true,
+                "description": "Filters audit logs by HTTP verb present in the `action` property."
+              },
+              {
+                "key": "resource",
+                "type": "string",
+                "optional": true,
+                "description": "Filters audit logs by API resource present in the `action` property."
+              },
+              {
+                "key": "errorId",
+                "type": "string",
+                "optional": true,
+                "description": "Filters audit logs by error id."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "auditLogs",
+                "type": "array of [Audit logs](#data-structure-audit-log)",
+                "description": "The accessible audit logs."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "forbidden",
+              "http": "403",
+              "description": "Authorization token is not authorized to audit the given access.\n\nWhen providing a specific access id, if the result of [Get Accesses](#methods-accesses-accesses-get)\nusing the provided Authorization token does not contain the given access, then it is not auditable."
+            }
+          ],
+          "examples": [
+            {
+              "params": {
+                "auth": "ck4b1gi1h001h0upvmfh6vxml",
+                "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+                "fromTime": 1561000000,
+                "toTime": 1562000000,
+                "status": 403,
+                "ip": "172.18.0.7",
+                "httpVerb": "GET",
+                "resource": "/events",
+                "errorId": "forbidden"
+              },
+              "result": {
+                "auditLogs": [
+                  {
+                    "id": "ck4b1gi1h001i0upvz3mpez8p",
+                    "type": "audit/core",
+                    "time": 1561988300,
+                    "forwardedFor": "172.18.0.7",
+                    "action": "GET /events",
+                    "query": "streamId=diary",
+                    "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+                    "status": 403,
+                    "errorMessage": "Access session has expired.",
+                    "errorId": "forbidden"
+                  },
+                  {
+                    "id": "ck4b1gi1h001j0upvfhibu9u4",
+                    "type": "audit/core",
+                    "time": 1561988900,
+                    "forwardedFor": "172.18.0.7",
+                    "action": "GET /events",
+                    "query": "streamId=diary",
+                    "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+                    "status": 403,
+                    "errorMessage": "Access session has expired.",
+                    "errorId": "forbidden"
+                  },
+                  {
+                    "id": "ck4b1gi1h001k0upv5clfod4p",
+                    "type": "audit/core",
+                    "time": 1561989200,
+                    "forwardedFor": "172.18.0.7",
+                    "action": "GET /events",
+                    "query": "streamId=work",
+                    "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+                    "status": 403,
+                    "errorMessage": "Access session has expired.",
+                    "errorId": "forbidden"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "webhooks",
+      "title": "Webhooks",
+      "description": "Methods to retrieve and manipulate [webhooks](#data-structure-webhook). These methods are only allowed for app and personal accesses.",
+      "sections": [
+        {
+          "id": "webhooks.get",
+          "type": "method",
+          "title": "Get webhooks",
+          "http": "GET /webhooks",
+          "description": "Gets manageable webhooks. Only returns webhooks that were created by the access, unless you are using a personal access which returns all existing webhooks in the user's account.",
+          "params": {
+            "properties": []
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "webhooks",
+                "type": "array of [webhooks](#data-structure-webhook)",
+                "description": "All manageable webhooks by the given access, ordered by modified date."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "webhooks": [
+                  {
+                    "id": "ck4b1gi1g001b0upv1lkm9na0",
+                    "accessId": "ck4b1gi1g00190upvo9kggyps",
+                    "url": "https://notifications.service.com/pryv",
+                    "minIntervalMs": 5000,
+                    "maxRetries": 5,
+                    "currentRetries": 0,
+                    "state": "active",
+                    "runCount": 2,
+                    "failCount": 0,
+                    "lastRun": {
+                      "status": 200,
+                      "timestamp": 1576654388.692
+                    },
+                    "runs": [
+                      {
+                        "status": 200,
+                        "timestamp": 1576654388.692
+                      },
+                      {
+                        "status": 200,
+                        "timestamp": 1576650788.692
+                      }
+                    ],
+                    "created": 1576571588.692,
+                    "createdBy": "ck4b1gi1g00190upvo9kggyps",
+                    "modified": 1576571588.692,
+                    "modifiedBy": "ck4b1gi1g00190upvo9kggyps"
+                  },
+                  {
+                    "id": "ck4b1gi1g001d0upvitw5d089",
+                    "accessId": "ck4b1gi1g00190upvo9kggyps",
+                    "url": "https://notifications.pryv.me/webhooks",
+                    "minIntervalMs": 5000,
+                    "maxRetries": 5,
+                    "currentRetries": 2,
+                    "state": "active",
+                    "runCount": 8,
+                    "failCount": 2,
+                    "lastRun": {
+                      "status": 200,
+                      "timestamp": 1576657983.692
+                    },
+                    "runs": [
+                      {
+                        "status": 500,
+                        "timestamp": 1576657983.692
+                      },
+                      {
+                        "status": 500,
+                        "timestamp": 1576657978.692
+                      },
+                      {
+                        "status": 200,
+                        "timestamp": 1576657388.692
+                      },
+                      {
+                        "status": 200,
+                        "timestamp": 1576656788.692
+                      },
+                      {
+                        "status": 200,
+                        "timestamp": 1576656188.692
+                      },
+                      {
+                        "status": 200,
+                        "timestamp": 1576655588.692
+                      },
+                      {
+                        "status": 200,
+                        "timestamp": 1576654988.692
+                      },
+                      {
+                        "status": 200,
+                        "timestamp": 1576654388.692
+                      }
+                    ],
+                    "created": 1576485188.692,
+                    "createdBy": "ck4b1gi1g00190upvo9kggyps",
+                    "modified": 1576485188.692,
+                    "modifiedBy": "ck4b1gi1g00190upvo9kggyps"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "webhooks.getOne",
+          "type": "method",
+          "title": "Get one webhook",
+          "http": "GET /webhooks/{id}",
+          "description": "Fetches a specific webhook. Only returns a webhook if it was created by the access, unless you are using a personal access which is allowed to fetch any existing webhook in the user's account.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the webhook."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "webhook",
+                "type": "[webhook](#data-structure-webhook)",
+                "description": "The webhook."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "webhook": {
+                  "id": "ck4b1gi1g001b0upv1lkm9na0",
+                  "accessId": "ck4b1gi1g00190upvo9kggyps",
+                  "url": "https://notifications.service.com/pryv",
+                  "minIntervalMs": 5000,
+                  "maxRetries": 5,
+                  "currentRetries": 0,
+                  "state": "active",
+                  "runCount": 2,
+                  "failCount": 0,
+                  "lastRun": {
+                    "status": 200,
+                    "timestamp": 1576654388.692
+                  },
+                  "runs": [
+                    {
+                      "status": 200,
+                      "timestamp": 1576654388.692
+                    },
+                    {
+                      "status": 200,
+                      "timestamp": 1576650788.692
+                    }
+                  ],
+                  "created": 1576571588.692,
+                  "createdBy": "ck4b1gi1g00190upvo9kggyps",
+                  "modified": 1576571588.692,
+                  "modifiedBy": "ck4b1gi1g00190upvo9kggyps"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "webhooks.create",
+          "type": "method",
+          "title": "Create webhook",
+          "http": "POST /webhooks",
+          "description": "Creates a new webhook. You can only create webhooks with app accesses.",
+          "params": {
+            "description": "An object with the new webhook's data: see [webhook](#data-structure-webhook)."
+          },
+          "result": {
+            "http": "201 Created",
+            "properties": [
+              {
+                "key": "webhook",
+                "type": "[webhook](#data-structure-webhook)",
+                "description": "The created webhook."
+              }
+            ]
+          },
+          "errors": [],
+          "examples": [
+            {
+              "params": {
+                "url": "https://sievey.io/webhooks"
+              },
+              "result": {
+                "webhook": {
+                  "id": "ck4b1gi1g001e0upvxwwj9kc4",
+                  "accessId": "ck4b1gi1g001a0upv6fifnejc",
+                  "url": "https://sievey.io/webhooks",
+                  "minIntervalMs": 5000,
+                  "maxRetries": 5,
+                  "currentRetries": 0,
+                  "state": "active",
+                  "runCount": 0,
+                  "failCount": 0,
+                  "lastRun": {},
+                  "runs": [],
+                  "created": 1576657983.692,
+                  "createdBy": "ck4b1gi1g001a0upv6fifnejc",
+                  "modified": 1576657983.692,
+                  "modifiedBy": "ck4b1gi1g001a0upv6fifnejc"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "webhooks.update",
+          "type": "method",
+          "title": "Update webhook",
+          "http": "PUT /webhooks/{id}",
+          "description": "Modifies the webhook. You can only modify webhooks with the app access that was used to create them, unless you are using a personal token.  \nUpdating the `state` to `active` resets the `currentRetries` counter.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the webhook."
+              },
+              {
+                "key": "update",
+                "type": "object",
+                "http": {
+                  "text": "request body"
+                },
+                "description": "New values for the webhook's fields: see [webhook](#data-structure-webhook). All fields are optional, and only modified values must be included.  "
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "webhook",
+                "type": "[webhook](#data-structure-webhook)",
+                "description": "The updated webhook."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "item-already-exists",
+              "http": "400",
+              "description": "There is already a webhook for this URL created by the given access."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Reactivating a webhook",
+              "params": {
+                "state": "active"
+              },
+              "result": {
+                "webhook": {
+                  "id": "ck4b1gi1g001c0upvvl3zafso",
+                  "accessId": "ck4b1gi1g00190upvo9kggyps",
+                  "url": "https://notifications.pryv.me/myusername/ui3HDAw43",
+                  "minIntervalMs": 5000,
+                  "maxRetries": 5,
+                  "state": "active",
+                  "currentRetries": 0,
+                  "runCount": 5,
+                  "failCount": 5,
+                  "lastRun": {
+                    "status": 404,
+                    "timestamp": 1576657973.692
+                  },
+                  "runs": [
+                    {
+                      "status": 404,
+                      "timestamp": 1576657973.692
+                    },
+                    {
+                      "status": 404,
+                      "timestamp": 1576657933.692
+                    },
+                    {
+                      "status": 404,
+                      "timestamp": 1576657913.692
+                    },
+                    {
+                      "status": 404,
+                      "timestamp": 1576657903.692
+                    },
+                    {
+                      "status": 404,
+                      "timestamp": 1576657898.692
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "webhooks.delete",
+          "type": "method",
+          "title": "Delete webhook",
+          "http": "DELETE /webhooks/{id}",
+          "description": "Deletes the specified webhook. You can only delete webhooks with the app access that was used to create them, unless you are using a personal token.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the webhook."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "webhookDeletion",
+                "type": "[item deletion](#data-structure-item-deletion)",
+                "description": "The deletion record."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {
+                "id": "ck4b1gi1g001e0upvxwwj9kc4"
+              },
+              "result": {
+                "webhookDeletion": {
+                  "id": "ck4b1gi1g001e0upvxwwj9kc4"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "webhooks.test",
+          "type": "method",
+          "title": "Test webhook",
+          "http": "POST /webhooks/{id}/test",
+          "description": "Sends a post request containing a message called `test` to the URL of the specified webhook's `url`. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the webhook."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "webhook",
+                "type": "[webhook](#data-structure-webhook)",
+                "description": "The webhook."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "webhook": {
+                  "id": "ck4b1gi1g001e0upvxwwj9kc4",
+                  "accessId": "ck4b1gi1g001a0upv6fifnejc",
+                  "url": "https://sievey.io/webhooks",
+                  "minIntervalMs": 5000,
+                  "maxRetries": 5,
+                  "currentRetries": 0,
+                  "state": "active",
+                  "runCount": 0,
+                  "failCount": 0,
+                  "lastRun": {},
+                  "runs": [],
+                  "created": 1576657983.692,
+                  "createdBy": "ck4b1gi1g001a0upv6fifnejc",
+                  "modified": 1576657983.692,
+                  "modifiedBy": "ck4b1gi1g001a0upv6fifnejc"
+                }
+              }
+            }
+          ],
+          "errors": [
+            {
+              "key": "unknown-referenced-resource",
+              "http": "400",
+              "description": "The webhook's `url` is either unreachable or responds with a 4xx/5xx status."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "followed-slices",
+      "title": "Followed slices",
+      "trustedOnly": true,
+      "description": "Methods to retrieve and manipulate [followed slices](#data-structure-followed-slice).",
+      "sections": [
+        {
+          "id": "followedSlices.get",
+          "type": "method",
+          "title": "Get followed slices",
+          "http": "GET /followed-slices",
+          "description": "Gets followed slices.",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "followedSlices",
+                "type": "array of [followed slices](#data-structure-followed-slice)",
+                "description": "All followed slices in the user's account, ordered by name."
+              }
+            ]
+          },
+          "examples": []
+        },
+        {
+          "id": "followedSlices.create",
+          "type": "method",
+          "title": "Create followed slice",
+          "http": "POST /followed-slices",
+          "description": "Creates a new followed slice.",
+          "params": {
+            "description": "An object with the new followed slice's data: see [followed slice](#data-structure-followed-slice)."
+          },
+          "result": {
+            "http": "201 Created",
+            "properties": [
+              {
+                "key": "followedSlice",
+                "type": "[followed slice](#data-structure-followed-slice)",
+                "description": "The created followed slice."
+              }
+            ]
+          },
+          "examples": []
+        },
+        {
+          "id": "followedSlices.update",
+          "type": "method",
+          "title": "Update followed slice",
+          "http": "PUT /followed-slices/{id}",
+          "description": "Modifies the specified followed slice.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the followed slice."
+              },
+              {
+                "key": "update",
+                "type": "object",
+                "http": {
+                  "text": "= request body"
+                },
+                "description": "New values for the followed slice's fields: see [followed slice](#data-structure-followed-slice). All fields are optional, and only modified values must be included."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "followedSlice",
+                "type": "[followed slice](#data-structure-followed-slice)",
+                "description": "The updated followed slice."
+              }
+            ]
+          },
+          "examples": []
+        },
+        {
+          "id": "followedSlices.delete",
+          "type": "method",
+          "title": "Delete followed slice",
+          "http": "DELETE /followed-slices/{id}",
+          "description": "Deletes the specified followed slice.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the followed slice."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "followedSliceDeletion",
+                "type": "[item deletion](#data-structure-item-deletion)",
+                "description": "The deletion record."
+              }
+            ]
+          },
+          "examples": []
+        }
+      ]
+    },
+    {
+      "id": "profile",
+      "title": "Profile sets",
+      "description": "Methods to read and write profile sets. Profile sets are plain key-value stores of user-level settings.",
+      "sections": [
+        {
+          "id": "profile.getPublic",
+          "type": "method",
+          "title": "Get public user profile",
+          "http": "GET /profile/public",
+          "description": "Gets the user's public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "profile",
+                "type": "object",
+                "description": "The user's current public profile set."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "profile": {
+                  "avatarURL": "http://www.gravatar.com/avatar/1beb9d80bf842c1d90ebdab356908538"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "profile.getApp",
+          "type": "method",
+          "title": "Get app profile",
+          "http": "GET /profile/app",
+          "description": "Gets the app's dedicated user profile set, which contains app-level settings for the user. Available to app accesses.",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "profile",
+                "type": "object",
+                "description": "The app's current profile set. (Empty if the app never defined any setting.)"
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "profile": {
+                  "setting1": "value",
+                  "setting2": true,
+                  "setting3": 123
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "profile.updateApp",
+          "type": "method",
+          "title": "Update app profile",
+          "http": "PUT /profile/app",
+          "description": "Adds, updates or delete app profile keys.\n\n- To add or update a key, just set its value\n- To delete a key, set its value to `null`\n\nExisting keys not included in the update are left untouched.",
+          "params": {
+            "properties": [
+              {
+                "key": "update",
+                "type": "object",
+                "http": {
+                  "text": "= request body"
+                },
+                "description": "An object with the desired key changes (see above)."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "profile",
+                "type": "object",
+                "description": "The app's updated profile set."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {
+                "setting1": "new value",
+                "setting2": null
+              },
+              "result": {
+                "profile": {
+                  "setting1": "new value",
+                  "setting3": 123
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "profile.get",
+          "type": "method",
+          "trustedOnly": true,
+          "title": "Get profile",
+          "http": "GET /profile/{id}",
+          "description": "Gets the specified user profile set.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the profile set."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "profile",
+                "type": "object",
+                "description": "The profile set."
+              }
+            ]
+          },
+          "examples": []
+        },
+        {
+          "id": "profile.update",
+          "type": "method",
+          "trustedOnly": true,
+          "title": "Update profile",
+          "http": "PUT /profile/{id}",
+          "description": "Adds, updates or delete profile keys.\n\n- To add or update a key, just set its value\n- To delete a key, set its value to `null`\n\nExisting keys not included in the update are left untouched.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The id of the profile set."
+              },
+              {
+                "key": "update",
+                "type": "object",
+                "http": {
+                  "text": "= request body"
+                },
+                "description": "An object with the desired key changes (see above)."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "profile",
+                "type": "object",
+                "description": "The updated profile set."
+              }
+            ]
+          },
+          "examples": []
+        }
+      ]
+    },
+    {
+      "id": "account",
+      "title": "Account management",
+      "trustedOnly": true,
+      "description": "Methods to manage the user's account.",
+      "sections": [
+        {
+          "id": "account.get",
+          "type": "method",
+          "title": "Get account information",
+          "http": "GET /account",
+          "description": "Retrieves the user's account information.",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "account",
+                "type": "[account information](#data-structure-account)",
+                "description": "The user's account information."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "account": {
+                  "username": "chuangzi",
+                  "email": "chuangzi@dao.info",
+                  "language": "zh"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "account.update",
+          "type": "method",
+          "title": "Update account information",
+          "http": "PUT /account",
+          "description": "Modifies the user's account information.",
+          "params": {
+            "properties": [
+              {
+                "key": "update",
+                "type": "object",
+                "http": {
+                  "text": "= request body"
+                },
+                "description": "New values for the account information's fields: see [account information](#data-structure-account). All fields are optional, and only modified values must be included."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "account",
+                "type": "[account information](#data-structure-account)",
+                "description": "The updated account information."
+              }
+            ]
+          },
+          "examples": []
+        },
+        {
+          "id": "account.changePassword",
+          "type": "method",
+          "title": "Change password",
+          "http": "POST /account/change-password",
+          "description": "Modifies the user's password.",
+          "params": {
+            "properties": [
+              {
+                "key": "oldPassword",
+                "type": "string",
+                "description": "The current password."
+              },
+              {
+                "key": "newPassword",
+                "type": "string",
+                "description": "The new password."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK"
+          },
+          "errors": [
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "The given password does not match."
+            }
+          ],
+          "examples": [
+            {
+              "params": {
+                "oldPassword": "B|_|tt3rfly!",
+                "newPassword": "//\\_.:o0o:._//\\"
+              },
+              "result": {}
+            }
+          ]
+        },
+        {
+          "id": "account.requestPasswordReset",
+          "type": "method",
+          "title": "Request password reset",
+          "http": "POST /account/request-password-reset",
+          "description": "Requests the resetting of the user's password. An e-mail containing an expiring reset token (e.g. in a link) will be sent to the user.  \nThis method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).",
+          "params": {
+            "properties": [
+              {
+                "key": "appId",
+                "type": "string",
+                "description": "Your app's unique identifier."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK"
+          },
+          "examples": [
+            {
+              "params": {
+                "appId": "my-app-id"
+              },
+              "result": {}
+            }
+          ]
+        },
+        {
+          "id": "account.resetPassword",
+          "type": "method",
+          "title": "Reset password",
+          "http": "POST /account/reset-password",
+          "description": "Resets the user's password, authenticating the request with the given reset token (see [request password reset](#methods-account-account-requestPasswordReset) ).  \nThis method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).",
+          "params": {
+            "properties": [
+              {
+                "key": "resetToken",
+                "type": "string",
+                "description": "The expiring reset token that was sent to the user after requesting the password reset."
+              },
+              {
+                "key": "newPassword",
+                "type": "string",
+                "description": "The new password."
+              },
+              {
+                "key": "appId",
+                "type": "string",
+                "description": "Your app's unique identifier."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK"
+          },
+          "examples": [
+            {
+              "params": {
+                "resetToken": "chtplghfp0000hqjx814u6393",
+                "newPassword": "Dr0ws$4p",
+                "appId": "my-app-id"
+              },
+              "result": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "utils",
+      "title": "Utils",
+      "description": "Utility methods that don't pertain to a particular resource type.",
+      "sections": [
+        {
+          "id": "getAccessInfo",
+          "type": "method",
+          "title": "Get current access info",
+          "http": "GET /access-info",
+          "description": "Retrieves the name, type and permissions of the access in use.",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "name",
+                "type": "string",
+                "description": "The access' name."
+              },
+              {
+                "key": "type",
+                "type": "[access](#data-structure-access).type",
+                "description": "The access' type."
+              },
+              {
+                "key": "permissions",
+                "type": "[access](#data-structure-access).permissions",
+                "description": "The access' permissions."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "name": "my-app-id",
+                "type": "app",
+                "permissions": [
+                  {
+                    "streamId": "health",
+                    "level": "contribute"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "callBatch",
+          "type": "method",
+          "title": "Call batch",
+          "http": "POST /",
+          "description": "Sends a batch of API methods calls in one go (e.g. for to syncing offline changes when resuming connectivity).",
+          "params": {
+            "description": "Array of method call objects, each defined as follows:",
+            "properties": [
+              {
+                "key": "method",
+                "type": "string",
+                "description": "The method id."
+              },
+              {
+                "key": "params",
+                "type": "object or array",
+                "description": "The call parameters as required by the method."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "results",
+                "type": "array of call results",
+                "description": "The results of each method call, in order."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "title": "Sync some health metrics",
+              "params": [
+                {
+                  "method": "events.create",
+                  "params": {
+                    "time": 1385046854.282,
+                    "streamId": "heart",
+                    "type": "frequency/bpm",
+                    "content": 90
+                  }
+                },
+                {
+                  "method": "events.create",
+                  "params": {
+                    "time": 1385046854.282,
+                    "streamId": "systolic",
+                    "type": "pressure/mmhg",
+                    "content": 120
+                  }
+                },
+                {
+                  "method": "events.create",
+                  "params": {
+                    "time": 1385046854.282,
+                    "streamId": "diastolic",
+                    "type": "pressure/mmhg",
+                    "content": 80
+                  }
+                }
+              ],
+              "result": {
+                "results": [
+                  {
+                    "event": {
+                      "id": "ck4b1gi1e000q0upv7892hiz5",
+                      "time": 1385046854.282,
+                      "streamId": "heart",
+                      "tags": [],
+                      "type": "frequency/bpm",
+                      "content": 90,
+                      "created": 1576657988.69,
+                      "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                      "modified": 1576657988.69,
+                      "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    }
+                  },
+                  {
+                    "event": {
+                      "id": "ck4b1gi1e000r0upv8om6qymj",
+                      "time": 1385046854.282,
+                      "streamId": "systolic",
+                      "tags": [],
+                      "type": "pressure/mmhg",
+                      "content": 120,
+                      "created": 1576657988.69,
+                      "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                      "modified": 1576657988.69,
+                      "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    }
+                  },
+                  {
+                    "event": {
+                      "id": "ck4b1gi1e000s0upvmyl8adhr",
+                      "time": 1385046854.282,
+                      "streamId": "diastolic",
+                      "tags": [],
+                      "type": "pressure/mmhg",
+                      "content": 80,
+                      "created": 1576657988.69,
+                      "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
+                      "modified": 1576657988.69,
+                      "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
