@@ -281,7 +281,7 @@ Pryv.io enables you to define different accesses with different levels of permis
 
 Let's imagine that our athlete wants to share pictures of his meals with his nutritionist Bob, and enable his doctor Tom to check the evolution of his blood oxygenation. 
 
-To do so, he needs to give permission to his nutritionist Bob to "manage" the stream `FoodA` on which the pictures of his meals are uploaded. The level "manage" will enable Bob to not only consult the pictures, but also create, modify and delete child streams of `FoodA`, by adding his comments on a new child stream of `FoodA`, e.g `Nutritionist Notes`. 
+To do so, he needs to give permission to his nutritionist Bob to "manage" the stream `FoodA` on which the pictures of his meals are uploaded. The level "contribute" will enable Bob to not only view the pictures, but also add his comments as new events in the stream `nutritionApp`. 
 
 ![Access distribution for Bob](/assets/images/getting-started/access_bob.png)
 
@@ -293,23 +293,23 @@ The access for the nutritionist Bob will be created by a `POST` call on accesses
   "permissions": [
     {
       "streamId": "FoodA",
-      "level": "manage"
+      "level": "contribute"
     }
   ]
 }
 ```
-Similarly, the athlete will give access to the stream `bloodOxygenation` to doctor Tom on a "read" level for the doctor to be able to consult the evolution of the blood oxygenation.
+Similarly, the athlete will give access to the stream `heartRate` to doctor Tom on a "read" level for the doctor to be able to consult the evolution of his heart rate.
 
 ![Access distribution for Tom](/assets/images/getting-started/access_tom.png)
 
-This will be translated into the creation of a new read access on the stream `bloodOxygenation`(see [accesses.create](https://api.pryv.com/reference/#create-access)):
+This will be translated into the creation of a new read access on the stream `heartRate`(see [accesses.create](https://api.pryv.com/reference/#create-access)):
 
 ```json
 {
   "name": "For Doctor Tom",
   "permissions": [
     {
-      "streamId": "bloodOxygenation",
+      "streamId": "heartRate",
       "level": "read"
     }
   ]
@@ -326,8 +326,6 @@ As you can see from the example above, each permission specifies a `streamId`, t
 - `manage`: Enables users to fully control the stream. Can create, update, delete and move the stream.
 
 A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](http://api.pryv.com/reference/#access).
-
-Finally, note that an existing access can be used to create other accesses, but only if the new access has lower permissions (Shared < App < Personal and Read < Contribute < Manage). Also, an access can create other accesses only in the same scope, namely with permissions on the same streams and their childrens.
 
 # What Next?
 

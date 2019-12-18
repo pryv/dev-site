@@ -77,14 +77,6 @@ In our case :
   {
     "method": "streams.create",
     "params": {
-      "id": "smartwatchA",
-      "parentId": "pulseOximeterApp",
-      "name": "Smart Watch A"
-    }
-  },
-  {
-    "method": "streams.create",
-    "params": {
       "id": "blood",
       "name": "Blood"
     }
@@ -95,14 +87,6 @@ In our case :
       "id": "bloodOxygenation",
       "parentId": "blood",
       "name": "Blood Oxygenation"
-    }
-  },
-  {
-    "method": "streams.create",
-    "params": {
-      "id": "pulseOximeterApp",
-      "parentId": "bloodOxygenation",
-      "name": "Pulse Oximeter Application"
     }
   },
   {
@@ -157,14 +141,6 @@ In our case :
       "id": "foodB",
       "parentId": "foodConsumption",
       "name": "Food B"
-    }
-  },
-  {
-    "method": "streams.create",
-    "params": {
-      "id": "nutritionApp",
-      "parentId": "foodB",
-      "name": "Nutrition App"
     }
   }
 ]
