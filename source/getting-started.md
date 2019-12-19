@@ -13,7 +13,7 @@ We will guide you through:
 1. [Creating a User](#create-a-pryv-lab-user)
 2. [Obtaining an Access Token](#obtain-an-access-token)
 3. [Data Modelling](#data-modelling)
-4. [Managing Access](#access-management)
+4. [Managing Accesses](#access-management)
 
 # Create a Pryv Lab User
 
@@ -53,7 +53,7 @@ Once data is added to your account, you can select which streams to visualize on
 
 Now that your Pryv Lab account has been created, you can start adding data. In order to do so using code or API clients such as cURL or Postman, you need to obtain an access token.
 
-The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of our oAuth-like process).
+The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authorizing-your-app)).
 
 1. Go to [the Pryv Access Token Generator: https://api.pryv.com/app-web-access/](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me)
 2. Set up the required parameters :
@@ -277,11 +277,11 @@ You might want to give permissions to applications and third-parties to access a
 In a previous [section](#obtain-an-access-token), we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. This token represents the access your application has to a user account; it only expires when the user retracts his consent. 
 This token should be stored permanently and securely in your application.
 
-Pryv.io enables you to define different accesses with different levels of permissions for third-parties to interact with your data, or only particular folders of your data.
+Pryv.io enables you to define accesses with different levels of permissions for third-parties to interact with your data, or only particular folders of your data.
 
 Let's imagine that our athlete wants to share pictures of his meals with his nutritionist Bob, and enable his doctor Tom to check the evolution of his blood oxygenation. 
 
-To do so, he needs to give permission to his nutritionist Bob to "manage" the stream `FoodA` on which the pictures of his meals are uploaded. The level "contribute" will enable Bob to not only view the pictures, but also add his comments as new events in the stream `nutritionApp`. 
+To do so, he needs to give permission to his nutritionist Bob to "contribute" to the stream `FoodA` on which the pictures of his meals are uploaded. The level "contribute" will enable Bob to not only view the pictures, but also add his comments as new events in the stream `nutritionApp`. 
 
 ![Access distribution for Bob](/assets/images/getting-started/access_bob.png)
 
@@ -318,7 +318,7 @@ This will be translated into the creation of a new read access on the stream `he
 
 Thus, each access is defined by a "name", a set of "permissions" and a "type" that is optional.
 
-Pryv.io distinguishes between three access types ("shared", "app" and "personal") which are explained in the corresponding [section](http://api.pryv.com/concepts/#accesses).
+Pryv.io distinguishes between three access types ("shared", "app" and "personal") which are explained in the [corresponding section](http://api.pryv.com/concepts/#accesses).
 
 As you can see from the example above, each permission specifies a `streamId`, the id of the stream to which we want to give access, and an access `level`, which can be one of the following:
 - `read`: Enables users to view the stream and its contents (sub-streams and events).
