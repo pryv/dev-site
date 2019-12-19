@@ -23,9 +23,9 @@ For this we suggest to implement the following ways to load its configuration:
   https://sample.domain/app/index.html?pryvApiEndpoint=https://cdtasdjhashdsa@testuser.pryv.me
   ```
 
-  Note: service infos should be retrieved by appending '/service/info' to the value given by `pryvApiEndpoint`.
+  Note: service information should be retrieved by appending the path `/service/info` to the value given by `pryvApiEndpoint`.
 
-2. **pryvServiceInfo** query param
+2. **pryvServiceInfoUrl** query param
 
   Example: `https://reg.pryv.me/service/info` as service information URL
 
@@ -38,5 +38,5 @@ For this we suggest to implement the following ways to load its configuration:
 If multiple parameters are provided, the following order of priority should be used:  
 
 1. `pryvApiEndpoint` as query parameter
-2. `pryvServiceInfo` as query parameter
-3. `pryvApiEndpoint` as default value
+2. `pryvServiceInfoUrl` as query parameter
+3. `pryvServiceInfoUrl` as default value
