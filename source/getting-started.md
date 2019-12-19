@@ -6,52 +6,163 @@ withTOC: true
 ---
 
 In this tutorial, we will help you to try out and evaluate Pryv.io API for your
-projects. Throughout these steps, we will use **Pryv.me**, our [Lab platform](http://pryv.com/pryvlab/) for testing Pryv.io API.
+projects. Throughout these steps, we will use our [Lab platform](https://pryv.com/pryvlab/) for testing the Pryv.io API.
 
 We will guide you through:
 
-1. [Creating a Pryv.me User](#user-creation)
-2. [Data Modelling](#data-modelling-tips)
-3. [Authorizing your Application](#authorize-your-application)
-4. [Using CRUD operations: Create, Read, Update, Delete](#create-read-update-delete)
-5. [Managing Access](#access-management)
+1. [Creating a User](#create-a-pryv-lab-user)
+2. [Obtaining an Access Token](#obtain-an-access-token)
+3. [Data Modelling](#data-modelling)
+4. [Managing Accesses](#access-management)
 
-# Create a Pryv.me User
+# Create a Pryv Lab User
 
-By registering with **Pryv.me**, you will have access to a Pryv.io user and a fully-functional Pryv.io environment hosted in our laboratory infrastructure, perfect for your first tests.
+By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
 
-1. Go to the [registration page](https://sw.pryv.me/access/register.html) (click the link).
-2. Fill in the form, choose [where you want to store your data](http://api.pryv.com/concepts/#servers) and click the '**Create**' button.
+1. Go to the [registration page](https://sw.pryv.me/access/register.html).
+2. Fill in the form, choose [where you want to store your data](http://api.pryv.com/concepts/#servers) under 'Hosting' and click on the '**Create**' button.
 
-That's it! You will receive a welcome email from Pryv.me with your account details.
+*Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.*
 
-/!\ Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.
+Once this is done, you will receive a welcome email from the **Pryv Lab** with your account details. You can sign-in with your Pryv.io account on the following link:
 
-## Sign-in to Pryv.me
+[https://sw.pryv.me/access/signinhub.html](https://sw.pryv.me/access/signinhub.html)
 
-Go to the following address to sign-in with your Pryv.io account:
+You have now access to your Pryv Lab account through the Pryv.io demo dashboard web application.
 
-`'https://${username}.pryv.me/#/SignIn'`
+## Pryv demo Dashboard
 
-You have now access to your Pryv.me account through the Pryv.io demo dashboard. Alternatively, just click [here](https://sw.pryv.me/access/signinhub.html), enter your username and then your password in the second step.
+The Pryv demo dashboard is a data visualization tool. 
 
-As shown below, the streams for this account are listed, especially a default stream which is automatically created for you: 'Diary'.
+![Dashboard Image](/assets/images/getting-started/dashboard-image-git.png)
 
-![Pryv.me Dashboard: Streams](/assets/images/getting-started/streams_dashboard.png)
+It enables you to visualize the "events" you created, corresponding to timestamped data - that can be in the form of notes, images, GPS location, data points, etc - and to organize them into "streams", while managing the access level to this data.
+To get more information on the Pryv data model of events and streams, you can jump to the [**dedicated chapter**](#data-modelling).
 
-# Data Modelling Tips
+The dashboard will therefore be used to get a visual display of the data you will create and add to your account throughout this guide. 
+As shown below, once you connect to your account, the home page of your dashboard displays the list of streams of your account, where a default stream `Diary` is automatically created.
 
-The Pryv.io data model is composed mainly of two entities: **events** and **streams**.
+![Pryv Lab Dashboard: Streams](/assets/images/getting-started/streams_dashboard.png)
 
-Here's an example of two Pryv.io user accounts and their respective streams. Inside each stream, you can see timestamped events.
+You can easily add content (notes, pictures, positions) directly from the dashboard and select in which stream to put it.
+Once data is added to your account, you can select which streams to visualize on the dashboard and which time period to display by using the scroll bar on the bottom of the dashboard.
 
-![Pryv.io Data Model](/assets/images/getting-started/PryvIO.png)
+![Johann Dashboard](/assets/images/getting-started/dashboard_johann.png)
+
+# Obtain an Access Token
+
+Now that your Pryv Lab account has been created, you can start adding data. In order to do so using code or API clients such as cURL or Postman, you need to obtain an access token.
+
+The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authorizing-your-app)).
+
+1. Go to [the Pryv Access Token Generator: https://api.pryv.com/app-web-access/](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me)
+2. Set up the required parameters :
+
+   1. Enter the Application ID (ex.: `demopryv-access`)
+   2. Setup the streams you want to grant access to in the permissions box
+      ![Permissions Box](/assets/images/getting-started/permissions_box.png)
+
+      ```json
+      [
+        {
+          "streamId": "heart",
+          "level": "manage",
+          "defaultName": "Heart"
+        }
+      ]
+      ```
+
+   3. Click on '**Request Access**' button
+
+3. Now click on the '**Sign in**' button ![sign_in_button](/assets/images/getting-started/sign_in_button.png) - A new tab will open
+4. Sign in with your Pryv Lab credentials
+   ![Sign In Dialog](/assets/images/getting-started/sign_in.png)
+   A popup will open to inform you about the access you are about to grant.
+5. Click on '**Accept**' button
+
+   By accepting, you consent that the 'demopryv-access' application can access the stream `Heart` with a "manage" access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the `defaultName` parameter above.
+
+   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
+
+   ![Accept Button](/assets/images/getting-started/accept_button.png)
+
+6. **Your access token has been generated.**
+   ![Access Token](/assets/images/getting-started/access_token.png)
+
+# Data Modelling
+
+In this section, we provide you information on the basic concepts of the Pryv.io data model.
+When adding data to your account, you need to comply with Pryv's conventions by organizing it into "streams" and "events".
+
+To see examples and possible scenarios you might encounter, please check the [**dedicated page**](/guides/data-modelling) to learn how the data model should be structured and implemented depending on your use case.
+
+The Pryv.io data model is composed of two entities: **events** and **streams**.   
+
+All the data that you collect and aggregate should follow an organisation in streams and events. 
+Inside each stream can be found timestamped events : 
+
+![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
+
+### Streams
+
+**Streams** are the main way of encoding context for events and are organised in a hierarchical way. They can have sub-streams and usually correspond to organizational levels for the user (e.g. life journal, blood pressure recording, etc.) or encode data sources (e.g. apps and/or devices).
+
+To learn how to perform CRUD (create, read, update, delete) operations on streams, please refer to the guide ["**How to manipulate streams?**"](/guides/manage-streams).
+
+![Stream example](/assets/images/getting-started/stream_level_1.png)
+
+Here is an example of a **stream** with sub-streams (children): the **Pulse Oximeter App** has a dedicated substream, which collects "events" such as the heart rate measurements.
+
+```json
+{
+  "id": "heart",
+  "name": "Heart",
+  "parentId": null,
+  "created": 1528445539.785,
+  "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+  "modified": 1528445581.592,
+  "modifiedBy": "cjhagb5up1b950b40xsbeh5yj",
+  "clientData": {
+    "pryv-browser:bgColor": "#e81034"
+  },
+  "children": [
+    {
+      "id": "heartRate",
+      "name": "Heart Rate",
+      "parentId": "heart",
+      "created": 1528445684.508,
+      "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+      "modified": 1528445684.508,
+      "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+      "children": [
+        {
+          "id": "pulseOximeterApp",
+          "name": "Pulse Oximeter App",
+          "parentId": "heartRate",
+          "created": 1528445704.807,
+          "createdBy": "cji5os3u11ntt0b40tg0xhfea",
+          "modified": 1528445704.807,
+          "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
+          "children": []
+        }
+      ]
+    }
+  ]
+}
+```
 
 ### Events
 
-Events are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data.
+**Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in one stream. 
+Events either have a type from the list of [**standard event types**](/event-types/#directory) to allow interoperability, or an application-specific type. 
 
-Here's an example of an event:
+To learn how to perform CRUD (create, read, update, delete) operations on events, please refer to the guide ["**How to manipulate events?**"](/guides/manage-events).
+
+Our athlete will therefore be adding events of different types, each related to specific streams:
+
+![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
+
+Here's an example of an event, corresponding to the heart rate collected by the Pulse Oximeter App as described in the streams structure above :
 
 ```json
 {
@@ -68,553 +179,158 @@ Here's an example of an event:
 }
 ```
 
-[Events](http://api.pryv.com/concepts/#events) either have a type from the list of [standard event types](http://api.pryv.com/event-types/#directory) or they have an application specific type. For more details, see the [events API reference](http://api.pryv.com/reference/#event).
+Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](http://api.pryv.com/event-types/). 
 
-### Streams
-
-Streams are the main way of encoding context for events. Every event occurs in one stream. Streams follow a hierarchical structure. They can have sub-streams and usually match either user-specific, app-specific or organizational levels (e.g. life journal, work projects) or encode data sources (e.g. apps and/or devices).
-
-Here an example of a stream with sub-streams (children):
+Basic event types include :
+- [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `count/steps` can be used to record the counting of objects (eggs, apples, steps etc.). In the case of our athlete, we can use this type to count the daily number of steps recorded by the smartwatch A;
 
 ```json
 {
-  "name": "Heart",
-  "parentId": null,
-  "created": 1528445539.785,
-  "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-  "modified": 1528445581.592,
-  "modifiedBy": "cjhagb5up1b950b40xsbeh5yj",
-  "clientData": {
-    "pryv-browser:bgColor": "#e81034"
-  },
-  "id": "heart",
-  "children": [
+  "id": "c3jkdjdt000ze64d8u9z4hap",
+  "streamId": "smartwatchA",
+  "type": "count/steps",
+  "content": 14972,
+  "time": 1589358119.329,
+  "tags": []
+}
+```
+
+- [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activities and measurements. In the case of our athlete, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has three properties : the systolic and diastolic blood pressure stored in mmHg, and the heart rate in bpm.
+
+```json
+{
+  "id": "c4jghrjkj011ez46d8u4y3pah",
+  "streamId": "pulseOximeterApp",
+  "type": "blood-pressure/bpm-mmhg",
+  "content": {
+      "systolic": 100, 
+      "diastolic": 70, 
+      "rate": 75
+      },
+  "time": 1682359123.3923,
+  "tags": []
+}
+```
+
+More specific event types also involve :
+
+-  **attachments** that can be added to events, for example for our athlete to post pictures of his meals in the stream `FoodA`. 
+![Attachment](/assets/images/getting-started/attachment_example.png)
+
+These events will have the type `picture/attached` :
+
+```json
+{
+  "id": "ck2bzkjdt000ze64d8u9z4pha",
+  "streamId": "foodA",
+  "type": "picture/attached",
+  "content": null,
+  "time": 1572358119.329,
+  "tags": [],
+  "attachments": [
     {
-      "name": "Heart Rate",
-      "parentId": "heart",
-      "created": 1528445684.508,
-      "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-      "modified": 1528445684.508,
-      "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-      "id": "heartRate",
-      "children": [
-        {
-          "name": "Pulse Oximeter App",
-          "parentId": "heartRate",
-          "created": 1528445704.807,
-          "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-          "modified": 1528445704.807,
-          "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-          "id": "pulseOximeterApp",
-          "children": []
-        }
-      ]
+      "id": "ck2bzkjdt000ze64d8u9z4pha",
+      "fileName": "meal1.jpg",
+      "type": "image/jpeg",
+      "size": 2561,
+      "readToken": "ck2bzkjdt0010e64dwu4sy8fe-3yTvQTD630qVT4qBFYtWDwrQ8mb"
     }
   ]
 }
 ```
 
-Imagine an athlete who uses four applications to store data on Pryv.io. All four applications store their data in a single account:
+-  **high-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](http://api.pryv.com/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch A to collect GPS position in real-time of the athlete. 
+![HF](/assets/images/getting-started/hf_example.png)
 
-- **Nutrition Mobile App**: Tracks the consumption of various types of food ('calories ingested').
-- **Smartwatch A**: Monitors performance during the training ('calories burned', 'pulse rate').
-- **Smartwatch B**: Linked to the same application but only used to monitor the 'calories burned' outside of training.
-- **Pulse Oximeter**: Used at home to check the health of the heart ('pulse rate', 'blood oxygenation / SpO2')
-
-Here is a list of data generated by the applications and their corresponding Pryv types :
-
-| Data              | Type               |
-| ----------------- | :----------------- |
-| Heart rate        | `frequency/bpm`    |
-| Blood oxygenation | `oxygen-rate/spo2` |
-| Nutrition         | `energy/calories`  |
-| Physical activity | `energy/calories`  |
-
-Given this situation, we would recommend a streams structure similar to the following:
-
-![Example Streams Structure](/assets/images/getting-started/example_streams.png)
-
-This stream structure has multiple benefits:
-
-- Provides enough context to the data and thus avoids ambiguities:
-  - between food consumption ('calories ingested') and physical activity ('calories burned')
-  - between consumption of different food ('foodA', 'foodB')
-- Allows interoperability in the case of multiple devices that:
-  - measure the same type of data through different apps ('heartRate from 'pulseOximeterApp' and 'smartwatchA')
-  - use the same app but measure different parameters ('smartwatchA' : 'heartRate' and 'calories burned', 'smartwatchB' : only 'calories burned')
-
-# Authorize your application
-
-Continuing with our previous example we would like the pulse oximeter application to be able to provision our Pryv.me account with streams and events.
-
-For this purpose the application first needs to request access to the Pryv.io account. We present below two methods to generate a new access for our application, which materializes in the form of an app token.
-
-For more information about Pryv.io accesses [see below](#access-management).
-
-## Use Pryv.io Access Token Generator
-
-The easiest way to generate an app access token is to use the Pryv Access Token Generation page.
-
-1. Go to [the Pryv Access Token Generator: http://pryv.github.io/app-web-access](http://pryv.github.io/app-web-access)
-2. Set up the required parameters
-
-   1. Enter the Application ID ('demopryv-access')
-   2. Setup the streams you want to grant access to in the permissions box
-      ![Permissions Box](/assets/images/getting-started/permissions_box.png)
-
-      ```json
-      [
-        {
-          "streamId": "heart",
-          "level": "manage",
-          "defaultName": "Heart"
-        }
-      ]
-      ```
-
-   3. Click on '**Request Access**' button
-
-3. Now click on '**Sign in**' button ![sign_in_button](/assets/images/getting-started/sign_in_button.png) - A new tab will open
-4. Sign in with your Pryv account
-   ![Sign In Dialog](/assets/images/getting-started/sign_in.png)
-   A popup will open to inform you about the access you are about to grant.
-5. Click on '**Accept**' button
-
-   By accepting you consent that the 'demopryv-access' application can access the stream 'heart' with a 'manage' access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the 'defaultName' parameter above.
-
-   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
-
-   ![Accept Button](/assets/images/getting-started/accept_button.png)
-
-6. **Your access token has been generated.**
-   ![Access Token](/assets/images/getting-started/access_token.png)
-
-## Use your own implementation
-
-Instead of using the token generator page, it is also possible to implement the authorization process in code and obtain an access token by following the steps below.
-
-1. Send an access request with a `POST` call to `https://access.${domain}/access`:
-
-```bash
-curl -X POST https://reg.pryv.me/access -H 'Content-Type: application/json' \
-  -d '{
-  "requestingAppId": "demopryv-access",
-  "requestedPermissions": [
-    {
-      "streamId": "heart",
-      "level": "manage",
-      "defaultName": "Heart"
-    }
-  ],
-  "languageCode": "fr",
-  "returnURL": false
-}'
-```
-
-The server should respond with something similar to this:
+This data will have the type `position/wgs84` :
 
 ```json
 {
-  "status": "NEED_SIGNIN",
-  "code": 201,
-  "key": "Rp3NBpMBnkCOuuAo",
-  "requestingAppId": "demopryv-access",
-  "requestedPermissions": [
-    {
-      "streamId": "heart",
-      "level": "manage",
-      "defaultName": "Heart"
-    }
-  ],
-  "url": "https://sw.pryv.me/access/access.html?lang=fr&key=Rp3NBpMBnkCOuuAo&requestingAppId=demopryv-access&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22heart%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Heart%22%7D%5D",
-  "poll": "https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo",
-  "returnURL": false,
-  "poll_rate_ms": 1000
-}
-```
-
-2. Get the url parameter from the previous response and copy it into your web browser.
-
-```raw
-https://sw.pryv.me/access/access.html?lang=fr&key=Rp3NBpMBnkCOuuAo&requestingAppId=demopryv-access&returnURL=false&domain=pryv.io&registerURL=https%3A%2F%2Freg.pryv.me%3A443&requestedPermissions=%5B%7B%22streamId%22%3A%22heart%22%2C%22level%22%3A%22manage%22%2C%22defaultName%22%3A%22Heart%22%7D%5D
-```
-
-3. Sign in with your Pryv account:
-
-   A popup will open to inform you about the access are about to grant.
-
-4. Click on '**Accept**' button
-5. Retrieve the poll url from the previous response.
-
-```json
-"poll": "https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo"
-```
-
-6. Poll the access token with `GET` calls to the polling url:
-
-```bash
-curl -i GET https://reg.pryv.me:443/access/Rp3NBpMBnkCOuuAo
-```
-
-Once the access is generated, you should get a response with status _Accepted_ and containing the token :
-
-```json
-{
-  "status": "ACCEPTED",
-  "username": "demopryv",
-  "token": "cjhj7i2821eq60b40dzcdx6gt",
-  "code": 200
-}
-```
-
-This token represents the access your application has to a users account; it only expires when the user retracts his consent. You should store this token permanently and securely in your application.
-
-# Create, Read, Update, Delete
-
-Now that we've generated an application token, we can use it against Pryv.io API to manipulate data of the Pryv.me account, still based on the example of our athlete.
-
-## Create Operations
-
-### Streams
-
-Let's setup the context for the Pulse Oximeter measures by attaching child streams to the 'heart' root stream.
-
-We perform a 'POST' call to the streams route, providing the 'id' and 'name' of the stream to create and a 'parentId', the id of the parent stream.
-
-First, we create the 'heartRate' stream :
-
-```bash
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -H "Authorization: ${token}" \
-  -d '{
-  	"id":"heartRate",
-  	"name":"Heart Rate",
-  	"parentId":"heart"
-	}' \
-  'https://${username}.${domain}/streams'
-```
-
-Do the same for the 'pulseOximeterApp' stream:
-
-```bash
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -H "Authorization: ${token}" \
-  -d '{
-  	"id":"pulseOximeterApp",
-  	"name":"Pulse Oximeter App",
-  	"parentId":"heartRate"
-	}' \
-	'https://${username}.${domain}/streams'
-```
-
-### Events
-
-Once the streams have been created, we can collect the Pulse Oximeter measures as events.
-
-Create an event of type 'frequency/bpm' with a pulse rate (integer) as content in the Stream 'pulseOximeterApp'.
-
-```bash
-curl -X POST \
-	-H "Content-Type: application/json" \
-	-H "Authorization: ${token}" \
-  -d '{
-		"streamId": "pulseOximeterApp",
-		"type": "frequency/bpm",
-		"content": 90
-	}' \
-	'https://${username}.${domain}/events'
-```
-
-## Read Operations
-
-### Streams
-
-Use a 'GET' call to retrieve the heart stream and its childrens.
-
-```bash
-curl -i -H "Authorization: ${token}" \
-	https://${username}.${domain}/streams
-```
-
-Response:
-
-```json
-{
-  "streams": [
-    {
-      "name": "Heart",
-      "created": 1528445539.785,
-      "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-      "modified": 1528445581.592,
-      "modifiedBy": "cjhagb5up1b950b40xsbeh5yj",
-      "clientData": {
-        "pryv-browser:bgColor": "#e81034"
-      },
-      "id": "heart",
-      "children": [
-        {
-          "name": "Heart Rate",
-          "parentId": "heart",
-          "created": 1528445684.508,
-          "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-          "modified": 1528445684.508,
-          "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-          "id": "heartRate",
-          "children": [
-            {
-              "name": "Pulse Oximeter App",
-              "parentId": "heartRate",
-              "created": 1528445704.807,
-              "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-              "modified": 1528815172.551,
-              "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-              "id": "pulseOximeterApp",
-              "children": []
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528815903.187
-  }
-}
-```
-
-### Events
-
-Similarly, retrieve all the Pulse Oximeter events.
-
-```bash
-curl 	-H "Authorization: ${token}" \
-	-i https://${username}.${domain}/events
-```
-
-Response :
-
-```json
-{
-  "events": [
-    {
-      "streamId": "pulseOximeterApp",
-      "type": "frequency/bpm",
-      "content": 90,
-      "time": 1528447710.816,
-      "tags": [],
-      "created": 1528447710.816,
-      "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-      "modified": 1528447710.816,
-      "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-      "id": "cji5qaxk01nui0b40ec370p94"
-    }
-  ],
-  "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528467864.397
-  }
-}
-```
-
-## Update Operations
-
-### Events
-
-Imagine we want to modify a pulse rate measure from the stream 'pulseOximeterApp':
-
-First, retrieve the id of one event to update from the previous responses of our read operations.
-
-```bash
-${event_id} = cji5qaxk01nui0b40ec370p94
-```
-
-Then, use a 'PUT' call to update the event with a new value.
-
-```bash
-curl -X PUT \
-  -H "Authorization: ${token}" \
-  -H "Content-Type: application/json" \
-  -d '{
-		"content": 80
-	}' \
-	'https://${username}.${domain}/events/${event_id}'
-```
-
-### Streams
-
-Similarly, if we want to update the stream 'pulseOximeterApp' by changing its name, we first retrieve the id of the stream we want to update.
-
-```bash
-${streamId} = pulseOximeterApp
-```
-
-Then, use a `PUT` call to update the name `Pulse Oximeter App` to `Pulse Oximeter Application`.
-
-```bash
-curl -X PUT \
-  -H "Authorization: ${token}" \
-  -H "Content-Type: application/json" \
-  -d '{
-		"name": "Pulse Oximeter Application"
-	}' \
-	'https://${username}.${domain}/streams/${streamId}'
-```
-
-## Delete Operations
-
-The delete operation has two phases:
-
-- Trash - Event/Stream disappears, but can be restored.
-- Delete - Event/Stream disappears forever.
-
-When deleting an event or a stream, it is first flagged as trashed and irreversibly deleted only when repeating the delete operation a second time.
-
-### Events
-
-For example, if we want to delete our Pulse Rate event, we use a 'DELETE' call to trash it first and a second same call to delete it completely.
-
-First we retrieve the id of the event to delete.
-
-```bash
-${event_id} = cji5qaxk01nui0b40ec370p94
-```
-
-Then we trash the event (trashed=true):
-
-```bash
-curl -X DELETE \
-  -H "Authorization: ${token}" \
-  'https://${username}.${domain}/events/${event_id}'
-```
-
-Response:
-
-```json
-{
-  "event": {
-    "streamId": "pulseOximeterApp",
-    "type": "frequency/bpm",
-    "content": 105,
-    "time": 1528878365.385,
+  "id": "ck2klss8v00124yjx45s3jp5r",
+    "time": 1572882785.023,
+    "streamId": "position",
     "tags": [],
-    "created": 1528878365.385,
-    "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-    "modified": 1528895740.264,
-    "modifiedBy": "cjicv106i1q580b40678kjb17",
-    "trashed": true,
-    "id": "cjicupcqx1q530b40oao5ob02"
-  },
-  "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528895740.267
+    "type": "series:position/wgs84",
+    "content": {
+      "elementType": "position/wgs84",
+      "fields": [
+        "deltaTime",
+        "latitude",
+        "longitude"
+      ],
   }
 }
 ```
 
-Finally, we delete the event completely. The API returns a list of deletion ids.
+More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
 
-```bash
-curl -X DELETE \
-  -H "Authorization: ${token}" \
-  'https://${username}.${domain}/events/${event_id}'
-```
+- **start** and **stop** events. This can be very useful for time-tracking, enabling the athlete to track and report his activities in real-time (ex.: running, cycling, exercising, etc).
+This allows to specify time durations for events or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [**here**](/reference/#start-period).
 
-Response:
+To get more details on all possible event types, see the [**events API reference**](/reference/#event).
 
-```json
-{
-  "eventDeletion": {
-    "id": "cji5qaxk01nui0b40ec370p94"
-  },
-  "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528817673.092
-  }
-}
-```
-
-### Streams
-
-Now, we will delete the stream 'pulseOximeterApp'. The procedure looks like deleting an event:
-
-```bash
-${stream_id} = pulseOximeterApp
-```
-
-We repeat the following command two times, one for trashing the stream and another for deleting it :
-
-```bash
-curl -X DELETE \
-  -H "Authorization: ${token}" \
-  'https://${username}.${domain}/streams/${stream_id}'
-```
-
-When trying to delete the stream, you may encounter the following error message:
-
-```json
-{
-  "error": {
-    "id": "invalid-parameters-format",
-    "message": "There are events referring to the deleted items and the `mergeEventsWithParent` parameter is missing."
-  },
-  "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528890640.148
-  }
-}
-```
-
-This means that the stream you are trying to delete still contains some events and Pryv.io needs to know what to do with them. You can add the 'mergeEventsWithParent' boolean as query parameter of your delete call. Set it to _true_ if you want to merge the events into the parent stream or to _false_ if you want to delete them as well.
-
-Here is the command for deleting the stream and merging the events in the parent stream:
-
-```bash
-curl -X DELETE \
-  -H "Authorization: ${token}" \
-  'https://${username}.${domain}/streams/${streamId}?mergeEventsWithParent=true'
-```
-
-Response:
-
-```json
-{
-  "streamDeletion": {
-    "id": "pulseOximeterApp"
-  },
-  "meta": {
-    "apiVersion": "1.2.18",
-    "serverTime": 1528890935.505
-  }
-}
-```
 
 # Access Management
 
-In our previous examples, we used an app token corresponding to a new access we generated at the end of the [Authorization flow](#authorize-your-application).
+You might want to give permissions to applications and third-parties to access and manage your account (by reading or adding new data).
 
-Each access is defined by a 'name', a 'type' and a set of 'permissions'.
+In a previous [section](#obtain-an-access-token), we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. This token represents the access your application has to a user account; it only expires when the user retracts his consent. 
+This token should be stored permanently and securely in your application.
 
-Pryv.io distinguishes between these access types:
+Pryv.io enables you to define accesses with different levels of permissions for third-parties to interact with your data, or only particular folders of your data.
 
-- _Shared_: used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels, depending on the sharing user's choice. You will not encounter this access type in your applications.
-- _App_: used by applications which don't need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs. This is the type of access we used for our Pulse Oximeter application.
-- _Personal_: used by applications that need to access to the entirety of the user's data and/or manage account settings.
+Let's imagine that our athlete wants to share pictures of his meals with his nutritionist Bob, and enable his doctor Tom to check the evolution of his blood oxygenation. 
 
-Each permission specifies a 'streamId', the id of the stream to which we want to give access, and an access 'level', which can be one of the following:
+To do so, he needs to give permission to his nutritionist Bob to "contribute" to the stream `FoodA` on which the pictures of his meals are uploaded. The level "contribute" will enable Bob to not only view the pictures, but also add his comments as new events in the stream `nutritionApp`. 
 
-- `'read'`: Enable users to view the stream and its contents (sub-streams and events).
-- `'contribute'`: Enable users to contribute to one or multiple events of the stream. Cannot create, update, delete and move streams.
-- `'manage'`: Enable users to fully control the stream. Can create, update, delete and move the stream.
+![Access distribution for Bob](/assets/images/getting-started/access_bob.png)
 
-Finally, note that an existing access can be used to create other accesses, but only if the new access has lower permissions (Shared < App < Personal and Read < Contribute < Manage). Also, an access can create other accesses only in the same scope, namely with permissions on the same streams and their childrens.
+The access for the nutritionist Bob will be created by a `POST` call on accesses (see [accesses.create](https://api.pryv.com/reference/#create-access)):
+
+```json
+{
+  "name": "For Nutritionist Bob",
+  "permissions": [
+    {
+      "streamId": "FoodA",
+      "level": "contribute"
+    }
+  ]
+}
+```
+Similarly, the athlete will give access to the stream `heartRate` to doctor Tom on a "read" level for the doctor to be able to consult the evolution of his heart rate.
+
+![Access distribution for Tom](/assets/images/getting-started/access_tom.png)
+
+This will be translated into the creation of a new read access on the stream `heartRate`(see [accesses.create](https://api.pryv.com/reference/#create-access)):
+
+```json
+{
+  "name": "For Doctor Tom",
+  "permissions": [
+    {
+      "streamId": "heartRate",
+      "level": "read"
+    }
+  ]
+}
+```
+
+Thus, each access is defined by a "name", a set of "permissions" and a "type" that is optional.
+
+Pryv.io distinguishes between three access types ("shared", "app" and "personal") which are explained in the [corresponding section](http://api.pryv.com/concepts/#accesses).
+
+As you can see from the example above, each permission specifies a `streamId`, the id of the stream to which we want to give access, and an access `level`, which can be one of the following:
+- `read`: Enables users to view the stream and its contents (sub-streams and events).
+- `contribute`: Enables users to contribute to one or multiple events of the stream. Cannot create, update, delete and move streams.
+- `manage`: Enables users to fully control the stream. Can create, update, delete and move the stream.
+
+A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](http://api.pryv.com/reference/#access).
 
 # What Next?
 
 This concludes our first tour of Pryv.io and some basic things you can do with it. Where to go from here?
 
 - Our [external resources](/external-resources/) page presents some third party and unsupported libraries and sample applications.
-- The [API Reference](/reference/) explains all calls you can make to Pryv.io and their parameters.
+- The [API Reference](/reference/) explains all the calls you can make to Pryv.io and their parameters.
 - To obtain your own Pryv.io installation, please get in contact with our [Sales Team](mailto:sales@pryv.com).
