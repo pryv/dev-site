@@ -98,10 +98,10 @@ module.exports = exports =
     sections: [
       id: "mfa.login"
       type: "method"
-      title: "Login user"
+      title: "Login with MFA"
       http: "POST /auth/login"
       description: """
-                   Proxied login call that initiates MFA authentication,
+                   Proxied [Login](##{_getDocId("auth", "auth.login")}) call that initiates MFA authentication,
                    when MFA is activated for the current user.
                    """
       params:
@@ -151,13 +151,6 @@ module.exports = exports =
                        An expiring MFA session token to be used all along the MFA flow (challenge, verification).
                        """
         ]
-      errors: [
-        key: "forbidden"
-        http: "403"
-        description: """
-                     Invalid MFA session token.
-                     """
-      ]
       examples: [
         title: "Initiating the MFA activation using a phone number."
         params:
