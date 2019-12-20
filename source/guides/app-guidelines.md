@@ -15,6 +15,33 @@ Applications should retrieve configuration parameters from the [service informat
 Web applications should be implemented to be platform agnostic, for example an app should be easily run for the [Pryv Lab platform](https://pryv.com/pryvlab/) as well as your own.
 For this we suggest to implement the following ways to load its configuration:
 
+<script src="/assets/js/raphael.min.js"></script>
+<script src="/assets/js/flowchart.min.js"></script>
+<div id="diagram"></div>
+<div id="flowChartCode" style="visibility: hidden; display:inline;">
+st=>start: Start
+ready=>end: Ready
+fail=>end: Fail
+
+authProcess=>operation: Auth Process
+
+condApiEndPoint=>condition: ApiEndPoint exists?
+condServiceInfo=>condition: ServiceInfo exists?
+
+st->condApiEndPoint
+condApiEndPoint(yes)->ready
+condApiEndPoint(no)->condServiceInfo
+condServiceInfo(no, bottom)->fail
+condServiceInfo(yes, right)->authProcess
+authProcess(top)->condApiEndPoint
+</div>
+<script>
+var diagram = flowchart.parse(document.getElementById('flowChartCode').textContent);
+diagram.drawSVG('diagram');
+</script>
+
+
+
 1. **pryvApiEndpoint** query param
 
   Example:`https://cdtasdjhashdsa@testuser.pryv.me` as API endpoint
