@@ -523,8 +523,8 @@ module.exports = exports =
                  Series data is encoded in the "flatJSON" format:
                  - Each data point in a series has a `"deltaTime"` field that indicates its time difference, since the holder event's [timestamp](#data-structure-timestamp).
                    If a `"timestamp"` field is instead provided, the corresponding `"deltaTime"` will be automatically computed from the holder event's timestamp.
-                 - For [types](https://api.pryv.com/event-types/#directory) that store a single value (e.g. "mass/kg"), a single additional field named `"value"` is created.
-                 - Types that contain multiple properties (e.g. "position/wgs84") will have many fields, whose names can be inferred from the [type reference](https://api.pryv.com/event-types/#position).
+                 - For [types](/event-types/#directory) that store a single value (e.g. "mass/kg"), a single additional field named `"value"` is created.
+                 - Types that contain multiple properties (e.g. "position/wgs84") will have many fields, whose names can be inferred from the [type reference](/event-types/#position).
                  - Optional fields can either be provided or not; omitted values will be set as null.
                  """
     properties: [

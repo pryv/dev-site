@@ -55,7 +55,7 @@ Now that your Pryv Lab account has been created, you can start adding data. In o
 
 The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authorizing-your-app)).
 
-1. Go to [the Pryv Access Token Generator: https://api.pryv.com/app-web-access/](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me)
+1. Go to [the Pryv Access Token Generator: https://api.pryv.com/app-web-access/](/app-web-access/?pryv-reg=reg.pryv.me)
 2. Set up the required parameters :
 
    1. Enter the Application ID (ex.: `demopryv-access`)
@@ -285,7 +285,7 @@ To do so, he needs to give permission to his nutritionist Bob to "contribute" to
 
 ![Access distribution for Bob](/assets/images/getting-started/access_bob.png)
 
-The access for the nutritionist Bob will be created by a `POST` call on accesses (see [accesses.create](https://api.pryv.com/reference/#create-access)):
+The access for the nutritionist Bob will be created by a `POST` call on accesses (see [accesses.create](/reference/#create-access)):
 
 ```json
 {
@@ -302,7 +302,7 @@ Similarly, the athlete will give access to the stream `heartRate` to doctor Tom 
 
 ![Access distribution for Tom](/assets/images/getting-started/access_tom.png)
 
-This will be translated into the creation of a new read access on the stream `heartRate`(see [accesses.create](https://api.pryv.com/reference/#create-access)):
+This will be translated into the creation of a new read access on the stream `heartRate`(see [accesses.create](/reference/#create-access)):
 
 ```json
 {

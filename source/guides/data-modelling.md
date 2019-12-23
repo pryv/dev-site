@@ -250,4 +250,4 @@ You can then add events to the different streams at once by doing an [events.cre
 ]
 ```
 
-If the stream already exists, the error `item-already-exists` will be displayed (See [streams.create](https://api.pryv.com/reference/#create-stream) specific errors for more information).
+If the stream already exists, the error `item-already-exists` will be displayed (See [streams.create](/reference/#create-stream) specific errors for more information).
