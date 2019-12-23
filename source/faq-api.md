@@ -33,7 +33,7 @@ The user creation API call uses a token, by not making this token public, it is 
 
 ### Is there an API call for user creation?
 
-The API call for user creation is defined in [app-web-auth3](https://github.com/pryv/app-web-auth3/blob/master/src/components/models/Pryv.js#L148), please contact us for more information.
+The API call for user creation is defined in [API system reference](/reference-system/#account-creation), please contact us for more information.
 
 ### What if I don't want to provide an email registration phase?
 
