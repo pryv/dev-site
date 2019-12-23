@@ -23,10 +23,10 @@ st=>start: Start
 ready=>end: Ready
 fail=>end: Fail
 
-authProcess=>operation: Auth Process
+authProcess=>operation: Auth Process:>/reference/#authorizing-your-app
 
-condApiEndPoint=>condition: ApiEndPoint exists?
-condServiceInfo=>condition: ServiceInfo exists?
+condApiEndPoint=>condition: pryvApiEndpoint?
+condServiceInfo=>condition: pryvServiceInfoUrl?
 
 st->condApiEndPoint
 condApiEndPoint(yes)->ready
@@ -44,20 +44,20 @@ diagram.drawSVG('diagram');
 
 1. **pryvApiEndpoint** query param
 
-  Example:`https://cdtasdjhashdsa@testuser.pryv.me` as API endpoint
+  Example:`https://cdtasdjhashdsa@testuser.pryv.me` as API endpoint (URL encoded)
 
   ```
-  https://sample.domain/app/index.html?pryvApiEndpoint=https://cdtasdjhashdsa@testuser.pryv.me
+  https://sample.domain/app/index.html?pryvApiEndpoint=https%3A%2F%2Fcdtasdjhashdsa%40testuser.pryv.me
   ```
 
   Note: service information should be retrieved by appending the path `/service/info` to the value given by `pryvApiEndpoint`.
 
 2. **pryvServiceInfoUrl** query param
 
-  Example: `https://reg.pryv.me/service/info` as service information URL
+  Example: `https://reg.pryv.me/service/info` as service information URL (URL encoded)
 
   ```
-  https://sample.domain/app/index.html?pryvServiceInfo=https://reg.pryv.me/service/info
+  https://sample.domain/app/index.html?pryvServiceInfo=https%3A%2F%2Freg.pryv.me%2Fservice%2Finfo
   ```
 
 **Prevalence** 
