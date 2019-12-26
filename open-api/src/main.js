@@ -42,8 +42,12 @@ dataStructureRoot.sections.forEach(ds => {
   if (ds.id === 'timestamp') {
     struct.type = 'number';
   }
-
-  schemas[ds.id] = struct;
+  if (ds.id === 'key-value') {
+    struct.type = 'object';
+    struct.additionalProperties = true;
+  }
+  
+   schemas[ds.id] = struct;
 });
 
 

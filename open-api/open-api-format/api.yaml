@@ -1459,7 +1459,9 @@ components:
         deleted:
           description: The time the item was deleted.
           $ref: "#/components/schemas/timestamp"
-    key-value: {}
+    key-value:
+      type: object
+      additionalProperties: true
     error:
       type: object
       properties:
