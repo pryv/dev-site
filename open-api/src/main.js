@@ -16,17 +16,15 @@ dataStructureRoot.sections.forEach(s => {
 let api = metadata;
 api.paths = {};
 
-
 // SCHEMAS (DATA STRUCTURES)
 
 const schemas = {};
 
 dataStructureRoot.sections.forEach(ds => {
-  const struct = {
-    type: 'object',
-    properties: {}
-  };
+  const struct = {};
   if (ds.properties != null) {
+    struct.type = 'object';
+    struct.properties = {};
     ds.properties.forEach(p => {
       struct.properties[p.key] = {
         uniqueItems: p.unique,
@@ -35,12 +33,20 @@ dataStructureRoot.sections.forEach(ds => {
         description: p.description,
       }
       _.merge(struct.properties[p.key], parseType(p));
-
     });
   }
-  
+
+  if (ds.id === 'identifier') {
+    struct.type = 'string';
+  }
+  if (ds.id === 'timestamp') {
+    struct.type = 'number';
+  }
+
   schemas[ds.id] = struct;
 });
+
+
 
 api.components = {
   schemas: schemas,
