@@ -19,7 +19,7 @@ module.exports = exports =
                  https://{username}.pryv.me
                  ```
 
-                 Each user account has a dedicated root API endpoint as it is potentially served from a different location.
+                 Each user account has a dedicated root API endpoint as it is potentially served from a different location. The API endpoint format may vary, so check your platform's [service information](#service-info) if needed.
 
                  """
     examples: [
