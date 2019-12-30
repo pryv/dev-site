@@ -199,12 +199,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: "New values for the event's fields: see
-                    [event](#data-structure-event). All fields are optional, and
-                    only modified values must be included."
-                  type: object
+              properties: {}
     post:
       description: Adds one or more file attachments to the event. This request expects
         standard multipart/form-data content, with all content parts being the
@@ -389,12 +384,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: "New values for the stream's fields: see
-                    [stream](#data-structure-stream). All fields are optional,
-                    and only modified values must be included."
-                  type: object
+              properties: {}
     delete:
       description: >-
         Trashes or deletes the specified stream, depending on its current state:
@@ -645,12 +635,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: "New values for the webhook's fields: see
-                    [webhook](#data-structure-webhook). All fields are optional,
-                    and only modified values must be included.  "
-                  type: object
+              properties: {}
     delete:
       description: Deletes the specified webhook. You can only delete webhooks with the app
         access that was used to create them, unless you are using a personal
@@ -731,12 +716,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: "New values for the followed slice's fields: see [followed
-                    slice](#data-structure-followed-slice). All fields are
-                    optional, and only modified values must be included."
-                  type: object
+              properties: {}
     delete:
       description: Deletes the specified followed slice.
       operationId: followedSlices.delete
@@ -791,10 +771,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: An object with the desired key changes (see above).
-                  type: object
+              properties: {}
   "/profile/{id}":
     get:
       description: Gets the specified user profile set.
@@ -829,10 +806,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: An object with the desired key changes (see above).
-                  type: object
+              properties: {}
   /account:
     get:
       description: Retrieves the user's account information.
@@ -857,12 +831,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: "New values for the account information's fields: see
-                    [account information](#data-structure-account). All fields
-                    are optional, and only modified values must be included."
-                  type: object
+              properties: {}
   /account/change-password:
     post:
       description: Modifies the user's password.

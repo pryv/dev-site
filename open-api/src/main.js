@@ -361,6 +361,9 @@ function extractBodyParams(params) {
       param.http.text === 'set in request path') {
       return;
     }
+    if (param.key === 'update') {
+      return; 
+    }
     requestBody.content['application/json'].schema.properties[param.key] = {
       description: param.description,
       type: param.type
