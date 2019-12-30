@@ -354,6 +354,11 @@ function extractBodyParams(params) {
     }
   };
   params.forEach(param => {
+    if (param.http != null && 
+      param.http.text && 
+      param.http.text === 'set in request path') {
+      return;
+    }
     requestBody.content['application/json'].schema.properties[param.key] = {
       description: param.description,
       type: param.type

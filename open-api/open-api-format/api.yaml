@@ -200,9 +200,6 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  description: The id of the event.
-                  type: "[identifier](#data-structure-identifier)"
                 update:
                   description: "New values for the event's fields: see
                     [event](#data-structure-event). All fields are optional, and
@@ -401,9 +398,6 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  description: The id of the stream.
-                  type: "[identifier](#data-structure-identifier)"
                 update:
                   description: "New values for the stream's fields: see
                     [stream](#data-structure-stream). All fields are optional,
@@ -672,9 +666,6 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  description: The id of the webhook.
-                  type: "[identifier](#data-structure-identifier)"
                 update:
                   description: "New values for the webhook's fields: see
                     [webhook](#data-structure-webhook). All fields are optional,
@@ -719,10 +710,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                id:
-                  description: The id of the webhook.
-                  type: "[identifier](#data-structure-identifier)"
+              properties: {}
   /followed-slices:
     get:
       description: Gets followed slices.
@@ -768,9 +756,6 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  description: The id of the followed slice.
-                  type: "[identifier](#data-structure-identifier)"
                 update:
                   description: "New values for the followed slice's fields: see [followed
                     slice](#data-structure-followed-slice). All fields are
@@ -877,9 +862,6 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  description: The id of the profile set.
-                  type: "[identifier](#data-structure-identifier)"
                 update:
                   description: An object with the desired key changes (see above).
                   type: object
