@@ -178,7 +178,6 @@ methodsRoot.sections.forEach(section => {
       api.paths[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
     }
     if (hasSchemaParams(method)) {
-      //api.paths[path][httpMethod].requestBody = dataStructureMap[parseDataStructName(method.params.description, 2)];
       api.paths[path][httpMethod].requestBody = {
         description: parseBy(method.params.description, ':', 0),
         required: true,
