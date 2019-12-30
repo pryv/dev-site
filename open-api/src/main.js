@@ -7,6 +7,7 @@ const removeNulls = require('./cleanup').removeNulls;
 const _ = require('lodash');
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
+const OUTPUT_FILE_PUBLIC = '../source/open-api/3.0/api.yaml';
 
 const dataStructureMap = {};
 dataStructureRoot.sections.forEach(s => {
@@ -375,4 +376,5 @@ function extractResponses(path){
 
 function writeToOutput() {
   fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC, yaml.stringify(api));
 }
