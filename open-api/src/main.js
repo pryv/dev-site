@@ -223,6 +223,23 @@ methodsRoot.sections.forEach(section => {
     // make responses unique per HTTP status (currently overwriting previous responses)
     api.paths[path][httpMethod].responses = responsesPerStatus(api.paths[path][httpMethod].responses);
 
+    // special cases
+    switch(path) {
+      case '/auth/login':
+        api.paths[path][httpMethod].parameters.push({
+          in: 'header',
+          name: 'Origin',
+          schema: {
+            type: 'string',
+            format: 'uri',
+          },
+          required: true,
+        });
+        break;
+      default:
+
+    }
+
   });
 });
 

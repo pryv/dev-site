@@ -19,6 +19,13 @@ paths:
 
         This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).
       operationId: auth.login
+      parameters:
+        - in: header
+          name: Origin
+          schema:
+            type: string
+            format: uri
+          required: true
       responses:
         "200":
           content:
