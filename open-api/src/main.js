@@ -332,6 +332,8 @@ function parseBy(string, sep, pos, end) {
 function extractQueryParams(properties) {
   const params = [];
   properties.forEach(p => {
+    if (p.key === 'id') return;
+
     params.push({
       name: p.key, 
       description: p.description,

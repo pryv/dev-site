@@ -229,10 +229,6 @@ paths:
       operationId: events.delete
       parameters:
         - name: id
-          description: The id of the event.
-          required: true
-          in: query
-        - name: id
       responses:
         "200":
           content:
@@ -314,10 +310,6 @@ paths:
       description: Irreversibly deletes the attached file.
       operationId: events.deleteAttachment
       parameters:
-        - name: id
-          description: The id of the event.
-          required: true
-          in: query
         - name: fileId
           description: The id of the attached file.
           required: true
@@ -413,10 +405,6 @@ paths:
         - If the stream is already in the trash, it will be irreversibly deleted with its descendants (if any). If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`.
       operationId: streams.delete
       parameters:
-        - name: id
-          description: The id of the stream.
-          required: true
-          in: query
         - name: mergeEventsWithParent
           description: Required if actually deleting the item and if it (or any of its
             descendants) has linked events, ignored otherwise. If `true`, the
@@ -482,10 +470,6 @@ paths:
         permissions are a subset of those granted to your own access token.
       operationId: accesses.delete
       parameters:
-        - name: id
-          description: The id of the access.
-          required: true
-          in: query
         - name: id
       responses:
         "200":
@@ -633,10 +617,6 @@ paths:
       operationId: webhooks.getOne
       parameters:
         - name: id
-          description: The id of the webhook.
-          required: true
-          in: query
-        - name: id
       responses:
         "200":
           content:
@@ -677,10 +657,6 @@ paths:
         token.
       operationId: webhooks.delete
       parameters:
-        - name: id
-          description: The id of the webhook.
-          required: true
-          in: query
         - name: id
       responses:
         "200":
@@ -766,10 +742,6 @@ paths:
       operationId: followedSlices.delete
       parameters:
         - name: id
-          description: The id of the followed slice.
-          required: true
-          in: query
-        - name: id
       responses:
         "200":
           content:
@@ -828,10 +800,6 @@ paths:
       description: Gets the specified user profile set.
       operationId: profile.get
       parameters:
-        - name: id
-          description: The id of the profile set.
-          required: true
-          in: query
         - name: id
       responses:
         "200":
