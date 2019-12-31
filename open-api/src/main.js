@@ -1,5 +1,5 @@
-const methodsRoot = require('../transpiled/methods');
-const dataStructureRoot = require('../transpiled/data-structure');
+const methodsRoot = require('../rendered/methods');
+const dataStructureRoot = require('../rendered/data-structure');
 const yaml = require('yaml');
 const fs = require('fs');
 const metadata = require('./metadata');
