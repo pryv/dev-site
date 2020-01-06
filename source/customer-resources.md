@@ -10,23 +10,23 @@ In this space you will find links and reference documents that will help you mak
 
 ## Links
 
-- API Reference: [api.pryv.com/reference](https://api.pryv.com/reference/)
+- API Reference: [api.pryv.com/reference](/reference/)
 
   This reference can be shared with 3rd party and in-house application developers to interact with the Pryv.io platform.
 
-- API Reference including Trusted Apps: [api.pryv.com/reference-full](https://api.pryv.com/reference-full/)
+- API Reference including Trusted Apps: [api.pryv.com/reference-full](/reference-full/)
 
   This reference contains the previous methods' reference and additional resources to develop a trusted application. Only for in-house developments as the platform owner.
 
-- API Reference for system management: [api.pryv.com/reference-system](https://api.pryv.com/reference-system/)
+- API Reference for system management: [api.pryv.com/reference-system](/reference-system/)
 
   This reference contains system management methods' documentation, for the platform owner.
 
-- Functional Requirement Specification: [api.pryv.com/functional-specifications](https://api.pryv.com/functional-specifications/)
+- Functional Requirement Specification: [api.pryv.com/functional-specifications](/functional-specifications/)
 
   Functional specifications for the Pryv.io middleware system: the capabilities and functions that the system must be capable of performing.
 
-- API reference including incoming features: [api.pryv.com/reference-preview](https://api.pryv.com/reference-preview/)
+- API reference including incoming features: [api.pryv.com/reference-preview](/reference-preview/)
 
   In addition to the full reference, this includes upcoming features marked with a `PREVIEW` label.
 
@@ -68,6 +68,14 @@ In this space you will find links and reference documents that will help you mak
 - User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
 
   This document presents a tool which allows to delete Pryv.io users.
+
+- How to backup: [PDF](/assets/docs/20191007-pryv.io-backup-v1.pdf)
+
+  This document describes how to perform a backup of your Pryv.io platform and how to restore it in case of any data loss.
+
+- MFA configuration: [PDF](/assets/docs/20191205-pryv.io-mfa-v2.pdf)
+
+  This document describes how to enable and configure multi-factor authentication on top of Pryv.io logins.
 
 ## Development resources
 

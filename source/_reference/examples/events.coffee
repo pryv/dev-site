@@ -182,3 +182,71 @@ module.exports =
     createdBy: accesses.personal.id
     modified: timestamp.now('-2h')
     modifiedBy: accesses.personal.id
+
+  series:
+    position:
+      format: "flatJSON", 
+      fields: ["deltaTime", "latitude", "longitude", "altitude"], 
+      points: [
+        [0, 10.2, 11.2, 500], 
+        [1, 10.2, 11.2, 510],
+        [2, 10.2, 11.2, 520],
+      ]
+    mass:
+      format: "flatJSON", 
+      fields: ["deltaTime", "value"], 
+      points: [
+        [0, 70], 
+        [1, 71],
+        [2, 72],
+      ]
+    holderEvent:
+      id: generateId()
+      time: timestamp.now()
+      streamId: "position"
+      tags: []
+      type: "series:position/wgs84"
+      content:
+        elementType: "position/wgs84",
+        fields: [
+          "deltaTime",
+          "latitude",
+          "longitude",
+          "altitude",
+          "horizontalAccuracy",
+          "verticalAccuracy",
+          "speed",
+          "bearing"
+        ],
+        required: [
+          "deltaTime",
+          "latitude",
+          "longitude"
+        ]
+      created: timestamp.now()
+      createdBy: accesses.app.id
+      modified: timestamp.now()
+      modifiedBy: accesses.app.id
+    batch:
+      format: "seriesBatch"
+      data: [
+        eventId: generateId()
+        data:
+          format: "flatJSON", 
+          fields: ["deltaTime", "value"], 
+          points: [
+            [0, 70], 
+            [1, 71],
+            [2, 72],
+          ]
+      ,
+        eventId: generateId()
+        data:
+          format: "flatJSON", 
+          fields: ["deltaTime", "latitude", "longitude", "altitude"], 
+          points: [
+            [0, 10.2, 11.2, 500], 
+            [2, 10.2, 11.2, 510],
+            [1, 10.2, 11.2, 520],
+          ]
+      ]

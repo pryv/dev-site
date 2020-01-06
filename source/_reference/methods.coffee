@@ -89,6 +89,270 @@ module.exports = exports =
 
   ,
 
+    id: "mfa"
+    title: "Multi-factor authentication"
+    trustedOnly: true
+    description: """
+                 Methods for handling multi-factor authentication (MFA) on top of the usual [Login method](##{_getDocId("auth", "auth.login")}).
+                 """
+    sections: [
+      id: "mfa.login"
+      type: "method"
+      title: "Login with MFA"
+      http: "POST /auth/login"
+      description: """
+                   Proxied [Login](##{_getDocId("auth", "auth.login")}) call that initiates MFA authentication,
+                   when MFA is activated for the current user.
+                   """
+      params:
+        description: """
+                       Similar to the usual [Login](##{_getDocId("auth", "auth.login")}) parameters.
+                       """
+      result:
+        http: "302 Found"
+        properties: [
+          key: "mfaToken"
+          type: "string"
+          description: """
+                       An expiring MFA session token to be used all along the MFA flow (challenge, verification).
+                       """
+        ]
+      examples: [
+        title: "Login when MFA is activated."
+        params:
+          username: examples.users.one.username
+          password: examples.users.one.password
+          appId: "my-app-id"
+        result:
+          mfaToken: '215bcc40-1296-11ea-9ff7-453ff2437834'
+      ]
+
+    ,
+
+      id: "mfa.activate"
+      type: "method"
+      title: "Activate MFA"
+      http: "POST /mfa/activate"
+      description: """
+                   Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.
+                   
+                   Requires a personal token as [authentication](#basics-authentication), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
+                   """
+      params:
+        description: """
+              The parameters depend entirely on the chosen MFA method and will be forwarded to the service generating the challenge.
+              """
+      result:
+        http: "302 Found"
+        properties: [
+          key: "mfaToken"
+          type: "string"
+          description: """
+                       An expiring MFA session token to be used all along the MFA flow (challenge, verification).
+                       """
+        ]
+      examples: [
+        title: "Initiating the MFA activation using a phone number."
+        params:
+          phone_number: '41791234567'
+        result:
+          mfaToken: '215bcc40-1296-11ea-9ff7-453ff2437834'
+      ]
+
+    ,
+
+      id: "mfa.confirm"
+      type: "method"
+      title: "Confirm MFA activation"
+      http: "POST /mfa/confirm"
+      description: """
+                   Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
+                   
+                   Requires a MFA session token as [authentication](#basics-authentication).
+                   """
+      params:
+        description: """
+              The parameters depend entirely on the chosen MFA method and will be forwarded to the service verifying the challenge.
+              """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "recoveryCodes"
+          type: "array of strings"
+          description: """
+                       An array of recovery codes that can be used for the [MFA recover method](##{_getDocId("mfa", "mfa.recover")}).
+                       """
+        ]
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Invalid MFA session token.
+                     """
+      ]
+      examples: [
+        title: "Finalizing the MFA activation."
+        params:
+          code: '1234'
+        result:
+          recoveryCodes: [ 
+            'fba6e1f6-9f8f-4a0a-9c4f-8cf3458b4c55',
+            'eb81be18-3168-4a44-8914-d97187df991c',
+            'f7d7e863-0589-4779-8ddd-6c7e33df66af',
+            'fb1d579f-2b92-42e3-82fa-8d7154c334f6',
+            '52d3f019-3712-41d3-8c13-4924c3a7a703',
+            'ac9de48c-a47d-46db-b276-e045ba693672',
+            'de1072aa-6ed9-46a7-962c-1f8bb88ece2e',
+            'cb5277cf-af86-47c3-a03e-7cc5011314ac',
+            '16055dff-bc09-4262-b276-d70df82a9a2b',
+            '36c7dd9b-5d23-4fb9-8504-c3e04aeb62c0'
+            ]
+      ]
+
+    ,
+
+      id: "mfa.challenge"
+      type: "method"
+      title: "Trigger MFA challenge"
+      http: "POST /mfa/challenge"
+      description: """
+                   Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).
+                   
+                   Requires a MFA session token as [authentication](#basics-authentication).
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "message"
+          type: "string"
+          description: """
+                       "Please verify the MFA challenge."
+                       """
+        ]
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Invalid MFA session token.
+                     """
+      ]
+    ,
+
+      id: "mfa.verify"
+      type: "method"
+      title: "Verify MFA challenge"
+      http: "POST /mfa/verify"
+      description: """
+                   Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
+                   
+                   Requires a MFA session token as [authentication](#basics-authentication).
+                   """
+      params:
+        description: """
+              The parameters depend entirely on the chosen MFA method and will be forwarded to the service verifying the challenge.
+              """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "token"
+          type: "string"
+          description: """
+                       The personal access token to use for further API calls.
+                       """
+        ]
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Invalid MFA session token.
+                     """
+      ]
+      examples: [
+        title: "Verifying the MFA challenge."
+        params:
+          code: '1234'
+        result:
+          token: examples.accesses.personal.token
+      ]
+    ,
+
+      id: "mfa.deactivate"
+      type: "method"
+      title: "Deactivate MFA"
+      http: "POST /mfa/deactivate"
+      description: """
+                   Deactivate MFA for a given Pryv.io user.
+                   
+                   Requires a personal token as [authentication](#basics-authentication).
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "message"
+          type: "string"
+          description: """
+                       "MFA deactivated."
+                       """
+        ]
+    , 
+
+      id: "mfa.recover"
+      type: "method"
+      title: "Recover MFA"
+      http: "POST /mfa/recover"
+      description: """
+                   Deactivate MFA for a given Pryv.io user using a MFA recovery code.
+                   
+                   This is useful when [Deactivate MFA](##{_getDocId("mfa", "mfa.deactivate")}) can not be used (in case of 2nd factor loss).
+                   Instead, requires a MFA recovery code (obtained when [confirming the MFA activation](##{_getDocId("mfa", "mfa.confirm")})), as well as the usual [Login](##{_getDocId("auth", "auth.login")}) parameters.
+                   """
+      params:
+        description: """
+                     Similar to the usual [Login](##{_getDocId("auth", "auth.login")}) parameters, as well as:
+                     """
+        properties: [
+          key: "recoveryCode"
+          type: "string"
+          description: """
+                       One MFA recovery code.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "message"
+          type: "string"
+          description: """
+                       "MFA deactivated."
+                       """
+        ]
+      errors: [
+        key: "missing-parameter"
+        http: "400"
+        description: """
+                     Missing parameter: recoveryCode.
+                     """
+      ,
+        key: "invalid-parameter"
+        http: "400"
+        description: """
+                     Invalid recovery code.
+                     """
+      ]
+      examples: [
+        title: "Deactivate MFA using a recovery code."
+        params:
+          recoveryCode: 'fba6e1f6-9f8f-4a0a-9c4f-8cf3458b4c55'
+          username: examples.users.one.username
+          password: examples.users.one.password
+          appId: "my-app-id"
+        result:
+          message: "MFA deactivated."
+      ]
+    ]
+
+  ,
+
     id: "events"
     title: "Events"
     description: """
@@ -470,7 +734,6 @@ module.exports = exports =
       examples: [
         title: "Adding a tag"
         params:
-          id: examples.events.position.id
           update:
             tags: ["home"]
         result:
@@ -576,7 +839,6 @@ module.exports = exports =
         result:
           event: _.omit(examples.events.activityAttachment, "attachments")
       ]
-
     ,
 
       id: "events.delete"
@@ -633,6 +895,241 @@ module.exports = exports =
         result: {eventDeletion:{id:examples.events.note.id}}
       ]
     ]
+  ,
+
+  id: "hfs"
+  title: "HF events"
+  description: """
+                Methods to manipulate high-frequency data through HF events and [HF series](##{dataStructure.getDocId("high-frequency-series")}).
+               """
+  sections: [
+      id: "hfs.create"
+      type: "method"
+      title: "Create HF event"
+      http: "POST /events"
+      description: """
+                   Creates a new event that will be holding [HF series](##{dataStructure.getDocId("high-frequency-series")}).
+                   """
+      params:
+        description: """
+                     The new event's data: see [Event](##{dataStructure.getDocId("event")}).
+
+                     The content of HF events is read-only, so you should not provide any content.
+                     However, the event type should correspond to the type of the data points in the series, prefixed with `series:`.
+                     For example, to store HF series of `mass/kg` data points, the type of the holder event should be `series:mass/kg`.
+                     """
+      result:
+        http: "201 Created"
+        properties: [
+          key: "event"
+          type: "[event](##{dataStructure.getDocId("event")})"
+          description: """
+                       The created event.
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
+                     """
+      ,
+        key: "invalid-parameters-format"
+        http: "400"
+        description: """
+                     The event content's format is invalid. Events of type High-frequency have a read-only content.
+                     """
+      ]
+      examples: [
+        title: "Creating a new HF event that will hold HF series"
+        params: _.pick(examples.events.series.holderEvent, "streamId", "type")
+        result:
+          event: examples.events.series.holderEvent
+
+      ]
+
+    ,
+      id: "hfs.get"
+      type: "method"
+      httpOnly: true
+      title: "Get HF series data points"
+      http: "GET /events/{id}/series"
+      description: """
+                   Retrieves HF series data points from a HF event.
+                   Returns data in order of ascending deltaTime between "fromTime" and "toTime".
+                   Data is returned as input, no sampling or aggregation is performed.
+                   """
+      params:
+        properties: [
+          key: "fromDeltaTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       Only returns data points later than this deltaTime. If no value is given the query will return data starting at the earliest deltaTime in the series.
+                       """
+        ,
+          key: "toDeltaTime"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          optional: true
+          description: """
+                       Only returns data points earlier than this deltaTime. If no value is given the server will return only data that is in the past.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        description: """
+              The [HF series data points](##{dataStructure.getDocId("high-frequency-series")}).
+              """
+      examples: [
+        title: "Retrieving HF series data points from a HF event"
+        params: {}
+        result:
+          examples.events.series.position
+      ]
+
+    ,
+
+      id: "hfs.add"
+      type: "method"
+      httpOnly: true
+      title: "Add HF series data points"
+      http: "POST /events/{id}/series"
+      description: """
+                   Adds new HF series data points to a HF event.
+
+                   The HF series data will only store one set of values for any given deltaTime. This means you can update existing data points by 'adding' new data with the original deltaTime.  
+                   """
+      params:
+        description: """
+                     The new HF series data point(s), see [HF series](##{dataStructure.getDocId("high-frequency-series")}).
+                     """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "status"
+          type: "string"
+          description: """
+                       The string "ok".
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The event is not a HF event.
+                     """
+      ,
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The referenced HF event is in the trash, and we prevent the recording of new data points into trashed events.
+                     """
+      ]
+      examples: [
+        title: "Adding new HF series data points to a HF event"
+        params: examples.events.series.position
+        result:
+          status: "ok"
+      ]
+
+    ,
+
+      id: "hfs.addBatch"
+      type: "method"
+      httpOnly: true
+      title: "Add HF series batch"
+      http: "POST /series/batch"
+      description: """
+                    Adds data to multiple HF series (stored in multiple HF events) in a single atomic operation. This is the fastest way to append data to Pryv; it allows transferring many data points in a single request.
+
+                    For this operation to be successful, all of the following conditions must be fulfilled:
+
+                      - The access token needs write permissions to all series identified by "eventId".
+                      - All events referred to must be HF events (type starts with the string "series:").
+                      - Fields identified in each individual message must match those specified by the type of the HF event; there must be no duplicates.
+                      - All the values in every data point must conform to the type specification.
+
+                    If any part of the batch message is invalid, the entire batch is aborted and the returned result body identifies the error.
+                   """
+      params:
+        properties: [
+          key: "format"
+          type: "string"
+          description: """
+                       The format string "seriesBatch".
+                       """
+        ,
+          key: "data"
+          type: "array"
+          description: """
+                       Array of batch entries. Each batch entry is defined as follows:
+                       """
+          properties: [
+            key: "eventId"
+            type: "string"
+            description: """
+                        The id of the HF event.
+                        """
+          ,
+            key: "data"
+            type: "object"
+            description: """
+                        HF series data to add to the HF event.
+                        """
+          ]
+        ]
+      result:
+        http: "201 Created"
+        properties: [
+          key: "status"
+          type: "string"
+          description: """
+                       The string "ok".
+                       """
+        ]
+      errors: [
+        key: "invalid-request-structure"
+        http: "400"
+        description: """
+                     The request was malformed and could not be executed. The entire operation was aborted.
+                     """
+      ]
+      examples: [
+        title: "Adding a batch of HF series data to multiple HF events"
+        params: examples.events.series.batch
+        result:
+          status: "ok"
+      ]
+
+    ,
+
+      id: "hfs.update"
+      type: "method"
+      title: "Update HF event"
+      http: "PUT /events/{id}"
+      description: """
+                    Similar to the standard [Update event](##{_getDocId("events", "events.update")}) method.
+
+                    You may update all non read-only fields, except `content` which is read-only for HF events.
+                   """
+      errors: [
+        key: "invalid-parameters-format"
+        http: "400"
+        description: """
+                     The event content's format is invalid. Events of type High-frequency have a read-only content.
+                     """
+      ]
+
+    ,
+
+      id: "hfs.delete"
+      type: "method"
+      title: "Delete HF event"
+      http: "DELETE /events/{id}"
+      description: """
+                   Similar to the standard [Delete event](##{_getDocId("events", "events.delete")}) method.
+                   """
+  ]
 
   ,
 
@@ -760,7 +1257,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the stream's fields: see [stream](##{dataStructure.getDocId("stream")}). All fields are optional, and only modified values must be included.
                        """
@@ -1049,7 +1546,6 @@ module.exports = exports =
 
     id: "audit"
     title: "Audit"
-    previewOnly: true
     description: """
                  Methods to retrieve [Audit logs](##{dataStructure.getDocId("audit-log")}).
                  """
@@ -1470,7 +1966,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the followed slice's fields: see [followed slice](##{dataStructure.getDocId("followed-slice")}). All fields are optional, and only modified values must be included.
                        """
@@ -1525,36 +2021,12 @@ module.exports = exports =
                  Methods to read and write profile sets. Profile sets are plain key-value stores of user-level settings.
                  """
     sections: [
-      id: "profile.getPublic"
-      type: "method"
-      title: "Get public user profile"
-      http: "GET /profile/public"
-      description: """
-                   Gets the user's public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.
-                   """
-      result:
-        http: "200 OK"
-        properties: [
-          key: "profile"
-          type: "object"
-          description: """
-                       The user's current public profile set.
-                       """
-        ]
-      examples: [
-        params: {}
-        result:
-          profile: examples.profileSets.public
-      ]
-
-    ,
-
       id: "profile.getApp"
       type: "method"
       title: "Get app profile"
       http: "GET /profile/app"
       description: """
-                   Gets the app's dedicated user profile set, which contains app-level settings for the user. Available to app accesses.
+                   Gets the app's dedicated profile set, which contains app-level settings for the user. Available to app accesses.
                    """
       result:
         http: "200 OK"
@@ -1562,7 +2034,7 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The app's current profile set. (Empty if the app never defined any setting.)
+                       The app profile set. (Empty if the app never defined any setting.)
                        """
         ]
       examples: [
@@ -1578,7 +2050,7 @@ module.exports = exports =
       title: "Update app profile"
       http: "PUT /profile/app"
       description: """
-                   Adds, updates or delete app profile keys.
+                   Adds, updates or delete app profile keys. Available to app accesses.
 
                    - To add or update a key, just set its value
                    - To delete a key, set its value to `null`
@@ -1590,7 +2062,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        An object with the desired key changes (see above).
                        """
@@ -1601,7 +2073,7 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The app's updated profile set.
+                       The updated app profile set.
                        """
         ]
       examples: [
@@ -1614,44 +2086,36 @@ module.exports = exports =
 
     ,
 
-      id: "profile.get"
+      id: "profile.getPublic"
       type: "method"
-      trustedOnly: true
-      title: "Get profile"
-      http: "GET /profile/{id}"
+      title: "Get public profile"
+      http: "GET /profile/public"
       description: """
-                   Gets the specified user profile set.
+                   Gets the public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.
                    """
-      params:
-        properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the profile set.
-                       """
-        ]
       result:
         http: "200 OK"
         properties: [
           key: "profile"
           type: "object"
           description: """
-                       The profile set.
+                       The public profile set.
                        """
         ]
-      examples: []
+      examples: [
+        params: {}
+        result:
+          profile: examples.profileSets.public
+      ]
 
     ,
 
-      id: "profile.update"
+      id: "profile.updatePublic"
       type: "method"
-      trustedOnly: true
-      title: "Update profile"
-      http: "PUT /profile/{id}"
+      title: "Update public profile"
+      http: "PUT /profile/public"
       description: """
-                   Adds, updates or delete profile keys.
+                   Adds, updates or delete public profile keys. Available to personal accesses.
 
                    - To add or update a key, just set its value
                    - To delete a key, set its value to `null`
@@ -1660,18 +2124,10 @@ module.exports = exports =
                    """
       params:
         properties: [
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          http:
-            text: "set in request path"
-          description: """
-                       The id of the profile set.
-                       """
-        ,
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        An object with the desired key changes (see above).
                        """
@@ -1682,7 +2138,52 @@ module.exports = exports =
           key: "profile"
           type: "object"
           description: """
-                       The updated profile set.
+                       The updated public profile set.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "profile.getPrivate"
+      type: "method"
+      title: "Get private profile"
+      http: "GET /profile/private"
+      description: """
+                   Gets the private profile set. Available to personal accesses.
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The private profile set.
+                       """
+        ]
+      examples: []
+
+    ,
+
+      id: "profile.updatePrivate"
+      type: "method"
+      title: "Update private profile"
+      http: "PUT /profile/private"
+      description: """
+                   Adds, updates or delete private profile keys. Available to personal accesses.
+
+                   - To add or update a key, just set its value
+                   - To delete a key, set its value to `null`
+
+                   Existing keys not included in the update are left untouched.
+                   """
+      result:
+        http: "200 OK"
+        properties: [
+          key: "profile"
+          type: "object"
+          description: """
+                       The updated private profile set.
                        """
         ]
       examples: []
@@ -1733,7 +2234,7 @@ module.exports = exports =
           key: "update"
           type: "object"
           http:
-            text: "= request body"
+            text: "request body"
           description: """
                        New values for the account information's fields: see [account information](##{dataStructure.getDocId("account")}). All fields are optional, and only modified values must be included.
                        """
@@ -1868,32 +2369,21 @@ module.exports = exports =
       title: "Get current access info"
       http: "GET /access-info"
       description: """
-                   Retrieves the name, type and permissions of the access in use.
+                   Retrieves information about the access in use.
                    """
       result:
         http: "200 OK"
+        description: """
+              The current [Access properties](##{dataStructure.getDocId("access")}), as well as:
+              """
         properties: [
-          key: "name"
-          type: "string"
-          description: """
-                       The access' name.
-                       """
-        ,
-          key: "type"
-          type: "[access](##{dataStructure.getDocId("access")}).type"
-          description: """
-                       The access' type.
-                       """
-        ,
-          key: "permissions"
-          type: "[access](##{dataStructure.getDocId("access")}).permissions"
-          description: """
-                       The access' permissions.
-                       """
+          key: "calls"
+          type: "[key-value](##{_getDocId("key-value")})"
+          description: "A map of API methods and the number of time each of them was called using the current access."
         ]
       examples: [
         params: {}
-        result: _.pick(examples.accesses.app, "name", "type", "permissions")
+        result: examples.accesses.info
       ]
 
     ,
