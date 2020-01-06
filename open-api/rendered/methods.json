@@ -56,7 +56,7 @@
                 "appId": "my-app-id"
               },
               "result": {
-                "token": "ck4b1gi0n00020upvgyca2ias",
+                "token": "ck52o737o0002tlpvo0vqfwnz",
                 "preferredLanguage": "zh"
               }
             }
@@ -72,6 +72,259 @@
             "http": "200 OK"
           },
           "examples": []
+        }
+      ]
+    },
+    {
+      "id": "mfa",
+      "title": "Multi-factor authentication",
+      "trustedOnly": true,
+      "description": "Methods for handling multi-factor authentication (MFA) on top of the usual [Login method](#methods-auth-auth-login).",
+      "sections": [
+        {
+          "id": "mfa.login",
+          "type": "method",
+          "title": "Login with MFA",
+          "http": "POST /auth/login",
+          "description": "Proxied [Login](#methods-auth-auth-login) call that initiates MFA authentication,\nwhen MFA is activated for the current user.",
+          "params": {
+            "description": "Similar to the usual [Login](#methods-auth-auth-login) parameters."
+          },
+          "result": {
+            "http": "302 Found",
+            "properties": [
+              {
+                "key": "mfaToken",
+                "type": "string",
+                "description": "An expiring MFA session token to be used all along the MFA flow (challenge, verification)."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "title": "Login when MFA is activated.",
+              "params": {
+                "username": "chuangzi",
+                "password": "B|_|tt3rfly!",
+                "appId": "my-app-id"
+              },
+              "result": {
+                "mfaToken": "215bcc40-1296-11ea-9ff7-453ff2437834"
+              }
+            }
+          ]
+        },
+        {
+          "id": "mfa.activate",
+          "type": "method",
+          "title": "Activate MFA",
+          "http": "POST /mfa/activate",
+          "description": "Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.\n\nRequires a personal token as [authentication](#basics-authentication), which should be obtained during a prior [Login call](#methods-auth-auth-login).",
+          "params": {
+            "description": "The parameters depend entirely on the chosen MFA method and will be forwarded to the service generating the challenge."
+          },
+          "result": {
+            "http": "302 Found",
+            "properties": [
+              {
+                "key": "mfaToken",
+                "type": "string",
+                "description": "An expiring MFA session token to be used all along the MFA flow (challenge, verification)."
+              }
+            ]
+          },
+          "examples": [
+            {
+              "title": "Initiating the MFA activation using a phone number.",
+              "params": {
+                "phone_number": "41791234567"
+              },
+              "result": {
+                "mfaToken": "215bcc40-1296-11ea-9ff7-453ff2437834"
+              }
+            }
+          ]
+        },
+        {
+          "id": "mfa.confirm",
+          "type": "method",
+          "title": "Confirm MFA activation",
+          "http": "POST /mfa/confirm",
+          "description": "Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](#methods-mfa-mfa-activate).\n\nRequires a MFA session token as [authentication](#basics-authentication).",
+          "params": {
+            "description": "The parameters depend entirely on the chosen MFA method and will be forwarded to the service verifying the challenge."
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "recoveryCodes",
+                "type": "array of strings",
+                "description": "An array of recovery codes that can be used for the [MFA recover method](#methods-mfa-mfa-recover)."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "forbidden",
+              "http": "403",
+              "description": "Invalid MFA session token."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Finalizing the MFA activation.",
+              "params": {
+                "code": "1234"
+              },
+              "result": {
+                "recoveryCodes": [
+                  "fba6e1f6-9f8f-4a0a-9c4f-8cf3458b4c55",
+                  "eb81be18-3168-4a44-8914-d97187df991c",
+                  "f7d7e863-0589-4779-8ddd-6c7e33df66af",
+                  "fb1d579f-2b92-42e3-82fa-8d7154c334f6",
+                  "52d3f019-3712-41d3-8c13-4924c3a7a703",
+                  "ac9de48c-a47d-46db-b276-e045ba693672",
+                  "de1072aa-6ed9-46a7-962c-1f8bb88ece2e",
+                  "cb5277cf-af86-47c3-a03e-7cc5011314ac",
+                  "16055dff-bc09-4262-b276-d70df82a9a2b",
+                  "36c7dd9b-5d23-4fb9-8504-c3e04aeb62c0"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "mfa.challenge",
+          "type": "method",
+          "title": "Trigger MFA challenge",
+          "http": "POST /mfa/challenge",
+          "description": "Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).\n\nRequires a MFA session token as [authentication](#basics-authentication).",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "message",
+                "type": "string",
+                "description": "\"Please verify the MFA challenge.\""
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "forbidden",
+              "http": "403",
+              "description": "Invalid MFA session token."
+            }
+          ]
+        },
+        {
+          "id": "mfa.verify",
+          "type": "method",
+          "title": "Verify MFA challenge",
+          "http": "POST /mfa/verify",
+          "description": "Verifies the MFA challenge triggered by a prior [MFA challenge call](#methods-mfa-mfa-challenge).\n\nRequires a MFA session token as [authentication](#basics-authentication).",
+          "params": {
+            "description": "The parameters depend entirely on the chosen MFA method and will be forwarded to the service verifying the challenge."
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "token",
+                "type": "string",
+                "description": "The personal access token to use for further API calls."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "forbidden",
+              "http": "403",
+              "description": "Invalid MFA session token."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Verifying the MFA challenge.",
+              "params": {
+                "code": "1234"
+              },
+              "result": {
+                "token": "ck52o737o0002tlpvo0vqfwnz"
+              }
+            }
+          ]
+        },
+        {
+          "id": "mfa.deactivate",
+          "type": "method",
+          "title": "Deactivate MFA",
+          "http": "POST /mfa/deactivate",
+          "description": "Deactivate MFA for a given Pryv.io user.\n\nRequires a personal token as [authentication](#basics-authentication).",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "message",
+                "type": "string",
+                "description": "\"MFA deactivated.\""
+              }
+            ]
+          }
+        },
+        {
+          "id": "mfa.recover",
+          "type": "method",
+          "title": "Recover MFA",
+          "http": "POST /mfa/recover",
+          "description": "Deactivate MFA for a given Pryv.io user using a MFA recovery code.\n\nThis is useful when [Deactivate MFA](#methods-mfa-mfa-deactivate) can not be used (in case of 2nd factor loss).\nInstead, requires a MFA recovery code (obtained when [confirming the MFA activation](#methods-mfa-mfa-confirm)), as well as the usual [Login](#methods-auth-auth-login) parameters.",
+          "params": {
+            "description": "Similar to the usual [Login](#methods-auth-auth-login) parameters, as well as:",
+            "properties": [
+              {
+                "key": "recoveryCode",
+                "type": "string",
+                "description": "One MFA recovery code."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "message",
+                "type": "string",
+                "description": "\"MFA deactivated.\""
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "missing-parameter",
+              "http": "400",
+              "description": "Missing parameter: recoveryCode."
+            },
+            {
+              "key": "invalid-parameter",
+              "http": "400",
+              "description": "Invalid recovery code."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Deactivate MFA using a recovery code.",
+              "params": {
+                "recoveryCode": "fba6e1f6-9f8f-4a0a-9c4f-8cf3458b4c55",
+                "username": "chuangzi",
+                "password": "B|_|tt3rfly!",
+                "appId": "my-app-id"
+              },
+              "result": {
+                "message": "MFA deactivated."
+              }
+            }
+          ]
         }
       ]
     },
@@ -185,40 +438,40 @@
               "result": {
                 "events": [
                   {
-                    "id": "ck4b1gi1e000y0upvkfjkkxwf",
-                    "time": 1576654388.69,
+                    "id": "ck52o738g0010tlpvkudmqggs",
+                    "time": 1578325167.52,
                     "streamId": "diary",
                     "tags": [],
                     "type": "picture/attached",
                     "content": null,
                     "attachments": [
                       {
-                        "id": "ck4b1gi1e000z0upvnmiykjeb",
+                        "id": "ck52o738g0011tlpvm4a7ibyv",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ck4b1gi1e00100upv11ndg9em-OoNEru60aLCNh1zo0QtvRZmqTTl"
+                        "readToken": "ck52o738g0012tlpvcr47an2y-bpHTC7TC3vhMHMohJcof54zeoi4"
                       }
                     ],
-                    "created": 1576654388.69,
-                    "createdBy": "ck4b1gi0o00040upvhxbgfvfn",
-                    "modified": 1576654388.69,
-                    "modifiedBy": "ck4b1gi0o00040upvhxbgfvfn"
+                    "created": 1578325167.52,
+                    "createdBy": "ck52o737o0004tlpvtx94os9u",
+                    "modified": 1578325167.52,
+                    "modifiedBy": "ck52o737o0004tlpvtx94os9u"
                   },
                   {
-                    "id": "ck4b1gi1e000l0upvcxx8x7du",
-                    "time": 1576657988.69,
+                    "id": "ck52o738f000ntlpvnyjs0z8x",
+                    "time": 1578328767.519,
                     "streamId": "jogging",
                     "tags": [],
                     "type": "activity/pryv",
                     "content": null,
-                    "created": 1576657988.69,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576657988.69,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    "created": 1578328767.519,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578328767.519,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                   },
                   {
-                    "id": "ck4b1gi1e00110upv253hzix9",
+                    "id": "ck52o738g0013tlpv3i81ldfq",
                     "time": 1350373077.359,
                     "streamId": "diary",
                     "tags": [],
@@ -227,10 +480,10 @@
                       "latitude": 40.714728,
                       "longitude": -73.998672
                     },
-                    "created": 1576650788.69,
-                    "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                    "modified": 1576650788.69,
-                    "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    "created": 1578321567.52,
+                    "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                    "modified": 1578321567.52,
+                    "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                   }
                 ]
               }
@@ -241,40 +494,40 @@
               "result": {
                 "events": [
                   {
-                    "id": "ck4b1gi1e000y0upvkfjkkxwf",
-                    "time": 1576654388.69,
+                    "id": "ck52o738g0010tlpvkudmqggs",
+                    "time": 1578325167.52,
                     "streamId": "diary",
                     "tags": [],
                     "type": "picture/attached",
                     "content": null,
                     "attachments": [
                       {
-                        "id": "ck4b1gi1e000z0upvnmiykjeb",
+                        "id": "ck52o738g0011tlpvm4a7ibyv",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ck4b1gi1e00100upv11ndg9em-OoNEru60aLCNh1zo0QtvRZmqTTl"
+                        "readToken": "ck52o738g0012tlpvcr47an2y-bpHTC7TC3vhMHMohJcof54zeoi4"
                       }
                     ],
-                    "created": 1576654388.69,
-                    "createdBy": "ck4b1gi0o00040upvhxbgfvfn",
-                    "modified": 1576654388.69,
-                    "modifiedBy": "ck4b1gi0o00040upvhxbgfvfn"
+                    "created": 1578325167.52,
+                    "createdBy": "ck52o737o0004tlpvtx94os9u",
+                    "modified": 1578325167.52,
+                    "modifiedBy": "ck52o737o0004tlpvtx94os9u"
                   },
                   {
-                    "id": "ck4b1gi1e000u0upvenvhvbit",
-                    "time": 1576654388.69,
+                    "id": "ck52o738g000wtlpvvz62u59v",
+                    "time": 1578325167.52,
                     "streamId": "diary",
                     "tags": [],
                     "type": "note/text",
                     "content": "道可道非常道。。。",
-                    "created": 1576654388.69,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576693988.69,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    "created": 1578325167.52,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578364767.52,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                   },
                   {
-                    "id": "ck4b1gi1e00110upv253hzix9",
+                    "id": "ck52o738g0013tlpv3i81ldfq",
                     "time": 1350373077.359,
                     "streamId": "diary",
                     "tags": [],
@@ -283,54 +536,54 @@
                       "latitude": 40.714728,
                       "longitude": -73.998672
                     },
-                    "created": 1576650788.69,
-                    "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                    "modified": 1576650788.69,
-                    "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    "created": 1578321567.52,
+                    "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                    "modified": 1578321567.52,
+                    "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                   },
                   {
-                    "id": "ck4b1gi1e000t0upvsoylfp82",
-                    "time": 1576657988.69,
+                    "id": "ck52o738g000vtlpvv27y34bu",
+                    "time": 1578328767.52,
                     "streamId": "weight",
                     "tags": [],
                     "type": "mass/kg",
                     "content": 90,
-                    "created": 1576657988.69,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576657988.69,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    "created": 1578328767.52,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578328767.52,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                   }
                 ]
               }
             },
             {
               "title": "cURL with deletions",
-              "params": "```bash\ncurl -i https://${username}.pryv.me/events?auth=${token}&includeDeletions=true&modifiedSince=1576571588.72\n```",
+              "params": "```bash\ncurl -i https://${username}.pryv.me/events?auth=${token}&includeDeletions=true&modifiedSince=1578242367.543\n```",
               "result": {
                 "events": [
                   {
-                    "id": "ck4b1gi1e000t0upvsoylfp82",
-                    "time": 1576657988.69,
+                    "id": "ck52o738g000vtlpvv27y34bu",
+                    "time": 1578328767.52,
                     "streamId": "weight",
                     "tags": [],
                     "type": "mass/kg",
                     "content": 90,
-                    "created": 1576657988.69,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576657988.69,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    "created": 1578328767.52,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578328767.52,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                   },
                   {
-                    "id": "ck4b1gi1g00160upve9f5rysc",
-                    "deleted": 1576654388.692
+                    "id": "ck52o738i001btlpvvana9g6c",
+                    "deleted": 1578325167.522
                   },
                   {
-                    "id": "ck4b1gi1g00170upvz9y2e7hd",
-                    "deleted": 1576621988.692
+                    "id": "ck52o738i001ctlpvdqumaaq3",
+                    "deleted": 1578292767.522
                   },
                   {
-                    "id": "ck4b1gi1g00180upvueu35sa3",
-                    "deleted": 1576585988.692
+                    "id": "ck52o738i001dtlpvsuykdnzq",
+                    "deleted": 1578256767.522
                   }
                 ]
               }
@@ -377,41 +630,41 @@
               },
               "result": {
                 "event": {
-                  "id": "ck4b1gi1e000v0upviyxs3emx",
-                  "time": 1576654388.69,
+                  "id": "ck52o738g000xtlpvzk4vrpne",
+                  "time": 1578325167.52,
                   "streamId": "diary",
                   "tags": [],
                   "type": "note/text",
                   "content": "Hi, I am the latest version of this event",
-                  "created": 1576654388.69,
-                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "modified": 1576665188.69,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  "created": 1578325167.52,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                  "modified": 1578335967.52,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                 },
                 "history": [
                   {
-                    "id": "ck4b1gi1e000w0upvfrywoh2u",
-                    "time": 1576654388.69,
+                    "id": "ck52o738g000ytlpv462zpzxk",
+                    "time": 1578325167.52,
                     "streamId": "diary",
                     "tags": [],
                     "type": "note/text",
                     "content": "Hi, I am the first modification",
-                    "created": 1576654388.69,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576661588.69,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    "created": 1578325167.52,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578332367.52,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                   },
                   {
-                    "id": "ck4b1gi1e000x0upv3fq9a65k",
-                    "time": 1576654388.69,
+                    "id": "ck52o738g000ztlpvvboj37u5",
+                    "time": 1578325167.52,
                     "streamId": "diary",
                     "tags": [],
                     "type": "note/text",
                     "content": "Hi, I was the initial event",
-                    "created": 1576654388.69,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576657988.69,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    "created": 1578325167.52,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578328767.52,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                   }
                 ]
               }
@@ -464,16 +717,16 @@
               },
               "result": {
                 "event": {
-                  "id": "ck4b1gi1e000t0upvsoylfp82",
-                  "time": 1576657988.69,
+                  "id": "ck52o738g000vtlpvv27y34bu",
+                  "time": 1578328767.52,
                   "streamId": "weight",
                   "tags": [],
                   "type": "mass/kg",
                   "content": 90,
-                  "created": 1576657988.69,
-                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "modified": 1576657988.69,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  "created": 1578328767.52,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                  "modified": 1578328767.52,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                 }
               }
             },
@@ -482,25 +735,25 @@
               "content": "```bash\ncurl -i -F 'event={\"streamId\":\"diary\",\"type\":\"picture/attached\"}'  -F \"file=@photo.jpg\" https://${username}.pryv.me/events?auth=${token}\n```",
               "result": {
                 "event": {
-                  "id": "ck4b1gi1e000y0upvkfjkkxwf",
-                  "time": 1576654388.69,
+                  "id": "ck52o738g0010tlpvkudmqggs",
+                  "time": 1578325167.52,
                   "streamId": "diary",
                   "tags": [],
                   "type": "picture/attached",
                   "content": null,
                   "attachments": [
                     {
-                      "id": "ck4b1gi1e000z0upvnmiykjeb",
+                      "id": "ck52o738g0011tlpvm4a7ibyv",
                       "fileName": "photo.jpg",
                       "type": "image/jpeg",
                       "size": 2561,
-                      "readToken": "ck4b1gi1e00100upv11ndg9em-OoNEru60aLCNh1zo0QtvRZmqTTl"
+                      "readToken": "ck52o738g0012tlpvcr47an2y-bpHTC7TC3vhMHMohJcof54zeoi4"
                     }
                   ],
-                  "created": 1576654388.69,
-                  "createdBy": "ck4b1gi0o00040upvhxbgfvfn",
-                  "modified": 1576654388.69,
-                  "modifiedBy": "ck4b1gi0o00040upvhxbgfvfn"
+                  "created": 1578325167.52,
+                  "createdBy": "ck52o737o0004tlpvtx94os9u",
+                  "modified": 1578325167.52,
+                  "modifiedBy": "ck52o737o0004tlpvtx94os9u"
                 }
               }
             }
@@ -522,17 +775,17 @@
               "resultHTTP": "201 Created",
               "result": {
                 "event": {
-                  "id": "ck4b1gi1e000m0upvcy4h9pdw",
-                  "time": 1576657988.69,
+                  "id": "ck52o738f000otlpvia1yd8x3",
+                  "time": 1578328767.519,
                   "duration": null,
                   "streamId": "bicycling",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
-                  "created": 1576657988.69,
-                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "modified": 1576657988.69,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  "created": 1578328767.519,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                  "modified": 1578328767.519,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                 }
               }
             }
@@ -590,10 +843,10 @@
             {
               "params": {
                 "streamId": "bicycling",
-                "time": 1576657988.722
+                "time": 1578328767.543
               },
               "result": {
-                "stoppedId": "ck4b1gi1e000m0upvcy4h9pdw"
+                "stoppedId": "ck52o738f000otlpvia1yd8x3"
               }
             }
           ]
@@ -655,7 +908,6 @@
             {
               "title": "Adding a tag",
               "params": {
-                "id": "ck4b1gi1e00110upv253hzix9",
                 "update": {
                   "tags": [
                     "home"
@@ -667,9 +919,9 @@
                   "tags": [
                     "home"
                   ],
-                  "modified": 1576657988.722,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "id": "ck4b1gi1e00110upv253hzix9",
+                  "modified": 1578328767.543,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z",
+                  "id": "ck52o738g0013tlpv3i81ldfq",
                   "time": 1350373077.359,
                   "streamId": "diary",
                   "type": "position/wgs84",
@@ -677,8 +929,8 @@
                     "latitude": 40.714728,
                     "longitude": -73.998672
                   },
-                  "created": 1576650788.69,
-                  "createdBy": "ck4b1gi0n00000upv5vdz95d2"
+                  "created": 1578321567.52,
+                  "createdBy": "ck52o737n0000tlpvgq5hlkxw"
                 }
               }
             }
@@ -704,29 +956,29 @@
           "examples": [
             {
               "title": "cURL",
-              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" https://${username}.pryv.me/events/ck4b1gi1e000n0upv3hkpo45y?auth=${token}\n```",
+              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" https://${username}.pryv.me/events/ck52o738f000ptlpv8jac1mlj?auth=${token}\n```",
               "result": {
                 "event": {
-                  "id": "ck4b1gi1e000n0upv3hkpo45y",
-                  "time": 1576657988.69,
+                  "id": "ck52o738f000ptlpv8jac1mlj",
+                  "time": 1578328767.519,
                   "duration": null,
-                  "streamId": "ck4b1gi1d000b0upvlmy3jk8j",
+                  "streamId": "ck52o738f000dtlpvixnqxvun",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
                   "attachments": [
                     {
-                      "id": "ck4b1gi1e000o0upvls5ps7wr",
+                      "id": "ck52o738g000qtlpvuqbamfi9",
                       "fileName": "travel-expense.jpg",
                       "type": "image/jpeg",
                       "size": 1111,
-                      "readToken": "ck4b1gi1e000p0upv80m5v584-weEAIGpH17yzjpqpUQGcCT4dggo"
+                      "readToken": "ck52o738g000rtlpviqw7g2tk-kTb8fYXC6d9FKUMW1qnO6h0uE1A"
                     }
                   ],
-                  "created": 1576657988.69,
-                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "modified": 1576657988.69,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  "created": 1578328767.52,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                  "modified": 1578328767.52,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                 }
               }
             }
@@ -795,22 +1047,22 @@
           "examples": [
             {
               "params": {
-                "id": "ck4b1gi1e000n0upv3hkpo45y",
-                "fileId": "ck4b1gi1e000o0upvls5ps7wr"
+                "id": "ck52o738f000ptlpv8jac1mlj",
+                "fileId": "ck52o738g000qtlpvuqbamfi9"
               },
               "result": {
                 "event": {
-                  "id": "ck4b1gi1e000n0upv3hkpo45y",
-                  "time": 1576657988.69,
+                  "id": "ck52o738f000ptlpv8jac1mlj",
+                  "time": 1578328767.519,
                   "duration": null,
-                  "streamId": "ck4b1gi1d000b0upvlmy3jk8j",
+                  "streamId": "ck52o738f000dtlpvixnqxvun",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
-                  "created": 1576657988.69,
-                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "modified": 1576657988.69,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  "created": 1578328767.52,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                  "modified": 1578328767.52,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                 }
               }
             }
@@ -862,36 +1114,389 @@
             {
               "title": "Trashing",
               "params": {
-                "id": "ck4b1gi1e000u0upvenvhvbit"
+                "id": "ck52o738g000wtlpvvz62u59v"
               },
               "result": {
                 "event": {
                   "trashed": true,
-                  "modified": 1576657988.723,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "id": "ck4b1gi1e000u0upvenvhvbit",
-                  "time": 1576654388.69,
+                  "modified": 1578328767.544,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z",
+                  "id": "ck52o738g000wtlpvvz62u59v",
+                  "time": 1578325167.52,
                   "streamId": "diary",
                   "tags": [],
                   "type": "note/text",
                   "content": "道可道非常道。。。",
-                  "created": 1576654388.69,
-                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  "created": 1578325167.52,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z"
                 }
               }
             },
             {
               "title": "Deleting",
               "params": {
-                "id": "ck4b1gi1e000u0upvenvhvbit"
+                "id": "ck52o738g000wtlpvvz62u59v"
               },
               "result": {
                 "eventDeletion": {
-                  "id": "ck4b1gi1e000u0upvenvhvbit"
+                  "id": "ck52o738g000wtlpvvz62u59v"
                 }
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "hfs",
+      "title": "HF events",
+      "description": "Methods to manipulate high-frequency data through HF events and [HF series](#data-structure-high-frequency-series).",
+      "sections": [
+        {
+          "id": "hfs.create",
+          "type": "method",
+          "title": "Create HF event",
+          "http": "POST /events",
+          "description": "Creates a new event that will be holding [HF series](#data-structure-high-frequency-series).",
+          "params": {
+            "description": "The new event's data: see [Event](#data-structure-event).\n\nThe content of HF events is read-only, so you should not provide any content.\nHowever, the event type should correspond to the type of the data points in the series, prefixed with `series:`.\nFor example, to store HF series of `mass/kg` data points, the type of the holder event should be `series:mass/kg`."
+          },
+          "result": {
+            "http": "201 Created",
+            "properties": [
+              {
+                "key": "event",
+                "type": "[event](#data-structure-event)",
+                "description": "The created event."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "The referenced stream is in the trash, and we prevent the recording of new events into trashed streams."
+            },
+            {
+              "key": "invalid-parameters-format",
+              "http": "400",
+              "description": "The event content's format is invalid. Events of type High-frequency have a read-only content."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Creating a new HF event that will hold HF series",
+              "params": {
+                "streamId": "position",
+                "type": "series:position/wgs84"
+              },
+              "result": {
+                "event": {
+                  "id": "ck52o738g0014tlpv03qwbg9s",
+                  "time": 1578328767.52,
+                  "streamId": "position",
+                  "tags": [],
+                  "type": "series:position/wgs84",
+                  "content": {
+                    "elementType": "position/wgs84",
+                    "fields": [
+                      "deltaTime",
+                      "latitude",
+                      "longitude",
+                      "altitude",
+                      "horizontalAccuracy",
+                      "verticalAccuracy",
+                      "speed",
+                      "bearing"
+                    ],
+                    "required": [
+                      "deltaTime",
+                      "latitude",
+                      "longitude"
+                    ]
+                  },
+                  "created": 1578328767.52,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                  "modified": 1578328767.52,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "hfs.get",
+          "type": "method",
+          "httpOnly": true,
+          "title": "Get HF series data points",
+          "http": "GET /events/{id}/series",
+          "description": "Retrieves HF series data points from a HF event.\nReturns data in order of ascending deltaTime between \"fromTime\" and \"toTime\".\nData is returned as input, no sampling or aggregation is performed.",
+          "params": {
+            "properties": [
+              {
+                "key": "fromDeltaTime",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "Only returns data points later than this deltaTime. If no value is given the query will return data starting at the earliest deltaTime in the series."
+              },
+              {
+                "key": "toDeltaTime",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "optional": true,
+                "description": "Only returns data points earlier than this deltaTime. If no value is given the server will return only data that is in the past."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "description": "The [HF series data points](#data-structure-high-frequency-series)."
+          },
+          "examples": [
+            {
+              "title": "Retrieving HF series data points from a HF event",
+              "params": {},
+              "result": {
+                "format": "flatJSON",
+                "fields": [
+                  "deltaTime",
+                  "latitude",
+                  "longitude",
+                  "altitude"
+                ],
+                "points": [
+                  [
+                    0,
+                    10.2,
+                    11.2,
+                    500
+                  ],
+                  [
+                    1,
+                    10.2,
+                    11.2,
+                    510
+                  ],
+                  [
+                    2,
+                    10.2,
+                    11.2,
+                    520
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "hfs.add",
+          "type": "method",
+          "httpOnly": true,
+          "title": "Add HF series data points",
+          "http": "POST /events/{id}/series",
+          "description": "Adds new HF series data points to a HF event.\n\nThe HF series data will only store one set of values for any given deltaTime. This means you can update existing data points by 'adding' new data with the original deltaTime.  ",
+          "params": {
+            "description": "The new HF series data point(s), see [HF series](#data-structure-high-frequency-series)."
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "status",
+                "type": "string",
+                "description": "The string \"ok\"."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "The event is not a HF event."
+            },
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "The referenced HF event is in the trash, and we prevent the recording of new data points into trashed events."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Adding new HF series data points to a HF event",
+              "params": {
+                "format": "flatJSON",
+                "fields": [
+                  "deltaTime",
+                  "latitude",
+                  "longitude",
+                  "altitude"
+                ],
+                "points": [
+                  [
+                    0,
+                    10.2,
+                    11.2,
+                    500
+                  ],
+                  [
+                    1,
+                    10.2,
+                    11.2,
+                    510
+                  ],
+                  [
+                    2,
+                    10.2,
+                    11.2,
+                    520
+                  ]
+                ]
+              },
+              "result": {
+                "status": "ok"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hfs.addBatch",
+          "type": "method",
+          "httpOnly": true,
+          "title": "Add HF series batch",
+          "http": "POST /series/batch",
+          "description": "Adds data to multiple HF series (stored in multiple HF events) in a single atomic operation. This is the fastest way to append data to Pryv; it allows transferring many data points in a single request.\n\nFor this operation to be successful, all of the following conditions must be fulfilled:\n\n  - The access token needs write permissions to all series identified by \"eventId\".\n  - All events referred to must be HF events (type starts with the string \"series:\").\n  - Fields identified in each individual message must match those specified by the type of the HF event; there must be no duplicates.\n  - All the values in every data point must conform to the type specification.\n\nIf any part of the batch message is invalid, the entire batch is aborted and the returned result body identifies the error.",
+          "params": {
+            "properties": [
+              {
+                "key": "format",
+                "type": "string",
+                "description": "The format string \"seriesBatch\"."
+              },
+              {
+                "key": "data",
+                "type": "array",
+                "description": "Array of batch entries. Each batch entry is defined as follows:",
+                "properties": [
+                  {
+                    "key": "eventId",
+                    "type": "string",
+                    "description": "The id of the HF event."
+                  },
+                  {
+                    "key": "data",
+                    "type": "object",
+                    "description": "HF series data to add to the HF event."
+                  }
+                ]
+              }
+            ]
+          },
+          "result": {
+            "http": "201 Created",
+            "properties": [
+              {
+                "key": "status",
+                "type": "string",
+                "description": "The string \"ok\"."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "invalid-request-structure",
+              "http": "400",
+              "description": "The request was malformed and could not be executed. The entire operation was aborted."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Adding a batch of HF series data to multiple HF events",
+              "params": {
+                "format": "seriesBatch",
+                "data": [
+                  {
+                    "eventId": "ck52o738g0015tlpvp2vy467g",
+                    "data": {
+                      "format": "flatJSON",
+                      "fields": [
+                        "deltaTime",
+                        "value"
+                      ],
+                      "points": [
+                        [
+                          0,
+                          70
+                        ],
+                        [
+                          1,
+                          71
+                        ],
+                        [
+                          2,
+                          72
+                        ]
+                      ]
+                    }
+                  },
+                  {
+                    "eventId": "ck52o738g0016tlpvdzrpjgd0",
+                    "data": {
+                      "format": "flatJSON",
+                      "fields": [
+                        "deltaTime",
+                        "latitude",
+                        "longitude",
+                        "altitude"
+                      ],
+                      "points": [
+                        [
+                          0,
+                          10.2,
+                          11.2,
+                          500
+                        ],
+                        [
+                          2,
+                          10.2,
+                          11.2,
+                          510
+                        ],
+                        [
+                          1,
+                          10.2,
+                          11.2,
+                          520
+                        ]
+                      ]
+                    }
+                  }
+                ]
+              },
+              "result": {
+                "status": "ok"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hfs.update",
+          "type": "method",
+          "title": "Update HF event",
+          "http": "PUT /events/{id}",
+          "description": "Similar to the standard [Update event](#methods-events-events-update) method.\n\nYou may update all non read-only fields, except `content` which is read-only for HF events.",
+          "errors": [
+            {
+              "key": "invalid-parameters-format",
+              "http": "400",
+              "description": "The event content's format is invalid. Events of type High-frequency have a read-only content."
+            }
+          ]
+        },
+        {
+          "id": "hfs.delete",
+          "type": "method",
+          "title": "Delete HF event",
+          "http": "DELETE /events/{id}",
+          "description": "Similar to the standard [Delete event](#methods-events-events-delete) method."
         }
       ]
     },
@@ -953,76 +1558,76 @@
               "result": {
                 "streams": [
                   {
-                    "id": "ck4b1gi1d000a0upvpv58cdib",
+                    "id": "ck52o738f000ctlpvzfk255tp",
                     "name": "Noble Works Co.",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "ck4b1gi1d000c0upvnywi3dyr",
+                        "id": "ck52o738f000etlpvbtmp6bjq",
                         "name": "Last Be First",
-                        "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                        "parentId": "ck52o738f000ctlpvzfk255tp",
                         "children": [],
-                        "created": 1513544118.86092,
-                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                        "modified": 1513544342.0347326,
-                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                        "created": 1515214900.488609,
+                        "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                        "modified": 1515215015.3888156,
+                        "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                       },
                       {
-                        "id": "ck4b1gi1d000d0upv5thr9lmp",
+                        "id": "ck52o738f000ftlpvdby2sbmb",
                         "name": "Big Tree",
-                        "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                        "parentId": "ck52o738f000ctlpvzfk255tp",
                         "children": [],
-                        "created": 1513544118.86092,
-                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                        "modified": 1513544354.7582746,
-                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                        "created": 1515214900.488609,
+                        "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                        "modified": 1515214949.338191,
+                        "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                       },
                       {
-                        "id": "ck4b1gi1d000e0upv24xluy9u",
+                        "id": "ck52o738f000gtlpv4x024utw",
                         "name": "Inner Light",
-                        "parentId": "ck4b1gi1d000a0upvpv58cdib",
+                        "parentId": "ck52o738f000ctlpvzfk255tp",
                         "children": [],
-                        "created": 1513544118.86092,
-                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                        "modified": 1513544233.955431,
-                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                        "created": 1515214900.488609,
+                        "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                        "modified": 1515214926.5829232,
+                        "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                       }
                     ],
-                    "created": 1513544101.7839296,
-                    "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                    "modified": 1513544303.441415,
-                    "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    "created": 1515214888.6159823,
+                    "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                    "modified": 1515215118.3728805,
+                    "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                   },
                   {
-                    "id": "ck4b1gi1d000b0upvlmy3jk8j",
+                    "id": "ck52o738f000dtlpvixnqxvun",
                     "name": "Freelancing",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "ck4b1gi1d000f0upvb07hgdql",
+                        "id": "ck52o738f000htlpvmptmxboc",
                         "name": "Funky Veggies",
-                        "parentId": "ck4b1gi1d000b0upvlmy3jk8j",
+                        "parentId": "ck52o738f000dtlpvixnqxvun",
                         "children": [],
-                        "created": 1513544118.4245403,
-                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                        "modified": 1513544171.8580246,
-                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                        "created": 1515214907.2698545,
+                        "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                        "modified": 1515215124.0936506,
+                        "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                       },
                       {
-                        "id": "ck4b1gi1d000g0upvrfu4b3ox",
+                        "id": "ck52o738f000itlpvyeifrsri",
                         "name": "Jojo Lapin & sons",
-                        "parentId": "ck4b1gi1d000b0upvlmy3jk8j",
+                        "parentId": "ck52o738f000dtlpvixnqxvun",
                         "children": [],
-                        "created": 1513544118.4245403,
-                        "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                        "modified": 1513544341.1739607,
-                        "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                        "created": 1515214907.2698545,
+                        "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                        "modified": 1515215248.0802758,
+                        "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                       }
                     ],
-                    "created": 1513544101.7839296,
-                    "createdBy": "ck4b1gi0n00000upv5vdz95d2",
-                    "modified": 1513544372.8757694,
-                    "modifiedBy": "ck4b1gi0n00000upv5vdz95d2"
+                    "created": 1515214888.6159823,
+                    "createdBy": "ck52o737n0000tlpvgq5hlkxw",
+                    "modified": 1515215088.4898765,
+                    "modifiedBy": "ck52o737n0000tlpvgq5hlkxw"
                   }
                 ]
               }
@@ -1074,10 +1679,10 @@
                   "name": "Diastolic pressure",
                   "parentId": "heart",
                   "children": [],
-                  "created": 1576657988.689,
-                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "modified": 1576657988.689,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  "created": 1578328767.519,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                  "modified": 1578328767.519,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                 }
               }
             }
@@ -1103,7 +1708,7 @@
                 "key": "update",
                 "type": "object",
                 "http": {
-                  "text": "= request body"
+                  "text": "request body"
                 },
                 "description": "New values for the stream's fields: see [stream](#data-structure-stream). All fields are optional, and only modified values must be included."
               }
@@ -1138,12 +1743,12 @@
               "result": {
                 "stream": {
                   "name": "Slothing",
-                  "modified": 1576657988.723,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1578328767.544,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z",
                   "id": "sport",
                   "parentId": null,
-                  "created": 1513544084.689,
-                  "createdBy": "ck4b1gi0n00000upv5vdz95d2"
+                  "created": 1515214863.519,
+                  "createdBy": "ck52o737n0000tlpvgq5hlkxw"
                 }
               }
             }
@@ -1205,14 +1810,14 @@
               "result": {
                 "event": {
                   "trashed": true,
-                  "modified": 1576657988.723,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
+                  "modified": 1578328767.545,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z",
                   "id": "weight",
                   "name": "Weight",
                   "parentId": "health",
                   "children": [],
-                  "created": 1513544113.9300365,
-                  "createdBy": "ck4b1gi0n00000upv5vdz95d2"
+                  "created": 1515214867.7456307,
+                  "createdBy": "ck52o737n0000tlpvgq5hlkxw"
                 }
               }
             },
@@ -1279,8 +1884,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "ck4b1gi0o00040upvhxbgfvfn",
-                    "token": "ck4b1gi0o00050upvuq3kyp95",
+                    "id": "ck52o737o0004tlpvtx94os9u",
+                    "token": "ck52o737o0005tlpv2053swe3",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -1289,10 +1894,10 @@
                         "level": "contribute"
                       }
                     ],
-                    "created": 1576614788.664,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576614788.664,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    "created": 1578285567.492,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578285567.492,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                   }
                 ]
               }
@@ -1303,8 +1908,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "ck4b1gi0o00040upvhxbgfvfn",
-                    "token": "ck4b1gi0o00050upvuq3kyp95",
+                    "id": "ck52o737o0004tlpvtx94os9u",
+                    "token": "ck52o737o0005tlpv2053swe3",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -1313,16 +1918,16 @@
                         "level": "contribute"
                       }
                     ],
-                    "created": 1576614788.664,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576614788.664,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                    "created": 1578285567.492,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578285567.492,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                   }
                 ],
                 "accessDeletions": [
                   {
-                    "id": "ck4b1gi0o00080upvib6aihag",
-                    "token": "ck4b1gi0o00090upvxwx9rp46",
+                    "id": "ck52o737o0008tlpv6jxtskir",
+                    "token": "ck52o737o0009tlpvkltdku1k",
                     "type": "shared",
                     "name": "Health parameters survey",
                     "permissions": [
@@ -1331,11 +1936,11 @@
                         "level": "read"
                       }
                     ],
-                    "created": 1576657868.664,
-                    "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "modified": 1576657868.664,
-                    "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n",
-                    "deleted": 1576657928.664
+                    "created": 1578328647.492,
+                    "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                    "modified": 1578328647.492,
+                    "modifiedBy": "ck52o737o0001tlpv7eatlt7z",
+                    "deleted": 1578328707.492
                   }
                 ]
               }
@@ -1381,8 +1986,8 @@
               },
               "result": {
                 "access": {
-                  "id": "ck4b1gi0o00060upvo9ldx09e",
-                  "token": "ck4b1gi0o00070upvfyy5izxu",
+                  "id": "ck52o737o0006tlpv4zdy2n5d",
+                  "token": "ck52o737o0007tlpvk8ouqcuu",
                   "type": "shared",
                   "name": "For colleagues",
                   "permissions": [
@@ -1391,10 +1996,10 @@
                       "level": "read"
                     }
                   ],
-                  "created": 1576657988.664,
-                  "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                  "modified": 1576657988.664,
-                  "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                  "created": 1578328767.492,
+                  "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                  "modified": 1578328767.492,
+                  "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                 }
               }
             }
@@ -1431,11 +2036,11 @@
           "examples": [
             {
               "params": {
-                "id": "ck4b1gi0o00040upvhxbgfvfn"
+                "id": "ck52o737o0004tlpvtx94os9u"
               },
               "result": {
                 "accessDeletion": {
-                  "id": "ck4b1gi0o00040upvhxbgfvfn"
+                  "id": "ck52o737o0004tlpvtx94os9u"
                 }
               }
             }
@@ -1495,7 +2100,6 @@
     {
       "id": "audit",
       "title": "Audit",
-      "previewOnly": true,
       "description": "Methods to retrieve [Audit logs](#data-structure-audit-log).",
       "sections": [
         {
@@ -1576,8 +2180,8 @@
           "examples": [
             {
               "params": {
-                "auth": "ck4b1gi1h001h0upvmfh6vxml",
-                "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+                "auth": "ck52o738k001mtlpvsmmfsb0l",
+                "accessId": "ck52o738k001ltlpv4mekxc3d",
                 "fromTime": 1561000000,
                 "toTime": 1562000000,
                 "status": 403,
@@ -1589,37 +2193,37 @@
               "result": {
                 "auditLogs": [
                   {
-                    "id": "ck4b1gi1h001i0upvz3mpez8p",
+                    "id": "ck52o738k001ntlpv1jmr46je",
                     "type": "audit/core",
                     "time": 1561988300,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+                    "accessId": "ck52o738k001ltlpv4mekxc3d",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "ck4b1gi1h001j0upvfhibu9u4",
+                    "id": "ck52o738k001otlpv08b559p4",
                     "type": "audit/core",
                     "time": 1561988900,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+                    "accessId": "ck52o738k001ltlpv4mekxc3d",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "ck4b1gi1h001k0upv5clfod4p",
+                    "id": "ck52o738k001ptlpvukzujux1",
                     "type": "audit/core",
                     "time": 1561989200,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=work",
-                    "accessId": "ck4b1gi1h001g0upvaysrwz0w",
+                    "accessId": "ck52o738k001ltlpv4mekxc3d",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
@@ -1661,8 +2265,8 @@
               "result": {
                 "webhooks": [
                   {
-                    "id": "ck4b1gi1g001b0upv1lkm9na0",
-                    "accessId": "ck4b1gi1g00190upvo9kggyps",
+                    "id": "ck52o738i001gtlpvei3a20u1",
+                    "accessId": "ck52o738i001etlpvesmbs7ah",
                     "url": "https://notifications.service.com/pryv",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -1672,26 +2276,26 @@
                     "failCount": 0,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1576654388.692
+                      "timestamp": 1578325167.522
                     },
                     "runs": [
                       {
                         "status": 200,
-                        "timestamp": 1576654388.692
+                        "timestamp": 1578325167.522
                       },
                       {
                         "status": 200,
-                        "timestamp": 1576650788.692
+                        "timestamp": 1578321567.522
                       }
                     ],
-                    "created": 1576571588.692,
-                    "createdBy": "ck4b1gi1g00190upvo9kggyps",
-                    "modified": 1576571588.692,
-                    "modifiedBy": "ck4b1gi1g00190upvo9kggyps"
+                    "created": 1578242367.522,
+                    "createdBy": "ck52o738i001etlpvesmbs7ah",
+                    "modified": 1578242367.522,
+                    "modifiedBy": "ck52o738i001etlpvesmbs7ah"
                   },
                   {
-                    "id": "ck4b1gi1g001d0upvitw5d089",
-                    "accessId": "ck4b1gi1g00190upvo9kggyps",
+                    "id": "ck52o738k001itlpvuqwzsaww",
+                    "accessId": "ck52o738i001etlpvesmbs7ah",
                     "url": "https://notifications.pryv.me/webhooks",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -1701,46 +2305,46 @@
                     "failCount": 2,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1576657983.692
+                      "timestamp": 1578328762.524
                     },
                     "runs": [
                       {
                         "status": 500,
-                        "timestamp": 1576657983.692
+                        "timestamp": 1578328762.524
                       },
                       {
                         "status": 500,
-                        "timestamp": 1576657978.692
+                        "timestamp": 1578328757.524
                       },
                       {
                         "status": 200,
-                        "timestamp": 1576657388.692
+                        "timestamp": 1578328167.524
                       },
                       {
                         "status": 200,
-                        "timestamp": 1576656788.692
+                        "timestamp": 1578327567.524
                       },
                       {
                         "status": 200,
-                        "timestamp": 1576656188.692
+                        "timestamp": 1578326967.524
                       },
                       {
                         "status": 200,
-                        "timestamp": 1576655588.692
+                        "timestamp": 1578326367.524
                       },
                       {
                         "status": 200,
-                        "timestamp": 1576654988.692
+                        "timestamp": 1578325767.524
                       },
                       {
                         "status": 200,
-                        "timestamp": 1576654388.692
+                        "timestamp": 1578325167.524
                       }
                     ],
-                    "created": 1576485188.692,
-                    "createdBy": "ck4b1gi1g00190upvo9kggyps",
-                    "modified": 1576485188.692,
-                    "modifiedBy": "ck4b1gi1g00190upvo9kggyps"
+                    "created": 1578155967.524,
+                    "createdBy": "ck52o738i001etlpvesmbs7ah",
+                    "modified": 1578155967.524,
+                    "modifiedBy": "ck52o738i001etlpvesmbs7ah"
                   }
                 ]
               }
@@ -1780,8 +2384,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "ck4b1gi1g001b0upv1lkm9na0",
-                  "accessId": "ck4b1gi1g00190upvo9kggyps",
+                  "id": "ck52o738i001gtlpvei3a20u1",
+                  "accessId": "ck52o738i001etlpvesmbs7ah",
                   "url": "https://notifications.service.com/pryv",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -1791,22 +2395,22 @@
                   "failCount": 0,
                   "lastRun": {
                     "status": 200,
-                    "timestamp": 1576654388.692
+                    "timestamp": 1578325167.522
                   },
                   "runs": [
                     {
                       "status": 200,
-                      "timestamp": 1576654388.692
+                      "timestamp": 1578325167.522
                     },
                     {
                       "status": 200,
-                      "timestamp": 1576650788.692
+                      "timestamp": 1578321567.522
                     }
                   ],
-                  "created": 1576571588.692,
-                  "createdBy": "ck4b1gi1g00190upvo9kggyps",
-                  "modified": 1576571588.692,
-                  "modifiedBy": "ck4b1gi1g00190upvo9kggyps"
+                  "created": 1578242367.522,
+                  "createdBy": "ck52o738i001etlpvesmbs7ah",
+                  "modified": 1578242367.522,
+                  "modifiedBy": "ck52o738i001etlpvesmbs7ah"
                 }
               }
             }
@@ -1839,8 +2443,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "ck4b1gi1g001e0upvxwwj9kc4",
-                  "accessId": "ck4b1gi1g001a0upv6fifnejc",
+                  "id": "ck52o738k001jtlpv4muvwh9x",
+                  "accessId": "ck52o738i001ftlpvebibtt7z",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -1850,10 +2454,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1576657983.692,
-                  "createdBy": "ck4b1gi1g001a0upv6fifnejc",
-                  "modified": 1576657983.692,
-                  "modifiedBy": "ck4b1gi1g001a0upv6fifnejc"
+                  "created": 1578328762.524,
+                  "createdBy": "ck52o738i001ftlpvebibtt7z",
+                  "modified": 1578328762.524,
+                  "modifiedBy": "ck52o738i001ftlpvebibtt7z"
                 }
               }
             }
@@ -1910,8 +2514,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "ck4b1gi1g001c0upvvl3zafso",
-                  "accessId": "ck4b1gi1g00190upvo9kggyps",
+                  "id": "ck52o738i001htlpv6ffna9bj",
+                  "accessId": "ck52o738i001etlpvesmbs7ah",
                   "url": "https://notifications.pryv.me/myusername/ui3HDAw43",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -1921,28 +2525,28 @@
                   "failCount": 5,
                   "lastRun": {
                     "status": 404,
-                    "timestamp": 1576657973.692
+                    "timestamp": 1578328752.524
                   },
                   "runs": [
                     {
                       "status": 404,
-                      "timestamp": 1576657973.692
+                      "timestamp": 1578328752.524
                     },
                     {
                       "status": 404,
-                      "timestamp": 1576657933.692
+                      "timestamp": 1578328712.524
                     },
                     {
                       "status": 404,
-                      "timestamp": 1576657913.692
+                      "timestamp": 1578328692.524
                     },
                     {
                       "status": 404,
-                      "timestamp": 1576657903.692
+                      "timestamp": 1578328682.524
                     },
                     {
                       "status": 404,
-                      "timestamp": 1576657898.692
+                      "timestamp": 1578328677.524
                     }
                   ]
                 }
@@ -1981,11 +2585,11 @@
           "examples": [
             {
               "params": {
-                "id": "ck4b1gi1g001e0upvxwwj9kc4"
+                "id": "ck52o738k001jtlpv4muvwh9x"
               },
               "result": {
                 "webhookDeletion": {
-                  "id": "ck4b1gi1g001e0upvxwwj9kc4"
+                  "id": "ck52o738k001jtlpv4muvwh9x"
                 }
               }
             }
@@ -2024,8 +2628,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "ck4b1gi1g001e0upvxwwj9kc4",
-                  "accessId": "ck4b1gi1g001a0upv6fifnejc",
+                  "id": "ck52o738k001jtlpv4muvwh9x",
+                  "accessId": "ck52o738i001ftlpvebibtt7z",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2035,10 +2639,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1576657983.692,
-                  "createdBy": "ck4b1gi1g001a0upv6fifnejc",
-                  "modified": 1576657983.692,
-                  "modifiedBy": "ck4b1gi1g001a0upv6fifnejc"
+                  "created": 1578328762.524,
+                  "createdBy": "ck52o738i001ftlpvebibtt7z",
+                  "modified": 1578328762.524,
+                  "modifiedBy": "ck52o738i001ftlpvebibtt7z"
                 }
               }
             }
@@ -2118,7 +2722,7 @@
                 "key": "update",
                 "type": "object",
                 "http": {
-                  "text": "= request body"
+                  "text": "request body"
                 },
                 "description": "New values for the followed slice's fields: see [followed slice](#data-structure-followed-slice). All fields are optional, and only modified values must be included."
               }
@@ -2174,45 +2778,18 @@
       "description": "Methods to read and write profile sets. Profile sets are plain key-value stores of user-level settings.",
       "sections": [
         {
-          "id": "profile.getPublic",
-          "type": "method",
-          "title": "Get public user profile",
-          "http": "GET /profile/public",
-          "description": "Gets the user's public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.",
-          "result": {
-            "http": "200 OK",
-            "properties": [
-              {
-                "key": "profile",
-                "type": "object",
-                "description": "The user's current public profile set."
-              }
-            ]
-          },
-          "examples": [
-            {
-              "params": {},
-              "result": {
-                "profile": {
-                  "avatarURL": "http://www.gravatar.com/avatar/1beb9d80bf842c1d90ebdab356908538"
-                }
-              }
-            }
-          ]
-        },
-        {
           "id": "profile.getApp",
           "type": "method",
           "title": "Get app profile",
           "http": "GET /profile/app",
-          "description": "Gets the app's dedicated user profile set, which contains app-level settings for the user. Available to app accesses.",
+          "description": "Gets the app's dedicated profile set, which contains app-level settings for the user. Available to app accesses.",
           "result": {
             "http": "200 OK",
             "properties": [
               {
                 "key": "profile",
                 "type": "object",
-                "description": "The app's current profile set. (Empty if the app never defined any setting.)"
+                "description": "The app profile set. (Empty if the app never defined any setting.)"
               }
             ]
           },
@@ -2234,14 +2811,14 @@
           "type": "method",
           "title": "Update app profile",
           "http": "PUT /profile/app",
-          "description": "Adds, updates or delete app profile keys.\n\n- To add or update a key, just set its value\n- To delete a key, set its value to `null`\n\nExisting keys not included in the update are left untouched.",
+          "description": "Adds, updates or delete app profile keys. Available to app accesses.\n\n- To add or update a key, just set its value\n- To delete a key, set its value to `null`\n\nExisting keys not included in the update are left untouched.",
           "params": {
             "properties": [
               {
                 "key": "update",
                 "type": "object",
                 "http": {
-                  "text": "= request body"
+                  "text": "request body"
                 },
                 "description": "An object with the desired key changes (see above)."
               }
@@ -2253,7 +2830,7 @@
               {
                 "key": "profile",
                 "type": "object",
-                "description": "The app's updated profile set."
+                "description": "The updated app profile set."
               }
             ]
           },
@@ -2273,58 +2850,45 @@
           ]
         },
         {
-          "id": "profile.get",
+          "id": "profile.getPublic",
           "type": "method",
-          "trustedOnly": true,
-          "title": "Get profile",
-          "http": "GET /profile/{id}",
-          "description": "Gets the specified user profile set.",
-          "params": {
-            "properties": [
-              {
-                "key": "id",
-                "type": "[identifier](#data-structure-identifier)",
-                "http": {
-                  "text": "set in request path"
-                },
-                "description": "The id of the profile set."
-              }
-            ]
-          },
+          "title": "Get public profile",
+          "http": "GET /profile/public",
+          "description": "Gets the public profile set, which contains the information the user makes publicly available (e.g. avatar image). Available to all accesses.",
           "result": {
             "http": "200 OK",
             "properties": [
               {
                 "key": "profile",
                 "type": "object",
-                "description": "The profile set."
+                "description": "The public profile set."
               }
             ]
           },
-          "examples": []
+          "examples": [
+            {
+              "params": {},
+              "result": {
+                "profile": {
+                  "avatarURL": "http://www.gravatar.com/avatar/1beb9d80bf842c1d90ebdab356908538"
+                }
+              }
+            }
+          ]
         },
         {
-          "id": "profile.update",
+          "id": "profile.updatePublic",
           "type": "method",
-          "trustedOnly": true,
-          "title": "Update profile",
-          "http": "PUT /profile/{id}",
-          "description": "Adds, updates or delete profile keys.\n\n- To add or update a key, just set its value\n- To delete a key, set its value to `null`\n\nExisting keys not included in the update are left untouched.",
+          "title": "Update public profile",
+          "http": "PUT /profile/public",
+          "description": "Adds, updates or delete public profile keys. Available to personal accesses.\n\n- To add or update a key, just set its value\n- To delete a key, set its value to `null`\n\nExisting keys not included in the update are left untouched.",
           "params": {
             "properties": [
-              {
-                "key": "id",
-                "type": "[identifier](#data-structure-identifier)",
-                "http": {
-                  "text": "set in request path"
-                },
-                "description": "The id of the profile set."
-              },
               {
                 "key": "update",
                 "type": "object",
                 "http": {
-                  "text": "= request body"
+                  "text": "request body"
                 },
                 "description": "An object with the desired key changes (see above)."
               }
@@ -2336,7 +2900,43 @@
               {
                 "key": "profile",
                 "type": "object",
-                "description": "The updated profile set."
+                "description": "The updated public profile set."
+              }
+            ]
+          },
+          "examples": []
+        },
+        {
+          "id": "profile.getPrivate",
+          "type": "method",
+          "title": "Get private profile",
+          "http": "GET /profile/private",
+          "description": "Gets the private profile set. Available to personal accesses.",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "profile",
+                "type": "object",
+                "description": "The private profile set."
+              }
+            ]
+          },
+          "examples": []
+        },
+        {
+          "id": "profile.updatePrivate",
+          "type": "method",
+          "title": "Update private profile",
+          "http": "PUT /profile/private",
+          "description": "Adds, updates or delete private profile keys. Available to personal accesses.\n\n- To add or update a key, just set its value\n- To delete a key, set its value to `null`\n\nExisting keys not included in the update are left untouched.",
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "profile",
+                "type": "object",
+                "description": "The updated private profile set."
               }
             ]
           },
@@ -2391,7 +2991,7 @@
                 "key": "update",
                 "type": "object",
                 "http": {
-                  "text": "= request body"
+                  "text": "request body"
                 },
                 "description": "New values for the account information's fields: see [account information](#data-structure-account). All fields are optional, and only modified values must be included."
               }
@@ -2527,24 +3127,15 @@
           "type": "method",
           "title": "Get current access info",
           "http": "GET /access-info",
-          "description": "Retrieves the name, type and permissions of the access in use.",
+          "description": "Retrieves information about the access in use.",
           "result": {
             "http": "200 OK",
+            "description": "The current [Access properties](#data-structure-access), as well as:",
             "properties": [
               {
-                "key": "name",
-                "type": "string",
-                "description": "The access' name."
-              },
-              {
-                "key": "type",
-                "type": "[access](#data-structure-access).type",
-                "description": "The access' type."
-              },
-              {
-                "key": "permissions",
-                "type": "[access](#data-structure-access).permissions",
-                "description": "The access' permissions."
+                "key": "calls",
+                "type": "[key-value](#methods-key-value-)",
+                "description": "A map of API methods and the number of time each of them was called using the current access."
               }
             ]
           },
@@ -2552,14 +3143,34 @@
             {
               "params": {},
               "result": {
-                "name": "my-app-id",
+                "id": "ck52o737o000atlpvwvymrxbq",
+                "token": "ck52o737o000btlpvgo9j5fba",
                 "type": "app",
+                "name": "Current access",
+                "deviceName": "My awesome device",
                 "permissions": [
                   {
                     "streamId": "health",
-                    "level": "contribute"
+                    "level": "read"
                   }
-                ]
+                ],
+                "lastUsed": 1578328467.492,
+                "expires": 1578328647.492,
+                "deleted": 1578328707.492,
+                "clientData": {
+                  "consent": "My custom consent message."
+                },
+                "created": 1578328647.492,
+                "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                "modified": 1578328647.492,
+                "modifiedBy": "ck52o737o0001tlpv7eatlt7z",
+                "calls": {
+                  "getAccessInfo": 12,
+                  "profile:get": 5,
+                  "events:get": 12,
+                  "streams:get": 11,
+                  "accesses:get": 6
+                }
               }
             }
           ]
@@ -2631,44 +3242,44 @@
                 "results": [
                   {
                     "event": {
-                      "id": "ck4b1gi1e000q0upv7892hiz5",
+                      "id": "ck52o738g000stlpv1mih61gt",
                       "time": 1385046854.282,
                       "streamId": "heart",
                       "tags": [],
                       "type": "frequency/bpm",
                       "content": 90,
-                      "created": 1576657988.69,
-                      "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                      "modified": 1576657988.69,
-                      "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                      "created": 1578328767.52,
+                      "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                      "modified": 1578328767.52,
+                      "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                     }
                   },
                   {
                     "event": {
-                      "id": "ck4b1gi1e000r0upv8om6qymj",
+                      "id": "ck52o738g000ttlpv80hln9g7",
                       "time": 1385046854.282,
                       "streamId": "systolic",
                       "tags": [],
                       "type": "pressure/mmhg",
                       "content": 120,
-                      "created": 1576657988.69,
-                      "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                      "modified": 1576657988.69,
-                      "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                      "created": 1578328767.52,
+                      "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                      "modified": 1578328767.52,
+                      "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                     }
                   },
                   {
                     "event": {
-                      "id": "ck4b1gi1e000s0upvmyl8adhr",
+                      "id": "ck52o738g000utlpv2ce8d30y",
                       "time": 1385046854.282,
                       "streamId": "diastolic",
                       "tags": [],
                       "type": "pressure/mmhg",
                       "content": 80,
-                      "created": 1576657988.69,
-                      "createdBy": "ck4b1gi0n00010upvpj6y4j0n",
-                      "modified": 1576657988.69,
-                      "modifiedBy": "ck4b1gi0n00010upvpj6y4j0n"
+                      "created": 1578328767.52,
+                      "createdBy": "ck52o737o0001tlpv7eatlt7z",
+                      "modified": 1578328767.52,
+                      "modifiedBy": "ck52o737o0001tlpv7eatlt7z"
                     }
                   }
                 ]

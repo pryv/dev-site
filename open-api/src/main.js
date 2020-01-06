@@ -140,6 +140,19 @@ function parseDataStructName(text, endPad) {
 
 // METHODS
 
+function toBeSkipped(methodId) {
+  switch (methodId) {
+    case 'mfa.login':
+    case 'hfs.create':
+    case 'hfs.update':
+    case 'hfs.delete':
+      return true;
+      break;
+    default:
+      return false;
+  }
+}
+
 methodsRoot.sections.forEach(section => {
   section.sections.forEach(method => {
     const path = parseBy(method.http, ' ', 1);
@@ -148,6 +161,10 @@ methodsRoot.sections.forEach(section => {
     }
 
     const httpMethod = parseBy(method.http, ' ', 0).toLowerCase();
+
+    if (toBeSkipped(method.id)) {
+      return;
+    }
 
     api.paths[path][httpMethod] = {
       description: method.description,
