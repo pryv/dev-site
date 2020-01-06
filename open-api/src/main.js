@@ -1,5 +1,5 @@
-const methodsRoot = require('../transpiled/methods');
-const dataStructureRoot = require('../transpiled/data-structure');
+const methodsRoot = require('../rendered/methods');
+const dataStructureRoot = require('../rendered/data-structure');
 const yaml = require('yaml');
 const fs = require('fs');
 const metadata = require('./metadata');
@@ -179,7 +179,6 @@ methodsRoot.sections.forEach(section => {
       api.paths[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
     }
     if (hasSchemaParams(method)) {
-      //api.paths[path][httpMethod].requestBody = dataStructureMap[parseDataStructName(method.params.description, 2)];
       api.paths[path][httpMethod].requestBody = {
         description: parseBy(method.params.description, ':', 0),
         required: true,
@@ -233,7 +232,8 @@ methodsRoot.sections.forEach(section => {
           name: 'Origin',
           schema: {
             type: 'string',
-            default: '{{origin}}'
+            default: '{{origin}}',
+            format: 'uri'
           },
           required: true
         });
@@ -338,6 +338,8 @@ function parseBy(string, sep, pos, end) {
 function extractQueryParams(properties) {
   const params = [];
   properties.forEach(p => {
+    if (p.key === 'id') return;
+
     params.push({
       name: p.key, 
       description: p.description,
@@ -360,6 +362,14 @@ function extractBodyParams(params) {
     }
   };
   params.forEach(param => {
+    if (param.http != null && 
+      param.http.text && 
+      param.http.text === 'set in request path') {
+      return;
+    }
+    if (param.key === 'update') {
+      return; 
+    }
     requestBody.content['application/json'].schema.properties[param.key] = {
       description: param.description,
       type: param.type

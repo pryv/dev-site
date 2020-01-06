@@ -25,6 +25,7 @@ paths:
           schema:
             type: string
             default: "{{origin}}"
+            format: uri
           required: true
       responses:
         "200":
@@ -202,15 +203,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                id:
-                  description: The id of the event.
-                  type: "[identifier](#data-structure-identifier)"
-                update:
-                  description: "New values for the event's fields: see
-                    [event](#data-structure-event). All fields are optional, and
-                    only modified values must be included."
-                  type: object
+              properties: {}
     post:
       description: Adds one or more file attachments to the event. This request expects
         standard multipart/form-data content, with all content parts being the
@@ -234,10 +227,6 @@ paths:
         - If the event is already in the trash, it will be irreversibly deleted (including all its attached files, if any).
       operationId: events.delete
       parameters:
-        - name: id
-          description: The id of the event.
-          required: true
-          in: query
         - name: id
       responses:
         "200":
@@ -320,10 +309,6 @@ paths:
       description: Irreversibly deletes the attached file.
       operationId: events.deleteAttachment
       parameters:
-        - name: id
-          description: The id of the event.
-          required: true
-          in: query
         - name: fileId
           description: The id of the attached file.
           required: true
@@ -403,15 +388,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                id:
-                  description: The id of the stream.
-                  type: "[identifier](#data-structure-identifier)"
-                update:
-                  description: "New values for the stream's fields: see
-                    [stream](#data-structure-stream). All fields are optional,
-                    and only modified values must be included."
-                  type: object
+              properties: {}
     delete:
       description: >-
         Trashes or deletes the specified stream, depending on its current state:
@@ -422,10 +399,6 @@ paths:
         - If the stream is already in the trash, it will be irreversibly deleted with its descendants (if any). If events exist that refer to the deleted item(s), you must indicate how to handle them with the parameter `mergeEventsWithParent`.
       operationId: streams.delete
       parameters:
-        - name: id
-          description: The id of the stream.
-          required: true
-          in: query
         - name: mergeEventsWithParent
           description: Required if actually deleting the item and if it (or any of its
             descendants) has linked events, ignored otherwise. If `true`, the
@@ -491,10 +464,6 @@ paths:
         permissions are a subset of those granted to your own access token.
       operationId: accesses.delete
       parameters:
-        - name: id
-          description: The id of the access.
-          required: true
-          in: query
         - name: id
       responses:
         "200":
@@ -642,10 +611,6 @@ paths:
       operationId: webhooks.getOne
       parameters:
         - name: id
-          description: The id of the webhook.
-          required: true
-          in: query
-        - name: id
       responses:
         "200":
           content:
@@ -674,25 +639,13 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                id:
-                  description: The id of the webhook.
-                  type: "[identifier](#data-structure-identifier)"
-                update:
-                  description: "New values for the webhook's fields: see
-                    [webhook](#data-structure-webhook). All fields are optional,
-                    and only modified values must be included.  "
-                  type: object
+              properties: {}
     delete:
       description: Deletes the specified webhook. You can only delete webhooks with the app
         access that was used to create them, unless you are using a personal
         token.
       operationId: webhooks.delete
       parameters:
-        - name: id
-          description: The id of the webhook.
-          required: true
-          in: query
         - name: id
       responses:
         "200":
@@ -722,10 +675,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                id:
-                  description: The id of the webhook.
-                  type: "[identifier](#data-structure-identifier)"
+              properties: {}
   /followed-slices:
     get:
       description: Gets followed slices.
@@ -770,23 +720,11 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                id:
-                  description: The id of the followed slice.
-                  type: "[identifier](#data-structure-identifier)"
-                update:
-                  description: "New values for the followed slice's fields: see [followed
-                    slice](#data-structure-followed-slice). All fields are
-                    optional, and only modified values must be included."
-                  type: object
+              properties: {}
     delete:
       description: Deletes the specified followed slice.
       operationId: followedSlices.delete
       parameters:
-        - name: id
-          description: The id of the followed slice.
-          required: true
-          in: query
         - name: id
       responses:
         "200":
@@ -837,19 +775,12 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: An object with the desired key changes (see above).
-                  type: object
+              properties: {}
   "/profile/{id}":
     get:
       description: Gets the specified user profile set.
       operationId: profile.get
       parameters:
-        - name: id
-          description: The id of the profile set.
-          required: true
-          in: query
         - name: id
       responses:
         "200":
@@ -879,13 +810,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                id:
-                  description: The id of the profile set.
-                  type: "[identifier](#data-structure-identifier)"
-                update:
-                  description: An object with the desired key changes (see above).
-                  type: object
+              properties: {}
   /account:
     get:
       description: Retrieves the user's account information.
@@ -910,12 +835,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                update:
-                  description: "New values for the account information's fields: see
-                    [account information](#data-structure-account). All fields
-                    are optional, and only modified values must be included."
-                  type: object
+              properties: {}
   /account/change-password:
     post:
       description: Modifies the user's password.
