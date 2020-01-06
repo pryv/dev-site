@@ -233,10 +233,16 @@ methodsRoot.sections.forEach(section => {
           name: 'Origin',
           schema: {
             type: 'string',
-            format: 'uri'
+            default: '{{origin}}'
           },
           required: true
         });
+        const props = api.paths[path][httpMethod].requestBody.content[
+          'application/json'
+        ].schema.properties;
+        props.username.default = '{{username}}';
+        props.password.default = '{{password}}';
+        props.appId.default = '{{appId}}';
         break;
     }
 
