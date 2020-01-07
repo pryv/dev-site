@@ -15,6 +15,9 @@ We will guide you through:
 3. [Data Modelling](#data-modelling)
 4. [Managing Accesses](#access-management)
 
+In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) describing Pryv.io API using OpenAPI Specification and import it on other testing platforms for API such as Postman, as explained on our [Open API page](/open-api/index.md).
+
+
 # Create a Pryv Lab User
 
 By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
@@ -107,8 +110,6 @@ Inside each stream can be found timestamped events :
 
 **Streams** are the main way of encoding context for events and are organised in a hierarchical way. They can have sub-streams and usually correspond to organizational levels for the user (e.g. life journal, blood pressure recording, etc.) or encode data sources (e.g. apps and/or devices).
 
-To learn how to perform CRUD (create, read, update, delete) operations on streams, please refer to the guide ["**How to manipulate streams?**"](/guides/manage-streams).
-
 ![Stream example](/assets/images/getting-started/stream_level_1.png)
 
 Here is an example of a **stream** with sub-streams (children): the **Pulse Oximeter App** has a dedicated substream, which collects "events" such as the heart rate measurements.
@@ -155,8 +156,6 @@ Here is an example of a **stream** with sub-streams (children): the **Pulse Oxim
 
 **Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in one stream. 
 Events either have a type from the list of [**standard event types**](/event-types/#directory) to allow interoperability, or an application-specific type. 
-
-To learn how to perform CRUD (create, read, update, delete) operations on events, please refer to the guide ["**How to manipulate events?**"](/guides/manage-events).
 
 Our athlete will therefore be adding events of different types, each related to specific streams:
 
