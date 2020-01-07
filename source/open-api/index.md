@@ -85,6 +85,6 @@ As an example, the different parameters `name`, `parentId`, `singleActivity`, et
 
 - **7.** Enjoy !
 
-The original API reference can be found [online](https://api.pryv.com/reference/). 
+The original API reference can be found [online](/reference/). 
 
 For any questions or suggestions, do not hesitate to contact our team directly. 
