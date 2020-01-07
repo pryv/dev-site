@@ -10,11 +10,13 @@ withTOC: true
 
 Here is the Pryv.io API in OpenAPI 3.0 format: [api.yaml](/open-api/3.0/api.yaml).
 
-This OpenAPI document describes Pryv.io API and conforms to the OpenAPI Specification. It is represented in YAML format and can be downloaded from the previous link to be imported on other API tools such as Postman.
+This OpenAPI document describes the Pryv.io API and conforms to the OpenAPI Specification. It is represented in YAML format and can be downloaded from the above link to be imported on other API tools such as Postman.
 
-## Usage
+# Usage
 
-### Postman
+## Postman
+
+### Import
 
 The OpenAPI description of Pryv.io can be directly imported into Postman to test the API's functionality. 
 
@@ -27,6 +29,8 @@ The OpenAPI description of Pryv.io can be directly imported into Postman to test
 You can choose to upload a file, enter a URL, or copy the YAML file on Postman. 
 
 Import the `open-api-format/api.yaml` from the [URL link](/open-api/3.0/api.yaml) or the YAML file directly with `Import as an API` and `Generate a Postman Collection` checked.
+
+### Environment
 
 - **3.** In the top right corner of Postman, click on the eye icon to see the Environment Options and `Add` a new active Environment for Pryv :
 
@@ -43,23 +47,19 @@ Fill in the variables `username`, `token`, `password`, `baseUrl`, `appId` and `o
 - `password` is the password associated to your username;
 - `token` corresponds to the access token that you generated for your Pryv account. 
 
-You can obtain an Access Token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me) or directly from Postman by creating a new access.
-To do so, select the `POST` method for `accesses.create` and complete the `Body` information with the name of the access and the permissions as shown in the example below :
-
-![Create an Access](/assets/images/create-access.png)
-
-This will generate a token in the Response body once the request is sent :
-
-![Get token](/assets/images/get-token.png)
-
+You can obtain an Access Token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me).
 
 The variable `baseUrl` should be set as `https://{{token}}@{{username}}.pryv.me`.
 
-The variable `appId` can be completed with any trusted app Id of your Pryv account. More information on the trusted apps is provided in the full API reference [here](http://api.pryv.com/reference-full/#trusted-apps-verification).
+Methods reserved for trusted apps only, which are tagged as such [here](/reference-full/#trusted-apps-verification) require a personal token which is only obtainable through an `auth.login` API call. For this you need to set the following environment variables:
 
-The variable `origin` must be defined as `https://sw.{domain}` (in our case `https://sw.pryv.me`). API methods such as `auth.login` require to have the `origin` header matching the domain or one defined in the configuration to prevent phishing attacks.
+The variable `appId` can be completed with any trusted app Id of your Pryv account.
+
+The variable `origin` must be defined as `https://sw.{domain}` (in our case `https://sw.pryv.me`).
 
 Finally, click on `Add` to update the environment.
+
+### Testing the API
 
 - **5.** Once the Pryv environment is set, you can get familiar with Pryv.io API by testing different methods :
 

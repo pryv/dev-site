@@ -15,7 +15,7 @@ We will guide you through:
 3. [Data Modelling](#data-modelling)
 4. [Managing Accesses](#access-management)
 
-In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) describing Pryv.io API using OpenAPI Specification and import it on other testing platforms for API such as Postman, as explained on our [Open API page](/open-api/).
+In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) describing the Pryv.io API using the OpenAPI Specification and import it on other testing platforms for API such as Postman, as explained on our [Open API page](/open-api/).
 
 
 # Create a Pryv Lab User
