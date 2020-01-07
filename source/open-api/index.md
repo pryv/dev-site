@@ -21,7 +21,7 @@ This OpenAPI document describes the Pryv.io API and conforms to the OpenAPI Spec
 The OpenAPI description of Pryv.io can be directly imported into Postman to test the API's functionality. 
 
 
-- **1.** If Postman has not yet been installed on your computer, you can download it from [here](www.getpostman.com). 
+- **1.** If Postman has not yet been installed on your computer, you can download it from [here](http://www.getpostman.com). 
 - **2.** In the Postman app, click `Import` to bring up the following screen:
 
 ![Import on Postman](/assets/images/import.png)
