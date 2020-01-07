@@ -70,3 +70,30 @@ module.exports =
     modified: timestamp.now('-2m')
     modifiedBy: idApp  
     deleted: timestamp.now('-1m')
+
+  info:
+    id: generateId()
+    token: generateId()
+    type: "app"
+    name: "Current access"
+    deviceName: "My awesome device"
+    permissions: [
+      streamId: "health"
+      level: "read"
+    ]
+    lastUsed: timestamp.now('-5m')
+    expires: timestamp.now('-2m')
+    deleted: timestamp.now('-1m')
+    clientData: {
+      consent: "My custom consent message."
+    }
+    created: timestamp.now('-2m')
+    createdBy: idApp
+    modified: timestamp.now('-2m')
+    modifiedBy: idApp
+    calls:
+      getAccessInfo:	12
+      'profile:get':	5
+      'events:get':	12
+      'streams:get':	11
+      'accesses:get':	6

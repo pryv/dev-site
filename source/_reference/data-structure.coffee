@@ -430,7 +430,6 @@ module.exports = exports =
 
     id: "audit-log"
     title: "Audit log"
-    previewOnly: true
     description: """
                  Audit logs keep track of details about the actions performed by clients against Pryv.io accounts through the Pryv.io API.
                  These logs can be fetched by presenting an authorization token, allowing to audit the actions that involved a given token.
@@ -514,6 +513,50 @@ module.exports = exports =
     ]
   ,
 
+    id: "high-frequency-series"
+    title: "HF series"
+    description: """
+                 High-frequency series are collections of homogenous data points. 
+
+                 To store a HF series in Pryv.io, you must first [create a HF event](#create-hf-event).
+
+                 Series data is encoded in the "flatJSON" format:
+                 - Each data point in a series has a `"deltaTime"` field that indicates its time difference, since the holder event's [timestamp](#data-structure-timestamp).
+                   If a `"timestamp"` field is instead provided, the corresponding `"deltaTime"` will be automatically computed from the holder event's timestamp.
+                 - For [types](/event-types/#directory) that store a single value (e.g. "mass/kg"), a single additional field named `"value"` is created.
+                 - Types that contain multiple properties (e.g. "position/wgs84") will have many fields, whose names can be inferred from the [type reference](/event-types/#position).
+                 - Optional fields can either be provided or not; omitted values will be set as null.
+                 """
+    properties: [
+      key: "format"
+      type: "string"
+      description: """
+                   The data format (for now only "flatJSON" format is supported).
+                   """
+    ,
+      key: "fields"
+      type: "Array of fields"
+      description: """
+                   The "fields" array lists all the fields that you will be providing in the "points" array, including the "deltaTime" field in first position.
+                   If the data type contains a single field (ex.: mass/kg), the second field is "value", otherwise, it is the list of fields with the required ones first.
+                   """
+    ,
+      key: "points"
+      type: "Array of data points"
+      description: """
+                   The "points" array contains the data points, each data point is represented by a simple array.
+                   This makes the bulk of the message (your data points) very space-efficient; values are encoded positionally.
+                   The first value corresponds to the first field, and so on.
+                   """
+    ]
+    examples: [
+      title: "High-frequency series for the type 'mass/kg', encoded as flatJSON"
+      content: examples.events.series.mass
+    ,
+      title: "High-frequency series for the type 'position/wgs84', encoded as flatJSON"
+      content: examples.events.series.position
+    ]
+  ,
     id: "webhook"
     title: "Webhook"
     description: """
@@ -728,7 +771,6 @@ module.exports = exports =
       content: """
                - JavaScript: `Date.now() / 1000`
                - PHP (5+): `microtime(true)`
-               - TODO: more
                """
     ]
   ]

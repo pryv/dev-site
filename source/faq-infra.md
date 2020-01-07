@@ -126,6 +126,16 @@ server {
 
 ## System administrators
 
+### Port 53 is already in use (by Docker's embedded DNS)
+
+On some installations, the DNS container cannot be started because docker-compose attempts to bind on the same network interface and port as Docker's embedded DNS.  
+To fix this, you must specify the machine's public IP address in the docker-compose port mapping section of the DNS service as following:
+
+```yaml
+ports:
+	- "EXTERNAL_INTERFACE_IP_ADDRESS:53:5353/udp"
+```
+
 ### docker login X11 error
 
 On a Pryv install using Ubuntu 18.X when running `docker login`: Ubuntu refuses to let you enter the password because it wants you to use a secure means of password entry. The error reads something like 'Cannot autolaunch D-Bus without X11 \$DISPLAY' ([docker-compose issue #6023](https://github.com/docker/compose/issues/6023)).

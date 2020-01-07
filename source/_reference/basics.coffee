@@ -19,7 +19,7 @@ module.exports = exports =
                  https://{username}.pryv.me
                  ```
 
-                 Each user account has a dedicated root API endpoint as it is potentially served from a different location.
+                 Each user account has a dedicated root API endpoint as it is potentially served from a different location. The API endpoint format may vary, so check your platform's [service information](#service-info) if needed.
 
                  """
     examples: [
@@ -153,8 +153,11 @@ module.exports = exports =
                 Available messages are: 
                   - `eventsChanged`
                   - `streamsChanged`
+                  - `accessesChanged`
+                  - `systemBoot` (webhooks only)
 
-                Messages describe what type of resource has been changed (created, updated or deleted). It does not include the contents of the change, which must be retrieved through the API using a valid access token.
+                Messages describe what type of resource has been changed (created, updated or deleted). It does not include the contents of the change, which must be retrieved through the API using a valid access token.  
+                The `systemBoot` message is executed when the notificaitons system is started in order to query possibly missed data changes.
                 """
   sections: [
     id: "with-websockets"
@@ -463,6 +466,14 @@ module.exports = exports =
           optional: true
           description: """
                        Additional client data that will be transmitted alongside the auth request (see Result below).
+                       """
+        ,
+          key: "authUrl"
+          type: "string"
+          optional: true
+          description: """
+                       Specify a custom url for the authentication process.
+                       The authUrl's beginning must match with one of the trusted URLs set in the Register's configuration.
                        """
         ]
       result: [
