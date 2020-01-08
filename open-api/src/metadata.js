@@ -3,7 +3,7 @@ module.exports = {
   info: {
     description: 'Description of Pryv.io API in Open API 3.0 standard format',
     version: '1.0.0',
-    title: 'Open API Pryv',
+    title: 'Pryv.io API',
     contact: {
       email: 'hsupport@pryv.com'
     },
