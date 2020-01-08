@@ -249,7 +249,6 @@ methodsRoot.sections.forEach(section => {
           name: 'Origin',
           schema: {
             type: 'string',
-            default: '{{origin}}',
             format: 'uri'
           },
           required: true
@@ -257,9 +256,6 @@ methodsRoot.sections.forEach(section => {
         const props = api.paths[path][httpMethod].requestBody.content[
           'application/json'
         ].schema.properties;
-        props.username.default = '{{username}}';
-        props.password.default = '{{password}}';
-        props.appId.default = '{{appId}}';
         break;
     }
 
