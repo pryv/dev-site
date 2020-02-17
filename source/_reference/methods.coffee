@@ -477,7 +477,7 @@ module.exports = exports =
         title: "cURL for multiple streams"
         params: """
                 ```bash
-                curl -i https://${username}.pryv.me/events?auth=${token}&streams[]=diary&streams[]=weight
+                curl -i "https://${token}@${username}.pryv.me/events?streams[]=diary&streams[]=weight"
                 ```
                 """
         result:
@@ -486,7 +486,7 @@ module.exports = exports =
         title: "cURL with deletions"
         params: """
                 ```bash
-                curl -i https://${username}.pryv.me/events?auth=${token}&includeDeletions=true&modifiedSince=#{timestamp.now('-24h')}
+                curl -i "https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=#{timestamp.now('-24h')}""
                 ```
                 """
         result:
@@ -590,7 +590,7 @@ module.exports = exports =
         title: "cURL with attachment"
         content: """
                  ```bash
-                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" https://${username}.pryv.me/events?auth=${token}
+                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" "https://${token}@${username}.pryv.me/events"
                  ```
                  """
         result:
@@ -763,7 +763,7 @@ module.exports = exports =
         title: "cURL"
         content: """
                  ```bash
-                 curl -i -F "file=@travel-expense.jpg" https://${username}.pryv.me/events/#{examples.events.activityAttachment.id}?auth=${token}
+                 curl -i -F "file=@travel-expense.jpg" "https://${token}@${username}.pryv.me/events/#{examples.events.activityAttachment.id}""
                  ```
                  """
         result:
@@ -1409,7 +1409,7 @@ module.exports = exports =
         title: "cURL with deletions"
         params: """
                 ```bash
-                curl -i https://${username}.pryv.me/accesses?auth=${token}&includeDeletions=true
+                curl -i "https://${token}@${username}.pryv.me/accesses?includeDeletions=true
                 ```
                 """
         result:

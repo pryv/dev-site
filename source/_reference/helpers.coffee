@@ -44,9 +44,9 @@ exports.getCurlCall = (params, http, server, auth) ->
   
   call = ""
   if (server == "core")
-    call = "curl -i #{request}#{headers}#{data}https://#{basicAuth}{username}.pryv.me#{path}#{queryString}"
+    call = "curl -i #{request}#{headers}#{data}\"https://#{basicAuth}{username}.pryv.me#{path}#{queryString}\""
   else if (server == "register")
-    call = "curl -i #{request}#{headers}#{data}https://reg.pryv.me#{path}#{queryString}"
+    call = "curl -i #{request}#{headers}#{data}\"https://reg.pryv.me#{path}#{queryString}\""
     
   
   # use shell variable format to help with quick copy-paste
