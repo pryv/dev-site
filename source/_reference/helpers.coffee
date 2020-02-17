@@ -4,7 +4,7 @@ _ = require("lodash")
 exports.getDocId = () ->
   return [].slice.apply(arguments).join('-').replace('.', '-')
 
-exports.getCurlCall = (params, http, server, auth) ->
+exports.getCurlCall = (params, http, server, hasQueryAuth) ->
   [method, path] = http.split(" ")
   if (server == null || server == undefined)
     server = "core"
@@ -18,7 +18,7 @@ exports.getCurlCall = (params, http, server, auth) ->
     if (method == "POST" && (path == "/auth/login" || path == "/account/request-password-reset" || path == "/account/reset-password" || path == "/mfa/recover"))
       headers = "-H 'Origin: https://sw.pryv.me' "
     else 
-      if (auth)
+      if (hasQueryAuth)
         queryString = "?auth={token}"
       else
         basicAuth = "{token}@"
