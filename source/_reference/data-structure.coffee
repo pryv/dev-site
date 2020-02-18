@@ -283,9 +283,11 @@ module.exports = exports =
                      """
       ,
         key: "level"
-        type: "`read`|`contribute`|`manage`"
+        type: "`read`|`contribute`|`manage`|`create-only`"
         description: """
-                     The level of access to the stream. With `contribute`, one can see and record events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.
+                     The level of access to the stream. With `contribute`, one can see and manipulate events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.  
+                     
+                     The `create-only` level - only available for `streamIds` - allows to read the stream and create events on it and its children. It forbids the usage of socket.io for accesses that contain a `create-only` permission.
                      """
       ]
     ,
