@@ -19,6 +19,8 @@ For this we suggest to implement the following ways to load its configuration:
 
 1. **pryvApiEndpoint** query param
 
+  An URL in the form: `https://${TOKEN}@{USERNAME}.{DOMAIN}`. See [Basic HTTP Authentication](/reference/#authentication).
+
   Example:`https://cdtasdjhashdsa@testuser.pryv.me` as API endpoint (URL encoded)
 
   ```
