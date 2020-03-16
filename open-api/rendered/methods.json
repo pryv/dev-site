@@ -764,7 +764,8 @@
           "type": "method",
           "title": "Start period",
           "http": "POST /events/start",
-          "description": "Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.\n\nSee [Create event](#methods-events-events-create) for details.",
+          "description": "Starts a new period event. **(DEPRECATED)**  
+          This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.\n\nSee [Create event](#methods-events-events-create) for details.",
           "examples": [
             {
               "title": "Starting an activity",

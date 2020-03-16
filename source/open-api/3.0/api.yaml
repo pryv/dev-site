@@ -362,6 +362,7 @@ paths:
   /events/start:
     post:
       description: >-
+        **(DEPRECATED)**  
         Starts a new period event. This is equivalent to starting an event with
         a null `duration`. In `singleActivity` streams, also stops the
         previously running period event if any.

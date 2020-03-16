@@ -604,7 +604,7 @@ module.exports = exports =
       title: "Start period"
       http: "POST /events/start"
       description: """
-                   **(DEPRECATED)**
+                   **(DEPRECATED)**  
                    Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.
 
                    See [Create event](##{_getDocId("events", "events.create")}) for details.
