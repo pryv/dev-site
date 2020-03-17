@@ -65,7 +65,7 @@ As an example, see the method `events.get` below :
 
 For `POST` and `PUT` methods, you should fill the necessary parameters in the `Body` field.
 
-As an example, the different parameters `name`, `parentId`, `singleActivity`, etc. should be completed with their own value when creating a new stream for the method `streams.create` below :
+As an example, the different parameters `name`, `parentId`, etc. should be completed with their own value when creating a new stream for the method `streams.create` below :
 
 ![events.get](/assets/images/create-streams.png)
 

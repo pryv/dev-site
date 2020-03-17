@@ -691,7 +691,7 @@
               {
                 "key": "stoppedId",
                 "type": "[identifier](#data-structure-identifier)",
-                "description": "Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event."
+                "description": "Only in `singleActivity` streams (**DEPRECATED**). If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event."
               }
             ]
           },
@@ -704,7 +704,7 @@
             {
               "key": "periods-overlap",
               "http": "400",
-              "description": "Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`."
+              "description": "Only in `singleActivity` streams (**DEPRECATED**): the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`."
             }
           ],
           "examples": [
@@ -764,8 +764,8 @@
           "type": "method",
           "title": "Start period",
           "http": "POST /events/start",
-          "description": "Starts a new period event. **(DEPRECATED)**  
-          This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.\n\nSee [Create event](#methods-events-events-create) for details.",
+          "description": "**(DEPRECATED)**  
+          Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.\n\nSee [Create event](#methods-events-events-create) for details.",
           "examples": [
             {
               "title": "Starting an activity",
@@ -797,13 +797,14 @@
           "type": "method",
           "title": "Stop period",
           "http": "POST /events/stop",
-          "description": "Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop (or its type) must be specified.",
+          "description": "(**DEPRECATED**)  
+          Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop (or its type) must be specified.",
           "params": {
             "properties": [
               {
                 "key": "streamId",
                 "type": "[identifier](#data-structure-identifier)",
-                "description": "The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified."
+                "description": "The id of the `singleActivity` stream (**DEPRECATED**) in which to stop the running event. Either this or `id` must be specified."
               },
               {
                 "key": "id",
@@ -889,7 +890,7 @@
               {
                 "key": "stoppedId",
                 "type": "[identifier](#data-structure-identifier)",
-                "description": "Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event."
+                "description": "Only in `singleActivity` streams (**DEPRECATED**). If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event."
               }
             ]
           },
@@ -897,12 +898,12 @@
             {
               "key": "invalid-operation",
               "http": "400",
-              "description": "Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event."
+              "description": "Only in `singleActivity` streams (**DEPRECATED**). The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event."
             },
             {
               "key": "periods-overlap",
               "http": "400",
-              "description": "Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`."
+              "description": "Only in `singleActivity` streams (**DEPRECATED**). The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`."
             }
           ],
           "examples": [

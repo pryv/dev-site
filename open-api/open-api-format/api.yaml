@@ -373,7 +373,9 @@ paths:
       responses: {}
   /events/stop:
     post:
-      description: Stops a running period event. In `singleActivity` streams, which
+      description: >-
+        **(DEPRECATED)**  
+        Stops a running period event. In `singleActivity` streams, which
         guarantee that only one event is running at any given time, that event
         is automatically determined; for regular streams, the event to stop (or
         its type) must be specified.

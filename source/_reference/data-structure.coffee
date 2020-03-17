@@ -194,6 +194,7 @@ module.exports = exports =
       type: "boolean"
       optional: true
       description: """
+                   (**DEPRECATED**)  
                    If specified and `true`, the system will ensure that period events in this stream and its children never overlap.
                    """
     ,

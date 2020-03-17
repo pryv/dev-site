@@ -373,7 +373,9 @@ paths:
       responses: {}
   /events/stop:
     post:
-      description: Stops a running period event. In `singleActivity` streams, which
+      description: >-
+        **(DEPRECATED)**  
+        Stops a running period event. In `singleActivity` streams, which
         guarantee that only one event is running at any given time, that event
         is automatically determined; for regular streams, the event to stop (or
         its type) must be specified.
@@ -393,7 +395,7 @@ paths:
               type: object
               properties:
                 streamId:
-                  description: The id of the `singleActivity` stream in which to stop the
+                  description: The id of the `singleActivity` stream (**DEPRECATED**) in which to stop the
                     running event. Either this or `id` must be specified.
                   type: "[identifier](#data-structure-identifier)"
                 id:
@@ -1265,7 +1267,8 @@ components:
             indicates that the stream has no parent (i.e. root stream).
           $ref: "#/components/schemas/identifier"
         singleActivity:
-          description: If specified and `true`, the system will ensure that period events
+          description: (**DEPRECATED**)  
+          If specified and `true`, the system will ensure that period events
             in this stream and its children never overlap.
           type: boolean
         clientData:

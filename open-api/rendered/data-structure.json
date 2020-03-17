@@ -213,7 +213,8 @@
           "key": "singleActivity",
           "type": "boolean",
           "optional": true,
-          "description": "If specified and `true`, the system will ensure that period events in this stream and its children never overlap."
+          "description": "**(DEPRECATED**)  
+          If specified and `true`, the system will ensure that period events in this stream and its children never overlap."
         },
         {
           "key": "clientData",

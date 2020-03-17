@@ -565,7 +565,7 @@ module.exports = exports =
           key: "stoppedId"
           type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+                       Only in `singleActivity` streams (**DEPRECATED**). If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
                        """
         ]
       errors: [
@@ -578,7 +578,7 @@ module.exports = exports =
         key: "periods-overlap"
         http: "400"
         description: """
-                     Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+                     Only in `singleActivity` streams (**DEPRECATED**): the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
                      """
       ]
       examples: [
@@ -624,6 +624,7 @@ module.exports = exports =
       title: "Stop period"
       http: "POST /events/stop"
       description: """
+                   **(DEPRECATED)**  
                    Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop (or its type) must be specified.
                    """
       params:
@@ -631,7 +632,7 @@ module.exports = exports =
           key: "streamId"
           type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
-                       The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified.
+                       The id of the `singleActivity` stream (**DEPRECATED**) in which to stop the running event. Either this or `id` must be specified.
                        """
         ,
           key: "id"
@@ -716,20 +717,20 @@ module.exports = exports =
           key: "stoppedId"
           type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+                       Only in `singleActivity` streams (**DEPRECATED**). If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
                        """
         ]
       errors: [
         key: "invalid-operation"
         http: "400"
         description: """
-                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
+                     Only in `singleActivity` streams (**DEPRECATED**). The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
                      """
       ,
         key: "periods-overlap"
         http: "400"
         description: """
-                     Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
+                     Only in `singleActivity` streams (**DEPRECATED**). The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
                      """
       ]
       examples: [
