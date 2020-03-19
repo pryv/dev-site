@@ -32,6 +32,10 @@ See `dev-env/setup.sh` for more details.
 
 **Note:** test results are sourced from repo [pryv/test-results-pryv.io](https://github.com/pryv/test-results-pryv.io) on `make retrieve-tests` and `make publish` into `source/event-types/_source`.
 
+### Don't forget
+
+- [API version bump](/source/_reference/index.js#L11)
+- [Change log](/source/change-log.md)
 
 ### Coding conventions
 
