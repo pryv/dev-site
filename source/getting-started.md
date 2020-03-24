@@ -264,7 +264,7 @@ This data will have the type `position/wgs84` :
 More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
 
 - **start** and **stop** events. This can be very useful for time-tracking, enabling the athlete to track and report his activities in real-time (ex.: running, cycling, exercising, etc).
-This allows to specify time durations for events or to guarantee that only one event is running at a given time in `singleActivity` streams. More information on these methods is provided [**here**](/reference/#start-period).
+This allows to specify time durations for events or to guarantee that only one event is running at a given time in `singleActivity` streams (**DEPRECATED**). More information on these methods is provided [**here**](/reference/#start-period).
 
 To get more details on all possible event types, see the [**events API reference**](/reference/#event).
 
