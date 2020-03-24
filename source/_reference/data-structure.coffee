@@ -66,7 +66,7 @@ module.exports = exports =
       type: "[timestamp](##{_getDocId("timestamp")})"
       optional: true
       description: """
-                   If present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
+                   If present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**.
                    """
     ,
       key: "type"
