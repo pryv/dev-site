@@ -263,14 +263,11 @@ paths:
                 - type: array
                   items: "[item deletions](#data-structure-item-deletion)"
     post:
-      description: >-
-        Records a new event. It is recommended that events recorded this way are
-        completed events, i.e. either period events with a known duration or
-        mark events. To start a running period event, use [Start
-        period](#methods-events-events-start) instead.
-
-
-        In addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
+      description: Records a new event, in addition to JSON, this request accepts standard
+        multipart/form-data content to support the creation of event with
+        attached files in a single request. When sending a multipart request,
+        one content part must hold the JSON for the new event and all other
+        content parts must be the attached files.
       operationId: events.create
       responses:
         "201":
@@ -392,9 +389,10 @@ paths:
               type: object
               properties:
                 streamId:
-                  description: The id of the `singleActivity` stream (**DEPRECATED**) in
-                    which to stop the running event. Either this or `id` must be
-                    specified.
+                  description: >-
+                    (**DEPRECATED**)
+
+                    The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified.
                   type: "[identifier](#data-structure-identifier)"
                 id:
                   description: The id of the event to stop. Either this or `streamId` (and
@@ -1190,10 +1188,7 @@ components:
         duration:
           description: If present and non-zero, indicates that the event is a period event.
             **Running period events have a duration set to `null`**. **A
-            duration set to zero is equivalent to no duration**. (We use a
-            dedicated field for duration—instead of using the `content` field—as
-            we do specific processing of event durations, intervals and
-            overlapping.)
+            duration set to zero is equivalent to no duration**.
           $ref: "#/components/schemas/timestamp"
         type:
           required: true
