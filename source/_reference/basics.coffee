@@ -474,11 +474,11 @@ module.exports = exports =
                        The authUrl's beginning must match with one of the trusted URLs set in the Register's configuration.
                        """
         ,
-          key: "serviceInfoUrl"
-          type: "string"
+          key: "serviceInfo"
+          type: "object"
           optional: true
           description: """
-                       A service information URL that will be transmitted in the poll responses, which will allows to override the access and requesting app configurations. See [App Guidelines](/guides/app-guidelines/).
+                       Overrides the default [service information](#service-info) object that will be transmitted in the polling responses.
                        """
         ]
       result: [
@@ -549,11 +549,11 @@ module.exports = exports =
                        The client data provided during the auth request.
                        """
         ,
-          key: "serviceInfoUrl"
+          key: "serviceInfo"
           type: "string"
           optional: true
           description: """
-                       The service information URL provided during the auth request.
+                       The [service information](#service-info).
                        """
         ]
       ,
@@ -584,11 +584,11 @@ module.exports = exports =
                        The API endpoint containing the authorization token. See [App Guidelines](/guides/app-guidelines/).
                        """
         ,
-          key: "serviceInfoUrl"
-          type: "string"
+          key: "serviceInfo"
+          type: "object"
           optional: true
           description: """
-                       The service information URL provided during the auth request.
+                       The [service information](#service-info).
                        """
         ]
       ,
@@ -613,11 +613,11 @@ module.exports = exports =
                        A message indicating the reason for the failure.
                        """
         ,
-          key: "serviceInfoUrl"
-          type: "string"
+          key: "serviceInfo"
+          type: "object"
           optional: true
           description: """
-                       The service information URL provided during the auth request.
+                       The [service information](#service-info).
                        """
         ]
       ]
@@ -672,7 +672,8 @@ module.exports = exports =
                     "poll": "https://reg.pryv.me/access/6CInm4R2TLaoqtl4",
                     "oauthState": null,
                     "poll_rate_ms": 1000,
-                    "lang": "fr"
+                    "lang": "fr",
+                    "serviceInfo": {...}
                 }
                  ```
                  """
@@ -685,7 +686,7 @@ module.exports = exports =
                  ```
                  """
       ,
-        title: "Auth request with custom serviceInfoUrl and custom access app"
+        title: "Auth request with custom serviceInfo and custom access app"
         content: """
                  ```http
                  POST /access HTTP/1.1
@@ -701,7 +702,7 @@ module.exports = exports =
                      }
                    ],
                    "authUrl": "https://auth.custom.com",
-                   "serviceInfoUrl": "https://custom.com/service/info",
+                   "serviceInfo": {...}
                  }
                  ```
                  """
@@ -726,7 +727,8 @@ module.exports = exports =
                     "poll": "https://reg.pryv.me/access/o8maIIWoifro7WNJ",
                     "oauthState": null,
                     "poll_rate_ms": 1000,
-                    "lang": "en"
+                    "lang": "en",
+                    "serviceInfo": {...}
                 }
                  ```
                  """
