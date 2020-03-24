@@ -389,8 +389,6 @@ module.exports = exports =
                   - by polling the URL obtained in the `poll` field of the HTTP response to the auth request
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
-                 **Note: this auth flow will very likely undergo some changes in the near future.**
-
                  #### Generate token app
 
                  You can also use the **Access token generator** to obtain an app token:
