@@ -384,7 +384,7 @@ module.exports = exports =
 
                  1. Choose an app identifier (min. length 6 chars)
                  2. Send an auth request from your app
-                 3. Open the `accessUrl` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
+                 3. Open the `authUrl` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
                  4. The result of the sign in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
                   - by polling the URL obtained in the `poll` field of the HTTP response to the auth request
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
@@ -492,6 +492,13 @@ module.exports = exports =
                        """
         ,
           key: "url"
+          type: "string"
+          description: """
+                       **(DEPRECATED)**  
+                       Please use the `authUrl` parameter. The URL of the auth page to show the user from your app as popup or webframe.
+                       """
+        ,
+          key: "authUrl"
           type: "string"
           description: """
                        The URL of the auth page to show the user from your app as popup or webframe.
@@ -668,7 +675,7 @@ module.exports = exports =
                         }
                     ],
                     "url": "https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4",
-                    "accessUrl": "https://sw.pryv.me/access/access.html?poll=https://reg.pryv.me/access/6CInm4R2TLaoqtl4"
+                    "authUrl": "https://sw.pryv.me/access/access.html?poll=https://reg.pryv.me/access/6CInm4R2TLaoqtl4"
                     "poll": "https://reg.pryv.me/access/6CInm4R2TLaoqtl4",
                     "oauthState": null,
                     "poll_rate_ms": 1000,
@@ -723,7 +730,7 @@ module.exports = exports =
                         }
                     ],
                     "url": "https://auth.custom.com?key=o8maIIWoifro7WNJ&requestingAppId=my-custom-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%o8maIIWoifro7WNJ",
-                    "accessUrl": "https://auth.custom.com?poll=https://reg.pryv.me/access/o8maIIWoifro7WNJ"
+                    "authUrl": "https://auth.custom.com?poll=https://reg.pryv.me/access/o8maIIWoifro7WNJ"
                     "poll": "https://reg.pryv.me/access/o8maIIWoifro7WNJ",
                     "oauthState": null,
                     "poll_rate_ms": 1000,
