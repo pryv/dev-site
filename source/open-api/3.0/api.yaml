@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: Description of Pryv.io API in Open API 3.0 standard format
   version: 1.0.0
-  title: Open API Pryv
+  title: Pryv.io API
   contact:
     email: hsupport@pryv.com
   license:
@@ -363,9 +363,8 @@ paths:
     post:
       description: >-
         **(DEPRECATED)**  
-        Starts a new period event. This is equivalent to starting an event with
-        a null `duration`. In `singleActivity` streams, also stops the
-        previously running period event if any.
+
+        Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.
 
 
         See [Create event](#methods-events-events-create) for details.
@@ -375,10 +374,8 @@ paths:
     post:
       description: >-
         **(DEPRECATED)**  
-        Stops a running period event. In `singleActivity` streams, which
-        guarantee that only one event is running at any given time, that event
-        is automatically determined; for regular streams, the event to stop (or
-        its type) must be specified.
+
+        Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop (or its type) must be specified.
       operationId: events.stop
       responses:
         "200":
@@ -395,8 +392,9 @@ paths:
               type: object
               properties:
                 streamId:
-                  description: The id of the `singleActivity` stream (**DEPRECATED**) in which to stop the
-                    running event. Either this or `id` must be specified.
+                  description: The id of the `singleActivity` stream (**DEPRECATED**) in
+                    which to stop the running event. Either this or `id` must be
+                    specified.
                   type: "[identifier](#data-structure-identifier)"
                 id:
                   description: The id of the event to stop. Either this or `streamId` (and
@@ -1267,9 +1265,10 @@ components:
             indicates that the stream has no parent (i.e. root stream).
           $ref: "#/components/schemas/identifier"
         singleActivity:
-          description: (**DEPRECATED**)  
-          If specified and `true`, the system will ensure that period events
-            in this stream and its children never overlap.
+          description: >-
+            (**DEPRECATED**)  
+
+            If specified and `true`, the system will ensure that period events in this stream and its children never overlap.
           type: boolean
         clientData:
           description: Additional client data for the stream.
