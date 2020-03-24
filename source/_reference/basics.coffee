@@ -385,7 +385,7 @@ module.exports = exports =
                  1. Choose an app identifier (min. length 6 chars)
                  2. Send an auth request from your app
                  3. Open the `accessUrl` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
-                 4. The result of the sign in process: a valid Access token or a refusal can be obtained in two ways: 
+                 4. The result of the sign in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
                   - by polling the URL obtained in the `poll` field of the HTTP response to the auth request
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
