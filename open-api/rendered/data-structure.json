@@ -129,46 +129,46 @@
         {
           "title": "A picture",
           "content": {
-            "id": "ck862t9sy00101ypv8j56l4dd",
-            "time": 1585061462.626,
+            "id": "ck862wm210010chpvidnw51su",
+            "time": 1585061618.473,
             "streamId": "diary",
             "tags": [],
             "type": "picture/attached",
             "content": null,
             "attachments": [
               {
-                "id": "ck862t9sy00111ypvgj78nmhu",
+                "id": "ck862wm210011chpv91h1pz5d",
                 "fileName": "photo.jpg",
                 "type": "image/jpeg",
                 "size": 2561,
-                "readToken": "ck862t9sy00121ypvqi68tjjb-arvXLnF4eUgcIKhYzwLBHH7Tb5M"
+                "readToken": "ck862wm210012chpv2p2hx14n-I6V75lUFPNyRPzSFPnmoTqIPany"
               }
             ],
-            "created": 1585061462.626,
-            "createdBy": "ck862t9se00041ypvtirozm01",
-            "modified": 1585061462.626,
-            "modifiedBy": "ck862t9se00041ypvtirozm01"
+            "created": 1585061618.473,
+            "createdBy": "ck862wm1i0004chpvcorv9zs1",
+            "modified": 1585061618.473,
+            "modifiedBy": "ck862wm1i0004chpvcorv9zs1"
           }
         },
         {
           "title": "An activity",
           "content": {
-            "id": "ck862t9sx000n1ypv5405vyag",
-            "time": 1585065062.625,
+            "id": "ck862wm21000nchpv3208clny",
+            "time": 1585065218.473,
             "streamId": "jogging",
             "tags": [],
             "type": "activity/pryv",
             "content": null,
-            "created": 1585065062.625,
-            "createdBy": "ck862t9sd00011ypv8cdmgjmf",
-            "modified": 1585065062.625,
-            "modifiedBy": "ck862t9sd00011ypv8cdmgjmf"
+            "created": 1585065218.473,
+            "createdBy": "ck862wm1i0001chpveac1g3je",
+            "modified": 1585065218.473,
+            "modifiedBy": "ck862wm1i0001chpveac1g3je"
           }
         },
         {
           "title": "A position",
           "content": {
-            "id": "ck862t9sy00131ypvbg3h8tcd",
+            "id": "ck862wm210013chpvpj6f78m2",
             "time": 1350373077.359,
             "streamId": "diary",
             "tags": [],
@@ -177,10 +177,10 @@
               "latitude": 40.714728,
               "longitude": -73.998672
             },
-            "created": 1585057862.626,
-            "createdBy": "ck862t9sd00001ypvsrz6sixz",
-            "modified": 1585057862.626,
-            "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+            "created": 1585058018.473,
+            "createdBy": "ck862wm1h0000chpvf344943e",
+            "modified": 1585058018.473,
+            "modifiedBy": "ck862wm1h0000chpvf344943e"
           }
         }
       ]
@@ -272,26 +272,26 @@
                   "name": "Jogging",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1521951169.3041427,
-                  "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                  "modified": 1521951224.2114496,
-                  "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                  "created": 1521951338.493939,
+                  "createdBy": "ck862wm1h0000chpvf344943e",
+                  "modified": 1521951562.3126118,
+                  "modifiedBy": "ck862wm1h0000chpvf344943e"
                 },
                 {
                   "id": "bicycling",
                   "name": "Bicycling",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1521951169.3041427,
-                  "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                  "modified": 1521951416.2017837,
-                  "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                  "created": 1521951338.493939,
+                  "createdBy": "ck862wm1h0000chpvf344943e",
+                  "modified": 1521951402.5261326,
+                  "modifiedBy": "ck862wm1h0000chpvf344943e"
                 }
               ],
-              "created": 1521951158.625,
-              "createdBy": "ck862t9sd00001ypvsrz6sixz",
-              "modified": 1521951519.694215,
-              "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+              "created": 1521951314.472,
+              "createdBy": "ck862wm1h0000chpvf344943e",
+              "modified": 1521951570.1331768,
+              "modifiedBy": "ck862wm1h0000chpvf344943e"
             },
             {
               "id": "work",
@@ -300,82 +300,82 @@
               "singleActivity": true,
               "children": [
                 {
-                  "id": "ck862t9sx000c1ypvnps2g4lz",
+                  "id": "ck862wm20000cchpvkt6qzgos",
                   "name": "Noble Works Co.",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "ck862t9sx000e1ypvhp8kqh3r",
+                      "id": "ck862wm20000echpv0tcqp3aq",
                       "name": "Last Be First",
-                      "parentId": "ck862t9sx000c1ypvnps2g4lz",
+                      "parentId": "ck862wm20000cchpvkt6qzgos",
                       "children": [],
-                      "created": 1521951197.7465746,
-                      "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                      "modified": 1521951357.367998,
-                      "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                      "created": 1521951345.8076959,
+                      "createdBy": "ck862wm1h0000chpvf344943e",
+                      "modified": 1521951352.933682,
+                      "modifiedBy": "ck862wm1h0000chpvf344943e"
                     },
                     {
-                      "id": "ck862t9sx000f1ypvh1v53eux",
+                      "id": "ck862wm20000fchpv5cm06yi4",
                       "name": "Big Tree",
-                      "parentId": "ck862t9sx000c1ypvnps2g4lz",
+                      "parentId": "ck862wm20000cchpvkt6qzgos",
                       "children": [],
-                      "created": 1521951197.7465746,
-                      "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                      "modified": 1521951375.6550016,
-                      "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                      "created": 1521951345.8076959,
+                      "createdBy": "ck862wm1h0000chpvf344943e",
+                      "modified": 1521951676.491873,
+                      "modifiedBy": "ck862wm1h0000chpvf344943e"
                     },
                     {
-                      "id": "ck862t9sx000g1ypv637vegbo",
+                      "id": "ck862wm20000gchpv67zyzhol",
                       "name": "Inner Light",
-                      "parentId": "ck862t9sx000c1ypvnps2g4lz",
+                      "parentId": "ck862wm20000cchpvkt6qzgos",
                       "children": [],
-                      "created": 1521951197.7465746,
-                      "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                      "modified": 1521951290.0530736,
-                      "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                      "created": 1521951345.8076959,
+                      "createdBy": "ck862wm1h0000chpvf344943e",
+                      "modified": 1521951485.1222064,
+                      "modifiedBy": "ck862wm1h0000chpvf344943e"
                     }
                   ],
-                  "created": 1521951185.142113,
-                  "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                  "modified": 1521951322.281079,
-                  "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                  "created": 1521951322.3053699,
+                  "createdBy": "ck862wm1h0000chpvf344943e",
+                  "modified": 1521951390.7363095,
+                  "modifiedBy": "ck862wm1h0000chpvf344943e"
                 },
                 {
-                  "id": "ck862t9sx000d1ypv7td2b5lb",
+                  "id": "ck862wm20000dchpvzbs7gofn",
                   "name": "Freelancing",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "ck862t9sx000h1ypvncf84wae",
+                      "id": "ck862wm20000hchpv70a5f2pk",
                       "name": "Funky Veggies",
-                      "parentId": "ck862t9sx000d1ypv7td2b5lb",
+                      "parentId": "ck862wm20000dchpvzbs7gofn",
                       "children": [],
-                      "created": 1521951213.0992448,
-                      "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                      "modified": 1521951300.1186037,
-                      "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                      "created": 1521951341.9263306,
+                      "createdBy": "ck862wm1h0000chpvf344943e",
+                      "modified": 1521951376.7401385,
+                      "modifiedBy": "ck862wm1h0000chpvf344943e"
                     },
                     {
-                      "id": "ck862t9sx000i1ypv3lgy83gm",
+                      "id": "ck862wm20000ichpvu47il9ga",
                       "name": "Jojo Lapin & sons",
-                      "parentId": "ck862t9sx000d1ypv7td2b5lb",
+                      "parentId": "ck862wm20000dchpvzbs7gofn",
                       "children": [],
-                      "created": 1521951213.0992448,
-                      "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                      "modified": 1521951498.068068,
-                      "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                      "created": 1521951341.9263306,
+                      "createdBy": "ck862wm1h0000chpvf344943e",
+                      "modified": 1521951567.6058087,
+                      "modifiedBy": "ck862wm1h0000chpvf344943e"
                     }
                   ],
-                  "created": 1521951185.142113,
-                  "createdBy": "ck862t9sd00001ypvsrz6sixz",
-                  "modified": 1521951491.561727,
-                  "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+                  "created": 1521951322.3053699,
+                  "createdBy": "ck862wm1h0000chpvf344943e",
+                  "modified": 1521951436.9561229,
+                  "modifiedBy": "ck862wm1h0000chpvf344943e"
                 }
               ],
-              "created": 1521951158.625,
-              "createdBy": "ck862t9sd00001ypvsrz6sixz",
-              "modified": 1521951197.0497124,
-              "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+              "created": 1521951314.472,
+              "createdBy": "ck862wm1h0000chpvf344943e",
+              "modified": 1521951439.6733043,
+              "modifiedBy": "ck862wm1h0000chpvf344943e"
             }
           ]
         }
@@ -503,8 +503,8 @@
         {
           "title": "An app access",
           "content": {
-            "id": "ck862t9sd00011ypv8cdmgjmf",
-            "token": "ck862t9se00031ypvhqo9s9b8",
+            "id": "ck862wm1i0001chpveac1g3je",
+            "token": "ck862wm1i0003chpvtqfnwqac",
             "type": "app",
             "name": "my-app-id",
             "permissions": [
@@ -513,10 +513,10 @@
                 "level": "contribute"
               }
             ],
-            "created": 1584978662.606,
-            "createdBy": "ck862t9sd00001ypvsrz6sixz",
-            "modified": 1584978662.606,
-            "modifiedBy": "ck862t9sd00001ypvsrz6sixz"
+            "created": 1584978818.454,
+            "createdBy": "ck862wm1h0000chpvf344943e",
+            "modified": 1584978818.454,
+            "modifiedBy": "ck862wm1h0000chpvf344943e"
           }
         }
       ]
@@ -669,13 +669,13 @@
         {
           "title": "A single audit log",
           "content": {
-            "id": "ck862t9t1001n1ypvm6os9s65",
+            "id": "ck862wm23001nchpvx60hiyvl",
             "type": "audit/core",
             "time": 1561988300,
             "forwardedFor": "172.18.0.7",
             "action": "GET /events",
             "query": "streamId=diary",
-            "accessId": "ck862t9t1001l1ypv8bw20d7j",
+            "accessId": "ck862wm23001lchpvh7llbww8",
             "status": 403,
             "errorMessage": "Access session has expired.",
             "errorId": "forbidden"
@@ -875,8 +875,8 @@
         {
           "title": "A simple Webhook",
           "content": {
-            "id": "ck862t9sz001g1ypvq5ugmfh5",
-            "accessId": "ck862t9sz001e1ypvibrulxa4",
+            "id": "ck862wm23001gchpv2fi0rpsg",
+            "accessId": "ck862wm23001echpve30ciylo",
             "url": "https://notifications.service.com/pryv",
             "minIntervalMs": 5000,
             "maxRetries": 5,
@@ -886,22 +886,22 @@
             "failCount": 0,
             "lastRun": {
               "status": 200,
-              "timestamp": 1585061462.627
+              "timestamp": 1585061618.475
             },
             "runs": [
               {
                 "status": 200,
-                "timestamp": 1585061462.627
+                "timestamp": 1585061618.475
               },
               {
                 "status": 200,
-                "timestamp": 1585057862.627
+                "timestamp": 1585058018.475
               }
             ],
-            "created": 1584978662.627,
-            "createdBy": "ck862t9sz001e1ypvibrulxa4",
-            "modified": 1584978662.627,
-            "modifiedBy": "ck862t9sz001e1ypvibrulxa4"
+            "created": 1584978818.475,
+            "createdBy": "ck862wm23001echpve30ciylo",
+            "modified": 1584978818.475,
+            "modifiedBy": "ck862wm23001echpve30ciylo"
           }
         }
       ]
