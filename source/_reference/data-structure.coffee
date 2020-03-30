@@ -66,7 +66,7 @@ module.exports = exports =
       type: "[timestamp](##{_getDocId("timestamp")})"
       optional: true
       description: """
-                   If present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**. (We use a dedicated field for duration—instead of using the `content` field—as we do specific processing of event durations, intervals and overlapping.)
+                   If present and non-zero, indicates that the event is a period event. **Running period events have a duration set to `null`**. **A duration set to zero is equivalent to no duration**.
                    """
     ,
       key: "type"
@@ -284,9 +284,11 @@ module.exports = exports =
                      """
       ,
         key: "level"
-        type: "`read`|`contribute`|`manage`"
+        type: "`read`|`contribute`|`manage`|`create-only`"
         description: """
-                     The level of access to the stream. With `contribute`, one can see and record events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.
+                     The level of access to the stream. With `contribute`, one can see and manipulate events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.  
+                     
+                     The `create-only` level - only available for stream-based permissions - allows to read the stream and create events on it and its children. The socket.io interface is not available for accesses that contain a `create-only` permission.
                      """
       ]
     ,

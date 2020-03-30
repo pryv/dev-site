@@ -545,9 +545,7 @@ module.exports = exports =
       title: "Create event"
       http: "POST /events"
       description: """
-                   Records a new event. It is recommended that events recorded this way are completed events, i.e. either period events with a known duration or mark events. To start a running period event, use [Start period](##{_getDocId("events", "events.start")}) instead.
-
-                   In addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
+                   Records a new event, in addition to JSON, this request accepts standard multipart/form-data content to support the creation of event with attached files in a single request. When sending a multipart request, one content part must hold the JSON for the new event and all other content parts must be the attached files.
                    """
       params:
         description: """
@@ -565,7 +563,8 @@ module.exports = exports =
           key: "stoppedId"
           type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
-                       Only in `singleActivity` streams (**DEPRECATED**). If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
+                       (**DEPRECATED**)  
+                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
                        """
         ]
       errors: [
@@ -578,7 +577,8 @@ module.exports = exports =
         key: "periods-overlap"
         http: "400"
         description: """
-                     Only in `singleActivity` streams (**DEPRECATED**): the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
+                     (**DEPRECATED**)  
+                     Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
                      """
       ]
       examples: [
@@ -604,7 +604,7 @@ module.exports = exports =
       title: "Start period"
       http: "POST /events/start"
       description: """
-                   **(DEPRECATED)**  
+                   **(DEPRECATED)**    
                    Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.
 
                    See [Create event](##{_getDocId("events", "events.create")}) for details.
@@ -632,7 +632,8 @@ module.exports = exports =
           key: "streamId"
           type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
-                       The id of the `singleActivity` stream (**DEPRECATED**) in which to stop the running event. Either this or `id` must be specified.
+                       (**DEPRECATED**)  
+                       The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified.
                        """
         ,
           key: "id"
@@ -717,20 +718,23 @@ module.exports = exports =
           key: "stoppedId"
           type: "[identifier](##{dataStructure.getDocId("identifier")})"
           description: """
-                       Only in `singleActivity` streams (**DEPRECATED**). If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
+                       (**DEPRECATED**)  
+                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
                        """
         ]
       errors: [
         key: "invalid-operation"
         http: "400"
         description: """
-                     Only in `singleActivity` streams (**DEPRECATED**). The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
+                     (**DEPRECATED**)  
+                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
                      """
       ,
         key: "periods-overlap"
         http: "400"
         description: """
-                     Only in `singleActivity` streams (**DEPRECATED**). The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
+                     (**DEPRECATED**)  
+                     Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
                      """
       ]
       examples: [
