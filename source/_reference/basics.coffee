@@ -576,13 +576,15 @@ module.exports = exports =
           key: "username"
           type: "string"
           description: """
-                       The authentified user's username.
+                       **(DEPRECATED)**  
+                       Please use the `pryvApiEndpoint` parameter. The authentified user's username.
                        """
         ,
           key: "token"
           type: "string"
           description: """
-                       Your app's API access token.
+                       **(DEPRECATED)**  
+                       Please use the `pryvApiEndpoint` parameter. Your app's API access token.
                        """
         ,
           key: "pryvApiEndpoint"
