@@ -46,7 +46,7 @@ For example:
 
 Here’s a visual representation of the process : 
 
-![Webhook structure in Pryv](source/assets/images/Webhook Pryv.png)
+![Webhook structure in Pryv](source/assets/images/Webhook_pryv.png)
 
 ## Why using Webhooks on Pryv.io
 
