@@ -157,7 +157,7 @@ module.exports = exports =
                   - `systemBoot` (webhooks only)
 
                 Messages describe what type of resource has been changed (created, updated or deleted). It does not include the contents of the change, which must be retrieved through the API using a valid access token.  
-                The `systemBoot` message is executed when the notificaitons system is started in order to query possibly missed data changes.
+                The `systemBoot` message is executed when the notifications system is started in order to query possibly missed data changes.
                 """
   sections: [
     id: "with-websockets"
