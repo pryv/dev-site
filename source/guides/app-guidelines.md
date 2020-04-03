@@ -19,6 +19,8 @@ For this we suggest to implement the following ways to load its configuration:
 
 1. **pryvApiEndpoint** query param
 
+  An URL in the [Basic HTTP Authentication form](/reference/#authentication).
+
   Example:`https://cdtasdjhashdsa@testuser.pryv.me` as API endpoint (URL encoded)
 
   ```
@@ -39,8 +41,8 @@ For this we suggest to implement the following ways to load its configuration:
 
 If multiple parameters are provided, the following order of priority should be used:  
 
-1. `pryvApiEndpoint` as query parameter
-2. `pryvServiceInfoUrl` as query parameter
+1. `pryvServiceInfoUrl` as query parameter
+2. `pryvApiEndpoint` as query parameter
 3. `pryvServiceInfoUrl` as default value
 
 # Authentication

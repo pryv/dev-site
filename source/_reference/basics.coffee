@@ -384,12 +384,10 @@ module.exports = exports =
 
                  1. Choose an app identifier (min. length 6 chars)
                  2. Send an auth request from your app
-                 3. Open the `url` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
-                 4. The result of the sign in process: a valid Access token or a refusal can be obtained in two ways: 
+                 3. Open the `authUrl` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
+                 4. The result of the sign in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
                   - by polling the URL obtained in the `poll` field of the HTTP response to the auth request
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
-
-                 **Note: this auth flow will very likely undergo some changes in the near future.**
 
                  #### Generate token app
 
@@ -475,6 +473,13 @@ module.exports = exports =
                        Specify a custom url for the authentication process.
                        The authUrl's beginning must match with one of the trusted URLs set in the Register's configuration.
                        """
+        ,
+          key: "serviceInfo"
+          type: "object"
+          optional: true
+          description: """
+                       Overrides the default [service information](#service-info) object that will be transmitted in the polling responses.
+                       """
         ]
       result: [
         title: "Result: in progress"
@@ -487,6 +492,13 @@ module.exports = exports =
                        """
         ,
           key: "url"
+          type: "string"
+          description: """
+                       **(DEPRECATED)**  
+                       Please use the `authUrl` parameter. The URL of the auth page to show the user from your app as popup or webframe.
+                       """
+        ,
+          key: "authUrl"
           type: "string"
           description: """
                        The URL of the auth page to show the user from your app as popup or webframe.
@@ -543,6 +555,13 @@ module.exports = exports =
           description: """
                        The client data provided during the auth request.
                        """
+        ,
+          key: "serviceInfo"
+          type: "string"
+          optional: true
+          description: """
+                       The [service information](#service-info).
+                       """
         ]
       ,
         title: "Result: accepted"
@@ -557,13 +576,28 @@ module.exports = exports =
           key: "username"
           type: "string"
           description: """
-                       The authentified user's username.
+                       **(DEPRECATED)**  
+                       Please use the `pryvApiEndpoint` parameter. The authentified user's username.
                        """
         ,
           key: "token"
           type: "string"
           description: """
-                       Your app's API access token.
+                       **(DEPRECATED)**  
+                       Please use the `pryvApiEndpoint` parameter. Your app's API access token.
+                       """
+        ,
+          key: "pryvApiEndpoint"
+          type: "string"
+          description: """
+                       The API endpoint containing the authorization token. See [App Guidelines](/guides/app-guidelines/).
+                       """
+        ,
+          key: "serviceInfo"
+          type: "object"
+          optional: true
+          description: """
+                       The [service information](#service-info).
                        """
         ]
       ,
@@ -586,6 +620,13 @@ module.exports = exports =
           type: "string"
           description: """
                        A message indicating the reason for the failure.
+                       """
+        ,
+          key: "serviceInfo"
+          type: "object"
+          optional: true
+          description: """
+                       The [service information](#service-info).
                        """
         ]
       ]
@@ -636,10 +677,12 @@ module.exports = exports =
                         }
                     ],
                     "url": "https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4",
+                    "authUrl": "https://sw.pryv.me/access/access.html?poll=https://reg.pryv.me/access/6CInm4R2TLaoqtl4"
                     "poll": "https://reg.pryv.me/access/6CInm4R2TLaoqtl4",
                     "oauthState": null,
                     "poll_rate_ms": 1000,
-                    "lang": "fr"
+                    "lang": "fr",
+                    "serviceInfo": {...}
                 }
                  ```
                  """
@@ -649,6 +692,53 @@ module.exports = exports =
                  ```http
                  GET /access/6CInm4R2TLaoqtl4 HTTP/1.1
                  Host: reg.pryv.me
+                 ```
+                 """
+      ,
+        title: "Auth request with custom serviceInfo and custom access app"
+        content: """
+                 ```http
+                 POST /access HTTP/1.1
+                 Host: reg.pryv.me
+
+                 {
+                   "requestingAppId": "my-custom-app-id",
+                   "requestedPermissions": [
+                     {
+                       "streamId": "diary",
+                       "level": "read",
+                       "defaultName": "Journal"
+                     }
+                   ],
+                   "authUrl": "https://auth.custom.com",
+                   "serviceInfo": {...}
+                 }
+                 ```
+                 """
+      ,
+        title: '"In progress" response'
+        content: """
+                 ```json
+                 {
+                    "status": "NEED_SIGNIN",
+                    "code": 201,
+                    "key": "o8maIIWoifro7WNJ",
+                    "requestingAppId": "my-custom-app-id",
+                    "requestedPermissions": [
+                        {
+                            "streamId": "diary",
+                            "level": "read",
+                            "defaultName": "Journal"
+                        }
+                    ],
+                    "url": "https://auth.custom.com?key=o8maIIWoifro7WNJ&requestingAppId=my-custom-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%o8maIIWoifro7WNJ",
+                    "authUrl": "https://auth.custom.com?poll=https://reg.pryv.me/access/o8maIIWoifro7WNJ"
+                    "poll": "https://reg.pryv.me/access/o8maIIWoifro7WNJ",
+                    "oauthState": null,
+                    "poll_rate_ms": 1000,
+                    "lang": "en",
+                    "serviceInfo": {...}
+                }
                  ```
                  """
       ]
