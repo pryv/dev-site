@@ -6,6 +6,32 @@ customer: true
 withTOC: true
 ---
 
+## Target audience
+
+developers implementing notified system with webhooks
+
+## Content
+
+1. quick intro on notifications
+2. webhooks: what, why
+  1. what they are
+  2. why use them instead of socket.io
+  3. why not sending all data but notification only
+  4. separation of reponsibility
+3. use case: counting steps
+  explain with schema
+4. on hands example: step by step with API method links and payload examples
+5. special features
+  1. frequency limit
+  2. retries
+  3. reactivation
+  5. stats
+  6. global parameters
+  4. deletion of access used to create webhook - does not delete webhook
+6. Usages
+  1. identify user: use include it in webhooks's URL: domain, path or query params
+  2. add secret in query param
+
 ## Introduction
 
 Pryv.io supports webhook integration and therefore allows to notify of data changes.
