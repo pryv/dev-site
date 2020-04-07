@@ -6,37 +6,59 @@ customer: true
 withTOC: true
 ---
 
+## Target audience
+
+developers implementing notified system with webhooks
+
+## Content
+
+1. quick intro on notifications
+2. webhooks: what, why
+  1. what they are
+  2. why use them instead of socket.io
+  3. why not sending all data but notification only
+  4. separation of reponsibility
+3. use case: counting steps
+  explain with schema
+4. on hands example: step by step with API method links and payload examples
+5. special features
+  1. frequency limit
+  2. retries
+  3. reactivation
+  5. stats
+  6. global parameters
+  4. deletion of access used to create webhook - does not delete webhook
+6. Usages
+  1. identify user: use include it in webhooks's URL: domain, path or query params
+  2. add secret in query param
+
 ## Introduction
 
-Pryv.io supports webhook integration, and therefore allows to notify of data changes. 
+Pryv.io supports webhook integration and therefore allows to notify of data changes.
 
 But what exactly are Webhooks ?
 
 ## Definition
 
-Webhooks are by definition a way to set up a push notification to a predefined URL endpoint. It is triggered by some event that one wishes to be alerted of, mostly in order to act on it.
+Webhooks are by definition a way to set up push notifications to an external service. It is triggered by some event that one wishes to be alerted of, mostly in order to act on it. It allows to notify another service in real-time whenever a given event occurs.
 
-It enables you to send real-time data from one application to another whenever a given event occurs.
+For example, let’s imagine that you've created an application storing its data on a Pryv.io platform that tracks the number of steps a user does everyday and you want to be able to notify him when he reaches a certain number of steps during the day.  
+What a webhook does is notify a defined service every time a user records a certain number of steps, the service sums up the daily steps and sends a notification to the user on his mobile app when the threshold is reached.
 
-For example, let’s imagine that you've created an application using Pryv.io API that tracks the number of steps your user does everyday and you want to be able to notify him when he reaches a certain number of steps during the day. 
+These are the steps to follow to setup event notifications with webhooks:
 
-What a webhook does is notify the receiving application any time the user does a certain number of steps, so you can run any processes that you had in your application once this event is triggered, and send the user a notification on his mobile app for example. 
+1. You first need to create the webhook. You can do so by making an API call on the [webhooks.create](https://api.pryv.com/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made.
+For example:  
 
-The data is then sent over the web from the application where the event originally occurred (here the step counter app), to the receiving application that handles the data (the server).
-
-More specifically, these are the few steps to follow to receive event notifications with webhooks : 
-
-1. You first need to create the webhook. You can do so by checking Pryv.io API reference at the [corresponding section](https://api.pryv.com/reference/#webhook) and fill the necessary fields when creating the webhook. In particular, you need to provide a “webhook URL" over which the HTTP POST requests will be made.
-For example:
 ```json
 {
   "url": "https://notifications.service.com/pryv"
 }
 ```
 
-2. You should then send a token to the server to give it the access to information when it will be retrieving the data changes. You can easily obtain an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me) by following [these steps](https://api.pryv.com/getting-started/#obtain-an-access-token).
+2. You should then provide an Access token to the notified service so it can retrieve new data when changes occur. You can easily obtain an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me) by following [these steps](https://api.pryv.com/getting-started/#obtain-an-access-token).
 
-3. While the step counter is on, events related to the steps are recorded and added to the corresponding stream, e.g. the stream `Activity`. This is done by performing an HTTP POST call to create an event with Pryv.io API (see method [create.event](https://api.pryv.com/reference/#create-event)). 
+3. While the step counter is on, events related to the steps are recorded and added to the `Activity` stream using the [events.create](https://api.pryv.com/reference/#create-event) method.
 
 4. Once the `count/step` event is created in Pryv.io API, the webhook is triggered. It notifies the server that a data change has occured in the user account (e.g. a new `count/step` event has been recorded) by sending an HTTP POST request to the provided webhook URL. This URL acts as a phone number that the other application can call when an event happens.
 
@@ -44,16 +66,16 @@ For example:
 
 6. The server processes the data as configured and sends it back to the user app. It can for example send a notification to the user about the number of steps he did, or perform any algorithm that you may have programmed on the server.
 
-Here’s a visual representation of the process : 
+Here’s a visual representation of the process:
 
-![Webhook structure in Pryv](source/assets/images/Webhook_pryv.png)
+![Webhook structure in Pryv](/assets/images/Webhook_pryv.png)
 
 ## Why using Webhooks on Pryv.io
 
-Notification systems are extremely useful to send and get updates of data changes in real-time. 
-Before implementing webhooks on Pryv.io, the API only supported real-time interaction by accepting [websocket](https://api.pryv.com/reference/#call-with-websockets) connections via Socket.IO.
+Notification systems are extremely useful to send and get updates of data changes in real-time.
+Before implementing webhooks on Pryv.io, the API only supported real-time notifications using [Socket.io](https://api.pryv.com/reference/#call-with-websockets).
 
-From now, one can subscribe to notifications of changes in a web application using websockets, or in a web service using webhooks.
+From now on, one can subscribe to notifications of changes in a web application using websockets, or in a web service using webhooks.
 
 The difference is mainly that websockets will keep a socket open on both the client and the server for the duration of the conversation, while webhooks require a socket to stay open on the server side. On the client side, the socket is only opened up for the request (just like any other HTTP request).
 
