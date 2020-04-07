@@ -19,7 +19,8 @@ You can find the source code [in this github repository](https://github.com/pryv
 
 ## Existing example applications
 
-- Service integrations:
-  - IFTTT: [IFTTT channel](https://ifttt.com/pryv)
-  - bluebutton: [GitHub](https://github.com/pryv/service-bluebutton)
-  - bridge-tableau: [GitHub](https://github.com/pryv/bridge-tableau)
+Service integrations:
+
+- IFTTT: [IFTTT channel](https://ifttt.com/pryv)
+- bluebutton: [GitHub](https://github.com/pryv/service-bluebutton)
+- bridge-tableau: [GitHub](https://github.com/pryv/bridge-tableau)
