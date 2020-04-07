@@ -8,7 +8,7 @@ To add items to the lists below [send us a message](mailto:developers@pryv.com).
 
 ## Pryv libraries
 
-- Javascript (browser & Node.js): [GitHub](https://github.com/pryv/lib-javascript)
+- Javascript (browser & Node.js): [GitHub](https://github.com/pryv/lib-js)
 - Apple Cocoa (iOS & OSX): [GitHub](https://github.com/pryv/sdk-objectivec-apple)
 - Java (Android & desktop): [GitHub](https://github.com/pryv/lib-java)
 

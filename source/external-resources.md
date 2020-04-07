@@ -11,7 +11,7 @@ This page presents some third party and _unsupported_ libraries as well as _unsu
 
 ### Javascript
 
-You can find the source code [in this github repository](https://github.com/pryv/lib-javascript).
+You can find the source code [in this github repository](https://github.com/pryv/lib-js).
 
 ### Java
 
