@@ -656,6 +656,13 @@ module.exports = exports =
                  ```
                  """
       ,
+        title: 'Auth request cURL'
+        content: """
+                 ```bash
+                 curl -i -H 'Content-Type: application/json' -X POST -d '{"requestingAppId": "my-app-id","requestedPermissions": [{"streamId": "diary","level": "read","defaultName": "Journal"},{"streamId": "position","level": "contribute","defaultName": "Position"}]}' "https://reg.pryv.me/access"
+                 ```
+                 """
+      ,
         title: '"In progress" response'
         content: """
                  ```json
