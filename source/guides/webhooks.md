@@ -204,54 +204,41 @@ The number of stored runs can be configured by the platform administrator.
 
 In case the app access that has created the webhook is deleted, it does not alter the webhook. It can still be modified using a personal access.
 
-## Usages
+## Usages (find better title)
 
 *In this section, we present possible ways to identify the user from which the data change is originating in the webhook URL and to share a secret between your application and the webhook provider.*
 
-### Identifying the user 
+### User identification
 
-When a data change occurs on a user account, the webhook will notify your server by sending an HTTP POST request on the provided URL endpoint, for example on **https://notifications.service.com/pryv**.
-The webhook notification payload is yet very basic and only contains the information that a resource has been modified (`eventsChanged`, `accessChanged`or `streamsChanged`), without identifying the source account of the data change.
-Your server will then need an access token and a username to retrieve information about the data change from the source account.
-As the access token should have already been provided to the service at the webhook creation, it needs now to identify the source of the webhook. You will have to make your server able to identify the source account : to do so, you can use the `url`'s hostname, path or query parameters to provide the server with the `username` to be used for data retrieval. 
+In order to idenfy the account which triggered the webhook notification, it is recommended to use the `url` of the webhook. It is possible to store the Pryv.io API endpoint in the URL path or query parameters:
 
-For example in the host name :
+In the path:
 ```json
 {
-  "url": "https://${username}.my-notifications.com/"
+  "url": "https://my-notifications.com/stefan.pryv.me"
 }
 ```
 
-In the path parameter :
+In the query parameters:
 ```json
 {
-  "url": "https://my-notifications.com/${username}"
+  "url": "https://my-notifications.com/?apiEndpoint=stefan.pryv.me"
 }
 ```
 
-Or in the query parameter :
-```json
-{
-  "url": "https://my-notifications.com/?username=${username}"
-}
-```
+### Adding a secret (find better title)
 
-## Adding a secret
+You might need to include a shared secret between your application and the webhook provider in order to control the API usage of your external service.
 
-You might need to include a shared secret between your application and the webhook provider. Typically, this is done as a query parameter in the callback URL string. 
+You can add a "shared secret" to the Pryv.io webhooks that your application trusts. This means that when you will be receiving a webhook notification, you can validate the provided secret and discard the request if it is not trustworthy.
 
-You can add a "shared secret" to the webhook provider that your application knows and trusts. This means that when you will be receiving a webhook from that provider, you can check for that shared secret and if it’s not present, then you can assume that the originator of that webhook is not trustworthy.
-
-This secret can be contained in a query parameter *${my-secret}* of the URL endpoint on which the webhook will be sending requests, for example :
+This secret can be provided in the same way as the username, illustrated above. In this example, we use the path parameters to store the secret:  
 
 ```json
 {
-  "url": "https://${username}.my-notifications.com/${my-secret}/"
+  "url": "https://my-notifications.com/stefan.pryv.me/my-secret"
 }
 ```
-Each time the webhook will be sending a request, it will need to provide the query parameter *${my-secret}* in the URL to be authenticated and trusted by your application. This allows for more traceability and implements security and verification mechanisms into your system.
-
 ## Conclusion
 
-If you wish to set up a `Webhook` or get more information on the data structure, please refer to the corresponding section of the [API reference](https://api.pryv.com/reference/#webhook). 
-It describes the main features of the data structure, while the methods relative to webhooks can be found in the [API methods section](https://api.pryv.com/reference/#webhooks).
+If you wish to set up a Pryv.io webhook or get more information on the data structure, please refer to [its data structure reference](https://api.pryv.com/reference/#webhook), while the methods relative to webhooks can be found in the [API methods section](https://api.pryv.com/reference/#webhooks).
