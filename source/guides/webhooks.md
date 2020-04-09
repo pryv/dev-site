@@ -162,45 +162,47 @@ It should then retrieve the new event from the stream `Steps` :
 
 6. The server processes the data as configured and sends it back to the user app. It can for example send a congratulatory message to the user about the number of steps he did, or perform any algorithm that you may have programmed on the server. (adapt according to new use case)
 
-## Special features
+## Pryv.io Webhook features
 
-*In this section, we give an overview of all the special features of the Webhook data structure in Pryv.io.*
+*In this section, we give an overview of all the features of the Pryv.io Webhooks.*
 
 ### Frequency limit
 
-In case you are dealing with frequent data changes, you might encounter a huge flood of webhooks going back to the system. If they are not processed in a timely manner, it can lead to back pressure on the webhook provider. 
-A frequency limit, corresponding to the frequency at which HTTP POST requests are sent, is enforced to avoid triggering webhooks too frequently and to limit unintended abuse of a 3rd-party service.  
-This is defined by the `minIntervalMs` parameter of the [Webhook data structure](https://api.pryv.com/reference/#webhook) and corresponds to the minimum interval between HTTP calls in milliseconds. Its value is set by the platform admin.
+In case you are dealing with possibly frequent data changes, you might encounter a surge of data changes. In order to avoid notifying the external service too often, webhook executions have a frequency limit `minIntervalMs`. If multiple changes of different resources occur during a short internal, they will be bundled in the `messages` array of the webhook request payload.
+
+The `minIntervalMs` parameter can be configured by the Pryv.io platform administrator.
 
 ### Retries
 
-In case of failure to send an HTTP POST request, for example if the system is overwhelmed with webhooks requests or if you are facing network connection issues, the webhook will try to send the request multiple times, each of them separated by a certain interval of time. 
-This can eventually lead to timeout errors and issues unless there is a proper fall-back system in place.
-This is why the maximal number of retries is fixed, and the webhook will retry `maxRetries` times at a growing interval of time before becoming inactive after too many successive failures. Its value is set by the platform admin.
+In case of failure to send an HTTP POST request, such as a response status outside the 200-299 range  or timeout, the webhook will retry the request at exponentially increasing intervals.
+
+This backpressure mechanism is in place to allow the external service to stabilise in case it is overloaded.
+
+The number of retries that the webhook will attempt is indicated in its `maxRetries` field, you can monitor its current retry attempt using the `currentRetries` field.
+
+The `maxRetries` parameter can be configured by the Pryv.io platform administrator.
 
 ### Reactivation
 
-After a certain amount of consecutive failures to send a request, the webhook `state` will be set as `inactive` and the webhook will be turned off. An inactive Webhook can no longer make any HTTP call when changes occur. 
-It will need to be manually reactivated using the [update.webhook](https://api.pryv.com/reference/#methods-webhooks-webhooks-update) method.
+After a certain amount of consecutive failures to send a request, the webhook will be deactivated and no longer send requests when triggered. This will be indicated by the  `state` parameter which will be set to `inactive` 
+
+It will need to be manually reactivated using the [update.webhook](https://api.pryv.com/reference/#methods-webhooks-webhooks-update) method using the app access that created it or a personal one.
 
 ### Stats
 
-Each time a webhook is run, it stores information about the `status`, i.e the HTTP response status of the call, and the `timestamp`, i.e the time the call was started, in a new `Run` object.
+Each time a webhook is run, it stores information about the HTTP response status and timestamp, respectively in the  `status` and `timestamp` fields of a `Run` object.
 
-All the *n* runs of a webhook are stored in an array `runs` (of length *n*) containing the *n* Run objects of a webhook in inverse chronological order (newest first). This parameter allows to monitor a webhook's health.
-The number *n* of runs to be stored is set by the platform admin.
-The last Webhook call (newest call) is contained in the parameter `lastRun` of the Webhook, comprised of its HTTP response status and timestamp.
-The number of times the Webhook has been run, including failures, is stored in the parameter `runCount` of the Webhook.
+A certain number of `runs` of a webhook are stored in the `runs` field of the Webhook in inverse chronological order (newest first). This parameter allows to monitor a webhook's health.
 
-### Global parameters
+The latest execution stats can be conveniently accessed in the `lastRun` field.
 
-Several parameters of the Webhook can only be set by the platform admin.
-This includes the frequency limit of sending requests by a webhook - `minIntervalMs`, the maximal number of retries allowed in case of failure - `maxRetries`, and the number *n* of runs of a webhook to be stored.
-Only the parameters `url` and `state` of the Webhook can be updated using the [update.webhook](https://api.pryv.com/reference/#methods-webhooks-webhooks-update) method. 
+The number of times the Webhook has been run, including failures, is stored in the parameter `runCount` of the Webhook. Failures count is stored in `failCount`.
+
+The number of stored runs can be configured by the platform administrator.
 
 ### Deletion of the original access
 
-In case the access that has originally created the Webhook is deleted, it does not cancel the resulting Webhook.
+In case the app access that has created the webhook is deleted, it does not alter the webhook. It can still be modified using a personal access.
 
 ## Usages
 
