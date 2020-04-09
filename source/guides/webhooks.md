@@ -66,7 +66,7 @@ Typically, a certain access will be used to setup one or multiple webhooks per u
 
 ## Use case: Counting steps application
 
-*In this section, we describe a real-life use case : a device (a step counter) connected to a fitness mobile application and the usage of webhooks notifications to alert XXX (find better use case as)*
+*In this section, we describe a real-life use case : a device (a step counter) connected to a fitness mobile application and the usage of webhooks notifications to alert XXX (find better use case as).*
 
 Let’s imagine that you've created an application storing its data on a Pryv.io platform that tracks the number of steps a user does everyday and you want to be able to notify him when he reaches a certain number of steps during the day.  
 
@@ -89,76 +89,57 @@ You can easily visualize the whole process on the following schema :
 
 ## Hands-on example
 
-*In this section, we will describe how to implement the previous example step-by-step in your app using Pryv.io API.*
+*In this section, we will describe how to perform the previous example step-by-step using the Pryv Lab platform.*
 
 Based on the previous use case with the step counter (see the schema above), these are the steps to follow to setup event notifications with webhooks:
 
-1. You first need to create the webhook. You can do so by making an API call on the [webhooks.create](https://api.pryv.com/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made.
+1. You first need to create the webhook. You can do so by making an API call on the [webhooks.create](https://api.pryv.com/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made. (maybe add code for an HTTP server that reads such notifications)
 For example:  
-
 ```json
 {
-  "url": "https://notifications.service.com/pryv"
+  "url": "https://notifications.service.com/pryv/my-username"
 }
 ```
 
-2. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can easily obtain an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me) by following [these steps](https://api.pryv.com/getting-started/#obtain-an-access-token).
-The app access will look like the following:
+2. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
+You can set the permissions to and leave other parameters unchanged:  
 ```json
-{
-  "id": "ck8pqobua0001oopvu6fhd3a2",
-  "token": "ck8pqobub0003oopvml08cqq0",
-  "type": "app",
-  "name": "my-fitness-app",
-  "permissions": [
-    {
-      "streamId": "Steps",
-      "level": "read"
-    }
-  ],
-  "created": 1586167600.115,
-  "createdBy": "ck8pqobua0000oopvdqm2suho",
-  "modified": 1586167600.115,
-  "modifiedBy": "ck8pqobua0000oopvdqm2suho"
-}
+[
+  {
+    "streamId": "steps-counter",
+    "defaultName": "Steps Counter",
+    "level": "read"
+  }
+]
 ```
 
 3. While the step counter is on, events related to the steps are recorded and added to the `Steps` stream using the [events.create](https://api.pryv.com/reference/#create-event) method.
-A new event concerning the number of steps will be posted on the Pryv.io account of the user:
+You can use the following parameters for your steps events:
 ```json
 {
-  "event": {
-    "id": "ck8pqobvr000voopvtlw9ct83",
-    "time": 1586254000.167,
-    "streamId": "Steps",
-    "tags": [],
-    "type": "count/steps",
-    "content": 100,
-    "created": 1586254000.167,
-    "createdBy": "ck8pqobua0001oopvu6fhd3a2",
-    "modified": 1586254000.167,
-    "modifiedBy": "ck8pqobua0001oopvu6fhd3a2"
+  "streamId": "steps-counter",
+  "type": "count/steps",
+  "content": 100
   }
-}
 ```
 
-4. Once the `count/steps` event is created in Pryv.io API, the webhook is triggered. It notifies the server that a data change has occured in the user account (e.g. a new `count/steps` event has been recorded) by sending an HTTP POST request to the provided webhook URL. This URL acts as a phone number that the other application can call when an event happens.
-The webhook notification payload will inform the server that a data change has occured in the events resource (in our case, a new event has been created) :
+4. Once the event is created in Pryv.io API, the webhook is triggered. It notifies the external service that an `eventsChanged` has occured in the user account by sending an HTTP POST request to the provided webhook URL.
+The request payload will look like this:  
 ```json
 {
   "messages": [
     "eventsChanged"
   ],
   "meta": {
-    "apiVersion": "1.4.11",
+    "apiVersion": "1.4.33",
     "serial": "20190802",
     "serverTime": 1586254000.213
   }
 }
 ```
 
-5. As soon as the server receives the HTTP POST request on the URL, it retrieves the events since last change from Pryv.io using the provided token.
-It does so by performing an HTTP GET request on the events from the stream `Steps` using the [events.get](https://api.pryv.com/reference/#get-events) method. 
+5. As soon as the server receives the HTTP POST request on the URL, it must retrieve the events since last change from Pryv.io using the provided token.
+It does so by performing an HTTP GET request on the events from the stream `steps-counter` using the [events.get](https://api.pryv.com/reference/#get-events) method with the `modifiedSince` parameter set. 
 It should then retrieve the new event from the stream `Steps` :
 ```json
 {
@@ -166,9 +147,10 @@ It should then retrieve the new event from the stream `Steps` :
     {
       "id": "ck8pqobvr000voopvtlw9ct83",
       "time": 1586254000.167,
-      "streamId": "steps",
+      "streamId": "steps-sounter",
       "tags": [],
       "type": "count/steps",
+      "content": 100,
       "created": 1586254000.167,
       "createdBy": "ck8pqobua0001oopvu6fhd3a2",
       "modified": 1586254000.167,
@@ -178,7 +160,7 @@ It should then retrieve the new event from the stream `Steps` :
 }
 ```
 
-6. The server processes the data as configured and sends it back to the user app. It can for example send a congratulatory message to the user about the number of steps he did, or perform any algorithm that you may have programmed on the server.
+6. The server processes the data as configured and sends it back to the user app. It can for example send a congratulatory message to the user about the number of steps he did, or perform any algorithm that you may have programmed on the server. (adapt according to new use case)
 
 ## Special features
 
