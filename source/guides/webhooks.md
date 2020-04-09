@@ -35,9 +35,11 @@ It describes what Webhooks are, why and how they were designed on Pryv.io. It go
 
 ## Introduction
 
-Pryv.io supports webhook integration and therefore allows to notify of data changes. This is extremely useful for your app and your server to get notified as soon as a data change has occured, as it enables to retrieve the up-to-date data directly and to use it in any process or algorithms of your app.
+Webhooks are a fine system for real time streaming and push notifications to your own servers as your users' data is created and modified. 
 
-It is no longer necessary to wait until your app or your server goes and checks manually if something new has happened with the data : webhooks update data before you know it.
+They can be used to configure multiple receivers that receive customized sets of events, and they work well for accounts connected via OAuth, allowing platforms built on the APIs to tie into the activity of their users.
+
+Our webhook integration feature allows to automatically push the subscriber data to your app whenever a certain event occurs, and ensures that the data you are using in any process or algorithms of your app is up-to-date.
 
 ## Pryv.io Webhooks
 
