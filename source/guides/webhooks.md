@@ -22,12 +22,12 @@ It describes what Webhooks are, why and how they were designed on Pryv.io. It go
 3. [Use case: Counting steps application](#use-case)
 4. [Hands-on example](#hands-on-example)
 5. [Special features](#special-features)
-  1. [Frequency limit](#frequency-limit) in order to avoid triggering webhooks too frequently, the webhooks have assessing that limit their execution st a certain min interval betwenn 2 executions.
-  2. [Retries](#retries) . si le call POST fait une erreur (autre que statut 200) il va essayer de refaire le call. request sur l'URL. backPressure
-  3. [Reactivation](#reactivation) after a certain amount of consectuive failures, webhook turns off.need to be manually reactived with webhook update call.
-  5. [Stats](#stats) = runs. chaque webhook stocke pour n executions données (les n dernieres), il va stocker timestamp et le statut de la reponse.
-  6. [Global parameters](#global-parameters) = minInterval et maxRetries et nb de runs stockés  sont set par admin de la plateforme. c'est de la config de plateforme. gars qui adminstri.n. URL et state sont les seuls qu'on peut modif.
-  7. [Deletion of the original access](#deletion-of-the-original-access) deletion of access used to create webhook - does not delete webhook
+  1. [Frequency limit](#frequency-limit) 
+  2. [Retries](#retries) 
+  3. [Reactivation](#reactivation) 
+  5. [Stats](#stats) 
+  6. [Global parameters](#global-parameters)
+  7. [Deletion of the original access](#deletion-of-the-original-access)
 6. [Usages](#usages)
   1. [Identifying the user](#identifying-the-user)
   2. [Adding a secret](#adding-a-secret)
