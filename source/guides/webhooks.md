@@ -17,7 +17,7 @@ It describes what Webhooks are, why and how they were designed on Pryv.io. It go
 2. [Webhooks](#webhooks-what-and-why)
   1. [What are Webhooks?](#what-are-webhooks)
   2. [Why using Webhooks?](#why-using-webhooks)
-  3. [Why using a notification system?](#why-using-a-notification-system) 
+  3. [Why only notify of changes?](#why-only-notify-of-changes) 
   4. [Separation of reponsibility](#separation-of-reponsibility)
 3. [Use case: Counting steps application](#use-case)
 4. [Hands-on example](#hands-on-example)
@@ -25,9 +25,9 @@ It describes what Webhooks are, why and how they were designed on Pryv.io. It go
   1. [Frequency limit](#frequency-limit) 
   2. [Retries](#retries) 
   3. [Reactivation](#reactivation) 
-  5. [Stats](#stats) 
-  6. [Global parameters](#global-parameters)
-  7. [Deletion of the original access](#deletion-of-the-original-access)
+  4. [Stats](#stats) 
+  5. [Global parameters](#global-parameters)
+  6. [Deletion of the original access](#deletion-of-the-original-access)
 6. [Usages](#usages)
   1. [Identifying the user](#identifying-the-user)
   2. [Adding a secret](#adding-a-secret)
@@ -53,9 +53,23 @@ You can now setup notifications without requiring to establish a connection and 
 
 ### Why only notify of changes? 
 
-Webhooks work through notifications of data changes: in other words, the modified data in itself is not directly shared with the external service, but only the type of resource that was altered.
+Webhooks work through notifications of data changes: in other words, the modified data in itself is not directly shared with the external service, but only the type of resource that was altered as on the example below :
 
-Providing only an event identifier in the webhook payload will force the recipients to make an API request to fetch the full resource, and will ensure that they are authorized to retrieve the information they are notified about with since they are required to use authorization token.
+```json
+{
+  "messages": [
+    "eventsChanged",
+    "streamsChanged"
+  ],
+  "meta": {
+    "apiVersion": "1.4.11",
+    "serial": "20190802",
+    "serverTime": 1586254000.213
+  }
+}
+```
+
+Providing only an event identifier in the webhook payload will force the recipients to make an API request to fetch the full resource, and will ensure that they are authorized to retrieve the information they are notified about with since they are required to use an authorization token.
 
 
 ### Separation of reponsibility 
@@ -102,7 +116,7 @@ For example:
 ```
 
 2. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
-You can set the permissions to and leave other parameters unchanged:  
+You can set the permissions and leave other parameters unchanged:  
 ```json
 [
   {
@@ -147,7 +161,7 @@ It should then retrieve the new event from the stream `Steps` :
     {
       "id": "ck8pqobvr000voopvtlw9ct83",
       "time": 1586254000.167,
-      "streamId": "steps-sounter",
+      "streamId": "steps-counter",
       "tags": [],
       "type": "count/steps",
       "content": 100,
@@ -168,7 +182,7 @@ It should then retrieve the new event from the stream `Steps` :
 
 ### Frequency limit
 
-In case you are dealing with possibly frequent data changes, you might encounter a surge of data changes. In order to avoid notifying the external service too often, webhook executions have a frequency limit `minIntervalMs`. If multiple changes of different resources occur during a short internal, they will be bundled in the `messages` array of the webhook request payload.
+In case you are dealing with possibly frequent data changes, you might encounter a surge of data changes. In order to avoid notifying the external service too often, webhook executions have a frequency limit `minIntervalMs`. If multiple changes of different resources occur during a short interval, they will be bundled in the `messages` array of the webhook request payload.
 
 The `minIntervalMs` parameter can be configured by the Pryv.io platform administrator.
 
@@ -184,15 +198,15 @@ The `maxRetries` parameter can be configured by the Pryv.io platform administrat
 
 ### Reactivation
 
-After a certain amount of consecutive failures to send a request, the webhook will be deactivated and no longer send requests when triggered. This will be indicated by the  `state` parameter which will be set to `inactive` 
+After a certain amount of consecutive failures to send a request, the webhook will be deactivated and no longer send requests when triggered. This will be indicated by the  `state` parameter which will be set to `inactive`.
 
-It will need to be manually reactivated using the [update.webhook](https://api.pryv.com/reference/#methods-webhooks-webhooks-update) method using the app access that created it or a personal one.
+It will need to be manually reactivated using the [update.webhook](https://api.pryv.com/reference/#methods-webhooks-webhooks-update) method with the app access that created it or a personal one.
 
 ### Stats
 
 Each time a webhook is run, it stores information about the HTTP response status and timestamp, respectively in the  `status` and `timestamp` fields of a `Run` object.
 
-A certain number of `runs` of a webhook are stored in the `runs` field of the Webhook in inverse chronological order (newest first). This parameter allows to monitor a webhook's health.
+A certain number of `runs` of a webhook is stored in the `runs` field of the Webhook in inverse chronological order (newest first). This parameter allows to monitor a webhook's health.
 
 The latest execution stats can be conveniently accessed in the `lastRun` field.
 
@@ -204,13 +218,13 @@ The number of stored runs can be configured by the platform administrator.
 
 In case the app access that has created the webhook is deleted, it does not alter the webhook. It can still be modified using a personal access.
 
-## Usages (find better title)
+## Securing your webhooks
 
 *In this section, we present possible ways to identify the user from which the data change is originating in the webhook URL and to share a secret between your application and the webhook provider.*
 
 ### User identification
 
-In order to idenfy the account which triggered the webhook notification, it is recommended to use the `url` of the webhook. It is possible to store the Pryv.io API endpoint in the URL path or query parameters:
+In order to identify the account which triggered the webhook notification, it is recommended to use the `url` of the webhook. It is possible to store the Pryv.io API endpoint in the URL path or query parameters:
 
 In the path:
 ```json
@@ -226,7 +240,7 @@ In the query parameters:
 }
 ```
 
-### Adding a secret (find better title)
+### Setting a webhook secret
 
 You might need to include a shared secret between your application and the webhook provider in order to control the API usage of your external service.
 
