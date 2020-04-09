@@ -35,11 +35,9 @@ It describes what Webhooks are, why and how they were designed on Pryv.io. It go
 
 ## Introduction
 
-Webhooks are a reliable system for real time streaming and push notifications to your own servers as your users' data is created and modified. 
+Webhooks are a reliable system for real time streaming and push notifications to external services as your users' data is created and modified. 
 
-They can be used to configure multiple receivers that receive customized sets of events, and they work well for accounts connected via OAuth, allowing platforms built on the APIs to tie into the activity of their users.
-
-Our webhook integration feature allows to automatically push the subscriber data to your app whenever a certain event occurs, and ensures that the data you are using in any process or algorithms of your app is up-to-date.
+The Pryv.io webhooks allow to automatically push subscriber data to your app whenever a certain event occurs and ensures that the data you are using in any process or algorithms of your app is up-to-date.
 
 ## Pryv.io Webhooks
 
