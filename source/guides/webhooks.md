@@ -66,7 +66,7 @@ Typically, a certain access will be used to setup one or multiple webhooks per u
 
 ## Use case: Counting steps application
 
-*In this section, we describe a real-life use case : the example of a device (a step counter) connected to a fitness application and the integration of webhooks in this particular case.*
+*In this section, we describe a real-life use case : a device (a step counter) connected to a fitness mobile application and the usage of webhooks notifications to alert XXX (find better use case as)*
 
 Let’s imagine that you've created an application storing its data on a Pryv.io platform that tracks the number of steps a user does everyday and you want to be able to notify him when he reaches a certain number of steps during the day.  
 
@@ -80,11 +80,12 @@ You can easily visualize the whole process on the following schema :
 
 ![Webhook structure in Pryv](/assets/images/Webhook_pryv.png)
 
-You first need to create a webhook that will notify your server every time a data change concerning the steps of your app user occurs.
-You must also provide your server with an access token to retrieve information about the steps of your app user.
-Once your user has made some steps, the connected step counter sends the information to your app, which creates an event on the Pryv.io platform in the corresponding stream.
-As new data has been posted in the stream about steps, the webhook notifies your server on a predefined URL endpoint.
-The server finally retrieves events since last change, and performs the implemented process : it sums up the steps of your user, and sends him a congratulatory message on his mobile app when he reaches 10'000 steps.
+1. You first need to create a webhook that will notify your service every time a data change concerning the steps of your app user occurs.
+2. You must also provide your service with an access token to retrieve steps information of your app user.
+3. Once your user has made some steps, the connected step counter sends the information to your app, which creates an event on the Pryv.io platform.
+4. As new data has been posted in the stream about steps, the webhook notifies your service.
+5. The server retrieves events since the last change.
+6. It performs the implemented process : it sums up the steps of your user, and sends him a congratulatory message on his mobile app when he reaches 10'000 steps (to modify according to use case).
 
 ## Hands-on example
 
