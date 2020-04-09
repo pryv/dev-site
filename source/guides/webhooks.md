@@ -39,33 +39,28 @@ Pryv.io supports webhook integration and therefore allows to notify of data chan
 
 It is no longer necessary to wait until your app or your server goes and checks manually if something new has happened with the data : webhooks update data before you know it.
 
-## Webhooks : What and why ?
+## Pryv.io Webhooks
 
 ### What are Webhooks ?
 
-Webhooks are by definition a way to set up push notifications to an external service. It is triggered by some event that one wishes to be alerted of, mostly in order to act on it. It allows to notify another service in real-time whenever a given event occurs.
+Webhooks are by definition a way to set up push notifications to an external service. It is triggered by data changes in an account that one wishes to be alerted of, mostly in order to act on it.
 
 ### Why using Webhooks ?
 
-Notification systems are extremely useful to send and get updates of data changes in real-time.
-Before implementing webhooks on Pryv.io, the API only supported real-time notifications using [Socket.io](https://api.pryv.com/reference/#call-with-websockets).
+Notification systems are used to send and get updates of data changes in real-time. In addition to the Socket.io transport, we have added webhooks to allow push notifications.
 
-From now on, one can subscribe to notifications of changes in a web application using websockets, or in a web service using webhooks.
+You can now setup notifications without requiring to establish a connection and maintain a connection on the client-side. It is recommended for infrequent data updates and scales better for a high volume of users as it is more resource efficient.
 
-The difference is mainly that websockets will keep a socket open on both the client and the server for the duration of the conversation, while webhooks require a socket to stay open on the server side. On the client side, the socket is only opened up for the request (just like any other HTTP request).
+### Why only notify of changes? 
 
-As no persistent connection is required with webhooks, it allows an efficient resources usage. That's also why webhooks will be particularly useful for unfrequent updates of data changes.
+Webhooks work through notifications of data changes: in other words, the modified data in itself is not directly shared with the external service, but only the type of resource that was altered.
 
-### Why using a notification system? 
-
-Webhooks work through notifications of changes : in other words, the modified data in itself is not directly shared with the server, but only the notification about the data change that has occured.  
-Since webhook notifications payload only contains metadata and the type of resource that has been modified (`eventsChanged`, `streamsChanged` or `accessesChanged`), sensitive data will then always remain secure. 
-Providing only an event identifier in the webhook payload will force the recipients to make an API request to fetch the full resource, and will ensure that they are authorized to retrieve the information they are notified with since they are required to use authorization token.
+Providing only an event identifier in the webhook payload will force the recipients to make an API request to fetch the full resource, and will ensure that they are authorized to retrieve the information they are notified about with since they are required to use authorization token.
 
 
 ### Separation of reponsibility 
 
-Importantly, only the access used to create the webhook (or a personal one) can be used to modify it. This is meant to separate the responsibilities between the webhooks management and services that will consume the data following a notification.
+Importantly, only the app access used to create the webhook (or a personal one) can be used to modify it. This is meant to separate the responsibilities between the webhooks management and services that will consume the data following a notification.
 
 Typically, a certain access will be used to setup one or multiple webhooks per user, while updated data will be fetched using a different set of accesses.
 
