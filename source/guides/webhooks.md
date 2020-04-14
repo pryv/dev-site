@@ -80,32 +80,32 @@ Typically, a certain access will be used to setup one or multiple webhooks per u
 
 ## Use case : Notify of a new document uploaded on your application
 
-*In this section, we describe a real-life use case : the usage of webhooks notifications to alert a doctor when a patient of your app posts a new health-related document on your mobile platform.*
+*In this section, we describe a real-life use case : the usage of webhooks notifications to alert a doctor when a patient of your app records a new health-related document.*
 
-Let’s imagine that you've created an application storing its data on a Pryv.io platform that enables to connect patients with doctors and you want to be able to notify a doctor when his patient uploads a new document related to his health on the app.  
+Let’s imagine that you've created an application storing its data on a Pryv.io platform that enables to connect patients with doctors and you want to be able to notify a doctor when his patients upload a new document related to their health on the app.  
 
-The patient Ana has an access `create.only` (see more information about accesses types [here](https://api.pryv.com/reference/#access)) on the stream `Health` shared with Doctor Tom.
-This allows Ana to post new events (data, picture, scan, audio file, etc) related to her health on this stream and to share them with her doctor. Doctor Tom has a `read` access on the stream `Health`, and he would like to get notified on the mobile app every time his patient posts a new event on this stream.
+The app created a webhook to notify the doctor's service of data changes on Ana's account.
 
-What you need is to track every time a user adds a new event in the stream `Health`, and send a notification message to doctor Tom with the name of the patient and the type of the event (picture, number of steps, blood pressure, audio file, scan, etc...).
+The patient Ana has provided access to information on the stream `Health` with Dr. Tom by creating a `read` level access (see more information about accesses types [here](https://api.pryv.com/reference/#access)) and sending it to the doctor's service using the app.
+This allows Ana to post new events (data, picture, scan, audio file, etc) related to her health on this stream and her doctor to consult it.
+
+What we need is to track every time Ana adds a new event in the stream `Health`, and send a notification message to Dr. Tom with the name of the patient and the type of the data (picture, number of steps, blood pressure, audio file, scan, etc...).
 
 Let's say that the patient Ana just uploaded her daily number of steps on the stream `Health`.
 
-In this case, the data change in the stream `Health` triggers a webhook that will send a push notification to the server. The server will then retrieve information (patient name and event type) from the stream `Health` on the Pryv.io platform and directly send a notification to the doctor on the mobile app.
-This notification message will contain information about the *patient name* and the *type of event* he posted on the platform : "The patient *Ana* has uploaded a new event of type *count/steps*".
+In this case, the data change in the stream `Health` triggers the webhook that will send a push notification to the doctor's service. The service will then retrieve information (patient name and event type) from the stream `Health` on the Pryv.io platform using the `read` level access and directly send a notification to the doctor on his mobile app.
+This notification message will contain information about the *patient name* and the *type of event* she posted on the platform : "The patient *Ana* has uploaded a new event of type *count/steps*".
 
-The webhook must therefore have an access token with a `read` level on the stream `Health` to be able to see when a new event has been posted on the stream `Health`.
-
-You can easily visualize the whole process on the following schema : 
+You can easily visualize the whole process on the following schema:  
 
 ![Webhook structure in Pryv](/assets/images/webhooks_pryv_1.png)
 
-1. You first need to create a webhook that will notify your web service every time a data change occurs in the stream `Health`.
-2. You must also provide your service with a `read` access token to retrieve information about the events posted in the stream `Health`.
-3. Once your user has uploaded a new file on the stream `Health`, a new event is created on the Pryv.io platform.
-4. As new data has been posted in the stream `Health`, the webhook notifies your service.
-5. The server retrieves events since the last change.
-6. It performs the implemented process : it sends a message to Doctor Tom on his mobile app notifying him that a certain patient `Ana` has posted a new file of type `count/steps`.
+1. Your app needs to create a webhook that will notify your web service every time a data change occurs in the stream `Health`.
+2. Your app must also provide the doctor's service with a `read` access token to retrieve information about the events posted in the stream `Health`.
+3. Ana records her daily number of steps, creating an event on the stream `Health` on the Pryv.io platform.
+4. As new data has been posted in the stream `Health`, the webhook notifies the doctor's service.
+5. The service retrieves events since the last change using the `read` token.
+6. It performs the implemented process: it sends a message to Dr. Tom on his mobile app notifying him that a certain patient `Ana` has posted a new file of type `count/steps`.
 
 ## Hands-on example
 
