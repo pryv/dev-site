@@ -59,6 +59,7 @@ module.exports = exports =
         type: "method"
         title: "Get users"
         http: "GET /admin/users"
+        httpOnly: true
         trustedOnly: "Admin only"
         server: "register"
         description: """
@@ -96,6 +97,7 @@ module.exports = exports =
         type: "method"
         title: "Get core servers"
         http: "GET /admin/servers"
+        httpOnly: true
         trustedOnly: "Admin only"
         server: "register"
         description: """
@@ -123,6 +125,7 @@ module.exports = exports =
         type: "method"
         title: "Get users on core server"
         http: "GET /admin/servers/{serverName}/users"
+        httpOnly: true
         trustedOnly: "Admin only"
         server: "register"
         description: """
@@ -162,6 +165,7 @@ module.exports = exports =
         type: "method"
         title: "Rename core server"
         http: "GET /admin/servers/{srcServerName}/rename/{dstServerName}"
+        httpOnly: true
         trustedOnly: "Admin only"
         server: "register"
         description: """
@@ -223,6 +227,7 @@ module.exports = exports =
         type: "method"
         title: "Get hostings"
         http: "GET /hostings"
+        httpOnly: true
         server: "register"
         description: """
                     Get the list of all available hostings for data storage locations.
@@ -250,6 +255,7 @@ module.exports = exports =
         type: "method"
         title: "Get apps"
         http: "GET /apps"
+        httpOnly: true
         server: "register"
         description: """
                     Retrieve the list of applications connected to the platform.
@@ -276,6 +282,7 @@ module.exports = exports =
         type: "method"
         title: "Get app"
         http: "GET /apps/{appid}"
+        httpOnly: true
         server: "register"
         description: """
                     Retrieve information about a given application.
@@ -317,6 +324,7 @@ module.exports = exports =
         type: "method"
         title: "Create user"
         http: "POST /user"
+        httpOnly: true
         server: "register"
         description: """
                     Creates a new user account on the specified core server.
@@ -409,6 +417,7 @@ module.exports = exports =
         type: "method"
         title: "Check username"
         http: "GET /{username}/check_username"
+        httpOnly: true
         server: "register"
         description: """
                     Check the availability and validity of a given username.
@@ -469,6 +478,7 @@ module.exports = exports =
         type: "method"
         title: "Check email existence"
         http: "GET /{email}/check_email"
+        httpOnly: true
         server: "register"
         description: """
                     Check the existence of an account's email.
@@ -512,6 +522,7 @@ module.exports = exports =
         type: "method"
         title: "Get username from email"
         http: "GET /{email}/username"
+        httpOnly: true
         server: "register"
         description: """
                     Get the username of a Pryv.io account according to the given email.
