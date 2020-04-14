@@ -113,15 +113,29 @@ You can easily visualize the whole process on the following schema:
 
 Based on the previous use case (see the schema above), these are the steps to follow to setup event notifications with webhooks:
 
-1. You first need to create the webhook. You can do so by making an API call on the [webhooks.create](https://api.pryv.com/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made. (maybe add code for an HTTP server that reads such notifications)
+If needed, create a new user account on the Pryv Lab platform [here](https://sw.pryv.me/access/register.html)
+
+1. You first need to obtain a token to create a webhook and store data into your account. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
+You can set the permissions and leave other parameters unchanged:  
+```json
+[
+  {
+    "streamId": "health",
+    "defaultName": "Health",
+    "level": "contribute"
+  }
+]
+```
+
+2. You then need to create the webhook by making an API call on the [webhooks.create](https://api.pryv.com/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made (See [User identification](#user-identification) on how to allow the service to identify the webhook's account). 
 For example:  
 ```json
 {
-  "url": "https://notifications.service.com/pryv/my-username"
+  "url": "https://notifications.service.com/pryv/my-pryv-username"
 }
 ```
 
-2. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
+3. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
 You can set the permissions and leave other parameters unchanged:  
 ```json
 [
@@ -133,7 +147,7 @@ You can set the permissions and leave other parameters unchanged:
 ]
 ```
 
-3. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](https://api.pryv.com/reference/#create-event) method.
+4. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](https://api.pryv.com/reference/#create-event) method.
 You can use the following parameters for a `count/steps` event:
 ```json
 {
@@ -143,7 +157,7 @@ You can use the following parameters for a `count/steps` event:
   }
 ```
 
-4. Once the event is created in Pryv.io API, the webhook is triggered. It notifies the external service that an `eventsChanged` has occured in the user account by sending an HTTP POST request to the provided webhook URL.
+5. Once the event is created, the webhook is triggered. It notifies the external service that an `eventsChanged` has occured in the user account by sending an HTTP POST request to the provided webhook URL.
 The request payload will look like this:  
 ```json
 {
@@ -158,16 +172,16 @@ The request payload will look like this:
 }
 ```
 
-5. As soon as the server receives the HTTP POST request on the URL, it must retrieve the events since last change from Pryv.io using the provided token.
-It does so by performing an HTTP GET request on the events from the stream `Health` using the [events.get](https://api.pryv.com/reference/#get-events) method with the `modifiedSince` parameter set. 
-It should then retrieve the new event from the stream `Health` :
+6. As soon as the server receives the HTTP POST request on the URL, it must retrieve the events since the last change from the Pryv.io platform using the provided token.
+It does so by performing an HTTP GET request on the events from the streamId `health` using the [events.get](https://api.pryv.com/reference/#get-events) method with the `modifiedSince` parameter set.  
+It should then retrieve the new event from the stream `Health`:
 ```json
 {
   "events": [
     {
       "id": "ck8pqobvr000voopvtlw9ct83",
       "time": 1586254000.167,
-      "streamId": "Health",
+      "streamId": "health",
       "tags": [],
       "type": "count/steps",
       "content": 10000,
@@ -180,7 +194,7 @@ It should then retrieve the new event from the stream `Health` :
 }
 ```
 
-6. The server processes the data as configured. It must retrieve the information about the patient name (that it can get from the `createdBy` field) and the type of the event that he posted (`count/steps` in this case). 
+7. The server processes the data as configured. It must retrieve the information about the patient name and the type of the event that he posted (`count/steps` in this case).  
 It sends then a notification message to doctor Tom about the new event that was posted in the stream `Health`.
 
 ## Pryv.io Webhook features
