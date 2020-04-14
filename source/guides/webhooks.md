@@ -1,6 +1,6 @@
 ---
 id: webhooks
-title: 'Webhooks'
+title: 'Pryv.io Webhooks'
 template: default.jade
 customer: true
 withTOC: true
@@ -13,7 +13,7 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
 ## Table of contents
 
 1. [Introduction](#introduction)
-2. [Webhooks](#pryv-io-webhooks)
+2. [Pryv.io Webhooks](#pryv-io-webhooks)
   1. [What are Webhooks?](#what-are-webhooks-)
   2. [Why using Webhooks?](#why-using-webhooks-)
   3. [Why only notify of changes?](#why-only-notify-of-changes-) 
