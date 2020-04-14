@@ -119,11 +119,11 @@ If needed, create a new user account on the Pryv Lab platform [here](https://sw.
 You can set the permissions and leave other parameters unchanged:  
 ```json
 [
-  {
-    "streamId": "health",
-    "defaultName": "Health",
-    "level": "contribute"
-  }
+    {
+      "streamId": "health",
+      "defaultName": "Health",
+      "level": "contribute"
+    }
 ]
 ```
 
@@ -131,7 +131,7 @@ You can set the permissions and leave other parameters unchanged:
 For example:  
 ```json
 {
-  "url": "https://notifications.service.com/pryv/my-pryv-username"
+    "url": "https://notifications.service.com/pryv/my-pryv-username"
 }
 ```
 
@@ -139,11 +139,11 @@ For example:
 You can set the permissions and leave other parameters unchanged:  
 ```json
 [
-  {
-    "streamId": "health",
-    "defaultName": "Health",
-    "level": "read"
-  }
+    {
+      "streamId": "health",
+      "defaultName": "Health",
+      "level": "read"
+    }
 ]
 ```
 
@@ -151,24 +151,24 @@ You can set the permissions and leave other parameters unchanged:
 You can use the following parameters for a `count/steps` event:
 ```json
 {
-  "streamId": "Health",
-  "type": "count/steps",
-  "content": 10000
-  }
+    "streamId": "Health",
+    "type": "count/steps",
+    "content": 10000
+}
 ```
 
 5. Once the event is created, the webhook is triggered. It notifies the external service that an `eventsChanged` has occured in the user account by sending an HTTP POST request to the provided webhook URL.
 The request payload will look like this:  
 ```json
 {
-  "messages": [
-    "eventsChanged"
-  ],
-  "meta": {
-    "apiVersion": "1.4.33",
-    "serial": "20190802",
-    "serverTime": 1586254000.213
-  }
+    "messages": [
+      "eventsChanged"
+    ],
+    "meta": {
+      "apiVersion": "1.4.33",
+      "serial": "20190802",
+      "serverTime": 1586254000.213
+    }
 }
 ```
 
@@ -177,20 +177,20 @@ It does so by performing an HTTP GET request on the events from the streamId `he
 It should then retrieve the new event from the stream `Health`:
 ```json
 {
-  "events": [
-    {
-      "id": "ck8pqobvr000voopvtlw9ct83",
-      "time": 1586254000.167,
-      "streamId": "health",
-      "tags": [],
-      "type": "count/steps",
-      "content": 10000,
-      "created": 1586254000.167,
-      "createdBy": "ck8pqobua0001oopvu6fhd3a2",
-      "modified": 1586254000.167,
-      "modifiedBy": "ck8pqobua0001oopvu6fhd3a2"
-    } 
-  ]
+    "events": [
+      {
+        "id": "ck8pqobvr000voopvtlw9ct83",
+        "time": 1586254000.167,
+        "streamId": "health",
+        "tags": [],
+        "type": "count/steps",
+        "content": 10000,
+        "created": 1586254000.167,
+        "createdBy": "ck8pqobua0001oopvu6fhd3a2",
+        "modified": 1586254000.167,
+        "modifiedBy": "ck8pqobua0001oopvu6fhd3a2"
+      } 
+    ]
 }
 ```
 
