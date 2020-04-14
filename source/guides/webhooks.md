@@ -13,23 +13,22 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
 ## Table of contents
 
 1. [Introduction](#introduction)
-2. [Webhooks](#webhooks-what-and-why)
-  1. [What are Webhooks?](#what-are-webhooks)
-  2. [Why using Webhooks?](#why-using-webhooks)
-  3. [Why only notify of changes?](#why-only-notify-of-changes) 
+2. [Webhooks](#pryv-io-webhooks)
+  1. [What are Webhooks?](#what-are-webhooks-)
+  2. [Why using Webhooks?](#why-using-webhooks-)
+  3. [Why only notify of changes?](#why-only-notify-of-changes-) 
   4. [Separation of reponsibility](#separation-of-reponsibility)
 3. [Use case: Notify of a new document uploaded on your application](#use-case-notify-of-a-new-document-uploaded-on-your-application)
 4. [Hands-on example](#hands-on-example)
-5. [Special features](#special-features)
+5. [Pryv.io Webhooks features](#pryv-io-webhook-features)
   1. [Frequency limit](#frequency-limit) 
   2. [Retries](#retries) 
   3. [Reactivation](#reactivation) 
   4. [Stats](#stats) 
-  5. [Global parameters](#global-parameters)
-  6. [Deletion of the original access](#deletion-of-the-original-access)
+  5. [Deletion of the original access](#deletion-of-the-original-access)
 6. [Usages](#usages)
-  1. [Identifying the user](#identifying-the-user)
-  2. [Adding a secret](#adding-a-secret)
+  1. [User identification](#user-identification)
+  2. [Setting a webhook secret](#setting-a-webhook-secret)
 7. [Conclusion](#conclusion)
 
 ## Introduction
@@ -46,13 +45,13 @@ Webhooks are by definition a way to set up push notifications to an external ser
 
 ### Why using Webhooks ?
 
-Notification systems are used to send and get updates of data changes in real-time. In addition to the Socket.io transport, we have added webhooks to allow push notifications.
+Notification systems are used to receive updates of data changes in real-time. In addition to the Socket.io transport, we have added webhooks to allow push notifications.
 
-You can now setup notifications without requiring to establish a connection and maintain a connection on the client-side. It is recommended for infrequent data updates and scales better for a high volume of users as it is more resource efficient.
+You can now setup notifications without requiring to establish a connection and maintain it on the client-side. It is recommended for infrequent data updates and scales better for a high volume of users as it is more resource efficient.
 
 ### Why only notify of changes? 
 
-Webhooks work through notifications of data changes: in other words, the modified data in itself is not directly shared with the external service, but only the type of resource that was altered as on the example below :
+Webhooks work through notifications of data changes: in other words, the modified data in itself is not directly shared with the external service, but only the type of resource that was altered as shown on the example below :
 
 ```json
 {
@@ -75,20 +74,20 @@ Providing only an event identifier in the webhook payload will force the recipie
 
 Importantly, only the app access used to create the webhook (or a personal one) can be used to modify it. This is meant to separate the responsibilities between the webhooks management and services that will consume the data following a notification.
 
-Typically, a certain access will be used to setup one or multiple webhooks per user, while updated data will be fetched using a different set of accesses.
+Typically, a certain access will be used to setup one or multiple webhooks per user, while updated data will be fetched using a different set of permissions.
 
 ## Use case : Notify of a new document uploaded on your application
 
-*In this section, we describe a real-life use case : the usage of webhooks notifications to alert a doctor when a patient of your app records a new health-related document.*
+*In this section, we describe a real-life use case: the usage of webhooks notifications to alert a doctor when a patient of your app records a new health-related document.*
 
-Let’s imagine that you've created an application storing its data on a Pryv.io platform that enables to connect patients with doctors and you want to be able to notify a doctor when his patients upload a new document related to their health on the app.  
+Let’s imagine that you have created an application storing its data on a Pryv.io platform that enables to connect patients with doctors and you want to be able to notify a doctor when his patients upload a new document related to their health on the app.  
 
 The app created a webhook to notify the doctor's service of data changes on Ana's account.
 
-The patient Ana has provided access to information on the stream `Health` with Dr. Tom by creating a `read` level access (see more information about accesses types [here](https://api.pryv.com/reference/#access)) and sending it to the doctor's service using the app.
+The patient Ana has provided access to information on the stream `Health` with Dr. Tom by creating a `read` level access (see more information about access types [here](https://api.pryv.com/reference/#access)) and sending it to the doctor's service using the app.
 This allows Ana to post new events (data, picture, scan, audio file, etc) related to her health on this stream and her doctor to consult it.
 
-What we need is to track every time Ana adds a new event in the stream `Health`, and send a notification message to Dr. Tom with the name of the patient and the type of the data (picture, number of steps, blood pressure, audio file, scan, etc...).
+What we need is to track every time Ana adds a new event in the stream `Health`, and notify Dr. Tom with the name of the patient and the type of the data (picture, number of steps, blood pressure, audio file, scan, etc...).
 
 Let's say that the patient Ana just uploaded her daily number of steps on the stream `Health`.
 
@@ -99,7 +98,7 @@ You can easily visualize the whole process on the following schema:
 
 ![Webhook structure in Pryv](/assets/images/webhooks_pryv_1.png)
 
-1. Your app needs to create a webhook that will notify your web service every time a data change occurs in the stream `Health`.
+1. Your app needs to create a webhook that will notify the doctor's web service every time a data change occurs in the stream `Health`.
 2. Your app must also provide the doctor's service with a `read` access token to retrieve information about the events posted in the stream `Health`.
 3. Ana records her daily number of steps, creating an event on the stream `Health` on the Pryv.io platform.
 4. As new data has been posted in the stream `Health`, the webhook notifies the doctor's service.
@@ -150,7 +149,7 @@ You can set the permissions and leave other parameters unchanged:
 You can use the following parameters for a `count/steps` event:
 ```json
 {
-    "streamId": "Health",
+    "streamId": "health",
     "type": "count/steps",
     "content": 10000
 }
@@ -173,7 +172,7 @@ The request payload will look like this:
 
 6. As soon as the server receives the HTTP POST request on the URL, it must retrieve the events since the last change from the Pryv.io platform using the provided token.
 It does so by performing an HTTP GET request on the events from the streamId `health` using the [events.get](https://api.pryv.com/reference/#get-events) method with the `modifiedSince` parameter set.  
-It should then retrieve the new event from the stream `Health`:
+The API response should look like this:
 ```json
 {
     "events": [
@@ -194,7 +193,7 @@ It should then retrieve the new event from the stream `Health`:
 ```
 
 7. The server processes the data as configured. It must retrieve the information about the patient name and the type of the event that he posted (`count/steps` in this case).  
-It sends then a notification message to doctor Tom about the new event that was posted in the stream `Health`.
+It sends then a notification message to Dr. Tom about the new event that was posted in the stream `Health`.
 
 ## Pryv.io Webhook features
 
@@ -210,9 +209,9 @@ The `minIntervalMs` parameter can be configured by the Pryv.io platform administ
 
 In case of failure to send an HTTP POST request, such as a response status outside the 200-299 range  or timeout, the webhook will retry the request at exponentially increasing intervals.
 
-This backpressure mechanism is in place to allow the external service to stabilise in case it is overloaded.
+This backpressure mechanism is in place to allow the external service to stabilise in case it becomes overloaded.
 
-The number of retries that the webhook will attempt is indicated in its `maxRetries` field, you can monitor its current retry attempt using the `currentRetries` field.
+The number of retries that the webhook will attempt is indicated in its `maxRetries` field. You can monitor its current retry attempt using the `currentRetries` field.
 
 The `maxRetries` parameter can be configured by the Pryv.io platform administrator.
 
