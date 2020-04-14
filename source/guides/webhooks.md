@@ -6,10 +6,9 @@ customer: true
 withTOC: true
 ---
 
-## Target audience
 
 In this guide we address developers that wish to implement notified systems with Webhooks. 
-It describes what Webhooks are, why and how they were designed on Pryv.io. It goes through a possible use case to explain how to implement Webhooks with Pryv.io.
+It describes what Webhooks are, why and how to use them on Pryv.io, illustrating it with a common use case.
 
 ## Table of contents
 
