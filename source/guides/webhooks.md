@@ -20,7 +20,7 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
   4. [Separation of reponsibility](#separation-of-reponsibility)
 3. [Use case: Notify of a new document uploaded on your application](#use-case-notify-of-a-new-document-uploaded-on-your-application)
 4. [Hands-on example](#hands-on-example)
-5. [Pryv.io Webhooks features](#pryv-io-webhook-features)
+5. [Pryv.io Webhooks features](#pryv-io-webhooks-features)
   1. [Frequency limit](#frequency-limit) 
   2. [Retries](#retries) 
   3. [Reactivation](#reactivation) 
