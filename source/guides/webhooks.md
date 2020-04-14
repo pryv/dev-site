@@ -19,7 +19,7 @@ It describes what Webhooks are, why and how they were designed on Pryv.io. It go
   2. [Why using Webhooks?](#why-using-webhooks)
   3. [Why only notify of changes?](#why-only-notify-of-changes) 
   4. [Separation of reponsibility](#separation-of-reponsibility)
-3. [Use case: Counting steps application](#use-case)
+3. [Use case: Notify of a new document uploaded on your application](#use-case)
 4. [Hands-on example](#hands-on-example)
 5. [Special features](#special-features)
   1. [Frequency limit](#frequency-limit) 
@@ -78,34 +78,40 @@ Importantly, only the app access used to create the webhook (or a personal one) 
 
 Typically, a certain access will be used to setup one or multiple webhooks per user, while updated data will be fetched using a different set of accesses.
 
-## Use case: Counting steps application
+## Use case : Notify of a new document uploaded on your application
 
-*In this section, we describe a real-life use case : a device (a step counter) connected to a fitness mobile application and the usage of webhooks notifications to alert XXX (find better use case as).*
+*In this section, we describe a real-life use case : the usage of webhooks notifications to alert a doctor when a patient of your app posts a new health-related document on your mobile platform.*
 
-Let’s imagine that you've created an application storing its data on a Pryv.io platform that tracks the number of steps a user does everyday and you want to be able to notify him when he reaches a certain number of steps during the day.  
+Let’s imagine that you've created an application storing its data on a Pryv.io platform that enables to connect patients with doctors and you want to be able to notify a doctor when his patient uploads a new document related to his health on the app.  
 
-Your user wears a step counter, which is connected to your fitness application and sends data on a Pryv.io platform. As soon as your user reaches 10'000 steps a day, you want your server to get notified about it and to send a congratulatory message to your user.
+The patient Ana has an access `create.only` (see more information about accesses types [here](https://api.pryv.com/reference/#access)) on the stream `Health` shared with Doctor Tom.
+This allows Ana to post new events (data, picture, scan, audio file, etc) related to her health on this stream and to share them with her doctor. Doctor Tom has a `read` access on the stream `Health`, and he would like to get notified on the mobile app every time his patient posts a new event on this stream.
 
-What you need to track is the number of steps your user does, and therefore get notified once he has recorded a certain number of steps to be able to launch your app's process (sending a congratulatory message when the total number of steps sums up to 10'000).
+What you need is to track every time a user adds a new event in the stream `Health`, and send a notification message to doctor Tom with the name of the patient and the type of the event (picture, number of steps, blood pressure, audio file, scan, etc...).
 
-In this case, a webhook will allow to notify a defined service every time a user records a certain number of steps. The service sums up the daily steps and sends a notification to the user on his mobile app when the threshold is reached.
+Let's say that the patient Ana just uploaded her daily number of steps on the stream `Health`.
+
+In this case, the data change in the stream `Health` triggers a webhook that will send a push notification to the server. The server will then retrieve information (patient name and event type) from the stream `Health` on the Pryv.io platform and directly send a notification to the doctor on the mobile app.
+This notification message will contain information about the *patient name* and the *type of event* he posted on the platform : "The patient *Ana* has uploaded a new event of type *count/steps*".
+
+The webhook must therefore have an access token with a `read` level on the stream `Health` to be able to see when a new event has been posted on the stream `Health`.
 
 You can easily visualize the whole process on the following schema : 
 
-![Webhook structure in Pryv](/assets/images/Webhook_pryv.png)
+![Webhook structure in Pryv](/assets/images/webhooks_pryv_1.png)
 
-1. You first need to create a webhook that will notify your service every time a data change concerning the steps of your app user occurs.
-2. You must also provide your service with an access token to retrieve steps information of your app user.
-3. Once your user has made some steps, the connected step counter sends the information to your app, which creates an event on the Pryv.io platform.
-4. As new data has been posted in the stream about steps, the webhook notifies your service.
+1. You first need to create a webhook that will notify your web service every time a data change occurs in the stream `Health`.
+2. You must also provide your service with a `read` access token to retrieve information about the events posted in the stream `Health`.
+3. Once your user has uploaded a new file on the stream `Health`, a new event is created on the Pryv.io platform.
+4. As new data has been posted in the stream `Health`, the webhook notifies your service.
 5. The server retrieves events since the last change.
-6. It performs the implemented process : it sums up the steps of your user, and sends him a congratulatory message on his mobile app when he reaches 10'000 steps (to modify according to use case).
+6. It performs the implemented process : it sends a message to Doctor Tom on his mobile app notifying him that a certain patient `Ana` has posted a new file of type `count/steps`.
 
 ## Hands-on example
 
 *In this section, we will describe how to perform the previous example step-by-step using the Pryv Lab platform.*
 
-Based on the previous use case with the step counter (see the schema above), these are the steps to follow to setup event notifications with webhooks:
+Based on the previous use case (see the schema above), these are the steps to follow to setup event notifications with webhooks:
 
 1. You first need to create the webhook. You can do so by making an API call on the [webhooks.create](https://api.pryv.com/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made. (maybe add code for an HTTP server that reads such notifications)
 For example:  
@@ -120,20 +126,20 @@ You can set the permissions and leave other parameters unchanged:
 ```json
 [
   {
-    "streamId": "steps-counter",
-    "defaultName": "Steps Counter",
+    "streamId": "health",
+    "defaultName": "Health",
     "level": "read"
   }
 ]
 ```
 
-3. While the step counter is on, events related to the steps are recorded and added to the `Steps` stream using the [events.create](https://api.pryv.com/reference/#create-event) method.
-You can use the following parameters for your steps events:
+3. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](https://api.pryv.com/reference/#create-event) method.
+You can use the following parameters for a `count/steps` event:
 ```json
 {
-  "streamId": "steps-counter",
+  "streamId": "Health",
   "type": "count/steps",
-  "content": 100
+  "content": 10000
   }
 ```
 
@@ -153,18 +159,18 @@ The request payload will look like this:
 ```
 
 5. As soon as the server receives the HTTP POST request on the URL, it must retrieve the events since last change from Pryv.io using the provided token.
-It does so by performing an HTTP GET request on the events from the stream `steps-counter` using the [events.get](https://api.pryv.com/reference/#get-events) method with the `modifiedSince` parameter set. 
-It should then retrieve the new event from the stream `Steps` :
+It does so by performing an HTTP GET request on the events from the stream `Health` using the [events.get](https://api.pryv.com/reference/#get-events) method with the `modifiedSince` parameter set. 
+It should then retrieve the new event from the stream `Health` :
 ```json
 {
   "events": [
     {
       "id": "ck8pqobvr000voopvtlw9ct83",
       "time": 1586254000.167,
-      "streamId": "steps-counter",
+      "streamId": "Health",
       "tags": [],
       "type": "count/steps",
-      "content": 100,
+      "content": 10000,
       "created": 1586254000.167,
       "createdBy": "ck8pqobua0001oopvu6fhd3a2",
       "modified": 1586254000.167,
@@ -174,7 +180,8 @@ It should then retrieve the new event from the stream `Steps` :
 }
 ```
 
-6. The server processes the data as configured and sends it back to the user app. It can for example send a congratulatory message to the user about the number of steps he did, or perform any algorithm that you may have programmed on the server. (adapt according to new use case)
+6. The server processes the data as configured. It must retrieve the information about the patient name (that it can get from the `createdBy` field) and the type of the event that he posted (`count/steps` in this case). 
+It sends then a notification message to doctor Tom about the new event that was posted in the stream `Health`.
 
 ## Pryv.io Webhook features
 
@@ -256,3 +263,4 @@ This secret can be provided in the same way as the username, illustrated above. 
 ## Conclusion
 
 If you wish to set up a Pryv.io webhook or get more information on the data structure, please refer to [its data structure reference](https://api.pryv.com/reference/#webhook), while the methods relative to webhooks can be found in the [API methods section](https://api.pryv.com/reference/#webhooks).
+
