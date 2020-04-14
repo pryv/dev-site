@@ -195,7 +195,7 @@ The API response should look like this:
 7. The server processes the data as configured. It must retrieve the information about the patient name and the type of the event that he posted (`count/steps` in this case).  
 It sends then a notification message to Dr. Tom about the new event that was posted in the stream `Health`.
 
-## Pryv.io Webhook features
+## Pryv.io Webhooks features
 
 *In this section, we give an overview of all the features of the Pryv.io Webhooks.*
 
