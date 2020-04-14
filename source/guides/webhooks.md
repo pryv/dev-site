@@ -11,7 +11,7 @@ withTOC: true
 In this guide we address developers that wish to implement notified systems with Webhooks. 
 It describes what Webhooks are, why and how they were designed on Pryv.io. It goes through a possible use case to explain how to implement Webhooks with Pryv.io.
 
-## Table of content
+## Table of contents
 
 1. [Introduction](#introduction)
 2. [Webhooks](#webhooks-what-and-why)
@@ -19,7 +19,7 @@ It describes what Webhooks are, why and how they were designed on Pryv.io. It go
   2. [Why using Webhooks?](#why-using-webhooks)
   3. [Why only notify of changes?](#why-only-notify-of-changes) 
   4. [Separation of reponsibility](#separation-of-reponsibility)
-3. [Use case: Notify of a new document uploaded on your application](#use-case)
+3. [Use case: Notify of a new document uploaded on your application](#use-case-notify-of-a-new-document-uploaded-on-your-application)
 4. [Hands-on example](#hands-on-example)
 5. [Special features](#special-features)
   1. [Frequency limit](#frequency-limit) 
