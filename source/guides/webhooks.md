@@ -16,7 +16,7 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
   1. [What are Webhooks?](#what-are-webhooks-)
   2. [Why using Webhooks?](#why-using-webhooks-)
   3. [Why only notify of changes?](#why-only-notify-of-changes-) 
-  4. [Separation of reponsibility](#separation-of-reponsibility)
+  4. [Separation of responsibility](#separation-of-responsibility)
 3. [Use case: Notify of a new document uploaded on your application](#use-case-notify-of-a-new-document-uploaded-on-your-application)
 4. [Hands-on example](#hands-on-example)
 5. [Pryv.io Webhooks features](#pryv-io-webhooks-features)
@@ -70,7 +70,7 @@ Webhooks work through notifications of data changes: in other words, the modifie
 Providing only an event identifier in the webhook payload will force the recipients to make an API request to fetch the full resource, and will ensure that they are authorized to retrieve the information they are notified about with since they are required to use an authorization token.
 
 
-### Separation of reponsibility 
+### Separation of responsibility 
 
 Importantly, only the app access used to create the webhook (or a personal one) can be used to modify it. This is meant to separate the responsibilities between the webhooks management and services that will consume the data following a notification.
 
@@ -111,7 +111,7 @@ You can easily visualize the whole process on the following schema:
 
 Based on the previous use case (see the schema above), these are the steps to follow to setup event notifications with webhooks:
 
-If needed, create a new user account on the Pryv Lab platform [here](https://sw.pryv.me/access/register.html)
+If needed, create a new user account on the Pryv Lab platform [here](https://sw.pryv.me/access/register.html).
 
 1. You first need to obtain a token to create a webhook and store data into your account. You can generate an access token from the [Pryv Access Token Generator](/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
 You can set the permissions and leave other parameters unchanged:  
@@ -125,7 +125,7 @@ You can set the permissions and leave other parameters unchanged:
 ]
 ```
 
-2. You then need to create the webhook by making an API call on the [webhooks.create](/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made (See [User identification](#user-identification) on how to allow the service to identify the webhook's account). 
+2. You then need to create the webhook by making an API call on the [webhooks.create](/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made (see [User identification](#user-identification) on how to allow the service to identify the webhook's account).  
 For example:  
 ```json
 {
@@ -145,7 +145,7 @@ You can set the permissions and leave other parameters unchanged:
 ]
 ```
 
-4. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](/reference/#create-event) method.
+4. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](/reference/#create-event) method.  
 You can use the following parameters for a `count/steps` event:
 ```json
 {
@@ -155,7 +155,7 @@ You can use the following parameters for a `count/steps` event:
 }
 ```
 
-5. Once the event is created, the webhook is triggered. It notifies the external service that an `eventsChanged` has occured in the user account by sending an HTTP POST request to the provided webhook URL.
+5. Once the event is created, the webhook is triggered. It notifies the external service that an `eventsChanged` has occured in the user account by sending an HTTP POST request to the provided webhook URL.  
 The request payload will look like this:  
 ```json
 {
@@ -269,7 +269,7 @@ You might need to include a shared secret between your application and the webho
 
 You can add a "shared secret" to the Pryv.io webhooks that your application trusts. This means that when you will be receiving a webhook notification, you can validate the provided secret and discard the request if it is not trustworthy.
 
-This secret can be provided in the same way as the username, illustrated above. In this example, we use the path parameters to store the secret:  
+This secret can be provided in the same way as the username, illustrated above. In this example, we use the path parameter to store the secret:  
 
 ```json
 {
