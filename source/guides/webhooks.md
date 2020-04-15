@@ -28,6 +28,7 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
 6. [User identification and webhook authentication](#user-identification-and-webhook-authentication)
   1. [User identification](#user-identification)
   2. [Webhook authentication](#webhook-authentication)
+  3. [Endpoint testing](#endpoint-testing)
 7. [Conclusion](#conclusion)
 
 ## Introduction
@@ -257,6 +258,10 @@ In the query parameters:
   "url": "https://my-notifications.com/?apiEndpoint=stefan.pryv.me"
 }
 ```
+
+### Endpoint testing
+
+In order to test that your service's endpoint is reachable by the webhook calls, we offer the [webhooks.test](/reference/#test-webhook) API method that triggers the webhook execution.
 
 ### Webhook authentication
 
