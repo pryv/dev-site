@@ -6,8 +6,7 @@ customer: true
 withTOC: true
 ---
 
-
-In this guide we address developers that wish to implement notified systems with Webhooks. 
+In this guide we address developers that wish to implement notified systems with Webhooks.
 It describes what Webhooks are, why and how to use them on Pryv.io, illustrating it with a common use case.
 
 ## Table of contents
@@ -84,7 +83,7 @@ Let’s imagine that you have created an application storing its data on a Pryv.
 
 The app created a webhook to notify the doctor's service of data changes on Ana's account.
 
-The patient Ana has provided access to information on the stream `Health` with Dr. Tom by creating a `read` level access (see more information about access types [here](https://api.pryv.com/reference/#access)) and sending it to the doctor's service using the app.
+The patient Ana has provided access to information on the stream `Health` with Dr. Tom by creating a `read` level access (see more information about access types [here](/reference/#access)) and sending it to the doctor's service using the app.
 This allows Ana to post new events (data, picture, scan, audio file, etc) related to her health on this stream and her doctor to consult it.
 
 What we need is to track every time Ana adds a new event in the stream `Health`, and notify Dr. Tom with the name of the patient and the type of the data (picture, number of steps, blood pressure, audio file, scan, etc...).
@@ -113,7 +112,7 @@ Based on the previous use case (see the schema above), these are the steps to fo
 
 If needed, create a new user account on the Pryv Lab platform [here](https://sw.pryv.me/access/register.html)
 
-1. You first need to obtain a token to create a webhook and store data into your account. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
+1. You first need to obtain a token to create a webhook and store data into your account. You can generate an access token from the [Pryv Access Token Generator](/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
 You can set the permissions and leave other parameters unchanged:  
 ```json
 [
@@ -125,7 +124,7 @@ You can set the permissions and leave other parameters unchanged:
 ]
 ```
 
-2. You then need to create the webhook by making an API call on the [webhooks.create](https://api.pryv.com/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made (See [User identification](#user-identification) on how to allow the service to identify the webhook's account). 
+2. You then need to create the webhook by making an API call on the [webhooks.create](/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made (See [User identification](#user-identification) on how to allow the service to identify the webhook's account). 
 For example:  
 ```json
 {
@@ -145,7 +144,7 @@ You can set the permissions and leave other parameters unchanged:
 ]
 ```
 
-4. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](https://api.pryv.com/reference/#create-event) method.
+4. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](/reference/#create-event) method.
 You can use the following parameters for a `count/steps` event:
 ```json
 {
@@ -171,7 +170,7 @@ The request payload will look like this:
 ```
 
 6. As soon as the server receives the HTTP POST request on the URL, it must retrieve the events since the last change from the Pryv.io platform using the provided token.
-It does so by performing an HTTP GET request on the events from the streamId `health` using the [events.get](https://api.pryv.com/reference/#get-events) method with the `modifiedSince` parameter set.  
+It does so by performing an HTTP GET request on the events from the streamId `health` using the [events.get](/reference/#get-events) method with the `modifiedSince` parameter set.  
 The API response should look like this:
 ```json
 {
@@ -219,7 +218,7 @@ The `maxRetries` parameter can be configured by the Pryv.io platform administrat
 
 After a certain amount of consecutive failures to send a request, the webhook will be deactivated and no longer send requests when triggered. This will be indicated by the  `state` parameter which will be set to `inactive`.
 
-It will need to be manually reactivated using the [update.webhook](https://api.pryv.com/reference/#methods-webhooks-webhooks-update) method with the app access that created it or a personal one.
+It will need to be manually reactivated using the [webhooks.update](/reference/#methods-webhooks-webhooks-update) method with the app access that created it or a personal one.
 
 ### Stats
 
@@ -274,5 +273,4 @@ This secret can be provided in the same way as the username, illustrated above. 
 ```
 ## Conclusion
 
-If you wish to set up a Pryv.io webhook or get more information on the data structure, please refer to [its data structure reference](https://api.pryv.com/reference/#webhook), while the methods relative to webhooks can be found in the [API methods section](https://api.pryv.com/reference/#webhooks).
-
+If you wish to set up a Pryv.io webhook or get more information on the data structure, please refer to [its data structure reference](/reference/#webhook), while the methods relative to webhooks can be found in the [API methods section](/reference/#webhooks).
