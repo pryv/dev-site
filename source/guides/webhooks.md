@@ -27,8 +27,8 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
   5. [Deletion of the original access](#deletion-of-the-original-access)
 6. [User identification and webhook authentication](#user-identification-and-webhook-authentication)
   1. [User identification](#user-identification)
-  2. [Webhook authentication](#webhook-authentication)
-  3. [Endpoint testing](#endpoint-testing)
+  2. [Endpoint testing](#endpoint-testing)
+  3. [Webhook authentication](#webhook-authentication)
 7. [Conclusion](#conclusion)
 
 ## Introduction
