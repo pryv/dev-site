@@ -25,7 +25,7 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
   3. [Reactivation](#reactivation) 
   4. [Stats](#stats) 
   5. [Deletion of the original access](#deletion-of-the-original-access)
-6. [User identification and webhook authentication](#user-identification-and-webhook-authentication)
+6. [Endpoint setup](#endpoint-setup)
   1. [User identification](#user-identification)
   2. [Endpoint testing](#endpoint-testing)
   3. [Webhook authentication](#webhook-authentication)
@@ -237,7 +237,7 @@ The number of stored runs can be configured by the platform administrator.
 
 In case the app access that has created the webhook is deleted, it does not alter the webhook. It can still be modified using a personal access.
 
-## User identification and webhook authentication
+## Endpoint setup
 
 *In this section, we present possible ways to identify the user from which the data change is originating in the webhook URL and to share a secret between your application and the webhook provider.*
 
