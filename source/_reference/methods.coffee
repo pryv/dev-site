@@ -1348,7 +1348,7 @@ module.exports = exports =
         params:
           id: examples.streams.health[0].children[2].id
         result:
-          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.streams.health[0].children[2])
+          stream: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.streams.health[0].children[2])
       ,
         title: "Deleting"
         params:
