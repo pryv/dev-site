@@ -490,7 +490,8 @@ module.exports = exports =
                 ```
                 """
         result:
-          events: [examples.events.mass, examples.itemDeletions[0], examples.itemDeletions[1], examples.itemDeletions[2]]
+          events: [examples.events.mass]
+          eventDeletions: [examples.itemDeletions[0], examples.itemDeletions[1], examples.itemDeletions[2]]
       ]
 
     ,
