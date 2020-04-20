@@ -2254,7 +2254,13 @@ module.exports = exports =
                        The updated account information.
                        """
         ]
-      examples: []
+      examples: [
+        params:
+          email: examples.users.two.email
+        result:
+          account: _.omit(examples.users.two, "id", "password")
+
+      ]
 
     ,
 
