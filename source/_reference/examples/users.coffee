@@ -8,12 +8,18 @@ module.exports =
     password: "B|_|tt3rfly!"
     email: "chuangzi@dao.info"
     language: "zh"
+    storageUsed:
+      dbDocuments: 34831
+      attachedFiles: 12
   two:
     id: generateId()
     username: "user-123-abc"
     password: "ChjUzDXwaTG2qdV"
     email: "joseph-brenner@" + register.platforms[0]
     language: "en"
+    storageUsed:
+      dbDocuments: 355501
+      attachedFiles: 1570208
   three:
     username: "user1"
     email: "red.miller@mail.ch"
