@@ -23,7 +23,11 @@ or
 
 - license
 - credentials to pull docker images
-- config files to deploy services
+- config files to deploy services: https://github.com/pryv/config-template-pryv.io/tree/central/pryv.io
+
+4. Set platform variables
+
+- https://github.com/pryv/config-template-pryv.io/blob/central/pryv.io/single-node/config-leader/conf/platform.yml
 
 4. obtain SSL certificate
 
