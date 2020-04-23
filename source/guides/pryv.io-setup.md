@@ -6,25 +6,25 @@ customer: true
 withTOC: true
 ---
 
-In this guide we address developers that wish to initialize their Pryv.io platform.
-It walks you through the different steps that have to be implemented in order to set up your platform.
+In this guide we address IT operators that wish to initialize their Pryv.io platform.
+It walks you through the different steps that have to be performed in order to set up your platform.
 
 ## Table of contents
 
 1. [Set up the machines](#set-up-the-machines)
 2. [Obtain a domain name](#obtain-a-domain-name)
-3. [Obtain the license key, credentials and config files](#obtain-the-license-credentials-and-config-files)
+3. [Obtain the license key, credentials and config files](#obtain-the-license-key-credentials-and-config-files)
 4. [Set the platform parameters](#set-the-platform-parameters)
-5. [Obtain an SSL certificate](#obtain-an-SSL-certificate)
+5. [Obtain an SSL certificate](#obtain-an-ssl-certificate)
 6. [Validate your platform installation](#validate-your-platform-installation)
 7. [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
-8. [Fork the app-web-auth3 repositery](#fork-the-app-web-auth3-repositery)
+8. [Customize authorization, registration and reset password apps](#customize-authorization-registration-and-reset-password-apps)
 9. [Define your data model](#define-your-data-model)
 10. [Other documents](#other-documents)
 
 ## Set up the machines
 
-You need first to decide which hardware or virtual machines you will provision to host your Pryv.io instance.  
+You need first to define which hardware or virtual machines you will provision to host your Pryv.io instance.  
 
 The [Deployment Design Guide](https://api.pryv.com/assets/docs/deployment_design_guide_v6.pdf) for the Pryv.io middleware will guide you for the provisionning and deployment of your machines.
 
@@ -67,7 +67,7 @@ You can monitor its status by performing regular healthcheck API calls to the Pr
 
 The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks document](https://api.pryv.com/assets/docs/20190201-API-healthchecks-v4.pdf).
 
-## Fork the app-web-auth3 repositery
+## Customize authorization, registration and reset password apps
 
 In order to perform the [authorization procedure](/reference/#authorizing-your-app), a web page is necessary. We provide a template web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
 
@@ -76,21 +76,23 @@ In order to customize your own, we suggest that you fork this repository and hos
 To use your own page, you will also need to update the following platform variables:
 
 ```yaml
-  # Origins and appIds accept "*" wildcards, but never use wildcard appIds in production.
   TRUSTED_APPS: '*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://*.rec.la*'
-  # Default auth url used for the authorization flow (https://api.pryv.com/reference/#auth-request).
   DEFAULT_AUTH_URL: https://sw.DOMAIN/access/access.html
 ```
 
-*Note*: add way in config to serve it on sw.DOMAIN
+**TODO**: add way in config to serve it on sw.DOMAIN and manage self-hosted one and fork (on gh-pages and other).
+
+We urge you to fork this web application even if you don't wish to customize it as it follows the versioning of the Pryv Lab platform and might incur breaking changes during updates.
 
 ## Define your data model
 
 As your Pryv.io platform is fully operational, you can start collecting data.
 
-To do so, you need to design your own model and structure your data under Pryv's conventions using **streams** and **events**.
+To do so, you need to design the data model your app(s) will use using Pryv's data structures: **streams** and **events**.
 
-We will help you with the creation of your data model in our [Data modelling guide](https://api.pryv.com/guides/data-modelling/) which describes the Pryv.io data structure and walks you through different use cases for your data model.
+You can have a look at our [Data modelling guide](https://api.pryv.com/guides/data-modelling/) which describes the Pryv.io data structure and walks you through different use cases for your data model.
+
+We can also help you with the design and validation of your data model.
 
 ## Other documents
 
