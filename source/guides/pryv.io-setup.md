@@ -1,0 +1,97 @@
+---
+id: pryv.io-setup
+title: 'Pryv.io setup guide'
+template: default.jade
+customer: true
+withTOC: true
+---
+
+In this guide we address developers that wish to initialize their Pryv.io platform.
+It walks you through the different steps that have to be implemented in order to set up your platform.
+
+## Table of contents
+
+1. [Set up the machines](#set-up-the-machines)
+2. [Obtain a domain name](#obtain-a-domain-name)
+3. [Obtain the license key, credentials and config files](#obtain-the-license-credentials-and-config-files)
+4. [Set the platform parameters](#set-the-platform-parameters)
+5. [Obtain an SSL certificate](#obtain-an-SSL-certificate)
+6. [Validate your platform installation](#validate-your-platform-installation)
+7. [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
+8. [Fork the app-web-auth3 repositery](#fork-the-app-web-auth3-repositery)
+9. [Define your data model](#define-your-data-model)
+10. [Other documents](#other-documents)
+
+## Set up the machines
+
+You need first to decide which hardware or virtual machines you will provision to host your Pryv.io instance.  
+
+The [Deployment Design Guide](https://api.pryv.com/assets/docs/deployment_design_guide_v6.pdf) for the Pryv.io middleware will guide you for the provisionning and deployment of your machines.
+
+It will help you with the choice of your Pryv.io deployment (single node or cluster), and provide you with resources sizing considerations.  
+
+The system requirements for each machine are also specified.
+
+## Obtain a domain name
+
+Now that your machines are ordered, you need to register your own domain name.
+
+You can either:  
+
+- obtain one yourself through a domain name registrar of your choice;
+- or contact us directly to obtain a domain name with pryv.io, e.g. ***yourdomainname*.pryv.io**
+
+## Obtain the license key, credentials and config files
+
+In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files.
+
+## Set the platform parameters
+
+Along with the the configuration files, you will find an Installation guide describing where to unpack them and how to set the platform variables.
+
+## Obtain an SSL certificate
+
+You will need to obtain an SSL certificate to enable SSL encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one using LetsEncrypt, for which we can provide you a quick guide.
+
+We have automatic SSL certificate renewal on our roadmap, so let us know if you are interested.
+
+## Validate your platform installation
+
+Now that your Pryv.io platform is configured and running, you can run the following validation procedure: [Validation document for Pryv.io installation](https://api.pryv.com/assets/docs/20190131-pryv.io-verification-v3.pdf).  
+
+It will walk you through the validation steps of your platform and contains a troubleshooting part in case of issue.
+
+## Set up the platform health monitoring
+
+You can monitor its status by performing regular healthcheck API calls to the Pryv.io API.
+
+The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks document](https://api.pryv.com/assets/docs/20190201-API-healthchecks-v4.pdf).
+
+## Fork the app-web-auth3 repositery
+
+In order to perform the [authorization procedure](/reference/#authorizing-your-app), a web page is necessary. We provide a template web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
+
+In order to customize your own, we suggest that you fork this repository and host the web app on your environment. The easiest way to begin is to fork it on GitHub and host it using GitHub-pages.
+
+To use your own page, you will also need to update the following platform variables:
+
+```yaml
+  # Origins and appIds accept "*" wildcards, but never use wildcard appIds in production.
+  TRUSTED_APPS: '*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://*.rec.la*'
+  # Default auth url used for the authorization flow (https://api.pryv.com/reference/#auth-request).
+  DEFAULT_AUTH_URL: https://sw.DOMAIN/access/access.html
+```
+
+*Note*: add way in config to serve it on sw.DOMAIN
+
+## Define your data model
+
+As your Pryv.io platform is fully operational, you can start collecting data.
+
+To do so, you need to design your own model and structure your data under Pryv's conventions using **streams** and **events**.
+
+We will help you with the creation of your data model in our [Data modelling guide](https://api.pryv.com/guides/data-modelling/) which describes the Pryv.io data structure and walks you through different use cases for your data model.
+
+## Other documents
+
+More resources can be found in our [Customer Resources page](https://api.pryv.com/customer-resources/#documents), or in the [FAQ](https://api.pryv.com/faq-infra/).
