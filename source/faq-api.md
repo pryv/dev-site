@@ -82,7 +82,7 @@ Using a token previously obtained, you can generate a new one using the [accesse
 
 In order to request an access to someone's data, one must implement a page that makes an [auth request](/reference/#auth-request) when loaded. The `url` in the response must be displayed to the user. The web page will ask him for his credentials as well as display the list of requested permissions. Upon approval, the app will obtain a valid token in the polling url response.
 
-A simple web app demonstrating this implementation can be seen [here](/app-web-access/?pryv-reg=reg.pryv.me).
+A simple web app demonstrating this implementation can be seen [here](https://github.com/pryv/app-web-access).
 
 ## Account granularity
 
