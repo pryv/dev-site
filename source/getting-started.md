@@ -58,7 +58,7 @@ Now that your Pryv Lab account has been created, you can start adding data. In o
 
 The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authorizing-your-app)).
 
-1. Go to [the Pryv Access Token Generator: https://api.pryv.com/app-web-access/](/app-web-access/?pryv-reg=reg.pryv.me)
+1. Go to [the Pryv Access Token Generator: https://api.pryv.com/app-web-access/](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
 2. Set up the required parameters :
 
    1. Enter the Application ID (ex.: `demopryv-access`)

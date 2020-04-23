@@ -394,12 +394,12 @@ module.exports = exports =
                  You can also use the **Access token generator** to obtain an app token:
 
                  ```
-                 https://api.pryv.com/app-web-access/?pryv-reg=reg.{domain}
+                 https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=${pryvServiceInfoUrl}
                  ```
 
                  For example:
 
-                 [https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me)
+                 [https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
 
 
                  
