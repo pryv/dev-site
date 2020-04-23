@@ -26,7 +26,7 @@ It walks you through the different steps that have to be performed in order to s
 
 You need first to define which hardware or virtual machines you will provision to host your Pryv.io instance.  
 
-The [Deployment Design Guide](https://api.pryv.com/assets/docs/deployment_design_guide_v6.pdf) for the Pryv.io middleware will guide you for the provisionning and deployment of your machines.
+The **Deployment design guide** for the Pryv.io middleware from the [Customer Resources page](https://api.pryv.com/customer-resources/#documents) will guide you for the provisionning and deployment of your machines.
 
 It will help you with the choice of your Pryv.io deployment (single node or cluster), and provide you with resources sizing considerations.  
 
@@ -57,7 +57,7 @@ We have automatic SSL certificate renewal on our roadmap, so let us know if you 
 
 ## Validate your platform installation
 
-Now that your Pryv.io platform is configured and running, you can run the following validation procedure: [Validation document for Pryv.io installation](https://api.pryv.com/assets/docs/20190131-pryv.io-verification-v3.pdf).  
+Now that your Pryv.io platform is configured and running, you can run the validation procedure from the **Installation Validation guide** available on the [Customer Resources page](https://api.pryv.com/customer-resources/#documents). 
 
 It will walk you through the validation steps of your platform and contains a troubleshooting part in case of issue.
 
@@ -65,7 +65,7 @@ It will walk you through the validation steps of your platform and contains a tr
 
 You can monitor its status by performing regular healthcheck API calls to the Pryv.io API.
 
-The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks document](https://api.pryv.com/assets/docs/20190201-API-healthchecks-v4.pdf).
+The procedure for the platform health monitoring is described in the **System monitoring guide** from the [Customer Resources page](https://api.pryv.com/customer-resources/#documents). 
 
 ## Customize authorization, registration and reset password apps
 
