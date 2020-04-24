@@ -58,7 +58,7 @@ We have automatic SSL certificate renewal on our roadmap, so let us know if you 
 
 ## Validate your platform installation
 
-Now that your Pryv.io platform is configured and running, you can run the validation procedure from the [Pryv.io platform validation guide](https://api.pryv.com/customer-resources/#platform-validation).
+Now that your Pryv.io platform is configured and running, you can run the validation procedure from the [Pryv.io platform validation guide](https://api.pryv.com/customer-resources/platform-validation).
 
 It will walk you through the validation steps of your platform and contains a troubleshooting part in case of issue.
 
@@ -66,7 +66,7 @@ It will walk you through the validation steps of your platform and contains a tr
 
 You can monitor its status by performing regular healthcheck API calls to the Pryv.io API.
 
-The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks guide](https://api.pryv.com/customer-resources/customer-resources/#healthchecks).
+The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks guide](https://api.pryv.com/customer-resources/healthchecks).
 
 ## Customize authorization, registration and reset password apps
 
