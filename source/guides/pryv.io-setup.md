@@ -47,7 +47,7 @@ In order to be able to run your Pryv.io instance, you will need to get a license
 
 ## Set the platform parameters
 
-Along with the the configuration files, you will find an Installation guide describing where to unpack them and how to set the platform variables.
+Along with the configuration files, you will find an Installation guide describing where to unpack them and how to set the platform variables.
 
 ## Obtain an SSL certificate
 
@@ -57,7 +57,7 @@ We have automatic SSL certificate renewal on our roadmap, so let us know if you 
 
 ## Validate your platform installation
 
-Now that your Pryv.io platform is configured and running, you can run the validation procedure from the **Installation Validation guide** available on the [Customer Resources page](https://api.pryv.com/customer-resources/#documents). 
+Now that your Pryv.io platform is configured and running, you can run the validation procedure from the [Pryv.io platform validation guide](https://api.pryv.com/customer-resources/#platform-validation).
 
 It will walk you through the validation steps of your platform and contains a troubleshooting part in case of issue.
 
@@ -65,7 +65,7 @@ It will walk you through the validation steps of your platform and contains a tr
 
 You can monitor its status by performing regular healthcheck API calls to the Pryv.io API.
 
-The procedure for the platform health monitoring is described in the **System monitoring guide** from the [Customer Resources page](https://api.pryv.com/customer-resources/#documents). 
+The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks guide](https://api.pryv.com/customer-resources/customer-resources/#healthchecks).
 
 ## Customize authorization, registration and reset password apps
 
@@ -83,6 +83,20 @@ To use your own page, you will also need to update the following platform variab
 **TODO**: add way in config to serve it on sw.DOMAIN and manage self-hosted one and fork (on gh-pages and other).
 
 We urge you to fork this web application even if you don't wish to customize it as it follows the versioning of the Pryv Lab platform and might incur breaking changes during updates.
+
+## Setup email sending
+
+Pryv.io allows to send emails in two situations:
+- for account creation,
+- for password reset requests.
+
+You might want to install and configure the sending of emails in these situations. You can do so by either using SMTP transport, or alternatively Sendmail transport.
+
+In both cases, you will need to replace a few settings in the platform parameters file. The variables to be changed are mentioned in the section "Email configuration" of the platform parameters file.
+
+You can also customize the email templates in the configuration files.
+
+More details are provided in the **Emails configuration guide** that can be found in the [Customer Resources section](https://api.pryv.com/customer-resources/#documents).
 
 ## Define your data model
 
