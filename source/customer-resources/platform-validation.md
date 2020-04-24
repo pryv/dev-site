@@ -64,7 +64,7 @@ Verify with your domain provider that the name servers are set correctly.
 
 Run `dig reg.${DOMAIN}`.
 
-The `ANSWER SECTION` should exist and list a hostname such as:  
+The `ANSWER` section should exist and list a hostname such as:  
 
 ~~~~~~~~
 ;; ANSWER :
