@@ -1,6 +1,6 @@
 ---
 id: platform-validation
-title: 'ABC'
+title: 'Platform validation guide'
 template: default.jade
 customer: true
 withTOC: true
@@ -10,34 +10,24 @@ withTOC: true
 | ------- | --------------------- |
 | Author  | Ilia Kebets 		      |
 | Reviewer | Guillaume Bassand (v1,2) |
-| Date    | 31.01.2019            |
-| Version | 3                     |
-
+| Date    | 24.04.2020            |
+| Version | 4                     |
 
 
 # Summary
 
-This procedure describes the steps to validate that a Pryv.io platform is up and running. Troubleshooting steps can be found at the end of this document in case of validation failure.
+This procedure describes the steps to validate that a Pryv.io platform is up and running. You can directly jump to the [Checklist section](#checklist) to proceed to a quick check-up of your Pryv.io platform.
+Troubleshooting steps can be found at the end of this document in case of validation failure.
 
 # Variables
 
 As this guide is platform agnostic, we will use variables `${VARIABLE_NAME}` which must be replaced in the commands.
 
-## Domain name
-
-This guide considers the platform using a certain domain name, which will be called `${DOMAIN}`.
-
-## Configuration folder
-
-The Pryv.io configuration files are placed in a certain folder on the machine, we will call this folder `${PRYV_CONFIG_FOLDER}`.
-
-## Container name
-
-Pryv.io components are containerized with Docker, so when doing certain actions on them, we address the containers by their name `${APP_CONTAINER_NAME}`. To find the name of a container, use `docker ps -a` to display all containers.
-
-## Core machine hostname
-
-The hostname ${CORE_MACHINE_HOSTNAME} of a machine running the Pryv.io core service. On default configurations, we define the first one as co1.${DOMAIN}.
+In particular, the following variables should be replaced :
+- the domain name, which will be called `${DOMAIN}`,
+- the configuration folder `${PRYV_CONFIG_FOLDER}`, corresponding to the folder on the machine containing the Pryv.io configuration files,
+- the container name. Pryv.io components are containerized with Docker, so when doing certain actions on them, we address the containers by their name `${APP_CONTAINER_NAME}`. To find the name of a container, use `docker ps -a` to display all containers ;
+- the core machine hostname `${CORE_MACHINE_HOSTNAME}`, corresponding to the machine running the Pryv.io core service. On default configurations, we define the first one as `co1.${DOMAIN}`.
 
 # Tools
 
@@ -53,21 +43,21 @@ Depending on your skill set, this can be done using CLI tools or a web interface
 - cURL version 7.54.0+
 - Chrome web browser version 71+
 
-# Operations
+# Checklist
 
 ## DNS is set as domain name server
 
 Run `dig NS ${DOMAIN}`.
 
-The `ANSWER SECTION` should exist and list 2 hostnames such as:  
+The `ANSWER` section should exist and list 2 hostnames such as:  
 
 ~~~~~~~~
-;; ANSWER SECTION:
+;; ANSWER :
 ${DOMAIN}.  SOME_TTL_NUMBER  IN  NS  dns1.${DOMAIN}.
 ${DOMAIN}.  SOME_TTL_NUMBER  IN  NS  dns2.${DOMAIN}.
 ~~~~~~~~
 
-If there is no `ANSWER SECTION`, the name servers for the domain name `${DOMAIN}` are not defined or misconfigured.  
+If there is no `ANSWER` section, the name servers for the domain name `${DOMAIN}` are not defined or misconfigured.  
 Verify with your domain provider that the name servers are set correctly.
 
 ## DNS
@@ -77,11 +67,11 @@ Run `dig reg.${DOMAIN}`.
 The `ANSWER SECTION` should exist and list a hostname such as:  
 
 ~~~~~~~~
-;; ANSWER SECTION:
+;; ANSWER :
 reg.${DOMAIN}.  SOME_TTL_NUMBER  IN  A  ${REGISTER_MACHINE_IP_ADDRESS}
 ~~~~~~~~
 
-If there is no `ANSWER SECTION`, this means that the DNS is not running or is unreachable. See [DNS section](#dns).
+If there is no `ANSWER` section, this means that the DNS is not running or is unreachable. See [DNS section](#dns).
 
 ## API
 
