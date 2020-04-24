@@ -1,6 +1,6 @@
 ---
 id: platform-validation
-title: 'Platform validation guide'
+title: 'Pryv.io platform validation guide'
 template: default.jade
 customer: true
 withTOC: true
