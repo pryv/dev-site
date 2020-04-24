@@ -19,8 +19,9 @@ It walks you through the different steps that have to be performed in order to s
 6. [Validate your platform installation](#validate-your-platform-installation)
 7. [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
 8. [Customize authorization, registration and reset password apps](#customize-authorization-registration-and-reset-password-apps)
-9. [Define your data model](#define-your-data-model)
-10. [Other documents](#other-documents)
+9. [Set up email sending](#set-up-email-sending)
+10. [Define your data model](#define-your-data-model)
+11. [Other documents](#other-documents)
 
 ## Set up the machines
 
@@ -84,7 +85,7 @@ To use your own page, you will also need to update the following platform variab
 
 We urge you to fork this web application even if you don't wish to customize it as it follows the versioning of the Pryv Lab platform and might incur breaking changes during updates.
 
-## Setup email sending
+## Set up email sending
 
 Pryv.io allows to send emails in two situations:
 - for account creation,
