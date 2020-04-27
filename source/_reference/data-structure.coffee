@@ -190,14 +190,6 @@ module.exports = exports =
                    The identifier of the stream's parent, if any. A value of `null` indicates that the stream has no parent (i.e. root stream).
                    """
     ,
-      key: "singleActivity"
-      type: "boolean"
-      optional: true
-      description: """
-                   (**DEPRECATED**)  
-                   If specified and `true`, the system will ensure that period events in this stream and its children never overlap.
-                   """
-    ,
       key: "clientData"
       type: "[key-value](##{_getDocId("key-value")})"
       optional: true
