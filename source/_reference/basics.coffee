@@ -861,6 +861,12 @@ module.exports = exports =
                      The `events.get` method in batch or websocket call yielded too many results. Call the API method directly, narrow the request scope or page the request.
                      """
       ,
+        key: "removed-method"
+        http: "410"
+        description: """
+                     The resource or method has been removed from the API.
+                     """
+      ,
         key: "user-account-relocated"
         http: "301"
         description: """
