@@ -393,6 +393,9 @@ module.exports = exports =
           type: "array of strings"
           optional: true
           description: """
+                       **(DEPRECATED)**
+                       Please use streamIds instead.
+
                        If set, only events assigned to any of the listed tags will be returned.
                        """
         ,

@@ -95,6 +95,9 @@ module.exports = exports =
       type: "array of strings"
       optional: "(always present in read items)"
       description: """
+                   **(DEPRECATED)**
+                   Please use streamIds instead.
+                   
                    The tags associated with the event.
                    """
     ,
