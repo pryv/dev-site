@@ -4,6 +4,28 @@ title: API change log
 template: default.jade
 ---
 
+## v1.5
+
+New Features:
+
+- Events can now be part of multiple streamIds
+- `authUrl` replaces `url` in **Auth request** in-progress response
+- `pryvApiEndpoint` replaces `username` and `token` in **Auth request** accepted response
+
+Deprecated ones:
+
+- `event.streamId`: replaced by `event.streamIds`
+- `event.tags`: their functionality will soon be totally replaced by streamIds
+- `url` in **Auth request** in-progress response
+- `username` and `token` in **Auth request** accepted response
+
+Removals:
+
+- Timetracking functionalities have been removed
+  - singleActivity streams are now standart streams
+  - events.start
+  - events.stop
+
 ## V1.4
 
 New features:
