@@ -50,10 +50,19 @@ module.exports = exports =
                    The identifier ([collision-resistant cuid](https://usecuid.org/)) for the event. Automatically generated if not set when creating the event.
                    """
     ,
+      key: "streamIds"
+      type: "array of [identifier](##{_getDocId("identifier")})"
+      description: """
+                   The ids of the belonging streams.
+                   """
+    ,
       key: "streamId"
       type: "[identifier](##{_getDocId("identifier")})"
       description: """
-                   The id of the belonging stream.
+                   **(DEPRECATED)**
+                   Please use streamIds instead.
+
+                   The id of the first element of the streamIds array.
                    """
     ,
       key: "time"

@@ -15,6 +15,7 @@ module.exports =
   activity:
     id: generateId()
     time: timestamp.now()
+    streamIds: [ streams.activities[0].children[0].id ]
     streamId: streams.activities[0].children[0].id
     tags: []
     type: "activity/pryv"
@@ -28,6 +29,7 @@ module.exports =
     id: generateId()
     time: timestamp.now()
     duration: null
+    streamIds: [ streams.activities[0].children[1].id ]
     streamId: streams.activities[0].children[1].id
     tags: []
     type: "activity/pryv"
@@ -41,6 +43,7 @@ module.exports =
     id: generateId()
     time: timestamp.now()
     duration: null
+    streamIds: [ streams.activities[1].children[1].id ]
     streamId: streams.activities[1].children[1].id
     tags: []
     type: "activity/pryv"
@@ -60,6 +63,7 @@ module.exports =
   heartRate:
     id: generateId()
     time: 1385046854.282,
+    streamIds: [ "heart" ]
     streamId: "heart"
     tags: []
     type: "frequency/bpm"
@@ -72,6 +76,7 @@ module.exports =
   heartSystolic:
     id: generateId()
     time: 1385046854.282
+    streamIds: [ "systolic" ]
     streamId: "systolic"
     tags: []
     type: "pressure/mmhg"
@@ -84,6 +89,7 @@ module.exports =
   heartDiastolic:
     id: generateId()
     time: 1385046854.282
+    streamIds: [ "diastolic" ]
     streamId: "diastolic"
     tags: []
     type: "pressure/mmhg"
@@ -96,6 +102,7 @@ module.exports =
   mass:
     id: generateId()
     time: timestamp.now()
+    streamIds: [ streams.health[0].children[2].id ]
     streamId: streams.health[0].children[2].id
     tags: []
     type: "mass/kg"
@@ -108,6 +115,7 @@ module.exports =
   note:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
@@ -119,6 +127,7 @@ module.exports =
   noteWithHistory:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
@@ -130,6 +139,7 @@ module.exports =
   noteHistory1:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
@@ -141,6 +151,7 @@ module.exports =
   noteHistory2:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
@@ -153,6 +164,7 @@ module.exports =
   picture:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "picture/attached"
@@ -172,6 +184,7 @@ module.exports =
   position:
     id: generateId()
     time: 1350373077.359
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "position/wgs84"
@@ -203,6 +216,7 @@ module.exports =
     holderEvent:
       id: generateId()
       time: timestamp.now()
+      streamIds: [ "position" ]
       streamId: "position"
       tags: []
       type: "series:position/wgs84"

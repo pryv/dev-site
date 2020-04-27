@@ -165,6 +165,7 @@ Here's an example of an event, corresponding to the heart rate collected by the 
 
 ```json
 {
+  "streamIds": ["pulseOximeterApp"],
   "streamId": "pulseOximeterApp",
   "type": "frequency/bpm",
   "content": 90,
@@ -186,6 +187,7 @@ Basic event types include :
 ```json
 {
   "id": "c3jkdjdt000ze64d8u9z4hap",
+  "streamIds": ["smartwatchA"],
   "streamId": "smartwatchA",
   "type": "count/steps",
   "content": 14972,
@@ -199,6 +201,7 @@ Basic event types include :
 ```json
 {
   "id": "c4jghrjkj011ez46d8u4y3pah",
+  "streamIds": ["pulseOximeterApp"],
   "streamId": "pulseOximeterApp",
   "type": "blood-pressure/bpm-mmhg",
   "content": {
@@ -221,6 +224,7 @@ These events will have the type `picture/attached` :
 ```json
 {
   "id": "ck2bzkjdt000ze64d8u9z4pha",
+  "streamIds": ["foodA"],
   "streamId": "foodA",
   "type": "picture/attached",
   "content": null,
@@ -247,6 +251,7 @@ This data will have the type `position/wgs84` :
 {
   "id": "ck2klss8v00124yjx45s3jp5r",
     "time": 1572882785.023,
+    "streamId": ["position"],
     "streamId": "position",
     "tags": [],
     "type": "series:position/wgs84",

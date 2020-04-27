@@ -570,14 +570,14 @@ module.exports = exports =
       ]
       examples: [
         title: "Capturing a simple number value"
-        params: _.pick(examples.events.mass, "streamId", "type", "content")
+        params: _.pick(examples.events.mass, "streamIds", "type", "content")
         result:
           event: examples.events.mass
       ,
         title: "cURL with attachment"
         content: """
                  ```bash
-                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" "https://${token}@${username}.pryv.me/events"
+                 curl -i -F 'event={"streamIds":["#{examples.events.picture.streamId}"],"type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" "https://${token}@${username}.pryv.me/events"
                  ```
                  """
         result:
@@ -832,7 +832,7 @@ module.exports = exports =
       ]
       examples: [
         title: "Creating a new HF event that will hold HF series"
-        params: _.pick(examples.events.series.holderEvent, "streamId", "type")
+        params: _.pick(examples.events.series.holderEvent, "streamIds", "type")
         result:
           event: examples.events.series.holderEvent
 
@@ -2319,13 +2319,13 @@ module.exports = exports =
         title: "Sync some health metrics"
         params: [
           method: "events.create"
-          params: _.pick(examples.events.heartRate, "time", "streamId", "type", "content")
+          params: _.pick(examples.events.heartRate, "time", "streamIds", "type", "content")
         ,
           method: "events.create"
-          params: _.pick(examples.events.heartSystolic, "time", "streamId", "type", "content")
+          params: _.pick(examples.events.heartSystolic, "time", "streamIds", "type", "content")
         ,
           method: "events.create"
-          params: _.pick(examples.events.heartDiastolic, "time", "streamId", "type", "content")
+          params: _.pick(examples.events.heartDiastolic, "time", "streamIds", "type", "content")
         ]
         result:
           results: [

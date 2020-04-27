@@ -177,6 +177,7 @@ The API response should look like this:
       {
         "id": "ck8pqobvr000voopvtlw9ct83",
         "time": 1586254000.167,
+        "streamIds": ["health"],
         "streamId": "health",
         "tags": [],
         "type": "count/steps",

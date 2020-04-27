@@ -220,30 +220,30 @@ You can then add events to the different streams at once by doing an [events.cre
   {
     "method": "events.create",
     "params": {
-    "time": 1385046854.282,
-    "streamId": "campaign-123-description",
-		"type": "campaign/pryv",
-    "content": {
-      "requestedPermissions": {}, //...
-      "consentText": "", //...
-      "appId": "", //
-    }
+      "time": 1385046854.282,
+      "streamIds": ["campaign-123-description"],
+      "type": "campaign/pryv",
+      "content": {
+        "requestedPermissions": {}, //...
+        "consentText": "", //...
+        "appId": "", //
+      }
     }
   },
   {
     "method": "events.create",
     "params": {
-    "time": 1385046854.282,
-    "streamId": "campaign-123-patient-accesses",
-    "type": "access/pryv",
-    "content": {
-      "access": {
-        "id": "ck0qmmwo40006a8ive8nkv9es",
-        "username": "subject01",
-        "token": "ck0qmmwo40007a8ivbxnl2zt7", 
-        "urlEndpoint": "${PATIENT_USERNAME}.${PATIENT_DOMAIN}",
-        "type": "shared",
-        } 
+      "time": 1385046854.282,
+      "streamIds": ["campaign-123-patient-accesses"],
+      "type": "access/pryv",
+      "content": {
+        "access": {
+          "id": "ck0qmmwo40006a8ive8nkv9es",
+          "username": "subject01",
+          "token": "ck0qmmwo40007a8ivbxnl2zt7", 
+          "urlEndpoint": "${PATIENT_USERNAME}.${PATIENT_DOMAIN}",
+          "type": "shared",
+        }
       }
     }
   }
