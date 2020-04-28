@@ -1,6 +1,6 @@
 ---
 id: pryv.io-setup
-title: 'Pryv.io setup guide'
+title: 'Pryv.io platform setup guide'
 template: default.jade
 customer: true
 withTOC: true

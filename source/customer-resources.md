@@ -10,7 +10,7 @@ In this space you will find links and reference documents that will help you mak
 
 ## Links
 
-- Pryv.io setup guide: [api.pryv.com/guides/pryv.io-setup](/guides/pryv.io-setup/)
+- Pryv.io platform setup guide: [api.pryv.com/guides/pryv.io-setup](/guides/pryv.io-setup/)
 
 - API Reference: [api.pryv.com/reference](/reference/)
 
