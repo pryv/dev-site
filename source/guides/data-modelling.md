@@ -213,9 +213,9 @@ You can do a [streams.create](/reference/#create-stream) call with the following
 }
 ```
 
-The events of this stream will contain the credentials of every subject that granted access to their data, in particular the `username` and the `token` associated with their Pryv.io account.
+The events of this stream will contain the credentials of every subject that granted access to their data, in particular the `pryvApiEndpoint` associated with their Pryv.io account.
 
-You can do an [events.create](https://api.pryv.com/reference/#create-event) call to store the credentials of "Subject 01" for example:
+You can do an [events.create](/reference/#create-event) call to store the credentials of "Subject 01" for example:
 
 ```json
 {
@@ -223,11 +223,8 @@ You can do an [events.create](https://api.pryv.com/reference/#create-event) call
     "id": "jk8ujvwfo000vt4vprfriwd5a",
     "time": 1385046854.285,
     "streamIds": ["patient-accesses"],
-    "type": "access/pryv",
-    "content": {
-      "username": "subject01",
-      "token": "ck0qmnwo40007a8ivbxn12zt7",
-      } 
+    "type": "access/pryvApiEndpoint",
+    "content": "https://ck0qmnwo40007a8ivbxn12zt7@subject01.pryv.me/"
   }
 }
 ```
