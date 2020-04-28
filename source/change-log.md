@@ -22,7 +22,7 @@ Deprecated:
 Removals:
 
 - Timetracking functionalities have been removed
-  - singleActivity streams are now standart streams
+  - singleActivity streams are now standard streams
   - events.start
   - events.stop
 
