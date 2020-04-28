@@ -148,7 +148,7 @@ In our case :
 
 ### Consent aggregation
 
-Let's imagine now a different use case.
+Let's imagine now a different use case. You are conducting an Allergology Exposition research, in which you analyze the exposition of subjects to allergens by tracking their geolocation.
 
 You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io in order to be able to retrieve data from their accounts.
 You will therefore need a "campaign" stream structure which allows you to store the accesses for your app.
@@ -157,14 +157,14 @@ You will therefore need a "campaign" stream structure which allows you to store 
 
 The "campaign" data structure will contain the following streams:
 
-- The stream **Campaign 123 description**, in which you will store information about the authorization you are requesting. 
+- The stream **Campaign description**, in which you will store information about the authorization you are requesting. 
 You can do a [streams.create](https://api.pryv.com/reference/#create-stream) call with the following data:
 
 ```json
 {
-  "id": "campaign-123-description",
+  "id": "campaign-description",
   "name": "Campaign description",
-  "parentId": "campaign-123"
+  "parentId": "allergology-exposition-campaign"
 }
 ```
 
@@ -177,20 +177,15 @@ You can do an [events.create](https://api.pryv.com/reference/#create-event) call
   "event": {
     "id": "ck9ckvwfo000vt4pvrudxci9b",
     "time": 1385046854.282,
-    "streamIds": ["campaign-123-description]",
+    "streamIds": ["campaign-description]",
     "type": "campaign/auth-request",
     "content": {
         "requestingAppId": "test-app-id",
         "requestedPermissions": [
         {
-            "streamId": "diary",
+            "streamIds": ["geolocation"],
             "level": "read",
-            "defaultName": "Journal"
-        },
-        {
-            "streamId": "position",
-            "level": "contribute",
-            "defaultName": "Position"
+            "defaultName": "Geolocation"
         }],
         "clientData": "", //...
     } 
@@ -206,7 +201,7 @@ You can do a [streams.create](https://api.pryv.com/reference/#create-stream) cal
 {
   "id": "patient-accesses",
   "name": "Patient accesses",
-  "parentId": "campaign-123"
+  "parentId": "allergology-exposition-campaign"
 }
 ```
 
@@ -237,15 +232,15 @@ For this stream structure, you can create the streams one by one as explained [h
   {
     "method": "streams.create",
     "params": {
-      "id": "campaign-123",
-      "name": "Campaign name"
+      "id": "allergology-exposition-campaign",
+      "name": "Allergology Exposition Campaign"
     }
   },
     {
     "method": "streams.create",
     "params": {
-      "id": "campaign-123-description",
-      "parentId": "campaign-123",
+      "id": "campaign-description",
+      "parentId": "allergology-exposition-campaign",
       "name": "Campaign description"
     }
   },
@@ -253,7 +248,7 @@ For this stream structure, you can create the streams one by one as explained [h
     "method": "streams.create",
     "params": {
       "id": "patient-accesses",
-      "parentId": "campaign-123",
+      "parentId": "allergology-exposition-campaign",
       "name": "Patient accesses"
     }
   }
@@ -267,7 +262,7 @@ You can then add events to the different streams at once by doing an [events.cre
     "method": "events.create",
     "params": {
       "time": 1385046854.282,
-      "streamIds": ["campaign-123-description"],
+      "streamIds": ["campaign-description"],
       "type": "campaign/auth-request",
       "content": {
         "requestingAppId": "", //...
