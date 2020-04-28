@@ -229,7 +229,6 @@ You can do an [events.create](/reference/#create-event) call to store the creden
 }
 ```
 
-
 For this stream structure, you can create the streams one by one as explained [here](/guides/manipulate-streams) or all in one by doing a "batch call" : 
 
 ```json
@@ -259,36 +258,3 @@ For this stream structure, you can create the streams one by one as explained [h
   }
 ]
 ```
-You can then add events to the different streams at once by doing an [events.create](/reference/#create-event) call, and store the campaign data in one stream, and the username and token of the subject in another stream:
-
-```json
-[
-  {
-    "method": "events.create",
-    "params": {
-      "time": 1385046854.282,
-      "streamIds": ["campaign-description"],
-      "type": "campaign/auth-request",
-      "content": {
-        "requestingAppId": "", //...
-        "requestedPermissions": {}, //...
-        "clientData": "", //
-      }
-    }
-  },
-  {
-    "method": "events.create",
-    "params": {
-      "time": 1385046854.283,
-      "streamIds": ["patient-accesses"],
-      "type": "access/pryv",
-      "content": {
-          "username": "subject01",
-          "token": "ck0qmnwo40007a8ivbxn12zt7",
-        }
-      }
-    }
-]
-```
-
-If the stream already exists, the error `item-already-exists` will be displayed (See [streams.create](/reference/#create-stream) specific errors for more information).
