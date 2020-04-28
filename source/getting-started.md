@@ -104,7 +104,7 @@ The Pryv.io data model is composed of two entities: **events** and **streams**.
 All the data that you collect and aggregate should follow an organisation in streams and events. 
 Inside each stream can be found timestamped events : 
 
-![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
+![Pryv.io Data Model](/assets/images/Data_modelling.svg)
 
 ### Streams
 
@@ -159,7 +159,7 @@ Events either have a type from the list of [**standard event types**](/event-typ
 
 Our athlete will therefore be adding events of different types, each related to specific streams:
 
-![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
+![Pryv.io Data Model](/assets/images/Data_modelling.svg)
 
 Here's an example of an event, corresponding to the heart rate collected by the Pulse Oximeter App as described in the streams structure above :
 
