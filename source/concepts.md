@@ -7,7 +7,7 @@ withTOC: true
 
 ## Basics
 
-Pryv supports any type of timestamped data, modeling individual pieces as **events** (things that happen) and contextualizing them into **streams** (the context in which the events happen).
+Pryv supports any type of timestamped data, modeling individual pieces as **events** (things that happen) and contextualizing them into **streams** and **tags** (the context in which the events happen).
 
 Storage can be decentralized: you access each user account on the specific server hosting its data (e.g. `https://{username}.{domain}/`). There can be as many servers as there are accounts.
 
