@@ -85,6 +85,8 @@ You will then need to provide your web page's URL in the [Auth request](/referen
 
 ### GH pages
 
+Make sure to implement the [following change](https://github.com/pryv/app-web-auth3/blob/master/README.md#fork-repository-for-github-pages) on your fork.
+
 If you are hosting it on GitHub pages, you will need to adapt the platform variables as following:
 
 ```yaml
