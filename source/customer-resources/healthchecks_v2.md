@@ -1,5 +1,5 @@
 ---
-id: healthchecks
+id: healthchecks_v2
 title: 'Pryv.io Healthchecks'
 template: default.jade
 customer: true
