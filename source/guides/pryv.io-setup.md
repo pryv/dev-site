@@ -40,7 +40,7 @@ Now that your machines are ordered, you need to register your own domain name.
 You can either:  
 
 - obtain one yourself through a domain name registrar of your choice;
-- or contact us directly to obtain a domain name with Pryv.io, e.g. ***your-platform-name*.pryv.io**
+- or contact us directly to obtain a pryv.io subdomain, e.g. ***your-platform-name*.pryv.io**
 
 ## Obtain the license key, credentials and configuration files
 
