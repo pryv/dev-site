@@ -12,7 +12,7 @@ New Features:
 - `authUrl` replaces `url` in **Auth request** in-progress response
 - `pryvApiEndpoint` replaces `username` and `token` in **Auth request** accepted response
 
-Deprecated ones:
+Deprecated:
 
 - `event.streamId`: replaced by `event.streamIds`
 - `event.tags`: their functionality will soon be totally replaced by streamIds
@@ -42,6 +42,13 @@ Changes:
 
  - Enrich [access-info](/reference/#get-current-access-info) result with exhaustive access properties.
  - Improve the update account API call, in particular when it applies a change of email address. It now correctly checks if the email address is not already in use before updating the account and throws consistent errors.
+
+Deprecated:
+
+- Timetracking functionalities
+  - singleActivity streams
+  - events.start
+  - events.stop
 
 ## V1.3
 
