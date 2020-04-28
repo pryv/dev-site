@@ -39,11 +39,11 @@ In this space you will find links and reference documents that will help you mak
   This document describes how to deploy a Pryv.io platform as well as essential information to help you decide on your infrastructure and sizing needs.
   You will also find information about how to operate your Pryv.io platform.
 
-- Installation validation: [PDF](/assets/docs/20190131-pryv.io-verification-v3.pdf)
+- Installation validation: [HTML](/customer-resources/platform-validation)
 
   This document describes some steps to validate that a Pryv.io platform is up and running after deployment.
 
-- System monitoring: [PDF](/assets/docs/20190201-API-healthchecks-v4.pdf)
+- System monitoring: [HTML](/customer-resources/healthchecks)
 
   This document describes some steps to perform regular healthcheck on a running Pryv.io platform.
 
