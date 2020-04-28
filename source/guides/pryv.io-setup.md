@@ -6,7 +6,7 @@ customer: true
 withTOC: true
 ---
 
-In this guide we address IT operators that wish to initialize their Pryv.io platform.
+In this guide we address IT operators that wish to install their Pryv.io platform.
 It walks you through the different steps that have to be performed in order to set up your platform.
 
 ## Table of contents
@@ -40,9 +40,9 @@ Now that your machines are ordered, you need to register your own domain name.
 You can either:  
 
 - obtain one yourself through a domain name registrar of your choice;
-- or contact us directly to obtain a domain name with pryv.io, e.g. ***yourdomainname*.pryv.io**
+- or contact us directly to obtain a domain name with pryv.io, e.g. ***your-platform-name*.pryv.io**
 
-## Obtain the license key, credentials and config files
+## Obtain the license key, credentials and configuration files
 
 In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files.
 
@@ -52,21 +52,21 @@ Along with the configuration files, you will find an Installation guide describi
 
 ## Obtain an SSL certificate
 
-You will need to obtain an SSL certificate to enable SSL encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one using LetsEncrypt, for which we can provide you a quick guide.
+You will need to obtain an SSL certificate to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one using LetsEncrypt, for which we can provide you a quick guide.
 
 We have automatic SSL certificate renewal on our roadmap, so let us know if you are interested.
 
 ## Validate your platform installation
 
-Now that your Pryv.io platform is configured and running, you can run the validation procedure from the [Pryv.io platform validation guide](https://api.pryv.com/customer-resources/platform-validation).
+Now that your Pryv.io platform is configured and running, you can run the validation procedure from the [Pryv.io platform validation guide](/customer-resources/platform-validation).
 
 It will walk you through the validation steps of your platform and contains a troubleshooting part in case of issue.
 
 ## Set up the platform health monitoring
 
-You can monitor its status by performing regular healthcheck API calls to the Pryv.io API.
+You can monitor its status by setting up regular healthcheck API calls to the Pryv.io API.
 
-The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks guide](https://api.pryv.com/customer-resources/healthchecks).
+The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks guide](/customer-resources/healthchecks).
 
 ## Customize authorization, registration and reset password apps
 
@@ -74,26 +74,59 @@ In order to perform the [authorization procedure](/reference/#authorizing-your-a
 
 In order to customize your own, we suggest that you fork this repository and host the web app on your environment. The easiest way to begin is to fork it on GitHub and host it using GitHub-pages.
 
-To use your own page, you will also need to update the following platform variables:
+To use your own page, you will need to update the following platform variables:
+
+- TRUSTED_AUTH_URLS
+- TRUSTED_APPS
+
+You will then need to provide your web page's URL in the [Auth request](/reference/#auth-request) `authUrl` parameter, or if you want to make it default, change the `DEFAULT_AUTH_URL` in the platform variables.
+
+**We urge you to fork this web application even if you don't wish to customize it as it follows the versioning of the Pryv Lab platform and may incur breaking changes during updates.**
+
+### GH pages
+
+If you are hosting it on GitHub pages, you will need to adapt the platform variables as following:
 
 ```yaml
-  TRUSTED_APPS: '*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://*.rec.la*'
-  DEFAULT_AUTH_URL: https://sw.DOMAIN/access/access.html
+  TRUSTED_APPS: "*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://YOUR-GITHUB-ACCOUNT.github.io*"
+  TRUSTED_AUTH_URLS:
+    - "https://sw.DOMAIN/access/access.html"
+    - "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
 ```
 
-**TODO**: add way in config to serve it on sw.DOMAIN and manage self-hosted one and fork (on gh-pages and other).
+If you wish to make it default, you must additionally set as following:
 
-We urge you to fork this web application even if you don't wish to customize it as it follows the versioning of the Pryv Lab platform and might incur breaking changes during updates.
+```yaml
+  DEFAULT_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
+```
+
+### Your own server
+
+If you are hosting it on your own server, you will need to adapt the platform variables as following:
+
+```yaml
+  TRUSTED_APPS: "*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://YOUR-SERVER-DOMAIN*"
+  TRUSTED_AUTH_URLS:
+    - "https://sw.DOMAIN/access/access.html"
+    - "https://YOUR-SERVER-URL/access/access.html"
+```
+
+If you wish to make it default, you must additionally set as following:
+
+```yaml
+  DEFAULT_AUTH_URL: "https://YOUR-SERVER-URL/access/access.html"
+```
 
 ## Set up email sending
 
 Pryv.io allows to send emails in two situations:
-- for account creation,
-- for password reset requests.
 
-You might want to install and configure the sending of emails in these situations. You can do so by either using SMTP transport, or alternatively Sendmail transport.
+- Account creation,
+- Password reset requests.
 
-In both cases, you will need to replace a few settings in the platform parameters file. The variables to be changed are mentioned in the section "Email configuration" of the platform parameters file.
+You might want to install and configure the sending of emails in these situations. You can do so by either using your SMTP server, or Sendmail.
+
+In both cases, you will need to customize settings in the "Email configuration" section of the platform parameters file.
 
 You can also customize the email templates in the configuration files.
 
