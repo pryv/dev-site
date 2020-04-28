@@ -9,15 +9,10 @@ withTOC: true
 |         |                       |
 | ------- | --------------------- |
 | Author  | Ilia Kebets 		      |
-| Reviewer | Guillaume Bassand (v1-3) |
-| Date    | 01.02.2019            |
+| Reviewer | Guillaume Bassand (v1-3), Anastasia Bouzdine (v4) |
+| Date    | 28.04.2020            |
 | Version | 4                    |
 
-Pryv.io Healthchecks
-{: .doc_title} 
-
-Procedure & API endpoints  
-{: .doc_subtitle}  
 
 # Summary
 
@@ -25,16 +20,18 @@ This procedure describes how to perform regular healthcheck API calls to the Pry
 
 Please note that the current procedure does not cover how to perform healthchecks per core machine, only per hosting. If you require core-level status, get in touch with your Pryv tech contact.
 
-## Variables
+# Variables
 
 As this guide is platform agnostic, we will use variables `${VARIABLE_NAME}` which must be replaced in the commands.
 
 In particular, the following variables should be replaced :
-- the domain name, which will be called `${DOMAIN}`,
-- the core machines hostings, identified with a `${HOSTING_NAME}`. In a Pryv.io platform, core machines are organized into clusters that we call hostings. Each of these has an identifier `${HOSTING_NAME}`, which can be found at the following URL: https://reg.${DOMAIN}/hostings. The `${HOSTING_NAME}` are the keys of the object `regions:REGION_NAME:zones:ZONE_NAME:hostings`.
-- the access token `${ACCESS_TOKEN}`, associated with a dedicated user account and that will be used in the API calls for healthchecks. The preparation chapter describes how to obtain it.
+- the **domain name**, which will be called `${DOMAIN}`,
+- the **core machines hostings**, identified with a `${HOSTING_NAME}`. In a Pryv.io platform, core machines are organized into clusters that we call hostings. Each of these has an identifier `${HOSTING_NAME}`, which can be found at the following URL: https://reg.${DOMAIN}/hostings. The `${HOSTING_NAME}` are the keys of the object `regions:REGION_NAME:zones:ZONE_NAME:hostings`,
+- the **access token** `${ACCESS_TOKEN}`, associated with a dedicated user account and that will be used in the API calls for healthchecks. The preparation chapter describes how to obtain it.
 
 # Tools
+
+Depending on your skill set, this can be done using CLI tools or a web interface.
 
 ## DNS checks:
 
@@ -46,12 +43,12 @@ In particular, the following variables should be replaced :
 
 # Preparation
 
-As the current Pryv.io version does not have dedicated API endpoints for a thorough healthcheck, we create a dedicated user account in order to do so.  
+As the current Pryv.io version does not have dedicated API endpoints for a thorough healthcheck, we create a dedicated user account in order to do so. 
 This preparation phase describes how to create an account and obtain a non-expirable token. This must be done once and the username/token pairs stored for automatic API healthcheck calls.
 
 ## Create account
 
-We start by creating an account. We propose to use the following credentials, but these can be modified at the user's discretion:
+We begin by creating an account. We propose to use the following credentials, but these can be modified at the user's discretion:
 
 - **username** : healthmetrics
 - **password** : healthmetrics
@@ -75,11 +72,11 @@ If you are using a default configuration, you can use the default web app:
     - **email** : healthmetrics01@${DOMAIN}
     - **username** : healthmetrics
     - **password** : healthmetrics
-    - **password conrmation** : healthmetrics
+    - **password confirmation** : healthmetrics
 
 ## Create token
 
-In order to obtain a non-expirable access token, we must do 2 calls: first sign in with the user password to obtain a temporary personal token then use it to obtain a non-expirable one.
+In order to obtain a non-expirable access token, we must do 2 calls. First sign in with the user password to obtain a temporary personal token, and then use it to obtain a non-expirable one.
 
 **- Sign in:**
 
@@ -99,7 +96,7 @@ The response body should contain a valid personal token under the field `token`:
 "meta":
 {
 "apiVersion":"1.3.51",
-"serverTime":1548952964.
+"serverTime":1548952964.011
 },
 "token":"${PERSONAL_TOKEN}",
 "preferredLanguage":"en"
@@ -120,7 +117,7 @@ The response body should contain a valid access token under the `access:token` f
 "meta":
 {
 "apiVersion":"1.3.51",
-"serverTime":1548953274.
+"serverTime":1548953274.902
 },
 "access":
 {
@@ -155,7 +152,7 @@ If you are using a default configuration, you can use the default web app:
 
 ## Register
 
-The call to perform: `HTTP GET https://reg.${DOMAIN}/healthmetrics01/check_username`
+The call to perform: **HTTP GET** `https://reg.${DOMAIN}/healthmetrics01/check_username`
 
 Run `curl https://reg.${DOMAIN}/healthmetrics01/check_username`
 
@@ -165,16 +162,13 @@ The expected result: `Status: 200`
 
 Run `Dig A healthmetrics01.${DOMAIN}`
 
-The expected result:
-```
-An answer.
-```
+The expected result: An answer.
 
 ## Core
 
 Authentication header: `${ACCESS_TOKEN}`
 
-The call to perform: `HTTP GET https://healthmetrics01.${DOMAIN}/events?limit=1`
+The call to perform: **HTTP GET** `https://healthmetrics01.${DOMAIN}/events?limit=1`
 
 Run `curl -i -H 'Authorization: ${ACCESS_TOKEN}'`
 `"https://healthmetrics01.${DOMAIN}/events?limit=1" `

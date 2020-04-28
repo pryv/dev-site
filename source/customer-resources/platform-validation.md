@@ -9,7 +9,7 @@ withTOC: true
 |         |                       |
 | ------- | --------------------- |
 | Author  | Ilia Kebets 		      |
-| Reviewer | Guillaume Bassand (v1,2) |
+| Reviewer | Guillaume Bassand (v1,2), Anastasia Bouzdine (v3) |
 | Date    | 24.04.2020            |
 | Version | 4                     |
 
@@ -24,10 +24,10 @@ Troubleshooting steps can be found at the end of this document in case of valida
 As this guide is platform agnostic, we will use variables `${VARIABLE_NAME}` which must be replaced in the commands.
 
 In particular, the following variables should be replaced :
-- the domain name, which will be called `${DOMAIN}`,
-- the configuration folder `${PRYV_CONFIG_FOLDER}`, corresponding to the folder on the machine containing the Pryv.io configuration files,
-- the container name. Pryv.io components are containerized with Docker, so when doing certain actions on them, we address the containers by their name `${APP_CONTAINER_NAME}`. To find the name of a container, use `docker ps -a` to display all containers ;
-- the core machine hostname `${CORE_MACHINE_HOSTNAME}`, corresponding to the machine running the Pryv.io core service. On default configurations, we define the first one as `co1.${DOMAIN}`.
+- the **domain name**, which will be called `${DOMAIN}`,
+- the **configuration folder** `${PRYV_CONFIG_FOLDER}`, corresponding to the folder on the machine containing the Pryv.io configuration files,
+- the **container name**. Pryv.io components are containerized with Docker, so when doing certain actions on them, we address the containers by their name `${APP_CONTAINER_NAME}`. To find the name of a container, use `docker ps -a` to display all containers,
+- the **core machine hostname** `${CORE_MACHINE_HOSTNAME}`, corresponding to the machine running the Pryv.io core service. On default configurations, we define the first one as `co1.${DOMAIN}`.
 
 # Tools
 
