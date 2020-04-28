@@ -10,15 +10,16 @@ withTOC: true
 | ------- | --------------------- |
 | Author  | Ilia Kebets 		      |
 | Reviewer | Guillaume Bassand (v1-3) |
-| Date    | 24.04.2020            |
-| Version | 5                     |
+| Date    | 01.02.2019            |
+| Version | 4                    |
 
+Pryv.io Healthchecks
+{: .doc_title} 
 
-# Pryv.io Healthchecks
+Procedure & API endpoints  
+{: .doc_subtitle}  
 
-##### Procedure & API endpoints
-
-## Summary
+# Summary
 
 This procedure describes how to perform regular healthcheck API calls to the Pryv.io API in order to remotely monitor its status. You can directly jump to the [Healthchecks section](#healthchecks) to proceed to the healthchecks.
 
@@ -33,21 +34,22 @@ In particular, the following variables should be replaced :
 - the core machines hostings, identified with a `${HOSTING_NAME}`. In a Pryv.io platform, core machines are organized into clusters that we call hostings. Each of these has an identifier `${HOSTING_NAME}`, which can be found at the following URL: https://reg.${DOMAIN}/hostings. The `${HOSTING_NAME}` are the keys of the object `regions:REGION_NAME:zones:ZONE_NAME:hostings`.
 - the access token `${ACCESS_TOKEN}`, associated with a dedicated user account and that will be used in the API calls for healthchecks. The preparation chapter describes how to obtain it.
 
-## Tools
+# Tools
 
-### DNS checks:
+## DNS checks:
 
 - dig version 9.12.3+
 
-### HTTP calls
+## HTTP calls
 
 - cURL v7.54.0+
 
-## Preparation
+# Preparation
 
-As the current Pryv.io version does not have dedicated API endpoints for a thorough healthcheck, we will create a dedicated user account in order to do so. This preparation phase describes how to create an account and obtain a non-expirable token. This must be done once and the **username/token** pairs stored for automatic API healthcheck calls.
+As the current Pryv.io version does not have dedicated API endpoints for a thorough healthcheck, we create a dedicated user account in order to do so.  
+This preparation phase describes how to create an account and obtain a non-expirable token. This must be done once and the username/token pairs stored for automatic API healthcheck calls.
 
-### Create account
+## Create account
 
 We start by creating an account. We propose to use the following credentials, but these can be modified at the user's discretion:
 
@@ -75,10 +77,9 @@ If you are using a default configuration, you can use the default web app:
     - **password** : healthmetrics
     - **password conrmation** : healthmetrics
 
+## Create token
 
-### Create token
-
-In order to obtain a non-expirable access token, we must do 2 calls. First sign in with the user password to obtain a temporary personal token, and then use it to obtain a non-expirable one.
+In order to obtain a non-expirable access token, we must do 2 calls: first sign in with the user password to obtain a temporary personal token then use it to obtain a non-expirable one.
 
 **- Sign in:**
 
@@ -150,9 +151,9 @@ If you are using a default configuration, you can use the default web app:
 7. Click on `Accept` button
 8. Copy the Access token and save it for this machine's healthchecks. We will refer to it as `${ACCESS_TOKEN}`.
 
-## Healthchecks
+# Healthchecks
 
-### Register
+## Register
 
 The call to perform: `HTTP GET https://reg.${DOMAIN}/healthmetrics01/check_username`
 
@@ -160,7 +161,7 @@ Run `curl https://reg.${DOMAIN}/healthmetrics01/check_username`
 
 The expected result: `Status: 200`
 
-### DNS
+## DNS
 
 Run `Dig A healthmetrics01.${DOMAIN}`
 
@@ -169,7 +170,7 @@ The expected result:
 An answer.
 ```
 
-### Core
+## Core
 
 Authentication header: `${ACCESS_TOKEN}`
 
