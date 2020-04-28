@@ -223,7 +223,7 @@ You can do an [events.create](/reference/#create-event) call to store the creden
     "id": "jk8ujvwfo000vt4vprfriwd5a",
     "time": 1385046854.285,
     "streamIds": ["patient-accesses"],
-    "type": "access/pryvApiEndpoint",
+    "type": "access/pryv-api-endpoint",
     "content": "https://ck0qmnwo40007a8ivbxn12zt7@subject01.pryv.me/"
   }
 }
