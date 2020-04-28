@@ -40,7 +40,7 @@ Now that your machines are ordered, you need to register your own domain name.
 You can either:  
 
 - obtain one yourself through a domain name registrar of your choice;
-- or contact us directly to obtain a domain name with pryv.io, e.g. ***your-platform-name*.pryv.io**
+- or contact us directly to obtain a domain name with Pryv.io, e.g. ***your-platform-name*.pryv.io**
 
 ## Obtain the license key, credentials and configuration files
 
@@ -74,7 +74,7 @@ In order to perform the [authorization procedure](/reference/#authorizing-your-a
 
 In order to customize your own, we suggest that you fork this repository and host the web app on your environment. The easiest way to begin is to fork it on GitHub and host it using GitHub-pages.
 
-To use your own page, you will need to update the following platform variables:
+To use your own page, you will have to update the following platform variables:
 
 - TRUSTED_AUTH_URLS
 - TRUSTED_APPS
