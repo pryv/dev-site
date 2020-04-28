@@ -150,14 +150,14 @@ In our case :
 
 Let's imagine now a different use case. You are conducting an Allergology Exposition research, in which you analyze the exposition of subjects to allergens by tracking their geolocation through your app.
 
-You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io in order to be able to retrieve data from their accounts.
+You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io.
 You will therefore need a "campaign" stream structure which allows you to store the accesses for your app.
 
 ![Example Campaign Structure](/assets/images/Campaign.svg)
 
 The "campaign" data structure will contain the following streams:
 
-- The stream **Campaign description**, in which you will store information about the authorization you are requesting. 
+The stream **Campaign description**, in which you will store information about the authorization you are requesting. 
 You can do a [streams.create](https://api.pryv.com/reference/#create-stream) call with the following data:
 
 ```json
@@ -168,7 +168,11 @@ You can do a [streams.create](https://api.pryv.com/reference/#create-stream) cal
 }
 ```
 
-It will include the `requestingAppId` (your app's identifier that wishes to access data from the users), the `requestedPermissions` (containing the `streamId` your app wants to access and the level of permission) and the `clientData` (e.g. the consent information of your user).
+Its events will include the fields necessary to perform an [Auth request](https://api.pryv.com/reference/#auth-request):
+
+- `requestingAppId`, your app's identifier that wishes to access data from the users  
+- `requestedPermissions`, containing the streams your app wants to access and their associated level of permission  
+- `clientData`, containing the consent information of your user
 
 You can do an [events.create](https://api.pryv.com/reference/#create-event) call containing this information:
 
@@ -180,22 +184,26 @@ You can do an [events.create](https://api.pryv.com/reference/#create-event) call
     "streamIds": ["campaign-description]",
     "type": "campaign/auth-request",
     "content": {
-        "requestingAppId": "test-app-id",
-        "requestedPermissions": [
-        {
-            "streamIds": ["geolocation"],
-            "level": "read",
-            "defaultName": "Geolocation"
-        }],
-        "clientData": "", //...
-    } 
+      "requestingAppId": "test-app-id",
+      "requestedPermissions": [
+      {
+          "streamId": "geolocation",
+          "level": "read",
+          "defaultName": "Geolocation"
+      }],
+      "clientData": {
+        "app-web-auth:description": {
+          "type": "note/txt",
+          "content": "This is a consent message."
+        }
+      }
+    }
   }
 }
 ```
-More information about the content of this event can be found in the [Auth request section](https://api.pryv.com/reference/#auth-request) of the API reference.
 
-- The stream **Patient accesses** that will store the credentials (`username` and `token`) for every subject that granted access to their data. 
-You can do a [streams.create](https://api.pryv.com/reference/#create-stream) call with the following data:
+The stream **Patient accesses** that will store the credentials in `pryvApiEndpoint` format (see [App guidelines](/guides/app-guidelines/)) for every subject that granted access to their data.
+You can do a [streams.create](/reference/#create-stream) call with the following data:
 
 ```json
 {
@@ -205,9 +213,9 @@ You can do a [streams.create](https://api.pryv.com/reference/#create-stream) cal
 }
 ```
 
-The events of this stream will contain the credentials of every subject that granted access to their data, in particular the `username` and the `token` associated with their Pryv.io account.
+The events of this stream will contain the credentials of every subject that granted access to their data, in particular the `pryvApiEndpoint` associated with their Pryv.io account.
 
-You can do an [events.create](https://api.pryv.com/reference/#create-event) call to store the credentials of "Subject 01" for example:
+You can do an [events.create](/reference/#create-event) call to store the credentials of "Subject 01" for example:
 
 ```json
 {
@@ -215,15 +223,11 @@ You can do an [events.create](https://api.pryv.com/reference/#create-event) call
     "id": "jk8ujvwfo000vt4vprfriwd5a",
     "time": 1385046854.285,
     "streamIds": ["patient-accesses"],
-    "type": "access/pryv",
-    "content": {
-      "username": "subject01",
-      "token": "ck0qmnwo40007a8ivbxn12zt7",
-      } 
+    "type": "access/pryvApiEndpoint",
+    "content": "https://ck0qmnwo40007a8ivbxn12zt7@subject01.pryv.me/"
   }
 }
 ```
-
 
 For this stream structure, you can create the streams one by one as explained [here](/guides/manipulate-streams) or all in one by doing a "batch call" : 
 
@@ -254,36 +258,3 @@ For this stream structure, you can create the streams one by one as explained [h
   }
 ]
 ```
-You can then add events to the different streams at once by doing an [events.create](/reference/#create-event) call, and store the campaign data in one stream, and the username and token of the subject in another stream:
-
-```json
-[
-  {
-    "method": "events.create",
-    "params": {
-      "time": 1385046854.282,
-      "streamIds": ["campaign-description"],
-      "type": "campaign/auth-request",
-      "content": {
-        "requestingAppId": "", //...
-        "requestedPermissions": {}, //...
-        "clientData": "", //
-      }
-    }
-  },
-  {
-    "method": "events.create",
-    "params": {
-      "time": 1385046854.283,
-      "streamIds": ["patient-accesses"],
-      "type": "access/pryv",
-      "content": {
-          "username": "subject01",
-          "token": "ck0qmnwo40007a8ivbxn12zt7",
-        }
-      }
-    }
-]
-```
-
-If the stream already exists, the error `item-already-exists` will be displayed (See [streams.create](/reference/#create-stream) specific errors for more information).
