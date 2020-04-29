@@ -799,6 +799,10 @@ module.exports = exports =
                      The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the service information.
                      """
       ]
+      examples: [
+        title: "Metadata in API Response"
+        content: examples.metadata.apiResponse
+      ]
     ]
 
 

@@ -10,3 +10,4 @@ module.exports =
   webhooks: require('./webhooks.coffee')
   audit: require('./audit.coffee')
   serviceInfo: require('./serviceInfo.coffee')
+  metadata: require('./metadata.coffee')
