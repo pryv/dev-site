@@ -39,9 +39,10 @@ Now that your machines are ordered, you need to register your own domain name.
 
 You can either:  
 
-- obtain one yourself through a domain name registrar of your choice;
+- obtain one yourself through a domain name registrar of your choice, make sure that you can configure your domain's name servers.
 - or contact us directly to obtain a pryv.io subdomain, e.g. ***your-platform-name*.pryv.io**
 
+You will need to obtain an additional one for your staging development, and pre-production if you have one.
 ## Obtain the license key, credentials and configuration files
 
 In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files.
