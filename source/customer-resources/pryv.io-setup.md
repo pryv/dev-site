@@ -11,17 +11,17 @@ It walks you through the different steps that have to be performed in order to s
 
 ## Table of contents
 
-- [Set up the machines](#set-up-the-machines)
-- [Obtain a domain name](#obtain-a-domain-name)
-- [Obtain the license key, credentials and config files](#obtain-the-license-key-credentials-and-config-files)
-- [Set the platform parameters](#set-the-platform-parameters)
-- [Obtain an SSL certificate](#obtain-an-ssl-certificate)
-- [Validate your platform installation](#validate-your-platform-installation)
-- [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
-- [Customize authorization, registration and reset password apps](#customize-authorization-registration-and-reset-password-apps)
-- [Set up email sending](#set-up-email-sending)
-- [Define your data model](#define-your-data-model)
-- [Other documents](#other-documents)
+- 1 [Set up the machines](#set-up-the-machines)
+- 2 [Obtain a domain name](#obtain-a-domain-name)
+- 3 [Obtain the license key, credentials and config files](#obtain-the-license-key-credentials-and-config-files)
+- 4 [Set the platform parameters](#set-the-platform-parameters)
+- 5 [Obtain an SSL certificate](#obtain-an-ssl-certificate)
+- 6 [Validate your platform installation](#validate-your-platform-installation)
+- 7 [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
+- 8 [Customize authorization, registration and reset password apps](#customize-authorization-registration-and-reset-password-apps)
+- 9 [Set up email sending](#set-up-email-sending)
+- 10 [Define your data model](#define-your-data-model)
+- 11 [Other documents](#other-documents)
 
 ## Set up the machines
 
