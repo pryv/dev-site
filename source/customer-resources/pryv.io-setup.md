@@ -43,6 +43,7 @@ You can either:
 - or contact us directly to obtain a pryv.io subdomain, e.g. ***your-platform-name*.pryv.io**
 
 You will need to obtain an additional one for your staging development, and pre-production if you have one.
+
 ## Obtain the license key, credentials and configuration files
 
 In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files.
@@ -53,7 +54,7 @@ Along with the configuration files, you will find an Installation guide describi
 
 ## Obtain an SSL certificate
 
-You will need to obtain an SSL certificate to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one using LetsEncrypt, for which we can provide you a quick guide.
+You will need to obtain a wildcard SSL certificate for *.DOMAIN to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one using LetsEncrypt, for which we can provide you a quick guide.
 
 We have automatic SSL certificate renewal on our roadmap, so let us know if you are interested.
 
