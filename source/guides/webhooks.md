@@ -29,7 +29,8 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
   1. [User identification](#user-identification)
   2. [Endpoint testing](#endpoint-testing)
   3. [Webhook authentication](#webhook-authentication)
-7. [Conclusion](#conclusion)
+7. [Events synchronization](#events-synchronization)
+8. [Conclusion](#conclusion)
 
 ## Introduction
 
@@ -275,6 +276,13 @@ This secret can be provided in the same way as the username, illustrated above. 
   "url": "https://my-notifications.com/stefan.pryv.me/my-secret"
 }
 ```
+
+## Events synchronization
+
+In order to make sure that the events data you fetch following a webhook notification contains only the new changes, it is recommended to keep track of the timestamps of your requests.  Each Pryv.io API response contains [Metadata](/reference/#in-method-results) whose `serverTime` you should save at each request.  
+
+Following a notification, you can [retrieve the events](/reference/#get-events) using the `modifiedSince` parameter set to the `serverTime` of your last request.
+
 ## Conclusion
 
 If you wish to set up a Pryv.io webhook or get more information on the data structure, please refer to [its data structure reference](/reference/#webhook), while the methods relative to webhooks can be found in the [API methods section](/reference/#webhooks).
