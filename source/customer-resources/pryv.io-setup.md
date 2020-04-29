@@ -21,7 +21,8 @@ It walks you through the different steps that have to be performed in order to s
 - 8 [Customize authorization, registration and reset password apps](#customize-authorization-registration-and-reset-password-apps)
 - 9 [Set up email sending](#set-up-email-sending)
 - 10 [Define your data model](#define-your-data-model)
-- 11 [Other documents](#other-documents)
+- 11 [Customize event types validation](#customize-event-types-validation)
+- 12 [Other documents](#other-documents)
 
 ## Set up the machines
 
@@ -145,6 +146,17 @@ To do so, you need to design the data model your app(s) will use using Pryv's da
 You can have a look at our [Data modelling guide](https://api.pryv.com/guides/data-modelling/) which describes the Pryv.io data structure and walks you through different use cases for your data model.
 
 We can also help you with the design and validation of your data model.
+
+## Customize event types validation
+
+Your Pryv.io platform performs content validation for the types definnition that you provide it. Events with undefined types are allowed but their content is not validated.  
+By default, the one defined in the [Event Types](/event-types/) page is used.
+
+You can host your definitions page on a public URL which will be loaded at the platform boot. You can define this URL in the platform parameters as following:
+
+```yaml
+EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
+```
 
 ## Other documents
 
