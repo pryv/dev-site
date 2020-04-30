@@ -41,11 +41,11 @@ In this space you will find links and reference documents that will help you mak
 
 - Installation validation: [HTML](/customer-resources/platform-validation/)
 
-  This document describes some steps to validate that a Pryv.io platform is up and running after deployment.
+  This document describes the steps to validate that a Pryv.io platform is up and running after deployment.
 
 - System monitoring: [HTML](/customer-resources/healthchecks/)
 
-  This document describes some steps to perform regular healthcheck on a running Pryv.io platform.
+  This document describes the steps to perform regular healthchecks on a running Pryv.io platform.
 
 - DNS configuration: [PDF](/assets/docs/20190501-dns-config-v3.pdf)
 
