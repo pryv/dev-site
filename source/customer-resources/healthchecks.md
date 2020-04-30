@@ -56,13 +56,13 @@ We begin by creating an account. We propose to use the following credentials, bu
 
 ```json
 curl -i -X POST -H 'Content-Type: application/json' \
--d '{"hosting":"${HOSTING_NAME}",
-"username": "healthmetrics01",
-"password":"healthmetrics01",
-"email": "healthmetrics01@${DOMAIN}",
-"language": "en",
-"appid":"pryv-metrics"}' \
-"https://reg.${DOMAIN}/user/"
+    -d '{"hosting":"${HOSTING_NAME}",
+    "username": "healthmetrics01",
+    "password":"healthmetrics01",
+    "email": "healthmetrics01@${DOMAIN}",
+    "language": "en",
+    "appid":"pryv-metrics"}' \
+    "https://reg.${DOMAIN}/user/"
 ```
 
 If you are using a default configuration, you can use the default web app:
@@ -82,58 +82,61 @@ In order to obtain a non-expirable access token, we must do 2 calls. First sign 
 
 ```json
 curl -i -H "Content-Type: application/json" \
--H "Origin: https://sw.${DOMAIN}" \
--X POST \
--d '{"username":"healthmetrics01",
-"password":"healthmetrics01",
-"appId":"pryv-metrics"}' \
-"https://healthmetrics01.${DOMAIN}/auth/login"
+    -H "Origin: https://sw.${DOMAIN}" \
+    -X POST \
+    -d '{"username":"healthmetrics01",
+    "password":"healthmetrics01",
+    "appId":"pryv-metrics"}' \
+    "https://healthmetrics01.${DOMAIN}/auth/login"
 ```
+
 The response body should contain a valid personal token under the field `token`:
 
 ```json
 {
-"meta":
-{
-"apiVersion":"1.3.51",
-"serverTime":1548952964.011
-},
-"token":"${PERSONAL_TOKEN}",
-"preferredLanguage":"en"
+    "token":"${PERSONAL_TOKEN}",
+    "preferredLanguage":"en",
+    "meta": {
+        "apiVersion":"1.3.51",
+        "serverTime":1548952964.011
+    }
 }
 ```
+
 **- Create token**
 
 ```json
 curl -i -X POST -H 'Content-Type: application/json' \
--H 'Authorization: ${PERSONAL_TOKEN}' \
--d '{"name":"metricsAccess",
-"permissions":[{"streamId":"*","level":"manage"}]}' \
-"https://healthmetrics01.${DOMAIN}/accesses"
+    -H 'Authorization: ${PERSONAL_TOKEN}' \
+    -d '{"name":"metricsAccess",
+    "permissions":[{"streamId":"*","level":"manage"}]}' \
+    "https://healthmetrics01.${DOMAIN}/accesses"
 ```
+
 The response body should contain a valid access token under the `access:token` field:
 
 ```json
-"meta":
 {
-"apiVersion":"1.3.51",
-"serverTime":1548953274.902
-},
-"access":
-{
-"name":"metricsAccess",
-"permissions":
-[
-{"streamId":"*","level":"manage"}
-],
-"type":"shared",
-"token":"${ACCESS_TOKEN}",
-"created":1548953274.877,
-"createdBy":"cjrkulo5s00040t0cb5xwlupi",
-"modified":1548953274.877,
-"modifiedBy":"cjrkulo5s00040t0cb5xwlupi",
-"id":"cjrkusc1p00060t0czs7ect45"
-}
+    "access": {
+        "name":"metricsAccess",
+        "permissions": [
+            {
+                "streamId":"*",
+                "level":"manage"
+            }
+        ],
+        "type":"shared",
+        "token":"${ACCESS_TOKEN}",
+        "created":1548953274.877,
+        "createdBy":"cjrkulo5s00040t0cb5xwlupi",
+        "modified":1548953274.877,
+        "modifiedBy":"cjrkulo5s00040t0cb5xwlupi",
+        "id":"cjrkusc1p00060t0czs7ect45",
+    },
+    "meta": {
+        "apiVersion":"1.3.51",
+        "serverTime":1548953274.902
+    }
 }
 ```
 
