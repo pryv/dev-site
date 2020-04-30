@@ -153,6 +153,12 @@ If you are using a default configuration, you can use the default web app:
 
 # Healthchecks
 
+## DNS
+
+Run `Dig A healthmetrics01.${DOMAIN}`
+
+The expected result: An answer.
+
 ## Register
 
 The call to perform: **HTTP GET** `https://reg.${DOMAIN}/healthmetrics01/check_username`
@@ -160,12 +166,6 @@ The call to perform: **HTTP GET** `https://reg.${DOMAIN}/healthmetrics01/check_u
 Run `curl https://reg.${DOMAIN}/healthmetrics01/check_username`
 
 The expected result: `Status: 200`
-
-## DNS
-
-Run `Dig A healthmetrics01.${DOMAIN}`
-
-The expected result: An answer.
 
 ## Core
 
