@@ -73,7 +73,7 @@ reg.${DOMAIN}.  SOME_TTL_NUMBER  IN  A  ${REGISTER_MACHINE_IP_ADDRESS}
 
 If there is no `ANSWER` section, this means that the DNS is not running or is unreachable. See [DNS section](#dns).
 
-## API
+## Core
 
 Run `curl -i https://${CORE_MACHINE_HOSTNAME}/status` or open [https://${CORE_MACHINE_HOSTNAME}/status](https://${CORE_MACHINE_HOSTNAME}/status)
 
