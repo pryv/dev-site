@@ -110,6 +110,8 @@ Otherwise, send the last 100 lines of the DNS log file to your Pryv tech contact
 
 ### Port is unreachable from the Internet
 
+If there are no errors in the logs, the machine might simply not be reachable from the Internet on port UDP/53.
+
 1. SSH to the Register machine
 2. Make a DNS request: `dig @localhost reg.${DOMAIN}`
 
