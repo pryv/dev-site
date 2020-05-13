@@ -108,6 +108,13 @@ Fix issue if possible, otherwise send the last 100 lines of the log file to your
 If the service keeps rebooting with an error message, fix configuration if possible.  
 Otherwise, send the last 100 lines of the DNS log file to your Pryv tech contact. Run `docker logs --tail 100 ${DNS_CONTAINER_NAME} > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
 
+### Port is unreachable from the Internet
+
+1. SSH to the Register machine
+2. Make a DNS request: `dig @localhost reg.${DOMAIN}`
+
+If the request yields an answer, your firewall settings might be set wrong. You must allow INGRESS UDP/53 as defined in the **Deployment design guide** from the [Customer Resources page](https://api.pryv.com/customer-resources/#documents).
+
 ## Core
 
 1. SSH to core machine
