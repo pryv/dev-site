@@ -75,7 +75,9 @@ If there is no `ANSWER` section, this means that the DNS is not running or is un
 
 ## Core
 
-Run `curl -i https://${CORE_MACHINE_HOSTNAME}/status` or open [https://${CORE_MACHINE_HOSTNAME}/status](https://${CORE_MACHINE_HOSTNAME}/status)
+Run `curl -i https://${CORE_MACHINE_HOSTNAME}/status` or open [https://${CORE_MACHINE_HOSTNAME}/status](https://${CORE_MACHINE_HOSTNAME}/status).  
+
+The hostname of the first core should be `co1.${DOMAIN}` by default (`co2.${DOMAIN}` and so on for the other ones in case of cluster deployment).
 
 - HTTP Status 200: OK
 - HTTP Status 502: core service is not running, see [Core section](#core)
