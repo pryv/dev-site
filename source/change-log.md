@@ -23,8 +23,10 @@ Removals:
 
 - Timetracking functionalities have been removed
   - singleActivity streams are now standard streams
-  - events.start
-  - events.stop
+  - `events.start`
+  - `events.stop`
+- `accesses.update` has been removed
+- `accesses.delete <id>` has been extended for self revocation to `shared` and `app` access 
 
 ## V1.4
 
