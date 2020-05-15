@@ -49,7 +49,7 @@ The streams structure and accesses over it would look like the following:
 
 This structure allows you a granular level of control of the accesses to the data. Different permissions can be defined for each stream and substream, therefore enabling you to share only necessary information with third-parties. Available levels of accesses (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](https://api.pryv.com/reference/#access). 
 
-To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events. You can find out more on how to create streams [here](/guides/manipulate-streams).
+To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events. You can find out more on how to create streams [here](https://api.pryv.com/reference/#create-stream).
 
 Alternatively, you can also do a ["batch call"](http://api.pryv.com/reference/#call-batch) to create all the streams using a single API call. 
 
@@ -130,106 +130,105 @@ In our case :
 
 ### Consent aggregation
 
-Now, let's imagine that you want to store the accesses of multiple subjects that gave you their consent.
-You will therefore need a "campaign" stream structure which allows you to store the accesses of these accounts in order to be able to retrieve data from these accounts.
+Let's imagine now a slightly different use case. You are conducting an Allergology Exposition research, in which you analyze the exposition of subjects to allergens by tracking their geolocation through your app.
+
+You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io. You will therefore need a "campaign" stream structure which allows you to store the accesses for your app.
 
 ![Example Campaign Structure](/assets/images/getting-started/campaign.png)
 
-The "campaign" data structure described below will contain the following streams :
+The "campaign" data structure will contain the following streams:
 
-- The stream **"Campaign description"**, where you will store the requested permissions (the `streamId` you want to access e.g. `heartRate`, the level of permission e.g. "read"/"manage"/…), the consent information, the app identifiers. 
+The stream Campaign description, in which you will store information about the authorization you are requesting. You can do a [streams.create](#create-stream) call with the following data:
 
 ```json
 {
-  "streamId": "campaign-123-description",
-  "type": "campaign/sempryv",
+  "id": "campaign-description",
   "name": "Campaign description",
-  "parentId": "campaign-123",
-  "content": {
-    "requestedPermissions": {}, //...
-    "consentText": "", //...
-    "appId": "", //
-    } 
+  "parentId": "allergology-exposition-campaign"
 }
 ```
-- The stream **"Patient accesses"** that will contain the `username` and `token` properties for every subject that granted access to their data.
+Its events will include the fields necessary to perform an [Auth request](#auth-request):
+
+- `requestingAppId`, your app's identifier that wishes to access data from the users
+- `requestedPermissions`, containing the streams your app wants to access and their associated level of permission
+- `clientData`, containing the consent information of your user
+
+You can do an [events.create](#create-event) call containing this information:
+
 ```json
 {
-      "streamId": "campaign-123-description",
-      "type": "access/pryv",
-      "name": "Patient accesses",
-      "parentId": "campaign-123",
-      "content": {
-      "username": "subject01",
-      "token": "ck0qmnwo40007a8ivbxn12zt7",
-      } 
+  "event": {
+    "id": "ck9ckvwfo000vt4pvrudxci9b",
+    "time": 1385046854.282,
+    "streamIds": ["campaign-description]",
+    "type": "campaign/auth-request",
+    "content": {
+      "requestingAppId": "allergen-exposure-app-id",
+      "requestedPermissions": [
+      {
+          "streamId": "geolocation",
+          "level": "read",
+          "defaultName": "Geolocation"
+      }],
+      "clientData": {
+        "app-web-auth:description": {
+          "type": "note/txt",
+          "content": "This is a consent message."
+        }
+      }
+    }
+  }
+}
+```
+The stream `Patient accesses` that will store the credentials in `pryvApiEndpoint` format (see [App guidelines](https://api.pryv.com/guides/app-guidelines/)) for every subject that granted access to their data. You can do a [streams.create](https://api.pryv.com/reference/#create-stream) call with the following data:
+
+```json
+{
+  "id": "patient-accesses",
+  "name": "Patient accesses",
+  "parentId": "allergology-exposition-campaign"
+}
+```
+The events of this stream will contain the credentials of every subject that granted access to their data, in particular the `pryvApiEndpoint` associated with their Pryv.io account.
+
+You can do an [events.create](#create-event) call to store the credentials of "Subject 01" for example:
+```json
+{
+  "event": {
+    "id": "jk8ujvwfo000vt4vprfriwd5a",
+    "time": 1385046854.285,
+    "streamIds": ["patient-accesses"],
+    "type": "access/pryv-api-endpoint",
+    "content": "https://ck0qmnwo40007a8ivbxn12zt7@subject01.pryv.me/"
+  }
 }
 ```
 
-Similarly, you can create the streams one by one as explained [here](/guides/manipulate-streams) or all in one by doing a "batch call" : 
-
+For this stream structure, you can create the streams one by one as explained [here](https://api.pryv.com/reference/#create-stream) or all in one by doing a "batch call" :
 ```json
 [
   {
     "method": "streams.create",
     "params": {
-      "id": "campaign-123",
-      "name": "Campaign name"
+      "id": "allergology-exposition-campaign",
+      "name": "Allergology Exposition Campaign"
     }
   },
     {
     "method": "streams.create",
     "params": {
-      "id": "campaign-123-description",
-      "parentId": "campaign-123",
+      "id": "campaign-description",
+      "parentId": "allergology-exposition-campaign",
       "name": "Campaign description"
     }
   },
   {
     "method": "streams.create",
     "params": {
-      "id": "campaign-123-patient-accesses",
-      "parentId": "campaign-123",
+      "id": "patient-accesses",
+      "parentId": "allergology-exposition-campaign",
       "name": "Patient accesses"
     }
   }
 ]
-```
-You can then add events to the different streams at once by doing an [events.create](/reference/#create-event) call, and store the campaign data in one stream, and the username and token of the subject in another stream:
-
-```json
-[
-  {
-    "method": "events.create",
-    "params": {
-    "time": 1385046854.282,
-    "streamId": "campaign-123-description",
-		"type": "campaign/pryv",
-    "content": {
-      "requestedPermissions": {}, //...
-      "consentText": "", //...
-      "appId": "", //
-    }
-    }
-  },
-  {
-    "method": "events.create",
-    "params": {
-    "time": 1385046854.282,
-    "streamId": "campaign-123-patient-accesses",
-    "type": "access/pryv",
-    "content": {
-      "access": {
-        "id": "ck0qmmwo40006a8ive8nkv9es",
-        "username": "subject01",
-        "token": "ck0qmmwo40007a8ivbxnl2zt7", 
-        "urlEndpoint": "${PATIENT_USERNAME}.${PATIENT_DOMAIN}",
-        "type": "shared",
-        } 
-      }
-    }
-  }
-]
-```
-
-If the stream already exists, the error `item-already-exists` will be displayed (See [streams.create](/reference/#create-stream) specific errors for more information).
+````
