@@ -47,8 +47,9 @@ The streams structure and accesses over it would look like the following:
 
 ![Example Streams Structure](/assets/images/data_model_allergens_doctor.svg)
 
-This structure allows you a granular level of control of the accesses to the data. Different permissions can be defined for each stream and substream, therefore enabling you to share only necessary information with third-parties. 
-For example, the access you will create (see [access.create](#https://api.pryv.com/reference/#create-access) call for more details) for the **Allergen Exposure App** will enable your app to `read-only` the geolocation data from the user and to `manage` the stream in which allergen exposure data will be added:
+This structure allows you a granular level of control of the accesses to the data. Different permissions can be defined for each stream and substream, therefore enabling you to share only necessary information with third-parties.  
+
+For example, the access you will create (see [access.create](/reference/#create-access) call for more details) for the **Allergen Exposure App** will enable your app to `read-only` the geolocation data from the user and to `manage` the stream in which allergen exposure data will be added:
 
 ```json
 {
@@ -69,11 +70,11 @@ For example, the access you will create (see [access.create](#https://api.pryv.c
     ],
 ```
 
-Available levels of accesses (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](https://api.pryv.com/reference/#access). 
+Available levels of accesses (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](/reference/#access). 
 
-To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events. You can find out more on how to create streams [here](https://api.pryv.com/reference/#create-stream).
+To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events. You can find out more on how to create streams [here](/reference/#create-stream).
 
-Alternatively, you can also do a ["batch call"](http://api.pryv.com/reference/#call-batch) to create all the streams using a single API call. 
+Alternatively, you can also do a ["batch call"](/reference/#call-batch) to create all the streams using a single API call. 
 
 In our case :
 ```json
@@ -160,7 +161,7 @@ You have been collecting consent from your app users to use their data and you n
 
 The "campaign" data structure will contain the following streams:
 
-The stream **Campaign description**, in which you will store information about the authorization you are requesting. You can do a [streams.create](https://api.pryv.com/reference/#create-stream) call with the following data:
+The stream **Campaign description**, in which you will store information about the authorization you are requesting. You can do a [streams.create](/reference/#create-stream) call with the following data:
 
 ```json
 {
@@ -169,13 +170,13 @@ The stream **Campaign description**, in which you will store information about t
   "parentId": "allergology-exposition-campaign"
 }
 ```
-Its events will include the fields necessary to perform an [Auth request](https://api.pryv.com/reference/#auth-request):
+Its events will include the fields necessary to perform an [Auth request](/reference/#auth-request):
 
 - `requestingAppId`, your app's identifier that wishes to access data from the users
 - `requestedPermissions`, containing the streams your app wants to access and their associated level of permission
 - `clientData`, containing the consent information of your user
 
-You can do an [events.create](https://api.pryv.com/reference/#create-event) call containing this information:
+You can do an [events.create](/reference/#create-event) call containing this information:
 
 ```json
 {
@@ -202,7 +203,7 @@ You can do an [events.create](https://api.pryv.com/reference/#create-event) call
   }
 }
 ```
-The stream **Patient accesses** that will store the credentials in `pryvApiEndpoint` format (see [App guidelines](https://api.pryv.com/guides/app-guidelines/)) for every subject that granted access to their data. You can do a [streams.create](https://api.pryv.com/reference/#create-stream) call with the following data:
+The stream **Patient accesses** that will store the credentials in `pryvApiEndpoint` format (see [App guidelines](/guides/app-guidelines/)) for every subject that granted access to their data. You can do a [streams.create](/reference/#create-stream) call with the following data:
 
 ```json
 {
@@ -213,7 +214,7 @@ The stream **Patient accesses** that will store the credentials in `pryvApiEndpo
 ```
 The events of this stream will contain the credentials of every subject that granted access to their data, in particular the `pryvApiEndpoint` associated with their Pryv.io account.
 
-You can do an [events.create](https://api.pryv.com/reference/#create-event) call to store the credentials of "Subject 01" for example:
+You can do an [events.create](/reference/#create-event) call to store the credentials of "Subject 01" for example:
 ```json
 {
   "event": {
@@ -226,7 +227,7 @@ You can do an [events.create](https://api.pryv.com/reference/#create-event) call
 }
 ```
 
-For this stream structure, you can create the streams one by one as explained [here](https://api.pryv.com/reference/#create-stream) or all in one by doing a "batch call" :
+For this stream structure, you can create the streams one by one as explained [here](/reference/#create-stream) or all in one by doing a "batch call" :
 ```json
 [
   {
