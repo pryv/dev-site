@@ -41,13 +41,35 @@ Let's imagine now that you want doctors to be able to provide feedback to users 
 You can easily do so by adding a new stream `Doctor's feedback` in which the doctor will be communicating with his patient.
 
 As multiple actors are involved in your process, you might need to restrict accesses to particular streams of the user's data.
-For example, you can restrict the access to the stream `Position` to the Allergen Exposure App only and the access to the stream `Health Profile` to the doctor only, so that personal and sensitive data from the user is protected.
+For example, you can restrict the access to the stream `Position` to the **Allergen Exposure App** only and the access to the stream `Health Profile` to the **Doctor** only, so that personal and sensitive data from the user is protected.
 
 The streams structure and accesses over it would look like the following:
 
 ![Example Streams Structure](/assets/images/data_model_allergens_doctor.svg)
 
-This structure allows you a granular level of control of the accesses to the data. Different permissions can be defined for each stream and substream, therefore enabling you to share only necessary information with third-parties. Available levels of accesses (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](https://api.pryv.com/reference/#access). 
+This structure allows you a granular level of control of the accesses to the data. Different permissions can be defined for each stream and substream, therefore enabling you to share only necessary information with third-parties. 
+For example, the access you will create (see [access.create](#https://api.pryv.com/reference/#create-access) call for more details) for the **Allergen Exposure App** will enable your app to `read-only` the geolocation data from the user and to `manage` the stream in which allergen exposure data will be added:
+
+```json
+{
+  "access": {
+    "id": "cka6h2b2t00065wpvubqj12xb",
+    "token": "cka6h2b2t00075wpvgcuy4ocn",
+    "type": "shared",
+    "name": "For the Allergen Exposure App",
+    "permissions": [
+      {
+        "streamId": "position",
+        "level": "read"
+      },
+      {
+        "streamId": "allergen-exposure-app",
+        "level": "manage"
+      }
+    ],
+```
+
+Available levels of accesses (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](https://api.pryv.com/reference/#access). 
 
 To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events. You can find out more on how to create streams [here](https://api.pryv.com/reference/#create-stream).
 
@@ -134,11 +156,11 @@ Let's imagine now a slightly different use case. You are conducting an Allergolo
 
 You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io. You will therefore need a "campaign" stream structure which allows you to store the accesses for your app.
 
-![Example Campaign Structure](/assets/images/Campaign.jpg)
+![Example Campaign Structure](/assets/images/Campaign.svg)
 
 The "campaign" data structure will contain the following streams:
 
-The stream **Campaign description**, in which you will store information about the authorization you are requesting. You can do a [streams.create](#create-stream) call with the following data:
+The stream **Campaign description**, in which you will store information about the authorization you are requesting. You can do a [streams.create](https://api.pryv.com/reference/#create-stream) call with the following data:
 
 ```json
 {
@@ -147,13 +169,13 @@ The stream **Campaign description**, in which you will store information about t
   "parentId": "allergology-exposition-campaign"
 }
 ```
-Its events will include the fields necessary to perform an [Auth request](#auth-request):
+Its events will include the fields necessary to perform an [Auth request](https://api.pryv.com/reference/#auth-request):
 
 - `requestingAppId`, your app's identifier that wishes to access data from the users
 - `requestedPermissions`, containing the streams your app wants to access and their associated level of permission
 - `clientData`, containing the consent information of your user
 
-You can do an [events.create](#create-event) call containing this information:
+You can do an [events.create](https://api.pryv.com/reference/#create-event) call containing this information:
 
 ```json
 {
@@ -191,7 +213,7 @@ The stream **Patient accesses** that will store the credentials in `pryvApiEndpo
 ```
 The events of this stream will contain the credentials of every subject that granted access to their data, in particular the `pryvApiEndpoint` associated with their Pryv.io account.
 
-You can do an [events.create](#create-event) call to store the credentials of "Subject 01" for example:
+You can do an [events.create](https://api.pryv.com/reference/#create-event) call to store the credentials of "Subject 01" for example:
 ```json
 {
   "event": {
