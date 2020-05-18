@@ -11,6 +11,7 @@ New Features:
 - Events can now be part of multiple streamIds
 - `authUrl` replaces `url` in **Auth request** in-progress response
 - `pryvApiEndpoint` replaces `username` and `token` in **Auth request** accepted response
+- `accesses.delete` has been extended for self revocation to `shared` and `app` accesses
 
 Deprecated:
 
@@ -25,8 +26,7 @@ Removals:
   - singleActivity streams are now standard streams
   - `events.start`
   - `events.stop`
-- `accesses.update` has been removed
-- `accesses.delete <id>` has been extended for self revocation to `shared` and `app` access 
+- `accesses.update`
 
 ## V1.4
 
