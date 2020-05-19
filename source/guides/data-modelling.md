@@ -48,7 +48,6 @@ The streams structure and accesses over it would look like the following:
 ![Example Streams Structure](/assets/images/data_model_allergens_doctor.svg)
 
 This structure allows you a granular level of control to accesses to the data. Different permissions can be defined for each stream and substream, therefore enabling you to share only necessary information with third-parties.  
-
 For example, the access you will create (see [accesses.create](/reference/#create-access) call for more details) for the **Allergen Exposure App** will enable your app to `read` the geolocation data from the user and to `manage` the stream in which allergen exposure data will be added:
 
 ```json
@@ -70,9 +69,11 @@ For example, the access you will create (see [accesses.create](/reference/#creat
     ],
 ```
 
-Available levels of permissions (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](/reference/#access). 
+Available levels of permissions (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](/reference/#access).   
 
-To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events (see [streams.create](/reference/#create-stream) call for more details)
+A global overview of the streams and permissions structure of this use case is provided in this [Excel template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit#gid=0). We advice you to build your own file based on this template in which you will describe your own data model depending on the use cases of your app/device.
+
+To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events (see [streams.create](/reference/#create-stream) call for more details).
 
 Alternatively, you can also do a ["batch call"](/reference/#call-batch) to create all the streams using a single API call. 
 
