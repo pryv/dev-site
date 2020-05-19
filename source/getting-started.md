@@ -207,7 +207,7 @@ Basic event types include :
 
 More specific event types also involve :
 
--  **attachments** that can be added to events, for example for our user to post pictures of his nutrition in a dedicated substream under his `Health Profile` stream. 
+**Attachments** that can be added to events, for example for our user to post pictures of his nutrition in a dedicated substream under his `Health Profile` stream. 
 ![Attachment](/assets/images/getting-started/attachment.png)
 
 These events will have the type `picture/attached` :
@@ -231,7 +231,7 @@ These events will have the type `picture/attached` :
 }
 ```
 
--  **high-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](http://api.pryv.com/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch to collect GPS position in real-time of the user. 
+**High-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](http://api.pryv.com/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch to collect GPS position in real-time of the user. 
 ![HF](/assets/images/getting-started/hf-event.png)
 
 This data will have the type `position/wgs84` :
