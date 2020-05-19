@@ -1,6 +1,6 @@
 ---
 id: pryv.io-setup
-title: 'Pryv.io setup guide'
+title: 'Pryv.io platform setup guide'
 template: default.jade
 customer: true
 withTOC: true
@@ -11,17 +11,18 @@ It walks you through the different steps that have to be performed in order to s
 
 ## Table of contents
 
-1. [Set up the machines](#set-up-the-machines)
-2. [Obtain a domain name](#obtain-a-domain-name)
-3. [Obtain the license key, credentials and config files](#obtain-the-license-key-credentials-and-config-files)
-4. [Set the platform parameters](#set-the-platform-parameters)
-5. [Obtain an SSL certificate](#obtain-an-ssl-certificate)
-6. [Validate your platform installation](#validate-your-platform-installation)
-7. [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
-8. [Customize authorization, registration and reset password apps](#customize-authorization-registration-and-reset-password-apps)
-9. [Set up email sending](#set-up-email-sending)
-10. [Define your data model](#define-your-data-model)
-11. [Other documents](#other-documents)
+- 1 [Set up the machines](#set-up-the-machines)
+- 2 [Obtain a domain name](#obtain-a-domain-name)
+- 3 [Obtain the license key, credentials and config files](#obtain-the-license-key-credentials-and-config-files)
+- 4 [Set the platform parameters](#set-the-platform-parameters)
+- 5 [Obtain an SSL certificate](#obtain-an-ssl-certificate)
+- 6 [Validate your platform installation](#validate-your-platform-installation)
+- 7 [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
+- 8 [Customize authorization, registration and reset password apps](#customize-authorization-registration-and-reset-password-apps)
+- 9 [Set up email sending](#set-up-email-sending)
+- 10 [Define your data model](#define-your-data-model)
+- 11 [Customize event types validation](#customize-event-types-validation)
+- 12 [Other documents](#other-documents)
 
 ## Set up the machines
 
@@ -39,8 +40,10 @@ Now that your machines are ordered, you need to register your own domain name.
 
 You can either:  
 
-- obtain one yourself through a domain name registrar of your choice;
-- or contact us directly to obtain a domain name with Pryv.io, e.g. ***your-platform-name*.pryv.io**
+- obtain one yourself through a domain name registrar of your choice, make sure that you can configure your domain's name servers.
+- or contact us directly to obtain a pryv.io subdomain, e.g. ***your-platform-name*.pryv.io**
+
+You will need to obtain an additional one for your staging development, and pre-production if you have one.
 
 ## Obtain the license key, credentials and configuration files
 
@@ -52,7 +55,7 @@ Along with the configuration files, you will find an Installation guide describi
 
 ## Obtain an SSL certificate
 
-You will need to obtain an SSL certificate to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one using LetsEncrypt, for which we can provide you a quick guide.
+You will need to obtain a wildcard SSL certificate for *.DOMAIN to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one using LetsEncrypt, for which we can provide you a quick guide.
 
 We have automatic SSL certificate renewal on our roadmap, so let us know if you are interested.
 
@@ -84,6 +87,8 @@ You will then need to provide your web page's URL in the [Auth request](/referen
 **We urge you to fork this web application even if you don't wish to customize it as it follows the versioning of the Pryv Lab platform and may incur breaking changes during updates.**
 
 ### GH pages
+
+Make sure to implement the [following change](https://github.com/pryv/app-web-auth3/blob/master/README.md#fork-repository-for-github-pages) on your fork.
 
 If you are hosting it on GitHub pages, you will need to adapt the platform variables as following:
 
@@ -143,6 +148,17 @@ You can have a look at our [Data modelling guide](https://api.pryv.com/guides/da
 We advise you to build your own file based on this template to describe your own data structure (streams, events, permissions) depending on your use case.
 
 We can also help you with the design and validation of your data model.
+
+## Customize event types validation
+
+Your Pryv.io platform performs content validation for the types definnition that you provide it. Events with undefined types are allowed but their content is not validated.  
+By default, the one defined in the [Event Types](/event-types/) page is used.
+
+You can host your definitions page on a public URL which will be loaded at the platform boot. You can define this URL in the platform parameters as following:
+
+```yaml
+EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
+```
 
 ## Other documents
 

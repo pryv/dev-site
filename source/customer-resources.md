@@ -10,8 +10,6 @@ In this space you will find links and reference documents that will help you mak
 
 ## Links
 
-- Pryv.io setup guide: [api.pryv.com/guides/pryv.io-setup](/guides/pryv.io-setup/)
-
 - API Reference: [api.pryv.com/reference](/reference/)
 
   This reference can be shared with 3rd party and in-house application developers to interact with the Pryv.io platform.
@@ -32,20 +30,22 @@ In this space you will find links and reference documents that will help you mak
 
   In addition to the full reference, this includes upcoming features marked with a `PREVIEW` label.
 
-## Documents
+## Guides and Documents
+
+- Pryv.io platform setup guide: [HTML](/customer-resources/pryv.io-setup/)
 
 - Deployment Design Guide: [PDF](/assets/docs/deployment_design_guide_v6.pdf)
 
   This document describes how to deploy a Pryv.io platform as well as essential information to help you decide on your infrastructure and sizing needs.
   You will also find information about how to operate your Pryv.io platform.
 
-- Installation validation: [HTML](/customer-resources/platform-validation)
+- Installation validation: [HTML](/customer-resources/platform-validation/)
 
-  This document describes some steps to validate that a Pryv.io platform is up and running after deployment.
+  This document describes the steps to validate that a Pryv.io platform is up and running after deployment.
 
-- System monitoring: [HTML](/customer-resources/healthchecks)
+- System monitoring: [HTML](/customer-resources/healthchecks/)
 
-  This document describes some steps to perform regular healthcheck on a running Pryv.io platform.
+  This document describes the steps to perform regular healthchecks on a running Pryv.io platform.
 
 - DNS configuration: [PDF](/assets/docs/20190501-dns-config-v3.pdf)
 

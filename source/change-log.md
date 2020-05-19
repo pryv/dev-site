@@ -4,6 +4,30 @@ title: API change log
 template: default.jade
 ---
 
+## v1.5
+
+New Features:
+
+- Events can now be part of multiple streamIds
+- `authUrl` replaces `url` in **Auth request** in-progress response
+- `pryvApiEndpoint` replaces `username` and `token` in **Auth request** accepted response
+- `accesses.delete` has been extended for self revocation to `shared` and `app` accesses
+
+Deprecated:
+
+- `event.streamId`: replaced by `event.streamIds`
+- `event.tags`: their functionality will soon be totally replaced by streamIds
+- `url` in **Auth request** in-progress response
+- `username` and `token` in **Auth request** accepted response
+
+Removals:
+
+- Timetracking functionalities have been removed
+  - singleActivity streams are now standard streams
+  - `events.start`
+  - `events.stop`
+- `accesses.update`
+
 ## V1.4
 
 New features:
@@ -20,6 +44,13 @@ Changes:
 
  - Enrich [access-info](/reference/#get-current-access-info) result with exhaustive access properties.
  - Improve the update account API call, in particular when it applies a change of email address. It now correctly checks if the email address is not already in use before updating the account and throws consistent errors.
+
+Deprecated:
+
+- Timetracking functionalities
+  - singleActivity streams
+  - events.start
+  - events.stop
 
 ## V1.3
 

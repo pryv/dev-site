@@ -73,9 +73,11 @@ reg.${DOMAIN}.  SOME_TTL_NUMBER  IN  A  ${REGISTER_MACHINE_IP_ADDRESS}
 
 If there is no `ANSWER` section, this means that the DNS is not running or is unreachable. See [DNS section](#dns).
 
-## API
+## Core
 
-Run `curl -i https://${CORE_MACHINE_HOSTNAME}/status` or open [https://${CORE_MACHINE_HOSTNAME}/status](https://${CORE_MACHINE_HOSTNAME}/status)
+Run `curl -i https://${CORE_MACHINE_HOSTNAME}/status` or open [https://${CORE_MACHINE_HOSTNAME}/status](https://${CORE_MACHINE_HOSTNAME}/status).  
+
+The hostname of the first core should be `co1.${DOMAIN}` by default (`co2.${DOMAIN}` and so on for the other ones in case of cluster deployment).
 
 - HTTP Status 200: OK
 - HTTP Status 502: core service is not running, see [Core section](#core)
@@ -107,6 +109,15 @@ Fix issue if possible, otherwise send the last 100 lines of the log file to your
 
 If the service keeps rebooting with an error message, fix configuration if possible.  
 Otherwise, send the last 100 lines of the DNS log file to your Pryv tech contact. Run `docker logs --tail 100 ${DNS_CONTAINER_NAME} > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
+
+### Port is unreachable from the Internet
+
+If there are no errors in the logs, the machine might simply not be reachable from the Internet on port UDP/53.
+
+1. SSH to the Register machine
+2. Make a DNS request: `dig @localhost reg.${DOMAIN}`
+
+If the request yields an answer, your firewall settings might be set wrong. You must allow INGRESS UDP/53 as defined in the **Deployment design guide** from the [Customer Resources page](https://api.pryv.com/customer-resources/#documents).
 
 ## Core
 

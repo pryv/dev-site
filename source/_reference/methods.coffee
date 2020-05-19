@@ -393,6 +393,9 @@ module.exports = exports =
           type: "array of strings"
           optional: true
           description: """
+                       **(DEPRECATED)**
+                       Please use streamIds instead.
+
                        If set, only events assigned to any of the listed tags will be returned.
                        """
         ,
@@ -560,13 +563,6 @@ module.exports = exports =
           description: """
                        The created event.
                        """
-        ,
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       (**DEPRECATED**)  
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
-                       """
         ]
       errors: [
         key: "invalid-operation"
@@ -574,110 +570,21 @@ module.exports = exports =
         description: """
                      The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
                      """
-      ,
-        key: "periods-overlap"
-        http: "400"
-        description: """
-                     (**DEPRECATED**)  
-                     Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
-                     """
       ]
       examples: [
         title: "Capturing a simple number value"
-        params: _.pick(examples.events.mass, "streamId", "type", "content")
+        params: _.pick(examples.events.mass, "streamIds", "type", "content")
         result:
           event: examples.events.mass
       ,
         title: "cURL with attachment"
         content: """
                  ```bash
-                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" "https://${token}@${username}.pryv.me/events"
+                 curl -i -F 'event={"streamIds":["#{examples.events.picture.streamId}"],"type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" "https://${token}@${username}.pryv.me/events"
                  ```
                  """
         result:
           event: examples.events.picture
-      ]
-
-    ,
-
-      id: "events.start"
-      type: "method"
-      title: "Start period"
-      http: "POST /events/start"
-      description: """
-                   **(DEPRECATED)**    
-                   Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.
-
-                   See [Create event](##{_getDocId("events", "events.create")}) for details.
-                   """
-      examples: [
-        title: "Starting an activity"
-        params: _.pick(examples.events.activityRunning, "streamId", "type")
-        resultHTTP: "201 Created" # add here as no result doc present above
-        result:
-          event: examples.events.activityRunning
-      ]
-
-    ,
-
-      id: "events.stop"
-      type: "method"
-      title: "Stop period"
-      http: "POST /events/stop"
-      description: """
-                   **(DEPRECATED)**  
-                   Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop (or its type) must be specified.
-                   """
-      params:
-        properties: [
-          key: "streamId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       (**DEPRECATED**)  
-                       The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified.
-                       """
-        ,
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       The id of the event to stop. Either this or `streamId` (and possibly `type`) must be specified.
-                       """
-        ,
-          key: "type"
-          type: "string"
-          description: """
-                       The type of the event to stop. `streamId` must be specified as well. If there are multiple running events matching, the closest one (by time) will be stopped.
-                       """
-        ,
-          key: "time"
-          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
-          optional: true
-          description: """
-                       The stop time. Default: now.
-                       """
-        ]
-      result:
-        http: "200 OK"
-        properties: [
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       The id of the event that was stopped or null if no running event was found.
-                       """
-        ]
-      errors: [
-        key: "invalid-operation"
-        http: "400"
-        description: """
-                     The specified event is not a running period event.
-                     """
-      ]
-      examples: [
-        params:
-          streamId: examples.events.activityRunning.streamId
-          time: timestamp.now()
-        result:
-          stoppedId: examples.events.activityRunning.id
       ]
 
     ,
@@ -715,29 +622,8 @@ module.exports = exports =
           description: """
                        The updated event.
                        """
-        ,
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       (**DEPRECATED**)  
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
-                       """
         ]
-      errors: [
-        key: "invalid-operation"
-        http: "400"
-        description: """
-                     (**DEPRECATED**)  
-                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
-                     """
-      ,
-        key: "periods-overlap"
-        http: "400"
-        description: """
-                     (**DEPRECATED**)  
-                     Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
-                     """
-      ]
+      errors: []
       examples: [
         title: "Adding a tag"
         params:
@@ -949,7 +835,7 @@ module.exports = exports =
       ]
       examples: [
         title: "Creating a new HF event that will hold HF series"
-        params: _.pick(examples.events.series.holderEvent, "streamId", "type")
+        params: _.pick(examples.events.series.holderEvent, "streamIds", "type")
         result:
           event: examples.events.series.holderEvent
 
@@ -1466,7 +1352,7 @@ module.exports = exports =
       title: "Delete access"
       http: "DELETE /accesses/{id}"
       description: """
-                   Deletes the specified access. You can only delete accesses whose permissions are a subset of those granted to your own access token.
+                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. All accesses can also perform a self-delete.
                    """
       params:
         properties: [
@@ -2436,13 +2322,13 @@ module.exports = exports =
         title: "Sync some health metrics"
         params: [
           method: "events.create"
-          params: _.pick(examples.events.heartRate, "time", "streamId", "type", "content")
+          params: _.pick(examples.events.heartRate, "time", "streamIds", "type", "content")
         ,
           method: "events.create"
-          params: _.pick(examples.events.heartSystolic, "time", "streamId", "type", "content")
+          params: _.pick(examples.events.heartSystolic, "time", "streamIds", "type", "content")
         ,
           method: "events.create"
-          params: _.pick(examples.events.heartDiastolic, "time", "streamId", "type", "content")
+          params: _.pick(examples.events.heartDiastolic, "time", "streamIds", "type", "content")
         ]
         result:
           results: [

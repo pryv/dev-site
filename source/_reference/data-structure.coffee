@@ -50,10 +50,19 @@ module.exports = exports =
                    The identifier ([collision-resistant cuid](https://usecuid.org/)) for the event. Automatically generated if not set when creating the event.
                    """
     ,
+      key: "streamIds"
+      type: "array of [identifier](##{_getDocId("identifier")})"
+      description: """
+                   The ids of the belonging streams.
+                   """
+    ,
       key: "streamId"
       type: "[identifier](##{_getDocId("identifier")})"
       description: """
-                   The id of the belonging stream.
+                   **(DEPRECATED)**
+                   Please use streamIds instead.
+
+                   The id of the first element of the streamIds array.
                    """
     ,
       key: "time"
@@ -86,6 +95,9 @@ module.exports = exports =
       type: "array of strings"
       optional: "(always present in read items)"
       description: """
+                   **(DEPRECATED)**
+                   Please use streamIds instead.
+                   
                    The tags associated with the event.
                    """
     ,
@@ -188,14 +200,6 @@ module.exports = exports =
       optional: true
       description: """
                    The identifier of the stream's parent, if any. A value of `null` indicates that the stream has no parent (i.e. root stream).
-                   """
-    ,
-      key: "singleActivity"
-      type: "boolean"
-      optional: true
-      description: """
-                   (**DEPRECATED**)  
-                   If specified and `true`, the system will ensure that period events in this stream and its children never overlap.
                    """
     ,
       key: "clientData"

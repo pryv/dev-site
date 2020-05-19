@@ -799,6 +799,10 @@ module.exports = exports =
                      The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the service information.
                      """
       ]
+      examples: [
+        title: "Metadata in API Response"
+        content: examples.metadata.apiResponse
+      ]
     ]
 
 
@@ -859,6 +863,12 @@ module.exports = exports =
         http: "413"
         description: """
                      The `events.get` method in batch or websocket call yielded too many results. Call the API method directly, narrow the request scope or page the request.
+                     """
+      ,
+        key: "removed-method"
+        http: "410"
+        description: """
+                     The resource or method has been removed from the API.
                      """
       ,
         key: "user-account-relocated"

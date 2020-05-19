@@ -25,7 +25,6 @@ module.exports = exports =
     id: "work"
     name: "Work"
     parentId: null
-    singleActivity: true
     children: [
       id: idA
       name: "Noble Works Co."

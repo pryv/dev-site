@@ -34,11 +34,14 @@ See also [standard event types](/event-types/#directory).
 
 ### Streams
 
-Streams are the fundamental contexts in which events occur. Every event occurs in one stream. Streams follow a hierarchical structure—streams can have sub-streams—and usually match either user/app-specific organizational levels (e.g. life journal, work projects, etc.) or data sources (e.g. apps and/or devices).
+Streams are the fundamental contexts in which events occur. Every event occurs in at least one stream. Streams follow a hierarchical structure—streams can have sub-streams—and usually match either user/app-specific organizational levels (e.g. life journal, work projects, etc.) or data sources (e.g. apps and/or devices).
 
 <!-- TODO: See also [standard streams](/standard-structure/). -->
 
 ### Tags
+
+**(DEPRECATED)**
+Please use streamIds instead.
 
 Tags can provide further context to events. Each event can be labeled with one or more tags. Each tag can be no more than 500 characters in size.
 

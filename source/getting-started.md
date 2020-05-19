@@ -164,15 +164,13 @@ Here's an example of an event, corresponding to the blood pressure collected by 
 {
   "id": "cji5pfumt1nu90b40chlpetyp",
   "streamIds": ["blood-pressure"],
-  "streamId": "blood-pressure",
   "type": "blood-pressure/mmhg-bpm",
 	"content": {
 		"systolic": 120,
 		"diastolic": 80,
 		"rate": 90
   	},
-  "time": 1528446260.693,
-  "tags": []
+  "time": 1528446260.693
 }
 ```
 
@@ -184,11 +182,10 @@ Basic event types include :
 ```json
 {
   "id": "c3jkdjdt000ze64d8u9z4hap",
-  "streamId": "pollen",
+  "streamIds": ["pollen"],
   "type": "density/kg-m3",
   "content": 850,
-  "time": 1589358119.329,
-  "tags": []
+  "time": 1589358119.329
 }
 ```
 
@@ -197,15 +194,14 @@ Basic event types include :
 ```json
 {
   "id": "c4jghrjkj011ez46d8u4y3pah",
-  "streamId": "pulseOximeterApp",
+  "streamIds": ["pulseOximeterApp"],
   "type": "blood-pressure/bpm-mmhg",
   "content": {
       "systolic": 120, 
       "diastolic": 80, 
       "rate": 95
       },
-  "time": 1682359123.3923,
-  "tags": []
+  "time": 1682359123.3923
 }
 ```
 
@@ -220,11 +216,9 @@ These events will have the type `picture/attached` :
 {
   "id": "ck2bzkjdt000ze64d8u9z4pha",
   "streamIds": ["nutrition"],
-  "streamId": "nutrition",
   "type": "picture/attached",
   "content": null,
   "time": 1572358119.329,
-  "tags": [],
   "attachments": [
     {
       "id": "ck2bzkjdt000ze64d8u9z4pha",
@@ -246,8 +240,7 @@ This data will have the type `position/wgs84` :
 {
   "id": "ck2klss8v00124yjx45s3jp5r",
     "time": 1572882785.023,
-    "streamId": "position",
-    "tags": [],
+    "streamIds": ["position"],
     "type": "series:position/wgs84",
     "content": {
       "elementType": "position/wgs84",
@@ -261,9 +254,6 @@ This data will have the type `position/wgs84` :
 ```
 
 More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
-
-- **start** and **stop** events. This can be very useful for time-tracking, enabling the user to track and report his activities in real-time (ex.: running, cycling, exercising, etc).
-This allows to specify time durations for events or to guarantee that only one event is running at a given time in `singleActivity` streams (**DEPRECATED**). More information on these methods is provided [**here**](/reference/#start-period).
 
 To get more details on all possible event types, see the [**events API reference**](/reference/#event).
 
