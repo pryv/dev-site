@@ -33,7 +33,7 @@ Given this situation, we would recommend a stream structure similar to the follo
 ![Example Streams Structure](/assets/images/data_model_allergens.svg)
 
 This stream structure has multiple benefits:
-- Allows interoperability in the case of multiple data sources
+- Allows aggregation of data originating from different data sources
 - Provides enough context to the data and thus avoids ambiguities
 - Enables granular accesses to streams
 
