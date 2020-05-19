@@ -140,7 +140,7 @@ To do so, you need to design the data model your app(s) will use using Pryv's da
 
 You can have a look at our [Data modelling guide](https://api.pryv.com/guides/data-modelling/) which describes the Pryv.io data structure and walks you through different use cases for your data model. We provide you with an [Excel template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit#gid=0) file describing a basic use case. 
 
-We advice you to build your own file based on this template to describe your own data structure (streams, events, permissions) depending on your use case.
+We advise you to build your own file based on this template to describe your own data structure (streams, events, permissions) depending on your use case.
 
 We can also help you with the design and validation of your data model.
 

@@ -71,7 +71,7 @@ For example, the access you will create (see [accesses.create](/reference/#creat
 
 Available levels of permissions (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](/reference/#access).   
 
-A global overview of the streams and permissions structure of this use case is provided in this [Excel template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit#gid=0). We advice you to build your own file based on this template in which you will describe your own data model depending on the use cases of your app/device.
+A global overview of the streams and permissions structure of this use case is provided in this [Excel template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit#gid=0). We advise you to build your own file based on this template in which you will describe your own data model depending on the use cases of your app/device.
 
 To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events (see [streams.create](/reference/#create-stream) call for more details).
 
