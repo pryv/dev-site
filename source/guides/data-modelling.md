@@ -180,11 +180,11 @@ Let's imagine now a slightly different use case. You are conducting an Allergolo
 
 You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io. You will therefore need a "campaign" stream structure which allows you to store the accesses for your app.
 
-![Example Campaign Structure](/assets/images/Campaign.svg)
-
 The "campaign" data structure will contain the following streams:
 
-The stream **Campaign description**, in which you will store information about the authorization you are requesting. You can do a [streams.create](/reference/#create-stream) call with the following data:
+![Example Campaign Structure](/assets/images/Campaign.svg)
+
+- The stream **Campaign description**, in which you will store information about the authorization you are requesting. You can do a [streams.create](/reference/#create-stream) call with the following data:
 
 ```json
 {
@@ -226,7 +226,7 @@ You can do an [events.create](/reference/#create-event) call containing this inf
   }
 }
 ```
-The stream **Patient accesses** that will store the credentials in `pryvApiEndpoint` format (see [App guidelines](/guides/app-guidelines/)) for every subject that granted access to their data. You can do a [streams.create](/reference/#create-stream) call with the following data:
+- The stream **Patient accesses** that will store the credentials in `pryvApiEndpoint` format (see [App guidelines](/guides/app-guidelines/)) for every subject that granted access to their data. You can do a [streams.create](/reference/#create-stream) call with the following data:
 
 ```json
 {
