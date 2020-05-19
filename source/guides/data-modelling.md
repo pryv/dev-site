@@ -14,7 +14,7 @@ We describe two basic use cases : **data collection** to store and aggregate dat
 
 Let's say you built an algorithm that computes allergen exposure based on geolocation data from your users and integrates it to their health profile.
 
-All the different data sources store their data in a single account:
+All the different data sources store their data in the user's account:
 - **Smartwatch**: Collects in real-time the GPS position of the user, which represents a high volume of data.
 - **Allergen Exposure Mobile App**: Tracks the allergen exposure using the geolocation data from the smartwatch of the user.
 - **Digital Tensiometer**: Used at home to daily monitor blood pressure and added in the health profile of the user.
@@ -35,9 +35,9 @@ Given this situation, we would recommend a stream structure similar to the follo
 This stream structure has multiple benefits:
 - Allows aggregation of data originating from different data sources
 - Provides enough context to the data and thus avoids ambiguities
-- Enables granular accesses to streams
+- Enables granular permissions to streams
 
-Let's imagine now that you want doctors to be able to provide feedback to users after consulting their health profile and allergen exposure. 
+Let's imagine now that you want doctors to provide feedback to users after consulting their health profile and allergen exposure. 
 You can easily do so by adding a new stream `Doctor's feedback` in which the doctor will be communicating with his patient.
 
 As multiple actors are involved in your process, you might need to restrict accesses to particular streams of the user's data.
@@ -47,9 +47,9 @@ The streams structure and accesses over it would look like the following:
 
 ![Example Streams Structure](/assets/images/data_model_allergens_doctor.svg)
 
-This structure allows you a granular level of control of the accesses to the data. Different permissions can be defined for each stream and substream, therefore enabling you to share only necessary information with third-parties.  
+This structure allows you a granular level of control to accesses to the data. Different permissions can be defined for each stream and substream, therefore enabling you to share only necessary information with third-parties.  
 
-For example, the access you will create (see [access.create](/reference/#create-access) call for more details) for the **Allergen Exposure App** will enable your app to `read-only` the geolocation data from the user and to `manage` the stream in which allergen exposure data will be added:
+For example, the access you will create (see [accesses.create](/reference/#create-access) call for more details) for the **Allergen Exposure App** will enable your app to `read` the geolocation data from the user and to `manage` the stream in which allergen exposure data will be added:
 
 ```json
 {
@@ -57,7 +57,7 @@ For example, the access you will create (see [access.create](/reference/#create-
     "id": "cka6h2b2t00065wpvubqj12xb",
     "token": "cka6h2b2t00075wpvgcuy4ocn",
     "type": "shared",
-    "name": "For the Allergen Exposure App",
+    "name": "For Allergen Exposure App",
     "permissions": [
       {
         "streamId": "position",
@@ -70,9 +70,9 @@ For example, the access you will create (see [access.create](/reference/#create-
     ],
 ```
 
-Available levels of accesses (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](/reference/#access). 
+Available levels of permissions (`read`, `manage`, `contribute`, `create-only`) are defined and explained [here](/reference/#access). 
 
-To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events. You can find out more on how to create streams [here](/reference/#create-stream).
+To implement this structure, you first need to create the root streams `smartwatch`, `allergen exposure app` and `health profile` and then the corresponding substreams, in which you will be able to insert the events (see [streams.create](/reference/#create-stream) call for more details)
 
 Alternatively, you can also do a ["batch call"](/reference/#call-batch) to create all the streams using a single API call. 
 
@@ -86,6 +86,14 @@ In our case :
       "name": "Smartwatch"
     }
   },
+  {
+    "method": "streams.create",
+    "params": {
+      "id": "position",
+      "parentId": "smartwatch",
+      "name": "Position"
+    },
+  }
     {
     "method": "streams.create",
     "params": {
@@ -146,6 +154,21 @@ In our case :
       "id": "weight",
       "parentId": "health-profile",
       "name": "Weight"
+    }
+  },
+  {
+    "method": "streams.create",
+    "params": {
+      "id": "doctor-feedback",
+      "name": "Doctor's feedback"
+    }
+  },
+  {
+    "method": "streams.create",
+    "params": {
+      "id": "comment",
+      "parentId": "doctor-feedback",
+      "name": "Comment"
     }
   }
 ]
