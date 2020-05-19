@@ -281,7 +281,7 @@ Let's imagine that our user wants his doctor Tom to give him feedback on his dai
 
 ![Example with doctor feedback](/assets/images/data_model_allergens_doctor.svg)
 
-To do so, he needs to give permission to the doctor Tom to "read" the data from the stream `Allergen exposure App` and to "contribute" to the stream `Doctor's feedback` in which he will be adding his feedback. The level "contribute" will enable Tom to not only modify and create new substreams, but also add his comments as new events in the stream `Comment`. 
+To do so, he needs to give permission to the doctor Tom to "read" the data from the stream `Allergen exposure App` and to "manage" the streams `Doctor's feedback` in which he will be adding his feedback, and `Health Profile` in which he will record events related to his patient's health. The level "manage" will enable Tom to fully control the stream and to add his comments as new events in the stream `Comment`. 
 
 The access for doctor Tom will be created by a `POST` call on accesses (see [accesses.create](/reference/#create-access)):
 
@@ -294,8 +294,12 @@ The access for doctor Tom will be created by a `POST` call on accesses (see [acc
       "level": "read"
     },
     {
+      "streamId": "health-profile",
+      "level": "manage"
+    },
+    {
       "streamId": "doctor-feedback",
-      "level": "contribute"
+      "level": "manage"
     }
   ]
 }
