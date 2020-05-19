@@ -180,9 +180,9 @@ Let's imagine now a slightly different use case. You are conducting an Allergolo
 
 You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io. You will therefore need a "campaign" stream structure which allows you to store the accesses for your app.
 
-The "campaign" data structure will contain the following streams:
-
 ![Example Campaign Structure](/assets/images/Campaign.svg)
+
+The "campaign" data structure will contain the following streams:
 
 - The stream **Campaign description**, in which you will store information about the authorization you are requesting. You can do a [streams.create](/reference/#create-stream) call with the following data:
 
@@ -195,9 +195,9 @@ The "campaign" data structure will contain the following streams:
 ```
 Its events will include the fields necessary to perform an [Auth request](/reference/#auth-request):
 
-- `requestingAppId`, your app's identifier that wishes to access data from the users
-- `requestedPermissions`, containing the streams your app wants to access and their associated level of permission
-- `clientData`, containing the consent information of your user
+  - `requestingAppId`, your app's identifier that wishes to access data from the users
+  - `requestedPermissions`, containing the streams your app wants to access and their associated level of permission
+  - `clientData`, containing the consent information of your user
 
 You can do an [events.create](/reference/#create-event) call containing this information:
 
@@ -250,7 +250,7 @@ You can do an [events.create](/reference/#create-event) call to store the creden
 }
 ```
 
-For this stream structure, you can create the streams one by one as explained [here](/reference/#create-stream) or all in one by doing a "batch call" :
+For this stream structure, you can create the streams as explained [here](/reference/#create-stream) or all in one by doing a "batch call" :
 ```json
 [
   {
