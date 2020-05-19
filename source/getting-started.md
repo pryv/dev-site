@@ -194,7 +194,7 @@ Basic event types include :
 ```json
 {
   "id": "c4jghrjkj011ez46d8u4y3pah",
-  "streamIds": ["pulseOximeterApp"],
+  "streamIds": ["blood-pressure"],
   "type": "blood-pressure/bpm-mmhg",
   "content": {
       "systolic": 120, 
