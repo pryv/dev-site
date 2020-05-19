@@ -112,7 +112,7 @@ Inside each stream can be found timestamped events :
 
 ![Stream example](/assets/images/getting-started/stream_level_1.png)
 
-Here is an example of a **stream** with sub-streams (children): the **Digital Tensiometer** has a dedicated substream, which collects "events" such as the blood pressure measurements.
+Here is an example of a **stream** with sub-streams (children): the **Digital Tensiometer** has a dedicated substream, which collects "events" such as the blood pressure measurements and adds them in the substream `blood-pressure`.
 
 ```json
 {
@@ -158,7 +158,7 @@ Our user will therefore be adding events of different types, each related to spe
 
 ![Pryv.io Data Model](/assets/images/data_model_allergens.svg)
 
-Here's an example of an event, corresponding to the blood pressure collected by the **Digital Tensiometer** as described in the streams structure above :
+Here's an example of an event, corresponding to the blood pressure collected by the **Digital Tensiometer** and added in the substream `blood-pressure` as described in the streams structure above :
 
 ```json
 {
@@ -179,7 +179,7 @@ Here's an example of an event, corresponding to the blood pressure collected by 
 Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](http://api.pryv.com/event-types/). 
 
 Basic event types include :
-- [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `density/kg-m3` can be used to record the density of a material. In the case of our user, we can use this type to reflect the exposure to specific allergens in the user's daily life.
+- [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `density/kg-m3` can be used to record the density of a material. In the case of our user, we can use this type to reflect the exposure to specific allergens in his daily life.
 
 ```json
 {
@@ -192,7 +192,7 @@ Basic event types include :
 }
 ```
 
-- [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activities and measurements. In the use case above, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has three properties : the systolic and diastolic blood pressure stored in mmHg, and the heart rate in bpm.
+- [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activities and measurements. In the use case above, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has three properties : the systolic and diastolic blood pressure stored in **mmHg**, and the heart rate in **bpm**.
 
 ```json
 {
@@ -211,7 +211,7 @@ Basic event types include :
 
 More specific event types also involve :
 
--  **attachments** that can be added to events, for example for our user to post pictures of his nutrition in a dedicated stream under his `Health Profile` stream. 
+-  **attachments** that can be added to events, for example for our user to post pictures of his nutrition in a dedicated substream under his `Health Profile` stream. 
 ![Attachment](/assets/images/getting-started/attachment.png)
 
 These events will have the type `picture/attached` :
