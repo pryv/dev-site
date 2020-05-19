@@ -104,7 +104,7 @@ The Pryv.io data model is composed of two entities: **events** and **streams**.
 All the data that you collect and aggregate should follow an organisation in streams and events. 
 Inside each stream can be found timestamped events : 
 
-![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
+![Pryv.io Data Model](/assets/images/data_model_allergens.svg)
 
 ### Streams
 
@@ -112,34 +112,31 @@ Inside each stream can be found timestamped events :
 
 ![Stream example](/assets/images/getting-started/stream_level_1.png)
 
-Here is an example of a **stream** with sub-streams (children): the **Pulse Oximeter App** has a dedicated substream, which collects "events" such as the heart rate measurements.
+Here is an example of a **stream** with sub-streams (children): the **Digital Tensiometer** has a dedicated substream, which collects "events" such as the blood pressure measurements.
 
 ```json
 {
-  "id": "heart",
-  "name": "Heart",
+  "id": "health-profile",
+  "name": "Health Profile",
   "parentId": null,
   "created": 1528445539.785,
   "createdBy": "cji5os3u11ntt0b40tg0xhfea",
   "modified": 1528445581.592,
   "modifiedBy": "cjhagb5up1b950b40xsbeh5yj",
-  "clientData": {
-    "pryv-browser:bgColor": "#e81034"
-  },
   "children": [
     {
-      "id": "heartRate",
-      "name": "Heart Rate",
-      "parentId": "heart",
+      "id": "digital-tensiometer",
+      "name": "Digital Tensiometer",
+      "parentId": "health-profile",
       "created": 1528445684.508,
       "createdBy": "cji5os3u11ntt0b40tg0xhfea",
       "modified": 1528445684.508,
       "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
       "children": [
         {
-          "id": "pulseOximeterApp",
-          "name": "Pulse Oximeter App",
-          "parentId": "heartRate",
+          "id": "blood-pressure",
+          "name": "Blood Pressure",
+          "parentId": "digital-tensiometer",
           "created": 1528445704.807,
           "createdBy": "cji5os3u11ntt0b40tg0xhfea",
           "modified": 1528445704.807,
@@ -157,44 +154,45 @@ Here is an example of a **stream** with sub-streams (children): the **Pulse Oxim
 **Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in one stream. 
 Events either have a type from the list of [**standard event types**](/event-types/#directory) to allow interoperability, or an application-specific type. 
 
-Our athlete will therefore be adding events of different types, each related to specific streams:
+Our user will therefore be adding events of different types, each related to specific streams:
 
-![Pryv.io Data Model](/assets/images/getting-started/streams_structure_v2.png)
+![Pryv.io Data Model](/assets/images/data_model_allergens.svg)
 
-Here's an example of an event, corresponding to the heart rate collected by the Pulse Oximeter App as described in the streams structure above :
+Here's an example of an event, corresponding to the blood pressure collected by the **Digital Tensiometer** as described in the streams structure above :
 
 ```json
 {
-  "streamId": "pulseOximeterApp",
-  "type": "frequency/bpm",
-  "content": 90,
+  "id": "cji5pfumt1nu90b40chlpetyp",
+  "streamIds": ["blood-pressure"],
+  "streamId": "blood-pressure",
+  "type": "blood-pressure/mmhg-bpm",
+	"content": {
+		"systolic": 120,
+		"diastolic": 80,
+		"rate": 90
+  	},
   "time": 1528446260.693,
-  "tags": [],
-  "created": 1528446260.693,
-  "createdBy": "cji5os3u11ntt0b40tg0xhfea",
-  "modified": 1528446260.693,
-  "modifiedBy": "cji5os3u11ntt0b40tg0xhfea",
-  "id": "cji5pfumt1nu90b40chlpetyp"
+  "tags": []
 }
 ```
 
 Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](http://api.pryv.com/event-types/). 
 
 Basic event types include :
-- [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `count/steps` can be used to record the counting of objects (eggs, apples, steps etc.). In the case of our athlete, we can use this type to count the daily number of steps recorded by the smartwatch A;
+- [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `density/kg-m3` can be used to record the density of a material. In the case of our user, we can use this type to reflect the exposure to specific allergens in the user's daily life.
 
 ```json
 {
   "id": "c3jkdjdt000ze64d8u9z4hap",
-  "streamId": "smartwatchA",
-  "type": "count/steps",
-  "content": 14972,
+  "streamId": "pollen",
+  "type": "density/kg-m3",
+  "content": 850,
   "time": 1589358119.329,
   "tags": []
 }
 ```
 
-- [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activities and measurements. In the case of our athlete, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has three properties : the systolic and diastolic blood pressure stored in mmHg, and the heart rate in bpm.
+- [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activities and measurements. In the use case above, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has three properties : the systolic and diastolic blood pressure stored in mmHg, and the heart rate in bpm.
 
 ```json
 {
@@ -202,9 +200,9 @@ Basic event types include :
   "streamId": "pulseOximeterApp",
   "type": "blood-pressure/bpm-mmhg",
   "content": {
-      "systolic": 100, 
-      "diastolic": 70, 
-      "rate": 75
+      "systolic": 120, 
+      "diastolic": 80, 
+      "rate": 95
       },
   "time": 1682359123.3923,
   "tags": []
@@ -213,7 +211,7 @@ Basic event types include :
 
 More specific event types also involve :
 
--  **attachments** that can be added to events, for example for our athlete to post pictures of his meals in the stream `FoodA`. 
+-  **attachments** that can be added to events, for example for our user to post pictures of his nutrition in a dedicated stream under his `Health Profile` stream. 
 ![Attachment](/assets/images/getting-started/attachment_example.png)
 
 These events will have the type `picture/attached` :
@@ -221,7 +219,8 @@ These events will have the type `picture/attached` :
 ```json
 {
   "id": "ck2bzkjdt000ze64d8u9z4pha",
-  "streamId": "foodA",
+  "streamIds": ["nutrition"],
+  "streamId": "nutrition",
   "type": "picture/attached",
   "content": null,
   "time": 1572358119.329,
@@ -238,7 +237,7 @@ These events will have the type `picture/attached` :
 }
 ```
 
--  **high-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](http://api.pryv.com/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch A to collect GPS position in real-time of the athlete. 
+-  **high-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](http://api.pryv.com/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch to collect GPS position in real-time of the user. 
 ![HF](/assets/images/getting-started/hf_example.png)
 
 This data will have the type `position/wgs84` :
@@ -263,7 +262,7 @@ This data will have the type `position/wgs84` :
 
 More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
 
-- **start** and **stop** events. This can be very useful for time-tracking, enabling the athlete to track and report his activities in real-time (ex.: running, cycling, exercising, etc).
+- **start** and **stop** events. This can be very useful for time-tracking, enabling the user to track and report his activities in real-time (ex.: running, cycling, exercising, etc).
 This allows to specify time durations for events or to guarantee that only one event is running at a given time in `singleActivity` streams (**DEPRECATED**). More information on these methods is provided [**here**](/reference/#start-period).
 
 To get more details on all possible event types, see the [**events API reference**](/reference/#event).
@@ -278,38 +277,25 @@ This token should be stored permanently and securely in your application.
 
 Pryv.io enables you to define accesses with different levels of permissions for third-parties to interact with your data, or only particular folders of your data.
 
-Let's imagine that our athlete wants to share pictures of his meals with his nutritionist Bob, and enable his doctor Tom to check the evolution of his blood oxygenation. 
+Let's imagine that our user wants his doctor Tom to give him feedback on his daily allergen exposure. The streams structure will then look like the following :
 
-To do so, he needs to give permission to his nutritionist Bob to "contribute" to the stream `FoodA` on which the pictures of his meals are uploaded. The level "contribute" will enable Bob to not only view the pictures, but also add his comments as new events in the stream `nutritionApp`. 
+![Example with doctor feedback](/assets/images/data_model_allergens_doctor.svg)
 
-![Access distribution for Bob](/assets/images/getting-started/access_bob.png)
+To do so, he needs to give permission to the doctor Tom to "read" the data from the stream `Allergen exposure App` and to "contribute" to the stream `Doctor's feedback` in which he will be adding his feedback. The level "contribute" will enable Tom to not only modify and create new substreams, but also add his comments as new events in the stream `Comment`. 
 
-The access for the nutritionist Bob will be created by a `POST` call on accesses (see [accesses.create](/reference/#create-access)):
-
-```json
-{
-  "name": "For Nutritionist Bob",
-  "permissions": [
-    {
-      "streamId": "FoodA",
-      "level": "contribute"
-    }
-  ]
-}
-```
-Similarly, the athlete will give access to the stream `heartRate` to doctor Tom on a "read" level for the doctor to be able to consult the evolution of his heart rate.
-
-![Access distribution for Tom](/assets/images/getting-started/access_tom.png)
-
-This will be translated into the creation of a new read access on the stream `heartRate`(see [accesses.create](/reference/#create-access)):
+The access for doctor Tom will be created by a `POST` call on accesses (see [accesses.create](/reference/#create-access)):
 
 ```json
 {
   "name": "For Doctor Tom",
   "permissions": [
     {
-      "streamId": "heartRate",
+      "streamId": "allergen-exposure-app",
       "level": "read"
+    },
+    {
+      "streamId": "doctor-feedback",
+      "level": "contribute"
     }
   ]
 }
@@ -323,6 +309,7 @@ As you can see from the example above, each permission specifies a `streamId`, t
 - `read`: Enables users to view the stream and its contents (sub-streams and events).
 - `contribute`: Enables users to contribute to one or multiple events of the stream. Cannot create, update, delete and move streams.
 - `manage`: Enables users to fully control the stream. Can create, update, delete and move the stream.
+- `create-only`: Enables users to read the stream and create events on it and its children.
 
 A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](http://api.pryv.com/reference/#access).
 
