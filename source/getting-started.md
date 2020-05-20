@@ -165,11 +165,11 @@ Here's an example of an event, corresponding to the blood pressure collected by 
   "id": "cji5pfumt1nu90b40chlpetyp",
   "streamIds": ["blood-pressure"],
   "type": "blood-pressure/mmhg-bpm",
-	"content": {
-		"systolic": 120,
-		"diastolic": 80,
-		"rate": 90
-  	},
+  "content": {
+    "systolic": 120,
+    "diastolic": 80,
+    "rate": 90
+  },
   "time": 1528446260.693
 }
 ```
@@ -239,16 +239,16 @@ This data will have the type `position/wgs84` :
 ```json
 {
   "id": "ck2klss8v00124yjx45s3jp5r",
-    "time": 1572882785.023,
-    "streamIds": ["position"],
-    "type": "series:position/wgs84",
-    "content": {
-      "elementType": "position/wgs84",
-      "fields": [
-        "deltaTime",
-        "latitude",
-        "longitude"
-      ],
+  "time": 1572882785.023,
+  "streamIds": ["position"],
+  "type": "series:position/wgs84",
+  "content": {
+    "elementType": "position/wgs84",
+    "fields": [
+      "deltaTime",
+      "latitude",
+      "longitude"
+    ],
   }
 }
 ```
@@ -256,7 +256,6 @@ This data will have the type `position/wgs84` :
 More information on HF series is provided in the [**API reference**](/reference-preview/#hf-series).
 
 To get more details on all possible event types, see the [**events API reference**](/reference/#event).
-
 
 # Access Management
 
