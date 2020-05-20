@@ -176,7 +176,7 @@ Here's an example of an event, corresponding to the blood pressure collected by 
 
 Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](http://api.pryv.com/event-types/). 
 
-Basic event types include :
+**Basic event types** include :
 - [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `density/kg-m3` can be used to record the density of a material. In the case of our user, we can use this type to reflect the exposure to specific allergens in his daily life.
 
 ```json
