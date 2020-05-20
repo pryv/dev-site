@@ -5,49 +5,48 @@ template: default.jade
 withTOC: true
 ---
 
-## Data Structure
 
-### Streams
+## Streams
 
-#### Is the structure of streams defined locally at the level of each user or is the stream structure defined globally and all the users get the same streams and substreams structure ?
+### Is the structure of streams defined locally at the level of each user or is the stream structure defined globally and all the users get the same streams and substreams structure ?
 
 The stream structure is declared and managed by apps. We advise you to maintain a list of streams following [this template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit?usp=sharing).
 
-#### Is there a limit in the number of child streams that a stream can have ?
+### Is there a limit in the number of child streams that a stream can have ?
 
 There is no limit to the number of substreams of a stream. As a general rule it is preferable to multiply the number of streams and to minimize the creation of different event types.
 
 For example, if you want to enter data measurements for different types of allergens, it is preferable to create one substream per allergen type (`Cereal crops`, `Pollen`, `Hazelnut Tree`, etc) with a single event type (`density/kg-m3`) instead of multiplying event types (`density/pollen`, `density/cereal`, etc) under a single stream `Allergens`.
 
 
-### Event Types
+## Event Types
 
 
-#### How can I define custom event types?
+### How can I define custom event types?
 
 You can define any custom type as long as it follows [this structure](/event-types/#basics). See the [Getting started guide - Data modelling](/getting-started/#events/) for more information.
 
-#### Is there a limit in the number of event types to be used in a stream ?
+### Is there a limit in the number of event types to be used in a stream ?
 
 There is no limitation in terms of event types per stream. A stream acts like a “folder” in which you can put any type of information.
 If you wish to give a Pryv access token to an external service and to control its use of the access, you can give it a “limited” access type- `create-only`- which allows it to only create events in the streams.
 
-#### Are my events content validated?
+### Are my events content validated?
 
 The default set of validated types is defined in [https://api.pryv.com/event-types](/event-types/), they are validated upon creation and modification. To validate custom types, it is possible to provide a different source of event types, following the [JSON schema format](/event-types/#format-specification).
 
-#### What kind of validation do you perform?
+### What kind of validation do you perform?
 
 Depending on the `type` field of the event, the content of the fields `content` and `attachments` are validated.
 
-### Other data structures
+## Other data structures
 
-#### What information should be contained in the “Profile” section of the user ?
+### What information should be contained in the “Profile” section of the user ?
 
 Profile sets are plain key-value structure in which you can store any user-level settings (e.g. credentials).   
 This structure is likely to be deprecated soon, and with the exception of the “Public profile set”, we recommend our customers to use dedicated streams to store account information of their users. 
 
-#### What are “Followed slices” that can be stored in Pryv accounts ? 
+### What are “Followed slices” that can be stored in Pryv accounts ? 
 
 These are [data structures](http://pryv.github.io/reference-full/#followed-slice) that can store subscriptions to resources in other accounts.
 
@@ -178,7 +177,7 @@ It is possible to request an access on all streams (`*`) at once with the follow
 ### Can I limit the number of apps that can send an auth request to users ? 
 
 To do so, you can either :
-- Maintain a register of authorized *appIds* that can send auth requests and launch a verification protol every time an app is requesting access to users' data from the [Token generator page](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info). You can implement it by modifying the source code of the [app-web-auth3-flow](https://github.com/pryv/app-web-auth3).
+- Maintain a register of authorized *appIds* that can send auth requests and launch a verification protol every time an app is requesting access to users' data from the [Token generator page](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info). You can implement it by modifying the source code of the [app-web-auth3-flow](https://github.com/pryv/app-web-auth3) and adding a frontend web app that performs this validation step.
 - Or limit the use of some API methods (such as [authentication methods](https://api.pryv.com/reference/#authentication) or [create.access](https://api.pryv.com/reference/#create-access)) to specific IP addresses. In this way, you can control who can create accesses for apps. 
 
 ## Notification system
