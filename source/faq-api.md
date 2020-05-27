@@ -8,9 +8,11 @@ withTOC: true
 
 ## Streams
 
-### Is the structure of streams defined locally at the level of each user or is the stream structure defined globally and all the users get the same streams and substreams structure ?
+### Is the stream structure declared globally or at the level of each user account ? 
 
-The stream structure is declared and managed by apps. We advise you to maintain a list of streams following [this template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit?usp=sharing).
+The stream structure is independent from one user account to another. It is declared and managed by apps: the stream structure can be created by the app when the user logins for the first time for example.
+
+We advise you to maintain a list of streams following [this template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit?usp=sharing).
 
 ### Is there a limit in the number of child streams that a stream can have ?
 
@@ -26,10 +28,10 @@ For example, if you want to enter data measurements for different types of aller
 
 You can define any custom type as long as it follows [this structure](/event-types/#basics). See the [Getting started guide - Data modelling](/getting-started/#events/) for more information.
 
-### Is there a limit in the number of event types to be used in a stream ?
+### Can I limit the number of event types to be used in a stream ?
 
 There is no limitation in terms of event types per stream. A stream acts like a “folder” in which you can put any type of information.
-If you wish to give a Pryv access token to an external service and to control its use of the access, you can give it a “limited” access type- `create-only`- which allows it to only create events in the streams.
+If you wish to give a Pryv access token to an external service and to control its use of the access, you can give it a “limited” access type - `create-only` - which allows it to **only** create events in the streams (more information on the different permission levels [here](https://api.pryv.com/reference/#access)).
 
 ### Are my events content validated?
 
@@ -48,11 +50,15 @@ This structure is likely to be deprecated soon, and with the exception of the �
 
 ### What are “Followed slices” that can be stored in Pryv accounts ? 
 
-These are [data structures](http://pryv.github.io/reference-full/#followed-slice) that can store subscriptions to resources in other accounts.
+You can use a Followed slice to store subscriptions to resources in other accounts. This data structure contains the following fields :
+- a `name` to enable the user to identify it;
+- the `url` of the API endpoint of the account hosting it;
+- the `token` of the shared access.
 
 For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a **Followed Slice**.  
-However this data structure has a limitation: it is only accessible with a “personal token” which requires a password every time.
-In some cases it can be more practical (but less safe) to store these access tokens in a dedicated stream.
+However this data structure has a limitation: it is only accessible with a “personal token” which requires the user to login with his password every time.
+
+For practical reasons, we generally advise you to store the access tokens in a dedicated stream.
 
 ## API methods
 
@@ -62,13 +68,13 @@ If you are having issues creating the package for the create attachment call wit
 
 ## User creation
 
-### Can we restrict access to user creation?
-
-The user creation API call uses a token, by not making this token public, it is possible to make account creation available to select users.
-
 ### Is there an API call for user creation?
 
 The API call for user creation is defined in [API system reference](/reference-system/#account-creation), please contact us for more information.
+
+### Can we restrict access to user creation?
+
+The user creation API call uses a token and by not making this token public, it is possible to make account creation available to select users.
 
 ### What if I don't want to provide an email registration phase?
 
@@ -82,7 +88,7 @@ It is possible to create users with an API call, without having to fill the fiel
 
 ## Authentication
 
-### I'm getting the "invalid credentials" error on the auth.login call although my fields are correct
+### I'm getting the "invalid credentials" error on the auth.login call although my fields are correct.
 
 ```json
 {
@@ -109,12 +115,10 @@ In addition to the host, it is possible to allow this call for a defined set of 
 
 You should implement the [auth request](/reference/#auth-request), displaying the provided `url` in a web view. Once you obtain the token, save it into the local app storage so you will not have to authenticate each time.
 
-### Is it possible to add an additional layer of authentification?
+### Is it possible to add an additional layer of authentication?
 
-Pryv.io login implies a username/password login. It is possible to transform this login into a challenge-response authentication and add an authentication overlayer in the challenge. 
-
-It is also possible to add multiple authentication factors : http://pryv.github.io/assets/docs/20191205-pryv.io-mfa-v2.pdf
-
+Pryv.io login implies a username/password login, and integrates a multi-factor authentication (MFA) microservice on top of Pryv.io calls. 
+You can find more on how to use our MFA micro service for your authentication flow [here](https://api.pryv.com/reference-full/#multi-factor-authentication).
 
 ## Account granularity
 
@@ -139,7 +143,7 @@ A simple web app demonstrating this implementation can be seen [here](https://gi
 There are three main access types (see more info [here](https://api.pryv.com/concepts/#accesses)):
 
 - **Personal accesses** are used by apps that need to access the entirety of the user's data and/or manage account settings. They grant full permissions, including management of other accesses. This type of access can create app accesses.
-- **App accesses** are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs; this includes the management of shared accesses with lower or equivalent permissions. This type of access can create shared accesses. 
+- **App accesses** are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs; this includes the management of shared accesses with lower or equivalent permissions. This type of access can only create shared accesses. 
 - **Shared accesses** are used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), depending on the sharing user's choice. This type of access can not create other accesses.
 
 ## How long should I keep an access token valid ?
@@ -147,7 +151,7 @@ There are three main access types (see more info [here](https://api.pryv.com/con
 Accesses are not systematically set with an expiry date. The optional field `expireAfter` of an [Access token](https://api.pryv.com/reference/#access) allows you to set an expiry date for the token if you want to. 
 It is important to bear in mind that if a token expires, you will need to keep a “master token” to be able to generate new ones. 
 
-If you are concerned with the security of the accesses, we provide you with monitoring tools to detect fraudulent use of tokens [here](https://api.pryv.com/reference/#audit).
+If you are concerned with the security of the access, we provide you with monitoring tools to detect fraudulent use of tokens [here](https://api.pryv.com/reference/#audit).
 
 ### How can I access Pryv.io resources from another app?
 
@@ -155,9 +159,9 @@ This can be done by using the auth request through a consent step or by generati
 
 ### Is it possible for a user to delegate the access to his data (or part of it) to another user for a limited amount of time ?
 
-Let’s imagine that the users' from the app you created won’t be connecting on the app for a while. You cannot afford to wait until they finally reconnect to authorize apps and grant access to their data.
+Let’s imagine that your app users won’t be connecting on your app for a while. You cannot afford to wait until they finally reconnect to authorize apps and grant access to their data.
 
-It is possible to "delegate" the access by using an "app" token which will act as an “authorization account” and accept access requests on behalf of the user. An “app” token can generate sub-tokens of a “shared” type and therefore share the access to data that was in the scope of the “app” token. 
+It is possible to "delegate" the access by using an "app" token which will act as an “authorization account” and accept access requests on behalf of the user. An “app” token can generate sub-tokens of a “shared” type and therefore share access to data that was in the scope of the “app” token. 
 
 ### What level of permissions do I need to create/delete/modify streams in a user’s account ? 
 
