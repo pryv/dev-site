@@ -185,7 +185,7 @@ In our case :
 
 Let's imagine now a slightly different use case. You are conducting an Allergology Exposition research, in which you analyze the exposition of subjects to allergens by tracking their geolocation through your app.
 
-### Streams structure
+### Stream structure
 
 You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io. You will therefore need a "campaign" stream structure which allows you to store the accesses for your app.
 
