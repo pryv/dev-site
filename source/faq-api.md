@@ -213,7 +213,9 @@ It is generally preferable to maximize the number of "app" tokens with limited s
 
 Below is an example of a single app "third-party-test" requesting access to the particular streams "Health" and "Personal Information" with a limited set of permissions :
 
-<img src="/assets/images/app-access.png" width="200">
+<p align="center">
+  <src="/assets/images/app-access.png" width="200>
+</p>
 
 
 ## Notification system
