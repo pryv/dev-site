@@ -23,7 +23,6 @@ For example, if you want to enter data measurements for different types of aller
 
 ## Event Types
 
-
 ### How can I define custom event types?
 
 You can define any custom type as long as it follows [this structure](/event-types/#basics). See the [Getting started guide - Data modelling](/getting-started/#events/) for more information.
@@ -88,6 +87,12 @@ It is possible to create users with an API call, without having to fill the fiel
 
 ## Authentication
 
+### How does the authentication flow work ?
+
+We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-auth3). 
+
+We advise our customers to customize it and adapt to their own use case. 
+
 ### I'm getting the "invalid credentials" error on the auth.login call although my fields are correct.
 
 ```json
@@ -132,6 +137,14 @@ For compliance reasons, Pryv.io accounts are per-user. Storing multiple people d
 
 Using a token previously obtained, you can generate a new one using the [accesses.create](/reference/#create-access) API call to generate a new token. The permission set associated to this token must be a subset of the permissions set of the access token used for the call.
 
+### Where should I store the access token to a user's account ?
+
+Once you have obtained an access token to a user's account, for example for a doctor to access particular streams of his patients' data, we advise you to store it in a dedicated stream.
+
+You can create a dedicated public stream in which you (or any third party, e.g. other apps, doctors, that has been granted access to data) will store access tokens to other accounts. Third parties will have a “create-only” access level to this stream and will add events corresponding to access tokens.
+
+This method allows you to use the audit capabilities of Pryv.io and to audit API calls that were made on this stream.
+
 ### How can I request access to someone's data?
 
 In order to request an access to someone's data, one must implement a page that makes an [auth request](/reference/#auth-request) when loaded. The `url` in the response must be displayed to the user. The web page will ask him for his credentials as well as display the list of requested permissions. Upon approval, the app will obtain a valid token in the polling url response.
@@ -143,8 +156,8 @@ A simple web app demonstrating this implementation can be seen [here](https://gi
 There are three main access types (see more info [here](https://api.pryv.com/concepts/#accesses)):
 
 - **Personal accesses** are used by apps that need to access the entirety of the user's data and/or manage account settings. They grant full permissions, including management of other accesses. This type of access can create app accesses.
-- **App accesses** are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs; this includes the management of shared accesses with lower or equivalent permissions. This type of access can only create shared accesses. 
-- **Shared accesses** are used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), depending on the sharing user's choice. This type of access can not create other accesses.
+- **App accesses** are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs; this includes the management of shared accesses with lower or equivalent permissions. This type of access can only create shared accesses. If an app token is destroyed, it automatically destroys the shared tokens that were generated from this app token.
+- **Shared accesses** are used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), depending on the sharing user's choice. This type of access can not create other accesses. 
 
 ## How long should I keep an access token valid ?
 
@@ -157,15 +170,20 @@ If you are concerned with the security of the access, we provide you with monito
 
 This can be done by using the auth request through a consent step or by generating a token directly through an API call using a token obtained previously.
 
-### Is it possible for a user to delegate the access to his data (or part of it) to another user for a limited amount of time ?
+### How does an access delegation work ?
 
-Let’s imagine that your app users won’t be connecting on your app for a while. You cannot afford to wait until they finally reconnect to authorize apps and grant access to their data.
+It can happen that you would need an access delegation from your app users if they cannot connect on the app to authorize apps and grant access to their data for some period of time.
 
-It is possible to "delegate" the access by using an "app" token which will act as an “authorization account” and accept access requests on behalf of the user. An “app” token can generate sub-tokens of a “shared” type and therefore share access to data that was in the scope of the “app” token. 
+You can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](https://api.pryv.com/reference-full/#authorizing-your-app) for more information on the auth request).
+
+This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and therefore share access to data that was in the access scope of the “app” token. 
+
+However, an “app” token does not give the same rights as a “personal” token. A "personal" access allows in addition to manage account settings and other accesses, and to access the entirety of the user's data. A “personal” access can only be obtained by the user authenticating directly with his personal credentials within the app.
+
 
 ### What level of permissions do I need to create/delete/modify streams in a user’s account ? 
 
-The access level “manage” (see more details [here](https://api.pryv.com/reference/#access)) on a stream gives you the permission to manipulate (create, modify, delete) all the substreams of this stream. 
+The access level “manage” on a stream gives you the permission to manipulate (create, modify, delete) all the substreams of this stream (see more details on the **Access** structure [here](https://api.pryv.com/reference/#access)).
 It is possible to request an access on all streams (`*`) at once with the following : 
 ```json
 {
@@ -180,20 +198,35 @@ It is possible to request an access on all streams (`*`) at once with the follow
 ```
 ### Can I limit the number of apps that can send an auth request to users ? 
 
-To do so, you can either :
-- Maintain a register of authorized *appIds* that can send auth requests and launch a verification protol every time an app is requesting access to users' data from the [Token generator page](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info). You can implement it by modifying the source code of the [app-web-auth3-flow](https://github.com/pryv/app-web-auth3) and adding a frontend web app that performs this validation step.
-- Or limit the use of some API methods (such as [authentication methods](https://api.pryv.com/reference/#authentication) or [create.access](https://api.pryv.com/reference/#create-access)) to specific IP addresses. In this way, you can control who can create accesses for apps. 
+There is currently no API token or API secret to restrict the auth request usage.
+You can contact us directly if you wish to implement a verification protocol for the requesting apps.
+
+### How to distribute accesses over a user account between multiple apps ?
+
+We advise you to define all the needed accesses for third-parties from the beginning, and to ask for the user's consent at his first login on your app.
+
+You can do so by sharing a document with the user listing the concerned third-parties and asking for his consent, or by implementing a web-app that displays a panel of apps/third-parties to grant access to.
+
+You can then give each third-party an “app” token with a limited access to a particular scope of streams.
+
+It is generally preferable to maximize the number of "app" tokens with limited set of permissions than to use a "master" token generating shared type of accesses to third parties, as it allows to track accesses made over data for audit capabilities. 
+
+Below is an example of a single app "third-party-test" requesting access to the particular streams "Health" and "Personal Information" with a limited set of permissions :
+
+![Example app access](/assets/images/app-access.png)
 
 ## Notification system
 
 ### Should I use “websockets” or “webhooks” to subscribe to changes ?
 
-**Websockets** should be used to get notified of data changes in a web application (on the frontend side). It requires to establish a connection between the client and the server and to subscribe to one of the following events : `eventsChanged`, `streamsChanged`, `accessesChanged` (see more details [here](https://api.pryv.com/reference/#subscribe-to-changes)).
+**Websockets** should be used to get notified of data changes in a web application (on the frontend side). 
 **Webhooks** are more suited to get notified of data changes in a web service (on the backend side).
+
+More details on websockets and webhooks can be found [here](https://api.pryv.com/reference/#subscribe-to-changes).
 
 ### What type of information do webhooks/websockets contain ?
 
-These notifications do not include the contents of the change, but they describe what type of resource has been changed (created, updated or deleted).
+These notifications do not include the content of the change, but they describe what type of resource has been changed (created, updated or deleted).
 They inform the server that it needs to fetch new or updated data through the API by doing a HTTP GET request with a valid access token. 
 
 ### Is the server notified of data changes in all streams of the account or only the streams for which permission was granted in the provided access token ?
