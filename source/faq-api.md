@@ -159,7 +159,7 @@ There are three main access types (see more info [here](https://api.pryv.com/con
 - **App accesses** are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs; this includes the management of shared accesses with lower or equivalent permissions. This type of access can only create shared accesses. If an app token is destroyed, it automatically destroys the shared tokens that were generated from this app token.
 - **Shared accesses** are used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), depending on the sharing user's choice. This type of access can not create other accesses. 
 
-## How long should I keep an access token valid ?
+### How long should I keep an access token valid ?
 
 Accesses are not systematically set with an expiry date. The optional field `expireAfter` of an [Access token](https://api.pryv.com/reference/#access) allows you to set an expiry date for the token if you want to. 
 It is important to bear in mind that if a token expires, you will need to keep a “master token” to be able to generate new ones. 
@@ -213,7 +213,8 @@ It is generally preferable to maximize the number of "app" tokens with limited s
 
 Below is an example of a single app "third-party-test" requesting access to the particular streams "Health" and "Personal Information" with a limited set of permissions :
 
-![Example app access](/assets/images/app-access.png)
+<img src="/assets/images/app-access.png" width="200">
+
 
 ## Notification system
 
