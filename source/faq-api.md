@@ -5,6 +5,35 @@ template: default.jade
 withTOC: true
 ---
 
+In this FAQ we answer common questions related to Pryv.io API. You can contact us directly if your question is not listed here.
+
+## Table of contents
+
+1. [Personal data](#personal-data)
+2. [Streams](#streams)
+3. [Event types](#event-types)
+4. [Other data structures](#other-data-structures)
+5. [API methods](#api-methods)
+6. [User creation](#user-creation)
+7. [Authentication](#authentication)
+8. [Account granularity](#account-granularity)
+9. [Access sharing](#access-sharing)
+10. [Notification system](#notification-system)
+11. [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api)
+
+## Personal data
+
+### We are using medical devices to collect data from our users. Is technical data from these devices also part of “personal” data of the user ?
+
+For data to be considered as “personal” data, it has to observe the following conditions  :
+
+- It is describing the person’s life. For example, MR Safe data shows that the individual was in an MRI at a particular moment, which is descriptive of his life;
+- It enables the person’s identification. For example, technical time-stamped data from a rare surgery can enable anyone to identify the person who has undergone the surgery, as only a few persons around the world have undergone the same surgery at the same timing.
+
+### Where should I store technical data of these devices ?
+
+If the technical data from these devices is considered as “personal” data of the user, he has the right to access it anytime. It should therefore be stored in his account.
+If you prefer storing this data in a separate account, keep in mind that the user can ask for a copy of it anytime if it is “personal” data.
 
 ## Streams
 
@@ -61,6 +90,12 @@ For practical reasons, we generally advise you to store the access tokens in a d
 
 ## API methods
 
+### Is it possible to have a list of existing core servers?
+
+Yes, the register service has 2 methods:
+- Get hostings: https://api.pryv.com/reference-system/#get-hostings.
+- Get cores: https://api.pryv.com/reference-system/#get-core-servers.
+
 ### What is the exact structure of the create attachment call?
 
 If you are having issues creating the package for the create attachment call with the client/framework/library you are using, you can print the details of the call by using cURL with the `-v` verbose option.
@@ -84,6 +119,12 @@ We suggest using the following format as a placeholder: `${USERNAME}@${DOMAIN}`.
 ### How can I programmatically create user accounts?
 
 It is possible to create users with an API call, without having to fill the fields manually.
+
+### Is there a search tool to retrieve a username from the user information (name, surname, etc) ? 
+
+It is possible to retrieve a username from an email address: https://api.pryv.com/reference-system/#get-username-from-email.
+This is useful for email authentication or if the user has lost his password. 
+
 
 ## Authentication
 
