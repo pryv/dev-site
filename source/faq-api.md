@@ -178,7 +178,7 @@ Using a token previously obtained, you can generate a new one using the [accesse
 
 Once you have obtained an access token to a user's account, for example for a doctor to access particular streams of his patients' data, we advise you to store it in a dedicated stream.
 
-You can find an example [here](/guides/data-modelling/#consent-aggregation) of how to do a consent aggregation with Pryv.io and store access tokens to user accounts. 
+You can find an example in the [data modelling guide](/guides/data-modelling/#consent-aggregation) of how to do consent aggregation with Pryv.io and store access tokens to user accounts. 
 
 ### How can I request access to someone's data?
 
