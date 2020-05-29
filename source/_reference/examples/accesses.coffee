@@ -97,3 +97,20 @@ module.exports =
       'events:get':	12
       'streams:get':	11
       'accesses:get':	6
+
+  createOnly:
+    id: generateId()
+    token: "mailbox"
+    type: "shared"
+    name: "publicly available token"
+    permissions: [
+      streamId: "inbox"
+      level: "create-only"
+    , 
+      feature: "selfRevoke"
+      setting: "forbidden"
+    ]
+    created: timestamp.now('-1d')
+    createdBy: idPersonal
+    modified: timestamp.now('-1d')
+    modifiedBy: idPersonal

@@ -1272,13 +1272,11 @@ components:
           $ref: "#/components/schemas/identifier"
         token:
           uniqueItems: true
-          readOnly: (except at creation)
           required: true
           description: The token identifying the access. Automatically generated if not set
             when creating the access; **slugified if necessary**.
           type: string
         type:
-          readOnly: (except at creation)
           description: "The type — or usage — of the access. Default: `shared`."
           schema:
             type: string
