@@ -357,7 +357,7 @@ module.exports = exports =
       title: "An app access"
       content: examples.accesses.app
     ,
-      title: "An app access with a create-only permission and forbidden selfRevoke"
+      title: "An app access with create-only and forbidden selfRevoke permissions"
       content: examples.accesses.createOnly
     ]
 

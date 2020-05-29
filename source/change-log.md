@@ -8,7 +8,7 @@ template: default.jade
 
 New feature: 
 
-- New access permission `{ "feature": "selfRevoke", "setting": "forbidden"}`, more details on [Concept - Accesses](/concepts/#accesses).
+- Access permission `{ "feature": "selfRevoke", "setting": "forbidden"}`, more details on [Access data structure](/reference/#access).
 
 ## v1.5
 
