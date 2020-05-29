@@ -78,16 +78,11 @@ This structure is likely to be deprecated soon, and with the exception of the �
 
 ### What are “Followed slices” that can be stored in Pryv accounts ? 
 
-For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a **Followed Slice**.  
-This data structure contains the following fields :
-- a `name` to enable the user to identify it;
-- the `url` of the API endpoint of the account hosting it;
-- the `token` of the shared access.
+Followed slices are meant to store another user's access tokens in one's account. For practical reasons, we generally advise you to store the access tokens in a dedicated stream.
+
+For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a [Followed Slice](/reference-full/#followed-slice).  
 
 However this data structure has a limitation: it is only accessible with a “personal token” which requires the user to login with his password every time.
-
-For practical reasons, we generally advise you to store the access tokens in a dedicated stream.
-
 
 ## API methods
 
