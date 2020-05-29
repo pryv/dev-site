@@ -41,7 +41,7 @@ If you prefer storing this data in a separate account, keep in mind that the use
 
 The stream structure is independent from one user account to another. It is declared and managed by apps: the stream structure can be created by the app when the user logs in for the first time for example.
 
-We advise you to maintain a list of streams following [this template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit?usp=sharing).
+We advise you to maintain a list of streams as explained in our [data modelling guide](https://api.pryv.com/guides/data-modelling/#implementation).
 
 ### Is there a limit in the number of child streams that a stream can have ?
 
@@ -54,7 +54,7 @@ For example, if you want to enter data measurements for different types of aller
 
 ### How can I define custom event types?
 
-You can define any custom type as long as it follows [this structure](/event-types/#basics). See the [Getting started guide - Data modelling](/getting-started/#events/) for more information.
+You can define any custom type as long as it follows [this structure](/event-types/#basics). See [How to customize event types](https://api.pryv.com/customer-resources/pryv.io-setup/#customize-event-types-validation) for more information.
 
 ### Can I limit the number of event types to be used in a stream ?
 
@@ -78,15 +78,16 @@ This structure is likely to be deprecated soon, and with the exception of the �
 
 ### What are “Followed slices” that can be stored in Pryv accounts ? 
 
-You can use a Followed slice to store subscriptions to resources in other accounts. This data structure contains the following fields :
+For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a **Followed Slice**.  
+This data structure contains the following fields :
 - a `name` to enable the user to identify it;
 - the `url` of the API endpoint of the account hosting it;
 - the `token` of the shared access.
 
-For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a **Followed Slice**.  
 However this data structure has a limitation: it is only accessible with a “personal token” which requires the user to login with his password every time.
 
 For practical reasons, we generally advise you to store the access tokens in a dedicated stream.
+
 
 ## API methods
 
@@ -129,9 +130,11 @@ This is useful for email authentication or if the user has lost his password.
 
 ### How does the authentication flow work ?
 
+You can check how to authorize your app [here](https://api.pryv.com/reference/#authorizing-your-app).
+
 We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-auth3). 
 
-We advise our customers to customize it and adapt to their own use case. 
+We advise our customers to customize it, and we provide some [guidelines](https://api.pryv.com/customer-resources/pryv.io-setup/#customize-authorization-registration-and-reset-password-apps) for the customization.
 
 ### I'm getting the "invalid credentials" error on the auth.login call although my fields are correct.
 
@@ -180,9 +183,7 @@ Using a token previously obtained, you can generate a new one using the [accesse
 
 Once you have obtained an access token to a user's account, for example for a doctor to access particular streams of his patients' data, we advise you to store it in a dedicated stream.
 
-You can create a dedicated public stream in which you (or any third party, e.g. other apps, doctors, that has been granted access to data) will store access tokens to other accounts. Third parties will have a “create-only” access level to this stream and will add events corresponding to access tokens.
-
-This method allows you to use the audit capabilities of Pryv.io and to audit API calls that were made on this stream.
+You can find an example [here](/guides/data-modelling/#consent-aggregation) of how to do a consent aggregation with Pryv.io and store access tokens to user accounts. 
 
 ### How can I request access to someone's data?
 
@@ -192,11 +193,7 @@ A simple web app demonstrating this implementation can be seen [here](https://gi
 
 ### What are the different access types ? 
 
-There are three main access types (see more info [here](https://api.pryv.com/concepts/#accesses)):
-
-- **Personal accesses** are used by apps that need to access the entirety of the user's data and/or manage account settings. They grant full permissions, including management of other accesses. This type of access can create app accesses.
-- **App accesses** are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs; this includes the management of shared accesses with lower or equivalent permissions. This type of access can only create shared accesses. If an app token is destroyed, it automatically destroys the shared tokens that were generated from this app token.
-- **Shared accesses** are used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), depending on the sharing user's choice. This type of access can not create other accesses. 
+There are three main access types - **personal**, **app** and **shared** - that are defined and explained [here](https://api.pryv.com/concepts/#accesses).
 
 ### How long should I keep an access token valid ?
 
