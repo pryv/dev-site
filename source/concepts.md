@@ -61,9 +61,9 @@ Custom applications can access Pryv user accounts via accesses. Each access defi
 
 Accesses can be made to expire after some time; see the `expireAfter` and `expires` attributes for more information. To flag an access as refused during access request use `expireAfter=0`.
 
-Accesses **cannot be updated**, to change Access properties it should be revoked with [/reference/#delete-access](`accesses.delete`) and re-created with [/reference/#create-access](`accesses.create`). The token can be preserved if given during creation.
+Accesses **cannot be updated**, to change Access properties it should be revoked with [`accesses.delete`](/reference/#delete-access) and re-created with [`accesses.create`](/reference/#create-access). The token can be preserved if given during creation.
 
-For security reason, unless explicitly indicated by `{ "feature": "selfRevoke", "setting": "forbidden"}` all accesses can be used to revoke (delete) themselves. In very specific cases, for example when a token is distributed publicly the `selfRevoke` capabilities should be set to `forbidden`.  
+For security reason, unless explicitly indicated by the permission `{ "feature": "selfRevoke", "setting": "forbidden"}` all accesses can be used to revoke (delete) themselves. In very specific cases, for example when a token is distributed publicly the `selfRevoke` capabilities should be set to `forbidden`.  
 
 
 <!-- TODO: See also [registering your app](#TODO). -->
