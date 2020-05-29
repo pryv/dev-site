@@ -59,15 +59,8 @@ Custom applications can access Pryv user accounts via accesses. Each access defi
 - **App** accesses are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs. An app Access is obtained by the user authorizing the requesting app after authenticating on Pryv (OAuth2-three-legged-style). This type of access can only create shared accesses with lower or equivalent permissions.  
 - **Personal** accesses are used by apps that need to access the entirety of the user's data and/or manage account settings. They grant full permissions, including management of other accesses. Personal accesses require the app to be registered as a trusted Pryv app. Access is obtained by the user directly authenticating with her personal credentials within the app. This type of access can create app accesses.
 
-Accesses can be made to expire after some time; see the `expireAfter` and `expires`
-attributes for more information. To disable an access please use `expireAfter=0`.
+Accesses can be made to expire after some time; see the `expireAfter` and `expires` attributes for more information.
 
+Accesses **cannot be updated**, to change Access properties it should be revoked with [`accesses.delete`](/reference/#delete-access) and re-created with [`accesses.create`](/reference/#create-access). The token can be preserved if provided during creation.
 
-<!-- TODO: See also [registering your app](#TODO). -->
-
-<!-- TODO: Rewrite this part....
-## Followed slices
-
-Users can view and possibly manipulate streams shared by other users as **followed slices** of life. A followed slice is a reference to another user's shared access, together with details on how to integrate the shared data within the user's own streams.
-
--->
+For security reason, unless explicitly indicated by the permission `{ "feature": "selfRevoke", "setting": "forbidden"}` all accesses can be used to revoke (delete) themselves. In very specific cases, for example when a token is distributed publicly the `selfRevoke` feature should be set to `forbidden`.  

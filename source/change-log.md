@@ -4,6 +4,12 @@ title: API change log
 template: default.jade
 ---
 
+## v1.5.5
+
+New feature: 
+
+- Access permission `{ "feature": "selfRevoke", "setting": "forbidden"}`, more details on [Access data structure](/reference/#access).
+
 ## v1.5
 
 New Features:

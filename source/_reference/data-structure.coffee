@@ -281,18 +281,34 @@ module.exports = exports =
                    Ignored for personal accesses. If permission levels conflict (e.g. stream set to "manage" and child stream set to "contribute"), only the highest level is considered. Each permission object has the following structure:
                    """
       properties: [
-        key: [ "streamId", "tag" ]
+        key: [ "streamId", "tag"]
         type: "[identifier](##{_getDocId("identifier")}) | string"
         description: """
-                     The id of the stream or the tag the permission applies to, or `*` for all streams/tags. Stream permissions are recursively applied to child streams.
+                     To be used with `level` property only.   
+                     The id of the stream or the tag the permission applies to, or `*` for all streams/tags. Stream permissions are recursively applied to child streams. 
                      """
       ,
         key: "level"
         type: "`read`|`contribute`|`manage`|`create-only`"
         description: """
+                     Used only with `streamId` or `tag` permissions.  
                      The level of access to the stream. With `contribute`, one can see and manipulate events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.  
                      
                      The `create-only` level - only available for stream-based permissions - allows to read the stream and create events on it and its children. The socket.io interface is not available for accesses that contain a `create-only` permission.
+                     """
+      ,
+        key: [ "feature"]
+        type: "`selfRevoke`"
+        description: """
+                     To be used only with `setting` property.  
+                     The only supported feature is `selfRevoke`
+                     """
+      ,
+        key: "setting"
+        type: "`forbidden`"
+        description: """
+                     To be used only with `feature` permission. 
+                     If given in the permission list, this will forbid this access to call `accesses.delete {id}` and perform a self revocation.  
                      """
       ]
     ,
@@ -307,12 +323,10 @@ module.exports = exports =
       optional: true
       readOnly: false
       description: """
-        (Only on create and update) If set, controls access expiry in seconds.
+        (Only on create) If set, controls access expiry in seconds.
         When given a number in this attribute (positive or zero),
         the access will expire (and not be accessible any more) after this many
         seconds.
-
-        Use `expireAfter=0` to immediately disable an access (without deleting it).
         """
     ,
       key: "expires"
@@ -342,6 +356,9 @@ module.exports = exports =
     examples: [
       title: "An app access"
       content: examples.accesses.app
+    ,
+      title: "An app access with create-only and forbidden selfRevoke permissions"
+      content: examples.accesses.createOnly
     ]
 
   ,
