@@ -9,10 +9,10 @@ In this FAQ we answer common questions related to Pryv.io platform. You can cont
 
 ## Table of contents
 
-1. [Platform prerequisites](#platform-prerequisites)
-2. [Customize registration, login, password-reset pages](#customize-registration-login-password-reset-pages)
-3. [Host apps, resources on the same domain, and reuse the SSL certificate](#host-apps-resources-on-the-same-domain-and-reuse-the-ssl-certificate)
-4. [System administrators](#system-administrators)
+- 1 [Platform prerequisites](#platform-prerequisites)
+- 2 [Customize registration, login, password-reset pages](#customize-registration-login-password-reset-pages)
+- 3 [Host apps, resources on the same domain, and reuse the SSL certificate](#host-apps-resources-on-the-same-domain-and-reuse-the-ssl-certificate)
+- 4 [System administrators](#system-administrators)
 
 
 ## Platform prerequisites

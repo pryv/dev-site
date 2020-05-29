@@ -9,17 +9,17 @@ In this FAQ we answer common questions related to Pryv.io API. You can contact u
 
 ## Table of contents
 
-1. [Personal data](#personal-data)
-2. [Streams](#streams)
-3. [Event types](#event-types)
-4. [Other data structures](#other-data-structures)
-5. [API methods](#api-methods)
-6. [User creation](#user-creation)
-7. [Authentication](#authentication)
-8. [Account granularity](#account-granularity)
-9. [Access sharing](#access-sharing)
-10. [Notification system](#notification-system)
-11. [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api-)
+- 1 [Personal data](#personal-data)
+- 2 [Streams](#streams)
+- 3 [Event types](#event-types)
+- 4 [Other data structures](#other-data-structures)
+- 5 [API methods](#api-methods)
+- 6 [User creation](#user-creation)
+- 7 [Authentication](#authentication)
+- 8 [Account granularity](#account-granularity)
+- 9 [Access sharing](#access-sharing)
+- 10 [Notification system](#notification-system)
+- 11 [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api-)
 
 ## Personal data
 
