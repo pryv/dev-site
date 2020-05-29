@@ -300,14 +300,14 @@ module.exports = exports =
         key: [ "feature"]
         type: "`selfRevoke`"
         description: """
-                     To be used with `setting` property.  
+                     To be used only with `setting` property.  
                      The only supported feature is `selfRevoke`
                      """
       ,
         key: "setting"
         type: "`forbidden`"
         description: """
-                     Used only with `feature` permission. 
+                     To be used only with `feature` permission. 
                      If given in the permission list, this will forbid this access to call `accesses.delete {id}` and perform a self revocation.  
                      """
       ]
@@ -359,7 +359,7 @@ module.exports = exports =
       title: "An app access"
       content: examples.accesses.app
     ,
-      title: "An app access with a create only permission and self revoke forbidden"
+      title: "An app access with a create-only permission and forbidden selfRevoke"
       content: examples.accesses.createOnly
     ]
 
