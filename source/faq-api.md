@@ -86,9 +86,10 @@ However this data structure has a limitation: it is only accessible with a “pe
 
 ## API methods
 
-### Is it possible to have a list of existing core servers?
+### Is it possible to have a list of existing core servers ?
 
 Yes, the register service has 2 methods:
+
 - Get hostings: [GET hostings](/reference-system/#get-hostings).
 - Get cores: [GET core servers](/reference-system/#get-core-servers).
 
@@ -180,7 +181,7 @@ Once you have obtained an access token to a user's account, for example for a do
 
 You can find an example in the [data modelling guide](/guides/data-modelling/#consent-aggregation) of how to do consent aggregation with Pryv.io and store access tokens to user accounts. 
 
-### How can I request access to someone's data?
+### How can I request access to someone's data ?
 
 In order to request an access to someone's data, one must implement a page that makes an [auth request](/reference/#auth-request) when loaded. The `url` in the response must be displayed to the user. The web page will ask him for his credentials as well as display the list of requested permissions. Upon approval, the app will obtain a valid token in the polling url response.
 
