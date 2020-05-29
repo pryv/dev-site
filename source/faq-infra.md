@@ -5,6 +5,16 @@ template: default.jade
 withTOC: true
 ---
 
+In this FAQ we answer common questions related to Pryv.io platform. You can contact us directly if your question is not listed here.
+
+## Table of contents
+
+1. [Platform prerequisites](#platform-prerequisites)
+2. [Customize registration, login, password-reset pages](#customize-registration-login-password-reset-pages)
+3. [Host apps, resources on the same domain, and reuse the SSL certificate](#host-apps-resources-on-the-same-domain-and-reuse-the-ssl-certificate)
+4. [System administrators](#system-administrators)
+
+
 ## Platform prerequisites
 
 In addition to the **Deployment design guide** document (available on request), a Pryv.io platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
@@ -100,7 +110,7 @@ The following pages will show the changes that you apply to this repository:
 - Reset password: https://sw.${DOMAIN}/access/reset-password.html
 - Consent authorization: https://sw.${DOMAIN}/access/access.html
 
-## How to host apps, resources on the same domain / reuse the SSL certificate
+## Host apps, resources on the same domain and reuse the SSL certificate
 
 The web role is meant for this. It contains a proxy server that can be configured to serve apps from different sources such as GitHub pages under the same domain, thus allowing to reuse the SSL certificate.
 

@@ -151,7 +151,7 @@ We can also help you with the design and validation of your data model.
 
 ## Customize event types validation
 
-Your Pryv.io platform performs content validation for the types definnition that you provide it. Events with undefined types are allowed but their content is not validated.  
+Your Pryv.io platform performs content validation for the types definition that you provide it. Events with undefined types are allowed but their content is not validated.  
 By default, the one defined in the [Event Types](/event-types/) page is used.
 
 You can host your definitions page on a public URL which will be loaded at the platform boot. You can define this URL in the platform parameters as following:

@@ -156,7 +156,8 @@ module.exports = exports =
                   - `accessesChanged`
                   - `systemBoot` (webhooks only)
 
-                Messages describe what type of resource has been changed (created, updated or deleted). It does not include the contents of the change, which must be retrieved through the API using a valid access token.  
+                Messages do not include the content of the changes, but they describe what type of resource has been changed (created, updated or deleted).
+                They inform the server that it needs to fetch new or updated data through the API by doing a HTTP GET request with a valid access token. 
                 The `systemBoot` message is executed when the notifications system is started in order to query possibly missed data changes.
                 """
   sections: [
