@@ -39,7 +39,7 @@ If you prefer storing this data in a separate account, keep in mind that the use
 
 ### Is the stream structure declared globally or at the level of each user account ? 
 
-The stream structure is independent from one user account to another. It is declared and managed by apps: the stream structure can be created by the app when the user logins for the first time for example.
+The stream structure is independent from one user account to another. It is declared and managed by apps: the stream structure can be created by the app when the user logs in for the first time for example.
 
 We advise you to maintain a list of streams following [this template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit?usp=sharing).
 
@@ -93,8 +93,8 @@ For practical reasons, we generally advise you to store the access tokens in a d
 ### Is it possible to have a list of existing core servers?
 
 Yes, the register service has 2 methods:
-- Get hostings: https://api.pryv.com/reference-system/#get-hostings.
-- Get cores: https://api.pryv.com/reference-system/#get-core-servers.
+- Get hostings: [GET hostings](/reference-system/#get-hostings).
+- Get cores: [GET core servers](/reference-system/#get-core-servers).
 
 ### What is the exact structure of the create attachment call?
 
@@ -122,9 +122,8 @@ It is possible to create users with an API call, without having to fill the fiel
 
 ### Is there a search tool to retrieve a username from the user information (name, surname, etc) ? 
 
-It is possible to retrieve a username from an email address: https://api.pryv.com/reference-system/#get-username-from-email.
-This is useful for email authentication or if the user has lost his password. 
-
+It is possible to retrieve a username from an email address: [Get username from email](/reference-system/#get-username-from-email).
+This is useful for email authentication or if the user has lost his password.
 
 ## Authentication
 
@@ -163,8 +162,7 @@ You should implement the [auth request](/reference/#auth-request), displaying th
 
 ### Is it possible to add an additional layer of authentication?
 
-Pryv.io login implies a username/password login, and integrates a multi-factor authentication (MFA) microservice on top of Pryv.io calls. 
-You can find more on how to use our MFA micro service for your authentication flow [here](https://api.pryv.com/reference-full/#multi-factor-authentication).
+The Pryv.io login supports multi-factor authentication (MFA). See its API reference methods [here](/reference-full/#multi-factor-authentication).
 
 ## Account granularity
 
@@ -202,8 +200,7 @@ There are three main access types (see more info [here](https://api.pryv.com/con
 
 ### How long should I keep an access token valid ?
 
-Accesses are not systematically set with an expiry date. The optional field `expireAfter` of an [Access token](https://api.pryv.com/reference/#access) allows you to set an expiry date for the token if you want to. 
-It is important to bear in mind that if a token expires, you will need to keep a “master token” to be able to generate new ones. 
+Accesses are not systematically set with an expiry date. The optional field `expireAfter` of an [Access token](https://api.pryv.com/reference/#access) allows you to set an expiry date for the token if you want to.
 
 If you are concerned with the security of the access, we provide you with monitoring tools to detect fraudulent use of tokens [here](https://api.pryv.com/reference/#audit).
 
@@ -217,15 +214,13 @@ It can happen that you would need an access delegation from your app users if th
 
 You can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](https://api.pryv.com/reference-full/#authorizing-your-app) for more information on the auth request).
 
-This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and therefore share access to data that was in the access scope of the “app” token. 
-
-However, an “app” token does not give the same rights as a “personal” token. A "personal" access allows in addition to manage account settings and other accesses, and to access the entirety of the user's data. A “personal” access can only be obtained by the user authenticating directly with his personal credentials within the app.
-
+This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and give permission to data that was in its scope.
 
 ### What level of permissions do I need to create/delete/modify streams in a user’s account ? 
 
-The access level “manage” on a stream gives you the permission to manipulate (create, modify, delete) all the substreams of this stream (see more details on the **Access** structure [here](https://api.pryv.com/reference/#access)).
-It is possible to request an access on all streams (`*`) at once with the following : 
+The access level “manage” on a stream gives you the permission to manipulate (read, create, modify, delete) all the substreams of this stream (see more details on the **Access** structure [here](https://api.pryv.com/reference/#access)).
+It is possible to request an access on all streams (`*`) at once with the following :
+
 ```json
 {
   "name": "Access on all streams",
@@ -237,9 +232,10 @@ It is possible to request an access on all streams (`*`) at once with the follow
   ]
 }
 ```
+
 ### Can I limit the number of apps that can send an auth request to users ? 
 
-There is currently no API token or API secret to restrict the auth request usage.
+There is currently no API secret to restrict the auth request usage.
 You can contact us directly if you wish to implement a verification protocol for the requesting apps.
 
 ### How to distribute accesses over a user account between multiple apps ?
@@ -262,7 +258,7 @@ Below is an example of a single app "third-party-test" requesting access to the 
 
 ### Should I use “websockets” or “webhooks” to subscribe to changes ?
 
-**Websockets** should be used to get notified of data changes in a web application (on the frontend side). 
+**Websockets** should be used to get notified of data changes in a web application (on the frontend side).  
 **Webhooks** are more suited to get notified of data changes in a web service (on the backend side).
 
 More details on websockets and webhooks can be found [here](https://api.pryv.com/reference/#subscribe-to-changes).
