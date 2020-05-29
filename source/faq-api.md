@@ -193,13 +193,13 @@ A simple web app demonstrating this implementation can be seen [here](https://gi
 
 ### What are the different access types ? 
 
-There are three main access types - **personal**, **app** and **shared** - that are defined and explained [here](https://api.pryv.com/concepts/#accesses).
+There are three main access types - **personal**, **app** and **shared** - that are defined and explained [here](/concepts/#accesses).
 
 ### How long should I keep an access token valid ?
 
-Accesses are not systematically set with an expiry date. The optional field `expireAfter` of an [Access token](https://api.pryv.com/reference/#access) allows you to set an expiry date for the token if you want to.
+Accesses are not systematically set with an expiry date. The optional field `expireAfter` of an [Access token](/reference/#access) allows you to set an expiry date for the token if you want to.
 
-If you are concerned with the security of the access, we provide you with monitoring tools to detect fraudulent use of tokens [here](https://api.pryv.com/reference/#audit).
+If you are concerned with the security of the access, we provide you with monitoring tools to detect fraudulent use of tokens [here](/reference/#audit).
 
 ### How can I access Pryv.io resources from another app?
 
@@ -209,26 +209,13 @@ This can be done by using the auth request through a consent step or by generati
 
 It can happen that you would need an access delegation from your app users if they cannot connect on the app to authorize apps and grant access to their data for some period of time.
 
-You can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](https://api.pryv.com/reference-full/#authorizing-your-app) for more information on the auth request).
+You can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](/reference-full/#authorizing-your-app) for more information on the auth request).
 
 This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and give permission to data that was in its scope.
 
 ### What level of permissions do I need to create/delete/modify streams in a user’s account ? 
 
-The access level “manage” on a stream gives you the permission to manipulate (read, create, modify, delete) all the substreams of this stream (see more details on the **Access** structure [here](https://api.pryv.com/reference/#access)).
-It is possible to request an access on all streams (`*`) at once with the following :
-
-```json
-{
-  "name": "Access on all streams",
-  "permissions": [
-    {
-      "streamId": "*",
-      "level": "manage"
-    }
-  ]
-}
-```
+The access level “manage” on a stream gives you the permission to manipulate (read, create, modify, delete) all the substreams of this stream (see more details on the **Access** structure [here](/reference/#access)).
 
 ### Can I limit the number of apps that can send an auth request to users ? 
 
@@ -241,7 +228,9 @@ We advise you to define all the needed accesses for third-parties from the begin
 
 You can do so by sharing a document with the user listing the concerned third-parties and asking for his consent, or by implementing a web-app that displays a panel of apps/third-parties to grant access to.
 
-You can then give each third-party an “app” token with a limited access to a particular scope of streams.
+To see an example of access structure implementation, you can check the [Data Modelling guide](/guides/data-modelling/).
+
+You can give each third-party an “app” token with limited permissions to a particular scope of streams.
 
 It is generally preferable to maximize the number of "app" tokens with limited set of permissions than to use a "master" token generating shared type of accesses to third parties, as it allows to track accesses made over data for audit capabilities. 
 
@@ -258,18 +247,16 @@ Below is an example of a single app "third-party-test" requesting access to the 
 **Websockets** should be used to get notified of data changes in a web application (on the frontend side).  
 **Webhooks** are more suited to get notified of data changes in a web service (on the backend side).
 
-More details on websockets and webhooks can be found [here](https://api.pryv.com/reference/#subscribe-to-changes).
+More details on websockets and webhooks can be found [here](/reference/#subscribe-to-changes).
 
 ### What type of information do webhooks/websockets contain ?
 
-These notifications do not include the content of the change, but they describe what type of resource has been changed (created, updated or deleted).
-They inform the server that it needs to fetch new or updated data through the API by doing a HTTP GET request with a valid access token. 
+You can have a look at the webhooks and websockets data changes payload in the [Subscribe to changes section](/reference/#subscribe-to-changes).
 
 ### Is the server notified of data changes in all streams of the account or only the streams for which permission was granted in the provided access token ?
 
 Notifications are sent as soon as there is a data change in the "events", "streams" or "accesses" for the whole user account. It is therefore possible to get notified of a data change that would not be in the scope of the access token.
 Notifications are likely to be scoped in the near future. 
-
 
 ## Do you have a test setup where I could experiment with your API?
 
