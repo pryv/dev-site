@@ -1664,7 +1664,7 @@ module.exports = exports =
       title: "Update webhook"
       http: "PUT /webhooks/{id}"
       description: """
-                   Modifies the webhook. You can only modify webhooks with the app access that was used to create them, unless you are using a personal token.  
+                   Modifies the webhook. You can only modify webhooks with the access that was used to create them, unless you are using a personal token.  
                    Updating the `state` to `active` resets the `currentRetries` counter.
                    """
       params:
@@ -1716,7 +1716,7 @@ module.exports = exports =
       title: "Delete webhook"
       http: "DELETE /webhooks/{id}"
       description: """
-                   Deletes the specified webhook. You can only delete webhooks with the app access that was used to create them, unless you are using a personal token.
+                   Deletes the specified webhook. You can only delete webhooks with the access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [
@@ -1750,7 +1750,7 @@ module.exports = exports =
       title: "Test webhook"
       http: "POST /webhooks/{id}/test"
       description: """
-                   Sends a post request containing a message called `test` to the URL of the specified webhook's `url`. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.
+                   Sends a post request containing a message called `test` to the URL of the specified webhook's `url`. You can only test webhooks with the access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [

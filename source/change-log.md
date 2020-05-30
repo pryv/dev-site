@@ -10,6 +10,8 @@ New feature:
 
 - Access permission `{ "feature": "selfRevoke", "setting": "forbidden"}`, more details on [Access data structure](/reference/#access).
 
+- Webhooks feature activated for `shared` tokens.
+
 ## v1.5
 
 New Features:

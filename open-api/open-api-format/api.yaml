@@ -753,7 +753,7 @@ paths:
                 - type: array
                   items: "[webhooks](#data-structure-webhook)"
     post:
-      description: Creates a new webhook. You can only create webhooks with app accesses.
+      description: Creates a new webhook. You can only create webhooks with `app` and `shared` accesses.
       operationId: webhooks.create
       responses:
         "201":
