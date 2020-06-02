@@ -4,13 +4,19 @@ title: API change log
 template: default.jade
 ---
 
+## v1.5.6
+
+Changes:
+
+- Webhooks API routes now available for `shared` accesses.
+- Socket.io interface availablel for `shared` accesses.
+- Socket.io interface availablel for accesses with `create-only` permissions.
+
 ## v1.5.5
 
 New feature: 
 
 - Access permission `{ "feature": "selfRevoke", "setting": "forbidden"}`, more details on [Access data structure](/reference/#access).
-
-- Webhooks feature activated for `shared` tokens.
 
 ## v1.5
 
