@@ -36,7 +36,7 @@
     "metalsmith-templates": "^0.7.0",
     "metalsmith-watch": "^1.0.1",
     "pryv-style": "git://github.com/pryv/style.git",
-    "rec-la": "^0.1.7",
+    "rec-la": "^0.1.11",
     "unix-timestamp": "^0.2.0"
   },
   "engines": {

@@ -1,6 +1,6 @@
-TYPES_BASE_URL=https://raw.github.com/pryv/data-types/master/
+TYPES_BASE_URL=https://raw.github.com/pryv/data-types/master/dist/
 EVENT_TYPES_URL=$(TYPES_BASE_URL)event-types.json
-EVENT_EXTRAS_URL=$(TYPES_BASE_URL)event-extras.json
+FLAT_TYPES_URL=$(TYPES_BASE_URL)flat.json
 TYPES_SOURCE_TARGET=./source/event-types/_source
 
 build:
@@ -19,7 +19,7 @@ retrieve-types:
 	@echo ""
 	@echo "Retrieving data types from $(TYPES_BASE_URL)..."
 	@echo ""
-	@cd $(TYPES_SOURCE_TARGET) && curl -LO $(EVENT_TYPES_URL) -LO $(EVENT_EXTRAS_URL)
+	@cd $(TYPES_SOURCE_TARGET) && curl -LO $(EVENT_TYPES_URL) -LO $(FLAT_TYPES_URL)
 
 retrieve-tests:
 	@echo ""

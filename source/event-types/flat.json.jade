@@ -1,15 +1,6 @@
 ---
 include:
-  sourceData: event-types/_source/event-types.json
+  sourceData: event-types/_source/flat.json
 ---
 
--// load JSON file
-- var data = _.clone(sourceData)
-- data.types = {}
-each className in Object.keys(data.classes)
-  - var classDef = data.classes[className]
-  each formatName in Object.keys(classDef.formats)
-    - var formatDef = classDef.formats[formatName]
-    - data.types[className + '/' + formatName] = formatDef
-- delete data.classes
-!= JSON.stringify(data, null, '  ')
+!= JSON.stringify(sourceData, null, '  ')

@@ -1293,10 +1293,10 @@ read-metadata@0.0.2:
   dependencies:
     yaml-js "0.0.8"
 
-rec-la@^0.1.7:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/rec-la/-/rec-la-0.1.10.tgz#fb0e929919169bede4d400f464128da638ec326f"
-  integrity sha512-2YwRg7rtlxsPCadpmg/TLbEEZXsXkSG13MwSqi61cAFZJxzzEURs7H1I2FcA2nLAaTDPTsb7zhetZcaAuwYQMg==
+rec-la@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/rec-la/-/rec-la-0.1.11.tgz#c10fb2a577b20af55eb416ef9e052078b6340e68"
+  integrity sha512-6Qw8lnTPeA/b8sB8VfQwtf5hgR/seznVZrD+nVykiAL8MTwhWxMBXjSLm0oVDBndCZ5do9gJgr9Pe0MJOnVUvw==
   dependencies:
     express "^4.14.0"
 
