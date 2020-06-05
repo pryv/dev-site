@@ -15,15 +15,23 @@ module.exports = exports =
     id: "endpoint-url"
     title: "Root endpoint URL"
     description: """
+                 Depending on Pryv.io set-up or distribution, the root endpoint can take different formats:
+
                  ```
-                 https://{username}.pryv.me
+                 Pryv.me: https://{username}.pryv.me
+                 DNSLess: https://{hostname}/{username}
+                 Own Domain: https://{username}.{domain}/
                  ```
 
                  Each user account has a dedicated root API endpoint as it is potentially served from a different location. The API endpoint format may vary, so check your platform's [service information](#service-info) if needed.
 
+                 You can adapt the examples with "API" selector in the top navigation bar.
+
                  """
     examples: [
-      title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.me`"
+      title: "For instance, user '#{examples.users.one.username}' would be served from  
+
+              `https://#{examples.users.one.username}.pryv.me` or `https://host.your-domain.io/#{examples.users.one.username}`"
     ]
 
   ,
@@ -45,9 +53,17 @@ module.exports = exports =
     examples: [
       title: "Example request"
       content: """
+               Pryv.me:
                ```http
                GET /events HTTP/1.1
                Host: {username}.pryv.me
+               Authorization: {token}
+               ```
+
+              DNSLess:
+              ```http
+               GET {username}/events HTTP/1.1
+               Host: host.your-domain.io
                Authorization: {token}
                ```
                """
@@ -90,15 +106,22 @@ module.exports = exports =
                    First, load the right Socket.IO client library.
 
                    - For a web app, the Javascript lib is directly served by the API at:
-                     <pre><code>https://{username}.pryv.me/socket.io/socket.io.js</code></pre>
+                     <pre><code>https://<span class="api">{username}.pryv.me</dib>/socket.io/socket.io.js</code></pre>
 
                    - For other platforms see the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).
 
                    Then initialize the connection with the URL:
-
+                  
+                   Pryv.me:
                    ```
                    https://{username}.pryv.me:443/{username}?auth={accessToken}&resource=/{username}
                    ```
+
+                   DNSLess:
+                   ```
+                   https://host.your-domain.io:443/{username}/{username}?auth={accessToken}&resource=/{username}
+                   ```
+                   *Yes! the username is quoted twice.. This is to keep compatibility with serviceInfo and eventual upgrades*
                    """
       examples: [
         title: "In a web app"
@@ -211,8 +234,10 @@ module.exports = exports =
     description: """
                  Service information provides a unified way for third party services to access the necessary information related to a Pryv.io platform as this route is served by any Pryv.io API endpoint.
 
-                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.  
-                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access.                 
+                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` or `https://{hostname}/access` is necessary.  
+                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access. 
+
+                 See [Auto-Configuration](/guides/app-guidelines/#auto-configuration) in the guide *App Guidlines*               
                  """
     params:
       properties: []

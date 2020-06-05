@@ -224,7 +224,13 @@ block content
 block custom-navbar-items
   form.navbar-form.navbar-right
     .form-group
-      label(for='examples-format') Examples:&nbsp;
+      label(for='examples-api') API:&nbsp;
+      select#examples-api.form-control
+        option(value='${username}.pryv.me', selected='selected') Pryv.me: ${username}.pryv.me
+        option(value='${hostname}/${username}') DNSLess: ${hostname}/${username}
+        option(value='${username}.${domain}') Own domain: ${username}.${domain}
+    .form-group
+      label(for='examples-format') &nbsp;Examples:&nbsp;
       select#examples-format.form-control
         option(value='json', selected='selected') Raw JSON
         option(value='http') cURL
@@ -240,6 +246,12 @@ block custom-scripts
     $('#examples-format').on('change', function () {
       setExamplesFormat(this.value);
     });
+    $('#examples-api').on('change', function () {
+      setExamplesAPI(this.value);
+    });
+    function setExamplesAPI(value) {
+       $("span").siblings( ".api" ).text(value);
+    }
     function setExamplesFormat(format) {
       var removeSelectors = [];
       ['json', 'http', 'sockets', 'httpAuth'].forEach(function (f) {
