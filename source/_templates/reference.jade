@@ -226,9 +226,9 @@ block custom-navbar-items
     .form-group
       label(for='examples-api') API:&nbsp;
       select#examples-api.form-control
-        option(value='${username}.pryv.me', selected='selected') Pryv.me: ${username}.pryv.me
-        option(value='${hostname}/${username}') DNSLess: ${hostname}/${username}
-        option(value='${username}.${domain}') Own domain: ${username}.${domain}
+        option(value='pryv.me', selected='selected') Pryv.me: ${username}.pryv.me
+        option(value='DNSLess') DNSLess: ${hostname}/${username}
+        option(value='Own') Own domain: ${username}.${domain}
     .form-group
       label(for='examples-format') &nbsp;Examples:&nbsp;
       select#examples-format.form-control
@@ -242,6 +242,10 @@ block custom-scripts
   script.
     $(document).ready(function () {
       setExamplesFormat($('#examples-format').get(0).value);
+      for (c of ['-user', '-host', '', '-curl']) {
+         $("span").siblings('.api' + c).addClass('hljs-string'); // add source code class to all items
+      }
+      setExamplesAPI('pryv.me');
     });
     $('#examples-format').on('change', function () {
       setExamplesFormat(this.value);
@@ -250,7 +254,30 @@ block custom-scripts
       setExamplesAPI(this.value);
     });
     function setExamplesAPI(value) {
-       $("span").siblings( ".api" ).text(value);
+      switch (value) {
+        case 'DNSLess':
+          $("span").siblings( ".api-user").text('{username}');
+          $("span").siblings( ".api-host").text('{hostname}');
+          $("span").siblings( ".api-reg").text('{hostname}/reg');
+          $("span").siblings( ".api" ).text('{hostname}/{username}');
+          $("span").siblings( ".api-curl" ).text('${hostname}/${username}');
+        break;
+        case 'Own':
+          $("span").siblings( ".api-user").text('');
+          $("span").siblings( ".api-host").text('{username}.{domain}');
+          $("span").siblings( ".api-reg" ).text('reg.{domain}');
+          $("span").siblings( ".api" ).text('{username}.{domain}');
+          $("span").siblings( ".api-curl" ).text('${username}.${domain}');
+        break;
+        default: // pryv.me
+          $("span").siblings( ".api-user").text('');
+          $("span").siblings( ".api-host").text('{username}.pryv.me');
+          $("span").siblings( ".api-reg" ).text('reg.pryv.me');
+          $("span").siblings( ".api" ).text('{username}.pryv.me');
+          $("span").siblings( ".api-curl" ).text('${username}.${domain}');
+        break;
+      }
+      console.log('Switched to ' + value);
     }
     function setExamplesFormat(format) {
       var removeSelectors = [];

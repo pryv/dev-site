@@ -97,7 +97,9 @@ module.exports = exports =
     id: "call-with-websockets"
     title: "Call with websockets"
     description: """
-                 The API supports real-time interaction by accepting websocket connections via [Socket.IO](http://socket.io).
+                 The API supports real-time interaction by accepting websocket connections via [Socket.IO](http://socket.io) V2.x.
+
+                 Before API version 1.5.8 Use Socket.io 0.9
                  """
     sections: [
       id: "connecting"
@@ -105,31 +107,33 @@ module.exports = exports =
       description: """
                    First, load the right Socket.IO client library.
 
-                   - For a web app, the Javascript lib is directly served by the API at:
-                     <pre><code>https://<span class="api">{username}.pryv.me</dib>/socket.io/socket.io.js</code></pre>
-
-                   - For other platforms see the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).
+                  See the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).
 
                    Then initialize the connection with the URL:
                   
+                   ```
                    Pryv.me:
-                   ```
                    https://{username}.pryv.me:443/{username}?auth={accessToken}&resource=/{username}
-                   ```
-
+                  
                    DNSLess:
-                   ```
                    https://host.your-domain.io:443/{username}/{username}?auth={accessToken}&resource=/{username}
                    ```
-                   *Yes! the username is quoted twice.. This is to keep compatibility with serviceInfo and eventual upgrades*
+                   *Yes! With DNSLess the username is quoted twice.. This is to keep compatibility with serviceInfo and eventual upgrades*
                    """
       examples: [
         title: "In a web app"
         content: """
+                 Pryv.me:
                  ```html
-                 <script src="https://#{examples.users.one.username}.pryv.me/socket.io/socket.io.js"></script>
                  <script>
                  var socket = io.connect("https://#{examples.users.one.username}.pryv.me:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 });
+                 </script>
+                 ```
+                 DNSLess:
+                 ```html
+                 <script>
+                 var socket = io.connect("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
                  });
                  </script>
                  ```
@@ -327,9 +331,8 @@ module.exports = exports =
                  1- Pryv.io supports the **Basic HTTP** Authentication Scheme This allows to present 
                  a Pryv.io endpoint as a single URL without exposing the token in query parameters:  
 
-                 ```
-                 curl https://{token}@{username}.pryv.me/access-info
-                 ```
+                 <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info
+                 </code></pre>
 
                  This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://visionmedia.github.io/superagent/) 
                  or [Postman](https://www.getpostman.com).
@@ -338,36 +341,33 @@ module.exports = exports =
 
                  2- The access token can be provided in the query string's `auth` parameter, for example during the Socket.IO handshake or for a direct HTTP GET call in a browser:
                  
-                 ```
-                 https://{username}.pryv.me/access-info?auth={token}
-                 ```
+                 <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info?auth={token}
+                 </code></pre>
 
                  """
     examples: [
       title: "HTTP `Authorization` header"
       content: """
-               ```http
-               GET /events HTTP/1.1
-               Host: {username}.pryv.me
+               <pre><code>GET <span class='api-user'></span>/events HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
                Authorization: {token}
-               ```
+               </code></pre>
                """
     ,
       title: "HTTP `Basic HTTP` authorization header"
       content: """
-               ```http
-               GET /events HTTP/1.1
-               Host: {username}.pryv.me
+               <pre><code>GET <span class='api-user'></span>/events HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
                Authorization: Basic {Base64 encoded token}
-               ```
+               </code></pre>
                """
     ,
       title: "HTTP `auth` query string parameter"
       content: """
-               ```http
-               GET /events?auth={token} HTTP/1.1
-               Host: {username}.pryv.me
-               ```
+               <pre><code>GET <span class='api-user'></span>/events?auth={token} HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               </code></pre>
                """
     ]
 
@@ -385,20 +385,18 @@ module.exports = exports =
     examples: [
       title: "HTTP `Origin` header"
       content: """
-               ```http
-               POST /auth/login HTTP/1.1
-               Host: {username}.pryv.me
-               Origin: https://sw.{domain}
-               ```
+                <pre><code>POST <span class='api-user'></span>/auth/login HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               Origin: https://sw.{domain}</code></pre>
                """
     ,
       title: "HTTP `Referer` header"
       content: """
-               ```http
-               POST /auth/login HTTP/1.1
-               Host: {username}.pryv.me
-               Referer: https://sw.{domain}
-               ```
+                <pre><code>POST <span class='api-user'></span>/auth/login HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               Referer: https://sw.{domain}</code></pre>
                """
     ]
   ,
