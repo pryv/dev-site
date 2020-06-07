@@ -3,6 +3,11 @@ id: change-log
 title: API change log
 template: default.jade
 ---
+## v1.5.9
+
+Changes:
+
+- Call 'POST /user' (create user) on register. The property `server` is now deprecated in favor of `apiEnpoint`.
 
 ## v1.5.6
 

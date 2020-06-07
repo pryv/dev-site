@@ -394,7 +394,15 @@ module.exports = exports =
             key: "server"
             type: "string"
             description: """
-                          The hostname of the core server hosting the new account.
+                          (Deprecated), result will be invalid for DNSLess setups.
+                          The server where this account is hosted.
+                          """ 
+          ,
+            key: "apiEndpoint"
+            type: "string"
+            description: """
+                          Available since `v1.5.9`
+                          The apiEndpoint to reach this account. Does not include an access token.
                           """
           ]
         examples: [
