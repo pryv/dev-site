@@ -383,7 +383,7 @@ module.exports = exports =
                   1. The web app for the Authentication and Consent process such as [app-web-auth3](https://github.com/pryv/app-web-auth3)
                   2. An admin panel for the end-user to manage Access Tokens and Profile.
 
-                 Trusted app api methods are tagged with <span class="trusted-tag"><span title="Trusted App Only" class="label">T</span></span>
+                 Trusted app api methods are tagged with <span class="trusted-tag"><span title="Trusted Apps Only" class="label">T</span></span>
 
                  This setting can be adapted in the Pryv.io service configuration.  
                  By default, any valid `appId` works and the `Origin` (or `Referer`) header must be in the form `https://*.{domain}`, ex.: `https://login.{domain}`.
