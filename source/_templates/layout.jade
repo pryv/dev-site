@@ -62,9 +62,10 @@ html.no-js(lang='en')
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>
                 ul.dropdown-menu
                   +menuItem('reference', 'API reference')
-                  +menuItem('change-log', 'API change log')
+                  +menuItem('reference-system', 'API System reference')
                   +menuItem('event-types', 'Event types')
-                  +menuItem('open-api', 'Open API')
+                  +menuItem('open-api', 'Open API (Postman)')
+                  +menuItem('change-log', 'API change log')
                   //+menuItem('standardStructure')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') FAQ <b class="caret"></b>
@@ -147,10 +148,4 @@ html.no-js(lang='en')
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-    // Sales-Wings
-    script(type='text/javascript' id='SW-fd71dffa-76e8-479e-a37b-6e915b97b023')
-    script.
-      !function(){function a(){var a=document.createElement("script");
-      a.type="text/javascript",a.async=1,a.src="//go.saleswingsapp.com/assets/javascripts/sw/fd71dffa-76e8-479e-a37b-6e915b97b023";
-      var b=document.getElementById("SW-fd71dffa-76e8-479e-a37b-6e915b97b023");
-      b.parentNode.insertBefore(a,b)}window.attachEvent?window.attachEvent("onload",a):window.addEventListener("load",a,0)}();
+   

@@ -242,7 +242,7 @@ sections:
             - Delete
             - List
         refs:
-          - url: https://api.pryv.com/reference-full/#followed-slices
+          - url: https://api.pryv.com/reference/#followed-slices
             description: Followed Slices API documentation
 
   - id: notifications

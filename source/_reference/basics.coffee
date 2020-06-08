@@ -13,17 +13,25 @@ module.exports = exports =
   title: "Basics"
   sections: [
     id: "endpoint-url"
-    title: "Root endpoint URL"
+    title: "API endpoint"
     description: """
+                 Depending on the Pryv.io set-up or distribution, the root endpoint can have the following formats:
+
                  ```
-                 https://{username}.pryv.me
+                 Pryv Lab: https://{username}.pryv.me
+                 DNS-less: https://{hostname}/{username}
+                 Own Domain: https://{username}.{domain}/
                  ```
 
                  Each user account has a dedicated root API endpoint as it is potentially served from a different location. The API endpoint format may vary, so check your platform's [service information](#service-info) if needed.
 
+                 You can adapt the examples with "API" selector in the top navigation bar.
+
                  """
     examples: [
-      title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.me`"
+      title: "For instance, user '#{examples.users.one.username}' would be served from  
+
+              `https://#{examples.users.one.username}.pryv.me` or `https://host.your-domain.io/#{examples.users.one.username}`"
     ]
 
   ,
@@ -45,9 +53,17 @@ module.exports = exports =
     examples: [
       title: "Example request"
       content: """
+               Pryv Lab:
                ```http
                GET /events HTTP/1.1
                Host: {username}.pryv.me
+               Authorization: {token}
+               ```
+
+              DNS-less:
+              ```http
+               GET {username}/events HTTP/1.1
+               Host: host.your-domain.io
                Authorization: {token}
                ```
                """
@@ -81,7 +97,9 @@ module.exports = exports =
     id: "call-with-websockets"
     title: "Call with websockets"
     description: """
-                 The API supports real-time interaction by accepting websocket connections via [Socket.IO](http://socket.io).
+                 The API supports real-time interaction by accepting websocket connections via [Socket.IO 2.0](http://socket.io)
+
+                 Before API version 1.5.8 Use Socket.io 0.9
                  """
     sections: [
       id: "connecting"
@@ -89,24 +107,31 @@ module.exports = exports =
       description: """
                    First, load the right Socket.IO client library.
 
-                   - For a web app, the Javascript lib is directly served by the API at:
-                     <pre><code>https://{username}.pryv.me/socket.io/socket.io.js</code></pre>
-
-                   - For other platforms see the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).
-
                    Then initialize the connection with the URL:
-
+                  
                    ```
+                   Pryv Lab:
                    https://{username}.pryv.me:443/{username}?auth={accessToken}&resource=/{username}
+                  
+                   DNS-less:
+                   https://host.your-domain.io:443/{username}/{username}?auth={accessToken}&resource=/{username}
                    ```
+                   *Yes, the username is quoted 3 times..*
                    """
       examples: [
         title: "In a web app"
         content: """
+                 Pryv.me:
                  ```html
-                 <script src="https://#{examples.users.one.username}.pryv.me/socket.io/socket.io.js"></script>
                  <script>
-                 var socket = io.connect("https://#{examples.users.one.username}.pryv.me:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 var socket = io("https://#{examples.users.one.username}.pryv.me:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 });
+                 </script>
+                 ```
+                 DNS-less:
+                 ```html
+                 <script>
+                 var socket = io("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
                  });
                  </script>
                  ```
@@ -211,8 +236,10 @@ module.exports = exports =
     description: """
                  Service information provides a unified way for third party services to access the necessary information related to a Pryv.io platform as this route is served by any Pryv.io API endpoint.
 
-                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.  
-                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access.                 
+                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` or `https://{hostname}/access` is necessary.  
+                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access. 
+
+                 See [Auto-Configuration](/guides/app-guidelines/#auto-configuration) in the guide *App Guidlines*               
                  """
     params:
       properties: []
@@ -302,9 +329,8 @@ module.exports = exports =
                  1- Pryv.io supports the **Basic HTTP** Authentication Scheme This allows to present 
                  a Pryv.io endpoint as a single URL without exposing the token in query parameters:  
 
-                 ```
-                 curl https://{token}@{username}.pryv.me/access-info
-                 ```
+                 <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info
+                 </code></pre>
 
                  This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://visionmedia.github.io/superagent/) 
                  or [Postman](https://www.getpostman.com).
@@ -313,36 +339,33 @@ module.exports = exports =
 
                  2- The access token can be provided in the query string's `auth` parameter, for example during the Socket.IO handshake or for a direct HTTP GET call in a browser:
                  
-                 ```
-                 https://{username}.pryv.me/access-info?auth={token}
-                 ```
+                 <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info?auth={token}
+                 </code></pre>
 
                  """
     examples: [
       title: "HTTP `Authorization` header"
       content: """
-               ```http
-               GET /events HTTP/1.1
-               Host: {username}.pryv.me
+               <pre><code>GET <span class='api-user'></span>/events HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
                Authorization: {token}
-               ```
+               </code></pre>
                """
     ,
       title: "HTTP `Basic HTTP` authorization header"
       content: """
-               ```http
-               GET /events HTTP/1.1
-               Host: {username}.pryv.me
+               <pre><code>GET <span class='api-user'></span>/events HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
                Authorization: Basic {Base64 encoded token}
-               ```
+               </code></pre>
                """
     ,
       title: "HTTP `auth` query string parameter"
       content: """
-               ```http
-               GET /events?auth={token} HTTP/1.1
-               Host: {username}.pryv.me
-               ```
+               <pre><code>GET <span class='api-user'></span>/events?auth={token} HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               </code></pre>
                """
     ]
 
@@ -353,27 +376,33 @@ module.exports = exports =
     trustedOnly: true
     description: """
                  These API methods require that the `appId` parameter and `Origin` (or `Referer`) header are trusted.  
+                 
+                 Only Apps that need to use a Personal token are be registered as "Trusted Apps".  
+                  
+                 These are usually:
+                  1. The web app for the Authentication and Consent process such as [app-web-auth3](https://github.com/pryv/app-web-auth3)
+                  2. An admin panel for the end-user to manage Access Tokens and Profile.
 
-                 This setting can be changed in the Pryv.io servers configuration.  
+                 Trusted app api methods are tagged with <span class="trusted-tag"><span title="Trusted App Only" class="label">T</span></span>
+
+                 This setting can be adapted in the Pryv.io service configuration.  
                  By default, any valid `appId` works and the `Origin` (or `Referer`) header must be in the form `https://*.{domain}`, ex.: `https://login.{domain}`.
                  """
     examples: [
       title: "HTTP `Origin` header"
       content: """
-               ```http
-               POST /auth/login HTTP/1.1
-               Host: {username}.pryv.me
-               Origin: https://sw.{domain}
-               ```
+                <pre><code>POST <span class='api-user'></span>/auth/login HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               Origin: https://sw.{domain}</code></pre>
                """
     ,
       title: "HTTP `Referer` header"
       content: """
-               ```http
-               POST /auth/login HTTP/1.1
-               Host: {username}.pryv.me
-               Referer: https://sw.{domain}
-               ```
+                <pre><code>POST <span class='api-user'></span>/auth/login HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               Referer: https://sw.{domain}</code></pre>
                """
     ]
   ,

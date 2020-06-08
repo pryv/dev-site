@@ -35,6 +35,21 @@ mixin methodId(id)
       span.label id
       span.label-value: code !{id}
 
+mixin entrepriseTag(entrepriseTag)
+  if entrepriseTag
+    span(onclick="location='/concepts/#entreprise-license-open-source-license'").entreprise-tag
+      span.label(title="Entreprise License Only") Y
+
+mixin trustedTag(trustedTag)
+  if trustedTag
+    span(onclick="location='/reference/#trusted-apps-verification'").trusted-tag
+      span.label(title="Trusted Apps Only") T
+
+mixin adminTag(adminTag)
+  if adminTag
+    span(onclick="location='/reference-system/#admin'").admin-tag
+      span.label(title="Admin Only") A
+
 mixin http(http, httpOnly)
   if http
     span.http
@@ -158,7 +173,7 @@ mixin examples(examples, settings)
 
                     !{helpers.printJSON(ex.result)}
 
-mixin section(section, parentDocId, level)
+mixin section(section, parentDocId, level, parent)
   - var isMethod = section.type === 'method'
   - var docId = apiReference.helpers.getDocId(parentDocId, section.id)
   - var sectionClass = (section.type || '')
@@ -177,14 +192,18 @@ mixin section(section, parentDocId, level)
       .content
         .meta
           if isMethod
+            +trustedTag(section.trustedTag || (parent && parent.trustedOnly)) 
+            +entrepriseTag(section.entrepriseTag || (parent && parent.entrepriseOnly)) 
+            +adminTag(section.adminTag || (parent && parent.adminOnly))
             if ! section.httpOnly
               +methodId(section.id)
             +http(section.http, section.httpOnly)
           if section.trustedOnly
-            if typeof(section.trustedOnly) === 'string'
-              span.label.trusted-only !{section.trustedOnly}
-            else 
-              span.label.trusted-only Trusted apps only
+            span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
+          if section.entrepriseOnly
+            span(onclick="location='/concepts/#entreprise-license-open-source-license'").label.entreprise-only Entreprise license only
+          if section.adminOnly
+            span(onclick="location='/reference-system/#admin'").label.admin-only Admin only
           if section.previewOnly
             span.label.trusted-only Preview 
         +intro(section.description)
@@ -205,7 +224,7 @@ mixin section(section, parentDocId, level)
       +examples(section.examples, section)
       if section.sections
         each subSection in section.sections
-          +section(subSection, docId, level + 1)
+          +section(subSection, docId, level + 1, section)
   
 block content
   - var source = sourceOverride ? apiReference[sourceOverride] : apiReference
@@ -224,7 +243,13 @@ block content
 block custom-navbar-items
   form.navbar-form.navbar-right
     .form-group
-      label(for='examples-format') Examples:&nbsp;
+      label(for='examples-api') API:&nbsp;
+      select#examples-api.form-control
+        option(value='pryv.me', selected='selected') Pryv Lab: ${username}.pryv.me
+        option(value='DNS-less') DNS-less: ${hostname}/${username}
+        option(value='Own') Own domain: ${username}.${domain}
+    .form-group
+      label(for='examples-format') &nbsp;Examples:&nbsp;
       select#examples-format.form-control
         option(value='json', selected='selected') Raw JSON
         option(value='http') cURL
@@ -236,10 +261,46 @@ block custom-scripts
   script.
     $(document).ready(function () {
       setExamplesFormat($('#examples-format').get(0).value);
+      for (c of ['-user', '-host', '', '-curl']) {
+         $("span").siblings('.api' + c).addClass('hljs-string'); // add source code class to all items
+      }
+      setExamplesAPI('pryv.me');
     });
     $('#examples-format').on('change', function () {
       setExamplesFormat(this.value);
     });
+    $('#examples-api').on('change', function () {
+      setExamplesAPI(this.value);
+    });
+    function setExamplesAPI(value) {
+      switch (value) {
+        case 'DNS-less':
+          $("span").siblings( ".api-user").text('{username}');
+          $("span").siblings( ".api-host").text('{hostname}');
+          $("span").siblings( ".api-reg").text('{hostname}/reg');
+          $("span").siblings( ".api-reg-curl").text('${hostname}/reg');
+          $("span").siblings( ".api" ).text('{hostname}/{username}');
+          $("span").siblings( ".api-curl" ).text('${hostname}/${username}');
+        break;
+        case 'Own':
+          $("span").siblings( ".api-user").text('');
+          $("span").siblings( ".api-host").text('{username}.{domain}');
+          $("span").siblings( ".api-reg" ).text('reg.{domain}');
+          $("span").siblings( ".api-reg-curl" ).text('reg.${domain}');
+          $("span").siblings( ".api" ).text('{username}.{domain}');
+          $("span").siblings( ".api-curl" ).text('${username}.${domain}');
+        break;
+        default: // pryv.me
+          $("span").siblings( ".api-user").text('');
+          $("span").siblings( ".api-host").text('{username}.pryv.me');
+          $("span").siblings( ".api-reg" ).text('reg.pryv.me');
+          $("span").siblings( ".api-reg-curl" ).text('reg.pryv.me');
+          $("span").siblings( ".api" ).text('{username}.pryv.me');
+          $("span").siblings( ".api-curl" ).text('${username}.pryv.me');
+        break;
+      }
+      console.log('Switched to ' + value);
+    }
     function setExamplesFormat(format) {
       var removeSelectors = [];
       ['json', 'http', 'sockets', 'httpAuth'].forEach(function (f) {

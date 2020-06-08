@@ -44,4 +44,6 @@ See the [Pryv guidelines](http://pryv.github.io/guidelines/).
 
 ## License
 
-[Revised BSD license](https://github.com/pryv/documents/blob/master/license-bsd-revised.md)
+Unlicensed 
+
+Copyright (c) 2020 Pryv S.A.

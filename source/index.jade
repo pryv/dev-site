@@ -51,14 +51,13 @@ permalink: false
       ul.nav.nav-tabs
         li.active: a(href='#api-example-http', data-toggle='tab') HTTP
         li: a(href='#api-example-sockets', data-toggle='tab') Socket.IO
-        li: a(href='#api-example-httpAuth', data-toggle='tab') HTTP+Basic
+        li: a(href='#api-example-DNS-less', data-toggle='tab') DNS-less
       .tab-content
-        #api-example-httpAuth.tab-pane.active
+        #api-example-DNS-less.tab-pane.active
           :marked
             ```http
-            GET /events HTTP/1.1
-            Host: {user}.pryv.me
-            Authorization: Basic {Base64 encoded token}
+            GET {user}/events HTTP/1.1
+            Authorization: {token}
             ```
           .step-marker ⬇
           :marked

@@ -92,6 +92,7 @@ module.exports = exports =
     id: "mfa"
     title: "Multi-factor authentication"
     trustedOnly: true
+    entrepriseOnly: true
     description: """
                  Methods for handling multi-factor authentication (MFA) on top of the usual [Login method](##{_getDocId("auth", "auth.login")}).
                  """
@@ -792,6 +793,7 @@ module.exports = exports =
 
   id: "hfs"
   title: "HF events"
+  entrepriseOnly: true
   description: """
                 Methods to manipulate high-frequency data through HF events and [HF series](##{dataStructure.getDocId("high-frequency-series")}).
                """
@@ -1439,6 +1441,7 @@ module.exports = exports =
 
     id: "audit"
     title: "Audit"
+    entrepriseOnly: true
     description: """
                  Methods to retrieve [Audit logs](##{dataStructure.getDocId("audit-log")}).
                  """
@@ -1562,6 +1565,7 @@ module.exports = exports =
 
     id: "webhooks"
     title: "Webhooks"
+    entrepriseOnly: true
     description: """
                  Methods to retrieve and manipulate [webhooks](##{dataStructure.getDocId("webhook")}). These methods are only allowed for app and personal accesses.
                  """

@@ -12,11 +12,7 @@ In this space you will find links and reference documents that will help you mak
 
 - API Reference: [api.pryv.com/reference](/reference/)
 
-  This reference can be shared with 3rd party and in-house application developers to interact with the Pryv.io platform.
-
-- API Reference including Trusted Apps: [api.pryv.com/reference-full](/reference-full/)
-
-  This reference contains the previous methods' reference and additional resources to develop a trusted application. Only for in-house developments as the platform owner.
+  This reference contains the documentation for application developers to interact with the Pryv.io platform.
 
 - API Reference for system management: [api.pryv.com/reference-system](/reference-system/)
 

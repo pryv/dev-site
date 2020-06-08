@@ -18,7 +18,7 @@ exports.sections = [
   loadYaml('./requirements.yml'),
 ];
 
-exports.version = '0.0.1';
+exports.version = '0.0.2';
 exports.helpers = require('./helpers.coffee');
 
 

@@ -41,16 +41,19 @@ module.exports = exports =
     id: "api-methods"
     title: "API methods"
     description: """
-              The methods are called via HTTPS on the registry server: `https://reg.{domain}`
+              The methods are called via HTTPS on the registry server: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.
               """
     sections: [
       id: "admin"
       title: "Admin"
+      adminOnly: true
       description: """
                   Methods for platform administration.
 
                   These calls are limited to accredited persons and are flagged as `Admin only`.
                   
+                  Admin api calls are tagged with <span class="admin-tag"><span title="Admin Only" class="label">A</span></span>
+
                   They must carry an admin key in the HTTP `Authorization` header.
                   Such keys are defined within the registry configuration (auth:authorizedKeys).
                   """
@@ -60,7 +63,6 @@ module.exports = exports =
         title: "Get users"
         http: "GET /admin/users"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all users registered on the platform.
@@ -98,7 +100,6 @@ module.exports = exports =
         title: "Get core servers"
         http: "GET /admin/servers"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all core servers with the number of users on them.
@@ -126,7 +127,6 @@ module.exports = exports =
         title: "Get users on core server"
         http: "GET /admin/servers/{serverName}/users"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all users registered on a specific core server.
@@ -166,7 +166,6 @@ module.exports = exports =
         title: "Rename core server"
         http: "GET /admin/servers/{srcServerName}/rename/{dstServerName}"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Rename a core server, thus reassigning the users from srcServer to dstServer.
@@ -394,7 +393,15 @@ module.exports = exports =
             key: "server"
             type: "string"
             description: """
-                          The hostname of the core server hosting the new account.
+                          **(DEPRECATED)**  
+                          The server where this account is hosted.
+                          The result will be invalid for DNS-less setups.
+                          """ 
+          ,
+            key: "apiEndpoint"
+            type: "string"
+            description: """
+                          The apiEndpoint to reach this account. Does not include an access token.
                           """
           ]
         examples: [
