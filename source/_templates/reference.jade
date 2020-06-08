@@ -203,10 +203,13 @@ mixin section(section, parentDocId, level, parent)
             &nbsp;
           if section.entrepriseOnly
             span(onclick="location='/concepts/#entreprise-license-open-source-license'").label.entreprise-only Entreprise license only
+            &nbsp;
           if section.adminOnly
             span(onclick="location='/reference-system/#admin'").label.admin-only Admin only
+            &nbsp;
           if section.previewOnly
-            span.label.trusted-only Preview 
+            span.label.trusted-only Preview
+            &nbsp; 
         +intro(section.description)
         +properties(section.properties)
         if section.params
