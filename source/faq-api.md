@@ -147,7 +147,7 @@ We advise our customers to customize it, and we provide some [guidelines](https:
 }
 ```
 
-API methods such as `auth.login` marked as _TRUSTED APPS ONLY_ on [the _full_ API reference](/reference/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.io connected apps to steal user credentials.
+API methods such as `auth.login` marked as <span onclick="location='/reference/#trusted-apps-verification'" class="label trusted-only">Trusted apps only</span> on [the API reference](/reference/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.io connected apps to steal user credentials.
 
 In order for this to work, the web app must be running on a domain allowed by the configuration. By default, this contains: `https://*.${DOMAIN}*, https://*.rec.la*, https://*.pryv.github.io*`.
 

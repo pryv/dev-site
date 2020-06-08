@@ -377,8 +377,9 @@ module.exports = exports =
     description: """
                  These API methods require that the `appId` parameter and `Origin` (or `Referer`) header are trusted.  
                  
-                 Only Apps that needs to use a Personal token should be registered as "Trusted Apps". 
-                 These apps are usually 
+                 Only Apps that need to use a Personal token should be registered as "Trusted Apps".  
+                  
+                 These are usually:
                   1. The web app for the Authentication and Consent process such as [app-web-auth3](https://github.com/pryv/app-web-auth3)
                   2. An admin panel for the end-user to manage Access Tokens and Profile.
 

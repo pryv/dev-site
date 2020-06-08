@@ -41,7 +41,7 @@ module.exports = exports =
     id: "api-methods"
     title: "API methods"
     description: """
-              The methods are called via HTTPS on the registry server: `https://reg.{domain}`
+              The methods are called via HTTPS on the registry server: `https://reg.{domain}` or `https://{hostname}/reg` for DNSLess setup.
               """
     sections: [
       id: "admin"
@@ -52,6 +52,8 @@ module.exports = exports =
 
                   These calls are limited to accredited persons and are flagged as `Admin only`.
                   
+                  Admin api calls are tagged with <span class="admin-tag"><span title="Admin Only" class="label">A</span></span>
+
                   They must carry an admin key in the HTTP `Authorization` header.
                   Such keys are defined within the registry configuration (auth:authorizedKeys).
                   """
