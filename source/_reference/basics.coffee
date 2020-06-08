@@ -97,7 +97,7 @@ module.exports = exports =
     id: "call-with-websockets"
     title: "Call with websockets"
     description: """
-                 The API supports real-time interaction by accepting websocket connections via [Socket.IO](http://socket.io) V2.x.
+                 The API supports real-time interaction by accepting websocket connections via [Socket.IO 2.0](http://socket.io)
 
                  Before API version 1.5.8 Use Socket.io 0.9
                  """
@@ -106,9 +106,7 @@ module.exports = exports =
       title: "Connecting"
       description: """
                    First, load the right Socket.IO client library.
-
-                  See the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).
-
+                   
                    Then initialize the connection with the URL:
                   
                    ```
@@ -126,14 +124,14 @@ module.exports = exports =
                  Pryv.me:
                  ```html
                  <script>
-                 var socket = io.connect("https://#{examples.users.one.username}.pryv.me:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 var socket = io("https://#{examples.users.one.username}.pryv.me:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
                  });
                  </script>
                  ```
                  DNSLess:
                  ```html
                  <script>
-                 var socket = io.connect("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 var socket = io("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
                  });
                  </script>
                  ```
