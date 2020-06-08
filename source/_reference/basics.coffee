@@ -18,8 +18,8 @@ module.exports = exports =
                  Depending on Pryv.io set-up or distribution, the root endpoint can take different formats:
 
                  ```
-                 DNSLess: https://{hostname}/{username}
                  Pryv Lab: https://{username}.pryv.me
+                 DNS-less: https://{hostname}/{username}
                  Own Domain: https://{username}.{domain}/
                  ```
 
@@ -60,7 +60,7 @@ module.exports = exports =
                Authorization: {token}
                ```
 
-              DNSLess:
+              DNS-less:
               ```http
                GET {username}/events HTTP/1.1
                Host: host.your-domain.io
@@ -113,7 +113,7 @@ module.exports = exports =
                    Pryv Lab:
                    https://{username}.pryv.me:443/{username}?auth={accessToken}&resource=/{username}
                   
-                   DNSLess:
+                   DNS-less:
                    https://host.your-domain.io:443/{username}/{username}?auth={accessToken}&resource=/{username}
                    ```
                    *Yes! With DNSLess the username is quoted twice.. This is to keep compatibility with serviceInfo and eventual upgrades*
@@ -128,7 +128,7 @@ module.exports = exports =
                  });
                  </script>
                  ```
-                 DNSLess:
+                 DNS-less:
                  ```html
                  <script>
                  var socket = io("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");

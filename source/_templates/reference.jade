@@ -246,7 +246,7 @@ block custom-navbar-items
       label(for='examples-api') API:&nbsp;
       select#examples-api.form-control
         option(value='Pryv Lab', selected='selected') Pryv.me: ${username}.pryv.me
-        option(value='DNSLess') DNSLess: ${hostname}/${username}
+        option(value='DNS-less') DNS-less: ${hostname}/${username}
         option(value='Own') Own domain: ${username}.${domain}
     .form-group
       label(for='examples-format') &nbsp;Examples:&nbsp;
@@ -274,7 +274,7 @@ block custom-scripts
     });
     function setExamplesAPI(value) {
       switch (value) {
-        case 'DNSLess':
+        case 'DNS-less':
           $("span").siblings( ".api-user").text('{username}');
           $("span").siblings( ".api-host").text('{hostname}');
           $("span").siblings( ".api-reg").text('{hostname}/reg');
