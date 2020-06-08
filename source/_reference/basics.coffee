@@ -13,7 +13,7 @@ module.exports = exports =
   title: "Basics"
   sections: [
     id: "endpoint-url"
-    title: "Root endpoint URL"
+    title: "API endpoint"
     description: """
                  Depending on Pryv.io set-up or distribution, the root endpoint can take different formats:
 
