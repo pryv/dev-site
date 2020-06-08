@@ -18,8 +18,8 @@ module.exports = exports =
                  Depending on Pryv.io set-up or distribution, the root endpoint can take different formats:
 
                  ```
-                 Pryv.me: https://{username}.pryv.me
                  DNSLess: https://{hostname}/{username}
+                 Pryv Lab: https://{username}.pryv.me
                  Own Domain: https://{username}.{domain}/
                  ```
 
@@ -53,7 +53,7 @@ module.exports = exports =
     examples: [
       title: "Example request"
       content: """
-               Pryv.me:
+               Pryv Lab:
                ```http
                GET /events HTTP/1.1
                Host: {username}.pryv.me
@@ -110,7 +110,7 @@ module.exports = exports =
                    Then initialize the connection with the URL:
                   
                    ```
-                   Pryv.me:
+                   Pryv Lab:
                    https://{username}.pryv.me:443/{username}?auth={accessToken}&resource=/{username}
                   
                    DNSLess:
