@@ -92,6 +92,7 @@ module.exports = exports =
     id: "mfa"
     title: "Multi-factor authentication"
     trustedOnly: true
+    entrepriseOnly: true
     description: """
                  Methods for handling multi-factor authentication (MFA) on top of the usual [Login method](##{_getDocId("auth", "auth.login")}).
                  """
