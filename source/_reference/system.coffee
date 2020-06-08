@@ -41,7 +41,7 @@ module.exports = exports =
     id: "api-methods"
     title: "API methods"
     description: """
-              The methods are called via HTTPS on the registry server: `https://reg.{domain}` or `https://{hostname}/reg` for DNSLess setup.
+              The methods are called via HTTPS on the registry server: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.
               """
     sections: [
       id: "admin"
@@ -393,14 +393,14 @@ module.exports = exports =
             key: "server"
             type: "string"
             description: """
-                          (Deprecated), result will be invalid for DNSLess setups.
+                          **(DEPRECATED)**  
                           The server where this account is hosted.
+                          The result will be invalid for DNS-less setups.
                           """ 
           ,
             key: "apiEndpoint"
             type: "string"
             description: """
-                          Available since `v1.5.9`
                           The apiEndpoint to reach this account. Does not include an access token.
                           """
           ]

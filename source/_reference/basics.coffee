@@ -15,7 +15,7 @@ module.exports = exports =
     id: "endpoint-url"
     title: "API endpoint"
     description: """
-                 Depending on Pryv.io set-up or distribution, the root endpoint can take different formats:
+                 Depending on the Pryv.io set-up or distribution, the root endpoint can have the following formats:
 
                  ```
                  Pryv Lab: https://{username}.pryv.me
@@ -116,7 +116,7 @@ module.exports = exports =
                    DNS-less:
                    https://host.your-domain.io:443/{username}/{username}?auth={accessToken}&resource=/{username}
                    ```
-                   *Yes! With DNSLess the username is quoted twice.. This is to keep compatibility with serviceInfo and eventual upgrades*
+                   *Yes, the username is quoted 3 times..*
                    """
       examples: [
         title: "In a web app"
@@ -377,15 +377,15 @@ module.exports = exports =
     description: """
                  These API methods require that the `appId` parameter and `Origin` (or `Referer`) header are trusted.  
                  
-                 Only Apps that need to use a Personal token should be registered as "Trusted Apps".  
+                 Only Apps that need to use a Personal token are be registered as "Trusted Apps".  
                   
                  These are usually:
                   1. The web app for the Authentication and Consent process such as [app-web-auth3](https://github.com/pryv/app-web-auth3)
                   2. An admin panel for the end-user to manage Access Tokens and Profile.
 
-                 Trusted app api calls are tagged with <span class="trusted-tag"><span title="Trusted App Only" class="label">T</span></span>
+                 Trusted app api methods are tagged with <span class="trusted-tag"><span title="Trusted App Only" class="label">T</span></span>
 
-                 This setting can be changed in the Pryv.io servers configuration.  
+                 This setting can be adapted in the Pryv.io service configuration.  
                  By default, any valid `appId` works and the `Origin` (or `Referer`) header must be in the form `https://*.{domain}`, ex.: `https://login.{domain}`.
                  """
     examples: [

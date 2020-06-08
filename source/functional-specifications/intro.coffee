@@ -19,7 +19,7 @@ module.exports = exports =
                 middleware system: the capabilities and functions that the
                 system must be capable of performing.
 
-                This document applies only to Pryv.io releases under commercial License.
+                This document applies only to Pryv.io releases under Enterprise License.
 
                 This document does not apply to Open Pryv.io release.
                """

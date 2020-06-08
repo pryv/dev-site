@@ -70,7 +70,7 @@ For security reason, unless explicitly indicated by the permission `{ "feature":
 Pryv.io is released under two licenses:
 
 1. **Open-Pryv.io**: Is distributed freely under [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) 
-2. **Pryv.io Entreprise**: Is distributed under a commercial license and comes with more features. In the API documentation these features are indicated with a <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span> Label.
+2. **Pryv.io Entreprise**: Is distributed under a commercial license and comes with more features. In the API documentation these features are indicated with a <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>label.
 For more information about Pryv.io Entreprise edition, visit [pryv.com](https://pryv.com)
 
 
