@@ -200,16 +200,16 @@ mixin section(section, parentDocId, level, parent)
             +http(section.http, section.httpOnly)
           if section.trustedOnly
             span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
-            &nbsp;
+            text &nbsp;
           if section.entrepriseOnly
             span(onclick="location='/concepts/#entreprise-license-open-source-license'").label.entreprise-only Entreprise license only
-            &nbsp;
+            text &nbsp;
           if section.adminOnly
             span(onclick="location='/reference-system/#admin'").label.admin-only Admin only
-            &nbsp;
+            text &nbsp;
           if section.previewOnly
             span.label.trusted-only Preview
-            &nbsp; 
+            text &nbsp; 
         +intro(section.description)
         +properties(section.properties)
         if section.params
