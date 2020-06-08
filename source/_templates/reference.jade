@@ -45,6 +45,11 @@ mixin trustedTag(trustedTag)
     span(onclick="location='/reference/#trusted-apps-verification'").trusted-tag
       span.label(title="Trusted Apps Only") T
 
+mixin adminTag(adminTag)
+  if adminTag
+    span(onclick="location='/reference-system/#admin'").admin-tag
+      span.label(title="Admin Only") A
+
 mixin http(http, httpOnly)
   if http
     span.http
@@ -189,16 +194,16 @@ mixin section(section, parentDocId, level, parent)
           if isMethod
             +trustedTag(section.trustedTag || (parent && parent.trustedOnly)) 
             +entrepriseTag(section.entrepriseTag || (parent && parent.entrepriseOnly)) 
+            +adminTag(section.adminTag || (parent && parent.adminOnly))
             if ! section.httpOnly
               +methodId(section.id)
             +http(section.http, section.httpOnly)
           if section.trustedOnly
-            if typeof(section.trustedOnly) === 'string'
-              span.label.trusted-only !{section.trustedOnly}
-            else 
-              span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
+            span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
           if section.entrepriseOnly
             span(onclick="location='/concepts/#entreprise-license-open-source-license'").label.entreprise-only Entreprise license only
+          if section.adminOnly
+            span(onclick="location='/reference-system/#admin'").label.admin-only Admin only
           if section.previewOnly
             span.label.trusted-only Preview 
         +intro(section.description)

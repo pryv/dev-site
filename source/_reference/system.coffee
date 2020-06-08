@@ -46,6 +46,7 @@ module.exports = exports =
     sections: [
       id: "admin"
       title: "Admin"
+      adminOnly: true
       description: """
                   Methods for platform administration.
 
@@ -60,7 +61,6 @@ module.exports = exports =
         title: "Get users"
         http: "GET /admin/users"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all users registered on the platform.
@@ -98,7 +98,6 @@ module.exports = exports =
         title: "Get core servers"
         http: "GET /admin/servers"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all core servers with the number of users on them.
@@ -126,7 +125,6 @@ module.exports = exports =
         title: "Get users on core server"
         http: "GET /admin/servers/{serverName}/users"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all users registered on a specific core server.
@@ -166,7 +164,6 @@ module.exports = exports =
         title: "Rename core server"
         http: "GET /admin/servers/{srcServerName}/rename/{dstServerName}"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Rename a core server, thus reassigning the users from srcServer to dstServer.
