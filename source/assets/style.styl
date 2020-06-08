@@ -227,7 +227,7 @@ body.home
     .meta
       margin-bottom: 0.5em
 
-    .method-id, :not(code).http
+    .method-id, :not(code).http, .entreprise-tag, .trusted-tag
       display: inline-block
       height: 1.6em
       border-radius: 0.25em
@@ -262,6 +262,18 @@ body.home
     .label
       background-color: #7E7E7E
 
+  .entreprise-tag
+    margin-right: 0.5em
+    .label
+      height: 40.6em
+      background-color: $pryv-red
+
+  .trusted-tag
+    margin-right: 0.5em
+    .label
+      height: 40.6em
+      background-color: #DD8800
+
   .example .step-marker, .marketing-icon .step-marker
     text-align: center
     margin-top: -0.60em;
@@ -271,6 +283,12 @@ body.home
 
   .trusted-only
     background-color: #DD8800
+    font-size: 1em
+    text-transform: uppercase
+    vertical-align: 0.5em
+
+  .entreprise-only
+    background-color: $pryv-red
     font-size: 1em
     text-transform: uppercase
     vertical-align: 0.5em
