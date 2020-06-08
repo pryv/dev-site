@@ -80,7 +80,7 @@ This structure is likely to be deprecated soon, and with the exception of the �
 
 Followed slices are meant to store another user's access tokens in one's account. For practical reasons, we generally advise you to store the access tokens in a dedicated stream.
 
-For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a [Followed Slice](/reference-full/#followed-slice).  
+For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a [Followed Slice](/reference/#followed-slice).  
 
 However this data structure has a limitation: it is only accessible with a “personal token” which requires the user to login with his password every time.
 
@@ -109,7 +109,7 @@ The user creation API call uses a token and by not making this token public, it 
 
 ### What if I don't want to provide an email registration phase?
 
-Account must have an email-like string attached to them. You can make up an email address for you internal app usage, depending on your requirements. Please note that you will not be able to retrieve a lost password using the [reset password request](/reference-full/#request-password-reset).
+Account must have an email-like string attached to them. You can make up an email address for you internal app usage, depending on your requirements. Please note that you will not be able to retrieve a lost password using the [reset password request](/reference/#request-password-reset).
 
 We suggest using the following format as a placeholder: `${USERNAME}@${DOMAIN}`.
 
@@ -147,7 +147,7 @@ We advise our customers to customize it, and we provide some [guidelines](https:
 }
 ```
 
-API methods such as `auth.login` marked as _TRUSTED APPS ONLY_ on [the _full_ API reference](/reference-full/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.io connected apps to steal user credentials.
+API methods such as `auth.login` marked as _TRUSTED APPS ONLY_ on [the _full_ API reference](/reference/) require to have the `Origin` or `Referer` headers matching the domain or one defined in the configuration. This field is not changeable in browser as it is a security measure. We use this to prevent phishing attacks that would allow attackers to impersonate Pryv.io connected apps to steal user credentials.
 
 In order for this to work, the web app must be running on a domain allowed by the configuration. By default, this contains: `https://*.${DOMAIN}*, https://*.rec.la*, https://*.pryv.github.io*`.
 
@@ -161,7 +161,7 @@ You should implement the [auth request](/reference/#auth-request), displaying th
 
 ### Is it possible to add an additional layer of authentication?
 
-The Pryv.io login supports multi-factor authentication (MFA). See its API reference methods [here](/reference-full/#multi-factor-authentication).
+The Pryv.io login supports multi-factor authentication (MFA). See its API reference methods [here](/reference/#multi-factor-authentication).
 
 ## Account granularity
 
@@ -205,7 +205,7 @@ This can be done by using the auth request through a consent step or by generati
 
 It can happen that you would need an access delegation from your app users if they cannot connect on the app to authorize apps and grant access to their data for some period of time.
 
-You can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](/reference-full/#authorizing-your-app) for more information on the auth request).
+You can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](/reference/#authorizing-your-app) for more information on the auth request).
 
 This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and give permission to data that was in its scope.
 

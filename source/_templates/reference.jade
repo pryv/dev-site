@@ -37,12 +37,12 @@ mixin methodId(id)
 
 mixin entrepriseTag(entrepriseTag)
   if entrepriseTag
-    span.entreprise-tag
+    span(onclick="location='/concepts/#entreprise-license-open-source-license'").entreprise-tag
       span.label(title="Entreprise License Only") Y
 
 mixin trustedTag(trustedTag)
   if trustedTag
-    span.trusted-tag
+    span(onclick="location='/reference/#trusted-apps-verification'").trusted-tag
       span.label(title="Trusted Apps Only") T
 
 mixin http(http, httpOnly)
@@ -196,9 +196,9 @@ mixin section(section, parentDocId, level, parent)
             if typeof(section.trustedOnly) === 'string'
               span.label.trusted-only !{section.trustedOnly}
             else 
-              span.label.trusted-only Trusted apps only
+              span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
           if section.entrepriseOnly
-            span.label.entreprise-only Entreprise license only
+            span(onclick="location='/concepts/#entreprise-license-open-source-license'").label.entreprise-only Entreprise license only
           if section.previewOnly
             span.label.trusted-only Preview 
         +intro(section.description)

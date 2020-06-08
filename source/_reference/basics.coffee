@@ -106,7 +106,7 @@ module.exports = exports =
       title: "Connecting"
       description: """
                    First, load the right Socket.IO client library.
-                   
+
                    Then initialize the connection with the URL:
                   
                    ```
@@ -376,6 +376,13 @@ module.exports = exports =
     trustedOnly: true
     description: """
                  These API methods require that the `appId` parameter and `Origin` (or `Referer`) header are trusted.  
+                 
+                 Only Apps that needs to use a Personal token should be registered as "Trusted Apps". 
+                 These apps are usually 
+                  1. The web app for the Authentication and Consent process such as [app-web-auth3](https://github.com/pryv/app-web-auth3)
+                  2. An admin panel for the end-user to manage Access Tokens and Profile.
+
+                 Trusted app api calls are tagged with <span class="trusted-tag"><span title="Trusted App Only" class="label">T</span></span>
 
                  This setting can be changed in the Pryv.io servers configuration.  
                  By default, any valid `appId` works and the `Origin` (or `Referer`) header must be in the form `https://*.{domain}`, ex.: `https://login.{domain}`.

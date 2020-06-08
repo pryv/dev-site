@@ -64,3 +64,13 @@ Accesses can be made to expire after some time; see the `expireAfter` and `expir
 Accesses **cannot be updated**, to change Access properties it should be revoked with [`accesses.delete`](/reference/#delete-access) and re-created with [`accesses.create`](/reference/#create-access). The token can be preserved if provided during creation.
 
 For security reason, unless explicitly indicated by the permission `{ "feature": "selfRevoke", "setting": "forbidden"}` all accesses can be used to revoke (delete) themselves. In very specific cases, for example when a token is distributed publicly the `selfRevoke` feature should be set to `forbidden`.  
+
+## Entreprise License & Open-Source License
+
+Pryv.io is released under two licenses:
+
+1. **Open-Pryv.io** : Is distributed freely under [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) 
+2. **Pryv.io Entreprise**: Is distributed under a commercial license and comes with more features. In the API documentation these features are indicated with a <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span> Label.
+For more information about Pryv.io Entreprise edition, visit [pryv.com](https://pryv.com)
+
+
