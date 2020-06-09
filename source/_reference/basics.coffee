@@ -20,7 +20,7 @@ module.exports = exports =
                  ```
                  Pryv Lab: https://{username}.pryv.me
                  DNS-less: https://{hostname}/{username}
-                 Own Domain: https://{username}.{domain}/
+                 Own Domain: https://{username}.{domain}
                  ```
 
                  Each user account has a dedicated root API endpoint as it is potentially served from a different location. The API endpoint format may vary, so check your platform's [service information](#service-info) if needed.
