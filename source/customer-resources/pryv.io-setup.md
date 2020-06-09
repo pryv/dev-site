@@ -18,7 +18,7 @@ It walks you through the different steps that have to be performed in order to s
 - 5 [Obtain an SSL certificate](#obtain-an-ssl-certificate)
 - 6 [Validate your platform installation](#validate-your-platform-installation)
 - 7 [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
-- 8 [Customize authorization, registration and reset password apps](#customize-authorization-registration-and-reset-password-apps)
+- 8 [Customize authentication, registration and reset password apps](#customize-authentication-registration-and-reset-password-apps)
 - 9 [Set up email sending](#set-up-email-sending)
 - 10 [Define your data model](#define-your-data-model)
 - 11 [Customize event types validation](#customize-event-types-validation)
@@ -71,9 +71,9 @@ You can monitor its status by setting up regular healthcheck API calls to the Pr
 
 The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks guide](/customer-resources/healthchecks).
 
-## Customize authorization, registration and reset password apps
+## Customize authentication, registration and reset password apps
 
-In order to perform the [authorization procedure](/reference/#authorizing-your-app), a web page is necessary. We provide a template web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
+In order to perform the [authentication procedure](/reference/#authorizing-your-app), a web page is necessary. We provide a template web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
 
 In order to customize your own, we suggest that you fork this repository and host the web app on your environment. The easiest way to begin is to fork it on GitHub and host it using GitHub-pages.
 

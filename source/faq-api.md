@@ -15,7 +15,7 @@ In this FAQ we answer common questions related to Pryv.io API. You can contact u
 - 4 [Other data structures](#other-data-structures)
 - 5 [API methods](#api-methods)
 - 6 [User creation](#user-creation)
-- 7 [Authorization](#authorization)
+- 7 [Authentication](#authentication)
 - 8 [Account granularity](#account-granularity)
 - 9 [Access sharing](#access-sharing)
 - 10 [Notification system](#notification-system)
@@ -122,15 +122,15 @@ It is possible to create users with an API call, without having to fill the fiel
 It is possible to retrieve a username from an email address: [Get username from email](/reference-system/#get-username-from-email).
 This is useful for email authentication or if the user has lost his password.
 
-## Authorization
+## Authentication
 
 ### How does the authentication flow work ?
 
-You can check how to authorize your app [here](https://api.pryv.com/reference/#authorizing-your-app).
+You can check how to authenticate your app [here](https://api.pryv.com/reference/#authorizing-your-app).
 
 We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-auth3). 
 
-We advise our customers to customize it, and we provide some [guidelines](https://api.pryv.com/customer-resources/pryv.io-setup/#customize-authorization-registration-and-reset-password-apps) for the customization.
+We advise our customers to customize it, and we provide some [guidelines](https://api.pryv.com/customer-resources/pryv.io-setup/#customize-authentication-registration-and-reset-password-apps) for the customization.
 
 ### I'm getting the "invalid credentials" error on the auth.login call although my fields are correct.
 
@@ -167,7 +167,7 @@ The Pryv.io login supports multi-factor authentication (MFA). See its API refere
 
 ### Should I store the data of more than one person in a single Pryv.io account?
 
-For compliance reasons, Pryv.io accounts are per-user. Storing multiple people data under the same account bypasses the authorization step which is the technical equivalent of consent.
+For compliance reasons, Pryv.io accounts are per-user. Storing multiple people data under the same account bypasses the authentication step which is the technical equivalent of consent.
 
 ## Access sharing
 

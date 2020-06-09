@@ -47,7 +47,7 @@ If multiple parameters are provided, the following order of priority should be u
 
 # Authorization
 
-Using a `pryvApiEndpoint` to load an app allows to load data directly as it usually contains credentials. For cases where you require authorization, it is preferred to use `pryvServiceInfoUrl`:
+Using a `pryvApiEndpoint` to load an app allows to load data directly as it usually contains credentials. For cases where you require authentication, it is preferred to use `pryvServiceInfoUrl`:
 
 <script src="/assets/js/raphael.min.js"></script>
 <script src="/assets/js/flowchart.min.js"></script>
