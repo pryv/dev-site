@@ -256,7 +256,7 @@ module.exports = exports =
         key: "access"
         type: "string"
         description: """
-                    The URL of the access page.
+                    The URL to perform [authorization requests](#auth-request)
                     """
       ,
         key: "api"
@@ -413,10 +413,11 @@ module.exports = exports =
                  To authenticate users in your app, and thus for users to grant your app access to their data, you must:
 
                  1. Choose an app identifier (min. length 6 chars)
-                 2. Send an auth request from your app
+                 2. (If not yet done), fetch [serviceInfo](#service-info)
+                 2. Send an auth request from your app to the url exposed by `access` parameter given by `serviceInfo`
                  3. Open the `authUrl` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
                  4. The result of the sign in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
-                  - by polling the URL obtained in the `poll` field of the HTTP response to the auth request
+                  - by polling the URL obtained in the `poll` field of the HTTP response to the auth request (preffered Method)
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
                  #### Generate token app
@@ -438,8 +439,11 @@ module.exports = exports =
       id: "auth-request"
       title: "Auth request"
       type: "method"
+      description: """
+                   The API endpoint to use is given by [serviceInfo](#service-info) `access`
+                   """
       http:
-        text: "POST to `https://reg.pryv.me/access`"
+        text: "POST to `https://access.pryv.me/access`" 
       httpOnly: true
       params:
         properties: [
@@ -593,7 +597,91 @@ module.exports = exports =
                        The [service information](#service-info).
                        """
         ]
+      ]
+      examples: [
+        title: "Auth request"
+        content: """
+                 ```http
+                 POST {serviceInfo.access} HTTP/1.1
+                 Host: reg.pryv.me
+
+                 {
+                   "requestingAppId": "test-app-id",
+                   "requestedPermissions": [
+                     {
+                       "streamId": "diary",
+                       "level": "read",
+                       "defaultName": "Journal"
+                     },
+                     {
+                       "streamId": "position",
+                       "level": "contribute",
+                       "defaultName": "Position"
+                     }
+                   ],
+                   "languageCode": "fr"
+                 }
+                 ```
+                 """
       ,
+        title: 'Auth request cURL'
+        content: """
+                 ```bash
+                 curl -i -H 'Content-Type: application/json' -X POST -d '{"requestingAppId": "my-app-id","requestedPermissions": [{"streamId": "diary","level": "read","defaultName": "Journal"},{"streamId": "position","level": "contribute","defaultName": "Position"}]}' "https://access.pryv.me/access"
+                 ```
+                 """
+      ,
+        title: '"In progress" response'
+        content: """
+                 ```json
+                 {
+                    "status": "NEED_SIGNIN",
+                    "code": 201,
+                    "key": "6CInm4R2TLaoqtl4",
+                    "requestingAppId": "test-app-id",
+                    "requestedPermissions": [
+                        {
+                            "streamId": "diary",
+                            "level": "read",
+                            "defaultName": "Journal"
+                        },
+                        {
+                            "streamId": "position",
+                            "level": "contribute",
+                            "defaultName": "Position"
+                        }
+                    ],
+                    "url": "https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4",
+                    "authUrl": "https://sw.pryv.me/access/access.html?poll=https://reg.pryv.me/access/6CInm4R2TLaoqtl4"
+                    "poll": "https://reg.pryv.me/access/6CInm4R2TLaoqtl4",
+                    "oauthState": null,
+                    "poll_rate_ms": 1000,
+                    "lang": "fr",
+                    "serviceInfo": {...}
+                }
+                 ```
+                 """
+      ]
+    ,
+      id: "poll-request"
+      title: "Poll request"
+      type: "method"
+      http:
+        text: "GET to `https://access.pryv.me/access/{key}`"
+      httpOnly: true
+      description: """
+                   The polling url is given by the `poll` parameter in the result
+                   of an [Auth Request](#auth-request) or a poll-request
+                   """
+      result: [
+        title: "Result: in progress"
+        http: "200"
+        description: """
+                     indentical to `RESULT: IN PROGRESS` form (Auth Request)[#auth-request] 
+                     """
+      ]
+      ,
+      result: [
         title: "Result: accepted"
         http: "200"
         properties: [
@@ -661,119 +749,46 @@ module.exports = exports =
         ]
       ]
       examples: [
-        title: "Auth request"
+        title: 'Polling request'
         content: """
                  ```http
-                 POST /access HTTP/1.1
+                 GET {RESULT_IN-PROGRESS.POLL} HTTP/1.1
                  Host: reg.pryv.me
-
+                 ```
+                 """
+      ,
+        title: '**"In progress"** response'
+        content: """
+                 identical to `RESULT: IN PROGRESS` from [Auth Request](#auth-request) with a 200 code
+                 ```
                  {
-                   "requestingAppId": "test-app-id",
-                   "requestedPermissions": [
-                     {
-                       "streamId": "diary",
-                       "level": "read",
-                       "defaultName": "Journal"
-                     },
-                     {
-                       "streamId": "position",
-                       "level": "contribute",
-                       "defaultName": "Position"
-                     }
-                   ],
-                   "languageCode": "fr"
+                   "status": "NEED_SIGNIN",
+                   "code": 200
+                   ... 
                  }
                  ```
                  """
       ,
-        title: 'Auth request cURL'
-        content: """
-                 ```bash
-                 curl -i -H 'Content-Type: application/json' -X POST -d '{"requestingAppId": "my-app-id","requestedPermissions": [{"streamId": "diary","level": "read","defaultName": "Journal"},{"streamId": "position","level": "contribute","defaultName": "Position"}]}' "https://reg.pryv.me/access"
-                 ```
-                 """
-      ,
-        title: '"In progress" response'
+        title: '**"Accepted"** response'
         content: """
                  ```json
                  {
-                    "status": "NEED_SIGNIN",
-                    "code": 201,
-                    "key": "6CInm4R2TLaoqtl4",
-                    "requestingAppId": "test-app-id",
-                    "requestedPermissions": [
-                        {
-                            "streamId": "diary",
-                            "level": "read",
-                            "defaultName": "Journal"
-                        },
-                        {
-                            "streamId": "position",
-                            "level": "contribute",
-                            "defaultName": "Position"
-                        }
-                    ],
-                    "url": "https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4",
-                    "authUrl": "https://sw.pryv.me/access/access.html?poll=https://reg.pryv.me/access/6CInm4R2TLaoqtl4"
-                    "poll": "https://reg.pryv.me/access/6CInm4R2TLaoqtl4",
-                    "oauthState": null,
-                    "poll_rate_ms": 1000,
-                    "lang": "fr",
+                    "status": "ACCEPTED",
+                    "code": 200,
+                    "pryvAPIEndpoint": "https://#{examples.accesses.app.token}.pryv.me@#{examples.users.one.username}.pryv.me/",
                     "serviceInfo": {...}
                 }
                  ```
                  """
       ,
-        title: 'Polling request'
-        content: """
-                 ```http
-                 GET /access/6CInm4R2TLaoqtl4 HTTP/1.1
-                 Host: reg.pryv.me
-                 ```
-                 """
-      ,
-        title: "Auth request with custom serviceInfo and custom access app"
-        content: """
-                 ```http
-                 POST /access HTTP/1.1
-                 Host: reg.pryv.me
-
-                 {
-                   "requestingAppId": "my-custom-app-id",
-                   "requestedPermissions": [
-                     {
-                       "streamId": "diary",
-                       "level": "read",
-                       "defaultName": "Journal"
-                     }
-                   ],
-                   "authUrl": "https://auth.custom.com",
-                   "serviceInfo": {...}
-                 }
-                 ```
-                 """
-      ,
-        title: '"In progress" response'
+        title: '**"Refused"** response'
         content: """
                  ```json
                  {
-                    "status": "NEED_SIGNIN",
-                    "code": 201,
-                    "key": "o8maIIWoifro7WNJ",
-                    "requestingAppId": "my-custom-app-id",
-                    "requestedPermissions": [
-                        {
-                            "streamId": "diary",
-                            "level": "read",
-                            "defaultName": "Journal"
-                        }
-                    ],
-                    "url": "https://auth.custom.com?key=o8maIIWoifro7WNJ&requestingAppId=my-custom-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%o8maIIWoifro7WNJ",
-                    "authUrl": "https://auth.custom.com?poll=https://reg.pryv.me/access/o8maIIWoifro7WNJ"
-                    "poll": "https://reg.pryv.me/access/o8maIIWoifro7WNJ",
-                    "oauthState": null,
-                    "poll_rate_ms": 1000,
-                    "lang": "en",
+                    "status": "REFUSED",
+                    "code": 403,
+                    "resonID": "REASON_UNDEFINED",
+                    "message": "...."
                     "serviceInfo": {...}
                 }
                  ```
