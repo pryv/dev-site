@@ -24,6 +24,7 @@ See `dev-env/setup.sh` for more details.
 - `make clean` cleans up the `build` folder (not done by build/watch)
 - `make publish` builds and publishes the website
 - `yarn webserver` to run the site locally on [https://l.rec.la:4443/](https://l.rec.la:4443/)
+- `yarn openapi` generate open-api definitions
 
 (Read `makefile` for details.)
 

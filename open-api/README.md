@@ -15,4 +15,3 @@
 - Fetch dependencies: `yarn install`
 - Transpile `../source/` into `transpiled/` (code) and `rendered/` (JSON): `yarn transpile`
 - Export into `open-api-format/`: `yarn export`
-

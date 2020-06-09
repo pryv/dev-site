@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "webserver": "node node_modules/rec-la/webserver/main.js ./build",
-    "transpile": "cd open-api ; yarn transpile",
+    "openapi": "cd open-api ; yarn transpile; yarn export",
     "build": "make build"
   },
   "dependencies": {},
