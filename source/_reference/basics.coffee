@@ -443,7 +443,7 @@ module.exports = exports =
                    The API endpoint to use is given by [serviceInfo](#service-info) `access`
                    """
       http:
-        text: "POST to `https://access.pryv.me/access`" 
+        text: "POST to `{serviceInfo.access}`" 
       httpOnly: true
       params:
         properties: [
@@ -631,7 +631,7 @@ module.exports = exports =
                  ```
                  """
       ,
-        title: '"In progress" response'
+        title: '"In progress" response {inProgressResponse}'
         content: """
                  ```json
                  {
@@ -652,8 +652,8 @@ module.exports = exports =
                         }
                     ],
                     "url": "https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4",
-                    "authUrl": "https://sw.pryv.me/access/access.html?poll=https://reg.pryv.me/access/6CInm4R2TLaoqtl4"
-                    "poll": "https://reg.pryv.me/access/6CInm4R2TLaoqtl4",
+                    "authUrl": "https://sw.pryv.me/access/access.html?poll=https://access.pryv.me/access/6CInm4R2TLaoqtl4"
+                    "poll": "https://access.pryv.me/access/6CInm4R2TLaoqtl4",
                     "oauthState": null,
                     "poll_rate_ms": 1000,
                     "lang": "fr",
@@ -667,7 +667,7 @@ module.exports = exports =
       title: "Poll request"
       type: "method"
       http:
-        text: "GET to `https://access.pryv.me/access/{key}`"
+        text: "GET `{inProgressResponse.poll}`"
       httpOnly: true
       description: """
                    The polling url is given by the `poll` parameter in the result
@@ -752,7 +752,7 @@ module.exports = exports =
         title: 'Polling request'
         content: """
                  ```http
-                 GET {RESULT_IN-PROGRESS.POLL} HTTP/1.1
+                 GET {inProgressResponse.poll} HTTP/1.1
                  Host: reg.pryv.me
                  ```
                  """
