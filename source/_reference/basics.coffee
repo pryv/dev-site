@@ -501,8 +501,8 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       The URL to redirect the user to after auth completes.
-                       Required if you are not using polling to retrieve the auth result (see Result below).
+                       The URL to redirect the user to after authentication completes.
+                       Required if you are not using polling to retrieve the authentication result (see Result below).
                        """
         ,
           key: "clientData"
@@ -534,20 +534,20 @@ module.exports = exports =
           key: "status"
           type: "`NEED_SIGNIN`"
           description: """
-                       Auth in progress.
+                       Authentication in progress.
                        """
         ,
           key: "url"
           type: "string"
           description: """
                        **(DEPRECATED)**  
-                       Please use the `authUrl` parameter. The URL of the auth page to show the user from your app as popup or webframe.
+                       Please use the `authUrl` parameter. The URL of the authentication page to show the user from your app as popup or webframe.
                        """
         ,
           key: "authUrl"
           type: "string"
           description: """
-                       The URL of the auth page to show the user from your app as popup or webframe.
+                       The URL of the authentication page to show the user from your app as popup or webframe.
                        """
         ,
           key: "key"
@@ -659,7 +659,7 @@ module.exports = exports =
           serviceInfo: {}
 
       ,
-        title: 'Auth request cURL'
+        title: 'Auth request using cURL'
         content: """
                  ```bash
                  curl -i -H 'Content-Type: application/json' -X POST -d '{"requestingAppId": "my-app-id","requestedPermissions": [{"streamId": "diary","level": "read","defaultName": "Journal"},{"streamId": "position","level": "contribute","defaultName": "Position"}]}' "https://access.pryv.me/access"
@@ -697,7 +697,7 @@ module.exports = exports =
           type: "string"
           description: """
                        **(DEPRECATED)**  
-                       Please use the `pryvApiEndpoint` parameter. The authentified user's username.
+                       Please use the `pryvApiEndpoint` parameter. The authenticated user's username.
                        """
         ,
           key: "token"
@@ -727,7 +727,7 @@ module.exports = exports =
           key: "status"
           type: "`REFUSED`"
           description: """
-                       Auth failed.
+                       Authentication failed.
                        """
         ,
           key: "reasonID"

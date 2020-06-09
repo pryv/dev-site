@@ -137,7 +137,7 @@ module.exports = exports =
       description: """
                    Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.
                    
-                   Requires a personal token as [authentication](#basics-authorization), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
+                   Requires a personal token as [authorization](#basics-authorization), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
                    """
       params:
         description: """
@@ -169,7 +169,7 @@ module.exports = exports =
       description: """
                    Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
                    
-                   Requires a MFA session token as [authentication](#basics-authorization).
+                   Requires a MFA session token as [authorization](#basics-authorization).
                    """
       params:
         description: """
@@ -219,7 +219,7 @@ module.exports = exports =
       description: """
                    Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).
                    
-                   Requires a MFA session token as [authentication](#basics-authorization).
+                   Requires a MFA session token as [authorization](#basics-authorization).
                    """
       result:
         http: "200 OK"
@@ -246,7 +246,7 @@ module.exports = exports =
       description: """
                    Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
                    
-                   Requires a MFA session token as [authentication](#basics-authorization).
+                   Requires a MFA session token as [authorization](#basics-authorization).
                    """
       params:
         description: """
@@ -284,7 +284,7 @@ module.exports = exports =
       description: """
                    Deactivate MFA for a given Pryv.io user.
                    
-                   Requires a personal token as [authentication](#basics-authorization).
+                   Requires a personal token as [authorization](#basics-authorization).
                    """
       result:
         http: "200 OK"
@@ -1461,7 +1461,7 @@ module.exports = exports =
           optional: true
           description: """
                        The id of a specific access to audit.
-                       When specified, it fetches the audit logs that involve the matching access instead of the one used to authenticate this call.
+                       When specified, it fetches the audit logs that involve the matching access instead of the one used to authorize this call.
                        It has to correspond to a sub-access (expired and deleted included) in regards to the provided authorization token.
                        """
         ,
