@@ -169,7 +169,7 @@ The expected result: `Status: 200`
 
 ## Core
 
-Authentication header: `${ACCESS_TOKEN}`
+Authorization header: `${ACCESS_TOKEN}`
 
 The call to perform: **HTTP GET** `https://healthmetrics01.${DOMAIN}/events?limit=1`
 

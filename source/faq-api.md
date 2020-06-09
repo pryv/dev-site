@@ -15,7 +15,7 @@ In this FAQ we answer common questions related to Pryv.io API. You can contact u
 - 4 [Other data structures](#other-data-structures)
 - 5 [API methods](#api-methods)
 - 6 [User creation](#user-creation)
-- 7 [Authentication](#authentication)
+- 7 [Authorization](#authorization)
 - 8 [Account granularity](#account-granularity)
 - 9 [Access sharing](#access-sharing)
 - 10 [Notification system](#notification-system)
@@ -122,7 +122,7 @@ It is possible to create users with an API call, without having to fill the fiel
 It is possible to retrieve a username from an email address: [Get username from email](/reference-system/#get-username-from-email).
 This is useful for email authentication or if the user has lost his password.
 
-## Authentication
+## Authorization
 
 ### How does the authentication flow work ?
 

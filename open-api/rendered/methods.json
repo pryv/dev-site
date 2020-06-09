@@ -13,7 +13,7 @@
           "type": "method",
           "title": "Login user",
           "http": "POST /auth/login",
-          "description": "Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authentication).   \nThis method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).",
+          "description": "Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).   \nThis method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).",
           "params": {
             "properties": [
               {
@@ -56,7 +56,7 @@
                 "appId": "my-app-id"
               },
               "result": {
-                "token": "ckb6eg29g0002ci0sr5efcbth",
+                "token": "ckb7wa4ys0002uy0shozyqyuu",
                 "preferredLanguage": "zh"
               }
             }
@@ -120,7 +120,7 @@
           "type": "method",
           "title": "Activate MFA",
           "http": "POST /mfa/activate",
-          "description": "Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.\n\nRequires a personal token as [authentication](#basics-authentication), which should be obtained during a prior [Login call](#methods-auth-auth-login).",
+          "description": "Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.\n\nRequires a personal token as [authentication](#basics-authorization), which should be obtained during a prior [Login call](#methods-auth-auth-login).",
           "params": {
             "description": "The parameters depend entirely on the chosen MFA method and will be forwarded to the service generating the challenge."
           },
@@ -151,7 +151,7 @@
           "type": "method",
           "title": "Confirm MFA activation",
           "http": "POST /mfa/confirm",
-          "description": "Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](#methods-mfa-mfa-activate).\n\nRequires a MFA session token as [authentication](#basics-authentication).",
+          "description": "Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](#methods-mfa-mfa-activate).\n\nRequires a MFA session token as [authentication](#basics-authorization).",
           "params": {
             "description": "The parameters depend entirely on the chosen MFA method and will be forwarded to the service verifying the challenge."
           },
@@ -200,7 +200,7 @@
           "type": "method",
           "title": "Trigger MFA challenge",
           "http": "POST /mfa/challenge",
-          "description": "Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).\n\nRequires a MFA session token as [authentication](#basics-authentication).",
+          "description": "Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).\n\nRequires a MFA session token as [authentication](#basics-authorization).",
           "result": {
             "http": "200 OK",
             "properties": [
@@ -224,7 +224,7 @@
           "type": "method",
           "title": "Verify MFA challenge",
           "http": "POST /mfa/verify",
-          "description": "Verifies the MFA challenge triggered by a prior [MFA challenge call](#methods-mfa-mfa-challenge).\n\nRequires a MFA session token as [authentication](#basics-authentication).",
+          "description": "Verifies the MFA challenge triggered by a prior [MFA challenge call](#methods-mfa-mfa-challenge).\n\nRequires a MFA session token as [authentication](#basics-authorization).",
           "params": {
             "description": "The parameters depend entirely on the chosen MFA method and will be forwarded to the service verifying the challenge."
           },
@@ -252,7 +252,7 @@
                 "code": "1234"
               },
               "result": {
-                "token": "ckb6eg29g0002ci0sr5efcbth"
+                "token": "ckb7wa4ys0002uy0shozyqyuu"
               }
             }
           ]
@@ -262,7 +262,7 @@
           "type": "method",
           "title": "Deactivate MFA",
           "http": "POST /mfa/deactivate",
-          "description": "Deactivate MFA for a given Pryv.io user.\n\nRequires a personal token as [authentication](#basics-authentication).",
+          "description": "Deactivate MFA for a given Pryv.io user.\n\nRequires a personal token as [authentication](#basics-authorization).",
           "result": {
             "http": "200 OK",
             "properties": [
@@ -439,8 +439,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "ckb6eg2a70011ci0scxo1acmp",
-                    "time": 1591611348.751,
+                    "id": "ckb7wa4zi0011uy0ssyh3qs8m",
+                    "time": 1591701771.582,
                     "streamIds": [
                       "diary"
                     ],
@@ -450,21 +450,21 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "ckb6eg2a70012ci0svw9fl22e",
+                        "id": "ckb7wa4zi0012uy0ste52cq8e",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ckb6eg2a70013ci0ssobq4fbr-V93aeD9i6RU8a89ocBGuR8QjfLw"
+                        "readToken": "ckb7wa4zi0013uy0slve66ggs-AcOhU3uxlxc6mY5A83SAATZnnwK"
                       }
                     ],
-                    "created": 1591611348.751,
-                    "createdBy": "ckb6eg29h0004ci0ssbqi42xz",
-                    "modified": 1591611348.751,
-                    "modifiedBy": "ckb6eg29h0004ci0ssbqi42xz"
+                    "created": 1591701771.582,
+                    "createdBy": "ckb7wa4yt0004uy0s3xwtb29q",
+                    "modified": 1591701771.582,
+                    "modifiedBy": "ckb7wa4yt0004uy0s3xwtb29q"
                   },
                   {
-                    "id": "ckb6eg2a7000oci0s2d6cu4lg",
-                    "time": 1591614948.751,
+                    "id": "ckb7wa4zi000ouy0s78u8zcrs",
+                    "time": 1591705371.582,
                     "streamIds": [
                       "jogging"
                     ],
@@ -472,13 +472,13 @@
                     "tags": [],
                     "type": "activity/pryv",
                     "content": null,
-                    "created": 1591614948.751,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591614948.751,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                    "created": 1591705371.582,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591705371.582,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                   },
                   {
-                    "id": "ckb6eg2a70014ci0sxy2b5hib",
+                    "id": "ckb7wa4zi0014uy0syhvuogpf",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -490,10 +490,10 @@
                       "latitude": 40.714728,
                       "longitude": -73.998672
                     },
-                    "created": 1591607748.751,
-                    "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                    "modified": 1591607748.751,
-                    "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                    "created": 1591698171.582,
+                    "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                    "modified": 1591698171.582,
+                    "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                   }
                 ]
               }
@@ -504,8 +504,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "ckb6eg2a70011ci0scxo1acmp",
-                    "time": 1591611348.751,
+                    "id": "ckb7wa4zi0011uy0ssyh3qs8m",
+                    "time": 1591701771.582,
                     "streamIds": [
                       "diary"
                     ],
@@ -515,21 +515,21 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "ckb6eg2a70012ci0svw9fl22e",
+                        "id": "ckb7wa4zi0012uy0ste52cq8e",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ckb6eg2a70013ci0ssobq4fbr-V93aeD9i6RU8a89ocBGuR8QjfLw"
+                        "readToken": "ckb7wa4zi0013uy0slve66ggs-AcOhU3uxlxc6mY5A83SAATZnnwK"
                       }
                     ],
-                    "created": 1591611348.751,
-                    "createdBy": "ckb6eg29h0004ci0ssbqi42xz",
-                    "modified": 1591611348.751,
-                    "modifiedBy": "ckb6eg29h0004ci0ssbqi42xz"
+                    "created": 1591701771.582,
+                    "createdBy": "ckb7wa4yt0004uy0s3xwtb29q",
+                    "modified": 1591701771.582,
+                    "modifiedBy": "ckb7wa4yt0004uy0s3xwtb29q"
                   },
                   {
-                    "id": "ckb6eg2a7000xci0s09t74njf",
-                    "time": 1591611348.751,
+                    "id": "ckb7wa4zi000xuy0skwdsbkwj",
+                    "time": 1591701771.582,
                     "streamIds": [
                       "diary"
                     ],
@@ -537,13 +537,13 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "道可道非常道。。。",
-                    "created": 1591611348.751,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591650948.751,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                    "created": 1591701771.582,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591741371.582,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                   },
                   {
-                    "id": "ckb6eg2a70014ci0sxy2b5hib",
+                    "id": "ckb7wa4zi0014uy0syhvuogpf",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -555,14 +555,14 @@
                       "latitude": 40.714728,
                       "longitude": -73.998672
                     },
-                    "created": 1591607748.751,
-                    "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                    "modified": 1591607748.751,
-                    "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                    "created": 1591698171.582,
+                    "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                    "modified": 1591698171.582,
+                    "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                   },
                   {
-                    "id": "ckb6eg2a7000wci0s4ne7d3g8",
-                    "time": 1591614948.751,
+                    "id": "ckb7wa4zi000wuy0swdkecm7l",
+                    "time": 1591705371.582,
                     "streamIds": [
                       "weight"
                     ],
@@ -570,22 +570,22 @@
                     "tags": [],
                     "type": "mass/kg",
                     "content": 90,
-                    "created": 1591614948.751,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591614948.751,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                    "created": 1591705371.582,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591705371.582,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                   }
                 ]
               }
             },
             {
               "title": "cURL with deletions",
-              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1591528548.775\"\"\n```",
+              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1591618971.61\"\"\n```",
               "result": {
                 "events": [
                   {
-                    "id": "ckb6eg2a7000wci0s4ne7d3g8",
-                    "time": 1591614948.751,
+                    "id": "ckb7wa4zi000wuy0swdkecm7l",
+                    "time": 1591705371.582,
                     "streamIds": [
                       "weight"
                     ],
@@ -593,24 +593,24 @@
                     "tags": [],
                     "type": "mass/kg",
                     "content": 90,
-                    "created": 1591614948.751,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591614948.751,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                    "created": 1591705371.582,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591705371.582,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                   }
                 ],
                 "eventDeletions": [
                   {
-                    "id": "ckb6eg2a9001cci0swrg0k32a",
-                    "deleted": 1591611348.753
+                    "id": "ckb7wa4zk001cuy0st4ttaexp",
+                    "deleted": 1591701771.584
                   },
                   {
-                    "id": "ckb6eg2a9001dci0s936x66ph",
-                    "deleted": 1591578948.753
+                    "id": "ckb7wa4zk001duy0sskvkqszx",
+                    "deleted": 1591669371.584
                   },
                   {
-                    "id": "ckb6eg2a9001eci0s4p17bmye",
-                    "deleted": 1591542948.753
+                    "id": "ckb7wa4zk001euy0sihxn998t",
+                    "deleted": 1591633371.584
                   }
                 ]
               }
@@ -657,8 +657,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckb6eg2a7000yci0sx2f27wb8",
-                  "time": 1591611348.751,
+                  "id": "ckb7wa4zi000yuy0sgouh1l5h",
+                  "time": 1591701771.582,
                   "streamIds": [
                     "diary"
                   ],
@@ -666,15 +666,15 @@
                   "tags": [],
                   "type": "note/text",
                   "content": "Hi, I am the latest version of this event",
-                  "created": 1591611348.751,
-                  "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "modified": 1591622148.751,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                  "created": 1591701771.582,
+                  "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "modified": 1591712571.582,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                 },
                 "history": [
                   {
-                    "id": "ckb6eg2a7000zci0sm4bkk9bk",
-                    "time": 1591611348.751,
+                    "id": "ckb7wa4zi000zuy0seeoirrq6",
+                    "time": 1591701771.582,
                     "streamIds": [
                       "diary"
                     ],
@@ -682,14 +682,14 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "Hi, I am the first modification",
-                    "created": 1591611348.751,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591618548.751,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                    "created": 1591701771.582,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591708971.582,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                   },
                   {
-                    "id": "ckb6eg2a70010ci0s6l4e9qc2",
-                    "time": 1591611348.751,
+                    "id": "ckb7wa4zi0010uy0sfiqlz1fo",
+                    "time": 1591701771.582,
                     "streamIds": [
                       "diary"
                     ],
@@ -697,10 +697,10 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "Hi, I was the initial event",
-                    "created": 1591611348.751,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591614948.751,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                    "created": 1591701771.582,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591705371.582,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                   }
                 ]
               }
@@ -745,8 +745,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckb6eg2a7000wci0s4ne7d3g8",
-                  "time": 1591614948.751,
+                  "id": "ckb7wa4zi000wuy0swdkecm7l",
+                  "time": 1591705371.582,
                   "streamIds": [
                     "weight"
                   ],
@@ -754,10 +754,10 @@
                   "tags": [],
                   "type": "mass/kg",
                   "content": 90,
-                  "created": 1591614948.751,
-                  "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "modified": 1591614948.751,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                  "created": 1591705371.582,
+                  "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "modified": 1591705371.582,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                 }
               }
             },
@@ -766,8 +766,8 @@
               "content": "```bash\ncurl -i -F 'event={\"streamIds\":[\"diary\"],\"type\":\"picture/attached\"}'  -F \"file=@photo.jpg\" \"https://${token}@${username}.pryv.me/events\"\n```",
               "result": {
                 "event": {
-                  "id": "ckb6eg2a70011ci0scxo1acmp",
-                  "time": 1591611348.751,
+                  "id": "ckb7wa4zi0011uy0ssyh3qs8m",
+                  "time": 1591701771.582,
                   "streamIds": [
                     "diary"
                   ],
@@ -777,17 +777,17 @@
                   "content": null,
                   "attachments": [
                     {
-                      "id": "ckb6eg2a70012ci0svw9fl22e",
+                      "id": "ckb7wa4zi0012uy0ste52cq8e",
                       "fileName": "photo.jpg",
                       "type": "image/jpeg",
                       "size": 2561,
-                      "readToken": "ckb6eg2a70013ci0ssobq4fbr-V93aeD9i6RU8a89ocBGuR8QjfLw"
+                      "readToken": "ckb7wa4zi0013uy0slve66ggs-AcOhU3uxlxc6mY5A83SAATZnnwK"
                     }
                   ],
-                  "created": 1591611348.751,
-                  "createdBy": "ckb6eg29h0004ci0ssbqi42xz",
-                  "modified": 1591611348.751,
-                  "modifiedBy": "ckb6eg29h0004ci0ssbqi42xz"
+                  "created": 1591701771.582,
+                  "createdBy": "ckb7wa4yt0004uy0s3xwtb29q",
+                  "modified": 1591701771.582,
+                  "modifiedBy": "ckb7wa4yt0004uy0s3xwtb29q"
                 }
               }
             }
@@ -845,9 +845,9 @@
                   "tags": [
                     "home"
                   ],
-                  "modified": 1591614948.776,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "id": "ckb6eg2a70014ci0sxy2b5hib",
+                  "modified": 1591705371.611,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "id": "ckb7wa4zi0014uy0syhvuogpf",
                   "time": 1350373077.359,
                   "streamIds": [
                     "diary"
@@ -858,8 +858,8 @@
                     "latitude": 40.714728,
                     "longitude": -73.998672
                   },
-                  "created": 1591607748.751,
-                  "createdBy": "ckb6eg29g0000ci0syuq7fzds"
+                  "created": 1591698171.582,
+                  "createdBy": "ckb7wa4ys0000uy0sig892li1"
                 }
               }
             }
@@ -885,32 +885,32 @@
           "examples": [
             {
               "title": "cURL",
-              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/ckb6eg2a7000qci0s1xwufmn3\"\"\n```",
+              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/ckb7wa4zi000quy0ss0f3vwu7\"\"\n```",
               "result": {
                 "event": {
-                  "id": "ckb6eg2a7000qci0s1xwufmn3",
-                  "time": 1591614948.751,
+                  "id": "ckb7wa4zi000quy0ss0f3vwu7",
+                  "time": 1591705371.582,
                   "duration": null,
                   "streamIds": [
-                    "ckb6eg2a6000eci0spfzxazus"
+                    "ckb7wa4zh000euy0spn5gkdss"
                   ],
-                  "streamId": "ckb6eg2a6000eci0spfzxazus",
+                  "streamId": "ckb7wa4zh000euy0spn5gkdss",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
                   "attachments": [
                     {
-                      "id": "ckb6eg2a7000rci0s8tx98u8i",
+                      "id": "ckb7wa4zi000ruy0s8vtjq3qb",
                       "fileName": "travel-expense.jpg",
                       "type": "image/jpeg",
                       "size": 1111,
-                      "readToken": "ckb6eg2a7000sci0stb44r6gt-NDVzZUV0JfDxzC3CtyiSQ5qTZPG"
+                      "readToken": "ckb7wa4zi000suy0s63a8tr6t-io3JX24e7sTeAVE4aykXKAGq4e8"
                     }
                   ],
-                  "created": 1591614948.751,
-                  "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "modified": 1591614948.751,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                  "created": 1591705371.582,
+                  "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "modified": 1591705371.582,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                 }
               }
             }
@@ -979,25 +979,25 @@
           "examples": [
             {
               "params": {
-                "id": "ckb6eg2a7000qci0s1xwufmn3",
-                "fileId": "ckb6eg2a7000rci0s8tx98u8i"
+                "id": "ckb7wa4zi000quy0ss0f3vwu7",
+                "fileId": "ckb7wa4zi000ruy0s8vtjq3qb"
               },
               "result": {
                 "event": {
-                  "id": "ckb6eg2a7000qci0s1xwufmn3",
-                  "time": 1591614948.751,
+                  "id": "ckb7wa4zi000quy0ss0f3vwu7",
+                  "time": 1591705371.582,
                   "duration": null,
                   "streamIds": [
-                    "ckb6eg2a6000eci0spfzxazus"
+                    "ckb7wa4zh000euy0spn5gkdss"
                   ],
-                  "streamId": "ckb6eg2a6000eci0spfzxazus",
+                  "streamId": "ckb7wa4zh000euy0spn5gkdss",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
-                  "created": 1591614948.751,
-                  "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "modified": 1591614948.751,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                  "created": 1591705371.582,
+                  "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "modified": 1591705371.582,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                 }
               }
             }
@@ -1049,15 +1049,15 @@
             {
               "title": "Trashing",
               "params": {
-                "id": "ckb6eg2a7000xci0s09t74njf"
+                "id": "ckb7wa4zi000xuy0skwdsbkwj"
               },
               "result": {
                 "event": {
                   "trashed": true,
-                  "modified": 1591614948.776,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "id": "ckb6eg2a7000xci0s09t74njf",
-                  "time": 1591611348.751,
+                  "modified": 1591705371.611,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "id": "ckb7wa4zi000xuy0skwdsbkwj",
+                  "time": 1591701771.582,
                   "streamIds": [
                     "diary"
                   ],
@@ -1065,19 +1065,19 @@
                   "tags": [],
                   "type": "note/text",
                   "content": "道可道非常道。。。",
-                  "created": 1591611348.751,
-                  "createdBy": "ckb6eg29g0001ci0s1wjtivph"
+                  "created": 1591701771.582,
+                  "createdBy": "ckb7wa4ys0001uy0sgxh47dqk"
                 }
               }
             },
             {
               "title": "Deleting",
               "params": {
-                "id": "ckb6eg2a7000xci0s09t74njf"
+                "id": "ckb7wa4zi000xuy0skwdsbkwj"
               },
               "result": {
                 "eventDeletion": {
-                  "id": "ckb6eg2a7000xci0s09t74njf"
+                  "id": "ckb7wa4zi000xuy0skwdsbkwj"
                 }
               }
             }
@@ -1133,8 +1133,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckb6eg2a70015ci0s0s5g31sv",
-                  "time": 1591614948.751,
+                  "id": "ckb7wa4zi0015uy0s18ngi1pk",
+                  "time": 1591705371.582,
                   "streamIds": [
                     "position"
                   ],
@@ -1159,10 +1159,10 @@
                       "longitude"
                     ]
                   },
-                  "created": 1591614948.751,
-                  "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "modified": 1591614948.751,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                  "created": 1591705371.582,
+                  "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "modified": 1591705371.582,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                 }
               }
             }
@@ -1358,7 +1358,7 @@
                 "format": "seriesBatch",
                 "data": [
                   {
-                    "eventId": "ckb6eg2a70016ci0syisc106j",
+                    "eventId": "ckb7wa4zi0016uy0s9mbqlj6e",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1382,7 +1382,7 @@
                     }
                   },
                   {
-                    "eventId": "ckb6eg2a70017ci0ski8o95dc",
+                    "eventId": "ckb7wa4zi0017uy0s2i1eh5tv",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1502,76 +1502,76 @@
               "result": {
                 "streams": [
                   {
-                    "id": "ckb6eg2a6000dci0sikvyr62r",
+                    "id": "ckb7wa4zh000duy0sqi52q6y3",
                     "name": "Noble Works Co.",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "ckb6eg2a6000fci0svf0not6x",
+                        "id": "ckb7wa4zh000fuy0si2f0dcew",
                         "name": "Last Be First",
-                        "parentId": "ckb6eg2a6000dci0sikvyr62r",
+                        "parentId": "ckb7wa4zh000duy0sqi52q6y3",
                         "children": [],
-                        "created": 1528501059.774615,
-                        "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                        "modified": 1528501145.3479738,
-                        "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                        "created": 1528591507.5813873,
+                        "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                        "modified": 1528591519.0921283,
+                        "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                       },
                       {
-                        "id": "ckb6eg2a6000gci0sn87jvaaw",
+                        "id": "ckb7wa4zh000guy0siewtrzx5",
                         "name": "Big Tree",
-                        "parentId": "ckb6eg2a6000dci0sikvyr62r",
+                        "parentId": "ckb7wa4zh000duy0sqi52q6y3",
                         "children": [],
-                        "created": 1528501059.774615,
-                        "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                        "modified": 1528501294.9731548,
-                        "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                        "created": 1528591507.5813873,
+                        "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                        "modified": 1528591723.2334151,
+                        "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                       },
                       {
-                        "id": "ckb6eg2a6000hci0sd4i0vaeb",
+                        "id": "ckb7wa4zh000huy0sdtw1ye4k",
                         "name": "Inner Light",
-                        "parentId": "ckb6eg2a6000dci0sikvyr62r",
+                        "parentId": "ckb7wa4zh000duy0sqi52q6y3",
                         "children": [],
-                        "created": 1528501059.774615,
-                        "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                        "modified": 1528501298.205494,
-                        "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                        "created": 1528591507.5813873,
+                        "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                        "modified": 1528591617.7931294,
+                        "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                       }
                     ],
-                    "created": 1528501051.38148,
-                    "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                    "modified": 1528501351.8765097,
-                    "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                    "created": 1528591488.8894382,
+                    "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                    "modified": 1528591809.264838,
+                    "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                   },
                   {
-                    "id": "ckb6eg2a6000eci0spfzxazus",
+                    "id": "ckb7wa4zh000euy0spn5gkdss",
                     "name": "Freelancing",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "ckb6eg2a6000ici0s7d21byg1",
+                        "id": "ckb7wa4zh000iuy0soijs3yn1",
                         "name": "Funky Veggies",
-                        "parentId": "ckb6eg2a6000eci0spfzxazus",
+                        "parentId": "ckb7wa4zh000euy0spn5gkdss",
                         "children": [],
-                        "created": 1528501080.0929065,
-                        "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                        "modified": 1528501437.3391314,
-                        "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                        "created": 1528591489.4942446,
+                        "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                        "modified": 1528591566.3009324,
+                        "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                       },
                       {
-                        "id": "ckb6eg2a6000jci0s0r5zsfpp",
+                        "id": "ckb7wa4zh000juy0sp5yah8bl",
                         "name": "Jojo Lapin & sons",
-                        "parentId": "ckb6eg2a6000eci0spfzxazus",
+                        "parentId": "ckb7wa4zh000euy0spn5gkdss",
                         "children": [],
-                        "created": 1528501080.0929065,
-                        "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                        "modified": 1528501120.19017,
-                        "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                        "created": 1528591489.4942446,
+                        "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                        "modified": 1528591766.0433898,
+                        "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                       }
                     ],
-                    "created": 1528501051.38148,
-                    "createdBy": "ckb6eg29g0000ci0syuq7fzds",
-                    "modified": 1528501408.2894435,
-                    "modifiedBy": "ckb6eg29g0000ci0syuq7fzds"
+                    "created": 1528591488.8894382,
+                    "createdBy": "ckb7wa4ys0000uy0sig892li1",
+                    "modified": 1528591832.7099586,
+                    "modifiedBy": "ckb7wa4ys0000uy0sig892li1"
                   }
                 ]
               }
@@ -1623,10 +1623,10 @@
                   "name": "Diastolic pressure",
                   "parentId": "heart",
                   "children": [],
-                  "created": 1591614948.75,
-                  "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "modified": 1591614948.751,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                  "created": 1591705371.581,
+                  "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "modified": 1591705371.581,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                 }
               }
             }
@@ -1687,12 +1687,12 @@
               "result": {
                 "stream": {
                   "name": "Slothing",
-                  "modified": 1591614948.776,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph",
+                  "modified": 1591705371.611,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk",
                   "id": "sport",
                   "parentId": null,
-                  "created": 1528501044.751,
-                  "createdBy": "ckb6eg29g0000ci0syuq7fzds"
+                  "created": 1528591467.582,
+                  "createdBy": "ckb7wa4ys0000uy0sig892li1"
                 }
               }
             }
@@ -1754,14 +1754,14 @@
               "result": {
                 "stream": {
                   "trashed": true,
-                  "modified": 1591614948.777,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph",
+                  "modified": 1591705371.612,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk",
                   "id": "weight",
                   "name": "Weight",
                   "parentId": "health",
                   "children": [],
-                  "created": 1528501050.525236,
-                  "createdBy": "ckb6eg29g0000ci0syuq7fzds"
+                  "created": 1528591494.7343414,
+                  "createdBy": "ckb7wa4ys0000uy0sig892li1"
                 }
               }
             },
@@ -1828,8 +1828,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "ckb6eg29h0004ci0ssbqi42xz",
-                    "token": "ckb6eg29h0005ci0ssoxdma3q",
+                    "id": "ckb7wa4yt0004uy0s3xwtb29q",
+                    "token": "ckb7wa4yt0005uy0s2gja63pi",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -1838,10 +1838,10 @@
                         "level": "contribute"
                       }
                     ],
-                    "created": 1591571748.725,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591571748.725,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                    "created": 1591662171.557,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591662171.557,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                   }
                 ]
               }
@@ -1852,8 +1852,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "ckb6eg29h0004ci0ssbqi42xz",
-                    "token": "ckb6eg29h0005ci0ssoxdma3q",
+                    "id": "ckb7wa4yt0004uy0s3xwtb29q",
+                    "token": "ckb7wa4yt0005uy0s2gja63pi",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -1862,16 +1862,16 @@
                         "level": "contribute"
                       }
                     ],
-                    "created": 1591571748.725,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591571748.725,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                    "created": 1591662171.557,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591662171.557,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                   }
                 ],
                 "accessDeletions": [
                   {
-                    "id": "ckb6eg29h0008ci0saqdrg5os",
-                    "token": "ckb6eg29h0009ci0s39h5rysd",
+                    "id": "ckb7wa4yt0008uy0siooqajk8",
+                    "token": "ckb7wa4yt0009uy0sioq1uxzd",
                     "type": "shared",
                     "name": "Health parameters survey",
                     "permissions": [
@@ -1880,11 +1880,11 @@
                         "level": "read"
                       }
                     ],
-                    "created": 1591614828.725,
-                    "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "modified": 1591614828.725,
-                    "modifiedBy": "ckb6eg29g0001ci0s1wjtivph",
-                    "deleted": 1591614888.725
+                    "created": 1591705251.557,
+                    "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "modified": 1591705251.557,
+                    "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                    "deleted": 1591705311.557
                   }
                 ]
               }
@@ -1930,8 +1930,8 @@
               },
               "result": {
                 "access": {
-                  "id": "ckb6eg29h0006ci0sisx1hyn6",
-                  "token": "ckb6eg29h0007ci0sqgg46eei",
+                  "id": "ckb7wa4yt0006uy0seb0h53t8",
+                  "token": "ckb7wa4yt0007uy0sr1u9i6uf",
                   "type": "shared",
                   "name": "For colleagues",
                   "permissions": [
@@ -1940,10 +1940,10 @@
                       "level": "read"
                     }
                   ],
-                  "created": 1591614948.725,
-                  "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                  "modified": 1591614948.725,
-                  "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                  "created": 1591705371.557,
+                  "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                  "modified": 1591705371.557,
+                  "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                 }
               }
             }
@@ -1980,11 +1980,11 @@
           "examples": [
             {
               "params": {
-                "id": "ckb6eg29h0004ci0ssbqi42xz"
+                "id": "ckb7wa4yt0004uy0s3xwtb29q"
               },
               "result": {
                 "accessDeletion": {
-                  "id": "ckb6eg29h0004ci0ssbqi42xz"
+                  "id": "ckb7wa4yt0004uy0s3xwtb29q"
                 }
               }
             }
@@ -2125,8 +2125,8 @@
           "examples": [
             {
               "params": {
-                "auth": "ckb6eg2aa001nci0s8ia7646z",
-                "accessId": "ckb6eg2aa001mci0sw2axyesg",
+                "auth": "ckb7wa4zl001nuy0spxd48662",
+                "accessId": "ckb7wa4zl001muy0s1la1gz22",
                 "fromTime": 1561000000,
                 "toTime": 1562000000,
                 "status": 403,
@@ -2138,37 +2138,37 @@
               "result": {
                 "auditLogs": [
                   {
-                    "id": "ckb6eg2aa001oci0scji394j2",
+                    "id": "ckb7wa4zl001ouy0slshaloh4",
                     "type": "audit/core",
                     "time": 1561988300,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "ckb6eg2aa001mci0sw2axyesg",
+                    "accessId": "ckb7wa4zl001muy0s1la1gz22",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "ckb6eg2ab001pci0s2xpknobi",
+                    "id": "ckb7wa4zl001puy0ssjaaszhn",
                     "type": "audit/core",
                     "time": 1561988900,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "ckb6eg2aa001mci0sw2axyesg",
+                    "accessId": "ckb7wa4zl001muy0s1la1gz22",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "ckb6eg2ab001qci0s04lyu2av",
+                    "id": "ckb7wa4zl001quy0sxp7xanb3",
                     "type": "audit/core",
                     "time": 1561989200,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=work",
-                    "accessId": "ckb6eg2aa001mci0sw2axyesg",
+                    "accessId": "ckb7wa4zl001muy0s1la1gz22",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
@@ -2211,8 +2211,8 @@
               "result": {
                 "webhooks": [
                   {
-                    "id": "ckb6eg2aa001hci0sxyu2otuy",
-                    "accessId": "ckb6eg2aa001fci0so3r15e6j",
+                    "id": "ckb7wa4zl001huy0sf1rzswkk",
+                    "accessId": "ckb7wa4zl001fuy0s65qt2efp",
                     "url": "https://notifications.service.com/pryv",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2222,26 +2222,26 @@
                     "failCount": 0,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1591611348.754
+                      "timestamp": 1591701771.585
                     },
                     "runs": [
                       {
                         "status": 200,
-                        "timestamp": 1591611348.754
+                        "timestamp": 1591701771.585
                       },
                       {
                         "status": 200,
-                        "timestamp": 1591607748.754
+                        "timestamp": 1591698171.585
                       }
                     ],
-                    "created": 1591528548.754,
-                    "createdBy": "ckb6eg2aa001fci0so3r15e6j",
-                    "modified": 1591528548.754,
-                    "modifiedBy": "ckb6eg2aa001fci0so3r15e6j"
+                    "created": 1591618971.585,
+                    "createdBy": "ckb7wa4zl001fuy0s65qt2efp",
+                    "modified": 1591618971.585,
+                    "modifiedBy": "ckb7wa4zl001fuy0s65qt2efp"
                   },
                   {
-                    "id": "ckb6eg2aa001jci0spy0vpocr",
-                    "accessId": "ckb6eg2aa001fci0so3r15e6j",
+                    "id": "ckb7wa4zl001juy0sofgpuslw",
+                    "accessId": "ckb7wa4zl001fuy0s65qt2efp",
                     "url": "https://notifications.pryv.me/webhooks",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2251,46 +2251,46 @@
                     "failCount": 2,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1591614943.754
+                      "timestamp": 1591705366.585
                     },
                     "runs": [
                       {
                         "status": 500,
-                        "timestamp": 1591614943.754
+                        "timestamp": 1591705366.585
                       },
                       {
                         "status": 500,
-                        "timestamp": 1591614938.754
+                        "timestamp": 1591705361.585
                       },
                       {
                         "status": 200,
-                        "timestamp": 1591614348.754
+                        "timestamp": 1591704771.585
                       },
                       {
                         "status": 200,
-                        "timestamp": 1591613748.754
+                        "timestamp": 1591704171.585
                       },
                       {
                         "status": 200,
-                        "timestamp": 1591613148.754
+                        "timestamp": 1591703571.585
                       },
                       {
                         "status": 200,
-                        "timestamp": 1591612548.754
+                        "timestamp": 1591702971.585
                       },
                       {
                         "status": 200,
-                        "timestamp": 1591611948.754
+                        "timestamp": 1591702371.585
                       },
                       {
                         "status": 200,
-                        "timestamp": 1591611348.754
+                        "timestamp": 1591701771.585
                       }
                     ],
-                    "created": 1591442148.754,
-                    "createdBy": "ckb6eg2aa001fci0so3r15e6j",
-                    "modified": 1591442148.754,
-                    "modifiedBy": "ckb6eg2aa001fci0so3r15e6j"
+                    "created": 1591532571.585,
+                    "createdBy": "ckb7wa4zl001fuy0s65qt2efp",
+                    "modified": 1591532571.585,
+                    "modifiedBy": "ckb7wa4zl001fuy0s65qt2efp"
                   }
                 ]
               }
@@ -2330,8 +2330,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "ckb6eg2aa001hci0sxyu2otuy",
-                  "accessId": "ckb6eg2aa001fci0so3r15e6j",
+                  "id": "ckb7wa4zl001huy0sf1rzswkk",
+                  "accessId": "ckb7wa4zl001fuy0s65qt2efp",
                   "url": "https://notifications.service.com/pryv",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2341,22 +2341,22 @@
                   "failCount": 0,
                   "lastRun": {
                     "status": 200,
-                    "timestamp": 1591611348.754
+                    "timestamp": 1591701771.585
                   },
                   "runs": [
                     {
                       "status": 200,
-                      "timestamp": 1591611348.754
+                      "timestamp": 1591701771.585
                     },
                     {
                       "status": 200,
-                      "timestamp": 1591607748.754
+                      "timestamp": 1591698171.585
                     }
                   ],
-                  "created": 1591528548.754,
-                  "createdBy": "ckb6eg2aa001fci0so3r15e6j",
-                  "modified": 1591528548.754,
-                  "modifiedBy": "ckb6eg2aa001fci0so3r15e6j"
+                  "created": 1591618971.585,
+                  "createdBy": "ckb7wa4zl001fuy0s65qt2efp",
+                  "modified": 1591618971.585,
+                  "modifiedBy": "ckb7wa4zl001fuy0s65qt2efp"
                 }
               }
             }
@@ -2389,8 +2389,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "ckb6eg2aa001kci0smo35oq4n",
-                  "accessId": "ckb6eg2aa001gci0sq2jyjavt",
+                  "id": "ckb7wa4zl001kuy0syvssed1l",
+                  "accessId": "ckb7wa4zl001guy0sta1k515r",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2400,10 +2400,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1591614943.754,
-                  "createdBy": "ckb6eg2aa001gci0sq2jyjavt",
-                  "modified": 1591614943.754,
-                  "modifiedBy": "ckb6eg2aa001gci0sq2jyjavt"
+                  "created": 1591705366.585,
+                  "createdBy": "ckb7wa4zl001guy0sta1k515r",
+                  "modified": 1591705366.585,
+                  "modifiedBy": "ckb7wa4zl001guy0sta1k515r"
                 }
               }
             }
@@ -2460,8 +2460,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "ckb6eg2aa001ici0scgsvy4e7",
-                  "accessId": "ckb6eg2aa001fci0so3r15e6j",
+                  "id": "ckb7wa4zl001iuy0sfd39co79",
+                  "accessId": "ckb7wa4zl001fuy0s65qt2efp",
                   "url": "https://notifications.pryv.me/myusername/ui3HDAw43",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2471,28 +2471,28 @@
                   "failCount": 5,
                   "lastRun": {
                     "status": 404,
-                    "timestamp": 1591614933.754
+                    "timestamp": 1591705356.585
                   },
                   "runs": [
                     {
                       "status": 404,
-                      "timestamp": 1591614933.754
+                      "timestamp": 1591705356.585
                     },
                     {
                       "status": 404,
-                      "timestamp": 1591614893.754
+                      "timestamp": 1591705316.585
                     },
                     {
                       "status": 404,
-                      "timestamp": 1591614873.754
+                      "timestamp": 1591705296.585
                     },
                     {
                       "status": 404,
-                      "timestamp": 1591614863.754
+                      "timestamp": 1591705286.585
                     },
                     {
                       "status": 404,
-                      "timestamp": 1591614858.754
+                      "timestamp": 1591705281.585
                     }
                   ]
                 }
@@ -2531,11 +2531,11 @@
           "examples": [
             {
               "params": {
-                "id": "ckb6eg2aa001kci0smo35oq4n"
+                "id": "ckb7wa4zl001kuy0syvssed1l"
               },
               "result": {
                 "webhookDeletion": {
-                  "id": "ckb6eg2aa001kci0smo35oq4n"
+                  "id": "ckb7wa4zl001kuy0syvssed1l"
                 }
               }
             }
@@ -2574,8 +2574,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "ckb6eg2aa001kci0smo35oq4n",
-                  "accessId": "ckb6eg2aa001gci0sq2jyjavt",
+                  "id": "ckb7wa4zl001kuy0syvssed1l",
+                  "accessId": "ckb7wa4zl001guy0sta1k515r",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2585,10 +2585,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1591614943.754,
-                  "createdBy": "ckb6eg2aa001gci0sq2jyjavt",
-                  "modified": 1591614943.754,
-                  "modifiedBy": "ckb6eg2aa001gci0sq2jyjavt"
+                  "created": 1591705366.585,
+                  "createdBy": "ckb7wa4zl001guy0sta1k515r",
+                  "modified": 1591705366.585,
+                  "modifiedBy": "ckb7wa4zl001guy0sta1k515r"
                 }
               }
             }
@@ -3110,8 +3110,8 @@
             {
               "params": {},
               "result": {
-                "id": "ckb6eg29h000aci0sb7w0oam5",
-                "token": "ckb6eg29h000bci0s8xid3w6q",
+                "id": "ckb7wa4yt000auy0ssi34p4in",
+                "token": "ckb7wa4yt000buy0sdhne8tbi",
                 "type": "app",
                 "name": "Current access",
                 "deviceName": "My awesome device",
@@ -3121,16 +3121,16 @@
                     "level": "read"
                   }
                 ],
-                "lastUsed": 1591614648.725,
-                "expires": 1591614828.725,
-                "deleted": 1591614888.725,
+                "lastUsed": 1591705071.557,
+                "expires": 1591705251.557,
+                "deleted": 1591705311.557,
                 "clientData": {
                   "consent": "My custom consent message."
                 },
-                "created": 1591614828.725,
-                "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                "modified": 1591614828.725,
-                "modifiedBy": "ckb6eg29g0001ci0s1wjtivph",
+                "created": 1591705251.557,
+                "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                "modified": 1591705251.557,
+                "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk",
                 "calls": {
                   "getAccessInfo": 12,
                   "profile:get": 5,
@@ -3215,7 +3215,7 @@
                 "results": [
                   {
                     "event": {
-                      "id": "ckb6eg2a7000tci0sdlyyhvxo",
+                      "id": "ckb7wa4zi000tuy0sr3vxun36",
                       "time": 1385046854.282,
                       "streamIds": [
                         "heart"
@@ -3224,15 +3224,15 @@
                       "tags": [],
                       "type": "frequency/bpm",
                       "content": 90,
-                      "created": 1591614948.751,
-                      "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                      "modified": 1591614948.751,
-                      "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                      "created": 1591705371.582,
+                      "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                      "modified": 1591705371.582,
+                      "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                     }
                   },
                   {
                     "event": {
-                      "id": "ckb6eg2a7000uci0seti3pko7",
+                      "id": "ckb7wa4zi000uuy0su252i0b2",
                       "time": 1385046854.282,
                       "streamIds": [
                         "systolic"
@@ -3241,15 +3241,15 @@
                       "tags": [],
                       "type": "pressure/mmhg",
                       "content": 120,
-                      "created": 1591614948.751,
-                      "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                      "modified": 1591614948.751,
-                      "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                      "created": 1591705371.582,
+                      "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                      "modified": 1591705371.582,
+                      "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                     }
                   },
                   {
                     "event": {
-                      "id": "ckb6eg2a7000vci0szx0e0akw",
+                      "id": "ckb7wa4zi000vuy0sjrdj4247",
                       "time": 1385046854.282,
                       "streamIds": [
                         "diastolic"
@@ -3258,10 +3258,10 @@
                       "tags": [],
                       "type": "pressure/mmhg",
                       "content": 80,
-                      "created": 1591614948.751,
-                      "createdBy": "ckb6eg29g0001ci0s1wjtivph",
-                      "modified": 1591614948.751,
-                      "modifiedBy": "ckb6eg29g0001ci0s1wjtivph"
+                      "created": 1591705371.582,
+                      "createdBy": "ckb7wa4ys0001uy0sgxh47dqk",
+                      "modified": 1591705371.582,
+                      "modifiedBy": "ckb7wa4ys0001uy0sgxh47dqk"
                     }
                   }
                 ]

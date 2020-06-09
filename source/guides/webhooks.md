@@ -28,7 +28,7 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
 6. [Endpoint setup](#endpoint-setup)
   1. [User identification](#user-identification)
   2. [Endpoint testing](#endpoint-testing)
-  3. [Webhook authentication](#webhook-authentication)
+  3. [Webhook authorization](#webhook-authorization)
 7. [Events synchronization](#events-synchronization)
 8. [Conclusion](#conclusion)
 
@@ -263,7 +263,7 @@ In the query parameters:
 
 In order to test that your service's endpoint is reachable by the webhook calls, we offer the [webhooks.test](/reference/#test-webhook) API method that triggers the webhook execution.
 
-### Webhook authentication
+### Webhook authorization
 
 You might need to include a shared secret between your application and the webhook provider in order to control the API usage of your external service.
 

@@ -316,8 +316,8 @@ module.exports = exports =
 
   ,
 
-    id: "authentication"
-    title: "Authentication"
+    id: "authorization"
+    title: "Authorization"
     description: """
                  All requests for retrieving and manipulating activity data must carry a valid [access token](##{dataStructure.getDocId("access")}). 
                  The preferred method is to use the HTTP `Authorization` header. 
@@ -326,7 +326,7 @@ module.exports = exports =
                  
                  **Alternative methods:**
               
-                 1- Pryv.io supports the **Basic HTTP** Authentication Scheme This allows to present 
+                 1- Pryv.io supports the **Basic HTTP** Authorization Scheme This allows to present 
                  a Pryv.io endpoint as a single URL without exposing the token in query parameters:  
 
                  <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info

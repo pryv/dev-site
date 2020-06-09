@@ -54,7 +54,7 @@ New features:
  - Add `create-only` permission level. See the [Access data structure](/reference/#access) for more details.
  - Add multi-factor authentication for login using the optional MFA service. See the [MFA API methods](/reference/#multi-factor-authentication) for more details.
  - Add auditing capabilities through the Audit API. See the [Audit API methods](/reference/#audit) for more details.
- - Pryv.io API now supports the Basic HTTP Authentication scheme.
+ - Pryv.io API now supports the Basic HTTP Authorization scheme.
  - Release of webhooks to notify of data changes. See Webhook [data structure](/reference/#webhook) and [methods](/reference/#webhooks) for more details.
  - Add route `/service/info` that provides a unified way for third party services to access the necessary information related to a Pryv.io platform. See [description](/reference/#service-info) for more details.
  - Most API calls now present a `Pryv-Access-Id` response header that contains the id of the access used for the call. This is the case only when a valid authorization token has been provided during the request (even if the token is expired). See [metadata](/reference/#in-http-headers) for more details.

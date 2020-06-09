@@ -25,7 +25,7 @@ module.exports = exports =
       title: "Login user"
       http: "POST /auth/login"
       description: """
-                   Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authentication).   
+                   Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).   
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
@@ -137,7 +137,7 @@ module.exports = exports =
       description: """
                    Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.
                    
-                   Requires a personal token as [authentication](#basics-authentication), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
+                   Requires a personal token as [authentication](#basics-authorization), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
                    """
       params:
         description: """
@@ -169,7 +169,7 @@ module.exports = exports =
       description: """
                    Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
                    
-                   Requires a MFA session token as [authentication](#basics-authentication).
+                   Requires a MFA session token as [authentication](#basics-authorization).
                    """
       params:
         description: """
@@ -219,7 +219,7 @@ module.exports = exports =
       description: """
                    Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).
                    
-                   Requires a MFA session token as [authentication](#basics-authentication).
+                   Requires a MFA session token as [authentication](#basics-authorization).
                    """
       result:
         http: "200 OK"
@@ -246,7 +246,7 @@ module.exports = exports =
       description: """
                    Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
                    
-                   Requires a MFA session token as [authentication](#basics-authentication).
+                   Requires a MFA session token as [authentication](#basics-authorization).
                    """
       params:
         description: """
@@ -284,7 +284,7 @@ module.exports = exports =
       description: """
                    Deactivate MFA for a given Pryv.io user.
                    
-                   Requires a personal token as [authentication](#basics-authentication).
+                   Requires a personal token as [authentication](#basics-authorization).
                    """
       result:
         http: "200 OK"

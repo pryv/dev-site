@@ -19,7 +19,7 @@ For this we suggest to implement the following ways to load its configuration:
 
 1. **pryvApiEndpoint** query param
 
-  An URL in the [Basic HTTP Authentication form](/reference/#authentication).
+  An URL in the [Basic HTTP Authorization form](/reference/#authorization).
 
   Example:`https://cdtasdjhashdsa@testuser.pryv.me` as API endpoint (URL encoded)
 
@@ -45,9 +45,9 @@ If multiple parameters are provided, the following order of priority should be u
 2. `pryvApiEndpoint` as query parameter
 3. `pryvServiceInfoUrl` as default value
 
-# Authentication
+# Authorization
 
-Using a `pryvApiEndpoint` to load an app allows to load data directly as it usually contains credentials. For cases where you require authentication, it is preferred to use `pryvServiceInfoUrl`:
+Using a `pryvApiEndpoint` to load an app allows to load data directly as it usually contains credentials. For cases where you require authorization, it is preferred to use `pryvServiceInfoUrl`:
 
 <script src="/assets/js/raphael.min.js"></script>
 <script src="/assets/js/flowchart.min.js"></script>
