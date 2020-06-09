@@ -268,7 +268,7 @@ module.exports = exports =
         key: "access"
         type: "string"
         description: """
-                    The URL to perform [authorization requests](#auth-request).
+                    The URL to perform [authentication requests](#auth-request).
                     """
       ,
         key: "api"
