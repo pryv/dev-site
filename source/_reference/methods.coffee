@@ -1639,7 +1639,7 @@ module.exports = exports =
       title: "Create webhook"
       http: "POST /webhooks"
       description: """
-                   Creates a new webhook. You can only create webhooks with app accesses.
+                   Creates a new webhook. You can only create webhooks with `app` and `shared` accesses.
                    """
       params:
         description: """
