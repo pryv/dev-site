@@ -15,13 +15,11 @@ module.exports = exports =
     id: "endpoint-url"
     title: "API endpoint"
     description: """
-                 Depending on the Pryv.io set-up or distribution, the root endpoint can have the following formats:
+                 Depending on the Pryv.io setup or distribution, the root endpoint can have the following formats:
 
-                 ```
-                 Pryv Lab: https://{username}.pryv.me
-                 DNS-less: https://{hostname}/{username}
-                 Own Domain: https://{username}.{domain}
-                 ```
+                 Pryv Lab: `https://{username}.pryv.me`  
+                 Own Domain: `https://{username}.{domain}`  
+                 DNS-less (Open): `https://{hostname}/{username}`
 
                  Each user account has a dedicated root API endpoint as it is potentially served from a different location. The API endpoint format may vary, so check your platform's [service information](#service-info) if needed.
 
@@ -62,7 +60,7 @@ module.exports = exports =
 
               DNS-less:
               ```http
-               GET {username}/events HTTP/1.1
+               GET /{username}/events HTTP/1.1
                Host: host.your-domain.io
                Authorization: {token}
                ```
@@ -97,7 +95,7 @@ module.exports = exports =
     id: "call-with-websockets"
     title: "Call with websockets"
     description: """
-                 The API supports real-time interaction by accepting websocket connections via [Socket.IO 2.0](http://socket.io)
+                 The API supports real-time interaction by accepting websocket connections via [Socket.io 2.0](http://socket.io)
 
                  Before API version 1.5.8 Use Socket.io 0.9
                  """
@@ -109,12 +107,19 @@ module.exports = exports =
 
                    Then initialize the connection with the URL:
                   
-                   ```
                    Pryv Lab:
-                   https://{username}.pryv.me:443/{username}?auth={accessToken}&resource=/{username}
+                   ```
+                   https://{username}.pryv.me/{username}?auth={accessToken}&resource=/{username}
+                   ```
+
+                   Own Domain: 
+                   ```
+                   https://{username}.{domain}/{username}?auth={accessToken}&resource=/{username}
+                   ```
                   
                    DNS-less:
-                   https://host.your-domain.io:443/{username}/{username}?auth={accessToken}&resource=/{username}
+                   ```
+                   https://host.your-domain.io/{username}/{username}?auth={accessToken}&resource=/{username}
                    ```
                    *Yes, the username is quoted 3 times..*
                    """
@@ -124,7 +129,14 @@ module.exports = exports =
                  Pryv.me:
                  ```html
                  <script>
-                 var socket = io("https://#{examples.users.one.username}.pryv.me:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 var socket = io("https://#{examples.users.one.username}.pryv.me/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 });
+                 </script>
+                 ```
+                 Own domain:
+                 ```html
+                 <script>
+                 var socket = io("https://#{examples.users.one.username}.{domain}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
                  });
                  </script>
                  ```
@@ -236,8 +248,8 @@ module.exports = exports =
     description: """
                  Service information provides a unified way for third party services to access the necessary information related to a Pryv.io platform as this route is served by any Pryv.io API endpoint.
 
-                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` or `https://{hostname}/access` is necessary.  
-                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access. 
+                 For many applications, the first step is to authenticate a user. For this you need to know the path to **access** which is usually set to `https://access.{domain}/` or `https://{hostname}/access/`.  
+                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as **access**, containing the URL to access. 
 
                  See [Auto-Configuration](/guides/app-guidelines/#auto-configuration) in the guide *App Guidlines*               
                  """
