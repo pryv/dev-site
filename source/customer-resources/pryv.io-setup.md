@@ -73,7 +73,7 @@ The procedure for the platform health monitoring is described in the [Pryv.io He
 
 ## Customize authentication, registration and reset password apps
 
-In order to perform the [authentication procedure](/reference/#authorizing-your-app), a web page is necessary. We provide a template web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
+In order to perform the [authentication procedure](/reference/#authenticate-your-app), a web page is necessary. We provide a template web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
 
 In order to customize your own, we suggest that you fork this repository and host the web app on your environment. The easiest way to begin is to fork it on GitHub and host it using GitHub-pages.
 

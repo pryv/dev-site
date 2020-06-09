@@ -126,7 +126,7 @@ This is useful for email authentication or if the user has lost his password.
 
 ### How does the authentication flow work ?
 
-You can check how to authenticate your app [here](https://api.pryv.com/reference/#authorizing-your-app).
+You can check how to authenticate your app [here](https://api.pryv.com/reference/#authenticate-your-app).
 
 We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-auth3). 
 
@@ -205,7 +205,7 @@ This can be done by using the auth request through a consent step or by generati
 
 It can happen that you would need an access delegation from your app users if they cannot connect on the app to authorize apps and grant access to their data for some period of time.
 
-You can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](/reference/#authorizing-your-app) for more information on the auth request).
+You can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](/reference/#authenticate-your-app) for more information on the auth request).
 
 This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and give permission to data that was in its scope.
 

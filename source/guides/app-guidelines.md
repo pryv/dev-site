@@ -57,7 +57,7 @@ st=>start: Start
 ready=>end: Ready
 fail=>end: Fail
 
-authProcess=>operation: Auth Process:>/reference/#authorizing-your-app
+authProcess=>operation: Auth Process:>/reference/#authenticate-your-app
 
 condApiEndPoint=>condition: pryvApiEndpoint?
 condServiceInfo=>condition: pryvServiceInfoUrl?

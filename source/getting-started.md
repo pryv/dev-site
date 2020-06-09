@@ -56,7 +56,7 @@ Once data is added to your account, you can select which streams to visualize on
 
 Now that your Pryv Lab account has been created, you can start adding data. In order to do so using code or API clients such as cURL or Postman, you need to obtain an access token.
 
-The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authorizing-your-app)).
+The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authenticate-your-app)).
 
 1. Go to [the Pryv Access Token Generator: https://api.pryv.com/app-web-access/](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
 2. Set up the required parameters :

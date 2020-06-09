@@ -50,7 +50,7 @@ Removals:
 ## V1.4
 
 New features:
- - Auth request now accepts a custom `serviceInfo` object, which is returned by the polling url. In case of success, a `pryvApiEndpoint` field is returned. See [Auth request](/reference/#authorizing-your-app) for more details.
+ - Auth request now accepts a custom `serviceInfo` object, which is returned by the polling url. In case of success, a `pryvApiEndpoint` field is returned. See [Auth request](/reference/#authenticate-your-app) for more details.
  - Add `create-only` permission level. See the [Access data structure](/reference/#access) for more details.
  - Add multi-factor authentication for login using the optional MFA service. See the [MFA API methods](/reference/#multi-factor-authentication) for more details.
  - Add auditing capabilities through the Audit API. See the [Audit API methods](/reference/#audit) for more details.
