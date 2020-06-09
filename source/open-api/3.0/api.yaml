@@ -1062,8 +1062,8 @@ paths:
   /account/reset-password:
     post:
       description: >-
-        Resets the user's password, authenticating the request with the given
-        reset token (see [request password
+        Resets the user's password, authorizing the request with the given reset
+        token (see [request password
         reset](#methods-account-account-requestPasswordReset) ).  
 
         This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).
