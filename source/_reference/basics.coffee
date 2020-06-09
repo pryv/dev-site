@@ -614,8 +614,8 @@ module.exports = exports =
         title: "Auth request on Pryv Lab"
         content: """
                  ```http
-                 POST https://reg.pryv.me/access HTTP/1.1
-                 Host: reg.pryv.me
+                 POST https://access.pryv.me/access HTTP/1.1
+                 Host: access.pryv.me
 
                  {
                    "requestingAppId": "test-app-id",
