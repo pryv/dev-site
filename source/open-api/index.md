@@ -47,7 +47,7 @@ You can find more information on how to create a Pryv user on the [dedicated pag
 
 In our example, the `username` "testuser" associated to the `token` "cdtasdjhashdsa" are used to set the `baseUrl` variable as `https://cdtasdjhashdsa@testuser.pryv.me`.
 
-**Note that you should remove trailing spaces for the variable `baseUrl` to have a working environment.**
+**Note that you should remove trailing slash for the variable `baseUrl` to have a working environment.**
 
 Finally, click on `Add` to update the environment.
 
