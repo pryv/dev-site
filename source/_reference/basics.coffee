@@ -334,7 +334,7 @@ module.exports = exports =
                  All requests for retrieving and manipulating activity data must carry a valid [access token](##{dataStructure.getDocId("access")}). 
                  The preferred method is to use the HTTP `Authorization` header. 
 
-                 Access tokens are obtained via the [app authorization](#authenticate-your-app) or from sharing.
+                 Access tokens are obtained via the [app authentication](#authenticate-your-app) or from sharing.
                  
                  **Alternative methods:**
               
