@@ -12,7 +12,9 @@
     "documentation"
   ],
   "scripts": {
-    "webserver": "node node_modules/rec-la/webserver/main.js ./build"
+    "webserver": "node node_modules/rec-la/webserver/main.js ./build",
+    "transpile": "cd open-api ; yarn transpile",
+    "build": "make build"
   },
   "dependencies": {},
   "devDependencies": {

@@ -23,7 +23,7 @@ from [https://sw.pryv.li/access/test.html](https://sw.pryv.li/access/test.html)
 
 ### Access request
 
-**request**: `POST https://reg.pryv.me/access`
+**request**: `POST https://access.pryv.me/access`
 **payload**:
 
 ```
@@ -93,7 +93,7 @@ from [https://sw.pryv.li/access/test.html](https://sw.pryv.li/access/test.html)
 
 ### Polling
 
-**request**: GET `https://reg.pryv.me/access/dXRqBezem8v3mNxf`
+**request**: GET `https://access.pryv.me/access/dXRqBezem8v3mNxf`
 
 3 response codes:
 
