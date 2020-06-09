@@ -268,7 +268,7 @@ module.exports = exports =
         key: "access"
         type: "string"
         description: """
-                    The URL to perform [authorization requests](#auth-request)
+                    The URL to perform [authorization requests](#auth-request).
                     """
       ,
         key: "api"
@@ -425,16 +425,16 @@ module.exports = exports =
                  To authenticate users in your app, and thus for users to grant your app access to their data, you must:
 
                  1. Choose an app identifier (min. length 6 chars)
-                 2. (If not yet done), fetch [serviceInfo](#service-info)
-                 2. Send an auth request from your app to the url exposed by `access` parameter given by `serviceInfo`
-                 3. Open the `authUrl` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
-                 4. The result of the sign in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
-                  - by polling the URL obtained in the `poll` field of the HTTP response to the auth request (preferred Method)
+                 2. Fetch the [service information](#service-info)
+                 2. Send an [auth request](#auth-request) to the URL exposed by the **access** parameter of the service information
+                 3. Open the `authUrl` field of the HTTP response in a browser or webframe. The web page will prompt the user to sign in using her Pryv.io credentials (or to create an account if she doesn't have one).
+                 4. The result of the sign-in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
+                  - by [polling the URL](#poll-request) obtained in the `poll` field of the HTTP response to the auth request (preferred Method)
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
                  #### Generate token app
 
-                 You can also use the **Access token generator** to obtain an app token:
+                 The **Access token generator** is a simple web application that allows its user to enter the parameters of the [Auth request](#auth-request) and performs it. It is accessible at the following URL:
 
                  ```
                  https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=${pryvServiceInfoUrl}
@@ -452,7 +452,7 @@ module.exports = exports =
       title: "Auth request"
       type: "method"
       description: """
-                   The API endpoint to use is given by [serviceInfo](#service-info) `access`
+                   The API endpoint to use is given by the [service information's](#service-info) `access` property.
                    """
       http:
         text: "POST to `{serviceInfo.access}`" 
@@ -528,7 +528,7 @@ module.exports = exports =
                        """
         ]
       result: [
-        title: "Result: in progress"
+        title: "Result: need sign-in"
         http: "200"
         properties: [
           key: "status"
@@ -611,10 +611,10 @@ module.exports = exports =
         ]
       ]
       examples: [
-        title: "Auth request"
+        title: "Auth request on Pryv Lab"
         content: """
                  ```http
-                 POST {serviceInfo.access} HTTP/1.1
+                 POST https://reg.pryv.me/access HTTP/1.1
                  Host: reg.pryv.me
 
                  {
@@ -635,65 +635,55 @@ module.exports = exports =
                  }
                  ```
                  """
+        result:
+          status: 'NEED_SIGNIN'
+          url: 'https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4',
+          authUrl: 'https://sw.pryv.me/access/access.html?poll=https://access.pryv.me/access/6CInm4R2TLaoqtl4'
+          key: '6CInm4R2TLaoqtl4'
+          poll: 'https://access.pryv.me/access/6CInm4R2TLaoqtl4',
+          poll_rate_ms: 1000,
+          requestingAppId: 'test-app-id',
+          requestedPermissions: [
+              {
+                  streamId: 'diary',
+                  level: 'read',
+                  defaultName: 'Journal'
+              },
+              {
+                  streamId: 'position',
+                  level: 'contribute',
+                  defaultName: 'Position'
+              }
+          ],
+          lang: 'fr',
+          serviceInfo: {}
+
       ,
         title: 'Auth request cURL'
         content: """
                  ```bash
                  curl -i -H 'Content-Type: application/json' -X POST -d '{"requestingAppId": "my-app-id","requestedPermissions": [{"streamId": "diary","level": "read","defaultName": "Journal"},{"streamId": "position","level": "contribute","defaultName": "Position"}]}' "https://access.pryv.me/access"
                  ```
-                 """
-      ,
-        title: '"In progress" response {inProgressResponse}'
-        content: """
-                 ```json
-                 {
-                    "status": "NEED_SIGNIN",
-                    "code": 201,
-                    "key": "6CInm4R2TLaoqtl4",
-                    "requestingAppId": "test-app-id",
-                    "requestedPermissions": [
-                        {
-                            "streamId": "diary",
-                            "level": "read",
-                            "defaultName": "Journal"
-                        },
-                        {
-                            "streamId": "position",
-                            "level": "contribute",
-                            "defaultName": "Position"
-                        }
-                    ],
-                    "url": "https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4",
-                    "authUrl": "https://sw.pryv.me/access/access.html?poll=https://access.pryv.me/access/6CInm4R2TLaoqtl4"
-                    "poll": "https://access.pryv.me/access/6CInm4R2TLaoqtl4",
-                    "oauthState": null,
-                    "poll_rate_ms": 1000,
-                    "lang": "fr",
-                    "serviceInfo": {...}
-                }
-                 ```
-                 """
+                 """        
       ]
     ,
       id: "poll-request"
       title: "Poll request"
       type: "method"
       http:
-        text: "GET `{inProgressResponse.poll}`"
+        text: "GET `{needSignInResponse.poll}`"
       httpOnly: true
       description: """
-                   The polling url is given by the `poll` parameter in the result
-                   of an [Auth Request](#auth-request) or a poll-request
+                   The polling URL is given by the `poll` parameter in the result the [Auth Request](#auth-request) or a Poll request.
                    """
-      result: [
-        title: "Result: in progress"
-        http: "200"
-        description: """
-                     indentical to `RESULT: IN PROGRESS` form (Auth Request)[#auth-request] 
-                     """
-      ]
       ,
       result: [
+        title: "Result: need sign-in"
+        http: "200"
+        description: """
+                     indentical to `RESULT: SIGN-IN` from [Auth Request](#auth-request)
+                     """
+      ,
         title: "Result: accepted"
         http: "200"
         properties: [
@@ -761,21 +751,20 @@ module.exports = exports =
         ]
       ]
       examples: [
-        title: 'Polling request'
+        title: 'Polling request on Pryv Lab'
         content: """
                  ```http
-                 GET {inProgressResponse.poll} HTTP/1.1
-                 Host: reg.pryv.me
+                 GET /access/6CInm4R2TLaoqtl4 HTTP/1.1
+                 Host: access.pryv.me
                  ```
                  """
       ,
-        title: '**"In progress"** response'
+        title: '**"Need sign-in"** response'
         content: """
-                 identical to `RESULT: IN PROGRESS` from [Auth Request](#auth-request) with a 200 code
+                 identical to `RESULT: NEED SIGN-IN` from [Auth Request](#auth-request)
                  ```
                  {
                    "status": "NEED_SIGNIN",
-                   "code": 200
                    ... 
                  }
                  ```
@@ -787,7 +776,7 @@ module.exports = exports =
                  {
                     "status": "ACCEPTED",
                     "code": 200,
-                    "pryvAPIEndpoint": "https://#{examples.accesses.app.token}.pryv.me@#{examples.users.one.username}.pryv.me/",
+                    "pryvAPIEndpoint": "https://#{examples.accesses.app.token}@#{examples.users.one.username}.pryv.me/",
                     "serviceInfo": {...}
                 }
                  ```
