@@ -23,7 +23,7 @@ In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) des
 By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
 
 1. Go to the [registration page](https://sw.pryv.me/access/register.html).
-2. Fill in the form, choose [where you want to store your data](http://api.pryv.com/concepts/#servers) under 'Hosting' and click on the '**Create**' button.
+2. Fill in the form, choose [where you want to store your data](/concepts/#servers) under 'Hosting' and click on the '**Create**' button.
 
 *Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.*
 
@@ -174,10 +174,10 @@ Here's an example of an event, corresponding to the blood pressure collected by 
 }
 ```
 
-Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](http://api.pryv.com/event-types/). 
+Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](/event-types/). 
 
 **Basic event types** include :
-- [**numerical values**](http://api.pryv.com/event-types/#numerical-types) to capture number values. For example, the type `density/kg-m3` can be used to record the density of a material. In the case of our user, we can use this type to reflect the exposure to specific allergens in his daily life.
+- [**numerical values**](/event-types/#numerical-types) to capture number values. For example, the type `density/kg-m3` can be used to record the density of a material. In the case of our user, we can use this type to reflect the exposure to specific allergens in his daily life.
 
 ```json
 {
@@ -189,7 +189,7 @@ Pryv offers the possibility to manipulate a broad range of event types that can 
 }
 ```
 
-- [**complex types**](http://api.pryv.com/event-types/#complex-types), which will be relevant for specific activities and measurements. In the use case above, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has three properties : the systolic and diastolic blood pressure stored in **mmHg**, and the heart rate in **bpm**.
+- [**complex types**](/event-types/#complex-types), which will be relevant for specific activities and measurements. In the use case above, the type `blood-pressure/bpm-mmhg` can be used to record a blood pressure measurement. It will represent an object, the blood pressure measurement, that has three properties : the systolic and diastolic blood pressure stored in **mmHg**, and the heart rate in **bpm**.
 
 ```json
 {
@@ -231,7 +231,7 @@ These events will have the type `picture/attached` :
 }
 ```
 
-**High-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](http://api.pryv.com/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch to collect GPS position in real-time of the user. 
+**High-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch to collect GPS position in real-time of the user. 
 ![HF](/assets/images/getting-started/hf-event.png)
 
 This data will have the type `position/wgs84` :
@@ -296,7 +296,7 @@ The access for doctor Tom will be created by a `POST` call on accesses (see [acc
 
 Thus, each access is defined by a "name", a set of "permissions" and a "type" that is optional.
 
-Pryv.io distinguishes between three access types ("shared", "app" and "personal") which are explained in the [corresponding section](http://api.pryv.com/concepts/#accesses).
+Pryv.io distinguishes between three access types ("shared", "app" and "personal") which are explained in the [corresponding section](/concepts/#accesses).
 
 As you can see from the example above, each permission specifies a `streamId`, the id of the stream to which we want to give access, and an access `level`, which can be one of the following:
 - `read`: Enables users to view the stream and its contents (sub-streams and events).
@@ -304,7 +304,7 @@ As you can see from the example above, each permission specifies a `streamId`, t
 - `manage`: Enables users to fully control the stream. Can create, update, delete and move the stream.
 - `create-only`: Enables users to read the stream and create events on it and its children.
 
-A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](http://api.pryv.com/reference/#access).
+A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](/reference/#access).
 
 # What Next?
 

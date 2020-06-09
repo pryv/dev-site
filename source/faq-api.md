@@ -41,7 +41,7 @@ If you prefer storing this data in a separate account, keep in mind that the use
 
 The stream structure is independent from one user account to another. It is declared and managed by apps: the stream structure can be created by the app when the user logs in for the first time for example.
 
-We advise you to maintain a list of streams as explained in our [data modelling guide](https://api.pryv.com/guides/data-modelling/#implementation).
+We advise you to maintain a list of streams as explained in our [data modelling guide](/guides/data-modelling/#implementation).
 
 ### Is there a limit in the number of child streams that a stream can have ?
 
@@ -54,12 +54,12 @@ For example, if you want to enter data measurements for different types of aller
 
 ### How can I define custom event types?
 
-You can define any custom type as long as it follows [this structure](/event-types/#basics). See [How to customize event types](https://api.pryv.com/customer-resources/pryv.io-setup/#customize-event-types-validation) for more information.
+You can define any custom type as long as it follows [this structure](/event-types/#basics). See [How to customize event types](/customer-resources/pryv.io-setup/#customize-event-types-validation) for more information.
 
 ### Can I limit the number of event types to be used in a stream ?
 
 There is no limitation in terms of event types per stream. A stream acts like a “folder” in which you can put any type of information.
-If you wish to give a Pryv access token to an external service and to control its use of the access, you can give it a “limited” access type - `create-only` - which allows it to **only** create events in the streams (more information on the different permission levels [here](https://api.pryv.com/reference/#access)).
+If you wish to give a Pryv access token to an external service and to control its use of the access, you can give it a “limited” access type - `create-only` - which allows it to **only** create events in the streams (more information on the different permission levels [here](/reference/#access)).
 
 ### Are my events content validated?
 
@@ -126,11 +126,11 @@ This is useful for email authentication or if the user has lost his password.
 
 ### How does the authentication flow work ?
 
-You can check how to authenticate your app [here](https://api.pryv.com/reference/#authenticate-your-app).
+You can check how to authenticate your app [here](/reference/#authenticate-your-app).
 
 We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-auth3). 
 
-We advise our customers to customize it, and we provide some [guidelines](https://api.pryv.com/customer-resources/pryv.io-setup/#customize-authentication-registration-and-reset-password-apps) for the customization.
+We advise our customers to customize it, and we provide some [guidelines](/customer-resources/pryv.io-setup/#customize-authentication-registration-and-reset-password-apps) for the customization.
 
 ### I'm getting the "invalid credentials" error on the auth.login call although my fields are correct.
 

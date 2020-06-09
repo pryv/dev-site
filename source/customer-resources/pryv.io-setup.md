@@ -28,7 +28,7 @@ It walks you through the different steps that have to be performed in order to s
 
 You need first to define which hardware or virtual machines you will provision to host your Pryv.io instance.  
 
-The **Deployment design guide** for the Pryv.io middleware from the [Customer Resources page](https://api.pryv.com/customer-resources/#documents) will guide you for the provisionning and deployment of your machines.
+The **Deployment design guide** for the Pryv.io middleware from the [Customer Resources page](/customer-resources/#documents) will guide you for the provisionning and deployment of your machines.
 
 It will help you with the choice of your Pryv.io deployment (single node or cluster), and provide you with resources sizing considerations.  
 
@@ -135,7 +135,7 @@ In both cases, you will need to customize settings in the "Email configuration" 
 
 You can also customize the email templates in the configuration files.
 
-More details are provided in the **Emails configuration guide** that can be found in the [Customer Resources section](https://api.pryv.com/customer-resources/#documents).
+More details are provided in the **Emails configuration guide** that can be found in the [Customer Resources section](/customer-resources/#documents).
 
 ## Define your data model
 
@@ -143,7 +143,7 @@ As your Pryv.io platform is fully operational, you can start collecting data.
 
 To do so, you need to design the data model your app(s) will use using Pryv's data structures: **streams** and **events**.
 
-You can have a look at our [Data modelling guide](https://api.pryv.com/guides/data-modelling/) which describes the Pryv.io data structure and walks you through different use cases for your data model. We provide you with an [Excel template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit#gid=0) file describing a basic use case. 
+You can have a look at our [Data modelling guide](/guides/data-modelling/) which describes the Pryv.io data structure and walks you through different use cases for your data model. We provide you with an [Excel template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/edit#gid=0) file describing a basic use case. 
 
 We advise you to build your own file based on this template to describe your own data structure (streams, events, permissions) depending on your use case.
 
@@ -163,4 +163,4 @@ EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
 
 ## Other documents
 
-More resources can be found in our [Customer Resources page](https://api.pryv.com/customer-resources/#documents), or in the [FAQ](https://api.pryv.com/faq-infra/).
+More resources can be found in our [Customer Resources page](/customer-resources/#documents), or in the [FAQ](/faq-infra/).

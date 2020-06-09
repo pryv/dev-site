@@ -103,7 +103,7 @@ Importantly, the logs on Pryv.io can only be fetched by presenting an authorizat
 
 ## Conclusion
 
-If you wish to get more information on the data structure of an `Audit Log` in Pryv.io, please refer to the corresponding section of the [API reference](https://api.pryv.com/reference/#audit-log). 
-It describes the main features of the data structure, while the methods relative to audit logs can be found in the [API methods section](https://api.pryv.com/reference/#audit).
+If you wish to get more information on the data structure of an `Audit Log` in Pryv.io, please refer to the corresponding section of the [API reference](/reference/#audit-log). 
+It describes the main features of the data structure, while the methods relative to audit logs can be found in the [API methods section](/reference/#audit).
 
 
