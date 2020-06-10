@@ -81,10 +81,14 @@ module.exports = exports =
       http: "POST /auth/logout"
       description: """
                    Terminates a personal access session by invalidating its access token (the user will have to login again).
+                   Simply provide the Authorization token in own of [the supported ways](/reference/#authorization), no request body is required.
                    """
       result:
         http: "200 OK"
-      examples: []
+      examples: [
+        params: {}
+        result: {}
+      ]
     ]
 
   ,
