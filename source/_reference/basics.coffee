@@ -775,7 +775,6 @@ module.exports = exports =
                  ```json
                  {
                     "status": "ACCEPTED",
-                    "code": 200,
                     "pryvAPIEndpoint": "https://#{examples.accesses.app.token}@#{examples.users.one.username}.pryv.me/",
                     "serviceInfo": {...}
                 }
@@ -787,7 +786,6 @@ module.exports = exports =
                  ```json
                  {
                     "status": "REFUSED",
-                    "code": 403,
                     "resonID": "REASON_UNDEFINED",
                     "message": "...."
                     "serviceInfo": {...}
