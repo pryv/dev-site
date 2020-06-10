@@ -690,7 +690,7 @@ module.exports = exports =
           key: "status"
           type: "`ACCEPTED`"
           description: """
-                       Auth successful.
+                       Authentication successful.
                        """
         ,
           key: "username"
