@@ -120,7 +120,6 @@ html.no-js(lang='en')
             ulClass: 'nav'
           });
 
-         
           // Synchronise scroll/click motion with TOC display.
           $(document).ready(function() {
             // NOTE This is done at onLoad since we need to wait for all CSS
@@ -133,8 +132,6 @@ html.no-js(lang='en')
             
             // fix offset when navigating
             $('#toc li a, a.toc-anchor').click(function (e) {
-             
-              console.log('CLick', this, offset);
               e.preventDefault();
               var target = $(this).attr('href');
               window.location.hash = target;
