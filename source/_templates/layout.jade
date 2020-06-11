@@ -112,7 +112,7 @@ html.no-js(lang='en')
         jQuery(document).ready(function($) {
           // Header is about 51 pixels. This equals to 'header + fuzz', fuzz was
           // determined experimentally.
-          var offset = 100;
+          var offset = 90;
 
           // Display TOC on the left side of the page.
           $('#toc').toc({
@@ -120,6 +120,7 @@ html.no-js(lang='en')
             ulClass: 'nav'
           });
 
+         
           // Synchronise scroll/click motion with TOC display.
           $(document).ready(function() {
             // NOTE This is done at onLoad since we need to wait for all CSS
@@ -128,6 +129,24 @@ html.no-js(lang='en')
               target: '#toc',
               offset: offset
             });
+            scrollBy(0, 1); // make it scroll to be sure scrollspy gets it
+            
+            // fix offset when navigating
+            $('#toc li a, a.toc-anchor').click(function (e) {
+             
+              console.log('CLick', this, offset);
+              e.preventDefault();
+              var target = $(this).attr('href');
+              window.location.hash = target;
+              
+              $(target)[0].scrollIntoView();
+              if ($(window).scrollTop() + $(window).height() !== $(document).height()) {
+                //only adjust when not at bottom
+                scrollBy(0, -offset + 40);
+              }
+              return true;
+            });
+          
           });
         });
 
