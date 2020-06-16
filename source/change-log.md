@@ -3,7 +3,14 @@ id: change-log
 title: API change log
 template: default.jade
 ---
-## v1.5.9
+
+## v1.5.18
+
+Changes:
+
+- `getAccessInfo` now returns public user data, for now only username.
+
+## v1.5.18
 
 Changes:
 

@@ -81,6 +81,8 @@ module.exports =
       streamId: "health"
       level: "read"
     ]
+    user:
+      username: "jackslater"
     lastUsed: timestamp.now('-5m')
     expires: timestamp.now('-2m')
     deleted: timestamp.now('-1m')
