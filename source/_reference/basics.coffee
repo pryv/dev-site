@@ -526,6 +526,20 @@ module.exports = exports =
           description: """
                        Overrides the default [service information](#service-info) object that will be transmitted in the polling responses.
                        """
+        ,
+          key: "deviceName"
+          type: "string"
+          optional: true
+          description: """
+                       [See access data structure](##{dataStructure.getDocId("access")})
+                       """
+        ,
+          key: "expireAfter"
+          type: "number"
+          optional: true
+          description: """
+                       [See access data structure](##{dataStructure.getDocId("access")})
+                       """
         ]
       result: [
         title: "Result: need sign-in"
