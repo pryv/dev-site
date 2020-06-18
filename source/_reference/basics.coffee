@@ -531,14 +531,21 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       [See access data structure](##{dataStructure.getDocId("access")})
+                       See [access data structure](##{dataStructure.getDocId("access")})
                        """
         ,
           key: "expireAfter"
           type: "number"
           optional: true
           description: """
-                       [See access data structure](##{dataStructure.getDocId("access")})
+                       See [access data structure](##{dataStructure.getDocId("access")})
+                       """
+        ,
+          key: "referer"
+          type: "string"
+          optional: true
+          description: """
+                       Used when creating a user in the process of authentication. See [Create user method](https://api.pryv.com/reference-system/#create-user).
                        """
         ]
       result: [

@@ -3,6 +3,23 @@ id: change-log
 title: API change log
 template: default.jade
 ---
+
+## v1.5.18
+
+New Features:
+
+- Call 'GET /access-info' now returns the username to avoid having to extract it manually from `pryvApiEndpoint`
+
+## v1.5.10
+
+New Features:
+
+- Socket.io v2
+
+Removals:
+
+- Socket.io v0.9
+
 ## v1.5.9
 
 Changes:
