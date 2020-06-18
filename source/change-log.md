@@ -20,7 +20,7 @@ Removals:
 
 - Socket.io v0.9
 
-## v1.5.9
+## v1.5.18
 
 Changes:
 
