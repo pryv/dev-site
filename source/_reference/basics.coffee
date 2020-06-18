@@ -109,19 +109,21 @@ module.exports = exports =
                   
                    Pryv Lab:
                    ```
-                   https://{username}.pryv.me/{username}?auth={accessToken}&resource=/{username}
+                   https://{username}.pryv.me/{username}?auth={accessToken}
                    ```
 
                    Own Domain: 
                    ```
-                   https://{username}.{domain}/{username}?auth={accessToken}&resource=/{username}
+                   https://{username}.{domain}/{username}?auth={accessToken}
                    ```
                   
                    DNS-less:
                    ```
-                   https://host.your-domain.io/{username}/{username}?auth={accessToken}&resource=/{username}
+                   https://host.your-domain.io/{username}/{username}?auth={accessToken}
                    ```
-                   *Yes, the username is quoted 3 times..*
+                   *Yes, the username is quoted 2 times..*
+
+                   For versions prior to **1.5.8** append `&resource={username}`
                    """
       examples: [
         title: "In a web app"
@@ -129,21 +131,21 @@ module.exports = exports =
                  Pryv.me:
                  ```html
                  <script>
-                 var socket = io("https://#{examples.users.one.username}.pryv.me/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 var socket = io("https://#{examples.users.one.username}.pryv.me/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
                  });
                  </script>
                  ```
                  Own domain:
                  ```html
                  <script>
-                 var socket = io("https://#{examples.users.one.username}.{domain}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 var socket = io("https://#{examples.users.one.username}.{domain}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
                  });
                  </script>
                  ```
                  DNS-less:
                  ```html
                  <script>
-                 var socket = io("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
+                 var socket = io("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
                  });
                  </script>
                  ```
