@@ -123,7 +123,7 @@ module.exports = exports =
                    ```
                    *Yes, the username is quoted 2 times..*
 
-                   For versions prior to **1.5.16** append `&resource={username}`
+                   For versions prior to **1.5.8** append `&resource={username}`
                    """
       examples: [
         title: "In a web app"
