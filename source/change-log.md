@@ -10,7 +10,7 @@ New Features:
 
 - Call 'GET /access-info' now returns the username to avoid having to extract it manually from `pryvApiEndpoint`
 
-## v1.5.10
+## v1.5.8
 
 New Features:
 
