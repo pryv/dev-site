@@ -97,7 +97,7 @@ module.exports = exports =
     description: """
                  The API supports real-time interaction by accepting websocket connections via [Socket.io 2.0](http://socket.io)
 
-                 Before API version 1.5.8 Use Socket.io 0.9
+                 For API versions prior to 1.5.8, use Socket.io 0.9.
                  """
     sections: [
       id: "connecting"
@@ -123,7 +123,7 @@ module.exports = exports =
                    ```
                    *Yes, the username is quoted 2 times..*
 
-                   For versions prior to **1.5.8** append `&resource={username}`
+                   For API versions prior to 1.5.8, append `&resource={username}`.
                    """
       examples: [
         title: "In a web app"
