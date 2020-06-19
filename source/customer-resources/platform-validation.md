@@ -86,7 +86,7 @@ The hostname of the first core should be `co1.${DOMAIN}` by default (`co2.${DOMA
 
 ## Register
 
-Run `curl -i https://reg.${DOMAIN}/wactiv/check_username` or open [https://reg.${DOMAIN}/wactiv/check_username](https://reg.${DOMAIN}/wactiv/check_username)
+Run `curl -i https://reg.${DOMAIN}/wactiv/check_username` or open [https://reg.${DOMAIN}/wactiv/check_username](https://reg.${DOMAIN}/wactiv/check_username). For DNS-less, use `curl -i https://${HOSTNAME}/reg/wactiv/check_username` or open [https://${HOSTNAME}/reg/wactiv/check_username](https://${HOSTNAME}/reg/wactiv/check_username).
 
 HTTP status:  
 - 200: OK  

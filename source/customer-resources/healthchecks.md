@@ -26,7 +26,7 @@ As this guide is platform agnostic, we will use variables `${VARIABLE_NAME}` whi
 
 In particular, the following variables should be replaced :
 - the **domain name**, which will be called `${DOMAIN}`,
-- the **core machines hostings**, identified with a `${HOSTING_NAME}`. In a Pryv.io platform, core machines are organized into clusters that we call hostings. Each of these has an identifier `${HOSTING_NAME}`, which can be found at the following URL: https://reg.${DOMAIN}/hostings. The `${HOSTING_NAME}` are the keys of the object `regions:REGION_NAME:zones:ZONE_NAME:hostings`,
+- the **core machines hostings**, identified with a `${HOSTING_NAME}`. In a Pryv.io platform, core machines are organized into clusters that we call hostings. Each of these has an identifier `${HOSTING_NAME}`, which can be found at the following URL: https://reg.${DOMAIN}/hostings. The `${HOSTING_NAME}` are the keys of the object `regions:REGION_NAME:zones:ZONE_NAME:hostings`. For DNS-less setups, it is fixed as `hosting1`.
 - the **access token** `${ACCESS_TOKEN}`, associated with a dedicated user account and that will be used in the API calls for healthchecks. The preparation chapter describes how to obtain it.
 
 # Tools
@@ -54,7 +54,7 @@ We begin by creating an account. We propose to use the following credentials, bu
 - **password** : healthmetrics
 - **email** : healthmetrics01@${DOMAIN}
 
-```json
+```bash
 curl -i -X POST -H 'Content-Type: application/json' \
     -d '{"hosting":"${HOSTING_NAME}",
     "username": "healthmetrics01",
@@ -63,6 +63,19 @@ curl -i -X POST -H 'Content-Type: application/json' \
     "language": "en",
     "appid":"pryv-metrics"}' \
     "https://reg.${DOMAIN}/user/"
+```
+
+for DNS-less, use:
+
+```bash
+curl -i -X POST -H 'Content-Type: application/json' \
+    -d '{"hosting":"${HOSTING_NAME}",
+    "username": "healthmetrics01",
+    "password":"healthmetrics01",
+    "email": "healthmetrics01@${DOMAIN}",
+    "language": "en",
+    "appid":"pryv-metrics"}' \
+    "https://${HOSTNAME}/reg/user/"
 ```
 
 If you are using a default configuration, you can use the default web app:
@@ -80,7 +93,7 @@ In order to obtain a non-expirable access token, we must do 2 calls. First sign 
 
 **- Sign in:**
 
-```json
+```bash
 curl -i -H "Content-Type: application/json" \
     -H "Origin: https://sw.${DOMAIN}" \
     -X POST \
@@ -92,7 +105,7 @@ curl -i -H "Content-Type: application/json" \
 
 The response body should contain a valid personal token under the field `token`:
 
-```json
+```bash
 {
     "token":"${PERSONAL_TOKEN}",
     "preferredLanguage":"en",
@@ -105,7 +118,7 @@ The response body should contain a valid personal token under the field `token`:
 
 **- Create token**
 
-```json
+```bash
 curl -i -X POST -H 'Content-Type: application/json' \
     -H 'Authorization: ${PERSONAL_TOKEN}' \
     -d '{"name":"metricsAccess",
@@ -142,7 +155,7 @@ The response body should contain a valid access token under the `access:token` f
 
 If you are using a default configuration, you can use the default web app:
 
-1. Go to https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.${DOMAIN}/service/info
+1. Go to https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.${DOMAIN}/service/info (https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://${HOSTNAME}/reg/service/info for DNS-less)
 2. Click on `Master Token`radio button
 3. Click on `Request Access` button
 4. Click on `Sign in` Pryv button
@@ -161,9 +174,9 @@ The expected result: An answer.
 
 ## Register
 
-The call to perform: **HTTP GET** `https://reg.${DOMAIN}/healthmetrics01/check_username`
+The call to perform: **HTTP GET** `https://reg.${DOMAIN}/healthmetrics01/check_username` (`https://${HOSTNAME}/reg/healthmetrics01/check_username` for DNS-less)
 
-Run `curl https://reg.${DOMAIN}/healthmetrics01/check_username`
+Run `curl https://reg.${DOMAIN}/healthmetrics01/check_username` (`curl https://${HOSTNAME}/reg/healthmetrics01/check_username` for DNS-less)
 
 The expected result: `Status: 200`
 
