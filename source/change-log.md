@@ -10,6 +10,12 @@ New Features:
 
 - Call 'GET /access-info' now returns the username to avoid having to extract it manually from `pryvApiEndpoint`
 
+## v1.5.18
+
+Changes:
+
+- Call 'POST /user' (create user) on register. The property `server` is now deprecated in favor of `apiEnpoint`.
+
 ## v1.5.8
 
 New Features:
@@ -19,12 +25,6 @@ New Features:
 Removals:
 
 - Socket.io v0.9
-
-## v1.5.18
-
-Changes:
-
-- Call 'POST /user' (create user) on register. The property `server` is now deprecated in favor of `apiEnpoint`.
 
 ## v1.5.6
 

@@ -2287,6 +2287,10 @@ module.exports = exports =
           key: "calls"
           type: "[key-value](##{_getDocId("key-value")})"
           description: "A map of API methods and the number of time each of them was called using the current access."
+        ,
+          key: "user"
+          type: "[key-value](##{_getDocId("key-value")})"
+          description: "A map of user account properties."
         ]
       examples: [
         params: {}
