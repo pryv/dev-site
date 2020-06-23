@@ -34,7 +34,7 @@ For this we suggest to implement the following ways to load its configuration:
   Example: `https://reg.pryv.me/service/info` as service information URL (URL encoded)
 
   ```
-  https://sample.domain/app/index.html?pryvServiceInfo=https%3A%2F%2Freg.pryv.me%2Fservice%2Finfo
+  https://sample.domain/app/index.html?pryvServiceInfoUrl=https%3A%2F%2Freg.pryv.me%2Fservice%2Finfo
   ```
 
 **Prevalence** 

@@ -112,7 +112,7 @@ You can easily visualize the whole process on the following schema:
 
 Based on the previous use case (see the schema above), these are the steps to follow to setup event notifications with webhooks:
 
-If needed, create a new user account on the Pryv Lab platform [here](https://sw.pryv.me/access/register.html) and obtain a token to create a webhook and store data into your account. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
+If needed, create a new user account on the Pryv Lab platform [here](https://sw.pryv.me/access/register.html) and obtain a token to create a webhook and store data into your account. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).  
 You can set the permissions and leave other parameters unchanged:  
 ```json
 [
@@ -132,7 +132,7 @@ For example:
 }
 ```
 
-2. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
+2. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).  
 You can set the permissions and leave other parameters unchanged:  
 ```json
 [
