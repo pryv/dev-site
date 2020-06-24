@@ -2339,7 +2339,7 @@ module.exports = exports =
           description: "The results of each method call, in order."
         ]
       examples: [
-        title: "Insure stream path for a new event. In this example the 'health' streams already exists."
+        title: "Ensure stream path for a new event. In this example the 'health' stream already exists."
         params: [
           method: "streams.create"
           params: _.pick(examples.streams.health[0], "id", "name")

@@ -29,5 +29,5 @@ helpers.getBatchBlock = function (methodId, params) {
 }
 
 helpers.httpOnly = function() {
-  return "Only available for HTTP Rest";
+  return "Only available for HTTP REST";
 }
