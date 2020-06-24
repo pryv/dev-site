@@ -9,13 +9,17 @@ This page presents some third party and _unsupported_ libraries as well as _unsu
 
 ## Example codes to interact with Pryv.io
 
+### Web application examples
+
+You can find the source code here: [https://github.com/pryv/app-web-examples](https://github.com/pryv/app-web-examples).
+
 ### Javascript
 
-You can find the source code [in this github repository](https://github.com/pryv/lib-js).
+You can find the source code here: [https://github.com/pryv/lib-js](https://github.com/pryv/lib-js).
 
 ### Java
 
-You can find the source code [in this github repository](https://github.com/pryv/lib-java).
+You can find the source code here: [https://github.com/pryv/lib-java](https://github.com/pryv/lib-java).
 
 ## Existing example applications
 
