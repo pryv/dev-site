@@ -158,12 +158,12 @@ Our user will therefore be adding events of different types, each related to spe
 
 ![Pryv.io Data Model](/assets/images/data_model_allergens.svg)
 
-Here's an example of an event, corresponding to the blood pressure collected by the **Digital Tensiometer** and added in the substream `blood-pressure` as described in the streams structure above :
+Here's an example of an event, corresponding to the heart rate collected by a **Digital Tensiometer** and added in the substream `heart` as described in the streams structure above :
 
 ```json
 {
   "id": "cji5pfumt1nu90b40chlpetyp",
-  "streamIds": ["blood-pressure"],
+  "streamIds": ["heart"],
   "type": "blood-pressure/mmhg-bpm",
   "content": {
     "systolic": 120,
@@ -194,7 +194,7 @@ Pryv offers the possibility to manipulate a broad range of event types that can 
 ```json
 {
   "id": "c4jghrjkj011ez46d8u4y3pah",
-  "streamIds": ["blood-pressure"],
+  "streamIds": ["heart"],
   "type": "blood-pressure/bpm-mmhg",
   "content": {
       "systolic": 120, 
