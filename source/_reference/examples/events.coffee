@@ -73,32 +73,6 @@ module.exports =
     modified: timestamp.now()
     modifiedBy: accesses.app.id
 
-  heartSystolic:
-    id: generateId()
-    time: 1385046854.282
-    streamIds: [ "systolic" ]
-    streamId: "systolic"
-    tags: []
-    type: "pressure/mmhg"
-    content: 120
-    created: timestamp.now()
-    createdBy: accesses.app.id
-    modified: timestamp.now()
-    modifiedBy: accesses.app.id
-
-  heartDiastolic:
-    id: generateId()
-    time: 1385046854.282
-    streamIds: [ "diastolic" ]
-    streamId: "diastolic"
-    tags: []
-    type: "pressure/mmhg"
-    content: 80
-    created: timestamp.now()
-    createdBy: accesses.app.id
-    modified: timestamp.now()
-    modifiedBy: accesses.app.id
-
   mass:
     id: generateId()
     time: timestamp.now()

@@ -154,7 +154,7 @@ mixin examples(examples, settings)
               if settings.id
                 .tab-pane.sockets
                   if settings.httpOnly
-                    !{helpers.httpOnly()}
+                    pre !{helpers.httpOnly()}
                   else
                     pre: code.
                       socket.emit('!{settings.id}', !{helpers.getWebsocketCall(ex.params)}, callback);
@@ -165,8 +165,10 @@ mixin examples(examples, settings)
               if settings.id
                 .tab-pane.batch
                   if settings.httpOnly
-                    !{helpers.httpOnly()}
+                    pre !{helpers.httpOnly()}
                   else
+                    if settings.id == "callBatch"
+                      | !{markdown('Yes it works! Calling a method `callBatch` within a **call batch** would make no sense. Look at Rest or Socket.io calls.')}
                     pre: code. 
                       !{helpers.getBatchBlock(settings.id, ex.params)}
                     if ex.result

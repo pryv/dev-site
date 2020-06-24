@@ -120,9 +120,18 @@ module.exports = exports =
   ]
 
   healthSubstreams: [
-    id: "diastolic"
-    name: "Diastolic pressure"
-    parentId: "heart"
+    id: "white-cells"
+    name: "White cells"
+    parentId: "blood"
+    children: []
+    created: timestamp.now()
+    createdBy: accesses.app.id
+    modified: timestamp.now()
+    modifiedBy: accesses.app.id
+  ,
+    id: "heart"
+    name: "Heart",
+    parentId: "health",
     children: []
     created: timestamp.now()
     createdBy: accesses.app.id

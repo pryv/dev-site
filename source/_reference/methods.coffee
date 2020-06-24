@@ -1136,7 +1136,7 @@ module.exports = exports =
                      """
       ]
       examples: [
-        title: "Create sub-stream 'diastolic' of 'heart'"
+        title: "Create sub-stream 'white-cells' of 'blood'"
         params: _.pick(examples.streams.healthSubstreams[0], "id", "name", "parentId")
         result:
           stream: examples.streams.healthSubstreams[0]
@@ -2339,27 +2339,30 @@ module.exports = exports =
           description: "The results of each method call, in order."
         ]
       examples: [
-        title: "Sync some health metrics"
+        title: "Insure stream path for a new event. In this example the 'health' streams already exists."
         params: [
-          method: "events.create"
-          params: _.pick(examples.events.heartRate, "time", "streamIds", "type", "content")
+          method: "streams.create"
+          params: _.pick(examples.streams.health[0], "id", "name")
+        ,
+          method: "streams.create"
+          params: _.pick(examples.streams.healthSubstreams[1], "id", "name", "parentId")
         ,
           method: "events.create"
-          params: _.pick(examples.events.heartSystolic, "time", "streamIds", "type", "content")
-        ,
-          method: "events.create"
-          params: _.pick(examples.events.heartDiastolic, "time", "streamIds", "type", "content")
+          params: _.pick(examples.events.heartRate, "streamIds", "type", "content")
         ]
         result:
           results: [
+            error:
+              id: 'item-already-exists'
+              message: 'A stream with id \"health\" already exists'
+              data: 
+                id: 'health'
+          ,
+            stream:
+              examples.streams.healthSubstreams[1]
+          ,
             event:
               examples.events.heartRate
-          ,
-            event:
-              examples.events.heartSystolic
-          ,
-            event:
-              examples.events.heartDiastolic
           ]
       ]
     ]
