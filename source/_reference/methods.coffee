@@ -24,6 +24,7 @@ module.exports = exports =
       type: "method"
       title: "Login user"
       http: "POST /auth/login"
+      httpOnly: true
       description: """
                    Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).   
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
@@ -77,6 +78,7 @@ module.exports = exports =
 
       id: "auth.logout"
       type: "method"
+      httpOnly: true
       title: "Logout user"
       http: "POST /auth/logout"
       description: """
@@ -104,6 +106,7 @@ module.exports = exports =
       id: "mfa.login"
       type: "method"
       title: "Login with MFA"
+      httpOnly: true
       http: "POST /auth/login"
       description: """
                    Proxied [Login](##{_getDocId("auth", "auth.login")}) call that initiates MFA authentication,
@@ -137,6 +140,7 @@ module.exports = exports =
       id: "mfa.activate"
       type: "method"
       title: "Activate MFA"
+      httpOnly: true
       http: "POST /mfa/activate"
       description: """
                    Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.
@@ -169,6 +173,7 @@ module.exports = exports =
       id: "mfa.confirm"
       type: "method"
       title: "Confirm MFA activation"
+      httpOnly: true
       http: "POST /mfa/confirm"
       description: """
                    Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
@@ -246,6 +251,7 @@ module.exports = exports =
       id: "mfa.verify"
       type: "method"
       title: "Verify MFA challenge"
+      httpOnly: true
       http: "POST /mfa/verify"
       description: """
                    Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
@@ -284,6 +290,7 @@ module.exports = exports =
       id: "mfa.deactivate"
       type: "method"
       title: "Deactivate MFA"
+      httpOnly: true
       http: "POST /mfa/deactivate"
       description: """
                    Deactivate MFA for a given Pryv.io user.
@@ -630,12 +637,13 @@ module.exports = exports =
         ]
       errors: []
       examples: [
-        title: "Adding a tag"
+        title: "Changing streams"
         params:
+          id: "ckbs54rfh0014ik0sabqobcsb"
           update:
-            tags: ["home"]
+            streamIds: ["position"]
         result:
-          event: _.defaults({ tags: ["home"], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
+          event: _.defaults({ id: "ckbs54rfh0014ik0sabqobcsb", streamIds: ["position"], streamId: "position", modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
       ]
 
     ,

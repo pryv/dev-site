@@ -55,3 +55,6 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
 exports.getWebsocketCall = (params) -> 
   return JSON.stringify(params)
 
+exports.getBatchBlock = (methodId, params) -> 
+  return JSON.stringify({method: methodId, params: params}, null, 2)
+
