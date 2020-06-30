@@ -428,10 +428,10 @@ module.exports = exports =
 
                  1. Choose an app identifier (min. length 6 chars)
                  2. Fetch the [service information](#service-info)
-                 2. Send an [auth request](#auth-request) to the URL exposed by the **access** parameter of the service information
-                 3. Open the `authUrl` field of the HTTP response in a browser or webframe. The web page will prompt the user to sign in using her Pryv.io credentials (or to create an account if she doesn't have one).
-                 4. The result of the sign-in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
-                  - by [polling the URL](#poll-request) obtained in the `poll` field of the HTTP response to the auth request (preferred Method)
+                 3. Send an [auth request](#auth-request) to the URL exposed by the **access** parameter of the service information
+                 4. Open the `authUrl` field of the HTTP response in a browser or webframe. The web page will prompt the user to sign in using her Pryv.io credentials (or to create an account if she doesn't have one).
+                 5. The result of the sign-in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
+                  - by [polling the URL](#poll-request) obtained in the `poll` field of the HTTP response to the auth request (preferred method)
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
                  #### Generate token app
