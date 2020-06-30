@@ -253,7 +253,7 @@ module.exports = exports =
                  For many applications, the first step is to authenticate a user. For this you need to know the path to **access** which is usually set to `https://access.{domain}/` or `https://{hostname}/access/`.  
                  Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as **access**, containing the URL to access. 
 
-                 See [Auto-Configuration](/guides/app-guidelines/#auto-configuration) in the guide *App Guidlines*               
+                 See [Auto-Configuration](/guides/app-guidelines/#auto-configuration) in the guide *App Guidelines*.              
                  """
     params:
       properties: []
