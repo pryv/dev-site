@@ -720,17 +720,17 @@ module.exports = exports =
           type: "string"
           description: """
                        **(DEPRECATED)**  
-                       Please use the `pryvApiEndpoint` parameter. The authenticated user's username.
+                       Please use the `apiEndpoint` parameter. The authenticated user's username.
                        """
         ,
           key: "token"
           type: "string"
           description: """
                        **(DEPRECATED)**  
-                       Please use the `pryvApiEndpoint` parameter. Your app's API access token.
+                       Please use the `apiEndpoint` parameter. Your app's API access token.
                        """
         ,
-          key: "pryvApiEndpoint"
+          key: "apiEndpoint"
           type: "string"
           description: """
                        The API endpoint containing the authorization token. See [App Guidelines](/guides/app-guidelines/).
@@ -798,7 +798,7 @@ module.exports = exports =
                  ```json
                  {
                     "status": "ACCEPTED",
-                    "pryvAPIEndpoint": "https://#{examples.accesses.app.token}@#{examples.users.one.username}.pryv.me/",
+                    "apiEndpoint": "https://#{examples.accesses.app.token}@#{examples.users.one.username}.pryv.me/",
                     "serviceInfo": {...}
                 }
                  ```

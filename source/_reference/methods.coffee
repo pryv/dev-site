@@ -365,6 +365,66 @@ module.exports = exports =
 
   ,
 
+    id: "callBatch"
+    type: "method"
+    title: "Call batch"
+    http: "POST /"
+    description: """
+                  Sends a batch of API methods calls in one go (e.g. for to syncing offline changes when resuming connectivity).
+                  """
+    params:
+      description: """
+                    Array of method call objects, each defined as follows:
+                    """
+      properties: [
+        key: "method"
+        type: "string"
+        description: """
+                      The method id.
+                      """
+      ,
+        key: "params"
+        type: "object or array"
+        description: """
+                      The call parameters as required by the method.
+                      """
+      ]
+    result:
+      http: "200 OK"
+      properties: [
+        key: "results"
+        type: "array of call results"
+        description: "The results of each method call, in order."
+      ]
+    examples: [
+      title: "Ensure stream path for a new event. In this example the 'health' stream already exists."
+      params: [
+        method: "streams.create"
+        params: _.pick(examples.streams.health[0], "id", "name")
+      ,
+        method: "streams.create"
+        params: _.pick(examples.streams.healthSubstreams[1], "id", "name", "parentId")
+      ,
+        method: "events.create"
+        params: _.pick(examples.events.heartRate, "streamIds", "type", "content")
+      ]
+      result:
+        results: [
+          error:
+            id: 'item-already-exists'
+            message: 'A stream with id \"health\" already exists'
+            data: 
+              id: 'health'
+        ,
+          stream:
+            examples.streams.healthSubstreams[1]
+        ,
+          event:
+            examples.events.heartRate
+        ]
+    ]
+  ,
+
     id: "events"
     title: "Events"
     description: """
@@ -391,7 +451,7 @@ module.exports = exports =
           type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
-                       The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
+                       The end time of the timeframe you want to retrieve events for. Default is the current time if `fromTime` is set. We recommend to set both `fromTime` and `toTime` (for example by choosing a very small number for `fromTime` or a large one for `toTime` if you want to retrieve all events). Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
                        """
         ,
           key: "streams"
@@ -1448,7 +1508,33 @@ module.exports = exports =
         ]
       examples: []
     ]
+  ,
 
+    id: "getAccessInfo"
+    type: "method"
+    title: "Access Info"
+    http: "GET /access-info"
+    description: """
+                  Retrieves information about the access in use.
+                  """
+    result:
+      http: "200 OK"
+      description: """
+            The current [Access properties](##{dataStructure.getDocId("access")}), as well as:
+            """
+      properties: [
+        key: "calls"
+        type: "[key-value](##{_getDocId("key-value")})"
+        description: "A map of API methods and the number of time each of them was called using the current access."
+      ,
+        key: "user"
+        type: "[key-value](##{_getDocId("key-value")})"
+        description: "A map of user account properties."
+      ]
+    examples: [
+      params: {}
+      result: examples.accesses.info
+    ]
   ,
 
     id: "audit"
@@ -2270,103 +2356,6 @@ module.exports = exports =
         result: {}
       ]
     ]
-
-  ,
-
-    id: "utils"
-    title: "Utils"
-    description: """
-                 Utility methods that don't pertain to a particular resource type.
-                 """
-    sections: [
-      id: "getAccessInfo"
-      type: "method"
-      title: "Get current access info"
-      http: "GET /access-info"
-      description: """
-                   Retrieves information about the access in use.
-                   """
-      result:
-        http: "200 OK"
-        description: """
-              The current [Access properties](##{dataStructure.getDocId("access")}), as well as:
-              """
-        properties: [
-          key: "calls"
-          type: "[key-value](##{_getDocId("key-value")})"
-          description: "A map of API methods and the number of time each of them was called using the current access."
-        ,
-          key: "user"
-          type: "[key-value](##{_getDocId("key-value")})"
-          description: "A map of user account properties."
-        ]
-      examples: [
-        params: {}
-        result: examples.accesses.info
-      ]
-
-    ,
-
-      id: "callBatch"
-      type: "method"
-      title: "Call batch"
-      http: "POST /"
-      description: """
-                   Sends a batch of API methods calls in one go (e.g. for to syncing offline changes when resuming connectivity).
-                   """
-      params:
-        description: """
-                     Array of method call objects, each defined as follows:
-                     """
-        properties: [
-          key: "method"
-          type: "string"
-          description: """
-                       The method id.
-                       """
-        ,
-          key: "params"
-          type: "object or array"
-          description: """
-                       The call parameters as required by the method.
-                       """
-        ]
-      result:
-        http: "200 OK"
-        properties: [
-          key: "results"
-          type: "array of call results"
-          description: "The results of each method call, in order."
-        ]
-      examples: [
-        title: "Ensure stream path for a new event. In this example the 'health' stream already exists."
-        params: [
-          method: "streams.create"
-          params: _.pick(examples.streams.health[0], "id", "name")
-        ,
-          method: "streams.create"
-          params: _.pick(examples.streams.healthSubstreams[1], "id", "name", "parentId")
-        ,
-          method: "events.create"
-          params: _.pick(examples.events.heartRate, "streamIds", "type", "content")
-        ]
-        result:
-          results: [
-            error:
-              id: 'item-already-exists'
-              message: 'A stream with id \"health\" already exists'
-              data: 
-                id: 'health'
-          ,
-            stream:
-              examples.streams.healthSubstreams[1]
-          ,
-            event:
-              examples.events.heartRate
-          ]
-      ]
-    ]
-
   ]
 
 # Returns the in-doc id of the given method, for safe linking from other doc sections
