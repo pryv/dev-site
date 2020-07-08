@@ -5,27 +5,32 @@ template: default.jade
 withTOC: true
 ---
 
-In this tutorial, we will help you to try out and evaluate Pryv.io API for your
-projects. Throughout these steps, we will use our [Lab platform](https://pryv.com/pryvlab/) for testing the Pryv.io API.
+In this tutorial, we will help you to get started with Pryv.io. You can try out and evaluate Pryv.io API for your projects using either our [Lab platform](https://pryv.com/pryvlab/) or the Open source version of Pryv.io available [here](https://github.com/pryv/open-pryv.io). 
 
 We will guide you through:
 
-1. [Creating a User](#create-a-pryv-lab-user)
-2. [Obtaining an Access Token](#obtain-an-access-token)
+1. [Create a Pryv Lab user](#create-a-pryv-lab-user)
+2. [Create an Open Pryv.io user](#create-a-pryv-lab-user)
+3. [Obtain an Access Token](#create-a-pryv-lab-user)
 3. [Data Modelling](#data-modelling)
-4. [Managing Accesses](#access-management)
+4. [Access Management](#access-management)
 
 In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) describing the Pryv.io API using the OpenAPI Specification and import it on other testing platforms for API such as Postman, as explained on our [Open API page](/open-api/).
 
-
-# Create a Pryv Lab User
+# Create a Pryv Lab user
 
 By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
 
 1. Go to the [registration page](https://sw.pryv.me/access/register.html).
-2. Fill in the form, choose [where you want to store your data](/concepts/#servers) under 'Hosting' and click on the '**Create**' button.
+![Register-lab.html](/assets/images/getting-started/register-lab.png)
+2. Fill in the form, choose [where you want to store your data](/concepts/#servers) under 'Hosting'.
+![Hosting](/assets/images/getting-started/hosting.png)
+3. Click on the '**Create**' button.
+
 
 *Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.*
+
+Note that the email is optional for the account creation, but is required to reset your password.
 
 Once this is done, you will receive a welcome email from the **Pryv Lab** with your account details. You can sign-in with your Pryv.io account on the following link:
 
@@ -42,7 +47,7 @@ The Pryv demo dashboard is a data visualization tool.
 It enables you to visualize the "events" you created, corresponding to timestamped data - that can be in the form of notes, images, GPS location, data points, etc - and to organize them into "streams", while managing the access level to this data.
 To get more information on the Pryv data model of events and streams, you can jump to the [**dedicated chapter**](#data-modelling).
 
-The dashboard will therefore be used to get a visual display of the data you will create and add to your account throughout this guide. 
+The dashboard offers a visual display of the data you will create and add to your account throughout this guide. 
 As shown below, once you connect to your account, the home page of your dashboard displays the list of streams of your account, where a default stream `Diary` is automatically created.
 
 ![Pryv Lab Dashboard: Streams](/assets/images/getting-started/streams_dashboard.png)
@@ -52,13 +57,26 @@ Once data is added to your account, you can select which streams to visualize on
 
 ![Johann Dashboard](/assets/images/getting-started/dashboard_johann.png)
 
-# Obtain an Access Token
+# Create an Open Pryv.io user
 
-Now that your Pryv Lab account has been created, you can start adding data. In order to do so using code or API clients such as cURL or Postman, you need to obtain an access token.
+You should first setup the installation of your own Open Pryv.io platform by following the guidelines in the README.md of the [Github repo](https://github.com/pryv/open-pryv.io).
+
+Once your platform is up and running, you can create a user account and launch the authentication process.
+
+1. Test your Open Pryv.io locally by running `yarn local` in your terminal
+2. Open the registration page on the following link : https://my-computer.rec.la:4443/www/access/register.html. 
+![Register-open.html](/assets/images/getting-started/register-open.png)
+3. Fill in the form and click on the '**Create**' button.
+
+
+
+## Obtain an Access Token
+
+Now that your Pryv Lab account has been created, you can start adding data. In order to do so by using code or API clients such as cURL or Postman, you first need to obtain an access token.
 
 The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authenticate-your-app)).
 
-1. Go to [the Pryv Access Token Generator: https://api.pryv.com/app-web-access/](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
+1. Go to the [Pryv Access Token Generator: https://api.pryv.com/app-web-access/](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
 2. Set up the required parameters :
 
    1. Enter the Application ID (ex.: `demopryv-access`)
@@ -77,15 +95,15 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
 
    3. Click on '**Request Access**' button
 
-3. Now click on the '**Sign in**' button ![sign_in_button](/assets/images/getting-started/sign_in_button.png) - A new tab will open
+3. Click on the '**Sign in**' button ![sign_in_button](/assets/images/getting-started/sign_in_button.png) - A new tab will open
 4. Sign in with your Pryv Lab credentials
-   ![Sign In Dialog](/assets/images/getting-started/sign_in.png)
+   ![Sign In Dialog](/assets/images/getting-started/sign-in.png)
    A popup will open to inform you about the access you are about to grant.
 5. Click on '**Accept**' button
 
    By accepting, you consent that the 'demopryv-access' application can access the stream `Heart` with a "manage" access-level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the `defaultName` parameter above.
 
-   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in [Access Management](#access-management).
+   For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in the [Access Management chapter](#access-management).
 
    ![Accept Button](/assets/images/getting-started/accept_button.png)
 
