@@ -5,7 +5,7 @@ template: default.jade
 withTOC: true
 ---
 
-In this tutorial, we will help you to get started with Pryv.io. You can try out and evaluate Pryv.io API for your projects using either our [Lab platform](https://pryv.com/pryvlab/) or the Open source version of Pryv.io available [here](https://github.com/pryv/open-pryv.io). 
+In this tutorial, we will help you to get started with Pryv.io. You can try out and evaluate the Pryv.io API for your projects using either our [Lab platform](https://pryv.com/pryvlab/) or the Open source version of Pryv.io available [here](https://github.com/pryv/open-pryv.io). 
 
 We will guide you through:
 
@@ -22,14 +22,16 @@ In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) des
 
 By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
 
-1. Go to the blabl [registration page](https://sw.pryv.me/access/register.html)\
+1. Go to the [registration page](https://sw.pryv.me/access/register.html)\
 <br />
 <br />
 
 ![Register-lab.html](/assets/images/getting-started/register-lab.png =210x)
+
 2. Fill in the form and choose [where you want to store your data](/concepts/#servers) under 'Hosting'.
 
 ![Hosting](/assets/images/getting-started/hosting.png)
+
 3. Click on the '**Create**' button.
 
 
@@ -41,7 +43,7 @@ Once this is done, you will receive a welcome email from the **Pryv Lab** with y
 
 ![Sign-in](/assets/images/getting-started/sign-in.png)
 
-You have now access to your Pryv Lab account through the Pryv.io demo dashboard web application.
+You have now access to your **Pryv Lab** account through the Pryv.io demo dashboard web application.
 
 ## Pryv demo Dashboard
 
@@ -64,12 +66,12 @@ Once data is added to your account, you can select which streams to visualize on
 
 # Create an Open Pryv.io user
 
-You should first setup the installation of your own Open Pryv.io platform by following the guidelines in the README.md of the [Github repo](https://github.com/pryv/open-pryv.io).
+You should first setup the installation of your own Open Pryv.io platform by following the guidelines in the README.md of the [Github repositery](https://github.com/pryv/open-pryv.io).
 
 Once your platform is up and running, you can create a user account and launch the authentication process.
 
 1. Test your Open Pryv.io locally by running `yarn local` in your terminal
-2. Open the registration page on the following link : https://my-computer.rec.la:4443/www/access/register.html. 
+2. Open the registration page on the following link : [https://my-computer.rec.la:4443/www/access/register.html](https://my-computer.rec.la:4443/www/access/register.html). 
 ![Register-open.html](/assets/images/getting-started/register-open.png =210x)
 3. Fill in the form and click on the '**Create**' button.
 
@@ -85,9 +87,9 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
 2. Set up the required parameters :
 
    1. Fill in the Service Info URL related to your Pryv.io platform:
-   - with Pryv Lab 
+   - with **Pryv Lab** 
    ![Service Info Pryv Lab](/assets/images/getting-started/service-info-lab.png)
-   - with Open Pryv.io
+   - with **Open Pryv.io**
    ![Service Info Open Pryv](/assets/images/getting-started/service-info-open.png)
    2. Enter the Application ID (ex.: `app-web-access-test`)
    2. Setup the streams you want to grant access to in the permissions box
@@ -98,7 +100,7 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
         {
           "streamId": "heart",
           "defaultName": "Heart",
-          "level": "read"
+          "level": "manage"
         }
       ]
       ```
@@ -120,9 +122,9 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
 6. **The API endpoint for the user account has been generated.** 
 Each user account has a dedicated root API endpoint that is potentially served from a different location. 
 The API endpoint will have the following format :
-- For a Pryv Lab account with username `demopryv123`:
+- For a **Pryv Lab** account with username `demopryv123`:
 ![Access Token](/assets/images/getting-started/access-token.png)
-- For an Open Pryv.io account with username `helloworld`:
+- For an **Open Pryv.io** account with username `helloworld`:
 ![Access Token Open Pryv](/assets/images/getting-started/access-token-open.png)
 
 # Data Modelling
