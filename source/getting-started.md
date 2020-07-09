@@ -10,10 +10,11 @@ In this tutorial, we will help you to get started with Pryv.io. You can try out 
 We will guide you through:
 
 1. [Create a Pryv Lab user](#create-a-pryv-lab-user)
-2. [Create an Open Pryv.io user](#create-a-pryv-lab-user)
-3. [Obtain an Access Token](#create-a-pryv-lab-user)
-3. [Data Modelling](#data-modelling)
-4. [Access Management](#access-management)
+2. [Create an Open Pryv.io user](#create-an-open-pryv-io-user)
+3. [Obtain an Access Token](#obtain-an-access-token)
+4. [Data Modelling](#data-modelling)
+5. [Access Management](#access-management)
+6. [What's next](#what-is-next)
 
 In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) describing the Pryv.io API using the OpenAPI Specification and import it on other testing platforms for API such as Postman, as explained on our [Open API page](/open-api/).
 
@@ -21,11 +22,13 @@ In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) des
 
 By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
 
-1. Go to the [registration page](https://sw.pryv.me/access/register.html).
-&nbsp;
+1. Go to the blabl [registration page](https://sw.pryv.me/access/register.html)\
+<br />
+<br />
+
 ![Register-lab.html](/assets/images/getting-started/register-lab.png =210x)
 2. Fill in the form and choose [where you want to store your data](/concepts/#servers) under 'Hosting'.
-&nbsp;
+
 ![Hosting](/assets/images/getting-started/hosting.png)
 3. Click on the '**Create**' button.
 
@@ -72,7 +75,7 @@ Once your platform is up and running, you can create a user account and launch t
 
 You can now sign in to your Open Pryv.io account on the following link: [https://my-computer.rec.la:4443/www/access/access.html](https://my-computer.rec.la:4443/www/access/access.html).
 
-## Obtain an Access Token
+# Obtain an Access Token
 
 Now that your Pryv.io account has been created using either Pryv lab or Open Pryv.io, you can start adding data. In order to do so by using code or API clients such as cURL or Postman, you first need to obtain an access token.
 
@@ -114,8 +117,13 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
 
    ![Accept Button](/assets/images/getting-started/consent.png)
 
-6. **The API endpoint has been generated.**
-   ![Access Token](/assets/images/getting-started/access-token.png)
+6. **The API endpoint for the user account has been generated.** 
+Each user account has a dedicated root API endpoint that is potentially served from a different location. 
+The API endpoint will have the following format :
+- For a Pryv Lab account with username `demopryv123`:
+![Access Token](/assets/images/getting-started/access-token.png)
+- For an Open Pryv.io account with username `helloworld`:
+![Access Token Open Pryv](/assets/images/getting-started/access-token-open.png)
 
 # Data Modelling
 
@@ -199,7 +207,7 @@ Here's an example of an event, corresponding to the heart rate collected by a **
 }
 ```
 
-Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](/event-types/). 
+Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](/event-types/). You can also create your custom event types for your own use case as explained in the Github repo [here](https://github.com/pryv/data-types).
 
 **Basic event types** include :
 - [**numerical values**](/event-types/#numerical-types) to capture number values. For example, the type `density/kg-m3` can be used to record the density of a material. In the case of our user, we can use this type to reflect the exposure to specific allergens in his daily life.
@@ -331,10 +339,12 @@ As you can see from the example above, each permission specifies a `streamId`, t
 
 A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](/reference/#access).
 
-# What Next?
+# What is next?
 
 This concludes our first tour of Pryv.io and some basic things you can do with it. Where to go from here?
 
+- To implement your digital apps with Pryv.io, you can check some web app examples and tutorials on the [dedicated Github repo](https://github.com/pryv/app-web-examples).
+- To faster your onboarding with Pryv.io, watch our video tutorials on our [Youtube channel](https://www.youtube.com/user/pryvme/videos).
 - Our [external resources](/external-resources/) page presents some third party and unsupported libraries and sample applications.
 - The [API Reference](/reference/) explains all the calls you can make to Pryv.io and their parameters.
 - To obtain your own Pryv.io installation, please get in contact with our [Sales Team](mailto:sales@pryv.com).
