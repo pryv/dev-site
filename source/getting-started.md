@@ -285,7 +285,7 @@ These events will have the type `picture/attached` :
 
 **High-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch to collect GPS position in real-time of the user.
 
-<img src="/assets/images/getting-started/hf-event.png" alt="hf-event" style="zoom:40%;" />
+<img src="/assets/images/getting-started/hf-event.png" alt="hf-event" style="zoom:45%;" />
 
 This data will have the type `position/wgs84` :
 
