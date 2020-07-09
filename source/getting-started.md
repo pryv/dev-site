@@ -42,13 +42,12 @@ By registering on our Lab platform, you will have access to a Pryv.io user accou
 Note that the email is optional for the account creation, but is required to reset your password.
 
 Once this is done, you will receive a welcome email from the **Pryv Lab** with your account details.
-<br />
+
 You can sign in to your Pryv.io account on the following link: [https://sw.pryv.me/access/access.html](https://sw.pryv.me/access/access.html).
-<br />
+
 <p align="center">
-<img src="/assets/images/getting-started/sign-in.png" alt="sign-in" style="zoom:33%;" />
+<img src="/assets/images/getting-started/sign-in.png" alt="sign-in" style="zoom:40%;" />
 </p>
-<br />
 
 You have now access to your **Pryv Lab** account through the Pryv.io demo dashboard web application.
 
@@ -58,10 +57,8 @@ The Pryv demo dashboard is a data visualization tool.
 
 ![Dashboard Image](/assets/images/getting-started/dashboard-image-git.png)
 
-
 It enables you to visualize the "events" you created, corresponding to timestamped data - that can be in the form of notes, images, GPS location, data points, etc - and to organize them into "streams", while managing the access level to this data.
 To get more information on the Pryv data model of events and streams, you can jump to the [**dedicated chapter**](#data-modelling).
-
 
 The dashboard offers a visual display of the data you will create and add to your account throughout this guide. 
 As shown below, once you connect to your account, the home page of your dashboard displays the list of streams of your account, where a default stream `Diary` is automatically created.
@@ -96,7 +93,7 @@ Now that your Pryv.io account has been created using either Pryv lab or Open Pry
 
 The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authenticate-your-app)).
 
-1. Go to the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/)
+1. Go to the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/).
 2. Set up the required parameters :
 
     1. Fill in the Service Info URL related to your Pryv.io platform:
@@ -117,20 +114,16 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
         }
       ]
       ```
-
-   3. Click on '**Request Access**' button
-
+    4. Click on the '**Request Access**' button
 3. After requesting access, you can click on the '**Login**' button that appears
    <p align="center">
-   <img src="/assets/images/getting-started/login-open-pryv.png" alt="login-open-pryv" style="zoom:15%;" />
+   <img src="/assets/images/getting-started/login-open-pryv.png" alt="login-open-pryv" style="zoom:33%;" />
    </p>
    A new tab will open to log in to your Pryv Lab or Open Pryv.io account
-   <br />
 4. Sign in with your Pryv Lab or Open Pryv.io credentials
-<p align="center">
-<img src="/assets/images/getting-started/sign-in.png" alt="sign-in" style="zoom:33%;" />
-</p>
-   A popup will open to inform you about the access you are about to grant.
+  <p align="center">
+  <img src="/assets/images/getting-started/sign-in.png" alt="sign-in" style="zoom:40%;" />
+  </p> - A popup will open to inform you about the access you are about to grant.
 5. Answer the App Access request
 
    By accepting, you consent that the 'app-web-access-test' application can access the stream `Heart` with a "manage" access level. Since this stream doesn't exist yet, it will be automatically created and carry the name we provided in the `defaultName` parameter above.
@@ -138,15 +131,14 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
    For now, you just have to understand that we are generating a token that gives enough permissions to interact with our Pryv.io account in the scope of our example. You will learn more about accesses in the [Access Management chapter](#access-management).
 
   <p align="center">
-   <img src="/assets/images/getting-started/consent.png" alt="consent" style="zoom:33%;" />
+  <img src="/assets/images/getting-started/consent.png" alt="consent" style="zoom:33%;" />
   </p>
-
 6. **The API endpoint for the user account has been generated.** 
-Each user account has a dedicated root API endpoint that is potentially served from a different location.<br /> 
+Each user account has a dedicated root API endpoint that is potentially served from a different location.
 The API endpoint will have the following format :
-- For a **Pryv Lab** account with username '**demopryv123**':
+  - For a **Pryv Lab** account with username '**demopryv123**':
 ![Access Token](/assets/images/getting-started/access-token.png)
-- For an **Open Pryv.io** account with username '**helloworld**':
+  - For an **Open Pryv.io** account with username '**helloworld**':
 ![Access Token Open Pryv](/assets/images/getting-started/access-token-open.png)
 
 # Data Modelling
@@ -167,7 +159,9 @@ Inside each stream can be found timestamped events :
 
 **Streams** are the main way of encoding context for events and are organised in a hierarchical way. They can have sub-streams and usually correspond to organizational levels for the user (e.g. life journal, blood pressure recording, etc.) or encode data sources (e.g. apps and/or devices).
 
+<p align="center">
 <img src="/assets/images/getting-started/stream_level_1.png" alt="stream_level_1" style="zoom:33%;" />
+ </p>
 
 Here is an example of a **stream** with sub-streams (children): the **Digital Tensiometer** has a dedicated substream, which collects "events" such as the blood pressure measurements and adds them in the substream `blood-pressure`.
 
@@ -265,7 +259,8 @@ Pryv offers the possibility to manipulate a broad range of event types that can 
 More specific event types also involve :
 
 **Attachments** that can be added to events, for example for our user to post pictures of his nutrition in a dedicated substream under his `Health Profile` stream. 
-<img src="/assets/images/getting-started/attachment.png" alt="attachment" style="zoom:60%;" />
+
+<img src="/assets/images/getting-started/attachment.png" alt="attachment" style="zoom:45%;" />
 
 These events will have the type `picture/attached` :
 
@@ -288,9 +283,9 @@ These events will have the type `picture/attached` :
 }
 ```
 
-**High-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch to collect GPS position in real-time of the user. 
-<img src="/assets/images/getting-started/hf-event.png" alt="hf-event" style="zoom:60%;" />
+**High-frequency series** that can be used to collect a high volume of data. This data structure, described in the [**corresponding section**](/reference/#data-structure-high-frequency-series), is used for high frequency data to resolve issues with data density. In our example, it can be used for the smartwatch to collect GPS position in real-time of the user.
 
+<img src="/assets/images/getting-started/hf-event.png" alt="hf-event" style="zoom:40%;" />
 
 This data will have the type `position/wgs84` :
 
