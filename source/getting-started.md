@@ -22,11 +22,10 @@ In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) des
 
 By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
 
-1. Go to the [registration page](https://sw.pryv.me/access/register.html)\
-<br />
+1. Go to the [registration page](https://sw.pryv.me/access/register.html).
 <br />
 
-![Register-lab.html](/assets/images/getting-started/register-lab.png =210x)
+![Register Lab](/assets/images/getting-started/register-lab.png =100x20)
 
 2. Fill in the form and choose [where you want to store your data](/concepts/#servers) under 'Hosting'.
 
