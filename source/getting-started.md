@@ -85,8 +85,6 @@ Once your platform is up and running, you can create a user account and launch t
 <br />
 3. Fill in the form and click on the '**Create**' button.
 
-You can now sign in to your Open Pryv.io account on the following link: [https://my-computer.rec.la:4443/www/access/access.html](https://my-computer.rec.la:4443/www/access/access.html).
-
 # Obtain an Access Token
 
 Now that your Pryv.io account has been created using either Pryv lab or Open Pryv.io, you can start adding data. In order to do so by using code or API clients such as cURL or Postman, you first need to obtain an access token.
@@ -138,7 +136,7 @@ Each user account has a dedicated root API endpoint that is potentially served f
 The API endpoint will have the following format :
   - For a **Pryv Lab** account with username '**demopryv123**':
 ![Access Token](/assets/images/getting-started/access-token.png)
-  - For an **Open Pryv.io** account with username '**helloworld**':
+  - For an **Open Pryv.io** account with username '**demopryv123**':
 ![Access Token Open Pryv](/assets/images/getting-started/access-token-open.png)
 
 # Data Modelling
