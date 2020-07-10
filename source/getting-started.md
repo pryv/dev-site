@@ -73,11 +73,11 @@ Once data is added to your account, you can select which streams to visualize on
 
 # Create an Open Pryv.io user
 
-You should first setup the installation of your own Open Pryv.io platform by following the guidelines in the README.md of the [Github repositery](https://github.com/pryv/open-pryv.io).
+You should first setup the installation of your own Open Pryv.io platform by following the guidelines in the README of the [Github repository](https://github.com/pryv/open-pryv.io).
 
 Once your platform is up and running, you can create a user account and launch the authentication process.
 
-1. Test your Open Pryv.io locally by running `yarn local` in your terminal
+1. Launch your Open Pryv.io locally by running `yarn local` in your terminal
 2. Open the registration page on the following link : [https://my-computer.rec.la:4443/www/access/register.html](https://my-computer.rec.la:4443/www/access/register.html). 
 <p align="center">
 <img src="/assets/images/getting-started/register-open.png" alt="register-open" style="zoom:33%;" />
@@ -225,7 +225,7 @@ Here's an example of an event, corresponding to the heart rate collected by a **
 }
 ```
 
-Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](/event-types/). You can also create your custom event types for your own use case as explained in the Github repo [here](https://github.com/pryv/data-types).
+Pryv offers the possibility to manipulate a broad range of event types that can be all found in the [**event type directory**](/event-types/). You can also create your custom event types for your own use case as explained in [this Github repository](https://github.com/pryv/data-types).
 
 **Basic event types** include :
 - [**numerical values**](/event-types/#numerical-types) to capture number values. For example, the type `density/kg-m3` can be used to record the density of a material. In the case of our user, we can use this type to reflect the exposure to specific allergens in his daily life.
@@ -363,7 +363,7 @@ A more exhaustive explanation of the concept of "Access" and the different "leve
 
 This concludes our first tour of Pryv.io and some basic things you can do with it. Where to go from here?
 
-- To implement your digital apps with Pryv.io, you can check some web app examples and tutorials on the [dedicated Github repo](https://github.com/pryv/app-web-examples).
+- To implement your digital apps with Pryv.io, you can check some web app examples and tutorials on the [dedicated Github repository](https://github.com/pryv/app-web-examples).
 - To faster your onboarding with Pryv.io, watch our video tutorials on our [Youtube channel](https://www.youtube.com/user/pryvme/videos).
 - Our [external resources](/external-resources/) page presents some third party and unsupported libraries and sample applications.
 - The [API Reference](/reference/) explains all the calls you can make to Pryv.io and their parameters.
