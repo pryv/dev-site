@@ -7,12 +7,12 @@ withTOC: true
 
 # Future releases
 
-- Admin panel for Pryv.io: web interface for Pryv.io platform administration 
-- Pryv Explorer: web application to explore and manage data on the Pryv.io web service
-- Adding a change-password.html page for the authentication app (app-web-auth3)
-- Custom middleware to verify access tokens
-- System streams to handle profile data 
-- Propose indexable fields at user account creation (other than username and email)
+- **Admin panel for Pryv.io**: web interface for Pryv.io platform administration 
+- **Pryv Explorer**: web application to explore and manage data on the Pryv.io web service
+- **Adding a change-password.html page for the authentication app** (app-web-auth3)
+- **Custom auth step to verify access tokens**
+- **System streams to handle profile data**
+- **Indexable fields at user account creation** (other than username and email)
 
 # Released
 
@@ -20,9 +20,9 @@ withTOC: true
 
 Open Pryv.io is now available through Docker containers : discover the new release [here].
 
-## 14.07.2020 - Customize assets for your Pryv.io web apps 
+## 14.07.2020 - Customize your Pryv.io web apps 
 
-A new tutorial on how to customize assets in your web apps is now available [on Github](githb-link). Check the video [here](video-link).
+A new tutorial on how to customize assets in your web apps is now available on [Github](githb-link). Check the video [here](video-link).
 
 ## 06.07.2020 - Pryv.io Onboarding
 
@@ -42,14 +42,14 @@ Check how Postman can help to facilitate & accelerate the Pryv.io API integratio
 
 ## 04.01.2020 - Webhooks at Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Pryv.io notifies your app of any data changes from now. Learn more about Webhooks [here] (Entreprise license).
+Pryv.io notifies your app of any data changes from now. Learn more about Webhooks [here] (available with Entreprise license only).
 
 ## 23.11.2019 - Audit Logs in Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Keep track of actions performed by your app users against Pryv.io accounts with [audit logs].
+Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](kkk) (available with Entreprise license only).
 
 ## 02.06.2019 - High Frequency Data in Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Learn more about how you can store data at high frequency and high data density in Pryv.io [here].
+Learn more about how you can store data at high frequency and high data density in Pryv.io [here](hh) (available with Entreprise license only).
 
 
