@@ -91,7 +91,10 @@ section#directory
       | ,
       span.attribute
         strong !{header}:&nbsp;
-        | !{value}
+        if (header === 'enum')
+          | !{value.join(", ")}
+        else 
+          | !{value}
 
   mixin definition(name, schema)
     - var type = schema.type
