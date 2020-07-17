@@ -4,6 +4,7 @@ examples = require("./examples")
 helpers = require("./helpers")
 timestamp = require("unix-timestamp")
 _ = require("lodash")
+generateId = require("cuid")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
 _getDocId = (sectionId, methodId) ->
@@ -1457,8 +1458,15 @@ module.exports = exports =
         ]
       examples: [
         params:
-          id: examples.accesses.shared.id
-        result: {accessDeletion:{id:examples.accesses.shared.id}}
+          id: examples.accesses.app.id
+        result: 
+          accessDeletion:
+            id: examples.accesses.app.id
+          sharedDeletions: [
+            id: generateId()
+          ,
+            id: generateId()
+          ]
       ]
 
     ,
