@@ -1426,7 +1426,7 @@ module.exports = exports =
       title: "Delete access"
       http: "DELETE /accesses/{id}"
       description: """
-                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it deleted.  
+                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.  
                    All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
                    """
       params:
@@ -1446,6 +1446,13 @@ module.exports = exports =
           type: "[item deletion](##{dataStructure.getDocId("item-deletion")})"
           description: """
                        The deletion record.
+                       """
+        ,
+          key: "sharedDeletions"
+          type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
+          optional: true
+          description: """
+                       When deleting an app token, the deletion records of all the shared accesses that were generated from this app token.
                        """
         ]
       examples: [
