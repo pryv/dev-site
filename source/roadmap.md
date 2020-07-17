@@ -18,11 +18,11 @@ withTOC: true
 
 ## 15.07.2020 - Dockerized Open Pryv.io
 
-Open Pryv.io is now available through Docker containers : discover the new release [here](https://support.pryv.com/hc/en-us/articles/360015324699-Open-Pryv-io-now-available-through-Docker-containers).
+Open Pryv.io is now available through Docker containers : discover the new release [here](https://support.pryv.com/hc/en-us/articles/360015324699-Open-Pryv-io-now-available-through-Docker-containers) and [swim](https://youtu.be/RwxEo4c_ed0) with the whale.
 
 ## 14.07.2020 - Customize your Pryv.io web apps 
 
-A new tutorial on how to customize assets in your web apps is now available on [Github](githb-link). Check the video [here](video-link).
+A new tutorial on how to customize assets in your web apps is now available on [Github](https://github.com/pryv/app-web-examples/tree/master/customize-assets). Check the video tutorial [here](https://youtu.be/VI1zjLLcR9Q).
 
 ## 06.07.2020 - Pryv.io Onboarding
 
