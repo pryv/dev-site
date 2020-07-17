@@ -40,15 +40,15 @@ Pryv releases an [Open-Source Solution](https://support.pryv.com/hc/en-us/articl
 
 Check how Postman can help to facilitate & accelerate the Pryv.io API integration [here](https://support.pryv.com/hc/en-us/articles/360015309120-Pryv-io-integration-with-Postman).
 
-## 04.01.2020 - Webhooks at Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 04.01.2020 - Webhooks at Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 Pryv.io notifies your app of any data changes from now. Learn more about Webhooks [here](https://support.pryv.com/hc/en-us/articles/360014071180-Webhooks-at-Pryv-io) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
 
-## 23.11.2019 - Audit Logs in Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 23.11.2019 - Audit Logs in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](https://support.pryv.com/hc/en-us/articles/360015326619-Audit-Logs-in-Pryv-io) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
 
-## 02.06.2019 - High Frequency Data in Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 02.06.2019 - High Frequency Data in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 Learn more about how you can store data at high frequency and high data density in Pryv.io [here](https://support.pryv.com/hc/en-us/articles/360014131139-High-Frequency-data-in-Pryv-io) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
 
