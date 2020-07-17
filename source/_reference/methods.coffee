@@ -1426,7 +1426,8 @@ module.exports = exports =
       title: "Delete access"
       http: "DELETE /accesses/{id}"
       description: """
-                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
+                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it deleted.  
+                   All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
                    """
       params:
         properties: [
