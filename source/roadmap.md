@@ -18,7 +18,7 @@ withTOC: true
 
 ## 15.07.2020 - Dockerized Open Pryv.io
 
-Open Pryv.io is now available through Docker containers : discover the new release [here].
+Open Pryv.io is now available through Docker containers : discover the new release [here](https://support.pryv.com/hc/en-us/articles/360015324699-Open-Pryv-io-now-available-through-Docker-containers).
 
 ## 14.07.2020 - Customize your Pryv.io web apps 
 
@@ -34,22 +34,22 @@ Discover how to easily create a form and collect data with Pryv.io in our [tutor
 
 ## 08.06.2020 - Pryv.io gets Open Source
 
-Pryv SA releases an [Open-Source Solution] for Personal Data & Privacy Management.
+Pryv SA releases an [Open-Source Solution](https://support.pryv.com/hc/en-us/articles/360015327139-Pryv-io-gets-Open-Source) for Personal Data & Privacy Management.
 
 ## 17.01.2020 - Pryv.io integration with Postman 
 
-Check how Postman can help to facilitate & accelerate the Pryv.io API integration [here].
+Check how Postman can help to facilitate & accelerate the Pryv.io API integration [here](https://support.pryv.com/hc/en-us/articles/360015309120-Pryv-io-integration-with-Postman).
 
 ## 04.01.2020 - Webhooks at Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Pryv.io notifies your app of any data changes from now. Learn more about Webhooks [here] (available with [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Pryv.io notifies your app of any data changes from now. Learn more about Webhooks [here](https://support.pryv.com/hc/en-us/articles/360014071180-Webhooks-at-Pryv-io) (available with [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
 
 ## 23.11.2019 - Audit Logs in Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](kkk) (available with [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](https://support.pryv.com/hc/en-us/articles/360015326619-Audit-Logs-in-Pryv-io) (available with [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
 
 ## 02.06.2019 - High Frequency Data in Pryv.io <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Learn more about how you can store data at high frequency and high data density in Pryv.io [here](hh) (available with [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Learn more about how you can store data at high frequency and high data density in Pryv.io [here](https://support.pryv.com/hc/en-us/articles/360014131139-High-Frequency-data-in-Pryv-io) (available with [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
 
 
