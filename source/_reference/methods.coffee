@@ -1449,7 +1449,7 @@ module.exports = exports =
                        The deletion record.
                        """
         ,
-          key: "sharedDeletions"
+          key: "relatedDeletions"
           type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
           optional: true
           description: """
@@ -1462,7 +1462,7 @@ module.exports = exports =
         result: 
           accessDeletion:
             id: examples.accesses.app.id
-          sharedDeletions: [
+          relatedDeletions: [
             id: generateId()
           ,
             id: generateId()
