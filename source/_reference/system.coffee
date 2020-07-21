@@ -418,6 +418,7 @@ module.exports = exports =
           result:
             username: examples.users.two.username
             server: examples.users.two.username + "." + examples.register.platforms[0]
+            apiEndpoint: examples.users.two.apiEndpoint.pryvLab
         ]
       ,
         id: "username.check"
