@@ -16,6 +16,16 @@ withTOC: true
 
 # Released
 
+## 24.07.2020 - View and share data
+
+Following our [Collect Survey data tutorial](https://github.com/pryv/app-web-examples/tree/master/collect-survey-data), discover how to enable your app users to visualize and share data using Open Pryv.io:
+- in our new [View and Share video](https://www.youtube.com/watch?v=gEfPmkQmtAI)
+- in our Github tutorial [View and Share data](https://github.com/pryv/app-web-examples/tree/master/view-and-share)
+
+## 23.07.2020 - Register and authenticate your app users
+
+Learn how to use our template [web pages](https://github.com/pryv/app-web-auth3) to register and authenticate your users in our new [video](https://youtu.be/MfGTAgXr2WI).
+
 ## 15.07.2020 - Dockerized Open Pryv.io
 
 Open Pryv.io is now available through Docker containers : discover the new release [here](https://support.pryv.com/hc/en-us/articles/360015324699-Open-Pryv-io-now-available-through-Docker-containers) and [swim](https://youtu.be/RwxEo4c_ed0) with the whale.
