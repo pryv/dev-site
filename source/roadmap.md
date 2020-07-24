@@ -25,7 +25,7 @@ Following our [Collect survey data tutorial](https://github.com/pryv/app-web-exa
 ## 23.07.2020 - Register and authenticate your users
 
 Learn how to use our [template web pages](https://github.com/pryv/app-web-auth3) to register and authenticate your app users in our new [video tutorial](https://youtu.be/MfGTAgXr2WI).
-Simplify your authorization process for your Open Pryv.io platform by forking our [Github repository](https://github.com/pryv/app-web-auth3). 
+Simplify your authorization process for your Open Pryv.io platform by forking our [Github repository](https://github.com/pryv/app-web-auth3/fork). 
 
 ## 15.07.2020 - Dockerized Open Pryv.io
 
