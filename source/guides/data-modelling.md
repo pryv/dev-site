@@ -14,17 +14,17 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 
 1. [Introduction](#introduction)
 2. [Use cases](#use-cases)
-  1. [Declaring the stream structure](#declaring-the-stream-structure)
-  2. [Storing Profile/Account information](#storing-profile-account-information) 
-  3. [Avoiding event types multiplication](#avoiding-event-types-multiplication)
-  4. [Defining a custom event type](#defining-a-custom-event-type)
-  5. [Storing an event in multiple streams](#storing-an-event-in-multiple-streams)
-  6. [Handling multiple devices](#handling-multiple-devices)  
-  7. [Referencing events](#referencing-events) 
-  8. [Storing technical data from devices](#storing-technical-data-from-devices)
-  9. [Defining accesses to the streams](#defining-accesses-to-the-streams)
-  10. [Performing an access delegation](#performing-an-access-delegation)
-  11. [Storing patient accesses](#storing-patient-accesses)
+  1. [Declare the stream structure](#declare-the-stream-structure)
+  2. [Store Account information](#store-account-information) 
+  3. [Avoid event types multiplication](#avoid-event-types-multiplication)
+  4. [Define a custom event type](#define-a-custom-event-type)
+  5. [Store an event in multiple streams](#store-an-event-in-multiple-streams)
+  6. [Handle multiple devices](#handle-multiple-devices)  
+  7. [Reference events](#reference-events) 
+  8. [Store technical data from devices](#store-technical-data-from-devices)
+  9. [Define accesses to the streams](#define-accesses-to-the-streams)
+  10. [Perform an access delegation](#performe-an-access-delegation)
+  11. [Store patient accesses](#store-patient-accesses)
   
 
 ## Introduction
@@ -60,7 +60,7 @@ Available levels of permissions (read, manage, contribute, create-only) are defi
 
 ## Use cases
 
-### Declaring the stream structure
+### Declare the stream structure
 
 When building your own data model, we advise you to write down your streams and events structure following this [template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/).
 This template file describes a very simple data model that can be adapted to your own use case, and provides you with an idea of how to keep track of your streams and events.
@@ -130,7 +130,7 @@ if (res.error.id == ’unknown-referenced-resource’) {
 ```
 This method allows to minimize the number of operations and to ensure the existence of the stream structure. However, it requires to link the batch calls when a lot of events needs to be added at once: in this case, you can choose the first solution.
 
-### Storing Profile/Account information
+### Store Account information
 
 We recommend our customers to create dedicated streams to store account information (e.g [credentials](https://api.pryv.com/event-types/#credentials)) of their users.
 
@@ -148,7 +148,7 @@ For example:
 
 The [Public profile set](https://api.pryv.com/reference/#get-public-profile) can be used to store any information the user makes publicly available (e.g. avatar image). Other profile sets are likely to be deprecated soon.
 
-### Avoiding event types multiplication
+### Avoid event types multiplication
 
 One general advice is to limit the number of different event types per stream, but rather to multiply the number of different streams.
 
@@ -209,7 +209,7 @@ This solution has the advantage of resolving the forementioned problems by provi
 
 There is no limit to the number of substreams of a stream. In this regard, multiplying the number of streams is a preferable solution when you need to enter data measurements for different types of components (e.g medications, diseases, multiple devices, etc) recording a similar type of measure.
 
-### Defining a custom event type
+### Define a custom event type
 
 If your event type is not referenced [here](https://api.pryv.com/event-types/), you can create your own event type for your use case as long as its type follows the specification `{class}/{format}` (e.g `note/txt`, more information on this in the [section](https://api.pryv.com/event-types/#basics)). Events with undeclared types are allowed but their content is not validated.
 
@@ -221,10 +221,7 @@ For example, let's say that you need to create a custom event type for your 12-l
   "formats": {
     "12-lead-recording": {
       "description": "Conventional 12-lead ECG measuring voltage with ten electrodes.",
-      "type": "number"
-      }
-    }
-  }
+      "type": "number"}}}
 }
 ```
 2. Fork the [Data Type repository](https://github.com/pryv/data-types) and add your `ecg.json` file
@@ -232,8 +229,9 @@ For example, let's say that you need to create a custom event type for your 12-l
 4. Publish the corresponding URL in the platform parameters to be loaded at the platform boot :
 ```json
 EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
-```
-### Storing an event in multiple streams
+```  
+
+### Store an event in multiple streams
 
 Pryv.io allows you to store an event in one or multiple streams. This enables you to add a different context to the same event according to your needs, and to facilitate the sharing of particular events.
 
@@ -266,7 +264,7 @@ You can then create an access for your nutritionist on the stream "Sharing":
 ```
 This method allows you to share particular events (e.g "blood-analysis-july" event) with third parties, while retainining the original event in another stream.
 
-### Handling multiple devices
+### Handle multiple devices
 
 Let's imagine that you are storing data from multiple devices/data sources in a Pryv.io user's account:
 - a **Smartwatch** that collects the heart rate of the user during his sleep (`blood-pressure/mmhg-bpm` events)
@@ -310,20 +308,20 @@ This allows you to easily retrieve all events related to one device (e.g "Smartw
 ```
 At the same time, events related to the device can also be stored in other streams of data to be placed in the necessary context (e.g "Physical activity" or "Health").
 
-### Referencing events
+### Reference events
 
 As some of your Pryv.io events may be linked to one another, you might need to reference events between themselves.
 To do so, multiple options are available depending on your use case:
-- **View data jointly**
-Let's say you want to visualize all events that happened at the same time frame of the day, for example during your ECG recording on Monday morning.
+- **View data jointly**    
+Let's say you want to visualize all events that happened at the same time frame of the day, for example during your ECG recording on Monday morning.  
 To do so, it is sufficient to get all the events related to the ECG recording using the time reference:
-1. Find the time reference you are searching for (`time` parameter of your ECG event)
-2. Get all events occuring in the time frame that includes the ECG recording
+  1. Find the time reference you are searching for (`time` parameter of your ECG event)
+  2. Get all events occuring in the time frame that includes the ECG recording
 
 This will allow you to retrieve all time-related events to your ECG recording: the weight associated to the recording if measured, the device associated to the recording, etc.
 
-- **Keep memory of the raw event for a processed result**
-In case you want to keep in memory the raw event from which the processed result of your algorithm is coming from, you can reference the raw event in the `clientData` field of your processed result.
+- **Keep memory of the raw event for a processed result**    
+In case you want to keep in memory the raw event from which the processed result of your algorithm is coming from, you can reference the raw event in the `clientData` field of your processed result.   
 For example, let's say that your Allergen Exposure app computes the allergen exposure of your app user using his geolocation.
 
 Your raw ECG measurement:
@@ -351,10 +349,10 @@ The processed result from your algorithm:
 
 The field `clientData` enables you to reference the event from which the processed result is originating and to make references across different events.
 
-- **Make a query on different events** 
-To get all the different events associated to the same event, we recommend to store all the references to these events in a single event on a dedicated stream, e.g "Session".
-Let's say you want to get the weight (event stored in the stream "Weight" of type `mass/kg`) associated to the ECG recording (event stored in the stream "Recording" of type `ecg/6-lead-recording`).
-Pryv.io does not allow to filter events in the same way as a classic database when performing an "events.get" API call.
+- **Make a query on different events**    
+To get all the different events associated to the same event, we recommend to store all the references to these events in a single event on a dedicated stream, e.g "Session".  
+Let's say you want to get the weight (event stored in the stream "Weight" of type `mass/kg`) associated to the ECG recording (event stored in the stream "Recording" of type `ecg/6-lead-recording`).   
+Pryv.io does not allow to filter events in the same way as a classic database when performing an "events.get" API call.   
 
 A possible solution is to create an event of type `session/record` that contains all references to related events in a dedicated stream "Session-1":
 ```js
@@ -374,7 +372,7 @@ A possible solution is to create an event of type `session/record` that contains
      │  └── "session/record" event ("id": "crt2lk039111r4wrt252xw3445")
      └── ...
 ```
-The event containing all references across related events:
+The event in "Session-1" containing the "eventIds" of related events:
 ```json
 {
   "id": "crt2lk039111r4wrt252xw3445",
@@ -388,10 +386,10 @@ This method allows you to store all related events to a measurement in order to 
 
 All the forementioned solutions can be used together to reference events across them, but some of them will be more suitable than others depending on the use case. 
 
-### Storing technical data from devices
-### Defining accesses to the streams](#defining-accesses-to-the-streams)
-### Performing an access delegation](#performing-an-access-delegation)
-### Storing patient accesses
+### Store technical data from devices
+### Define accesses to the streams](#defining-accesses-to-the-streams)
+### Perform an access delegation](#performing-an-access-delegation)
+### Store patient accesses
 
 You are conducting an Allergology Exposition research, in which you analyze the exposition of subjects to allergens by tracking their geolocation through your app.
 You have been collecting consent from your app users to use their data and you need to store these accesses on Pryv.io. You will therefore need a "campaign" stream structure which allows you to store the accesses for your app.
@@ -401,7 +399,7 @@ You have been collecting consent from your app users to use their data and you n
 
 
 
-## Storing patient accesses
+## Store patient accesses
 
 Let's imagine now a slightly different use case. You are conducting an Allergology Exposition research, in which you analyze the exposition of subjects to allergens by tracking their geolocation through your app.
 
