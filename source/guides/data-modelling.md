@@ -30,8 +30,8 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 ## Introduction
 
 Data in Pryv is organized in "streams" and "events":
-- **Streams** are the main way of encoding context for events. They act as folders in which data is stored ("Health", "Geolocation", etc), and follow a tree structure.
-- **Events** are the primary unit of content in Pryv.io. They correspond to files that are inserted in corresponding folders. An event is a timestamped piece of typed data (e.g `note/txt`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.
+- **Streams** are the main way of encoding context for events. They act as folders in a file system ("Health", "Geolocation", etc), and follow a tree structure with multiple roots.
+- **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g `note/txt`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.
 
 Let's take the example of a Pryv.io user who wants to keep track of his health metrics and his physical activity using a smartwatch. A simple and intuitive way to model his data would be to use two streams, "Health Profile" and "Smartwatch":
 - "**Health Profile**" corresponds to the health metrics of the user, with for example, the sub-streams "**Height**" and "**Weight**" in which the height and weight measurements are respectively added (events of type `length/cm` and `mass/kg` respectively).
@@ -62,10 +62,10 @@ Available levels of permissions (read, manage, contribute, create-only) are defi
 
 ### Declare the stream structure
 
-When building your own data model, we advise you to write down your streams and events structure following this [template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/).
-This template file describes a very simple data model that can be adapted to your own use case, and provides you with an idea of how to keep track of your streams and events.
+When building your own data model, we advise you to organize your streams and events structure following this [template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/). Such a document serves as reference for the potentially multiple actors that will implement apps for a single Pryv.io platform.
+This template file describes a very simple data model that needs to be adapted to your own use case.
 
-The "Allergen data model" on which the file is based is described in this structure:
+The Allergen data model on which the file is based is described in this structure:
 ![Example Streams Structure](/assets/images/data_model_allergens.svg)
 
 The use cases below can help you to design and implement your structure according to your own data flow.
@@ -340,7 +340,9 @@ The processed result from your algorithm:
   "streamIds": ["pollen-exposure"],
   "type": "density/kg-m3",
   "content": 320,
-  "clientData": {"raw-event:key": "ckd0br289000o5csm15xw6776"}
+  "clientData": { "raw-event": {
+    "id": "ckd0br289000o5csm15xw6776"
+  }}
 }
 ```
 
