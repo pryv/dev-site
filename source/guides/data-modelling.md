@@ -389,7 +389,7 @@ The `session/record` event in "ECG-Session" contains the *eventIds* of related e
 ```
 This method allows you to store all related events to a measurement in order to facilitate the query.
 
-All the forementioned solutions can be used together to reference events across them, but some of them will be more suitable than others depending on the use case. 
+All the aforementioned solutions can be used together to reference events across them, but some of them will be more suitable than others depending on the use case. 
 
 ### Store technical data from devices
 
@@ -424,7 +424,14 @@ When creating the `mri/signal` event related to the measured MRI signal during t
   "params": {
     "streamIds": [ "mri-recording"],
     "type": "mri/signal",
-    "clientData": { "magneticField":"1.5", "FOV":30, "sliceThickness":5 }
+    "clientData": {
+      "device-parameters":
+        {
+          "magneticField":"1.5",
+          "FOV":30,
+          "sliceThickness":5
+        }
+    }
   }
 }
 ```
@@ -507,7 +514,7 @@ It can happen that you need an access delegation from your app users if they can
 
 To do so, you can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](https://api.pryv.com/reference/#authenticate-your-app) for more information on the auth request).
 
-This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and give permission to data that was in its scope.
+This works as a delegation of access, and the “app” token will be able to generate sub-tokens of the “shared” type and give access to data that was in its scope.
 
 Let's imagine that your "Sleep Control Mobile App" needs to access the "Position" data from your user to perform sleep analysis, but also his "Health" data to share it with hospitals if needed:
 ```js
@@ -583,7 +590,7 @@ Stream structure for doctor Tom:
 ```
 
 Doctor Tom will need to keep all access tokens to his patients' accounts in the dedicated stream **"Patient accesses"**.   
-Every time a patient grants him access to his data, the access token to his Pryv.io account will be saved in a `credentials/pryvApiEndpoint` event under the stream "Patient accesses" (see [App guidelines](/guides/app-guidelines/) for the event format).   
+Every time a patient grants him access to his data, the access token to his Pryv.io account will be saved in a `credentials/pryvApiEndpoint` event under the stream "Patient accesses" (see [App guidelines](/guides/app-guidelines/) for why we use this format).   
 
 In the case of patient Ana, the following event will be created in the stream "Patient accesses" of Doctor Tom: 
 ```json
