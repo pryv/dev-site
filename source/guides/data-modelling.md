@@ -379,7 +379,12 @@ The `session/record` event in "ECG-Session" contains the *eventIds* of related e
   "time": 1595601190.345,
   "streamIds": ["ECG-Session"],
   "type": "session/record",
-  "content": {"ECG-recording":"ckd0br28a000z5csmi4f1cn8y","Weight":"czj2re389000o5csm15xw6776", "Heart rate":"czj2pk293847o5lsk35xw0987", "ECG-device":"crt2lk039111r4wrt252xw3445"},
+  "content": {
+    "ECG-recording":"ckd0br28a000z5csmi4f1cn8y",
+    "Weight":"czj2re389000o5csm15xw6776",
+    "Heart rate":"czj2pk293847o5lsk35xw0987",
+    "ECG-device":"crt2lk039111r4wrt252xw3445"
+  }
 }
 ```
 This method allows you to store all related events to a measurement in order to facilitate the query.
