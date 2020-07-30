@@ -19,7 +19,8 @@ In this FAQ we answer common questions related to Pryv.io API. You can contact u
 - 8 [Account granularity](#account-granularity)
 - 9 [Access sharing](#access-sharing)
 - 10 [Notification system](#notification-system)
-- 11 [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api-)
+- 11 [Set reminders](#set-reminders)
+- 12 [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api-)
 
 ## Personal data
 
@@ -253,6 +254,15 @@ You can have a look at the webhooks and websockets data changes payload in the [
 
 Notifications are sent as soon as there is a data change in the "events", "streams" or "accesses" for the whole user account. It is therefore possible to get notified of a data change that would not be in the scope of the access token.
 Notifications are likely to be scoped in the near future. 
+
+## Set reminders
+
+### How to schedule reminders on data (stored on Pryv.io) ?
+
+You user might need to set himself a reminder such **"Notify me in X days"** in his Pryv.io account, similar to calender events.
+Two options are possible:
+- Store the reminder in an external setting (recommended)
+- Store the reminder in the `clientData` field of the concerned event and execute [webhooks](https://api.pryv.com/reference/#with-webhooks) for all `eventsChanges` to check if such a reminder is stored in `clientData`. However this solution can be costly performance-wise.
 
 ## Do you have a test setup where I could experiment with your API?
 
