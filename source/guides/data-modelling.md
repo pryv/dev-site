@@ -8,7 +8,7 @@ withTOC: true
 
 In the following section, you will find all the necessary information to design your own data model.
 
-Please be aware that this guide IS NOT intended to be read cover to cover (even *Clean Code* from [Uncle Bob](https://fr.wikipedia.org/wiki/Robert_C._Martin) can sound more exciting), but rather to be used as a training manuel to assist you in designing your data model.
+Please be aware that this guide is NOT intended to be read cover to cover (even *Clean Code* from [Uncle Bob](https://fr.wikipedia.org/wiki/Robert_C._Martin) can sound more exciting), but rather to be used as a training manual to assist you in designing your data model.
 
 The general introduction describes Pryv.io data modelling conventions to help you understand how you should build your own data model. Then we provide you with a broad range of use cases that you can encounter while building your data model.
 
