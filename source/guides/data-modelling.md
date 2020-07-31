@@ -12,9 +12,11 @@ Please be aware that this guide IS NOT intended to be read cover to cover, but r
 
 The general introduction describes Pryv.io data modelling conventions to help you understand how you should build your own data model. Then we provide you with a broad range of use cases that you can encounter while building your data model.
 
-To savour fresh and in moderation.
+*To savour fresh and in moderation.*
 
-![Cheers](https://media.giphy.com/media/g9582DNuQppxC/giphy.gif)
+<p align="center">
+<img src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" width="400" />
+</p>
 
 ## Table of contents
 
@@ -60,7 +62,9 @@ This stream structure allows you to:
 
 Different permissions can be defined for each stream and substream, therefore enabling to share only necessary information with third-parties (apps, doctors, family, etc). If multiple actors are involved in the process, this allows to precisely control the access level to the different streams. So that your grandma doesn't have a heart attack when looking at your stream "Weight" if you don't allow her to do so.
 
-![grandma](https://media.giphy.com/media/l0MYQ5jcwegmAtXuU/giphy.gif)
+<p align="center">
+<img src="https://media.giphy.com/media/l0MYQ5jcwegmAtXuU/giphy.gif" width="400" />
+</p>
 
 ![Access Structure](/assets/images/data_model_access.svg)
 
