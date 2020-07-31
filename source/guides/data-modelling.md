@@ -40,10 +40,10 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 
 Data in Pryv is organized in "streams" and "events". Ok, hold on. 
 What are "Streams" ?
-- **Streams** are the main way of encoding context for events. They act as folders in which data is stored ("Health", "Geolocation", etc), and follow a tree structure.  
+- **Streams** are the main way of encoding context for events. They act as folders in a file system ("Health", "Geolocation", etc), and follow a tree structure with multiple roots.  
 
 And what are "Events" ?
-- **Events** are the primary unit of content in Pryv.io. They correspond to timestamped pieces of typed data (e.g `note/txt`) that are inserted in corresponding folders. An event can belong to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
+- **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g `note/txt`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
 
 Be patient, it is going to become crystal-clear for you with the next example. 
 
