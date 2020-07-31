@@ -20,8 +20,11 @@ withTOC: true
 
 Our new [Swift library](https://github.com/pryv/lib-swift) facilitates writing iOS apps for a Pryv.io platform, and provides an [Apple HealthKit bridge](https://github.com/pryv/bridge-ios-healthkit) between HealthKit data samples and Pryv.io streams. 
 
-Learn how to grow your own [iOS App(le)s](https://github.com/pryv/app-ios-swift-example) in this video: https://youtu.be/poWC__m8ZFU.
+Learn how to grow your own [iOS App(le)s](https://github.com/pryv/app-ios-swift-example) in this video: https://youtu.be/poWC__m8ZFU.  
 
+Discover Apple HealthKit bridge video here: https://youtu.be/PIBh2_joFqQ.  
+
+More on the release [here](https://support.pryv.com/hc/en-us/articles/360015645339-Develop-iOS-applications-with-our-Swift-library).
 
 ## 24.07.2020 - View and share data
 
