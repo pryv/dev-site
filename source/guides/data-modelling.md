@@ -8,34 +8,45 @@ withTOC: true
 
 In the following section, you will find all the necessary information to design your own data model.
 
+Please be aware that this guide IS NOT intended to be read cover to cover, but rather to be used as a training manuel to assist you in designing your data model.
+
 The general introduction describes Pryv.io data modelling conventions to help you understand how you should build your own data model. Then we provide you with a broad range of use cases that you can encounter while building your data model.
+
+To savour fresh and in moderation.
+
+![Cheers](https://media.giphy.com/media/g9582DNuQppxC/giphy.gif)
 
 ## Table of contents
 
-1. [Introduction](#introduction)
-2. [Use cases](#use-cases)
-  1. [Declare the stream structure](#declare-the-stream-structure)
-  2. [Store account information](#store-account-information) 
-  3. [Avoid event types multiplication](#avoid-event-types-multiplication)
-  4. [Define a custom event type](#define-a-custom-event-type)
-  5. [Store an event in multiple streams](#store-an-event-in-multiple-streams)
-  6. [Handle multiple devices](#handle-multiple-devices)  
-  7. [Reference events](#reference-events) 
-  8. [Store technical data from devices](#store-technical-data-from-devices)
-  9. [Define accesses to the streams](#define-accesses-to-the-streams)
-  10. [Perform an access delegation](#performe-an-access-delegation)
-  11. [Store patient accesses](#store-patient-accesses)
+- 1 [Introduction](#introduction)
+- 2 [Use cases](#use-cases)
+  - 1 [Declare the stream structure](#declare-the-stream-structure)
+  - 2 [Store account information](#store-account-information) 
+  - 3 [Avoid event types multiplication](#avoid-event-types-multiplication)
+  - 4 [Define a custom event type](#define-a-custom-event-type)
+  - 5 [Store an event in multiple streams](#store-an-event-in-multiple-streams)
+  - 6 [Handle multiple devices](#handle-multiple-devices)  
+  - 7 [Reference events](#reference-events) 
+  - 8 [Store technical data from devices](#store-technical-data-from-devices)
+  - 9 [Define accesses to the streams](#define-accesses-to-the-streams)
+  - 10 [Perform an access delegation](#performe-an-access-delegation)
+  - 11 [Store patient accesses](#store-patient-accesses)
   
 
 ## Introduction
 
-Data in Pryv is organized in "streams" and "events":
-- **Streams** are the main way of encoding context for events. They act as folders in which data is stored ("Health", "Geolocation", etc), and follow a tree structure.
-- **Events** are the primary unit of content in Pryv.io. They correspond to files that are inserted in corresponding folders. An event is a timestamped piece of typed data (e.g `note/txt`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.
+Data in Pryv is organized in "streams" and "events". Ok, hold on. 
+What are "Streams" ?
+- **Streams** are the main way of encoding context for events. They act as folders in which data is stored ("Health", "Geolocation", etc), and follow a tree structure.  
 
-Let's take the example of a Pryv.io user who wants to keep track of his health metrics and his physical activity using a smartwatch. A simple and intuitive way to model his data would be to use two streams, "Health Profile" and "Smartwatch":
-- "**Health Profile**" corresponds to the health metrics of the user, with for example, the sub-streams "**Height**" and "**Weight**" in which the height and weight measurements are respectively added (events of type `length/cm` and `mass/kg` respectively).
-- "**Smartwatch**" contains the collected data from the smartwatch, in particular the geolocation of the user - sub-stream "**Position**" - and the "**Energy**", that can be either the "**Energy-intake**" or the "**Energy-burnt**" (events of type `energy/cal`).
+And what are "Events" ?
+- **Events** are the primary unit of content in Pryv.io. They correspond to timestamped pieces of typed data (e.g `note/txt`) that are inserted in corresponding folders. An event can belong to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
+
+Be patient, it is going to become crystal-clear for you with the next example. 
+
+Let's suppose that your app, "Best Health App Ever", enables your user to track his health metrics and his physical activity using a smartwatch. A simple way to model his data would be to use two streams, "Health Profile" and "Smartwatch":
+- "**Health Profile**" corresponds to the health metrics of the user, with for example, the sub-streams "**Height**" and "**Weight**" in which, as you can guess, the height and weight measurements are respectively added (events of type `length/cm` and `mass/kg`).
+- "**Smartwatch**" contains the collected data from the smartwatch. It can be for example the geolocation of the user in the stream "**Position**" (`position/wgs84` events), the stream "**Energy-intake**" (positively correlated with the number of burgers your user has eaten during the day) and the stream "**Energy-burnt**" (corresponding to attempts to burn this fat), both containing `energy/cal` events.
 
 The stream structure of this data model can be visually represented as below:
 
@@ -43,20 +54,24 @@ The stream structure of this data model can be visually represented as below:
 
 This stream structure allows you to:
 
-- aggregate data from different data sources
-- provide enough context to the data
+- combine different type of data (attachement, notes, health records, pictures, videos) coming from different data sources
+- contextualize your data into an organization similar to folders
 - control on a granular level accesses to the data
 
-Different permissions can be defined for each stream and substream, therefore enabling to share only necessary information with third-parties (apps, doctors, family, etc). If multiple actors are involved in the process, this allows to precisely control the access level to the different streams. 
+Different permissions can be defined for each stream and substream, therefore enabling to share only necessary information with third-parties (apps, doctors, family, etc). If multiple actors are involved in the process, this allows to precisely control the access level to the different streams. So that your grandma doesn't have a heart attack when looking at your stream "Weight" if you don't allow her to do so.
+
+![grandma](https://media.giphy.com/media/l0MYQ5jcwegmAtXuU/giphy.gif)
 
 ![Access Structure](/assets/images/data_model_access.svg)
 
 In the example above, access to particular streams of data can be restricted:
 
-- the **Smartwatch app** has a `manage` access on the streams **Position** and **Energy**, and a `read` access on the streams **Height** and **Weight**
+- the **Best Health App Ever** has a `manage` access on the streams **Position** and **Energy**, and a `read` access on the streams **Height** and **Weight**
 - the **Dietetician** has a `read` access on the stream **Energy**
 
 Available levels of permissions (read, manage, contribute, create-only) are defined and explained [here](https://api.pryv.com/reference/#access).
+
+
 
 ## Use cases
 
