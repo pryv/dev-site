@@ -12,9 +12,10 @@ Please be aware that this guide IS NOT intended to be read cover to cover, but r
 
 The general introduction describes Pryv.io data modelling conventions to help you understand how you should build your own data model. Then we provide you with a broad range of use cases that you can encounter while building your data model.
 
-*To savour fresh and in moderation.*
-
 <p align="center">
+*To savour fresh and in moderation.*
+ </p>
+ <p align="center">
 <img src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" width="400" />
 </p>
 
