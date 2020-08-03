@@ -4,11 +4,17 @@ title: API change log
 template: default.jade
 ---
 
+## v1.5.22
+
+Changes:
+
+- Deleting an app token deletes the shared accesses that were generated from it (if any).
+
 ## v1.5.18
 
 New Features:
 
-- Call 'GET /access-info' now returns the username to avoid having to extract it manually from `pryvApiEndpoint`
+- Call 'GET /access-info' now returns the username to avoid having to extract it manually from `pryvApiEndpoint`.
 
 Changes:
 

@@ -4,6 +4,7 @@ examples = require("./examples")
 helpers = require("./helpers")
 timestamp = require("unix-timestamp")
 _ = require("lodash")
+generateId = require("cuid")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
 _getDocId = (sectionId, methodId) ->
@@ -1426,7 +1427,8 @@ module.exports = exports =
       title: "Delete access"
       http: "DELETE /accesses/{id}"
       description: """
-                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
+                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.  
+                   All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
                    """
       params:
         properties: [
@@ -1446,11 +1448,25 @@ module.exports = exports =
           description: """
                        The deletion record.
                        """
+        ,
+          key: "relatedDeletions"
+          type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
+          optional: true
+          description: """
+                       The deletion records of all the shared accesses that were generated from this app token when deleting it
+                       """
         ]
       examples: [
         params:
-          id: examples.accesses.shared.id
-        result: {accessDeletion:{id:examples.accesses.shared.id}}
+          id: examples.accesses.app.id
+        result: 
+          accessDeletion:
+            id: examples.accesses.app.id
+          relatedDeletions: [
+            id: generateId()
+          ,
+            id: generateId()
+          ]
       ]
 
     ,
