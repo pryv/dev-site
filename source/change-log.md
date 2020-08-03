@@ -4,6 +4,12 @@ title: API change log
 template: default.jade
 ---
 
+## v1.5.22
+
+Changes:
+
+- Deleting an app token deletes the shared access it was used to create.
+
 ## v1.5.18
 
 New Features:
