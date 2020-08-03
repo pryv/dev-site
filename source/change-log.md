@@ -8,7 +8,7 @@ template: default.jade
 
 Changes:
 
-- Deleting an app token deletes the shared tokens that were generated from this app token (if any)
+- Deleting an app token deletes the shared tokens that were generated from it (if any)
 
 ## v1.5.18
 
