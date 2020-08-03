@@ -38,7 +38,6 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 
 ## Introduction
 
-<<<<<<< HEAD
 Data in Pryv is organized in "streams" and "events". Ok, hold on. 
 What are "Streams" ?
 - **Streams** are the main way of encoding context for events. They act as folders in a file system ("Health", "Geolocation", etc), and follow a tree structure with multiple roots.  
@@ -48,8 +47,7 @@ And what are "Events" ?
 
 Be patient, it is going to become crystal-clear for you with the next example. 
 
-
-Let's suppose that your app, "Best Health App Ever", enables your user to track his health metrics and his physical activity using a smartwatch. A simple way to model his data would be to use two streams, "Health Profile" and "Smartwatch":
+Let's suppose that your app, "Best Health App", enables your user to track his health metrics and his physical activity using a smartwatch. A simple way to model his data would be to use two streams, "Health Profile" and "Smartwatch":
 - "**Health Profile**" corresponds to the health metrics of the user, with for example, the sub-streams "**Height**" and "**Weight**" in which, as you can guess, the height and weight measurements are respectively added (events of type `length/cm` and `mass/kg`).
 - "**Smartwatch**" contains the collected data from the smartwatch. It can be for example the geolocation of the user in the stream "**Position**" (`position/wgs84` events), the stream "**Energy-intake**" (positively correlated with the number of burgers your user has eaten during the day) and the stream "**Energy-burnt**" (corresponding to attempts to burn this fat), both containing `energy/cal` events.
 
@@ -73,11 +71,10 @@ Different permissions can be defined for each stream and substream, therefore en
 
 In the example above, access to particular streams of data can be restricted:
 
-- the **Best Health App Ever** has a `manage` access on the streams **Position** and **Energy**, and a `read` access on the streams **Height** and **Weight**
+- the **Best Health App** has a `manage` access on the streams **Position** and **Energy**, and a `read` access on the streams **Height** and **Weight**
 - the **Dietetician** has a `read` access on the stream **Energy**
 
 Available levels of permissions (read, manage, contribute, create-only) are defined and explained [here](https://api.pryv.com/reference/#access).
-
 
 
 ## Use cases
