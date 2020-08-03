@@ -38,6 +38,7 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 
 ## Introduction
 
+<<<<<<< HEAD
 Data in Pryv is organized in "streams" and "events". Ok, hold on. 
 What are "Streams" ?
 - **Streams** are the main way of encoding context for events. They act as folders in a file system ("Health", "Geolocation", etc), and follow a tree structure with multiple roots.  
@@ -46,6 +47,7 @@ And what are "Events" ?
 - **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g `note/txt`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
 
 Be patient, it is going to become crystal-clear for you with the next example. 
+
 
 Let's suppose that your app, "Best Health App Ever", enables your user to track his health metrics and his physical activity using a smartwatch. A simple way to model his data would be to use two streams, "Health Profile" and "Smartwatch":
 - "**Health Profile**" corresponds to the health metrics of the user, with for example, the sub-streams "**Height**" and "**Weight**" in which, as you can guess, the height and weight measurements are respectively added (events of type `length/cm` and `mass/kg`).
@@ -82,10 +84,10 @@ Available levels of permissions (read, manage, contribute, create-only) are defi
 
 ### Declare the stream structure
 
-When building your own data model, we advise you to write down your streams and events structure following this [template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/).
-This template file describes a very simple data model that can be adapted to your own use case, and provides you with an idea of how to keep track of your streams and events.
+When building your own data model, we advise you to organize your streams and events structure following this [template](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/). Such a document serves as reference for the potentially multiple actors that will implement apps for a single Pryv.io platform.
+This template file describes a very simple data model that needs to be adapted to your own use case.
 
-The "Allergen data model" on which the file is based is described in this structure:
+The Allergen data model on which the file is based is described in this structure:
 ![Example Streams Structure](/assets/images/data_model_allergens.svg)
 
 The use cases below can help you to design and implement your structure according to your own data flow.
@@ -360,7 +362,9 @@ The processed result from your algorithm:
   "streamIds": ["pollen-exposure"],
   "type": "density/kg-m3",
   "content": 320,
-  "clientData": {"raw-event:key": "ckd0br289000o5csm15xw6776"}
+  "clientData": { "raw-event": {
+    "id": "ckd0br289000o5csm15xw6776"
+  }}
 }
 ```
 
@@ -397,12 +401,17 @@ The `session/record` event in "ECG-Session" contains the *eventIds* of related e
   "time": 1595601190.345,
   "streamIds": ["ECG-Session"],
   "type": "session/record",
-  "content": {"ECG-recording":"ckd0br28a000z5csmi4f1cn8y","Weight":"czj2re389000o5csm15xw6776", "Heart rate":"czj2pk293847o5lsk35xw0987", "ECG-device":"crt2lk039111r4wrt252xw3445"},
+  "content": {
+    "ECG-recording":"ckd0br28a000z5csmi4f1cn8y",
+    "Weight":"czj2re389000o5csm15xw6776",
+    "Heart rate":"czj2pk293847o5lsk35xw0987",
+    "ECG-device":"crt2lk039111r4wrt252xw3445"
+  }
 }
 ```
 This method allows you to store all related events to a measurement in order to facilitate the query.
 
-All the forementioned solutions can be used together to reference events across them, but some of them will be more suitable than others depending on the use case. 
+All the aforementioned solutions can be used together to reference events across them, but some of them will be more suitable than others depending on the use case. 
 
 ### Store technical data from devices
 
@@ -437,7 +446,14 @@ When creating the `mri/signal` event related to the measured MRI signal during t
   "params": {
     "streamIds": [ "mri-recording"],
     "type": "mri/signal",
-    "clientData": { "magneticField":"1.5", "FOV":30, "sliceThickness":5 }
+    "clientData": {
+      "device-parameters":
+        {
+          "magneticField":"1.5",
+          "FOV":30,
+          "sliceThickness":5
+        }
+    }
   }
 }
 ```
@@ -520,7 +536,7 @@ It can happen that you need an access delegation from your app users if they can
 
 To do so, you can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](https://api.pryv.com/reference/#authenticate-your-app) for more information on the auth request).
 
-This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and give permission to data that was in its scope.
+This works as a delegation of access, and the “app” token will be able to generate sub-tokens of the “shared” type and give access to data that was in its scope.
 
 Let's imagine that your "Sleep Control Mobile App" needs to access the "Position" data from your user to perform sleep analysis, but also his "Health" data to share it with hospitals if needed:
 ```js
@@ -596,7 +612,7 @@ Stream structure for doctor Tom:
 ```
 
 Doctor Tom will need to keep all access tokens to his patients' accounts in the dedicated stream **"Patient accesses"**.   
-Every time a patient grants him access to his data, the access token to his Pryv.io account will be saved in a `credentials/pryvApiEndpoint` event under the stream "Patient accesses" (see [App guidelines](/guides/app-guidelines/) for the event format).   
+Every time a patient grants him access to his data, the access token to his Pryv.io account will be saved in a `credentials/pryvApiEndpoint` event under the stream "Patient accesses" (see [App guidelines](/guides/app-guidelines/) for why we use this format).   
 
 In the case of patient Ana, the following event will be created in the stream "Patient accesses" of Doctor Tom: 
 ```json
