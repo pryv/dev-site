@@ -1453,7 +1453,7 @@ module.exports = exports =
           type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
           optional: true
           description: """
-                       When deleting an app token, the deletion records of all the shared accesses that were generated from this app token.
+                       The deletion records of all the shared accesses that were generated from this app token when deleting it
                        """
         ]
       examples: [
