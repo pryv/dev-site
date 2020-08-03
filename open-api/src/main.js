@@ -181,7 +181,7 @@ function buildApi(api, isOpen) {
     if (section.entrepriseOnly && isOpen) {
       return;
     }
-    section.sections.forEach(method => {
+    function helper(method) {
       const path = parseBy(method.http, ' ', 1);
       if (api.paths[path] == null) {
         api.paths[path] = {};
@@ -285,8 +285,16 @@ function buildApi(api, isOpen) {
           ].schema.properties;
           break;
       }
-
-    });
+    }
+    if(!section.sections){
+      helper(section)
+    }
+    else{
+      section.sections.forEach(method => {
+        helper(method);
+      });
+    }
+    
   });
 }
 

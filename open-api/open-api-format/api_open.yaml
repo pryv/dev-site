@@ -49,11 +49,33 @@ paths:
                   type: string
   /auth/logout:
     post:
-      description: Terminates a personal access session by invalidating its access token
+      description: >-
+        Terminates a personal access session by invalidating its access token
         (the user will have to login again).
+
+        Simply provide the Authorization token in own of [the supported ways](/reference/#authorization), no request body is required.
       operationId: auth.logout
       responses:
         "200": {}
+  /:
+    post:
+      description: Sends a batch of API methods calls in one go (e.g. for to syncing
+        offline changes when resuming connectivity).
+      operationId: callBatch
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                - type: array
+                  items: call results
+      requestBody:
+        description: Array of method call objects, each defined as follows
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/false"
   /events:
     get:
       description: Queries accessible events.
@@ -67,9 +89,12 @@ paths:
           in: query
         - name: toTime
           description: "The end time of the timeframe you want to retrieve events for.
-            Default is the current time. Note: events are considered to be
-            within a given timeframe based on their `time` only (`duration` is
-            not considered)."
+            Default is the current time if `fromTime` is set. We recommend to
+            set both `fromTime` and `toTime` (for example by choosing a very
+            small number for `fromTime` or a large one for `toTime` if you want
+            to retrieve all events). Note: events are considered to be within a
+            given timeframe based on their `time` only (`duration` is not
+            considered)."
           required: false
           in: query
         - name: streams
@@ -455,6 +480,18 @@ paths:
                     specifying the name the stream should be created with later
                     if missing.
                   type: array of permission request objects
+  /access-info:
+    get:
+      description: Retrieves information about the access in use.
+      operationId: getAccessInfo
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                - type: "[key-value](#methods-key-value-)"
+                - type: "[key-value](#methods-key-value-)"
   /followed-slices:
     get:
       description: Gets followed slices.
@@ -699,36 +736,6 @@ paths:
                 appId:
                   description: Your app's unique identifier.
                   type: string
-  /access-info:
-    get:
-      description: Retrieves information about the access in use.
-      operationId: getAccessInfo
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                - type: "[key-value](#methods-key-value-)"
-  /:
-    post:
-      description: Sends a batch of API methods calls in one go (e.g. for to syncing
-        offline changes when resuming connectivity).
-      operationId: callBatch
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                - type: array
-                  items: call results
-      requestBody:
-        description: Array of method call objects, each defined as follows
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/false"
 components:
   schemas:
     event:
