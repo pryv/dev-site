@@ -8,8 +8,8 @@ withTOC: true
 
 # Definition file
 
-The API of Open-Pryv.io (open source version of Pryv.io) in OpenAPI 3.0 format: [api_open.yaml](/open-api/open-api-format/api_open.yaml).  
-The API of Pryv.io (Entreprise license) in OpenAPI 3.0 format: [api.yaml](/open-api/open-api-format/api.yaml). 
+The API of Open-Pryv.io (open source version of Pryv.io) in OpenAPI 3.0 format: [api_open.yaml](/open-api/3.0/api_open.yaml).  
+The API of Pryv.io (Entreprise license) in OpenAPI 3.0 format: [api.yaml](/open-api/3.0/api.yaml). 
 
 These OpenAPI documents describe the Pryv.io API and conform to the OpenAPI Specification. There are represented in YAML format and can be downloaded from the above links to be imported on other API tools such as Postman.
 
@@ -30,6 +30,7 @@ The OpenAPI description of Open-Pryv.io or Pryv.io Entreprise can be directly im
 You can choose to upload a file, enter a URL, or copy the YAML file on Postman. 
 
 Import the `open-api-format/api.yaml` from the [URL link](/open-api/3.0/api.yaml) or the YAML file directly with `Import as an API` and `Generate a Postman Collection` checked.
+If you are using the Open Source version of Pryv.io, import the `open-api-format/api_open.yaml` from the [URL link](/open-api/3.0/api_open.yaml).
 
 ### Environment
 
