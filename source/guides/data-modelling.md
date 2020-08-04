@@ -19,7 +19,7 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 <img src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" width="400" />
 </p>
 
-## Table of contents
+# Table of contents
 
 - 1 [Introduction](#introduction)
 - 2 [Use cases](#use-cases)
@@ -268,6 +268,11 @@ Sometimes, your user might need to share a single event (and not a whole stream)
 How so ?  
 
 Let's take the example of your Grandma (again). She is storing her blood analysis results in a substream "Blood" under her "Health" profile. She usually shares the whole stream with her hematologist, but now she only needs to share her last blood analysis with her general practitioner.  
+
+<p align="center">
+<img src="https://media.giphy.com/media/efyEShk2FJ9X2Kpd7V/giphy.gif" width="400" />
+</p>
+
 To do so, you can store her last blood analysis in a stream "Sharings" that you can then easily share with her general practitioner.
 
 ```js
@@ -297,7 +302,13 @@ This method allows to share particular events (e.g the "blood-analysis-july" eve
 
 ### Handle multiple devices
 
-Forget about the good old times when we would have one fixed-line telephone per building, and you'd have to climb to the last floor to tell your neighboor John to answer the phone (who had lost his keys again, and that were found again). Now, John not only has his own smartphone and smartwatch, but even a smart key chain that helps him to retrieve his keys.  
+Forget about the good old times when we would have one fixed-line telephone per building, and you'd have to climb to the last floor to tell your neighboor John to answer the phone (who had lost his keys again, and that were found again). 
+
+<p align="center">
+<img src="https://media.giphy.com/media/TlG9WaojXmx3y/giphy.gif" width="400" />
+</p>
+
+Now, John not only has his own smartphone and smartwatch, but even a smart key chain that helps him to retrieve his keys.  
 
 So how to model John's data coming from multiple devices ?  
 
@@ -322,7 +333,7 @@ Given this situation, we would recommend a stream structure similar to the follo
 └── Smart key chain
       └── Geolocation ("position/wgs84" events)
 ```
-This allows you to easily retrieve all events related to one device (e.g "Smartwatch" or "Smart key chain"): 
+This allows you to easily retrieve all events related to one device (e.g "Smartwatch"): 
 
 ```json
 {
@@ -333,27 +344,17 @@ This allows you to easily retrieve all events related to one device (e.g "Smartw
 }
 ```
 Answer:
+
+```json
 {
   "events": [
     {
       "id": "ckdfruqua000z7ppvzspqsnyz",
       "time": 1596531629.026,
-      "streamIds": [
-        "diary"
-      ],
-      "streamId": "diary",
+      "streamIds": ["heart-rate"],
       "tags": [],
-      "type": "picture/attached",
-      "content": null,
-      "attachments": [
-        {
-          "id": "ckdfruqua00107ppv0xeriki2",
-          "fileName": "photo.jpg",
-          "type": "image/jpeg",
-          "size": 2561,
-          "readToken": "ckdfruqua00117ppvm7f2pbgw-Fr1sbrYRbUqT6tqwElBaXB9eNMM"
-        }
-      ],
+      "type": "blood-pressure/mmhg-bpm",
+      "content": 85,
       "created": 1596531629.026,
       "createdBy": "ckdfruqs700047ppvzjoxu1jo",
       "modified": 1596531629.026,
@@ -361,59 +362,21 @@ Answer:
     },
     {
       "id": "ckdfruqua000v7ppv37k7gokc",
-      "time": 1596531629.026,
-      "streamIds": [
-        "diary"
-      ],
-      "streamId": "diary",
+      "time": 1596341634.567,
+      "streamIds": ["heart-rate"],
       "tags": [],
-      "type": "note/text",
-      "content": "道可道非常道。。。",
-      "created": 1596531629.026,
-      "createdBy": "ckdfruqs700017ppvj4rci1cg",
-      "modified": 1596571229.026,
-      "modifiedBy": "ckdfruqs700017ppvj4rci1cg"
-    },
-    {
-      "id": "ckdfruqua00127ppvue8jwrpk",
-      "time": 1350373077.359,
-      "streamIds": [
-        "diary"
-      ],
-      "streamId": "diary",
-      "tags": [],
-      "type": "position/wgs84",
-      "content": {
-        "latitude": 40.714728,
-        "longitude": -73.998672
-      },
-      "created": 1596528029.026,
-      "createdBy": "ckdfruqs700007ppvnmeg1gke",
-      "modified": 1596528029.026,
-      "modifiedBy": "ckdfruqs700007ppvnmeg1gke"
-    },
-    {
-      "id": "ckdfruqua000u7ppvdm78j8xa",
-      "time": 1596535229.026,
-      "streamIds": [
-        "weight"
-      ],
-      "streamId": "weight",
-      "tags": [],
-      "type": "mass/kg",
+      "type": "blood-pressure/mmhg-bpm",
       "content": 90,
-      "created": 1596535229.026,
+      "created": 1596341634.567,
       "createdBy": "ckdfruqs700017ppvj4rci1cg",
-      "modified": 1596535229.026,
+      "modified": 1596341634.567,
       "modifiedBy": "ckdfruqs700017ppvj4rci1cg"
     }
   ]
 }
 ```
 
-
-At the same time, events related to the device can also be stored in other streams of data to be placed in the necessary context (e.g "Physical activity" or "Health").
-
+At the same time, events related to the device can also be stored in other streams of data to be placed in the necessary context (e.g "Health").
 
 ```json
 {
@@ -425,7 +388,52 @@ At the same time, events related to the device can also be stored in other strea
 ```
 Answer:
 
-
+```json
+{
+  "events": [
+    {
+      "id": "ckdfruqua000z7ppvzspqsnyz",
+      "time": 1596531629.026,
+      "streamIds": ["heart-rate"],
+      "tags": [],
+      "type": "blood-pressure/mmhg-bpm",
+      "content": 85
+    },
+    {
+      "id": "ckdfruqua000v7ppv37k7gokc",
+      "time": 1596341634.567,
+      "streamIds": ["heart-rate"],
+      "tags": [],
+      "type": "blood-pressure/mmhg-bpm",
+      "content": 90
+    },
+    {
+      "id": "cfgtrzqua999f7ppv45g3zuit",
+      "time": 1596341634.567,
+      "streamIds": ["weight"],
+      "tags": [],
+      "type": "mass/kg",
+      "content": 88
+    },
+    {
+      "id": "cghztrwfs345r3llk3j69port",
+      "time": 1596341634.567,
+      "streamIds": ["height"],
+      "tags": [],
+      "type": "length/cm",
+      "content": 185
+    },
+    {
+      "id": "crtkophui678t3plk37k7tzui",
+      "time": 1596341634.567,
+      "streamIds": ["sleep"],
+      "tags": [],
+      "type": "sleep/analysis",
+      "content": "inBed"
+    }
+  ]
+}
+```
 
 ### Reference events
 
@@ -434,23 +442,41 @@ To do so, multiple options are available depending on your use case:
 
 #### View data jointly  
   
-Let's say you want to visualize all events that happened at the same time frame of the day, for example during your ECG recording on Monday morning:
+Grandma went to do an ECG recording on Monday morning.
+
 ```json
-
-
+{
+  "id": "ckdfruqua00127ppvue8jwrpk",
+  "time": 1350373077.359,
+  "streamIds": ["ecg"],
+  "type": "ecg/6-lead-recording",
+  "content": {...},
+}
 ```
+Did the doctor take her blood pressure, or her weight along with the ECG recording ? As usual, she cannot remember. But you can easily visualize all events that happened at the same time frame of the day around her ECG recording.
 To do so, it is sufficient to display all the events related to the ECG recording using the time reference:
-  1. Find the time reference you are searching for (`time` parameter of your ECG event)
+  1. Find the time reference you are searching for (`time` parameter of the ECG event, here `time: 1350373077.359`)
   2. Get all events occuring in the time frame that includes the ECG recording
+```json
+{
+  "method": "events.get",
+  "params": {
+    "fromTime": 1350373000.100,
+    "toTime": 135037400.100,
+    "limit": 20
+  }
+}
+```
 
-This will allow you to retrieve all time-related events to your ECG recording: the weight associated to the recording if measured, the device associated to the recording, etc.
+This will allow you to retrieve all time-related events to the ECG recording: the weight associated to the recording if measured, the device associated to the recording, etc.
 
-- **Keep memory of the raw event for a processed result**    
-   
-In case you want to keep in memory the raw event from which the processed result of your algorithm is coming from, you can reference the raw event in the `clientData` field of your processed result.   
-For example, let's say that your **Allergen Exposure app** computes the allergen exposure of your user using his geolocation.
+#### Keep memory of the raw event for a processed result
 
-Your raw ECG measurement:
+This time, no need to visualize data but rather keep in memory the raw event from which the processed result of your algorithm is coming from.  
+Let's say that your **Allergen Exposure app** computes the allergen exposure (processed result) of your user John using his geolocation (original event). You need to keep a reference to the original event (John's geolocation), in case you want to test a different algorithm to compute his allergen exposure.
+To do so, you can reference the raw event in the `clientData` field of your processed result.  
+
+John's raw event (geolocation):
 ```json
 {
   "id": "ckd0br289000o5csm15xw6776",
@@ -475,12 +501,13 @@ The processed result from your algorithm:
 }
 ```
 
-The field `clientData` enables you to reference the event from which the processed result is originating and to make references across different events.
+The field `clientData` enables you to reference the event from which the processed result is originating and to make references across different events. 
 
-- **Make a query on different events**    
+#### Make a query on different events   
   
-To get all the different events associated to the same event, we recommend to store all the references to these events in a single event on a dedicated stream, e.g "Session".  
-Let's say you want to get the weight (`mass/kg` event stored in the stream "Weight") associated to the ECG recording (`ecg/6-lead-recording` event stored in the stream "Recording").   
+Grandma went to do an ECG recording on Monday morning, and still cannot remember the weight that was associated to her recording. Can you help her ?
+To get all the different events associated to the same event (here the ECG recording), we recommend to store all the references to these events in a single event on a dedicated stream, e.g "Session".  
+Here we want to get the weight (`mass/kg` event stored in the stream "Weight") associated to the ECG recording (`ecg/6-lead-recording` event stored in the stream "Recording").   
 Pryv.io does not allow to filter events in the same way as a classic database when performing an "events.get" API call.   
 
 A possible solution is to create a `session/record` event that contains all references to related events in a dedicated stream "ECG-Session":
@@ -516,35 +543,37 @@ The `session/record` event in "ECG-Session" contains the *eventIds* of related e
   }
 }
 ```
-This method allows you to store all related events to a measurement in order to facilitate the query.
+This method allows you to store all related events to a measurement in order to facilitate the query. Grandma can continue to forget stuff, her Pryv.io account is here to remember.  
+
+<p align="center">
+<img src="https://media.giphy.com/media/3o7TKDmvzlxnkkPoSA/giphy.gif" width="400" />
+</p>
 
 All the aforementioned solutions can be used together to reference events across them, but some of them will be more suitable than others depending on the use case. 
 
 ### Store technical data from devices
 
-As some technical data from a medical device can be considered as "personal" data from the user (see [here](https://api.pryv.com/faq-api/#personal-data) for more on personal data), he needs to be able to access it anytime. 
+This might not be the most insightful data to store in a Pryv.io account, but sometimes you need to store technical data from devices you are using as it can be considered as "personal data" from your user (see [here](https://api.pryv.com/faq-api/#personal-data) for more on personal data).  
 
-Let's imagine that you are performing an MRI scan on your patient and you want to keep the technical data from the MRI device you are using during the scan.
+Let's imagine that you are performing an MRI scan on your patient John and you want to keep the technical data from the MRI device you are using during the scan.  
 Multiple options are available to store this data:
-- **Create an allocated stream in the patient's account (recommended)**  
 
-You can create a custom event type `mri-device/parameters` to store technical parameters of the MRI device used during the scan, and you add a new event in the stream "MRI-device" for each MRI scan containing the technical data.
+#### Create an allocated stream in John's account (recommended)  
+
+You can create a custom event type `mri-device/parameters` to store technical parameters of the MRI device used during the scan, and you add a new event containing the technical data in the stream "MRI-device" for each MRI scan.
 
 ```js
 ├── Recording
-│   └── MRI-recording
-│       └── "mri/signal" event
+│   └── MRI-recording ("mri/signal" event)
 ├── Devices
-│    └── MRI-device
-│        └── "mri-device/parameters" event
+│    └── MRI-device ("mri-device/parameters" event)
 └── Sessions
-     ├── MRI-Session
-     │  └── "session/record" event
+     ├── MRI-Session ("session/record" event)
      └── ...
 ```
 The `session/record` event in "MRI-Session" will contain all references to the MRI scan, corresponding to the *eventsIds* of all events related to the MRI scan (MRI signal, device parameters, etc).
 
-- **Add it in the `clientData` field of the MRI scan**  
+#### Add it in the `clientData` field of the MRI scan  
   
 When creating the `mri/signal` event related to the measured MRI signal during the scan, you can add the technical MRI data in the `clientData` field as in the following example:
 ```json
@@ -565,7 +594,7 @@ When creating the `mri/signal` event related to the measured MRI signal during t
 }
 ```
 
-- **Store in a separate account**  
+#### Store in a separate account 
   
 Instead of storing this information in the patient account, you can choose to keep all technical data in a dedicated "System" account.
 If you prefer storing this data in a separate account, you must keep in mind that the user can ask for a copy of it anytime if it is “personal” data.
