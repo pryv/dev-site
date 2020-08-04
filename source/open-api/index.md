@@ -9,6 +9,7 @@ withTOC: true
 # Definition file
 
 The API of Open-Pryv.io (open source version of Pryv.io) in OpenAPI 3.0 format: [api_open.yaml](/open-api/3.0/api_open.yaml).
+
 The API of Pryv.io (Entreprise license) in OpenAPI 3.0 format: [api.yaml](/open-api/3.0/api.yaml).
 
 These OpenAPI documents describe the Pryv.io API and conform to the OpenAPI Specification. They are represented in YAML format and can be downloaded from the above links to be imported on other API tools such as Postman.
