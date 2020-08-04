@@ -3,6 +3,7 @@ const dataStructureRoot = require('../rendered/data-structure');
 const yaml = require('yaml');
 const fs = require('fs');
 const metadata = require('./metadata');
+const metadata_open = require('./metadata_open');
 const removeNulls = require('./cleanup').removeNulls;
 const _ = require('lodash');
 
@@ -20,7 +21,7 @@ dataStructureRoot.sections.forEach(s => {
 let api_enterprise = metadata;
 api_enterprise.paths = {};
 
-let api_open = metadata;
+let api_open = metadata_open;
 api_open.paths = {};
 
 // SCHEMAS (DATA STRUCTURES)
@@ -286,15 +287,15 @@ function buildApi(api, isOpen) {
           break;
       }
     }
-    if(!section.sections){
+    if (!section.sections) {
       helper(section)
     }
-    else{
+    else {
       section.sections.forEach(method => {
         helper(method);
       });
     }
-    
+
   });
 }
 
