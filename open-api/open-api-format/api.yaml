@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: Description of Pryv.io API in Open API 3.0 standard format
-  version: 1.5.18
+  version: 1.5.22
   title: Pryv.io API
   contact:
     email: hsupport@pryv.com
@@ -648,10 +648,12 @@ paths:
               $ref: "#/components/schemas/access"
   "/accesses/{id}":
     delete:
-      description: Deletes the specified access. Personal accesses can delete any access.
-        App accesses can delete shared accesses they created. All accesses can
-        also perform a self-delete unless a forbidden `selfRevoke` permission
-        has been set.
+      description: >-
+        Deletes the specified access. Personal accesses can delete any access.
+        App accesses can delete shared accesses they created. Deleting an app
+        access deletes the shared ones it created.  
+
+        All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
       operationId: accesses.delete
       parameters:
         - name: id
@@ -661,6 +663,8 @@ paths:
             application/json:
               schema:
                 - $ref: "#/components/schemas/item-deletion"
+                - type: array
+                  items: "[item deletions](#data-structure-item-deletion)"
   /accesses/check-app:
     post:
       description: For the app authorization process. Checks if the app requesting

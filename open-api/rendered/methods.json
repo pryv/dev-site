@@ -57,7 +57,7 @@
                 "appId": "my-app-id"
               },
               "result": {
-                "token": "ckdfpnqld0002lv0jqivnn01e",
+                "token": "ckdfrsejk0002uqpvsog1pter",
                 "preferredLanguage": "zh"
               }
             }
@@ -263,7 +263,7 @@
                 "code": "1234"
               },
               "result": {
-                "token": "ckdfpnqld0002lv0jqivnn01e"
+                "token": "ckdfrsejk0002uqpvsog1pter"
               }
             }
           ]
@@ -419,15 +419,15 @@
                   "name": "Heart",
                   "parentId": "health",
                   "children": [],
-                  "created": 1596531542.903,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596531542.903,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596535119.797,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596535119.797,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               },
               {
                 "event": {
-                  "id": "ckdfpnqm0000tlv0js0mca1uy",
+                  "id": "ckdfrsek5000tuqpv334dmwzs",
                   "time": 1385046854.282,
                   "streamIds": [
                     "heart"
@@ -436,10 +436,10 @@
                   "tags": [],
                   "type": "frequency/bpm",
                   "content": 90,
-                  "created": 1596531542.904,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596531542.904,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596535119.797,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596535119.797,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               }
             ]
@@ -557,8 +557,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "ckdfpnqm0000zlv0jaoorqjqz",
-                    "time": 1596527942.904,
+                    "id": "ckdfrsek5000zuqpv1vd6ozo6",
+                    "time": 1596531519.797,
                     "streamIds": [
                       "diary"
                     ],
@@ -568,21 +568,21 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "ckdfpnqm00010lv0jy0annaei",
+                        "id": "ckdfrsek50010uqpvjyiql3vm",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ckdfpnqm00011lv0jwwu5r6u4-2iSy7XIN169ytTr5Q3Qcxg1G08M"
+                        "readToken": "ckdfrsek50011uqpvjpapdz6t-79kiOGXjS3ciD353qG9ny9ieU54"
                       }
                     ],
-                    "created": 1596527942.904,
-                    "createdBy": "ckdfpnqld0004lv0jjcnb9zif",
-                    "modified": 1596527942.904,
-                    "modifiedBy": "ckdfpnqld0004lv0jjcnb9zif"
+                    "created": 1596531519.797,
+                    "createdBy": "ckdfrsejk0004uqpvmxdqpfez",
+                    "modified": 1596531519.797,
+                    "modifiedBy": "ckdfrsejk0004uqpvmxdqpfez"
                   },
                   {
-                    "id": "ckdfpnqlz000olv0j1ezcajlg",
-                    "time": 1596531542.903,
+                    "id": "ckdfrsek5000ouqpv3c915x0s",
+                    "time": 1596535119.797,
                     "streamIds": [
                       "jogging"
                     ],
@@ -590,13 +590,13 @@
                     "tags": [],
                     "type": "activity/pryv",
                     "content": null,
-                    "created": 1596531542.903,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596531542.903,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                    "created": 1596535119.797,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596535119.797,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                   },
                   {
-                    "id": "ckdfpnqm00012lv0jebck6v7l",
+                    "id": "ckdfrsek50012uqpvzhq00reo",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -608,10 +608,10 @@
                       "latitude": 40.714728,
                       "longitude": -73.998672
                     },
-                    "created": 1596524342.904,
-                    "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                    "modified": 1596524342.904,
-                    "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                    "created": 1596527919.798,
+                    "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                    "modified": 1596527919.798,
+                    "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                   }
                 ]
               }
@@ -622,8 +622,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "ckdfpnqm0000zlv0jaoorqjqz",
-                    "time": 1596527942.904,
+                    "id": "ckdfrsek5000zuqpv1vd6ozo6",
+                    "time": 1596531519.797,
                     "streamIds": [
                       "diary"
                     ],
@@ -633,21 +633,21 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "ckdfpnqm00010lv0jy0annaei",
+                        "id": "ckdfrsek50010uqpvjyiql3vm",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ckdfpnqm00011lv0jwwu5r6u4-2iSy7XIN169ytTr5Q3Qcxg1G08M"
+                        "readToken": "ckdfrsek50011uqpvjpapdz6t-79kiOGXjS3ciD353qG9ny9ieU54"
                       }
                     ],
-                    "created": 1596527942.904,
-                    "createdBy": "ckdfpnqld0004lv0jjcnb9zif",
-                    "modified": 1596527942.904,
-                    "modifiedBy": "ckdfpnqld0004lv0jjcnb9zif"
+                    "created": 1596531519.797,
+                    "createdBy": "ckdfrsejk0004uqpvmxdqpfez",
+                    "modified": 1596531519.797,
+                    "modifiedBy": "ckdfrsejk0004uqpvmxdqpfez"
                   },
                   {
-                    "id": "ckdfpnqm0000vlv0jt5s6sis0",
-                    "time": 1596527942.904,
+                    "id": "ckdfrsek5000vuqpvel0akw6f",
+                    "time": 1596531519.797,
                     "streamIds": [
                       "diary"
                     ],
@@ -655,13 +655,13 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "道可道非常道。。。",
-                    "created": 1596527942.904,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596567542.904,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                    "created": 1596531519.797,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596571119.797,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                   },
                   {
-                    "id": "ckdfpnqm00012lv0jebck6v7l",
+                    "id": "ckdfrsek50012uqpvzhq00reo",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -673,14 +673,14 @@
                       "latitude": 40.714728,
                       "longitude": -73.998672
                     },
-                    "created": 1596524342.904,
-                    "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                    "modified": 1596524342.904,
-                    "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                    "created": 1596527919.798,
+                    "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                    "modified": 1596527919.798,
+                    "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                   },
                   {
-                    "id": "ckdfpnqm0000ulv0jbbzht1ln",
-                    "time": 1596531542.904,
+                    "id": "ckdfrsek5000uuqpv4ym1kmoq",
+                    "time": 1596535119.797,
                     "streamIds": [
                       "weight"
                     ],
@@ -688,22 +688,22 @@
                     "tags": [],
                     "type": "mass/kg",
                     "content": 90,
-                    "created": 1596531542.904,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596531542.904,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                    "created": 1596535119.797,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596535119.797,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                   }
                 ]
               }
             },
             {
               "title": "cURL with deletions",
-              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1596445142.939\"\"\n```",
+              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1596448719.82\"\"\n```",
               "result": {
                 "events": [
                   {
-                    "id": "ckdfpnqm0000ulv0jbbzht1ln",
-                    "time": 1596531542.904,
+                    "id": "ckdfrsek5000uuqpv4ym1kmoq",
+                    "time": 1596535119.797,
                     "streamIds": [
                       "weight"
                     ],
@@ -711,24 +711,24 @@
                     "tags": [],
                     "type": "mass/kg",
                     "content": 90,
-                    "created": 1596531542.904,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596531542.904,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                    "created": 1596535119.797,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596535119.797,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                   }
                 ],
                 "eventDeletions": [
                   {
-                    "id": "ckdfpnqm3001alv0jxmkgati8",
-                    "deleted": 1596527942.907
+                    "id": "ckdfrsek7001auqpvfc5x1iwh",
+                    "deleted": 1596531519.799
                   },
                   {
-                    "id": "ckdfpnqm3001blv0jp7gwbmen",
-                    "deleted": 1596495542.907
+                    "id": "ckdfrsek7001buqpvvj6gczq2",
+                    "deleted": 1596499119.799
                   },
                   {
-                    "id": "ckdfpnqm3001clv0jb7r1h2hi",
-                    "deleted": 1596459542.907
+                    "id": "ckdfrsek7001cuqpv77wxdjde",
+                    "deleted": 1596463119.799
                   }
                 ]
               }
@@ -775,8 +775,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckdfpnqm0000wlv0j12f516xm",
-                  "time": 1596527942.904,
+                  "id": "ckdfrsek5000wuqpvurv5t3a3",
+                  "time": 1596531519.797,
                   "streamIds": [
                     "diary"
                   ],
@@ -784,15 +784,15 @@
                   "tags": [],
                   "type": "note/text",
                   "content": "Hi, I am the latest version of this event",
-                  "created": 1596527942.904,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596538742.904,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596531519.797,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596542319.797,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 },
                 "history": [
                   {
-                    "id": "ckdfpnqm0000xlv0jvzvzixqo",
-                    "time": 1596527942.904,
+                    "id": "ckdfrsek5000xuqpvl5oevxg0",
+                    "time": 1596531519.797,
                     "streamIds": [
                       "diary"
                     ],
@@ -800,14 +800,14 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "Hi, I am the first modification",
-                    "created": 1596527942.904,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596535142.904,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                    "created": 1596531519.797,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596538719.797,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                   },
                   {
-                    "id": "ckdfpnqm0000ylv0jps6oa2tw",
-                    "time": 1596527942.904,
+                    "id": "ckdfrsek5000yuqpv71nk91q9",
+                    "time": 1596531519.797,
                     "streamIds": [
                       "diary"
                     ],
@@ -815,10 +815,10 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "Hi, I was the initial event",
-                    "created": 1596527942.904,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596531542.904,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                    "created": 1596531519.797,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596535119.797,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                   }
                 ]
               }
@@ -863,8 +863,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckdfpnqm0000ulv0jbbzht1ln",
-                  "time": 1596531542.904,
+                  "id": "ckdfrsek5000uuqpv4ym1kmoq",
+                  "time": 1596535119.797,
                   "streamIds": [
                     "weight"
                   ],
@@ -872,10 +872,10 @@
                   "tags": [],
                   "type": "mass/kg",
                   "content": 90,
-                  "created": 1596531542.904,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596531542.904,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596535119.797,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596535119.797,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               }
             },
@@ -884,8 +884,8 @@
               "content": "```bash\ncurl -i -F 'event={\"streamIds\":[\"diary\"],\"type\":\"picture/attached\"}'  -F \"file=@photo.jpg\" \"https://${token}@${username}.pryv.me/events\"\n```",
               "result": {
                 "event": {
-                  "id": "ckdfpnqm0000zlv0jaoorqjqz",
-                  "time": 1596527942.904,
+                  "id": "ckdfrsek5000zuqpv1vd6ozo6",
+                  "time": 1596531519.797,
                   "streamIds": [
                     "diary"
                   ],
@@ -895,17 +895,17 @@
                   "content": null,
                   "attachments": [
                     {
-                      "id": "ckdfpnqm00010lv0jy0annaei",
+                      "id": "ckdfrsek50010uqpvjyiql3vm",
                       "fileName": "photo.jpg",
                       "type": "image/jpeg",
                       "size": 2561,
-                      "readToken": "ckdfpnqm00011lv0jwwu5r6u4-2iSy7XIN169ytTr5Q3Qcxg1G08M"
+                      "readToken": "ckdfrsek50011uqpvjpapdz6t-79kiOGXjS3ciD353qG9ny9ieU54"
                     }
                   ],
-                  "created": 1596527942.904,
-                  "createdBy": "ckdfpnqld0004lv0jjcnb9zif",
-                  "modified": 1596527942.904,
-                  "modifiedBy": "ckdfpnqld0004lv0jjcnb9zif"
+                  "created": 1596531519.797,
+                  "createdBy": "ckdfrsejk0004uqpvmxdqpfez",
+                  "modified": 1596531519.797,
+                  "modifiedBy": "ckdfrsejk0004uqpvmxdqpfez"
                 }
               }
             }
@@ -966,8 +966,8 @@
                     "position"
                   ],
                   "streamId": "position",
-                  "modified": 1596531542.939,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq",
+                  "modified": 1596535119.82,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d",
                   "time": 1350373077.359,
                   "tags": [],
                   "type": "position/wgs84",
@@ -975,8 +975,8 @@
                     "latitude": 40.714728,
                     "longitude": -73.998672
                   },
-                  "created": 1596524342.904,
-                  "createdBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                  "created": 1596527919.798,
+                  "createdBy": "ckdfrsejj0000uqpvuh87puic"
                 }
               }
             }
@@ -1002,32 +1002,32 @@
           "examples": [
             {
               "title": "cURL",
-              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/ckdfpnqm0000qlv0jqyrsilsh\"\"\n```",
+              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/ckdfrsek5000quqpv0r4q9cov\"\"\n```",
               "result": {
                 "event": {
-                  "id": "ckdfpnqm0000qlv0jqyrsilsh",
-                  "time": 1596531542.904,
+                  "id": "ckdfrsek5000quqpv0r4q9cov",
+                  "time": 1596535119.797,
                   "duration": null,
                   "streamIds": [
-                    "ckdfpnqlz000elv0jyx4gzoqj"
+                    "ckdfrsek5000euqpvi1angqwg"
                   ],
-                  "streamId": "ckdfpnqlz000elv0jyx4gzoqj",
+                  "streamId": "ckdfrsek5000euqpvi1angqwg",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
                   "attachments": [
                     {
-                      "id": "ckdfpnqm0000rlv0j4u8pzlst",
+                      "id": "ckdfrsek5000ruqpvbe7nsu0q",
                       "fileName": "travel-expense.jpg",
                       "type": "image/jpeg",
                       "size": 1111,
-                      "readToken": "ckdfpnqm0000slv0jsf6ln20s-xa3tIZ92kToUPfgW4yJjwT4n9bt"
+                      "readToken": "ckdfrsek5000suqpvwr3wyso3-V0CsnqwQU2SXLnK2sBJvR21zsEq"
                     }
                   ],
-                  "created": 1596531542.904,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596531542.904,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596535119.797,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596535119.797,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               }
             }
@@ -1096,25 +1096,25 @@
           "examples": [
             {
               "params": {
-                "id": "ckdfpnqm0000qlv0jqyrsilsh",
-                "fileId": "ckdfpnqm0000rlv0j4u8pzlst"
+                "id": "ckdfrsek5000quqpv0r4q9cov",
+                "fileId": "ckdfrsek5000ruqpvbe7nsu0q"
               },
               "result": {
                 "event": {
-                  "id": "ckdfpnqm0000qlv0jqyrsilsh",
-                  "time": 1596531542.904,
+                  "id": "ckdfrsek5000quqpv0r4q9cov",
+                  "time": 1596535119.797,
                   "duration": null,
                   "streamIds": [
-                    "ckdfpnqlz000elv0jyx4gzoqj"
+                    "ckdfrsek5000euqpvi1angqwg"
                   ],
-                  "streamId": "ckdfpnqlz000elv0jyx4gzoqj",
+                  "streamId": "ckdfrsek5000euqpvi1angqwg",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
-                  "created": 1596531542.904,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596531542.904,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596535119.797,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596535119.797,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               }
             }
@@ -1166,15 +1166,15 @@
             {
               "title": "Trashing",
               "params": {
-                "id": "ckdfpnqm0000vlv0jt5s6sis0"
+                "id": "ckdfrsek5000vuqpvel0akw6f"
               },
               "result": {
                 "event": {
                   "trashed": true,
-                  "modified": 1596531542.94,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "id": "ckdfpnqm0000vlv0jt5s6sis0",
-                  "time": 1596527942.904,
+                  "modified": 1596535119.821,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "id": "ckdfrsek5000vuqpvel0akw6f",
+                  "time": 1596531519.797,
                   "streamIds": [
                     "diary"
                   ],
@@ -1182,19 +1182,19 @@
                   "tags": [],
                   "type": "note/text",
                   "content": "道可道非常道。。。",
-                  "created": 1596527942.904,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596531519.797,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               }
             },
             {
               "title": "Deleting",
               "params": {
-                "id": "ckdfpnqm0000vlv0jt5s6sis0"
+                "id": "ckdfrsek5000vuqpvel0akw6f"
               },
               "result": {
                 "eventDeletion": {
-                  "id": "ckdfpnqm0000vlv0jt5s6sis0"
+                  "id": "ckdfrsek5000vuqpvel0akw6f"
                 }
               }
             }
@@ -1250,8 +1250,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckdfpnqm00013lv0jgodzkllb",
-                  "time": 1596531542.904,
+                  "id": "ckdfrsek60013uqpvmjseenxx",
+                  "time": 1596535119.798,
                   "streamIds": [
                     "position"
                   ],
@@ -1276,10 +1276,10 @@
                       "longitude"
                     ]
                   },
-                  "created": 1596531542.904,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596531542.904,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596535119.798,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596535119.798,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               }
             }
@@ -1475,7 +1475,7 @@
                 "format": "seriesBatch",
                 "data": [
                   {
-                    "eventId": "ckdfpnqm00014lv0jc8yeby5t",
+                    "eventId": "ckdfrsek60014uqpv6qq5dp9d",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1499,7 +1499,7 @@
                     }
                   },
                   {
-                    "eventId": "ckdfpnqm00015lv0jp5n9zgc7",
+                    "eventId": "ckdfrsek60015uqpvnrvrd4ek",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1619,76 +1619,76 @@
               "result": {
                 "streams": [
                   {
-                    "id": "ckdfpnqlz000dlv0jhdbqogbb",
+                    "id": "ckdfrsek5000duqpvgqer2ylf",
                     "name": "Noble Works Co.",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "ckdfpnqlz000flv0jsqg2dc8k",
+                        "id": "ckdfrsek5000fuqpvxpoq99dc",
                         "name": "Last Be First",
-                        "parentId": "ckdfpnqlz000dlv0jhdbqogbb",
+                        "parentId": "ckdfrsek5000duqpvgqer2ylf",
                         "children": [],
-                        "created": 1533417663.7414498,
-                        "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                        "modified": 1533417846.2186315,
-                        "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                        "created": 1533421257.3589149,
+                        "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                        "modified": 1533421292.5217068,
+                        "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                       },
                       {
-                        "id": "ckdfpnqlz000glv0jy4ih5i3n",
+                        "id": "ckdfrsek5000guqpvuqgllvps",
                         "name": "Big Tree",
-                        "parentId": "ckdfpnqlz000dlv0jhdbqogbb",
+                        "parentId": "ckdfrsek5000duqpvgqer2ylf",
                         "children": [],
-                        "created": 1533417663.7414498,
-                        "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                        "modified": 1533418010.778904,
-                        "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                        "created": 1533421257.3589149,
+                        "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                        "modified": 1533421570.1380706,
+                        "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                       },
                       {
-                        "id": "ckdfpnqlz000hlv0j21ooi8b4",
+                        "id": "ckdfrsek5000huqpvgtzcjzx4",
                         "name": "Inner Light",
-                        "parentId": "ckdfpnqlz000dlv0jhdbqogbb",
+                        "parentId": "ckdfrsek5000duqpvgqer2ylf",
                         "children": [],
-                        "created": 1533417663.7414498,
-                        "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                        "modified": 1533417903.5945237,
-                        "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                        "created": 1533421257.3589149,
+                        "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                        "modified": 1533421434.7047153,
+                        "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                       }
                     ],
-                    "created": 1533417645.7271123,
-                    "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                    "modified": 1533417812.8310804,
-                    "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                    "created": 1533421245.74061,
+                    "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                    "modified": 1533421276.9894037,
+                    "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                   },
                   {
-                    "id": "ckdfpnqlz000elv0jyx4gzoqj",
+                    "id": "ckdfrsek5000euqpvi1angqwg",
                     "name": "Freelancing",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "ckdfpnqlz000ilv0jzuholyu2",
+                        "id": "ckdfrsek5000iuqpvtqhtmls6",
                         "name": "Funky Veggies",
-                        "parentId": "ckdfpnqlz000elv0jyx4gzoqj",
+                        "parentId": "ckdfrsek5000euqpvi1angqwg",
                         "children": [],
-                        "created": 1533417664.7520375,
-                        "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                        "modified": 1533417722.3579323,
-                        "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                        "created": 1533421268.628066,
+                        "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                        "modified": 1533421545.636867,
+                        "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                       },
                       {
-                        "id": "ckdfpnqlz000jlv0jy34x933d",
+                        "id": "ckdfrsek5000juqpvgmy5xthu",
                         "name": "Jojo Lapin & sons",
-                        "parentId": "ckdfpnqlz000elv0jyx4gzoqj",
+                        "parentId": "ckdfrsek5000euqpvi1angqwg",
                         "children": [],
-                        "created": 1533417664.7520375,
-                        "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                        "modified": 1533417817.6504672,
-                        "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                        "created": 1533421268.628066,
+                        "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                        "modified": 1533421419.5128667,
+                        "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                       }
                     ],
-                    "created": 1533417645.7271123,
-                    "createdBy": "ckdfpnqlc0000lv0jb57dc7pw",
-                    "modified": 1533417751.181489,
-                    "modifiedBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                    "created": 1533421245.74061,
+                    "createdBy": "ckdfrsejj0000uqpvuh87puic",
+                    "modified": 1533421376.7905326,
+                    "modifiedBy": "ckdfrsejj0000uqpvuh87puic"
                   }
                 ]
               }
@@ -1740,10 +1740,10 @@
                   "name": "White cells",
                   "parentId": "blood",
                   "children": [],
-                  "created": 1596531542.903,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596531542.903,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596535119.797,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596535119.797,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               }
             }
@@ -1804,12 +1804,12 @@
               "result": {
                 "stream": {
                   "name": "Slothing",
-                  "modified": 1596531542.94,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq",
+                  "modified": 1596535119.821,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d",
                   "id": "sport",
                   "parentId": null,
-                  "created": 1533417638.903,
-                  "createdBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                  "created": 1533421215.797,
+                  "createdBy": "ckdfrsejj0000uqpvuh87puic"
                 }
               }
             }
@@ -1871,14 +1871,14 @@
               "result": {
                 "stream": {
                   "trashed": true,
-                  "modified": 1596531542.94,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq",
+                  "modified": 1596535119.821,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d",
                   "id": "weight",
                   "name": "Weight",
                   "parentId": "health",
                   "children": [],
-                  "created": 1533417658.3497434,
-                  "createdBy": "ckdfpnqlc0000lv0jb57dc7pw"
+                  "created": 1533421237.666679,
+                  "createdBy": "ckdfrsejj0000uqpvuh87puic"
                 }
               }
             },
@@ -1945,8 +1945,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "ckdfpnqld0004lv0jjcnb9zif",
-                    "token": "ckdfpnqld0005lv0jj8xjnj4w",
+                    "id": "ckdfrsejk0004uqpvmxdqpfez",
+                    "token": "ckdfrsejk0005uqpv5injkdc4",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -1955,10 +1955,10 @@
                         "level": "contribute"
                       }
                     ],
-                    "created": 1596488342.881,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596488342.881,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                    "created": 1596491919.776,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596491919.776,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                   }
                 ]
               }
@@ -1969,8 +1969,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "ckdfpnqld0004lv0jjcnb9zif",
-                    "token": "ckdfpnqld0005lv0jj8xjnj4w",
+                    "id": "ckdfrsejk0004uqpvmxdqpfez",
+                    "token": "ckdfrsejk0005uqpv5injkdc4",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -1979,16 +1979,16 @@
                         "level": "contribute"
                       }
                     ],
-                    "created": 1596488342.881,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596488342.881,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                    "created": 1596491919.776,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596491919.776,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                   }
                 ],
                 "accessDeletions": [
                   {
-                    "id": "ckdfpnqld0008lv0j3qmeufbi",
-                    "token": "ckdfpnqld0009lv0j13r0m3e6",
+                    "id": "ckdfrsejl0008uqpvbkdatckl",
+                    "token": "ckdfrsejl0009uqpvi845dtui",
                     "type": "shared",
                     "name": "Health parameters survey",
                     "permissions": [
@@ -1997,11 +1997,11 @@
                         "level": "read"
                       }
                     ],
-                    "created": 1596531422.881,
-                    "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "modified": 1596531422.881,
-                    "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq",
-                    "deleted": 1596531482.881
+                    "created": 1596534999.777,
+                    "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "modified": 1596534999.777,
+                    "modifiedBy": "ckdfrsejk0001uqpvkbpta22d",
+                    "deleted": 1596535059.777
                   }
                 ]
               }
@@ -2047,8 +2047,8 @@
               },
               "result": {
                 "access": {
-                  "id": "ckdfpnqld0006lv0jxu9d1nbx",
-                  "token": "ckdfpnqld0007lv0jkjriz3pc",
+                  "id": "ckdfrsejk0006uqpv825s2x1j",
+                  "token": "ckdfrsejl0007uqpvejld3k8u",
                   "type": "shared",
                   "name": "For colleagues",
                   "permissions": [
@@ -2057,10 +2057,10 @@
                       "level": "read"
                     }
                   ],
-                  "created": 1596531542.881,
-                  "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-                  "modified": 1596531542.881,
-                  "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq"
+                  "created": 1596535119.777,
+                  "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+                  "modified": 1596535119.777,
+                  "modifiedBy": "ckdfrsejk0001uqpvkbpta22d"
                 }
               }
             }
@@ -2071,7 +2071,7 @@
           "type": "method",
           "title": "Delete access",
           "http": "DELETE /accesses/{id}",
-          "description": "Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.",
+          "description": "Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.  \nAll accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.",
           "params": {
             "properties": [
               {
@@ -2091,18 +2091,32 @@
                 "key": "accessDeletion",
                 "type": "[item deletion](#data-structure-item-deletion)",
                 "description": "The deletion record."
+              },
+              {
+                "key": "relatedDeletions",
+                "type": "array of [item deletions](#data-structure-item-deletion)",
+                "optional": true,
+                "description": "The deletion records of all the shared accesses that were generated from this app token when deleting it"
               }
             ]
           },
           "examples": [
             {
               "params": {
-                "id": "ckdfpnqld0004lv0jjcnb9zif"
+                "id": "ckdfrsejk0001uqpvkbpta22d"
               },
               "result": {
                 "accessDeletion": {
-                  "id": "ckdfpnqld0004lv0jjcnb9zif"
-                }
+                  "id": "ckdfrsejk0001uqpvkbpta22d"
+                },
+                "relatedDeletions": [
+                  {
+                    "id": "ckdfrsekt001puqpv9b06ec9q"
+                  },
+                  {
+                    "id": "ckdfrsekt001quqpv0f91sfr7"
+                  }
+                ]
               }
             }
           ]
@@ -2184,8 +2198,8 @@
         {
           "params": {},
           "result": {
-            "id": "ckdfpnqld000alv0ju2t0q4gx",
-            "token": "ckdfpnqld000blv0jr56kpx4o",
+            "id": "ckdfrsejl000auqpvxk6asbul",
+            "token": "ckdfrsejl000buqpv7iwojaue",
             "type": "app",
             "name": "Current access",
             "deviceName": "My awesome device",
@@ -2198,16 +2212,16 @@
             "user": {
               "username": "jackslater"
             },
-            "lastUsed": 1596531242.881,
-            "expires": 1596531422.881,
-            "deleted": 1596531482.881,
+            "lastUsed": 1596534819.777,
+            "expires": 1596534999.777,
+            "deleted": 1596535059.777,
             "clientData": {
               "consent": "My custom consent message."
             },
-            "created": 1596531422.881,
-            "createdBy": "ckdfpnqld0001lv0j8fz9vheq",
-            "modified": 1596531422.881,
-            "modifiedBy": "ckdfpnqld0001lv0j8fz9vheq",
+            "created": 1596534999.777,
+            "createdBy": "ckdfrsejk0001uqpvkbpta22d",
+            "modified": 1596534999.777,
+            "modifiedBy": "ckdfrsejk0001uqpvkbpta22d",
             "calls": {
               "getAccessInfo": 12,
               "profile:get": 5,
@@ -2303,8 +2317,8 @@
           "examples": [
             {
               "params": {
-                "auth": "ckdfpnqm4001llv0j1f20ytze",
-                "accessId": "ckdfpnqm4001klv0j4emc7r4t",
+                "auth": "ckdfrsek9001luqpvys3zlbho",
+                "accessId": "ckdfrsek9001kuqpv6myqcqm7",
                 "fromTime": 1561000000,
                 "toTime": 1562000000,
                 "status": 403,
@@ -2316,37 +2330,37 @@
               "result": {
                 "auditLogs": [
                   {
-                    "id": "ckdfpnqm4001mlv0jpn01dewu",
+                    "id": "ckdfrsek9001muqpvlhtio8kc",
                     "type": "audit/core",
                     "time": 1561988300,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "ckdfpnqm4001klv0j4emc7r4t",
+                    "accessId": "ckdfrsek9001kuqpv6myqcqm7",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "ckdfpnqm4001nlv0jrcsqpm31",
+                    "id": "ckdfrsek9001nuqpvl6uuf4rr",
                     "type": "audit/core",
                     "time": 1561988900,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "ckdfpnqm4001klv0j4emc7r4t",
+                    "accessId": "ckdfrsek9001kuqpv6myqcqm7",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "ckdfpnqm4001olv0j5sj9wvwp",
+                    "id": "ckdfrsek9001ouqpv0ituq3fh",
                     "type": "audit/core",
                     "time": 1561989200,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=work",
-                    "accessId": "ckdfpnqm4001klv0j4emc7r4t",
+                    "accessId": "ckdfrsek9001kuqpv6myqcqm7",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
@@ -2389,8 +2403,8 @@
               "result": {
                 "webhooks": [
                   {
-                    "id": "ckdfpnqm3001flv0jn8t9pluw",
-                    "accessId": "ckdfpnqm3001dlv0j3fbl0qxp",
+                    "id": "ckdfrsek7001fuqpv4eup97np",
+                    "accessId": "ckdfrsek7001duqpvtgokb8yf",
                     "url": "https://notifications.service.com/pryv",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2400,26 +2414,26 @@
                     "failCount": 0,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1596527942.907
+                      "timestamp": 1596531519.799
                     },
                     "runs": [
                       {
                         "status": 200,
-                        "timestamp": 1596527942.907
+                        "timestamp": 1596531519.799
                       },
                       {
                         "status": 200,
-                        "timestamp": 1596524342.907
+                        "timestamp": 1596527919.799
                       }
                     ],
-                    "created": 1596445142.907,
-                    "createdBy": "ckdfpnqm3001dlv0j3fbl0qxp",
-                    "modified": 1596445142.907,
-                    "modifiedBy": "ckdfpnqm3001dlv0j3fbl0qxp"
+                    "created": 1596448719.799,
+                    "createdBy": "ckdfrsek7001duqpvtgokb8yf",
+                    "modified": 1596448719.799,
+                    "modifiedBy": "ckdfrsek7001duqpvtgokb8yf"
                   },
                   {
-                    "id": "ckdfpnqm3001hlv0ja8bd6z4h",
-                    "accessId": "ckdfpnqm3001dlv0j3fbl0qxp",
+                    "id": "ckdfrsek8001huqpvrc6hj903",
+                    "accessId": "ckdfrsek7001duqpvtgokb8yf",
                     "url": "https://notifications.pryv.me/webhooks",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2429,46 +2443,46 @@
                     "failCount": 2,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1596531537.907
+                      "timestamp": 1596535114.8
                     },
                     "runs": [
                       {
                         "status": 500,
-                        "timestamp": 1596531537.907
+                        "timestamp": 1596535114.8
                       },
                       {
                         "status": 500,
-                        "timestamp": 1596531532.907
+                        "timestamp": 1596535109.8
                       },
                       {
                         "status": 200,
-                        "timestamp": 1596530942.907
+                        "timestamp": 1596534519.8
                       },
                       {
                         "status": 200,
-                        "timestamp": 1596530342.907
+                        "timestamp": 1596533919.8
                       },
                       {
                         "status": 200,
-                        "timestamp": 1596529742.907
+                        "timestamp": 1596533319.8
                       },
                       {
                         "status": 200,
-                        "timestamp": 1596529142.907
+                        "timestamp": 1596532719.8
                       },
                       {
                         "status": 200,
-                        "timestamp": 1596528542.907
+                        "timestamp": 1596532119.8
                       },
                       {
                         "status": 200,
-                        "timestamp": 1596527942.907
+                        "timestamp": 1596531519.8
                       }
                     ],
-                    "created": 1596358742.907,
-                    "createdBy": "ckdfpnqm3001dlv0j3fbl0qxp",
-                    "modified": 1596358742.907,
-                    "modifiedBy": "ckdfpnqm3001dlv0j3fbl0qxp"
+                    "created": 1596362319.8,
+                    "createdBy": "ckdfrsek7001duqpvtgokb8yf",
+                    "modified": 1596362319.8,
+                    "modifiedBy": "ckdfrsek7001duqpvtgokb8yf"
                   }
                 ]
               }
@@ -2508,8 +2522,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "ckdfpnqm3001flv0jn8t9pluw",
-                  "accessId": "ckdfpnqm3001dlv0j3fbl0qxp",
+                  "id": "ckdfrsek7001fuqpv4eup97np",
+                  "accessId": "ckdfrsek7001duqpvtgokb8yf",
                   "url": "https://notifications.service.com/pryv",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2519,22 +2533,22 @@
                   "failCount": 0,
                   "lastRun": {
                     "status": 200,
-                    "timestamp": 1596527942.907
+                    "timestamp": 1596531519.799
                   },
                   "runs": [
                     {
                       "status": 200,
-                      "timestamp": 1596527942.907
+                      "timestamp": 1596531519.799
                     },
                     {
                       "status": 200,
-                      "timestamp": 1596524342.907
+                      "timestamp": 1596527919.799
                     }
                   ],
-                  "created": 1596445142.907,
-                  "createdBy": "ckdfpnqm3001dlv0j3fbl0qxp",
-                  "modified": 1596445142.907,
-                  "modifiedBy": "ckdfpnqm3001dlv0j3fbl0qxp"
+                  "created": 1596448719.799,
+                  "createdBy": "ckdfrsek7001duqpvtgokb8yf",
+                  "modified": 1596448719.799,
+                  "modifiedBy": "ckdfrsek7001duqpvtgokb8yf"
                 }
               }
             }
@@ -2567,8 +2581,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "ckdfpnqm3001ilv0jv57p50cu",
-                  "accessId": "ckdfpnqm3001elv0jydv7c7r5",
+                  "id": "ckdfrsek8001iuqpvckhan05h",
+                  "accessId": "ckdfrsek7001euqpvy9cqj9cc",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2578,10 +2592,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1596531537.907,
-                  "createdBy": "ckdfpnqm3001elv0jydv7c7r5",
-                  "modified": 1596531537.907,
-                  "modifiedBy": "ckdfpnqm3001elv0jydv7c7r5"
+                  "created": 1596535114.8,
+                  "createdBy": "ckdfrsek7001euqpvy9cqj9cc",
+                  "modified": 1596535114.8,
+                  "modifiedBy": "ckdfrsek7001euqpvy9cqj9cc"
                 }
               }
             }
@@ -2638,8 +2652,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "ckdfpnqm3001glv0j39lhkkj5",
-                  "accessId": "ckdfpnqm3001dlv0j3fbl0qxp",
+                  "id": "ckdfrsek8001guqpvvmf9opeh",
+                  "accessId": "ckdfrsek7001duqpvtgokb8yf",
                   "url": "https://notifications.pryv.me/myusername/ui3HDAw43",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2649,28 +2663,28 @@
                   "failCount": 5,
                   "lastRun": {
                     "status": 404,
-                    "timestamp": 1596531527.907
+                    "timestamp": 1596535104.8
                   },
                   "runs": [
                     {
                       "status": 404,
-                      "timestamp": 1596531527.907
+                      "timestamp": 1596535104.8
                     },
                     {
                       "status": 404,
-                      "timestamp": 1596531487.907
+                      "timestamp": 1596535064.8
                     },
                     {
                       "status": 404,
-                      "timestamp": 1596531467.907
+                      "timestamp": 1596535044.8
                     },
                     {
                       "status": 404,
-                      "timestamp": 1596531457.907
+                      "timestamp": 1596535034.8
                     },
                     {
                       "status": 404,
-                      "timestamp": 1596531452.907
+                      "timestamp": 1596535029.8
                     }
                   ]
                 }
@@ -2709,11 +2723,11 @@
           "examples": [
             {
               "params": {
-                "id": "ckdfpnqm3001ilv0jv57p50cu"
+                "id": "ckdfrsek8001iuqpvckhan05h"
               },
               "result": {
                 "webhookDeletion": {
-                  "id": "ckdfpnqm3001ilv0jv57p50cu"
+                  "id": "ckdfrsek8001iuqpvckhan05h"
                 }
               }
             }
@@ -2752,8 +2766,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "ckdfpnqm3001ilv0jv57p50cu",
-                  "accessId": "ckdfpnqm3001elv0jydv7c7r5",
+                  "id": "ckdfrsek8001iuqpvckhan05h",
+                  "accessId": "ckdfrsek7001euqpvy9cqj9cc",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2763,10 +2777,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1596531537.907,
-                  "createdBy": "ckdfpnqm3001elv0jydv7c7r5",
-                  "modified": 1596531537.907,
-                  "modifiedBy": "ckdfpnqm3001elv0jydv7c7r5"
+                  "created": 1596535114.8,
+                  "createdBy": "ckdfrsek7001euqpvy9cqj9cc",
+                  "modified": 1596535114.8,
+                  "modifiedBy": "ckdfrsek7001euqpvy9cqj9cc"
                 }
               }
             }
