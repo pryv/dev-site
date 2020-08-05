@@ -33,7 +33,7 @@ The general introduction describes Pryv.io data modelling conventions to help yo
   - 8 [Store technical data from devices](#store-technical-data-from-devices)
   - 9 [Define accesses to the streams](#define-accesses-to-the-streams)
   - 10 [Perform an access delegation](#performe-an-access-delegation)
-  - 11 [Store patient accesses](#store-patient-accesses)
+  - 11 [Store data accesses](#store-data-accesses)
   
 
 ## Introduction
@@ -93,7 +93,7 @@ The Allergen data model on which the file is based is described in this structur
 
 *N.B.: The User's beard is for illustrative purposes solely. However you can check [here](https://www.lung.org/blog/beards-and-lung-health) what the American Lung Association thinks about the association between beard and allergy.*
 
-Now that your data model is set, you need to declare the stream structure at each user account creation on Pryv.io. Sounds like lots of work. Well, luckily, the Creator thought about it: you can do it all in one call by using a [batch call](https://api.pryv.com/reference/#call-batch). 
+Now that your data model is set, you need to declare the stream structure at each user account creation on Pryv.io. Sounds like lots of work. Well, luckily, the Creator thought about it: you can do it all in one call by using a [batch call](/reference/#call-batch). 
 
 Let's take the previous stream structure :
 
@@ -171,7 +171,7 @@ For example:
     └── ...
 ```
 
-The [Public profile set](https://api.pryv.com/reference/#get-public-profile) can be used to store any information the user makes publicly available (e.g. avatar image). Other profile sets are likely to be deprecated soon.
+The [Public profile set](/reference/#get-public-profile) can be used to store any information the user makes publicly available (e.g. avatar image). Other profile sets are likely to be deprecated soon.
 -->
 
 ### Avoid event types multiplication
@@ -470,11 +470,11 @@ To do so, it is sufficient to display all the events related to the ECG recordin
 
 This will allow you to retrieve all time-related events to the ECG recording: the weight associated to the recording if measured, the device associated to the recording, etc.
 
-#### Keep memory of the raw event for a processed result
+#### Keep memory of the raw data for a processed result
 
-This time, no need to visualize data but rather keep in memory the raw event from which the processed result of your algorithm is coming from.  
-Let's say that your **Allergen Exposure app** computes the allergen exposure (processed result) of your user John using his geolocation (original event). You need to keep a reference to the original event (John's geolocation), in case you want to test a different algorithm to compute his allergen exposure.
-To do so, you can reference the raw event in the `clientData` field of your processed result.  
+This time, no need to visualize data but rather keep in memory the raw data from which the processed result of your algorithm is coming from.  
+Let's say that your **Allergen Exposure app** computes the allergen exposure (processed result) of your user John using his geolocation (raw data). You need to keep a reference to the original event (John's geolocation), in case you want to test a different algorithm to compute his allergen exposure for example.
+To do so, you can reference the raw data in the `clientData` field of your processed result.  
 
 John's raw event (geolocation):
 ```json
@@ -505,7 +505,7 @@ The field `clientData` enables you to reference the event from which the process
 
 #### Make a query on different events   
   
-Grandma went to do an ECG recording on Monday morning, and still cannot remember the weight that was associated to her recording. Can you help her ?
+Grandma went to do an ECG recording on Monday morning, and still cannot remember the weight that was associated to her recording. Can you help her ?  
 To get all the different events associated to the same event (here the ECG recording), we recommend to store all the references to these events in a single event on a dedicated stream, e.g "Session".  
 Here we want to get the weight (`mass/kg` event stored in the stream "Weight") associated to the ECG recording (`ecg/6-lead-recording` event stored in the stream "Recording").   
 Pryv.io does not allow to filter events in the same way as a classic database when performing an "events.get" API call.   
@@ -551,16 +551,16 @@ This method allows you to store all related events to a measurement in order to 
 
 All the aforementioned solutions can be used together to reference events across them, but some of them will be more suitable than others depending on the use case. 
 
-### Store technical data from devices
+### Store technical data from devices  
 
-This might not be the most insightful data to store in a Pryv.io account, but sometimes you need to store technical data from devices you are using as it can be considered as "personal data" from your user (see [here](https://api.pryv.com/faq-api/#personal-data) for more on personal data).  
+You sometimes need to store technical data from devices you are using as it can be considered as "personal data" from your user (see [here](/faq-api/#personal-data) for more on personal data).  
 
-Let's imagine that you are performing an MRI scan on your patient John and you want to keep the technical data from the MRI device you are using during the scan.  
+After years of bad habits and a countless number of cigarettes, John had a heart attack yesterday evening. Your smartwatch "HeartHealth" luckily detected it soon enough and John survived it. However, he needs to undergo an MRI scan to check for possible damages. Along with his MRI scan analysis, you need to keep the technical data from the MRI device that was used.  
 Multiple options are available to store this data:
 
 #### Create an allocated stream in John's account (recommended)  
 
-You can create a custom event type `mri-device/parameters` to store technical parameters of the MRI device used during the scan, and you add a new event containing the technical data in the stream "MRI-device" for each MRI scan.
+You can create a custom event type `mri-device/parameters` to store technical parameters of the MRI device used during the scan, and add a new event containing the technical data in the stream "MRI-device" for each MRI scan.
 
 ```js
 ├── Recording
@@ -595,50 +595,47 @@ When creating the `mri/signal` event related to the measured MRI signal during t
 ```
 
 #### Store in a separate account 
-  
-Instead of storing this information in the patient account, you can choose to keep all technical data in a dedicated "System" account.
-If you prefer storing this data in a separate account, you must keep in mind that the user can ask for a copy of it anytime if it is “personal” data.
-You will therefore need to define a shared access for him on this data.
+   
+The other solution you might be thinking of is : "But what if we store all technical data in a dedicated "System" Pryv.io account ? This would keep only "useful" data in John's account, while we could still have all technical data stored somewhere."    
+If you don't want to bother John with technical data by adding it in his Pryv.io account, well, you might have to do it anyways. 
+Storing this data out of John's account might be a solution, but you need to keep in mind that John needs to be able to access it anytime if it is considered as “personal” data.  
+You will therefore need to define a shared access for John on this data...
 
 ### Define accesses to the streams
 
-Pryv.io streams structure allows you to define granular accesses on data and to share only necessary information with different access levels ("read", "manage", "contribute", "create-only").  
-The data sharing is made on streams (acting as "folders" in your computer) instead of particular events (similar to "files"). 
+Ready to take a deep dive right into the core of Pryv.io ? Be ready for the big jump.  
 
-Let's imagine you want to give a "manage" access to your doctor on the stream "Health" to enable him to read and update your medical data in your account:
+<p align="center">
+<img src="https://media.giphy.com/media/iMBEgyXkFBtdCFS93i/giphy.gif" width="400" />
+</p>
+
+Pryv.io streams structure allows you to define granular accesses on data and to share only necessary information with different access levels ("read", "manage", "contribute", "create-only").  
+The data sharing is made on streams (acting as "folders" in your computer) instead of particular events (similar to "files").
+
+And this could prove very useful. Imagine a situation in which you want one person to access a particular folder of your data, but not the rest. You have moved away to university, starting a new life, but you want to reassure your mum by sharing with her your position anytime. However, you don't want her to access your "Glucose" and "Weight" streams not to upset her.  
+Doing it with Pryv.io has never been easier.
 
 ```js
 ├── Health
-│   ├── Sleep
-│   │    └── "sleep/analysis" events
-│   ├── Height
-│   │    └── "length/cm" events
-│   ├── Glucose
-│   │    └── "density/mmol-l" events
-│   └── Weight
-│        └── "mass/kg" events
-├── Smartwatch
-│    ├── Position
-│    │   └── "position/wgs84" events
-│    └── Heart rate
-│        └── "blood-pressure/mmhg-bpm" events
-└── Sleep Control Mobile App
-     └── Sleep quality
-         └── "sleep/analysis" events
+│   ├── Glucose ("density/mmol-l" events)
+│   └── Weight ("mass/kg" events)
+└── Smartwatch
+     ├── Position ("position/wgs84" events)
+     └── Heart rate ("blood-pressure/mmhg-bpm" events)
 ``` 
 
 The data sharing involves two steps:  
-1. **The access creation using the [HTTP POST /accesses](https://api.pryv.com/reference/#create-access) method**
+1. **The access creation using the [accesses.create](/reference/#create-access) method**
 
 ```json
 {
   "method": "accesses.create",
   "params": {
-    "name": "For my doctor",
+    "name": "For my beloved mum",
     "permissions": [
       {
-        "streamId": "Health",
-        "level": "manage"
+        "streamId": "Position",
+        "level": "read"
       }
     ]
 }
@@ -646,15 +643,15 @@ The data sharing involves two steps:
 
 2. **The access token distribution**
 
-The "HTTP POST /accesses" call will create an access token to be shared with the doctor to enable him to manage data from the stream "Health" (**"token"**: "ckd0br26e00075csmifuhrlad"):
+The [accesses.create](/reference/#create-access) method will create an access token to be shared with your mum to enable her to read data from your stream "Position", and only this one (**"token"**: "ckd0br26e00075csmifuhrlad"):
 ```json
 {
   "access": {
     "id": "ckd0br26e00065csmktc33x11",
     "token": "ckd0br26e00075csmifuhrlad",
     "type": "shared",
-    "name": "For my doctor",
-    "permissions": [{"streamId": "Health", "level": "manage"}],
+    "name": "For my beloved mum",
+    "permissions": [{"streamId": "Position", "level": "read"}],
     "created": 1595601190.598,
     "createdBy": "ckd0br26d00015csmbqeu11pe",
     "modified": 1595601190.598,
@@ -662,50 +659,72 @@ The "HTTP POST /accesses" call will create an access token to be shared with the
   }
 }
 ```
-The access token should be kept in a separate stream in the doctor's account to enable him to easily retrieve his patient's data (see ["Store patient accesses" section](#store-patient-accesses)), or in some database for an app access. (????)  
+The access token should be kept in a separate stream in your mum's account to enable her to easily retrieve your data. And if she has multiple children to monitor, she can add access tokens form her children in this same stream (see ["Store data accesses" section](#store-data-accesses)).
+
+<p align="center">
+<img src="/assets/images/surveillance.jpg" width="400" />
+</p>
   
-Each created access will generate a different token that can be shared with the concerned third-party (doctor, app, family, etc). Pryv.io supports three types of accesses: "personal", "app", "shared" that are hierarchically ordered (more information on accesses type [here](https://api.pryv.com/concepts/#accesses)).
+Each created access will generate a different token that can be shared with the concerned third-party (doctor, app, family, etc). Pryv.io supports three types of accesses: "personal", "app", "shared" that are hierarchically ordered (more information on accesses type [here](/concepts/#accesses)).
 
 ### Perform an access delegation
 
-It can happen that you need an access delegation from your app users if they cannot connect on the app to authorize apps and grant access to their data for some period of time.
+Grandma Linda doesn't master technology as well as her cookies recipe. 
 
-To do so, you can send an auth request to your users at their first login to grant your app access to all or specific streams (see [here](https://api.pryv.com/reference/#authenticate-your-app) for more information on the auth request).
+<p align="center">
+<img src="https://media.giphy.com/media/3o7TKOuYcKMnqqatjy/giphy.gif" width="400" />
+</p>
 
-This works as a delegation of access, and the “app” token will be able to generate sub-tokens of the “shared” type and give access to data that was in its scope.
+If she cannot connect on to your app "Best Health App" to grant access to her data on a regular basis, you can facilitate it with an access delegation for your app. To do so, you can send an auth request to Linda at her first login to grant your app access to all or specific streams of her data (see [here](/reference/#authenticate-your-app) for more information on the auth request).  
 
-Let's imagine that your "Sleep Control Mobile App" needs to access the "Position" data from your user to perform sleep analysis, but also his "Health" data to share it with hospitals if needed:
+Linda's stream structure:
 ```js
-├── Health
-│   ├── Sleep
-│   │    └── "sleep/analysis" events
-│   ├── Height
-│   │    └── "length/cm" events
-│   ├── Glucose
-│   │    └── "density/mmol-l" events
-│   └── Weight
-│        └── "mass/kg" events
-├── Smartwatch
-│    ├── Position
-│    │   └── "position/wgs84" events
-│    └── Heart rate
-│        └── "blood-pressure/mmhg-bpm" events
-└── Sleep Control Mobile App
-     └── Sleep quality
-         └── "sleep/analysis" events
+└── Health
+    ├── Sleep
+    │    └── "sleep/analysis" events
+    ├── Height
+    │    └── "length/cm" events
+    ├── Glucose
+    │    └── "density/mmol-l" events
+    └── Weight
+         └── "mass/kg" events
 ```
-Your app will first make an auth request at the user's login:  
+
+At Linda's login (and that's the only moment when she will need to open the app), your app will make an auth request:
 <p align="center">
 <img src="/assets/images/delegate-access.png" alt="delegate-access" width=250 />
 </p>
 
-Once the app request is accepted by the user, the generated token will be saved by your app and used to create future shared accesses.  
-This will allow your app to create a shared access whose permissions must be a subset of those granted to your app. For example:  
+Once accepted by Linda, this will create the access for your app:
+```json
+{
+  "access": {
+    "id": "ckdfruqs700067ppv03z7pef4",
+    "token": "ckdfruqs700077ppvk404g4bt",
+    "type": "app",
+    "name": "best-health-app",
+    "permissions": [
+      {
+        "streamId": "health",
+        "level": "manage"
+      }
+    ],
+    "created": 1596535228.951,
+    "createdBy": "ckdfruqs700017ppvj4rci1cg",
+    "modified": 1596535228.951,
+    "modifiedBy": "ckdfruqs700017ppvj4rci1cg"
+  }
+}
+```
+
+This works as a delegation of access, and the “app” token will be able to generate shared accesses whose permissions must be a subset of those granted to your app (here the stream "Health").  
+
+For example, if your app needs to share the "Glucose" data from Linda with her doctor, it can do so by creating the following shared access:  
 ```json
 {
   "method": "accesses.create",
   "params": {
-    "name": "For the hospital",
+    "name": "For Linda's doctor",
     "permissions": [
       {
         "streamId": "glucose",
@@ -715,25 +734,57 @@ This will allow your app to create a shared access whose permissions must be a s
 }
 ```
 
-### Store patient accesses
-
-Once you have obtained an access token to a user's account, for example for a doctor to access particular streams of his patients' data, we advise you to store it in a dedicated stream.
-
-Let's illustrate it with a basic example. The patient Ana accepts to give a "manage" access to Doctor Tom on her stream "Health", which generates the access token "ckd0br26d00035csmdqvtjfla".
-
-Stream structure for patient Ana:
-```js
-├── Health
-│   ├── Sleep
-│   │    └── "sleep/analysis" events
-│   ├── Weight
-│   │    └── "mass/kg" events
-│   └── Heart rate
-│        └── "blood-pressure/mmhg-bpm" events
-└── Sleep Control Mobile App
-     └── Sleep quality
-         └── "sleep/analysis" events
+The resulting access:
+```json
+{
+  "access": {
+    "id": "chjkzuit098567hjk97r2wer1",
+    "token": "czuifgh567128lkj098w2dg",
+    "type": "shared",
+    "name": "For Linda's doctor",
+    "permissions": [
+      {
+        "streamId": "glucose",
+        "level": "read"
+      }
+    ],
+    "created": 1596535228.951,
+    "createdBy": "ckdfruqs700017ppvj4rci1cg",
+    "modified": 1596535228.951,
+    "modifiedBy": "ckdfruqs700017ppvj4rci1cg"
+  }
+}
 ```
+
+<p align="center">
+<img src="https://media.giphy.com/media/l0MYEIHpvyH8hd8ac/giphy.gif" width="400" />
+</p>
+
+While Linda can still be making delicious cookies for you.  
+
+
+### Store data accesses
+
+Let's take again the previous example where Grandma Linda provides your app an access to her data while she can still bake delicious cookies and not bother too much with technology.  
+
+Linda has delegated you access to her account, and you need to share the particular stream "Glucose" with her doctor Tom (see the example in [previous section](#perform-an-access-delegation)).
+
+Stream structure for Grandma Linda:
+```js
+└── Health
+    ├── Sleep
+    │    └── "sleep/analysis" events
+    ├── Height
+    │    └── "length/cm" events
+    ├── Glucose
+    │    └── "density/mmol-l" events
+    └── Weight
+         └── "mass/kg" events
+```
+
+Where should her doctor keep the access token that will be generated for this sharing, along with other patients' tokens ? 
+
+When Linda gives a "read" access to Doctor Tom on her stream "Glucose", this will generate the access token "czuifgh567128lkj098w2dg". This access should be kept in a dedicated stream, along with other patients' tokens.  
 
 Stream structure for doctor Tom:
 ```js
@@ -750,15 +801,17 @@ Stream structure for doctor Tom:
 Doctor Tom will need to keep all access tokens to his patients' accounts in the dedicated stream **"Patient accesses"**.   
 Every time a patient grants him access to his data, the access token to his Pryv.io account will be saved in a `credentials/pryvApiEndpoint` event under the stream "Patient accesses" (see [App guidelines](/guides/app-guidelines/) for why we use this format).   
 
-In the case of patient Ana, the following event will be created in the stream "Patient accesses" of Doctor Tom: 
+In the case of Linda, the following event will be created in the stream "Patient accesses" of Doctor Tom: 
 ```json
 {
     "method": "events.create",
     "params": {
       "streamIds": ["patient-accesses"],
       "type": "credentials/pryvApiEndpoint",
-      "content": "https://ckd0br26d00035csmdqvtjfla@ana.pryv.me/"
+      "content": "https://czuifgh567128lkj098w2dg@linda.pryv.me/"
     }
   }
 ```
-
+<p align="center">
+<img src="https://media.giphy.com/media/3o7TKDmvzlxnkkPoSA/giphy.gif" width="400" />
+</p>
