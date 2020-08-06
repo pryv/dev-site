@@ -56,11 +56,11 @@ The stream structure of this data model can be visually represented as below:
 
 This stream structure allows you to:
 
-- combine different type of data (attachement, notes, health records, pictures, videos) coming from different data sources
+- combine different types of data (attachments, notes, health records, pictures, videos) coming from different data sources
 - contextualize your data into an organization similar to folders
-- control on a granular level accesses to the data
+- control on a granular level access permissions to the data
 
-Different permissions can be defined for each stream and substream, therefore enabling to share only necessary information with third-parties (apps, doctors, family, etc). If multiple actors are involved in the process, this allows to precisely control the access level to the different streams. So that your grandma doesn't have a heart attack when looking at your stream "Weight" if you don't allow her to do so.
+Different permissions can be defined for each stream and substream, therefore enabling to share only the necessary information with third-parties (doctors, family, apps, etc). If multiple actors are involved in the process, this allows to precisely control the access level to the different streams. So that your grandma doesn't have a heart attack when looking at your stream "Weight" if you don't allow her to do so.
 
 ![Access Structure](/assets/images/data_model_access.svg)
 
@@ -69,7 +69,7 @@ In the example above, access to particular streams of data can be restricted:
 - the **Best Health App** has a `manage` access on the streams **Position** and **Energy**, and a `read` access on the streams **Height** and **Weight**
 - the **Dietetician** has a `read` access on the stream **Energy**, **Height** and **Weight**
 
-Available levels of permissions (read, manage, contribute, create-only) are defined and explained [here](/reference/#access).
+Available levels of permissions (read, manage, contribute, create-only) are defined and explained [here](/reference/#access) under permissions.
 
 
 ## Use cases
@@ -157,7 +157,8 @@ You **try** to add your event in the desired stream, and if it **fails** you cre
 
 ### Avoid event types multiplication
 
-> Everything should be made as simple as possible, but not simpler. *- Albert Einstein*
+> Everything should be made as simple as possible, but not simpler.  
+> *- Albert Einstein*
 
 This is what we had in mind when designing our data model in streams and events. Streams should provide the necessary context to events, so that the meaning of events can be directly understood from the stream they are in. **Simple.**   
 
@@ -187,7 +188,7 @@ An intake of 500mg of paracetamol will be recorded this way:
     }
   }
 ```
-Problem is... Every time Grandma will need to add a new medication in her daily cocktail (and God knows she will, she's not getting younger), we will have to create a new event type. And perform some additional content validation by cloning the [Data Types Github repository](https://github.com/pryv/data-types).
+The problem is... Every time Grandma will need to add a new medication in her daily cocktail (and God knows she will, she's not getting younger), we will have to create a new event type to perform content validation. The details steps are explained in the [Data Types Github repository](https://github.com/pryv/data-types).
 
 - **Create a substream per medication (recommended)**
 ```json
@@ -211,7 +212,7 @@ An intake of 500mg of paracetamol will be recorded this way:
 ```
 This solution has the advantage of resolving the forementioned problem by providing an easily adaptable structure. Every time Grandma needs to add a new medication to her cocktail, we only need to create a new stream.
 
-As there is no limit to the number of substreams of a stream. It's only Grandma's health, incidentally. 
+As there is no limit to the number of substreams to a stream, it's only Grandma's health, incidentally. 
 
 <p align="center">
 <img src="https://media.giphy.com/media/3o7TKVSpblpNLFLDLa/giphy.gif" width="400" />
@@ -221,7 +222,7 @@ In this regard, multiplying the number of streams is a preferable solution when 
 
 ### Define a custom event type
 
-Time to get hands-on.  
+Time to get our hands dirty.  
 If your event type is not referenced in the [default Event Types list](https://api.pryv.com/event-types/), you can create your own.
 
 Does it mean you can create absolutely any event type you want? Well, not exactly. It will need to follow the specification `{class}/{format}` (e.g `note/txt`). You can find more information on this in the [corresponding section](https://api.pryv.com/event-types/#basics). Events with undeclared types are allowed but their content is not validated.  
@@ -239,7 +240,7 @@ For example, let's say that you need to create a custom event type for your 12-l
 ```
 2. Fork the [Data Type repository](https://github.com/pryv/data-types) and add your `ecg.json` file
 3. Validate the JSON schema of your event type
-4. Publish the corresponding URL in the platform parameters to be loaded at the platform boot :
+4. Publish these files on a webserver and indicate the `flat.json` file in the platform parameters :
 ```json
 EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
 ```  
@@ -282,7 +283,7 @@ This method allows to share particular events (e.g the "blood-analysis-july" eve
 
 ### Handle multiple devices
 
-Forget about the good old times when we would have one fixed-line telephone per building, and you'd have to climb to the last floor to tell your neighboor John to answer the phone (who had lost his keys again at his mum's place). 
+Forget about the good old times when we would have one fixed-line telephone per building, and you'd have to climb to the last floor to tell your neighboor John to answer the phone (who forgot his keys again at his mum's place). 
 
 <p align="center">
 <img src="https://media.giphy.com/media/TlG9WaojXmx3y/giphy.gif" width="400" />
@@ -297,7 +298,7 @@ Let's list all the possible data sources for John:
 - a **Sleep Control Mobile App** that controls the sleep quality using data from the smartwatch (`sleep/analysis` events)
 - a **Smart key chain** that tracks the geolocation of John's keys at any time (`position/wgs84` events) 
 
-One general advice is to use one stream or substream per device. Each event can be stored across one or multiple streams: this enables you to save an event, e.g a `sleep/analysis` event, in both streams **Sleep Control Mobile App** and **Health** and to contextualize the event.  
+One general advice is to use one stream or substream per device. Each event can be stored across one or multiple streams: this enables you to save an event, e.g a `sleep/analysis` event, in both streams **Sleep Control Mobile App** and **Health** to contextualize the event.  
 
 Given this situation, we would recommend a stream structure similar to the following:
 ```js
