@@ -112,11 +112,13 @@ To add a `position/wgs84` event in the stream "Position", two options are availa
 - **Use the "try and fail" method (recommended)**
 ```json
 {
-res = events.create(Event, "streamIds": ["position"])
-if (res.error.id == ’unknown-referenced-resource’) {
-   - streams.create: Smartwatch
-   - streams.create: Position
-   - res = events.create({"streamIds": ["position"], "type": "position/wgs84", ...}) 
+res = events.create({"streamIds": ["position"] ...}) 
+if (res.error.id == "unknown-referenced-resource") {
+   batchCall([
+     streams.create({"id": "smartwatch", ...}),
+     streams.create({"id": "position", ...}),
+     events.create({"streamIds": ["position"] ...}) 
+   ])
  }
 ```
 You **try** to add your event in the desired stream, and if it **fails** you create the stream structure. To be used sparingly when multiple events need to be added at once.
