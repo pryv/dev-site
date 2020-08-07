@@ -22,17 +22,16 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 # Table of contents
 
 - 1 [Introduction](#introduction)
-- 2 [Use cases](#use-cases)
-  - 1 [Declare the stream structure](#declare-the-stream-structure)
-  - 2 [Avoid event types multiplication](#avoid-event-types-multiplication)
-  - 3 [Define a custom event type](#define-a-custom-event-type)
-  - 4 [Share a single event](#share-a-single-event)
-  - 5 [Handle multiple devices](#handle-multiple-devices)  
-  - 6 [Reference events](#reference-events) 
-  - 7 [Store technical data from devices](#store-technical-data-from-devices)
-  - 8 [Define accesses to the streams](#define-accesses-to-the-streams)
-  - 9 [Perform an access delegation](#performe-an-access-delegation)
-  - 10 [Store data accesses](#store-data-accesses)
+- 2 [Declare the stream structure](#declare-the-stream-structure)
+- 3 [Avoid event types multiplication](#avoid-event-types-multiplication)
+- 4 [Define a custom event type](#define-a-custom-event-type)
+- 5 [Share a single event](#share-a-single-event)
+- 6 [Handle multiple devices](#handle-multiple-devices)  
+- 7 [Reference events](#reference-events) 
+- 8 [Store technical data from devices](#store-technical-data-from-devices)
+- 9 [Define accesses to the streams](#define-accesses-to-the-streams)
+- 10 [Perform an access delegation](#performe-an-access-delegation)
+- 11 [Store data accesses](#store-data-accesses)
   
 
 ## Introduction
@@ -42,7 +41,7 @@ What are "Streams" ?
 - **Streams** are the main way of encoding context for events. They act as folders in a file system ("Health", "Geolocation", etc), and follow a tree structure with multiple roots.  
 
 And what are "Events" ?
-- **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g `note/txt`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
+- **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g a weight measurement would have the type `mass/kg`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
 
 Be patient, it is going to become crystal-clear for you with the next example. 
 
@@ -71,10 +70,7 @@ In the example above, access to particular streams of data can be restricted:
 
 Available levels of permissions (read, manage, contribute, create-only) are defined and explained [here](/reference/#access) under permissions.
 
-
-## Use cases
-
-### Declare the stream structure
+## Declare the stream structure
 
 > In the beginning was the Event, and the Event was in the Stream. 
 
@@ -83,6 +79,11 @@ Here is your starting point.
 <p align="center">
 <img src="https://media.giphy.com/media/KxuDSrLSYi8gqxJsua/giphy.gif" width="400" />
 </p>
+ 
+*References:*
+- [Template Excel document](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/)
+- [Event types Reference](/event-types/)
+- [Batch call](/reference/#call-batch)  
 
 Building your own data model means defining your streams and events structure following this [template document](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/). Such a document serves as reference for the potentially multiple actors that will implement apps for a single Pryv.io platform.  
 
@@ -91,7 +92,7 @@ The Allergen data model on which the document is based is described in this stre
 
 *N.B.: The User's beard is for illustrative purposes solely. However you can check [here](https://www.lung.org/blog/beards-and-lung-health) what the American Lung Association thinks about the association between beard and allergy.*
 
-Now that your data model is set, you need to declare the stream structure at each user account creation on Pryv.io. Sounds like lots of work. Well, luckily, the Creator thought about it: you can do it all in one call by using a [batch call](/reference/#call-batch). 
+Now that your data model is set, you need to declare the stream structure at each user account creation on Pryv.io. Sounds like lots of work. Well, luckily, we thought about it: you can do it all in one call by using a [batch call](/reference/#call-batch). 
 
 Let's take the previous stream structure :
 
@@ -121,7 +122,7 @@ if (res.error.id == "unknown-referenced-resource") {
    ])
  }
 ```
-You **try** to add your event in the desired stream, and if it **fails** you create the stream structure. To be used sparingly when multiple events need to be added at once.
+You **try** to add your event(s) in the desired stream, and if it **fails** you create the stream structure.  
 
 - **Create the whole stream structure before adding the event in the concerned stream** (long and tedious)
 ```json
@@ -157,25 +158,22 @@ You **try** to add your event in the desired stream, and if it **fails** you cre
 ]
 ```
 
-### Avoid event types multiplication
+## Avoid event types multiplication
 
 > Everything should be made as simple as possible, but not simpler.  
 > *- Albert Einstein*
 
 This is what we had in mind when designing our data model in streams and events. Streams should provide the necessary context to events, so that the meaning of events can be directly understood from the stream they are in. **Simple.**   
 
-The number of different event types per stream should therefore be limited, but rather the number of different streams. **Not simpler.**   
+The number of different event types should therefore be minimized, unlike the number of different streams that should be maximized. **Not simpler.**   
 
 Let's illustrate it. Grandma needs to record her daily medication intake (daily consumption of paracetamol, spasfon and levothyrox in mg).
 Two options are available to organize her stream structure:
 - **Create an event-type per medication (not recommended)** 
 ```json
 ├── Medication
-    ├── Intake
-    │   ├── "paracetamol/mg" events
-    │   ├── "spasfon/mg" events
-    │   └── "levothyrox/mg" events
-    └── ...
+│  ├── Intake ("paracetamol/mg", "spasfon/mg", "levothyrox/mg"  events)
+│  └── ...
 ```
 An intake of 500mg of paracetamol will be recorded this way:
 ```json
@@ -220,17 +218,18 @@ As there is no limit to the number of substreams to a stream, it's only Grandma'
 <img src="https://media.giphy.com/media/3o7TKVSpblpNLFLDLa/giphy.gif" width="400" />
 </p>
 
-In this regard, multiplying the number of streams is a preferable solution when you need to enter data measurements for different types of components (e.g medications, diseases, multiple devices, etc) recording a similar type of measure.
+In this regard, multiplying the number of streams is a preferable solution when you need to enter data measurements for different types of components (e.g medications, diseases, medical devices, etc).
 
-### Define a custom event type
+## Define a custom event type
 
 Time to get our hands dirty.  
 If your event type is not referenced in the [default Event Types list](https://api.pryv.com/event-types/), you can create your own.
 
-Does it mean you can create absolutely any event type you want? Well, not exactly. It will need to follow the specification `{class}/{format}` (e.g `note/txt`). You can find more information on this in the [corresponding section](https://api.pryv.com/event-types/#basics). Events with undeclared types are allowed but their content is not validated.  
+Does it mean you can create absolutely any event type you want? Well, not exactly. It will need to follow the specification `{class}/{format}` (e.g `note/txt`). **Events with undeclared types are allowed but their content is not validated.** You can find more information on this in the [corresponding section](https://api.pryv.com/event-types/#basics).    
 
 For example, let's say that you need to create a custom event type for your 12-lead ECG recording `ecg/12-lead-recording`. If you want to perform content validation and ensure that every time you retrieve a new event it has the right structure, the procedure is the following:
-1. Define your event type in a JSON file, in this case `ecg.json`:
+1. Fork the [Data Type repository](https://github.com/pryv/data-types) and add your `ecg.json` file
+2. Define your event type in a JSON file, in this case `ecg.json`:
 ```json
 {
   "ecg": {
@@ -240,14 +239,14 @@ For example, let's say that you need to create a custom event type for your 12-l
       "type": "number"}}}
 }
 ```
-2. Fork the [Data Type repository](https://github.com/pryv/data-types) and add your `ecg.json` file
-3. Validate the JSON schema of your event type
+3. [Validate](https://github.com/pryv/data-types#data-types-validation) the JSON schema of your event type
 4. Publish these files on a webserver and indicate the `flat.json` file in the platform parameters :
 ```json
 EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
 ```  
+The detailed steps can be found [here](https://github.com/pryv/data-types#how-to-customize-your-data-types).
 
-### Share a single event
+## Share a single event
 
 Sometimes, your user might need to share a single event (and not a whole stream) with third parties. Pryv.io allows you to store an event in one or multiple streams, wich can facilitate the sharing of particular events.  
 How so ?  
@@ -258,16 +257,18 @@ Let's take the example of your Grandma (again). She is storing her blood analysi
 <img src="https://media.giphy.com/media/efyEShk2FJ9X2Kpd7V/giphy.gif" width="400" />
 </p>
 
-To do so, you can store her last blood analysis in a stream "Sharings" that you can then easily share with her doctor.
+To do so, you can create a stream "Sharings" reserved for the data sharings she will need to do with third parties. You can then store her last blood analysis in a sub-stream of the stream "Sharings" that you will share with her doctor.
 
 ```js
 ├── Health
 │    ├── Blood ("file/attached" events: 'blood-analysis-may', 'blood-analysis-july' events, etc)
 │    └── ...
-└── Sharings ("file/attached" event corresponding to the last blood analysis, e.g 'blood-analysis-july' event)
+└── Sharings 
+     ├── Blood Sharing ("file/attached" event corresponding to the last blood analysis, e.g 'blood-analysis-july' event)
+     └── ...
 ```
 
-You can then create an access for her doctor on the stream "Sharings":
+You can then create an access for her doctor on the stream "Blood Sharing":
 ```json
 {
 "method": "access.create",
@@ -276,14 +277,14 @@ You can then create an access for her doctor on the stream "Sharings":
   "name": "For Grandma's doctor",
   "permissions": [
     {
-    "streamId": "sharings",
+    "streamId": "blood-sharing",
     "level": "read"
   }
 ]}
 ```
 This method allows to share particular events (e.g the "blood-analysis-july" event) with third parties, while retaining the original event in another stream.
 
-### Handle multiple devices
+## Handle multiple devices
 
 Forget about the good old times when we would have one fixed-line telephone per building, and you'd have to climb to the last floor to tell your neighboor John to answer the phone (who forgot his keys again at his mum's place). 
 
@@ -296,7 +297,7 @@ Now, John not only has his own smartphone and smartwatch, but even a smart key c
 So how to model John's data coming from multiple devices ?  
 
 Let's list all the possible data sources for John:
-- a **Smartwatch** that collects his heart rate during his sleep (`blood-pressure/mmhg-bpm` events)
+- a **Smartwatch** that collects his pulse rate and temperature during his sleep (`frequency/bpm` and `temperature/c` events)
 - a **Sleep Control Mobile App** that controls the sleep quality using data from the smartwatch (`sleep/analysis` events)
 - a **Smart key chain** that tracks the geolocation of John's keys at any time (`position/wgs84` events) 
 
@@ -305,16 +306,17 @@ One general advice is to use one stream or substream per device. Each event can 
 Given this situation, we would recommend a stream structure similar to the following:
 ```js
 ├── Health
-│   ├── Sleep ("sleep/analysis" events)
-│   ├── Blood pressure ("blood-pressure/mmhg-bpm" events)
-│   ├── Height ("length/cm" events)
-│   └── Weight ("mass/kg" events)
+│    ├── Sleep ("sleep/analysis" events)
+│    ├── Heart rate ("frequency/bpm" events)
+│    ├── Height ("length/cm" events)
+│    └── Weight ("mass/kg" events)
 ├── Smartwatch
-│    └── Heart rate ("blood-pressure/mmhg-bpm" events)
+│    ├── Temperature ("temperature/c" events)
+│    └── Pulse ("frequency/bpm" events)
 ├── Sleep Control Mobile App
-│     └── Sleep quality ("sleep/analysis" events)
+│    └── Sleep quality ("sleep/analysis" events)
 └── Smart key chain
-      └── Geolocation ("position/wgs84" events)
+     └── Geolocation ("position/wgs84" events)
 ```
 This allows you to easily retrieve all events related to one device (e.g "Smartwatch").
 The [events.get](/reference/#get-events) call:
@@ -335,8 +337,8 @@ The result:
     {
       "id": "ckdfruqua000z7ppvzspqsnyz",
       "time": 1596531629.026,
-      "streamIds": ["heart-rate"],
-      "type": "blood-pressure/mmhg-bpm",
+      "streamIds": ["pulse", "heart-rate"],
+      "type": "frequency/bpm",
       "content": 85,
       "created": 1596531629.026,
       "createdBy": "ckdfruqs700047ppvzjoxu1jo",
@@ -346,8 +348,8 @@ The result:
     {
       "id": "ckdfruqua000v7ppv37k7gokc",
       "time": 1596341634.567,
-      "streamIds": ["heart-rate"],
-      "type": "blood-pressure/mmhg-bpm",
+      "streamIds": ["pulse", "heart-rate"],
+      "type": "frequency/bpm",
       "content": 90,
       "created": 1596341634.567,
       "createdBy": "ckdfruqs700017ppvj4rci1cg",
@@ -376,15 +378,15 @@ The result:
     {
       "id": "ckdfruqua000z7ppvzspqsnyz",
       "time": 1596531629.026,
-      "streamIds": ["heart-rate"],
-      "type": "blood-pressure/mmhg-bpm",
+      "streamIds": ["pulse", "heart-rate"],
+      "type": "frequency/bpm",
       "content": 85
     },
     {
       "id": "ckdfruqua000v7ppv37k7gokc",
       "time": 1596341634.567,
-      "streamIds": ["heart-rate"],
-      "type": "blood-pressure/mmhg-bpm",
+      "streamIds": ["pulse", "heart-rate"],
+      "type": "frequency/bpm",
       "content": 90
     },
     {
@@ -404,7 +406,7 @@ The result:
     {
       "id": "crtkophui678t3plk37k7tzui",
       "time": 1596341634.567,
-      "streamIds": ["sleep"],
+      "streamIds": ["sleep", "sleep-quality"],
       "type": "sleep/analysis",
       "content": "inBed"
     }
@@ -412,7 +414,7 @@ The result:
 }
 ```
 
-### Reference events
+## Reference events
 
 Some of your Pryv.io events may be calling one another, and you might need to reference events between themselves.
 
@@ -422,7 +424,7 @@ Some of your Pryv.io events may be calling one another, and you might need to re
 
 To do so, multiple options are available depending on your use case:
 
-#### Keep memory of the raw data for a processed result
+### 1. Keep memory of the raw data for a processed result
 
 Let's say that your **Allergen Exposure app** computes the allergen exposure (processed result) of your user John using his geolocation (raw data). You need to keep a reference to the original event (John's geolocation), in case you want to test a different algorithm to compute his allergen exposure for example.  
 
@@ -455,7 +457,7 @@ The processed result from your algorithm:
 
 The field `clientData` enables you to reference the event from which the processed result is originating and to make references across different events. 
 
-#### View data jointly
+### 2. View data jointly 
   
 Grandma went to do an ECG recording on Monday morning.
 
@@ -468,64 +470,123 @@ Grandma went to do an ECG recording on Monday morning.
   "content": {...},
 }
 ```
-Did the doctor take her blood pressure, or her weight along with the ECG recording ? As usual, she cannot remember. But you can easily visualize all events that happened at the same time frame of the day around her ECG recording.  
+She usually tends to forget what happened to her earlier in the day. Did the doctor take her blood pressure, or her weight along with the ECG recording ? A solution to easily view all events related to her ECG recording is to artificially set the same "time" parameter for all events related to the recording.  
 
-To do so, it is sufficient to display all the events related to the ECG recording using the time reference:
-  1. Find the time reference you are searching for (`time` parameter of the ECG event, here `1350373077.359`)
-  2. Get all events occuring in the time frame that includes the ECG recording
+So that if the ECG recording occured at "1350373077.359", the weight measurement associated to the recording, the device parameters of the recording, etc, will have their "time" set to "1350373077.359".
+
+This allows to display all the events related to the ECG recording using the time reference:
+  1. Set the same time reference for related events (here `1350373077.359`)
+  2. Get all events occuring at the time `1350373077.359`:
 ```json
 {
   "method": "events.get",
   "params": {
-    "fromTime": 1350373000.100,
-    "toTime": 135037400.100
+    "fromTime": 1350373077.359,
+    "toTime": 1350373077.359
   }
+}
+```
+
+The result:
+```json
+{
+    "events": [
+          {
+            "id": "ckdfruqua00127ppvue8jwrpk",
+            "time": 1350373077.359,
+            "streamIds": ["ecg"],
+            "type": "ecg/6-lead-recording",
+            "content": {...},
+          },
+          {
+            "id": "ckdfruqua00107ppv0xeriki2",
+            "time": 1350373077.359,
+            "streamIds": ["weight"],
+            "type": "mass/kg",
+            "content": 60,
+          },
+          {
+            "id": "ckdfruqs700017ppvj4rci1cg",
+            "time": 1350373077.359,
+            "streamIds": ["devices"],
+            "type": "ecg-device/parameters",
+            "content": {...},
+          }
+    ]
 }
 ```
 
 This will allow you to retrieve all time-related events to the ECG recording of your grandma: the weight associated to the recording, the device associated to the recording, etc.
 
-#### Make a query on different events
+### 3. Make a query on different events
   
 Again, Grandma went to do an ECG recording on Monday morning, and cannot remember the weight that was associated to her recording. How can you query it?  
 *Pryv.io does not allow to filter events in the same way as a classic database when performing an "events.get" API call.*  
 
-To get all the different events associated to the same event (here the ECG recording), we recommend to store all the references to these events in a single event on a dedicated stream, e.g "Session".  
-Here we want to get the weight (`mass/kg` event stored in the stream "Weight") associated to the ECG recording (`ecg/6-lead-recording` event stored in the stream "Recording").   
+To get all the different events associated to the same event (here the ECG recording on 03.08.2020), we recommend to store all the references to these events in a dedicated stream, e.g "ECG-Session-20200803".  
+Here we want to get the weight (`mass/kg` event) associated to the ECG recording (`ecg/6-lead-recording` event). A possible solution is to store these events in the dedicated stream "ECG-Session-20200803" in addition to their respective streams ("Weight" and "ECG-recording").
 
-A possible solution is to create a `session/record` event that contains all references to related events in a dedicated stream "ECG-Session":
+The stream structure will look like the following:
 ```js
 ├── Recording
-│   └── ECG-recording ("ecg/6-lead-recording" event; "id": "ckd0br28a000z5csmi4f1cn8y")
+│   └── ECG-recording ("ecg/6-lead-recording" event; "id": "ckdfruqua00127ppvue8jwrpk")
 ├── Health
-│    ├── Weight ("mass/kg" event; "id": "czj2re389000o5csm15xw6776")
-│    └── Heart rate ("blood-pressure/mmhg-bpm" event; "id": "czj2pk293847o5lsk35xw0987")
+│    ├── Weight ("mass/kg" event; "id": "ckdfruqua00107ppv0xeriki2")
+│    └── Heart rate ("frequency/bpm" event; "id": "czj2pk293847o5lsk35xw0987")
 ├── Devices
-│    └── ECG-device ("ecg-device/parameters" event; "id": "cql2tz098234o5cjr12xw9034")
+│    └── ECG-device ("ecg-device/parameters" event; "id": "ckdfruqs700017ppvj4rci1cg")
 └── Sessions
-     ├── ECG-Session ("session/record" event; "id": "crt2lk039111r4wrt252xw3445")
+     ├── ECG-Session-20200803 (any type of event related to the ECG recording)
      └── ...
 ```
-The `session/record` event in "ECG-Session" contains the *eventIds* of related events:
+An [events.get](/reference/#get-events) call on the stream  "ECG-Session-20200803" will allow to retrieve all events related to the ECG recording on 03.08.2020:
 ```json
 {
-  "id": "crt2lk039111r4wrt252xw3445",
-  "time": 1595601190.345,
-  "streamIds": ["ECG-Session"],
-  "type": "session/record",
-  "content": {
-    "ECG-recording":"ckd0br28a000z5csmi4f1cn8y",
-    "Weight":"czj2re389000o5csm15xw6776",
-    "Heart rate":"czj2pk293847o5lsk35xw0987",
-    "ECG-device":"crt2lk039111r4wrt252xw3445"
+  "method": "events.get",
+  "params": {
+    "streamIds": ["ecg-session-20200803"]
   }
 }
 ```
+Result:
+```json
+{
+  "events": [
+    {
+      "id": "ckdfruqua00127ppvue8jwrpk",
+      "time": 1596531629.026,
+      "streamIds": ["ecg-recording", "ecg-session-20200803"],
+      "type": "ecg/6-lead-recording",
+      "content": {...},
+    },
+    {
+      "id": "ckdfruqua00107ppv0xeriki2",
+      "time": 1350309876.634,
+      "streamIds": ["weight", "ecg-session-20200803"],
+      "type": "mass/kg",
+      "content": 60,
+    },
+    {
+      "id": "czj2pk293847o5lsk35xw0987",
+      "time": 1350309856.321,
+      "streamIds": ["heart-rate", "ecg-session-20200803"],
+      "type": "frequency/bpm",
+      "content": 100,
+    },
+    {
+      "id": "ckdfruqs700017ppvj4rci1cg",
+      "time": 1350376789.789,
+      "streamIds": ["ecg-device", "ecg-session-20200803"],
+      "type": "ecg-device/parameters",
+      "content": {...},
+    }  
+```
+
 This method allows you to store all related events to a measurement in order to facilitate the query. Grandma can continue to forget stuff, her Pryv.io account is here to remember.  
 
 All the aforementioned solutions can be used together to reference events across them, but some of them will be more suitable than others depending on the use case. 
 
-### Store technical data from devices  
+## Store technical data from devices  
 
 You sometimes need to store technical data from devices you are collecting data with, as it can be considered "personal data" of your user (see [here](/faq-api/#personal-data) for more on personal data).  
 
@@ -533,7 +594,7 @@ After years of bad habits and a countless number of cigarettes, John had a heart
 
 Multiple options are available to store this data:
 
-#### Create an allocated stream in John's account (recommended)
+### 1. Create an allocated stream in John's account (recommended)
 
 You can create a custom event type `mri-device/parameters` to store technical parameters of the MRI device used during the scan, and add a new event containing the technical data in the stream "MRI-device" for each MRI scan.
 
@@ -543,12 +604,41 @@ You can create a custom event type `mri-device/parameters` to store technical pa
 ├── Devices
 │    └── MRI-device ("mri-device/parameters" event)
 └── Sessions
-     ├── MRI-Session ("session/record" event)
+     ├── MRI-Session-XYZ (any type of event related to the MRI scan)
      └── ...
 ```
-The `session/record` event in "MRI-Session" will contain all references to the MRI scan, corresponding to the *eventsIds* of all events related to the MRI scan (MRI signal, device parameters, etc).
+The stream "MRI-Session-XYZ" will contain all references to the MRI scan "XYZ", corresponding to all events related to the MRI scan XYZ(MRI signal, device parameters, etc).
 
-#### Add it in the `clientData` field of the MRI scan
+An [events.get](/reference/#get-events) call on the stream  "MRI-Session-XYZ" will allow to retrieve the scan measurements and the device parameters of the session XYZ:
+```json
+{
+  "method": "events.get",
+  "params": {
+    "streamIds": ["mri-session-xyz"]
+  }
+}
+```
+Result:
+```json
+{
+  "events": [
+    {
+      "id": "cghpoizut22456pkuio3ngvhu",
+      "time": 1532568969.321,
+      "streamIds": ["mri-recording", "mri-session-xyz"],
+      "type": "mri/signal",
+      "content": {...},
+    },
+    {
+      "id": "ctzoiubn234890ppvj3rci1gh",
+      "time": 1350376789.789,
+      "streamIds": ["mri-device", "mri-session-xyz"],
+      "type": "mri-device/parameters",
+      "content": {...},
+    }  
+```
+
+- **Add it in the `clientData` field of the MRI scan**
   
 When creating the `mri/signal` event related to the measured MRI signal during the scan, you can add the technical MRI data in the `clientData` field as in the following example:
 ```json
@@ -569,14 +659,14 @@ When creating the `mri/signal` event related to the measured MRI signal during t
 }
 ```
 
-#### Store in a separate account
+### 2. Store in a separate account
    
 The other solution you might be thinking of is : *"What if we store all technical data in a dedicated "System" Pryv.io account ? This would keep only "useful" data in John's account, while we could still have all technical data stored somewhere."*   
 If you don't want to bother John with technical data by adding it in his Pryv.io account, well, you might have to do it anyways. 
 Indeed, keep in mind that John needs to be able to access it anytime if it is considered as “personal” data.  
 You will therefore need to define a shared access for John on this data...
 
-### Define accesses to the streams
+## Define accesses to the streams
 
 Ready to take a deep dive right into the core of Pryv.io ?
 <p align="center">
@@ -600,7 +690,7 @@ This can be easily done with Pryv.io.
 ``` 
 
 The data sharing involves two steps:  
-#### 1. The access creation using the [accesses.create](/reference/#create-access) method
+### 1. The access creation using the [accesses.create](/reference/#create-access) method
 
 ```json
 {
@@ -616,7 +706,7 @@ The data sharing involves two steps:
 }
 ```
 
-#### 2. The access token distribution
+### 2. The access token distribution
 
 The [accesses.create](/reference/#create-access) method will create an access token to be shared with your mum to enable her to read data from your stream "Position", and only this one (**"token"**: "ckd0br26e00075csmifuhrlad"):
 ```json
@@ -642,7 +732,7 @@ The access token should be kept in a separate stream in your mum's account to en
   
 Each created access will generate a different token that can be shared with the concerned third-party (doctor, app, family, etc). Pryv.io supports three types of accesses: "personal", "app", "shared" that are hierarchically ordered (more information on accesses type [here](/concepts/#accesses)).
 
-### Perform an access delegation
+## Perform an access delegation
 
 Grandma Linda doesn't master technology as well as her cookies recipe. 
 
@@ -651,14 +741,10 @@ If she cannot connect on your app "Best Health App" to grant access to her data 
 Linda's stream structure:
 ```js
 └── Health
-    ├── Sleep
-    │    └── "sleep/analysis" events
-    ├── Height
-    │    └── "length/cm" events
-    ├── Glucose
-    │    └── "density/mmol-l" events
-    └── Weight
-         └── "mass/kg" events
+    ├── Sleep ("sleep/analysis" events)
+    ├── Height ("length/cm" events
+    ├── Glucose ("density/mmol-l" events)
+    └── Weight ("mass/kg" events)
 ```
 
 At Linda's login (and that's the only moment when she will need to open the app), your app will make an auth request:
@@ -734,7 +820,7 @@ The resulting access:
 While Linda can still be making delicious cookies for you.  
 
 
-### Store data accesses
+## Store data accesses
 
 Let's take again the previous example where Grandma Linda provides your app an access to her data while she can still bake delicious cookies and not bother too much with technology.  
 
@@ -743,14 +829,10 @@ Linda has delegated you access to her account, and you need to share the particu
 Stream structure for Grandma Linda:
 ```js
 └── Health
-    ├── Sleep
-    │    └── "sleep/analysis" events
-    ├── Height
-    │    └── "length/cm" events
-    ├── Glucose
-    │    └── "density/mmol-l" events
-    └── Weight
-         └── "mass/kg" events
+    ├── Sleep ("sleep/analysis" events)
+    ├── Height ("length/cm" events)
+    ├── Glucose ("density/mmol-l" events)
+    └── Weight ("mass/kg" events)
 ```
 
 Where should her doctor keep the access token that will be generated for this sharing, along with other patients' tokens ? 
@@ -760,13 +842,10 @@ When Linda gives a "read" access to Doctor Tom on her stream "Glucose", this wil
 Stream structure for doctor Tom:
 ```js
 ├── Personal profile
-│   ├── Name
-│   │    └── "name/id" events
-│   ├── Hospital
-│   │    └── "name/id" events
+│   ├── Name ("name/id" events)
+│   ├── Hospital ("name/id" events)
 │   └── ...
-└── Patient accesses
-     └── "credentials/pryvApiEndpoint" events
+└── Patient accesses ("credentials/pryvApiEndpoint" events)
 ```
 
 Doctor Tom will need to keep all access tokens to his patients' accounts in the dedicated stream **"Patient accesses"**.   
