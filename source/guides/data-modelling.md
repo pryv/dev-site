@@ -169,7 +169,8 @@ The number of different event types should therefore be minimized, unlike the nu
 
 Let's illustrate it. Grandma needs to record her daily medication intake (daily consumption of paracetamol, spasfon and levothyrox in mg).
 Two options are available to organize her stream structure:
-- **Create an event-type per medication (not recommended)** 
+
+### 1. Create an event-type per medication (not recommended)
 ```json
 ├── Medication
 │  ├── Intake ("paracetamol/mg", "spasfon/mg", "levothyrox/mg"  events)
@@ -190,7 +191,7 @@ An intake of 500mg of paracetamol will be recorded this way:
 ```
 The problem is... Every time Grandma will need to add a new medication in her daily cocktail (and God knows she will, she's not getting younger), we will have to create a new event type to perform content validation. The details steps are explained in the [Data Types Github repository](https://github.com/pryv/data-types).
 
-- **Create a substream per medication (recommended)**
+### 2. Create a substream per medication (recommended)
 ```json
 ├── Medication
     ├── Paracetamol ("mass/mg" events)
