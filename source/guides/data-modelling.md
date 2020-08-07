@@ -529,12 +529,12 @@ Here we want to get the weight (`mass/kg` event) associated to the ECG recording
 The stream structure will look like the following:
 ```js
 ├── Recording
-│   └── ECG-recording ("ecg/6-lead-recording" event; "id": "ckdfruqua00127ppvue8jwrpk")
+│   └── ECG-recording ("ecg/6-lead-recording" event)
 ├── Health
-│    ├── Weight ("mass/kg" event; "id": "ckdfruqua00107ppv0xeriki2")
-│    └── Heart rate ("frequency/bpm" event; "id": "czj2pk293847o5lsk35xw0987")
+│    ├── Weight ("mass/kg" event)
+│    └── Heart rate ("frequency/bpm" event)
 ├── Devices
-│    └── ECG-device ("ecg-device/parameters" event; "id": "ckdfruqs700017ppvj4rci1cg")
+│    └── ECG-device ("ecg-device/parameters" event)
 └── Sessions
      ├── ECG-Session-20200803 (any type of event related to the ECG recording)
      └── ...
@@ -580,6 +580,8 @@ Result:
       "type": "ecg-device/parameters",
       "content": {...},
     }  
+  ]
+}  
 ```
 
 This method allows you to store all related events to a measurement in order to facilitate the query. Grandma can continue to forget stuff, her Pryv.io account is here to remember.  
@@ -636,6 +638,8 @@ Result:
       "type": "mri-device/parameters",
       "content": {...},
     }  
+  ]
+}
 ```
 
 - **Add it in the `clientData` field of the MRI scan**
