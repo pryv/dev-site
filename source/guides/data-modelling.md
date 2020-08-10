@@ -295,7 +295,7 @@ This method allows to share particular events (e.g the "blood-analysis-july" eve
 Forget about the good old times when we would have one fixed-line telephone per building, and you'd have to climb to the last floor to tell your neighboor John to answer the phone (who forgot his keys again at his mum's place). 
 
 <p align="center">
-<img src="/assets/gifs/john-phone.gif" width="400" />
+<img src="/assets/gifs/phone-call.gif" width="400" />
 </p>
 
 Now, John not only has his own smartphone and smartwatch, but even a smart key chain to help him retrieve his keys.  
