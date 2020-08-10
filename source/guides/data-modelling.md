@@ -12,13 +12,6 @@ Please be aware that this guide is NOT intended to be read cover to cover (read 
 
 The general introduction describes Pryv.io data modelling conventions to help you understand how you should build your own data model. Then we provide you with a broad range of use cases that you can encounter while building your data model.
 
-<p align="center">
-*To savour fresh and in moderation.*
- </p>
- <p align="center">
-<img src="/assets/gifs/dicaprio.gif" width="400" />
-</p>
-
 # Table of contents
 
 - 0 [References](#references)
@@ -43,6 +36,13 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 - [Event types Github repository](https://github.com/pryv/data-types) 
 - [Access data structure](/reference/#access)
 - [Batch call](/reference/#call-batch) 
+
+<p align="center">
+*To savour fresh and in moderation.*
+ </p>
+ <p align="center">
+<img src="/assets/gifs/dicaprio.gif" width="400" />
+</p>
 
 ## Introduction
 
