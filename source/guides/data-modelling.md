@@ -21,6 +21,7 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 
 # Table of contents
 
+- 0 [References](#references)
 - 1 [Introduction](#introduction)
 - 2 [Declare the stream structure](#declare-the-stream-structure)
 - 3 [Avoid event types multiplication](#avoid-event-types-multiplication)
@@ -33,6 +34,15 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 - 10 [Perform an access delegation](#performe-an-access-delegation)
 - 11 [Store data accesses](#store-data-accesses)
   
+
+## References
+
+- [Template Excel document for Allergen Data Model](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/)
+- [API Reference](/reference/)
+- [Event types Reference](/event-types/)
+- [Event types Github repository](https://github.com/pryv/data-types) 
+- [Access data structure](/reference/#access)
+- [Batch call](/reference/#call-batch) 
 
 ## Introduction
 
@@ -78,16 +88,11 @@ Here is your starting point.
 
 <p align="center">
 <img src="https://media.giphy.com/media/KxuDSrLSYi8gqxJsua/giphy.gif" width="400" />
-</p>
- 
-*References:*
-- [Template Excel document](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/)
-- [Event types Reference](/event-types/)
-- [Batch call](/reference/#call-batch)  
+</p> 
 
 Building your own data model means defining your streams and events structure following this [template document](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/). Such a document serves as reference for the potentially multiple actors that will implement apps for a single Pryv.io platform.  
 
-The Allergen data model on which the document is based is described in this stream structure:
+The Allergen data model on which the document is based is described in the stream structure below. The smartwatch collects geolocation data from the user, which is used by the Allergen Exposure app to compute ther user's daily exposure to allergens:  
 ![Example Streams Structure](/assets/images/data_model_allergens.svg)
 
 *N.B.: The User's beard is for illustrative purposes solely. However you can check [here](https://www.lung.org/blog/beards-and-lung-health) what the American Lung Association thinks about the association between beard and allergy.*
@@ -189,7 +194,7 @@ An intake of 500mg of paracetamol will be recorded this way:
     }
   }
 ```
-The problem is... Every time Grandma will need to add a new medication in her daily cocktail (and God knows she will, she's not getting younger), we will have to create a new event type to perform content validation. The details steps are explained in the [Data Types Github repository](https://github.com/pryv/data-types).
+The problem is... Every time Grandma will need to add a new medication in her daily cocktail (and God knows she will, she's not getting younger), we will have to create a new event type to perform content validation. The detailed steps are explained in the [Data Types Github repository](https://github.com/pryv/data-types).
 
 ### 2. Create a substream per medication (recommended)
 ```json
@@ -229,8 +234,8 @@ If your event type is not referenced in the [default Event Types list](https://a
 Does it mean you can create absolutely any event type you want? Well, not exactly. It will need to follow the specification `{class}/{format}` (e.g `note/txt`). **Events with undeclared types are allowed but their content is not validated.** You can find more information on this in the [corresponding section](https://api.pryv.com/event-types/#basics).    
 
 For example, let's say that you need to create a custom event type for your 12-lead ECG recording `ecg/12-lead-recording`. If you want to perform content validation and ensure that every time you retrieve a new event it has the right structure, the procedure is the following:
-1. Fork the [Data Type repository](https://github.com/pryv/data-types) and add your `ecg.json` file
-2. Define your event type in a JSON file, in this case `ecg.json`:
+1. Fork the [Data Type Github repository](https://github.com/pryv/data-types)
+2. Define your event type in a JSON file, in this case `ecg.json` file:
 ```json
 {
   "ecg": {
@@ -610,7 +615,7 @@ You can create a custom event type `mri-device/parameters` to store technical pa
      ├── MRI-Session-XYZ (any type of event related to the MRI scan)
      └── ...
 ```
-The stream "MRI-Session-XYZ" will contain all references to the MRI scan "XYZ", corresponding to all events related to the MRI scan XYZ(MRI signal, device parameters, etc).
+The stream "MRI-Session-XYZ" will contain all references to the MRI scan "XYZ", corresponding to all events related to the MRI scan XYZ (MRI signal, device parameters, etc).
 
 An [events.get](/reference/#get-events) call on the stream  "MRI-Session-XYZ" will allow to retrieve the scan measurements and the device parameters of the session XYZ:
 ```json
@@ -643,7 +648,7 @@ Result:
 }
 ```
 
-- **Add it in the `clientData` field of the MRI scan**
+### 2. Add it in the `clientData` field of the MRI scan
   
 When creating the `mri/signal` event related to the measured MRI signal during the scan, you can add the technical MRI data in the `clientData` field as in the following example:
 ```json
@@ -664,7 +669,7 @@ When creating the `mri/signal` event related to the measured MRI signal during t
 }
 ```
 
-### 2. Store in a separate account
+### 3. Store in a separate account
    
 The other solution you might be thinking of is : *"What if we store all technical data in a dedicated "System" Pryv.io account ? This would keep only "useful" data in John's account, while we could still have all technical data stored somewhere."*   
 If you don't want to bother John with technical data by adding it in his Pryv.io account, well, you might have to do it anyways. 
