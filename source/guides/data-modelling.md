@@ -16,7 +16,7 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 *To savour fresh and in moderation.*
  </p>
  <p align="center">
-<img src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" width="400" />
+<img src="/assets/gifs/dicaprio.gif" width="400" />
 </p>
 
 # Table of contents
@@ -87,7 +87,7 @@ Available levels of permissions (read, manage, contribute, create-only) are defi
 Here is your starting point.  
 
 <p align="center">
-<img src="https://media.giphy.com/media/KxuDSrLSYi8gqxJsua/giphy.gif" width="400" />
+<img src="/assets/gifs/building-model.gif" width="400" />
 </p> 
 
 Building your own data model means defining your streams and events structure following this [template document](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/). Such a document serves as reference for the potentially multiple actors that will implement apps for a single Pryv.io platform.  
@@ -221,7 +221,7 @@ This solution has the advantage of resolving the forementioned problem by provid
 As there is no limit to the number of substreams to a stream, it's only Grandma's health, incidentally. 
 
 <p align="center">
-<img src="https://media.giphy.com/media/3o7TKVSpblpNLFLDLa/giphy.gif" width="400" />
+<img src="/assets/gifs/healthy-grandma.gif" width="400" />
 </p>
 
 In this regard, multiplying the number of streams is a preferable solution when you need to enter data measurements for different types of components (e.g medications, diseases, medical devices, etc).
@@ -260,7 +260,7 @@ How so ?
 Let's take the example of your Grandma (again). She is storing her blood analysis results in a substream "Blood" under her "Health" profile. She usually shares the whole stream with her hematologist, but now she only needs to share her last blood analysis with her general practitioner.  
 
 <p align="center">
-<img src="https://media.giphy.com/media/efyEShk2FJ9X2Kpd7V/giphy.gif" width="400" />
+<img src="/assets/gifs/bob-access.gif" width="400" />
 </p>
 
 To do so, you can create a stream "Sharings" reserved for the data sharings she will need to do with third parties. You can then store her last blood analysis in a sub-stream of the stream "Sharings" that you will share with her doctor.
@@ -295,7 +295,7 @@ This method allows to share particular events (e.g the "blood-analysis-july" eve
 Forget about the good old times when we would have one fixed-line telephone per building, and you'd have to climb to the last floor to tell your neighboor John to answer the phone (who forgot his keys again at his mum's place). 
 
 <p align="center">
-<img src="https://media.giphy.com/media/TlG9WaojXmx3y/giphy.gif" width="400" />
+<img src="/assets/gifs/john-phone.gif" width="400" />
 </p>
 
 Now, John not only has his own smartphone and smartwatch, but even a smart key chain to help him retrieve his keys.  
@@ -425,7 +425,7 @@ The result:
 Some of your Pryv.io events may be calling one another, and you might need to reference events between themselves.
 
 <p align="center">
-<img src="https://media.giphy.com/media/llfxx2GD5wMyk/giphy.gif" width="400" />
+<img src="/assets/gifs/references.gif" width="400" />
 </p>
 
 To do so, multiple options are available depending on your use case:
@@ -680,7 +680,7 @@ You will therefore need to define a shared access for John on this data...
 
 Ready to take a deep dive right into the core of Pryv.io ?
 <p align="center">
-<img src="https://media.giphy.com/media/iMBEgyXkFBtdCFS93i/giphy.gif" width="400" />
+<img src="/assets/gifs/define-access.gif" width="400" />
 </p>
 
 The Pryv.io streams structure allows you to define granular accesses on data and to share only necessary information with different access levels ("read", "manage", "contribute", "create-only").  
@@ -824,7 +824,7 @@ The resulting access:
 ```
 
 <p align="center">
-<img src="https://media.giphy.com/media/l0MYEIHpvyH8hd8ac/giphy.gif" width="400" />
+<img src="/assets/gifs/grandma-cookies.gif" width="400" />
 </p>
 
 While Linda can still be making delicious cookies for you.  
@@ -873,5 +873,5 @@ In the case of Linda, the following event will be created in the stream "Patient
   }
 ```
 <p align="center">
-<img src="https://media.giphy.com/media/3o7TKDmvzlxnkkPoSA/giphy.gif" width="400" />
+<img src="/assets/gifs/grandma-happy.gif" width="400" />
 </p>
