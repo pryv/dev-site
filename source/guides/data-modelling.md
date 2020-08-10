@@ -12,7 +12,7 @@ Please be aware that this guide is NOT intended to be read cover to cover (read 
 
 The general introduction describes Pryv.io data modelling conventions to help you understand how you should build your own data model. Then we provide you with a broad range of use cases that you can encounter while building your data model.
 
-# Table of contents
+**Table of contents:**
 
 - 0 [References](#references)
 - 1 [Introduction](#introduction)
