@@ -86,7 +86,7 @@ The following scheme explains the different steps of the process using Pryv.io c
 
 Bob wants to create an [Access](/reference/#data-structure-access) exclusive to Alice on his stream "Health" with a "read" permission.
 
-- 1. Alice creates an Access for verification, that will only be used by the custom auth step to validate her identity. It implies the creation of a stream "Verify" dedicated to this process.
+- 1 Alice creates an Access for verification, that will only be used by the custom auth step to validate her identity. It implies the creation of a stream "Verify" dedicated to this process.
 
 ```json
 {
@@ -104,11 +104,11 @@ Bob wants to create an [Access](/reference/#data-structure-access) exclusive to 
 }
 ```
 
-- 2. Alice provides Bob with:
+- 2 Alice provides Bob with:
   - her apiEndpoint: `https://alice.pryv.me/`
   - the `id` of her access previously created (see above): `alices-verification-abc`
 
-- 3. Bob creates an Access for Alice on the stream "Health" that will be verified by the custom auth step. In the `clientData` field, he adds her apiEndpoint and the `id` of her access that she provided him with in the previous step.
+- 3 Bob creates an Access for Alice on the stream "Health" that will be verified by the custom auth step. In the `clientData` field, he adds her apiEndpoint and the `id` of her access that she provided him with in the previous step.
 
 ```json
 {
@@ -134,7 +134,7 @@ Bob wants to create an [Access](/reference/#data-structure-access) exclusive to 
 }
 ```
 
-- 4. Alice queries Bob's data with the following header:
+- 4 Alice queries Bob's data with the following header:
 
 ```
 [<access-token>: bobs-token-for-alice <caller-id>: alices-token]
@@ -142,7 +142,7 @@ Bob wants to create an [Access](/reference/#data-structure-access) exclusive to 
 
 It should follow the auth format as specified in the `context` properties of the function `customAuthStepFn` (see [previous section](#function-to-implement)): `[<access-token> <caller-id>]` .
 
-- 5. 
+- 5 
 - 5.1 The Pryv.io API validates `bobs-token-for-alice`.
 - 5.2 The Custom Authentication function looks for a field `customAuth:PryvAuthentication` in the retrieved Access' `clientData`.
 - 5.3 Upon finding it, it fetches Alice's token's information, using Alice's `apiEndpoint` that is provided in the `clientData` field of Bob's access:
@@ -171,7 +171,7 @@ It should follow the auth format as specified in the `context` properties of the
   }
   ```
 
-- 5.5 It compares the retrieved Access `id` with the one that was saved in the `clientData` field under `"id": "alices-verification-abc"`. If it matches, it allows permission to the data, otherwise it refuses it.
+- 6 It compares the retrieved Access `id` with the one that was saved in the `clientData` field under `"id": "alices-verification-abc"`. If it matches, it allows permission to the data, otherwise it refuses it.
 
 ## Custom Auth Step features
 
@@ -185,7 +185,7 @@ As explained in the example below, granting access to a third party and verifyin
 
 These accesses serve different purposes and should be defined similarly as below:
 
-1. Alice's "verification" access that enables Pryv.io custom auth step to validate her identity. A "mock" stream (here the stream "Verify") needs to be created to be able to generate an access on it. The id of this access needs to be communicated to Bob so that he integrates it in the `clientData` field of the access he creates for Alice.
+- 1 Alice's "verification" access that enables Pryv.io custom auth step to validate her identity. A "mock" stream (here the stream "Verify") needs to be created to be able to generate an access on it. The id of this access needs to be communicated to Bob so that he integrates it in the `clientData` field of the access he creates for Alice.
 
 **POST \accesses** for Alice's verification access: 
 
@@ -205,7 +205,7 @@ These accesses serve different purposes and should be defined similarly as below
 }
 ```
 
-2. Bob's access for Alice enables Alice to access one or multiple streams of his Pryv.io data, with different permissions. It has the particularity of having a `clientData` field that contains information to verify Alice's identity: her **apiEndpoint** and the **id** of her "verification" access.  
+- 2 Bob's access for Alice enables Alice to access one or multiple streams of his Pryv.io data, with different permissions. It has the particularity of having a `clientData` field that contains information to verify Alice's identity: her **apiEndpoint** and the **id** of her "verification" access.  
 In our example, Bob's defines an access on his stream "Health" with a "read" permission.
 
 **POST \accesses** for Bob's access: 
@@ -234,7 +234,7 @@ In our example, Bob's defines an access on his stream "Health" with a "read" per
 }
 ```
 
-The custom auth step will retrieve Alice's verification access id and compare it to the access id stored in the `clientData` of Bob's access for Alice. If it matches, Alice's identity is verified and the authentication is successful. 
+The custom auth step will retrieve Alice's verification **access id** and compare it to the access id stored in the `clientData` of Bob's access for Alice. If it matches, Alice's identity is verified and the authentication is successful. 
 
 ### Custom Authentication function
 
