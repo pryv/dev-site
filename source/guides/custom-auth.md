@@ -84,6 +84,11 @@ When Alice is requesting access to this stream, the custom auth step will allow 
 
 The following scheme explains the different steps of the process using Pryv.io custom auth step.  
 
+ </p>
+ <p align="center">
+<img src="/assets/gifs/alice-bob.gif" />
+</p>
+
 Bob wants to create an [Access](/reference/#data-structure-access) exclusive to Alice on his stream "Health" with a "read" permission.
 
 - 1 Alice creates an Access for verification, that will only be used by the custom auth step to validate her identity. It implies the creation of a stream "Verify" dedicated to this process.
@@ -108,7 +113,8 @@ Bob wants to create an [Access](/reference/#data-structure-access) exclusive to 
   - her apiEndpoint: `https://alice.pryv.me/`
   - the `id` of her access previously created (see above): `alices-verification-abc`
 
-- 3 Bob creates an Access for Alice on the stream "Health" that will be verified by the custom auth step. In the `clientData` field, he adds her apiEndpoint and the `id` of her access that she provided him with in the previous step.
+- 3.1 Bob creates an Access for Alice on the stream "Health" that will be verified by the custom auth step. 
+- 3.2 In the `clientData` field, he adds her apiEndpoint and the `id` of her access that she provided him with in the previous step.
 
 ```json
 {
@@ -143,9 +149,9 @@ Bob wants to create an [Access](/reference/#data-structure-access) exclusive to 
 It should follow the auth format as specified in the `context` properties of the function `customAuthStepFn` (see [previous section](#function-to-implement)): `[<access-token> <caller-id>]` .
 
 - 5 
-- 5.1 The Pryv.io API validates `bobs-token-for-alice`.
-- 5.2 The Custom Authentication function looks for a field `customAuth:PryvAuthentication` in the retrieved Access' `clientData`.
-- 5.3 Upon finding it, it fetches Alice's token's information, using Alice's `apiEndpoint` that is provided in the `clientData` field of Bob's access:
+  - 5.1 The Pryv.io API validates `bobs-token-for-alice`.
+  - 5.2 The Custom Authentication function looks for a field `customAuth:PryvAuthentication` in the retrieved Access' `clientData`.
+  - 5.3 Upon finding it, it fetches Alice's token's information, using Alice's `apiEndpoint` that is provided in the `clientData` field of Bob's access:
   
   ```
   GET {apiEndpoint}/access-info
@@ -153,7 +159,7 @@ It should follow the auth format as specified in the `context` properties of the
   Authorization: alices-token
   ```
 
-- 5.4 It receives the access information of Alice's verification token:
+  - 5.4 It receives the access information of Alice's verification token:
 
   ```json
   {
