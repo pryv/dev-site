@@ -8,13 +8,17 @@ withTOC: true
 # Future releases
 
 - **Custom auth step to verify access tokens**
-- **Pryv Explorer**: web application to explore and manage data on the Pryv.io web service
+- **Pryv Explorer**: Web application to explore and manage data on the Pryv.io web service
 - **System streams to handle profile data**
 - **Indexable fields at user account creation** (other than username and email)
+- **Open Pryv.io image for [Exoscale market](https://www.exoscale.com/marketplace/)**
+- **HL7-FIHR bridge**: Convertor between Pryv.io events and FHIR data types
+- **Pryv.io certificates auto-renewal**: Implement automatic SSL certification renewal
+- **Data integrity in Pryv.io** 
 
 # Released
 
-## 12.08.2020 - Admin panel for Pryv.io
+## 12.08.2020 - Admin panel for Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 We have released a web application for your Pryv.io platform administration. It allows you to monitor all platform-related settings and manage users of your platform. Contact us directly if you wish to get your admin panel for Pryv.io!
 
