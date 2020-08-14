@@ -222,20 +222,22 @@ The custom auth step will compare the access id for Alice's verification token c
 The Custom Authentication function used by the custom auth step to validate Alice's identity is described below.
 
 ```javascript
-module.exports = function(context, callback) {
-  const http = require('http');
-  if (context.access.clientData) {
-    // aliceApiEndpoint/access-info?auth=alice_token
-    http.get(context.access.clientData.customAuth.PryvAuthentication.apiEndPoint + '/access-info?auth=' + context.callerId, (resp) => {
-      //alice accessId == clientData.customAuth.PryvAuthentication.accessId
-      if (resp.headers['pryv-access-id'] == context.access.clientData.customAuth.PryvAuthentication.accessId) {
-        return callback()
-      }
-      callback(new Error('AccessIds do not correpond'))
-    }).end();
-  } else {
-    callback(new Error('no clientData in access'));
-  }
+const http = require('http');
+module.exports = function (context, callback) {
+    const access = context.access;
+    if (access.clientData && access.clientData.customAuth && access.clientData.customAuth.PryvAuthentication) {
+        // aliceApiEndpoint/access-info?auth=alice_token
+        http.get(access.clientData.customAuth.PryvAuthentication.apiEndpoint + '/access-info?auth=' + context.callerId, (resp) => {
+            //alice accessId == clientData.customAuth.PryvAuthentication.accessId
+            if (resp.headers['pryv-access-id'] == access.clientData.customAuth.PryvAuthentication.accessId) {
+                return callback()
+            }
+            callback(new Error('accessIds do not correpond'))
+        }).end();
+    } else {
+        //access was created without clientData => no other verification
+        callback();
+    }
 };
 ```
 The arguments `context` and `callback` need to be passed as arguments to the method. Available properties of the context can be found in the section [above](#what-is-a-custom-auth-step).
