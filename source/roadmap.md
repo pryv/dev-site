@@ -7,14 +7,21 @@ withTOC: true
 
 # Future releases
 
-- **Admin panel for Pryv.io**: web interface for Pryv.io platform administration 
-- **Pryv Explorer**: web application to explore and manage data on the Pryv.io web service
-- **Adding a change-password.html page for the authentication app** (app-web-auth3)
 - **Custom auth step to verify access tokens**
+- **Pryv Explorer**: web application to explore and manage data on the Pryv.io web service
 - **System streams to handle profile data**
 - **Indexable fields at user account creation** (other than username and email)
 
 # Released
+
+## 12.08.2020 - Admin panel for Pryv.io
+
+We have released a web application for your Pryv.io platform administration. It allows you to monitor all platform-related settings and manage users of your platform. Contact us directly if you wish to get your admin panel for Pryv.io!
+
+## 05.08.2020 - New change-password.html page 
+
+Our new "change-password" web page allows you to change your password to your Pryv.io account. You can find the code for the authentication app in our [Github repository](https://github.com/pryv/app-web-auth3) that you can customize for your own authentication process.
+
 
 ## 31.07.2020 - Develop your iOS applications with Pryv.io 
 
