@@ -8,24 +8,24 @@ withTOC: true
 # Future releases
 
 - **Custom auth step to verify access tokens**
-- **Pryv Explorer**: Web application to explore and manage data on the Pryv.io web service
+- **Pryv Explorer**: Web application to explore and manage data on your Pryv.io platform
 - **System streams to handle profile data**
 - **Indexable fields at user account creation** (other than username and email)
 - **Open Pryv.io image for [Exoscale market](https://www.exoscale.com/marketplace/)**
 - **HL7-FIHR bridge**: Convertor between Pryv.io events and FHIR data types
-- **Pryv.io certificates auto-renewal**: Implement automatic SSL certification renewal
-- **Data integrity in Pryv.io** 
+- **Pryv.io certificates auto-renewal**: Automatic SSL certification renewal
 
 # Released
 
 ## 12.08.2020 - Admin panel for Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-We have released a web application for your Pryv.io platform administration. It allows you to monitor all platform-related settings and manage users of your platform. Contact us directly if you wish to get your admin panel for Pryv.io!
+We have released a web application for your Pryv.io platform administration. It allows you to manage the platform settings of your platform. Contact us directly if you wish to get your admin panel for Pryv.io!
 
-## 05.08.2020 - New change-password.html page 
+## 05.08.2020 - Change-password.html page 
 
-Our new "change-password" web page allows you to change your password to your Pryv.io account. You can find the code for the authentication app in our [Github repository](https://github.com/pryv/app-web-auth3) that you can customize for your own authentication process.
+The additional "change-password.html" page has been published among our [template web pages](https://github.com/pryv/app-web-auth3) to register, authenticate and allow password modification for your app users. 
 
+You can discover the authentication process for your Open Pryv.io platform in our [video tutorial](https://youtu.be/MfGTAgXr2WI). and fork our [Github repository](https://github.com/pryv/app-web-auth3/fork) to customize it.
 
 ## 31.07.2020 - Develop your iOS applications with Pryv.io 
 
