@@ -21,9 +21,9 @@ withTOC: true
 
 We have released a web application for your Pryv.io platform administration. It allows you to manage the platform settings of your platform. Contact us directly if you wish to get your admin panel for Pryv.io!
 
-## 05.08.2020 - Change-password.html page 
+## 05.08.2020 - "Change password" page
 
-The additional "change-password.html" page has been published among our [template web pages](https://github.com/pryv/app-web-auth3) to register, authenticate and allow password modification for your app users. 
+The additional `/change-password.html` page has been published among our [template web pages](https://github.com/pryv/app-web-auth3) to register, authenticate and password modification for your app users. 
 
 You can discover the authentication process for your Open Pryv.io platform in our [video tutorial](https://youtu.be/MfGTAgXr2WI). and fork our [Github repository](https://github.com/pryv/app-web-auth3/fork) to customize it.
 
