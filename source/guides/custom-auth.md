@@ -23,20 +23,22 @@ withTOC: true
 
 ## Introduction
 
-Authentication allows you to validate the identity of a registered user attempting to access resources. You can add a custom authentication step to your Pryv.io platform to verify more information than the access token when sending a request to access data.  
+Authentication allows you to validate the identity of a registered user attempting to access resources. You can add a custom authentication step to your Pryv.io platform to verify more information than the authorization token when performing a request to access data.  
 
-In this guide, we explain how to provide your Pryv.io instance with this feature and how to use it through a particular use case. 
+In this guide, we explain how to provide your Pryv.io instance with this feature and illustrate it with a concrete use case. 
 
 ## Pryv.io Custom Auth Step
 
 ### Why using a custom auth step
 
-You can already keep track of actions performed by clients against Pryv.io accounts using [Pryv.io Audit Capabilities](/reference/#audit-log) that enable you to track when an access token is used for example. The Custom Auth step allows the Pryv.io platform to authenticate a user with more information than the access token.
+You can already keep track of actions performed by clients against the Pryv.io API using the [Pryv.io Audit Capabilities](/reference/#audit-log) that enable you to track when an access token was used for example. The Custom Auth step allows the Pryv.io platform to authenticate a user with more information than the access token.
 
-For example, if a user A needs to access data from another user B in your Pryv.io platform, you can implement an authentication step that will allow you to verify the identity of user A when he tries to access data from user B, and keep the identity of user A in the audit logs. The identity of the requester (user A) can be verified through a custom auth step that you can add to your Pryv.io platform implementation as explained below.
+For example, if a Alice needs to access data from Bob in your Pryv.io platform, you can implement an authentication step that will allow you to verify the identity of user Alice when she tries to access data from Bob, and keep the identity of user Alice in the audit logs. The identity of the requester (Alice) can be verified through a custom auth step that you can add to your Pryv.io platform implementation as explained below.
 
 ### What is the custom auth step
 
+You can define a function that will be run by Pryv.io after the authorization token verificiation.
+In this function, you have access to a context object which contains the fields described below, as well as the NodeJS core modules.
 The function you will implement to augment your Pryv.io platform with authentication capabilities will be part of the custom extension modules that need to be added in your platform configuration.  
 It is possible to extend the API and servers with your own code. Your custom auth step will allow you to use the information stored in the context to authenticate a user.  
 
