@@ -21,6 +21,10 @@ withTOC: true
 
 We have released a web application for your Pryv.io platform administration. It allows you to manage the platform settings of your platform. Contact us directly if you wish to get your admin panel for Pryv.io!
 
+## 10.08.2020 - Data Modelling guide
+
+Our new [Data modelling guide](/guides/data-modelling/) is out, illustrating multiple use cases that can be implemented using the Pryv.io API.
+
 ## 05.08.2020 - "Change password" page
 
 The additional `/change-password.html` page has been published among our [template web pages](https://github.com/pryv/app-web-auth3) to register, authenticate and password modification for your app users. 
