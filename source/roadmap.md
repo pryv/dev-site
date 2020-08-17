@@ -78,7 +78,8 @@ Check how Postman can help to facilitate & accelerate the Pryv.io API integratio
 
 ## 04.01.2020 - Webhooks at Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Pryv.io notifies your app of any data changes from now. Learn more about Webhooks [here](https://support.pryv.com/hc/en-us/articles/360014071180-Webhooks-at-Pryv-io) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Pryv.io notifies your app of any data changes from now. Learn more about Webhooks [here](https://support.pryv.com/hc/en-us/articles/360014071180-Webhooks-at-Pryv-io) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).  
+Our [Webhooks technical guide](/guides/webhooks/) explains their different features and how they are set up.
 
 ## 23.11.2019 - Audit Logs in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
