@@ -1325,7 +1325,7 @@ module.exports = exports =
     title: "Accesses"
     description: """
                  Methods to retrieve and manipulate [accesses](##{dataStructure.getDocId("access")}), e.g. for sharing.
-                 Any app can manage shared accesses whose permissions are a subset of its own. (Full access management is available to trusted apps.)
+                 Any app token can manage shared accesses it created. Full access management is available to personal tokens.
                  """
     sections: [
       id: "accesses.get"
@@ -1333,10 +1333,9 @@ module.exports = exports =
       title: "Get accesses"
       http: "GET /accesses"
       description: """
-                   Gets manageable accesses. Only returns accesses that can
-                   be managed by the requesting access and that are active when
-                   making the request. To include accesses that have expired, use
-                   the `includeExpired` parameter.
+                   Gets accesses that were created by your access token, unless you're using a personal token then it returns all accesses.  
+                   Only returns accesses that are active when making the request. To include accesses that have expired or were deleted, use
+                   the `includeExpired` or `includeDeletions` parameters respectively.
                    """
       params:
         properties: [
