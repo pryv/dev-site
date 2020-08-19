@@ -72,6 +72,8 @@ The following scheme explains the different steps of the process using Pryv.io c
 <img src="/assets/gifs/alice-bob.gif" />
 </p>
 
+You can watch the entire flow [here](https://youtu.be/hu3vnFJZDVo).  
+
 Bob wants to create an [Access](/reference/#data-structure-access) exclusive to Alice on his stream "Health" with a "read" permission.
 
 - 1 Alice creates an **Access for verification**, that will only be used by the custom auth step to validate her identity. The custom auth step will check that the access id of this **Access** and the access id stored in Bob's access for Alice match (see step n°6). This implies the creation of a stream "Verify" dedicated to this process.
