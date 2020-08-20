@@ -25,43 +25,50 @@ withTOC: true
 
 Authentication allows you to validate the identity of a registered user attempting to access resources. You can add a custom authentication step to your Pryv.io platform to verify more information than the authorization token when performing a request to access data.  
 
-In this guide, we explain how to provide your Pryv.io instance with this feature and illustrate it with a concrete use case. 
+In this guide, we explain how to provide your Pryv.io platform with this feature and illustrate it with a concrete use case. 
 
 ## Pryv.io Custom Auth Step
 
 ### Why using a custom auth step
 
-You can already keep track of actions performed by clients against the Pryv.io API using the [Pryv.io Audit Capabilities](/reference/#audit-log) that enable you to track when an access token was used for example. The Custom Auth step allows the Pryv.io platform to authenticate a user with more information than the access token.
+When you wish to authenticate your Pryv.io API requests or authorize them against another web service. For example, if you wish to verify the identity of the person using the authorization token you have provided them.  
+In this case, you would append a second token to the `Authorization` header after the Pryv.io token separated by a whitespace.
 
-For example, if a Alice needs to access data from Bob in your Pryv.io platform, you can implement an authentication step that will allow you to verify the identity of user Alice when she tries to access data from Bob, and keep the identity of user Alice in the audit logs. The identity of the requester (Alice) can be verified through a custom auth step that you can add to your Pryv.io platform implementation as explained below.
+For example, if a Alice needs to access data from Bob in your Pryv.io platform, you can implement an authentication step that will allow you to verify the identity of user Alice when she tries to access data from Bob. The identity of the data client (Alice) can be verified through a custom auth step that you can add to your Pryv.io platform as explained below.
 
 ### What is the custom auth step
 
-You can define a function that will be run by Pryv.io after the authorization token verificiation.
-In this function, you have access to a context object which contains the fields described below, as well as the NodeJS core modules.
-The function you will implement to augment your Pryv.io platform with authentication capabilities will be part of the custom extension modules that need to be added in your platform configuration.  
-It is possible to extend the API and servers with your own code. Your custom auth step will allow you to use the information stored in the context to authenticate a user.  
+You can define a function that will be run by Pryv.io after the authorization token verificiation.  
+In this function, you have access to the fields described below, as well as the NodeJS core modules:
 
-The available properties of the context are (as of now):
-- `username` (string)
-- `user` (object): the user object (properties include `id`)
-- `accessToken` (string): as read in the `Authorization` header or `auth` parameter
-- `callerId` (string): optional additional id passed after `accessToken` in auth after a separating space (auth format is thus `[<access-token> <caller-id>]`)
-- `access` (object): the access object (see [API doc](https://api.pryv.com/reference/#access) for structure) 
+- `username` (string)  
+- `user` (object): the user object (properties include `id`)  
+- `accessToken` (string): as read in the `Authorization` header or `auth` parameter  
+- `callerId` (string): optional additional id passed after `accessToken` in the `Authorization` header after a separating space (header format is thus `[<access-token> <caller-id>]`)  
+- `access` (object): the access object (see [API doc](https://api.pryv.com/reference/#access))  
+
+```javascript
+// Example of customAuthStepFn.js
+module.exports = function (context, callback) {
+  // do whatever is needed here (check LDAP, custom DB, etc.)
+  performCustomValidation(context, function (err) {
+    if (err) { return callback(err); }
+    callback();
+  });
+};
+```
 
 ### How to set up the custom auth step
 
-You can add your custom code in the configuration file of your Pryv.io platform under the `customExtensions` field. By default, the API server checks `{app root}/custom-extensions/customAuthStepFn.js` to find a custom auth step. You can modify the default name in `{app root}/components/api-server/src/settings.js`.
+For Pryv.io enterprise version, you can add it using the admin panel, please request a template version above v1.0.XX to have access to it.
 
-Once your server is up and running:
-- run `yarn release` to create distribution for the release
-- run `yarn api`  in core-services to restart the API server
+For Open Pryv.io, you can provide it
 
-## Authenticate authorization token with Pryv.io 
+## Authenticate data access with Pryv.io
 
 In this section, we illustrate the usage of a custom auth step through a basic use case. Bob wants to share his data with Alice, and creates an access for her on the stream "Health" with a "read" permission (more information on the **Access structure** [here](/reference/#data-structure-access)). 
 
-When Alice is requesting access to this stream, the custom auth step will allow to verify Alice's identity using an access for verification and validate her request. This implies the creation of a "verification" access for Alice that will only be used to validate her identity.
+When Alice is using the access that was provided to her, the custom auth step will allow to verify Alice's identity. This implies the creation of a "verification" access for Alice that will only be used to validate her identity.
 
 ### Hands-on example
 
@@ -98,8 +105,8 @@ Bob wants to create an [Access](/reference/#data-structure-access) exclusive to 
   - the `id` of her access previously created (see above): `alices-verification-abc`
 
 - 3
- - 3.1 Bob creates an Access for Alice on the stream "Health" that will be verified by the custom auth step. 
- - 3.2 In the `clientData` field, he adds her apiEndpoint and the `id` of her access that she provided him with in the previous step.
+ - 3.1 Bob creates an Access for Alice on the stream "Health".
+ - 3.2 In the `clientData` field, he adds her apiEndpoint and the `id` of her access that she provided him with in the previous step, so that it will be verified by the custom auth step. 
 
 ```json
 {
@@ -124,13 +131,13 @@ Bob wants to create an [Access](/reference/#data-structure-access) exclusive to 
 }
 ```
 
-- 4 Alice queries Bob's data with the following header:
+- 4 Alice queries Bob's data with the following `Authorization` header:
 
-```
-[<access-token>: bobs-token-for-alice <caller-id>: alices-token-for-bob]
+```yaml
+Authorization: "bobs-token-for-alice alices-token-for-bob"
 ```
 
-It should follow the auth format as specified in the `context` properties of the function `customAuthStepFn` (see [previous section](#function-to-implement)): `[<access-token> <caller-id>]` .
+It should contain both tokens, separated by a whitespace.
 
 - 5 
  - 5.1 The Pryv.io API validates `bobs-token-for-alice`.
@@ -160,132 +167,80 @@ It should follow the auth format as specified in the `context` properties of the
   }
   ```
 
-- 6 It compares the retrieved Access `id` (`"id": "alices-verification-abc"`) with the one from Bob access' clientData: `clientData.customAuth.PryvAuthentication.id`. If it matches, it allows permission to the data, otherwise it refuses it.
-
-## Custom Auth Step features
-
-The implementation of the custom auth step requires the creation of different accesses and the function of authentication itself, that you can customize according to your needs using its `context` argument.
-
-### Accesses
-
-As explained in the example below, granting access to a third party and verifying the accessor's identity implies the creation of two distinct accesses:
-- the access to Bob's data, defined by Bob
-- the "verification" access, used only to validate Alice's identity, created by Alice
-
-These accesses serve different purposes and should be defined similarly as below:
-
-- 1 Alice's "verification" access that enables Pryv.io custom auth step to validate her identity. A "mock" stream (here the stream "Verify") needs to be created to be able to generate an access on it. The id of this access needs to be communicated to Bob so that he integrates it in the `clientData` field of the access he creates for Alice.
-
-**POST /accesses** for Alice's verification access: 
-
-```json
-{
-  "id": "alices-verification-abc",
-  "type": "shared",
-  "name": "alices-access",
-  "permissions": [
-    {
-      "streamId": "verify",
-      "level": "read"
-    }
-  ],
-}
-```
-
-- 2 Bob's access for Alice enables Alice to access one or multiple streams of his Pryv.io data, with different permissions. It has the particularity of having a `clientData` field that contains information to verify Alice's identity: her **apiEndpoint** and the **id** of her "verification" access.  
-In our example, Bob's defines an access on his stream "Health" with a "read" permission.
-
-**POST /accesses** for Bob's access: 
-
-```json
-{
-  "id": "ckdoc7cca0001m1pv5ju4msy5",
-  "type": "shared",
-  "name": "bobs-access-for-alice",
-  "permissions": [
-    {
-      "streamId": "health",
-      "level": "read"
-    }
-  ],
-  "clientData": {
-    "customAuth": {
-      "PryvAuthentication": {
-        "apiEndpoint": "https://alice.pryv.me/",
-        "accessId": "alices-verification-abc"
-      }
-    }
-  }
-}
-```
-
-The custom auth step will compare the access id for Alice's verification token contained in the `clientData` field and the id contained in the response of the call to access-info. If it matches, Alice's identity is verified and the authentication is successful. 
+- 6 It compares the retrieved Access `id` (`"id": "alices-verification-abc"`) with the one from Bob access' clientData: `clientData.customAuth.PryvAuthentication.accessId`. If it matches, it allows permission to the data, otherwise it refuses it.
 
 ### Custom Authentication function
 
-The Custom Authentication function used by the custom auth step to validate Alice's identity is described below.
+You will find the code used by the custom auth step to validate Alice's identity below:
 
 ```javascript
+
+// TODO:
+1. handle API call error
+2. handle wrong accessId
+
 const http = require('http');
 module.exports = function (context, callback) {
-    const access = context.access;
-    if (access.clientData && access.clientData.customAuth && access.clientData.customAuth.PryvAuthentication) {
-        // aliceApiEndpoint/access-info?auth=alice_token
-        http.get(access.clientData.customAuth.PryvAuthentication.apiEndpoint + '/access-info?auth=' + context.callerId, (resp) => {
-            //alice accessId == clientData.customAuth.PryvAuthentication.accessId
-            if (resp.headers['pryv-access-id'] == access.clientData.customAuth.PryvAuthentication.accessId) {
-                return callback()
-            }
-            callback(new Error('accessIds do not correpond'))
-        }).end();
-    } else {
-        //access was created without clientData => no other verification
-        callback();
-    }
+  const access = context.access;
+  if (access.clientData && access.clientData.customAuth && access.clientData.customAuth.PryvAuthentication) {
+    // aliceApiEndpoint/access-info?auth=alice_token
+    http.get(access.clientData.customAuth.PryvAuthentication.apiEndpoint + '/access-info?auth=' + context.callerId, (res) => {
+      //alice accessId == clientData.customAuth.PryvAuthentication.accessId
+      const authenticatedAccess = res.body.access;
+      if (authenticatedAccess.id == access.clientData.customAuth.PryvAuthentication.accessId) {
+        return callback();
+      }
+      callback(new Error('accessIds do not match'))
+    }).end();
+  } else {
+    //access was created without clientData => no other verification
+    callback();
+  }
 };
 ```
+
 The arguments `context` and `callback` need to be passed as arguments to the method. Available properties of the context can be found in the section [above](#what-is-a-custom-auth-step).
 
 ```javascript
 module.exports = function(context, callback) {
-  const http = require('http');
-```
-The method first verifies that the access (`context` property) has a non empty `clientData` field. If it is the case, an error is thrown:
-
-```javascript
-if (context.access.clientData){ 
-  //...
-}
-else {
-    callback(new Error('no clientData in access'));
+  // ...
 }
 ```
 
-If it is not the case, it fetches the **apiEndpoint** from `clientData` and performs a [**getAccessInfo call**](/reference/#access-info) with the apiEndpoint and the callerId (`context` property), that corresponds to Alice's token.
+The method first verifies that the access has a `clientData` property containing the access to verify:
 
 ```javascript
-if (context.access.clientData) {
-    // aliceApiEndpoint/access-info?auth=alice_token
-    http.get(context.access.clientData.customAuth.PryvAuthentication.apiEndPoint + '/access-info?auth=' + context.callerId, (resp) => {
-```
-It then compares the access id for Alice's verification token contained in the `clientData` field and the id contained in the response of the call to access-info. If it matches, the authentication is successful:
-
-```javascript
-{
-//alice accessId == clientData.customAuth.PryvAuthentication.accessId
-if (resp.headers['pryv-access-id'] == context.access.clientData.customAuth.PryvAuthentication.accessId) {
-  return callback()
-      
+if (access.clientData && access.clientData.customAuth && access.clientData.customAuth.PryvAuthentication) {
+  // perform authentication step
+} else {
+  callback();
 }
 ```
-If it doesn't match, an error is thrown:
+
+If it does not, the authentication step is skipped.
+
+If such a verification is required, a **getAccessInfo** API call is done to retrieve the information of Alice's token and verify if it matches the expected id:
+
 ```javascript
-callback(new Error('AccessIds do not correpond'))
+http.get(access.clientData.customAuth.PryvAuthentication.apiEndpoint + '/access-info?auth=' + context.callerId, (res) => {
+  //alice accessId == clientData.customAuth.PryvAuthentication.accessId
+  const authenticatedAccess = res.body.access;
+  if (authenticatedAccess.id == access.clientData.customAuth.PryvAuthentication.accessId) {
+    return callback();
+  }
+  callback(new Error('accessIds do not match'));
+});
 ```
+
+## Custom Auth Step features
+
+You can access [NodeJS core modules](https://nodejs.org/docs/latest-v12.x/api/documentation.html) inside the custom auth function.  
+
+As of template version v1.0.XX, the Node version is 12.13.1.
 
 ## Authenticate authorization token with an external service
 
-In the previous section, we presented a way to perform the authentication step inside Pryv.io by calling a custom module that you can add to your platform.
-In some cases, you might want to perform the validation step outside Pryv.io using a third party authentication. This will require the validation of an additional token from the chosen external service using its API.  
+In the previous section, we presented a way to perform the authentication step against Pryv.io.  
+In some cases, you might want to perform the validation step against a third-party API. This will require the validation of an additional token from the chosen external service.  
 
 We invite you to contact us directly if you wish to implement such a verification with Pryv.io.
