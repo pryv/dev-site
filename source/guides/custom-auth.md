@@ -11,14 +11,12 @@ withTOC: true
 1. [Introduction](#introduction)
 2. [Pryv.io Custom Auth Step](#pryv-io-custom-auth-step)
   1. [Why using a custom auth step](#why-using-a-custom-auth-step)
-  2. [What is the custom auth step](#what-is-a-custom-auth-step)
+  2. [What is the custom auth step](#what-is-the-custom-auth-step)
   3. [How to set up the custom auth step](#how-to-set-up-the-custom-auth-step)
-3. [Authenticate authorization token with Pryv.io](authenticate-authorization-token-with-pryv-io)
+3. [Authenticate data access with Pryv.io](#authenticate-data-access-with-pryv-io)
   1. [Hands-on example](#hands-on-example)
 4. [Custom Auth Step features](#custom-auth-step-features)
-  1. [Accesses](#accesses)
-  2. [Custom Authentication function](#custom-authentication-function)
-5. [Authenticate authorization token with an external service](authenticate-authorization-token-with-an-external-service)
+5. [Authenticate data access with an external service](#authenticate-data-access-with-an-external-service)
 
 
 ## Introduction
@@ -31,15 +29,15 @@ In this guide, we explain how to provide your Pryv.io platform with this feature
 
 ### Why using a custom auth step
 
-When you wish to authenticate your Pryv.io API requests or authorize them against another web service. For example, if you wish to verify the identity of the person using the authorization token you have provided them.  
+A custom auth step is necessary when you wish to authenticate your Pryv.io API requests or authorize them against another web service. A possible use case can be to verify the identity of the person using the authorization token you have provided him or her with.  
 In this case, you would append a second token to the `Authorization` header after the Pryv.io token separated by a whitespace.
 
 For example, if a Alice needs to access data from Bob in your Pryv.io platform, you can implement an authentication step that will allow you to verify the identity of user Alice when she tries to access data from Bob. The identity of the data client (Alice) can be verified through a custom auth step that you can add to your Pryv.io platform as explained below.
 
 ### What is the custom auth step
 
-You can define a function that will be run by Pryv.io after the authorization token verificiation.  
-In this function, you have access to the fields described below, as well as the NodeJS core modules:
+You can define a function that will be run by Pryv.io after the authorization token verification.  
+In this function, you have access to the fields described below, as well as the [NodeJS core modules](https://nodejs.org/docs/latest-v12.x/api/documentation.html):
 
 - `username` (string)  
 - `user` (object): the user object (properties include `id`)  
@@ -60,9 +58,9 @@ module.exports = function (context, callback) {
 
 ### How to set up the custom auth step
 
-For Pryv.io enterprise version, you can add it using the admin panel, please request a template version above v1.0.XX to have access to it.
+For Pryv.io entreprise version, you can add the custom auth step using the admin panel. Please request a template version above v1.0.XX to be able to access it.
 
-For Open Pryv.io, you can provide it
+For Open Pryv.io, contact us directly if you wish to use the custom auth step.
 
 ## Authenticate data access with Pryv.io
 
@@ -76,7 +74,7 @@ The following scheme explains the different steps of the process using Pryv.io c
 
  </p>
  <p align="center">
-<img src="/assets/gifs/alice-bob-gif.gif" />
+<img src="/assets/gifs/alice-bob-v2.gif" />
 </p>
 
 You can watch the entire flow [here](https://youtu.be/Z1Ufo_9b_E4).  
@@ -199,7 +197,7 @@ module.exports = function (context, callback) {
 };
 ```
 
-The arguments `context` and `callback` need to be passed as arguments to the method. Available properties of the context can be found in the section [above](#what-is-a-custom-auth-step).
+The arguments `context` and `callback` need to be passed as arguments to the method. Available properties of the context can be found in the fields described in the section [**What is the custom auth step**](#what-is-the-custom-auth-step).
 
 ```javascript
 module.exports = function(context, callback) {
@@ -238,7 +236,7 @@ You can access [NodeJS core modules](https://nodejs.org/docs/latest-v12.x/api/do
 
 As of template version v1.0.XX, the Node version is 12.13.1.
 
-## Authenticate authorization token with an external service
+## Authenticate data access with an external service
 
 In the previous section, we presented a way to perform the authentication step against Pryv.io.  
 In some cases, you might want to perform the validation step against a third-party API. This will require the validation of an additional token from the chosen external service.  
