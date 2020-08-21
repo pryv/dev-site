@@ -76,10 +76,10 @@ The following scheme explains the different steps of the process using Pryv.io c
 
  </p>
  <p align="center">
-<img src="/assets/gifs/alice-bob.gif" />
+<img src="/assets/gifs/alice-bob-gif.gif" />
 </p>
 
-You can watch the entire flow [here](https://youtu.be/hu3vnFJZDVo).  
+You can watch the entire flow [here](https://youtu.be/Z1Ufo_9b_E4).  
 
 Bob wants to create an [Access](/reference/#data-structure-access) exclusive to Alice on his stream "Health" with a "read" permission.
 
