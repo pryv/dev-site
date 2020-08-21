@@ -926,16 +926,16 @@ module.exports = exports =
                      The resource can't be found.
                      """
       ,
-        key: "too-many-results"
-        http: "413"
-        description: """
-                     The `events.get` method in batch or websocket call yielded too many results. Call the API method directly, narrow the request scope or page the request.
-                     """
-      ,
         key: "removed-method"
         http: "410"
         description: """
                      The resource or method has been removed from the API.
+                     """
+      ,
+        key: "too-many-results"
+        http: "413"
+        description: """
+                     The `events.get` method in batch or websocket call yielded too many results. Call the API method directly, narrow the request scope or page the request.
                      """
       ,
         key: "user-account-relocated"
