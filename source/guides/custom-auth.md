@@ -71,8 +71,7 @@ When Alice is using the access that was provided to her, the custom auth step wi
 
 The following scheme explains the different steps of the process using Pryv.io custom auth step.  
 
- </p>
- <p align="center">
+<p align="center">
 <img src="/assets/gifs/alice-bob-v2.gif" />
 </p>
 
