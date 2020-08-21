@@ -15,6 +15,7 @@ withTOC: true
   3. [How to set up the custom auth step](#how-to-set-up-the-custom-auth-step)
 3. [Authenticate data access with Pryv.io](#authenticate-data-access-with-pryv-io)
   1. [Hands-on example](#hands-on-example)
+  2. [Custom authentication function](#custom-authentication-function)
 4. [Custom Auth Step features](#custom-auth-step-features)
 5. [Authenticate data access with an external service](#authenticate-data-access-with-an-external-service)
 
