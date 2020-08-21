@@ -59,9 +59,7 @@ module.exports = function (context, callback) {
 
 ### How to set up the custom auth step
 
-For Pryv.io entreprise version, you can add the custom auth step using the admin panel. Please request a template version above v1.0.XX to be able to access it.
-
-For Open Pryv.io, contact us directly if you wish to use the custom auth step.
+For Pryv.io entreprise version, you can add the custom auth step using the admin panel, available on `https://adm.DOMAIN`. Please request a template version above or equal v1.0.35 to be able to access it.
 
 ## Authenticate data access with Pryv.io
 
@@ -173,26 +171,31 @@ It should contain both tokens, separated by a whitespace.
 You will find the code used by the custom auth step to validate Alice's identity below:
 
 ```javascript
-
-// TODO:
-1. handle API call error
-2. handle wrong accessId
-
-const http = require('http');
+const https = require("https");
 module.exports = function (context, callback) {
   const access = context.access;
-  if (access.clientData && access.clientData.customAuth && access.clientData.customAuth.PryvAuthentication) {
-    // aliceApiEndpoint/access-info?auth=alice_token
-    http.get(access.clientData.customAuth.PryvAuthentication.apiEndpoint + '/access-info?auth=' + context.callerId, (res) => {
-      //alice accessId == clientData.customAuth.PryvAuthentication.accessId
-      const authenticatedAccess = res.body.access;
-      if (authenticatedAccess.id == access.clientData.customAuth.PryvAuthentication.accessId) {
-        return callback();
-      }
-      callback(new Error('accessIds do not match'))
-    }).end();
+  if (
+    access.clientData &&
+    access.clientData.customAuth &&
+    access.clientData.customAuth.PryvAuthentication
+  ) {
+    https
+      .get(
+        access.clientData.customAuth.PryvAuthentication.apiEndpoint +
+          "/access-info?auth=" +
+          context.callerId,
+        (res) => {
+          if (
+            res.headers["pryv-access-id"] ===
+            access.clientData.customAuth.PryvAuthentication.accessId
+          ) {
+            return callback();
+          }
+          callback(new Error("accessIds do not match"));
+        }
+      )
+      .end();
   } else {
-    //access was created without clientData => no other verification
     callback();
   }
 };
@@ -235,7 +238,7 @@ http.get(access.clientData.customAuth.PryvAuthentication.apiEndpoint + '/access-
 
 You can access [NodeJS core modules](https://nodejs.org/docs/latest-v12.x/api/documentation.html) inside the custom auth function.  
 
-As of template version v1.0.XX, the Node version is 12.13.1.
+As of template version v1.0.35, the Node version is 12.13.1.
 
 ## Authenticate data access with an external service
 
