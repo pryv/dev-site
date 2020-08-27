@@ -7,7 +7,6 @@ withTOC: true
 
 # Future releases
 
-- **Custom auth step to verify access tokens**
 - **Pryv Explorer**: Web application to explore and manage data on your Pryv.io platform
 - **System streams to handle profile data**
 - **Indexable fields at user account creation** (other than username and email)
