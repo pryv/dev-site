@@ -73,7 +73,7 @@ Providing only an event identifier in the webhook payload will force the recipie
 
 ### Separation of responsibility 
 
-Importantly, only the app access used to create the webhook (or a personal one) can be used to modify it. This is meant to separate the responsibilities between the webhooks management and services that will consume the data following a notification.
+Importantly, only the access used to create the webhook (or a personal one) can be used to modify it. This is meant to separate the responsibilities between the webhooks management and services that will consume the data following a notification.
 
 Typically, a certain access will be used to setup one or multiple webhooks per user, while updated data will be fetched using a different set of permissions.
 
@@ -219,7 +219,7 @@ The `maxRetries` parameter can be configured by the Pryv.io platform administrat
 
 After a certain amount of consecutive failures to send a request, the webhook will be deactivated and no longer send requests when triggered. This will be indicated by the  `state` parameter which will be set to `inactive`.
 
-It will need to be manually reactivated using the [webhooks.update](/reference/#methods-webhooks-webhooks-update) method with the app access that created it or a personal one.
+It will need to be manually reactivated using the [webhooks.update](/reference/#methods-webhooks-webhooks-update) method with the access that created it or a personal one.
 
 ### Stats
 
@@ -235,7 +235,7 @@ The number of stored runs can be configured by the platform administrator.
 
 ### Deletion of the original access
 
-In case the app access that has created the webhook is deleted, it does not alter the webhook. It can still be modified using a personal access.
+In case the access that has created the webhook is deleted, it does not alter the webhook. It can still be modified using a personal access.
 
 ## Endpoint setup
 
