@@ -17,6 +17,17 @@ withTOC: true
 
 # Released
 
+## 27.08.2020 - Collect and Share High Frequency Data with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+
+Push the boundaries of your High Frequency Data. Discover how to collect, view and share high-frequency data in our [tutorial video](https://www.youtube.com/watch?v=l6uOXr1_ivA) for our high-frequency [app](https://api.pryv.com/app-web-examples/hf-data/). 
+The code for the Desktop and Mobile version is available in our [Github repository](https://github.com/pryv/app-web-examples/tree/release/hf-example/hf-data).
+
+Read more about high frequency data [here](https://support.pryv.com/hc/en-us/articles/360014131139).
+
+## 24.08.2020 - Custom Authentication with Pryv.io
+
+Provide your Pryv.io platform with a custom auth step to authenticate your Pryv.io API requests or authorize them against another web service. Detailed information in our [new technical guide](/guides/custom-auth/), illustrated with our [video use case](https://www.youtube.com/watch?v=Z1Ufo_9b_E4&feature=youtu.be): *How to check Alice's identity when she tries to access Bob's data for which he gave her access to ?*
+
 ## 12.08.2020 - Admin panel for Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 We have released a web application for your Pryv.io platform administration. It allows you to manage the platform settings of your platform. Contact us directly if you wish to get your admin panel for Pryv.io!
