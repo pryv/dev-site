@@ -53,6 +53,8 @@ html.no-js(lang='en')
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
                   +menuItem('getting-started', 'Getting started')
+                  li()
+                    a(href='https://github.com/pryv/app-web-examples/') App Examples
                   +menuItem('concepts', 'API concepts')
                   +menuItem('guides/data-modelling', 'Data modelling')
                   +menuItem('guides/webhooks', 'Webhooks')
@@ -67,7 +69,6 @@ html.no-js(lang='en')
                   +menuItem('event-types', 'Event types')
                   +menuItem('open-api', 'Open API (Postman)')
                   +menuItem('change-log', 'API change log')
-                  //+menuItem('standardStructure')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') FAQ <b class="caret"></b>
                 ul.dropdown-menu
