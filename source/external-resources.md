@@ -1,6 +1,6 @@
 ---
 id: external-resources
-title: 'Additional Resources'
+title: 'Apps & libs'
 template: default.jade
 withTOC: true
 ---
@@ -13,7 +13,7 @@ This page presents libraries as well as example applications which can be used a
 
 You can find the source code here: [https://github.com/pryv/app-web-examples](https://github.com/pryv/app-web-examples).
 
-### library
+### Library
 
 You can find the source code here: [https://github.com/pryv/lib-js](https://github.com/pryv/lib-js).
 
@@ -37,7 +37,7 @@ You can find the source code here: [https://github.com/pryv/app-java-examples](h
 
 You can find the source code here: [https://github.com/pryv/app-android-example](https://github.com/pryv/app-android-example).
 
-### Java library
+### Library
 
 You can find the source code here: [https://github.com/pryv/lib-java](https://github.com/pryv/lib-java).
 
