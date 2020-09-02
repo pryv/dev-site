@@ -53,14 +53,12 @@ html.no-js(lang='en')
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
                   +menuItem('getting-started', 'Getting started')
-                  li()
-                    a(href='https://github.com/pryv/app-web-examples/') App Examples
+                  +menuItem('external-resources', 'Apps & Libs')
                   +menuItem('concepts', 'API concepts')
                   +menuItem('guides/data-modelling', 'Data modelling')
                   +menuItem('guides/webhooks', 'Webhooks')
                   +menuItem('guides/custom-auth', 'Custom auth')
                   +menuItem('guides/app-guidelines', 'App guidelines')
-                  +menuItem('external-resources', 'External resources')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>
                 ul.dropdown-menu
