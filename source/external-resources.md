@@ -17,6 +17,16 @@ You can find the source code here: [https://github.com/pryv/app-web-examples](ht
 
 You can find the source code here: [https://github.com/pryv/lib-js](https://github.com/pryv/lib-js).
 
+### Auth web application
+
+Web application for: registration, [auth requests](https://api.pryv.com/reference/#authenticate-your-app), password reset and email change.  
+You can find the source code here: [https://github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
+
+### Multi-Factor Authentication application
+
+Web application for the [MFA flow](https://api.pryv.com/reference/#multi-factor-authentication).  
+You can find the source code here: [https://github.com/pryv/app-web-mfa](https://github.com/pryv/app-web-mfa).
+
 ## iOS
 
 ### iOS Swift example app
@@ -56,6 +66,10 @@ You can find the source code here: [https://github.com/pryv/bridge-ifttt](https:
 ### Tableau
 
 You can find the source code here: [https://github.com/pryv/bridge-tableau](https://github.com/pryv/bridge-tableau).
+
+### Power BI
+
+You can find the source code here: [https://github.com/pryv/plugin-powerbi](https://github.com/pryv/plugin-powerbi).
 
 ## Other
 
