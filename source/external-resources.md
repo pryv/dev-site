@@ -19,13 +19,17 @@ You can find the source code here: [https://github.com/pryv/lib-js](https://gith
 
 ## iOS
 
+### iOS Swift example app
+
+You can find the source code here: [https://github.com/pryv/app-ios-swift-example](https://github.com/pryv/app-ios-swift-example).
+
 ### Swift library
 
 You can find the source code here: [https://github.com/pryv/lib-swift](https://github.com/pryv/lib-swift).
 
-### iOS Swift example app
+### HealthKit bridge
 
-You can find the source code here: [https://github.com/pryv/app-ios-swift-example](https://github.com/pryv/app-ios-swift-example).
+You can find the source code here: [https://github.com/pryv/bridge-ios-healthkit](https://github.com/pryv/bridge-ios-healthkit).
 
 ## Java
 
@@ -45,12 +49,13 @@ You can find the source code here: [https://github.com/pryv/lib-java](https://gi
 
 ### IFTTT
 
-- [Pryv Lab channel on IFTTT](https://ifttt.com/pryv)
-- You can find the source code here: [https://github.com/pryv/bridge-ifttt](https://github.com/pryv/bridge-ifttt)
+You can find the Pryv Lab channel on IFTTT here: [https://ifttt.com/pryv](https://ifttt.com/pryv).  
+
+You can find the source code here: [https://github.com/pryv/bridge-ifttt](https://github.com/pryv/bridge-ifttt).
 
 ### Tableau
 
-You can find the source code here: [https://github.com/pryv/bridge-tableau](https://github.com/pryv/bridge-tableau)
+You can find the source code here: [https://github.com/pryv/bridge-tableau](https://github.com/pryv/bridge-tableau).
 
 ## Other
 
