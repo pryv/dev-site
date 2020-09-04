@@ -43,6 +43,10 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes the steps to perform regular healthchecks on a running Pryv.io platform.
 
+- System streams: [HTML](/customer-resources/system-streams/)
+
+  This document describes how to setup and configure your platform's system streams.
+
 - DNS configuration: [PDF](/assets/docs/20190501-dns-config-v3.pdf)
 
   This document describes how to add entries in your Pryv.io associated domain DNS zone.
