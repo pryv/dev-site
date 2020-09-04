@@ -12,4 +12,5 @@ exports.version = '1.5.22';
 exports.helpers = require('./helpers.coffee');
 
 exports.system = require('./system.coffee');
+exports.admin = require('./admin.coffee');
 
