@@ -8,7 +8,7 @@ withTOC: true
 
 # Summary
 
-The explains how to setup system streams.
+This document explains how to setup system streams.
 
 # 
 
@@ -19,7 +19,7 @@ As this guide is platform agnostic, we will use variables `${VARIABLE_NAME}` whi
 In particular, the following variables should be replaced :
 - the **domain name**, which will be called `${DOMAIN}`,
 - the **core machines hostings**, identified with a `${HOSTING_NAME}`. In a Pryv.io platform, core machines are organized into clusters that we call hostings. Each of these has an identifier `${HOSTING_NAME}`, which can be found at the following URL: https://reg.${DOMAIN}/hostings. The `${HOSTING_NAME}` are the keys of the object `regions:REGION_NAME:zones:ZONE_NAME:hostings`. For DNS-less setups, it is fixed as `hosting1`.
-- the **access token** `${ACCESS_TOKEN}`, associated with a dedicated user account and that will be used in the API calls for healthchecks. The preparation chapter describes how to obtain it.
+- the **access token** `${ACCESS_TOKEN}`, associated with a dedicated user account and that will be used in the API calls for healthchecks. The [preparation chapter](#preparation) describes how to obtain it.
 
 # Tools
 
@@ -81,7 +81,7 @@ If you are using a default configuration, you can use the default web app:
 
 ## Create token
 
-In order to obtain a non-expirable access token, we must do 2 calls. First sign in with the user password to obtain a temporary personal token, and then use it to obtain a non-expirable one.
+In order to obtain a non-expirable access token, you must do 2 calls. First sign in with the user password to obtain a temporary personal token, and then use it to obtain a non-expirable one.
 
 **- Sign in:**
 
@@ -108,7 +108,7 @@ The response body should contain a valid personal token under the field `token`:
 }
 ```
 
-**- Create token**
+**- Obtain token**
 
 ```bash
 curl -i -X POST -H 'Content-Type: application/json' \

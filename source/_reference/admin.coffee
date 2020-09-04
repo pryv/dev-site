@@ -14,7 +14,7 @@ module.exports = exports =
     title: "Basics"
     description: """
                  This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.  
-                 This service si only available with an **Entreprise license**.
+                 This service is only available with an [**Entreprise license**](https://api.pryv.com/concepts/#entreprise-license-open-source-license).
                  """
     sections: [
       id: "admin-service"
@@ -51,7 +51,7 @@ module.exports = exports =
         httpOnly: true
         server: "admin"
         description: """
-                    Authenticates the user against the provided credentials
+                    Authenticates the user against the provided credentials.
                     """
         params:
           properties: [
