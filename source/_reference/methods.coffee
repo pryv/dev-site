@@ -14,6 +14,174 @@ module.exports = exports =
   id: "methods"
   title: "API methods"
   sections: [
+      id: "registration"
+      title: "Registration"
+      description: """
+                  Methods for user registration and username uniqueness check.
+                  """
+      sections: [
+        id: "users.create"
+        type: "method"
+        title: "Create user"
+        http: "POST /users"
+        httpOnly: true
+        server: "core"
+        description: """
+                    Creates a new user account. Method could be customized using the platform config.
+                    """
+        params:
+          properties: [
+            key: "appId"
+            type: "string"
+            description: """
+                        Your app's unique identifier.
+                        """
+          ,
+            key: "username"
+            type: "string"
+            description: """
+                        The user's username.
+                        """
+          ,
+            key: "password"
+            type: "string"
+            description: """
+                        The user's password.
+                        """
+          ,
+            key: "email"
+            type: "string"
+            description: """
+                          The user's e-mail address, used for password retrieval.
+                          """
+          ,
+            key: "invitationToken"
+            type: "string"
+            optional: true
+            description: """
+                          An invitation token, necessary when users registration is limited to a specific set of users.
+                          Platform administrators may limit users registration by configuring a list of authorized invitation tokens.
+                          If this is not the case, users registration is open to everyone and this parameter can be omitted.
+                          """
+          ,
+            key: "language"
+            type: "string"
+            optional: true
+            description: """
+                          The user's preferred language as a 2-letter ISO language code.
+                          """
+          ,
+            key: "referer"
+            type: "string"
+            optional: true
+            description: "A referer id potentially used for analytics."
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "username"
+            type: "string"
+            description: """
+                          A confirmation of the user's username.
+                          """
+          ,
+            key: "server"
+            type: "string"
+            description: """
+                         The server where this account is hosted.
+                         """
+          ,
+            key: "apiEndpoint"
+            type: "string"
+            description: """
+                         The apiEndpoint to reach this account. It includes an access token.
+                         """
+          ]
+        examples: [
+          title: "Creating a user"
+          params:
+            appId: examples.register.appids[0]
+            username: examples.users.two.username
+            password: examples.users.two.password
+            email: examples.users.two.email
+            invitationToken: examples.register.invitationTokens[0]
+            language: examples.register.languageCodes[0]
+            referer: examples.register.referers[0]
+          result:
+            username: examples.users.five.username
+            server: examples.users.five.username + "." + examples.register.platforms[0]
+            apiEndpoint: examples.users.five.apiEndpoint.pryvLab
+        ]
+      ,
+        id: "username.check"
+        type: "method"
+        title: "Check username"
+        http: "GET /{username}/check_username"
+        httpOnly: true
+        server: "core"
+        description: """
+                    Check the availability and validity of a given username.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The username to check.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "reserved"
+            type: "boolean"
+            description: """
+                        Set to `true` if the given username is already taken, `false` otherwise.
+                        """
+          ]
+        examples: [
+          title: "Checking availability and validity of a given username"
+          params: {
+            username: examples.users.two.username
+          }
+          result:
+            reserved: false
+        ,
+          title: "When username has not correct format (for example is too short)."
+          params: {
+            username: 'pryv'
+          }
+          result:
+            reserved: false
+            error: {
+              id: "invalid-parameters-format"
+              data: [
+                {
+                  "code": "username-invalid",
+                  "message": "Username should have from 5 to 23 characters and contain letters or numbers or dashes",
+                  "param":"username"
+                }
+              ]
+            }
+        ,
+          title: "When username is already taken."
+          params: {
+            username: 'testuser'
+          }
+          result:
+            reserved: true
+            error: {
+              id: "item-already-exists"
+              data: [
+                {
+                  "username": "testuser"
+                }
+              ]
+            }
+        ]
+    ],
     id: "auth"
     title: "Authentication"
     trustedOnly: true
@@ -2211,7 +2379,7 @@ module.exports = exports =
       id: "account.get"
       type: "method"
       title: "Get account information"
-      http: "GET /account"
+      http: "GET /account (DEPRECATED)"
       description: """
                    Retrieves the user's account information.
                    """
@@ -2235,7 +2403,7 @@ module.exports = exports =
       id: "account.update"
       type: "method"
       title: "Update account information"
-      http: "PUT /account"
+      http: "PUT /account (DEPRECATED)"
       description: """
                    Modifies the user's account information.
                    """

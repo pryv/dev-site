@@ -26,8 +26,10 @@ module.exports = exports =
                    """
     ,
       id: "account-creation"
-      title: "Account creation"
+      title: "Account creation (DEPRECATED)"
       description: """
+                  Please check the [new account creation flow](/reference/#account-creation)
+
                   The steps for creating a new Pryv.io account are the following:
 
                    1. Client calls the registry server to get a list of available hostings (core server locations), see [Get Hostings](#get-hostings).
@@ -322,7 +324,7 @@ module.exports = exports =
         id: "users.create"
         type: "method"
         title: "Create user"
-        http: "POST /user"
+        http: "POST /user (DEPRECATED, please use the new user registration API endpoint ???)"
         httpOnly: true
         server: "register"
         description: """
@@ -424,7 +426,7 @@ module.exports = exports =
         id: "username.check"
         type: "method"
         title: "Check username"
-        http: "GET /{username}/check_username"
+        http: "GET /{username}/check_username (DEPRECATED, please use the new username check API endpoint???)"
         httpOnly: true
         server: "register"
         description: """

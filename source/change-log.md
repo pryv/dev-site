@@ -4,6 +4,28 @@ title: API change log
 template: default.jade
 ---
 
+## v1.6.0
+
+New features:
+- New registration path 'POST /users'.
+- Get the least populated core while retrieving the hostings list with the API endpoint `https://reg.{domain}/hostings`
+- Additional fields in the registration - platform manager can add config for the additional fields during the registration. 
+These fields could be 
+    1. globally unique in the platform
+    2. searchable globally in the platform
+    3. editable or not editable
+    4. visible or not visible
+    5. could be validated with the custom regex rule
+- In the platform settings, the email could be set as an optional registration parameter.
+- From this version, it is possible to create read, contribute, or create-only access for each visible account field.
+- From this version, the main Pryv.io system config could be edited from the admin panel.
+- From this version, system users could be managed from the admin panel.
+- From this version, platform users could be deleted from the admin panel.
+
+Changes:
+
+- While editing the account information, language information now is indexed globally.
+
 ## v1.5.22
 
 Changes:
