@@ -138,7 +138,7 @@ module.exports = exports =
             key: "reserved"
             type: "boolean"
             description: """
-                        Set to `true` if the given username is already taken, `false` otherwise.
+                        Set to `true` if the given username is already taken.
                         """
           ]
         examples: [
@@ -154,7 +154,6 @@ module.exports = exports =
             username: 'pryv'
           }
           result:
-            reserved: false
             error: {
               id: "invalid-parameters-format"
               data: [
@@ -171,7 +170,6 @@ module.exports = exports =
             username: 'testuser'
           }
           result:
-            reserved: true
             error: {
               id: "item-already-exists"
               data: [
