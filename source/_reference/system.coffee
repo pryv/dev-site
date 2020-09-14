@@ -324,10 +324,12 @@ module.exports = exports =
         id: "users.create"
         type: "method"
         title: "Create user"
-        http: "POST /user (DEPRECATED, please use the new user registration API endpoint ???)"
+        http: "POST /user"
         httpOnly: true
         server: "register"
         description: """
+                    **(DEPRECATED)** Please use the [new create user method](/reference/#create-user).  
+
                     Creates a new user account on the specified core server.
                     """
         params:
@@ -426,7 +428,7 @@ module.exports = exports =
         id: "username.check"
         type: "method"
         title: "Check username"
-        http: "GET /{username}/check_username (DEPRECATED, please use the new username check API endpoint???)"
+        http: "GET /{username}/check_username"
         httpOnly: true
         server: "register"
         description: """
