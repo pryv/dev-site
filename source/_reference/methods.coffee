@@ -109,7 +109,6 @@ module.exports = exports =
             referer: examples.register.referers[0]
           result:
             username: examples.users.five.username
-            server: examples.users.five.username + "." + examples.register.platforms[0]
             apiEndpoint: examples.users.five.apiEndpoint.pryvLab
         ]
     ],
