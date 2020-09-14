@@ -2377,8 +2377,10 @@ module.exports = exports =
       id: "account.get"
       type: "method"
       title: "Get account information"
-      http: "GET /account (DEPRECATED)"
+      http: "GET /account"
       description: """
+                   **(DEPRECATED)** Please use events methods instead.  
+
                    Retrieves the user's account information.
                    """
       result:
@@ -2401,8 +2403,10 @@ module.exports = exports =
       id: "account.update"
       type: "method"
       title: "Update account information"
-      http: "PUT /account (DEPRECATED)"
+      http: "PUT /account"
       description: """
+                   **(DEPRECATED)** Please use events methods instead.  
+
                    Modifies the user's account information.
                    """
       params:
