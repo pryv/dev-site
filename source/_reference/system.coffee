@@ -26,9 +26,9 @@ module.exports = exports =
                    """
     ,
       id: "account-creation"
-      title: "Account creation (DEPRECATED)"
+      title: "Account creation"
       description: """
-                  Please check the [new account creation flow](/reference/#account-creation)
+                  **(DEPRECATED)** Please use the new account creation flow(/reference/#account-creation).  
 
                   The steps for creating a new Pryv.io account are the following:
 
