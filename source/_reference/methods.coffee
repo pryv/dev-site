@@ -111,7 +111,76 @@ module.exports = exports =
             username: examples.users.five.username
             apiEndpoint: examples.users.five.apiEndpoint.pryvLab
         ]
-    ],
+      ],
+      id: "username.check"
+      type: "method"
+      title: "Check username"
+      http: "GET /{username}/check_username"
+      httpOnly: true
+      server: "core"
+      description: """
+                  For the cluster mode please use [this](https://api.pryv.com/reference/#check-username) API endpoint
+
+                  Check the availability and validity of a given username.
+                  """
+      params:
+        properties: [
+          key: "username"
+          type: "string"
+          http:
+            text: "set in request path"
+          description: """
+                      The username to check.
+                      """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "reserved"
+          type: "boolean"
+          description: """
+                      Set to `true` if the given username is already taken.
+                      """
+        ]
+      examples: [
+        title: "Checking availability and validity of a given username"
+        params: {
+          username: examples.users.two.username
+        }
+        result:
+          reserved: false
+      ,
+        title: "When username has not correct format (for example is too short)."
+        params: {
+          username: 'pryv'
+        }
+        result:
+          error: {
+            id: "invalid-parameters-format"
+            data: [
+              {
+                "code": "username-invalid",
+                "message": "Username should have from 5 to 23 characters and contain letters or numbers or dashes",
+                "param":"username"
+              }
+            ]
+          }
+      ,
+        title: "When username is already taken."
+        params: {
+          username: 'testuser'
+        }
+        result:
+          error: {
+            id: "item-already-exists"
+            data: [
+              {
+                "username": "testuser"
+              }
+            ]
+          }
+      ]
+    ,
     id: "auth"
     title: "Authentication"
     trustedOnly: true
