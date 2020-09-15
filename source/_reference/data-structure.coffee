@@ -59,8 +59,7 @@ module.exports = exports =
       key: "streamId"
       type: "[identifier](##{_getDocId("identifier")})"
       description: """
-                   **(DEPRECATED)**
-                   Please use streamIds instead.
+                   **(DEPRECATED)** Please use streamIds instead.
 
                    The id of the first element of the streamIds array.
                    """
@@ -95,8 +94,7 @@ module.exports = exports =
       type: "array of strings"
       optional: "(always present in read items)"
       description: """
-                   **(DEPRECATED)**
-                   Please use streamIds instead.
+                   **(DEPRECATED)** Please use streamIds instead.
                    
                    The tags associated with the event.
                    """

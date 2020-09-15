@@ -53,8 +53,7 @@ search for the dot before each stream id.
 
 ### Tags
 
-**(DEPRECATED)**
-Please use streamIds instead.
+**(DEPRECATED)** Please use streamIds instead.
 
 Tags can provide further context to events. Each event can be labeled with one or more tags. Each tag can be no more than 500 characters in size.
 

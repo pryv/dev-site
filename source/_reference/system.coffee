@@ -397,7 +397,8 @@ module.exports = exports =
             key: "server"
             type: "string"
             description: """
-                          **(DEPRECATED)**  
+                          **(DEPRECATED)** Please use the `apiEndpoint` parameter.
+
                           The server where this account is hosted.
                           The result will be invalid for DNS-less setups.
                           """ 

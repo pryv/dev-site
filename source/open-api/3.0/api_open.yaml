@@ -105,10 +105,7 @@ paths:
           in: query
         - name: tags
           description: >-
-            **(DEPRECATED)**
-
-            Please use streamIds instead.
-
+            **(DEPRECATED)** Please use streamIds instead.
 
             If set, only events assigned to any of the listed tags will be returned.
           required: false
@@ -763,8 +760,7 @@ components:
         streamId:
           required: true
           description: |-
-            **(DEPRECATED)**
-            Please use streamIds instead.
+            **(DEPRECATED)** Please use streamIds instead.
 
             The id of the first element of the streamIds array.
           $ref: "#/components/schemas/identifier"
@@ -789,8 +785,7 @@ components:
           type: any type
         tags:
           description: |-
-            **(DEPRECATED)**
-            Please use streamIds instead.
+            **(DEPRECATED)** Please use streamIds instead.
 
             The tags associated with the event.
           type: array
