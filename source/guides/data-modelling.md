@@ -53,7 +53,11 @@ What are "Streams" ?
 And what are "Events" ?
 - **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g a weight measurement would have the type `mass/kg`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
 
-Be patient, it is going to become crystal-clear for you with the next example. 
+Be patient, it is going to become crystal-clear for you with this [video](https://youtu.be/zl9RTf6JTps) :
+
+[![Pryv.io Data Model](/assets/images/youtube_screen.png)](https://youtu.be/zl9RTf6JTps "Pryv.io Data Model")
+
+Now that you are getting familiar with the concepts, let's go through a practical example.  
 
 Let's suppose that your app, "Best Health App", enables your user to track his health metrics and his physical activity using a smartwatch. A simple way to model his data would be to use two streams, "Health Profile" and "Smartwatch":
 - "**Health Profile**" corresponds to the health metrics of the user, with for example, the sub-streams "**Height**" and "**Weight**" in which, as you can guess, the height and weight measurements are respectively added (events of type `length/cm` and `mass/kg`).
