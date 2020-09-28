@@ -19,31 +19,36 @@ module.exports = exports =
       id: "services-involved"
       title: "Services involved"
       description: """
-                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central registry server (AKA user account directory).
+                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).
 
                    - The **core servers** own the account management processes, i.e. data creation and deletion
-                   - The **registry server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
+                   - The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
                    """
     ,
       id: "account-creation"
       title: "Account creation"
       description: """
-                  **(DEPRECATED)** Please use the new account creation flow(/reference/#account-creation).  
+                   The steps for creating a new Pryv.io account are the following:
 
-                  The steps for creating a new Pryv.io account are the following:
+                   1. The client calls the register server to get a list of available hostings (core server locations), see [Get Hostings](/reference-system/#get-hostings).
+                   2. The client calls the URL under "availableCore" for the hosting it chose with the desired new account data, see [Create user](#create-user).
+                   3. Data is verified.
+                   4. If validation passes, the user is saved and an authenticated apiEndpoint is returned to the caller. See [app guidelines](/guides/app-guidelines/).
 
-                   1. Client calls the registry server to get a list of available hostings (core server locations), see [Get Hostings](#get-hostings).
-                   2. Client calls registry server with desired new account data (including which core server should host the account), see [Create user](#create-user).
-                   3. Registry server verifies data, hands it over to specified core server if OK
-                   4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to registry server
-                   5. Registry server updates directory if OK, returns status to client
+                  **(DEPRECATED)** Please use the new account creation flow described above.
+
+                   1. Client calls the register server to get a list of available hostings (core server locations), see [Get Hostings](#get-hostings).
+                   2. Client calls register server with desired new account data (including which core server should host the account), see [Create user](#create-user).
+                   3. register server verifies data, hands it over to specified core server if OK
+                   4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to register server
+                   5. register server updates directory if OK, returns status to client
                    """
     ]
   ,
     id: "api-methods"
     title: "API methods"
     description: """
-              The methods are called via HTTPS on the registry server: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.
+              The methods are called via HTTPS on the register server: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.
               """
     sections: [
       id: "admin"
@@ -56,8 +61,8 @@ module.exports = exports =
                   
                   Admin api calls are tagged with <span class="admin-tag"><span title="Admin Only" class="label">A</span></span>
 
-                  They must carry an admin key in the HTTP `Authorization` header.
-                  Such keys are defined within the registry configuration (auth:authorizedKeys).
+                  They must carry the admin key in the HTTP `Authorization` header.  
+                  This key is defined within the platform configuration: `REGISTER_ADMIN_KEY`.
                   """
       sections: [
         id: "users.get"
@@ -462,7 +467,7 @@ module.exports = exports =
             description: """
                         Optional indication of the reason why the username is reserved.
                         If it mentions `RESERVED_USER_NAME`, this means that the given username is part of
-                        the reserved usernames list configured within the registry service.
+                        the reserved usernames list configured within the register service.
                         """
           ]
         errors: [

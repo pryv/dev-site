@@ -336,18 +336,6 @@ module.exports = exports =
 
   ,
 
-    id: "account-creation"
-    title: "Account creation"
-    description: """
-                The steps for creating a new Pryv.io account are the following:
-
-                 1. The client calls the registry server to get a list of available hostings (core server locations), see [Get Hostings](/reference-system/#get-hostings).
-                 2. The client calls "availableCore" server (retrieved from the hostings list) with the desired new account data, see [Create user](#create-user).
-                 3. Data is verified.
-                 4. If validation passes, the system saves the user.
-                 """
-  ,
-
     id: "authorization"
     title: "Authorization"
     description: """
@@ -565,7 +553,7 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       Used when creating a user in the process of authentication. See [Create user method](#create-user).
+                       Used when creating a user in the process of authentication. See [Create user method](/reference-system/#create-user).
                        """
         ]
       result: [
