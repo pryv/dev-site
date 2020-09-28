@@ -48,7 +48,7 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
   
   call = ""
   if (path == "/users")
-   call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"core-reg-curl\">{core-hostname}</sapan>.pryv.me</span>#{path}#{queryString}\""
+   call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"core-reg-curl\">{core-subdomain}</sapan>.pryv.me</span>#{path}#{queryString}\""
   else if (server == "core")
     call = "curl -i #{request}#{headers}#{data}\"https://#{basicAuth}<span class=\"api-curl\">{username}.pryv.me</span>#{path}#{queryString}\""
   else if (server == "register")
