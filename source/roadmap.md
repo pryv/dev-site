@@ -14,7 +14,7 @@ withTOC: true
 
 # Released
 
-## 10.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 28.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 Now user registration could be customized using the Pryv.io configuration. Either you want to have a registration without an email or 
 have your own unique fields, now it is possible to do so. Also, now admin panel users could easily delete not active users.
