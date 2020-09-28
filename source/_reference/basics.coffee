@@ -308,6 +308,12 @@ module.exports = exports =
         description: """
                     The URL of the list of validated event types.
                     """
+      ,
+        key: "version"
+        type: "string"
+        description: """
+                    The API version.
+                    """
       ]
     examples: [
           title: "Retrieving service information."
@@ -547,7 +553,7 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       Used when creating a user in the process of authentication. See [Create user method](https://api.pryv.com/reference-system/#create-user).
+                       Used when creating a user in the process of authentication. See [Create user method](/reference-system/#create-user).
                        """
         ]
       result: [
@@ -563,8 +569,9 @@ module.exports = exports =
           key: "url"
           type: "string"
           description: """
-                       **(DEPRECATED)**  
-                       Please use the `authUrl` parameter. The URL of the authentication page to show the user from your app as popup or webframe.
+                       **(DEPRECATED)** Please use the `authUrl` parameter.
+
+                       The URL of the authentication page to show the user from your app as popup or webframe.
                        """
         ,
           key: "authUrl"
@@ -719,15 +726,17 @@ module.exports = exports =
           key: "username"
           type: "string"
           description: """
-                       **(DEPRECATED)**  
-                       Please use the `apiEndpoint` parameter. The authenticated user's username.
+                       **(DEPRECATED)** Please use the `apiEndpoint` parameter.
+
+                       The authenticated user's username.
                        """
         ,
           key: "token"
           type: "string"
           description: """
-                       **(DEPRECATED)**  
-                       Please use the `apiEndpoint` parameter. Your app's API access token.
+                       **(DEPRECATED)** Please use the `apiEndpoint` parameter.
+
+                       Your app's API access token.
                        """
         ,
           key: "apiEndpoint"

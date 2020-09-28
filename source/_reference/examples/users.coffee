@@ -44,6 +44,18 @@ module.exports =
     registeredTimestamp: "1536930239805"
     server: register.servers[1]
     registeredDate: "Fri, 14 Sep 2018 13:03:59 GMT"
+  five:
+    username: "d8b9ndh1298dg98"
+    password: "ChjUzDXwaTG2qdV"
+    email: "mark-kaminski@" + register.platforms[0]
+    language: "en"
+    storageUsed:
+      dbDocuments: 37991
+      attachedFiles: 12637
+    apiEndpoint:
+      pryvLab: "https://{user-personal-token}@d8b9ndh1298dg98.pryv.me/"
+      ownDomain: "https://{user-personal-token}@d8b9ndh1298dg98.${DOMAIN}/"
+      dnsLess: "https://{user-personal-token}@${HOSTNAME}/d8b9ndh1298dg98"
   invalid:
     username: "abc"
     email: "invalid_email"

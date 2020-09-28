@@ -38,10 +38,22 @@ Streams are the fundamental contexts in which events occur. Every event occurs i
 
 <!-- TODO: See also [standard streams](/standard-structure/). -->
 
+### System streams
+
+System streams are the predefined structure of streams. It is loaded from the config and is not
+saved in the database. It could not be edited using streams API endpoints.
+
+Before each account stream id would see a **dot**.
+Current default streams include `.account` and `.helpers` streams and there will be more with 
+future features. 
+
+To filter all events that belong to the system-streams, you can filter the  events streamIds and
+search for the dot before each stream id.
+
+
 ### Tags
 
-**(DEPRECATED)**
-Please use streamIds instead.
+**(DEPRECATED)** Please use streamIds instead.
 
 Tags can provide further context to events. Each event can be labeled with one or more tags. Each tag can be no more than 500 characters in size.
 
