@@ -27,7 +27,7 @@ module.exports = exports =
         httpOnly: true
         server: "core"
         description: """
-                    Creates a new user account. Method could be customized using the platform config.
+                    Creates a new user account. The method's parameters can be customized with the [system streams configuration](/customer-resources/system-streams/).
                     """
         params:
           properties: [
