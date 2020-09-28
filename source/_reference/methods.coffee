@@ -119,7 +119,7 @@ module.exports = exports =
         httpOnly: true
         server: "core"
         description: """
-                    For the cluster mode please use [this](https://api.pryv.com/reference/#check-username) API endpoint
+                    For the cluster setup please use [this](/reference-system/#check-username) API endpoint
 
                     Check the availability and validity of a given username.
                     """
