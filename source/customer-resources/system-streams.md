@@ -31,7 +31,7 @@ The base system streams are the following:
 
 Please note that we have removed email from the default account, as some Pryv.io platforms don't include email for account anonymity. It can be added through custom streams in the platform configuration and is present in the template configuration we provide.
 
-There are a few settings that you can configure for these system streams outside of their structure:
+Here are the settings that you can configure for these system streams outside of their structure:
 
 ## Unicity
 
@@ -55,7 +55,11 @@ You can an enforce a property format for these values using a regular expression
 
 ## Event type
 
-you can define the `type` of the events that will be used to store the values.
+You can define the `type` of the events that will be used to store the values.
+
+## Visibility
+
+You can make some values stored at registration and indexed, but not to appear Pryv.io API outside of the administration API.
 
 # Configuration
 
