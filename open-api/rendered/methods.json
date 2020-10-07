@@ -229,7 +229,7 @@
                 "appId": "my-app-id"
               },
               "result": {
-                "token": "ckfme1exg0002fgpvim92y3b3",
+                "token": "ckfzdlvt90002empvgvzc8qej",
                 "preferredLanguage": "zh"
               }
             }
@@ -435,7 +435,7 @@
                 "code": "1234"
               },
               "result": {
-                "token": "ckfme1exg0002fgpvim92y3b3"
+                "token": "ckfzdlvt90002empvgvzc8qej"
               }
             }
           ]
@@ -591,15 +591,15 @@
                   "name": "Heart",
                   "parentId": "health",
                   "children": [],
-                  "created": 1601288853.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601288853.482,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602074189.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602074189.151,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               },
               {
                 "event": {
-                  "id": "ckfme1ey2000tfgpvb44tte6t",
+                  "id": "ckfzdlvtr000tempv4whgf7ry",
                   "time": 1385046854.282,
                   "streamIds": [
                     "heart"
@@ -608,10 +608,10 @@
                   "tags": [],
                   "type": "frequency/bpm",
                   "content": 90,
-                  "created": 1601288853.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601288853.482,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602074189.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602074189.151,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               }
             ]
@@ -729,8 +729,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "ckfme1ey2000zfgpvaswcbkgy",
-                    "time": 1601285253.482,
+                    "id": "ckfzdlvtr000zempv6mmoxhdk",
+                    "time": 1602070589.151,
                     "streamIds": [
                       "diary"
                     ],
@@ -740,21 +740,21 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "ckfme1ey20010fgpveljx2ubj",
+                        "id": "ckfzdlvtr0010empv24l8cutk",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ckfme1ey20011fgpvd4ax26hw-86kNRdZa7NvJwDR4VNP8lseviN6"
+                        "readToken": "ckfzdlvtr0011empvuwfuw4eo-zXZrCk9KK3EWHaBzarrQW6Rgbk2"
                       }
                     ],
-                    "created": 1601285253.482,
-                    "createdBy": "ckfme1exh0004fgpv9is8xdqz",
-                    "modified": 1601285253.482,
-                    "modifiedBy": "ckfme1exh0004fgpv9is8xdqz"
+                    "created": 1602070589.151,
+                    "createdBy": "ckfzdlvt90004empvbaaew3oe",
+                    "modified": 1602070589.151,
+                    "modifiedBy": "ckfzdlvt90004empvbaaew3oe"
                   },
                   {
-                    "id": "ckfme1ey2000ofgpv8dfpg3fb",
-                    "time": 1601288853.482,
+                    "id": "ckfzdlvtr000oempvrz90642v",
+                    "time": 1602074189.151,
                     "streamIds": [
                       "jogging"
                     ],
@@ -762,13 +762,13 @@
                     "tags": [],
                     "type": "activity/pryv",
                     "content": null,
-                    "created": 1601288853.482,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601288853.482,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                    "created": 1602074189.151,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602074189.151,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                   },
                   {
-                    "id": "ckfme1ey20012fgpvnt6vbhth",
+                    "id": "ckfzdlvtr0012empvhwl5luhf",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -780,10 +780,10 @@
                       "latitude": 40.714728,
                       "longitude": -73.998672
                     },
-                    "created": 1601281653.482,
-                    "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                    "modified": 1601281653.482,
-                    "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                    "created": 1602066989.151,
+                    "createdBy": "ckfzdlvt80000empvki3gu92b",
+                    "modified": 1602066989.151,
+                    "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                   }
                 ]
               }
@@ -794,8 +794,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "ckfme1ey2000zfgpvaswcbkgy",
-                    "time": 1601285253.482,
+                    "id": "ckfzdlvtr000zempv6mmoxhdk",
+                    "time": 1602070589.151,
                     "streamIds": [
                       "diary"
                     ],
@@ -805,21 +805,21 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "ckfme1ey20010fgpveljx2ubj",
+                        "id": "ckfzdlvtr0010empv24l8cutk",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ckfme1ey20011fgpvd4ax26hw-86kNRdZa7NvJwDR4VNP8lseviN6"
+                        "readToken": "ckfzdlvtr0011empvuwfuw4eo-zXZrCk9KK3EWHaBzarrQW6Rgbk2"
                       }
                     ],
-                    "created": 1601285253.482,
-                    "createdBy": "ckfme1exh0004fgpv9is8xdqz",
-                    "modified": 1601285253.482,
-                    "modifiedBy": "ckfme1exh0004fgpv9is8xdqz"
+                    "created": 1602070589.151,
+                    "createdBy": "ckfzdlvt90004empvbaaew3oe",
+                    "modified": 1602070589.151,
+                    "modifiedBy": "ckfzdlvt90004empvbaaew3oe"
                   },
                   {
-                    "id": "ckfme1ey2000vfgpvfeiypasn",
-                    "time": 1601285253.482,
+                    "id": "ckfzdlvtr000vempvo926963d",
+                    "time": 1602070589.151,
                     "streamIds": [
                       "diary"
                     ],
@@ -827,13 +827,13 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "道可道非常道。。。",
-                    "created": 1601285253.482,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601324853.482,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                    "created": 1602070589.151,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602110189.151,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                   },
                   {
-                    "id": "ckfme1ey20012fgpvnt6vbhth",
+                    "id": "ckfzdlvtr0012empvhwl5luhf",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -845,14 +845,14 @@
                       "latitude": 40.714728,
                       "longitude": -73.998672
                     },
-                    "created": 1601281653.482,
-                    "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                    "modified": 1601281653.482,
-                    "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                    "created": 1602066989.151,
+                    "createdBy": "ckfzdlvt80000empvki3gu92b",
+                    "modified": 1602066989.151,
+                    "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                   },
                   {
-                    "id": "ckfme1ey2000ufgpv1scry43k",
-                    "time": 1601288853.482,
+                    "id": "ckfzdlvtr000uempvrwb619o4",
+                    "time": 1602074189.151,
                     "streamIds": [
                       "weight"
                     ],
@@ -860,22 +860,22 @@
                     "tags": [],
                     "type": "mass/kg",
                     "content": 90,
-                    "created": 1601288853.482,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601288853.482,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                    "created": 1602074189.151,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602074189.151,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                   }
                 ]
               }
             },
             {
               "title": "cURL with deletions",
-              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1601202453.506\"\"\n```",
+              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1601987789.171\"\"\n```",
               "result": {
                 "events": [
                   {
-                    "id": "ckfme1ey2000ufgpv1scry43k",
-                    "time": 1601288853.482,
+                    "id": "ckfzdlvtr000uempvrwb619o4",
+                    "time": 1602074189.151,
                     "streamIds": [
                       "weight"
                     ],
@@ -883,24 +883,24 @@
                     "tags": [],
                     "type": "mass/kg",
                     "content": 90,
-                    "created": 1601288853.482,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601288853.482,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                    "created": 1602074189.151,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602074189.151,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                   }
                 ],
                 "eventDeletions": [
                   {
-                    "id": "ckfme1ey4001afgpv6vxqazl5",
-                    "deleted": 1601285253.484
+                    "id": "ckfzdlvtt001aempvphd2r3yp",
+                    "deleted": 1602070589.153
                   },
                   {
-                    "id": "ckfme1ey4001bfgpvynx4tdjt",
-                    "deleted": 1601252853.484
+                    "id": "ckfzdlvtt001bempvdqr01xzs",
+                    "deleted": 1602038189.153
                   },
                   {
-                    "id": "ckfme1ey4001cfgpv8cobykfu",
-                    "deleted": 1601216853.484
+                    "id": "ckfzdlvtt001cempvfy3y0hx9",
+                    "deleted": 1602002189.153
                   }
                 ]
               }
@@ -947,8 +947,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckfme1ey2000wfgpvnb7jz8gi",
-                  "time": 1601285253.482,
+                  "id": "ckfzdlvtr000wempvemdfilrz",
+                  "time": 1602070589.151,
                   "streamIds": [
                     "diary"
                   ],
@@ -956,15 +956,15 @@
                   "tags": [],
                   "type": "note/text",
                   "content": "Hi, I am the latest version of this event",
-                  "created": 1601285253.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601296053.482,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602070589.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602081389.151,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 },
                 "history": [
                   {
-                    "id": "ckfme1ey2000xfgpv9m2xei0m",
-                    "time": 1601285253.482,
+                    "id": "ckfzdlvtr000xempvwc44yiqt",
+                    "time": 1602070589.151,
                     "streamIds": [
                       "diary"
                     ],
@@ -972,14 +972,14 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "Hi, I am the first modification",
-                    "created": 1601285253.482,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601292453.482,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                    "created": 1602070589.151,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602077789.151,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                   },
                   {
-                    "id": "ckfme1ey2000yfgpvn6o9lnkp",
-                    "time": 1601285253.482,
+                    "id": "ckfzdlvtr000yempvgl73rdu4",
+                    "time": 1602070589.151,
                     "streamIds": [
                       "diary"
                     ],
@@ -987,10 +987,10 @@
                     "tags": [],
                     "type": "note/text",
                     "content": "Hi, I was the initial event",
-                    "created": 1601285253.482,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601288853.482,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                    "created": 1602070589.151,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602074189.151,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                   }
                 ]
               }
@@ -1035,8 +1035,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckfme1ey2000ufgpv1scry43k",
-                  "time": 1601288853.482,
+                  "id": "ckfzdlvtr000uempvrwb619o4",
+                  "time": 1602074189.151,
                   "streamIds": [
                     "weight"
                   ],
@@ -1044,10 +1044,10 @@
                   "tags": [],
                   "type": "mass/kg",
                   "content": 90,
-                  "created": 1601288853.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601288853.482,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602074189.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602074189.151,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               }
             },
@@ -1056,8 +1056,8 @@
               "content": "```bash\ncurl -i -F 'event={\"streamIds\":[\"diary\"],\"type\":\"picture/attached\"}'  -F \"file=@photo.jpg\" \"https://${token}@${username}.pryv.me/events\"\n```",
               "result": {
                 "event": {
-                  "id": "ckfme1ey2000zfgpvaswcbkgy",
-                  "time": 1601285253.482,
+                  "id": "ckfzdlvtr000zempv6mmoxhdk",
+                  "time": 1602070589.151,
                   "streamIds": [
                     "diary"
                   ],
@@ -1067,17 +1067,17 @@
                   "content": null,
                   "attachments": [
                     {
-                      "id": "ckfme1ey20010fgpveljx2ubj",
+                      "id": "ckfzdlvtr0010empv24l8cutk",
                       "fileName": "photo.jpg",
                       "type": "image/jpeg",
                       "size": 2561,
-                      "readToken": "ckfme1ey20011fgpvd4ax26hw-86kNRdZa7NvJwDR4VNP8lseviN6"
+                      "readToken": "ckfzdlvtr0011empvuwfuw4eo-zXZrCk9KK3EWHaBzarrQW6Rgbk2"
                     }
                   ],
-                  "created": 1601285253.482,
-                  "createdBy": "ckfme1exh0004fgpv9is8xdqz",
-                  "modified": 1601285253.482,
-                  "modifiedBy": "ckfme1exh0004fgpv9is8xdqz"
+                  "created": 1602070589.151,
+                  "createdBy": "ckfzdlvt90004empvbaaew3oe",
+                  "modified": 1602070589.151,
+                  "modifiedBy": "ckfzdlvt90004empvbaaew3oe"
                 }
               }
             }
@@ -1138,8 +1138,8 @@
                     "position"
                   ],
                   "streamId": "position",
-                  "modified": 1601288853.507,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98",
+                  "modified": 1602074189.171,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd",
                   "time": 1350373077.359,
                   "tags": [],
                   "type": "position/wgs84",
@@ -1147,8 +1147,8 @@
                     "latitude": 40.714728,
                     "longitude": -73.998672
                   },
-                  "created": 1601281653.482,
-                  "createdBy": "ckfme1exg0000fgpvsdlc64rw"
+                  "created": 1602066989.151,
+                  "createdBy": "ckfzdlvt80000empvki3gu92b"
                 }
               }
             }
@@ -1174,32 +1174,32 @@
           "examples": [
             {
               "title": "cURL",
-              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/ckfme1ey2000qfgpv2ii3a4r2\"\"\n```",
+              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/ckfzdlvtr000qempv20q4koqh\"\"\n```",
               "result": {
                 "event": {
-                  "id": "ckfme1ey2000qfgpv2ii3a4r2",
-                  "time": 1601288853.482,
+                  "id": "ckfzdlvtr000qempv20q4koqh",
+                  "time": 1602074189.151,
                   "duration": null,
                   "streamIds": [
-                    "ckfme1ey2000efgpveisfcm4r"
+                    "ckfzdlvtr000eempv68zfpgay"
                   ],
-                  "streamId": "ckfme1ey2000efgpveisfcm4r",
+                  "streamId": "ckfzdlvtr000eempv68zfpgay",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
                   "attachments": [
                     {
-                      "id": "ckfme1ey2000rfgpvjpitkbka",
+                      "id": "ckfzdlvtr000rempvi0aexp4w",
                       "fileName": "travel-expense.jpg",
                       "type": "image/jpeg",
                       "size": 1111,
-                      "readToken": "ckfme1ey2000sfgpvpbyfviur-8jYUaxN3Dc1AZLKJsuAwRomBcCG"
+                      "readToken": "ckfzdlvtr000sempvfkrcykpk-wCSStP73XfiVJ28viYdISmRbeat"
                     }
                   ],
-                  "created": 1601288853.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601288853.482,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602074189.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602074189.151,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               }
             }
@@ -1268,25 +1268,25 @@
           "examples": [
             {
               "params": {
-                "id": "ckfme1ey2000qfgpv2ii3a4r2",
-                "fileId": "ckfme1ey2000rfgpvjpitkbka"
+                "id": "ckfzdlvtr000qempv20q4koqh",
+                "fileId": "ckfzdlvtr000rempvi0aexp4w"
               },
               "result": {
                 "event": {
-                  "id": "ckfme1ey2000qfgpv2ii3a4r2",
-                  "time": 1601288853.482,
+                  "id": "ckfzdlvtr000qempv20q4koqh",
+                  "time": 1602074189.151,
                   "duration": null,
                   "streamIds": [
-                    "ckfme1ey2000efgpveisfcm4r"
+                    "ckfzdlvtr000eempv68zfpgay"
                   ],
-                  "streamId": "ckfme1ey2000efgpveisfcm4r",
+                  "streamId": "ckfzdlvtr000eempv68zfpgay",
                   "tags": [],
                   "type": "activity/pryv",
                   "content": null,
-                  "created": 1601288853.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601288853.482,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602074189.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602074189.151,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               }
             }
@@ -1338,15 +1338,15 @@
             {
               "title": "Trashing",
               "params": {
-                "id": "ckfme1ey2000vfgpvfeiypasn"
+                "id": "ckfzdlvtr000vempvo926963d"
               },
               "result": {
                 "event": {
                   "trashed": true,
-                  "modified": 1601288853.507,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "id": "ckfme1ey2000vfgpvfeiypasn",
-                  "time": 1601285253.482,
+                  "modified": 1602074189.171,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "id": "ckfzdlvtr000vempvo926963d",
+                  "time": 1602070589.151,
                   "streamIds": [
                     "diary"
                   ],
@@ -1354,19 +1354,19 @@
                   "tags": [],
                   "type": "note/text",
                   "content": "道可道非常道。。。",
-                  "created": 1601285253.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602070589.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               }
             },
             {
               "title": "Deleting",
               "params": {
-                "id": "ckfme1ey2000vfgpvfeiypasn"
+                "id": "ckfzdlvtr000vempvo926963d"
               },
               "result": {
                 "eventDeletion": {
-                  "id": "ckfme1ey2000vfgpvfeiypasn"
+                  "id": "ckfzdlvtr000vempvo926963d"
                 }
               }
             }
@@ -1422,8 +1422,8 @@
               },
               "result": {
                 "event": {
-                  "id": "ckfme1ey20013fgpvo6elmxbl",
-                  "time": 1601288853.482,
+                  "id": "ckfzdlvtr0013empvootbxl83",
+                  "time": 1602074189.151,
                   "streamIds": [
                     "position"
                   ],
@@ -1448,10 +1448,10 @@
                       "longitude"
                     ]
                   },
-                  "created": 1601288853.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601288853.482,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602074189.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602074189.151,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               }
             }
@@ -1647,7 +1647,7 @@
                 "format": "seriesBatch",
                 "data": [
                   {
-                    "eventId": "ckfme1ey20014fgpvm6nrutzd",
+                    "eventId": "ckfzdlvtr0014empv37r7gcu0",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1671,7 +1671,7 @@
                     }
                   },
                   {
-                    "eventId": "ckfme1ey20015fgpvj2btaktl",
+                    "eventId": "ckfzdlvtr0015empvegt2frbj",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1791,76 +1791,76 @@
               "result": {
                 "streams": [
                   {
-                    "id": "ckfme1ey2000dfgpvwrcmfmx0",
+                    "id": "ckfzdlvtr000dempvkzp086jo",
                     "name": "Noble Works Co.",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "ckfme1ey2000ffgpvbq366f7e",
+                        "id": "ckfzdlvtr000fempv5ah4bhfv",
                         "name": "Last Be First",
-                        "parentId": "ckfme1ey2000dfgpvwrcmfmx0",
+                        "parentId": "ckfzdlvtr000dempvkzp086jo",
                         "children": [],
-                        "created": 1538174953.1960452,
-                        "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                        "modified": 1538175106.4853246,
-                        "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                        "created": 1538960307.1157203,
+                        "createdBy": "ckfzdlvt80000empvki3gu92b",
+                        "modified": 1538960644.6959856,
+                        "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                       },
                       {
-                        "id": "ckfme1ey2000gfgpviz9gn35g",
+                        "id": "ckfzdlvtr000gempv35gaj6g6",
                         "name": "Big Tree",
-                        "parentId": "ckfme1ey2000dfgpvwrcmfmx0",
+                        "parentId": "ckfzdlvtr000dempvkzp086jo",
                         "children": [],
-                        "created": 1538174953.1960452,
-                        "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                        "modified": 1538175165.2570589,
-                        "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                        "created": 1538960307.1157203,
+                        "createdBy": "ckfzdlvt80000empvki3gu92b",
+                        "modified": 1538960511.634272,
+                        "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                       },
                       {
-                        "id": "ckfme1ey2000hfgpvqg5vs0qy",
+                        "id": "ckfzdlvtr000hempvvcggdbnk",
                         "name": "Inner Light",
-                        "parentId": "ckfme1ey2000dfgpvwrcmfmx0",
+                        "parentId": "ckfzdlvtr000dempvkzp086jo",
                         "children": [],
-                        "created": 1538174953.1960452,
-                        "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                        "modified": 1538175020.8733861,
-                        "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                        "created": 1538960307.1157203,
+                        "createdBy": "ckfzdlvt80000empvki3gu92b",
+                        "modified": 1538960659.2311664,
+                        "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                       }
                     ],
-                    "created": 1538174950.7761111,
-                    "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                    "modified": 1538175142.6631804,
-                    "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                    "created": 1538960289.9290743,
+                    "createdBy": "ckfzdlvt80000empvki3gu92b",
+                    "modified": 1538960368.628336,
+                    "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                   },
                   {
-                    "id": "ckfme1ey2000efgpveisfcm4r",
+                    "id": "ckfzdlvtr000eempv68zfpgay",
                     "name": "Freelancing",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "ckfme1ey2000ifgpvfpw9e4bg",
+                        "id": "ckfzdlvtr000iempvls9tov1z",
                         "name": "Funky Veggies",
-                        "parentId": "ckfme1ey2000efgpveisfcm4r",
+                        "parentId": "ckfzdlvtr000eempv68zfpgay",
                         "children": [],
-                        "created": 1538174966.5282338,
-                        "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                        "modified": 1538174969.3540354,
-                        "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                        "created": 1538960310.218616,
+                        "createdBy": "ckfzdlvt80000empvki3gu92b",
+                        "modified": 1538960346.7260575,
+                        "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                       },
                       {
-                        "id": "ckfme1ey2000jfgpv5v38zrzb",
+                        "id": "ckfzdlvtr000jempvl5h7uyxt",
                         "name": "Jojo Lapin & sons",
-                        "parentId": "ckfme1ey2000efgpveisfcm4r",
+                        "parentId": "ckfzdlvtr000eempv68zfpgay",
                         "children": [],
-                        "created": 1538174966.5282338,
-                        "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                        "modified": 1538175193.33529,
-                        "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                        "created": 1538960310.218616,
+                        "createdBy": "ckfzdlvt80000empvki3gu92b",
+                        "modified": 1538960402.949299,
+                        "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                       }
                     ],
-                    "created": 1538174950.7761111,
-                    "createdBy": "ckfme1exg0000fgpvsdlc64rw",
-                    "modified": 1538175118.195065,
-                    "modifiedBy": "ckfme1exg0000fgpvsdlc64rw"
+                    "created": 1538960289.9290743,
+                    "createdBy": "ckfzdlvt80000empvki3gu92b",
+                    "modified": 1538960437.8859065,
+                    "modifiedBy": "ckfzdlvt80000empvki3gu92b"
                   }
                 ]
               }
@@ -1912,10 +1912,10 @@
                   "name": "White cells",
                   "parentId": "blood",
                   "children": [],
-                  "created": 1601288853.482,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601288853.482,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602074189.151,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602074189.151,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               }
             }
@@ -1976,12 +1976,12 @@
               "result": {
                 "stream": {
                   "name": "Slothing",
-                  "modified": 1601288853.507,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98",
+                  "modified": 1602074189.172,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd",
                   "id": "sport",
                   "parentId": null,
-                  "created": 1538174949.482,
-                  "createdBy": "ckfme1exg0000fgpvsdlc64rw"
+                  "created": 1538960285.151,
+                  "createdBy": "ckfzdlvt80000empvki3gu92b"
                 }
               }
             }
@@ -2043,14 +2043,14 @@
               "result": {
                 "stream": {
                   "trashed": true,
-                  "modified": 1601288853.507,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98",
+                  "modified": 1602074189.172,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd",
                   "id": "weight",
                   "name": "Weight",
                   "parentId": "health",
                   "children": [],
-                  "created": 1538174959.0916352,
-                  "createdBy": "ckfme1exg0000fgpvsdlc64rw"
+                  "created": 1538960304.0802214,
+                  "createdBy": "ckfzdlvt80000empvki3gu92b"
                 }
               }
             },
@@ -2117,8 +2117,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "ckfme1exh0004fgpv9is8xdqz",
-                    "token": "ckfme1exh0005fgpv46uh7mdq",
+                    "id": "ckfzdlvt90004empvbaaew3oe",
+                    "token": "ckfzdlvt90005empv5uymymgj",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -2127,10 +2127,10 @@
                         "level": "contribute"
                       }
                     ],
-                    "created": 1601245653.461,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601245653.461,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                    "created": 1602030989.133,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602030989.133,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                   }
                 ]
               }
@@ -2141,8 +2141,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "ckfme1exh0004fgpv9is8xdqz",
-                    "token": "ckfme1exh0005fgpv46uh7mdq",
+                    "id": "ckfzdlvt90004empvbaaew3oe",
+                    "token": "ckfzdlvt90005empv5uymymgj",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -2151,16 +2151,16 @@
                         "level": "contribute"
                       }
                     ],
-                    "created": 1601245653.461,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601245653.461,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                    "created": 1602030989.133,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602030989.133,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                   }
                 ],
                 "accessDeletions": [
                   {
-                    "id": "ckfme1exh0008fgpvezs8t68r",
-                    "token": "ckfme1exh0009fgpvgpv9wouw",
+                    "id": "ckfzdlvt90008empv0y8ofxhd",
+                    "token": "ckfzdlvt90009empv239cjiif",
                     "type": "shared",
                     "name": "Health parameters survey",
                     "permissions": [
@@ -2169,11 +2169,11 @@
                         "level": "read"
                       }
                     ],
-                    "created": 1601288733.461,
-                    "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "modified": 1601288733.461,
-                    "modifiedBy": "ckfme1exg0001fgpvrvdn9x98",
-                    "deleted": 1601288793.461
+                    "created": 1602074069.133,
+                    "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "modified": 1602074069.133,
+                    "modifiedBy": "ckfzdlvt90001empvuc3ge3dd",
+                    "deleted": 1602074129.133
                   }
                 ]
               }
@@ -2219,8 +2219,8 @@
               },
               "result": {
                 "access": {
-                  "id": "ckfme1exh0006fgpvr3wre0lj",
-                  "token": "ckfme1exh0007fgpvmezv34ss",
+                  "id": "ckfzdlvt90006empvsqtijugw",
+                  "token": "ckfzdlvt90007empvhnew8hmn",
                   "type": "shared",
                   "name": "For colleagues",
                   "permissions": [
@@ -2229,10 +2229,10 @@
                       "level": "read"
                     }
                   ],
-                  "created": 1601288853.461,
-                  "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-                  "modified": 1601288853.461,
-                  "modifiedBy": "ckfme1exg0001fgpvrvdn9x98"
+                  "created": 1602074189.133,
+                  "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+                  "modified": 1602074189.133,
+                  "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
                 }
               }
             }
@@ -2275,18 +2275,18 @@
           "examples": [
             {
               "params": {
-                "id": "ckfme1exg0001fgpvrvdn9x98"
+                "id": "ckfzdlvt90001empvuc3ge3dd"
               },
               "result": {
                 "accessDeletion": {
-                  "id": "ckfme1exg0001fgpvrvdn9x98"
+                  "id": "ckfzdlvt90001empvuc3ge3dd"
                 },
                 "relatedDeletions": [
                   {
-                    "id": "ckfme1eys001pfgpvru1m1j0v"
+                    "id": "ckfzdlvuc001pempvk49warby"
                   },
                   {
-                    "id": "ckfme1eys001qfgpvhty7zgsb"
+                    "id": "ckfzdlvuc001qempvj1qbmdpj"
                   }
                 ]
               }
@@ -2370,8 +2370,8 @@
         {
           "params": {},
           "result": {
-            "id": "ckfme1exh000afgpvt2xlgegm",
-            "token": "ckfme1exh000bfgpv1tcqgiyf",
+            "id": "ckfzdlvt9000aempvqbspd8qf",
+            "token": "ckfzdlvt9000bempv0intggfp",
             "type": "app",
             "name": "Current access",
             "deviceName": "My awesome device",
@@ -2384,16 +2384,16 @@
             "user": {
               "username": "jackslater"
             },
-            "lastUsed": 1601288553.461,
-            "expires": 1601288733.461,
-            "deleted": 1601288793.461,
+            "lastUsed": 1602073889.133,
+            "expires": 1602074069.133,
+            "deleted": 1602074129.133,
             "clientData": {
               "consent": "My custom consent message."
             },
-            "created": 1601288733.461,
-            "createdBy": "ckfme1exg0001fgpvrvdn9x98",
-            "modified": 1601288733.461,
-            "modifiedBy": "ckfme1exg0001fgpvrvdn9x98",
+            "created": 1602074069.133,
+            "createdBy": "ckfzdlvt90001empvuc3ge3dd",
+            "modified": 1602074069.133,
+            "modifiedBy": "ckfzdlvt90001empvuc3ge3dd",
             "calls": {
               "getAccessInfo": 12,
               "profile:get": 5,
@@ -2489,8 +2489,8 @@
           "examples": [
             {
               "params": {
-                "auth": "ckfme1ey6001lfgpv4cn7y3zx",
-                "accessId": "ckfme1ey5001kfgpvftlun6rz",
+                "auth": "ckfzdlvtu001lempvb6henr9r",
+                "accessId": "ckfzdlvtu001kempvmxd1b7m1",
                 "fromTime": 1561000000,
                 "toTime": 1562000000,
                 "status": 403,
@@ -2502,37 +2502,37 @@
               "result": {
                 "auditLogs": [
                   {
-                    "id": "ckfme1ey6001mfgpv9b6mr322",
+                    "id": "ckfzdlvtu001mempvawldl7nq",
                     "type": "audit/core",
                     "time": 1561988300,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "ckfme1ey5001kfgpvftlun6rz",
+                    "accessId": "ckfzdlvtu001kempvmxd1b7m1",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "ckfme1ey6001nfgpvlcch4rxr",
+                    "id": "ckfzdlvtu001nempvmu4pvnlj",
                     "type": "audit/core",
                     "time": 1561988900,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "ckfme1ey5001kfgpvftlun6rz",
+                    "accessId": "ckfzdlvtu001kempvmxd1b7m1",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "ckfme1ey6001ofgpvgcwk0a3v",
+                    "id": "ckfzdlvtu001oempvqn0atmag",
                     "type": "audit/core",
                     "time": 1561989200,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=work",
-                    "accessId": "ckfme1ey5001kfgpvftlun6rz",
+                    "accessId": "ckfzdlvtu001kempvmxd1b7m1",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
@@ -2575,8 +2575,8 @@
               "result": {
                 "webhooks": [
                   {
-                    "id": "ckfme1ey5001ffgpvyb5sfph6",
-                    "accessId": "ckfme1ey5001dfgpvaet26z54",
+                    "id": "ckfzdlvtu001fempv1m1wwpn0",
+                    "accessId": "ckfzdlvtu001dempvni86is3t",
                     "url": "https://notifications.service.com/pryv",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2586,26 +2586,26 @@
                     "failCount": 0,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1601285253.485
+                      "timestamp": 1602070589.154
                     },
                     "runs": [
                       {
                         "status": 200,
-                        "timestamp": 1601285253.485
+                        "timestamp": 1602070589.154
                       },
                       {
                         "status": 200,
-                        "timestamp": 1601281653.485
+                        "timestamp": 1602066989.154
                       }
                     ],
-                    "created": 1601202453.485,
-                    "createdBy": "ckfme1ey5001dfgpvaet26z54",
-                    "modified": 1601202453.485,
-                    "modifiedBy": "ckfme1ey5001dfgpvaet26z54"
+                    "created": 1601987789.154,
+                    "createdBy": "ckfzdlvtu001dempvni86is3t",
+                    "modified": 1601987789.154,
+                    "modifiedBy": "ckfzdlvtu001dempvni86is3t"
                   },
                   {
-                    "id": "ckfme1ey5001hfgpv9xfuc5se",
-                    "accessId": "ckfme1ey5001dfgpvaet26z54",
+                    "id": "ckfzdlvtu001hempvseax6d8k",
+                    "accessId": "ckfzdlvtu001dempvni86is3t",
                     "url": "https://notifications.pryv.me/webhooks",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2615,46 +2615,46 @@
                     "failCount": 2,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1601288848.485
+                      "timestamp": 1602074184.154
                     },
                     "runs": [
                       {
                         "status": 500,
-                        "timestamp": 1601288848.485
+                        "timestamp": 1602074184.154
                       },
                       {
                         "status": 500,
-                        "timestamp": 1601288843.485
+                        "timestamp": 1602074179.154
                       },
                       {
                         "status": 200,
-                        "timestamp": 1601288253.485
+                        "timestamp": 1602073589.154
                       },
                       {
                         "status": 200,
-                        "timestamp": 1601287653.485
+                        "timestamp": 1602072989.154
                       },
                       {
                         "status": 200,
-                        "timestamp": 1601287053.485
+                        "timestamp": 1602072389.154
                       },
                       {
                         "status": 200,
-                        "timestamp": 1601286453.485
+                        "timestamp": 1602071789.154
                       },
                       {
                         "status": 200,
-                        "timestamp": 1601285853.485
+                        "timestamp": 1602071189.154
                       },
                       {
                         "status": 200,
-                        "timestamp": 1601285253.485
+                        "timestamp": 1602070589.154
                       }
                     ],
-                    "created": 1601116053.485,
-                    "createdBy": "ckfme1ey5001dfgpvaet26z54",
-                    "modified": 1601116053.485,
-                    "modifiedBy": "ckfme1ey5001dfgpvaet26z54"
+                    "created": 1601901389.154,
+                    "createdBy": "ckfzdlvtu001dempvni86is3t",
+                    "modified": 1601901389.154,
+                    "modifiedBy": "ckfzdlvtu001dempvni86is3t"
                   }
                 ]
               }
@@ -2694,8 +2694,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "ckfme1ey5001ffgpvyb5sfph6",
-                  "accessId": "ckfme1ey5001dfgpvaet26z54",
+                  "id": "ckfzdlvtu001fempv1m1wwpn0",
+                  "accessId": "ckfzdlvtu001dempvni86is3t",
                   "url": "https://notifications.service.com/pryv",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2705,22 +2705,22 @@
                   "failCount": 0,
                   "lastRun": {
                     "status": 200,
-                    "timestamp": 1601285253.485
+                    "timestamp": 1602070589.154
                   },
                   "runs": [
                     {
                       "status": 200,
-                      "timestamp": 1601285253.485
+                      "timestamp": 1602070589.154
                     },
                     {
                       "status": 200,
-                      "timestamp": 1601281653.485
+                      "timestamp": 1602066989.154
                     }
                   ],
-                  "created": 1601202453.485,
-                  "createdBy": "ckfme1ey5001dfgpvaet26z54",
-                  "modified": 1601202453.485,
-                  "modifiedBy": "ckfme1ey5001dfgpvaet26z54"
+                  "created": 1601987789.154,
+                  "createdBy": "ckfzdlvtu001dempvni86is3t",
+                  "modified": 1601987789.154,
+                  "modifiedBy": "ckfzdlvtu001dempvni86is3t"
                 }
               }
             }
@@ -2753,8 +2753,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "ckfme1ey5001ifgpvlt3d5cxu",
-                  "accessId": "ckfme1ey5001efgpvn8mk344z",
+                  "id": "ckfzdlvtu001iempvkhio84lt",
+                  "accessId": "ckfzdlvtu001eempv1wj779he",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2764,10 +2764,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1601288848.485,
-                  "createdBy": "ckfme1ey5001efgpvn8mk344z",
-                  "modified": 1601288848.485,
-                  "modifiedBy": "ckfme1ey5001efgpvn8mk344z"
+                  "created": 1602074184.154,
+                  "createdBy": "ckfzdlvtu001eempv1wj779he",
+                  "modified": 1602074184.154,
+                  "modifiedBy": "ckfzdlvtu001eempv1wj779he"
                 }
               }
             }
@@ -2824,8 +2824,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "ckfme1ey5001gfgpv9fnwy7sq",
-                  "accessId": "ckfme1ey5001dfgpvaet26z54",
+                  "id": "ckfzdlvtu001gempv1qi2xots",
+                  "accessId": "ckfzdlvtu001dempvni86is3t",
                   "url": "https://notifications.pryv.me/myusername/ui3HDAw43",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2835,28 +2835,28 @@
                   "failCount": 5,
                   "lastRun": {
                     "status": 404,
-                    "timestamp": 1601288838.485
+                    "timestamp": 1602074174.154
                   },
                   "runs": [
                     {
                       "status": 404,
-                      "timestamp": 1601288838.485
+                      "timestamp": 1602074174.154
                     },
                     {
                       "status": 404,
-                      "timestamp": 1601288798.485
+                      "timestamp": 1602074134.154
                     },
                     {
                       "status": 404,
-                      "timestamp": 1601288778.485
+                      "timestamp": 1602074114.154
                     },
                     {
                       "status": 404,
-                      "timestamp": 1601288768.485
+                      "timestamp": 1602074104.154
                     },
                     {
                       "status": 404,
-                      "timestamp": 1601288763.485
+                      "timestamp": 1602074099.154
                     }
                   ]
                 }
@@ -2895,11 +2895,11 @@
           "examples": [
             {
               "params": {
-                "id": "ckfme1ey5001ifgpvlt3d5cxu"
+                "id": "ckfzdlvtu001iempvkhio84lt"
               },
               "result": {
                 "webhookDeletion": {
-                  "id": "ckfme1ey5001ifgpvlt3d5cxu"
+                  "id": "ckfzdlvtu001iempvkhio84lt"
                 }
               }
             }
@@ -2938,8 +2938,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "ckfme1ey5001ifgpvlt3d5cxu",
-                  "accessId": "ckfme1ey5001efgpvn8mk344z",
+                  "id": "ckfzdlvtu001iempvkhio84lt",
+                  "accessId": "ckfzdlvtu001eempv1wj779he",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2949,10 +2949,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1601288848.485,
-                  "createdBy": "ckfme1ey5001efgpvn8mk344z",
-                  "modified": 1601288848.485,
-                  "modifiedBy": "ckfme1ey5001efgpvn8mk344z"
+                  "created": 1602074184.154,
+                  "createdBy": "ckfzdlvtu001eempv1wj779he",
+                  "modified": 1602074184.154,
+                  "modifiedBy": "ckfzdlvtu001eempv1wj779he"
                 }
               }
             }

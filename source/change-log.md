@@ -4,6 +4,12 @@ title: API change log
 template: default.jade
 ---
 
+## 1.6.1
+
+Changes:
+
+- increase JSON input payload to 10MB for HF server. See [Data format](/reference/#data-format).
+
 ## v1.6.0
 
 New features:

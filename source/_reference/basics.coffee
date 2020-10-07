@@ -328,6 +328,8 @@ module.exports = exports =
     title: "Data format"
     description: """
                  The API exchanges data with clients in JSON (MIME type `application/json`), except when uploading/downloading attached files.
+                 
+                 As input, the API accepts JSON payloads of maximum 10MB.
                  """
     examples: [
       title: "Example event"
