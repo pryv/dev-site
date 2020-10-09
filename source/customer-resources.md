@@ -71,7 +71,7 @@ In this space you will find links and reference documents that will help you mak
 
   This document presents a tool which allows to delete Pryv.io users.
 
-- How to backup: [PDF](/assets/docs/20191007-pryv.io-backup-v1.pdf)
+- How to backup: [HTML](/customer-resources/backup/)
 
   This document describes how to perform a backup of your Pryv.io platform and how to restore it in case of any data loss.
 
