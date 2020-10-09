@@ -15,7 +15,8 @@ module.exports =
                 url: "https://my-hosting-provider.ch"
                 name: "Pilot core server"
                 description: "The single PoC core server"
-                available: true
+                available: true,
+                availableCore: "https://my-core.ch",
   ]
   platforms: [
     "pryv.me"

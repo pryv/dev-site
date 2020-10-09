@@ -8,13 +8,16 @@ withTOC: true
 # Future releases
 
 - **Pryv Explorer**: Web application to explore and manage data on your Pryv.io platform
-- **System streams to handle profile data**
-- **Indexable fields at user account creation** (other than username and email)
 - **Open Pryv.io image for [Exoscale market](https://www.exoscale.com/marketplace/)**
 - **HL7-FIHR bridge**: Convertor between Pryv.io events and FHIR data types
 - **Pryv.io certificates auto-renewal**: Automatic SSL certification renewal
 
 # Released
+
+## 28.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+
+Now user registration could be customized using the Pryv.io configuration. Either you want to have a registration without an email or 
+have your own unique fields, now it is possible to do so. Also, now admin panel users could easily delete not active users.
 
 ## 27.08.2020 - Collect and Share High Frequency Data with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 

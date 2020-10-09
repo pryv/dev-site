@@ -14,7 +14,12 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
   queryString = ""
   basicAuth = ""
   if (server == "core")
-    if (method == "POST" && (path == "/auth/login" || path == "/account/request-password-reset" || path == "/account/reset-password" || path == "/mfa/recover"))
+    if (method == "POST" && (
+      path == "/auth/login" || 
+      path == "/account/request-password-reset" || 
+      path == "/account/reset-password" || 
+      path == "/mfa/recover"
+    ))
       headers = "-H 'Origin: https://sw.pryv.me' "
     else 
       if (hasQueryAuth)
@@ -42,7 +47,9 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
       queryString += "&#{k}=#{processedParams[k]}"
   
   call = ""
-  if (server == "core")
+  if (path == "/users")
+   call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"core-reg-curl\">{core-subdomain}</sapan>.pryv.me</span>#{path}#{queryString}\""
+  else if (server == "core")
     call = "curl -i #{request}#{headers}#{data}\"https://#{basicAuth}<span class=\"api-curl\">{username}.pryv.me</span>#{path}#{queryString}\""
   else if (server == "register")
     call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"api-reg-curl\">reg.pryv.me</span>#{path}#{queryString}\""

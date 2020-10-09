@@ -4,6 +4,35 @@ title: API change log
 template: default.jade
 ---
 
+## 1.6.1
+
+Changes:
+
+- increase JSON input payload to 10MB for HF server. See [Data format](/reference/#data-format).
+
+## v1.6.0
+
+New features:
+
+- System streams:
+  - Customizable unique and indexed properties for registration
+  - Account data accessible through Events API
+  - More details on [System streams](/customer-resources/system-streams/)
+- Admin API:
+  - Edit platform parameters
+  - Manage platform users
+  - More details on [Admin reference](/reference-admin/)
+- Admin Panel:
+  - Web application for entreprise Pryv.io platform administration
+
+Changes:
+
+- New registration flow, more details on [Account creation](/reference-system/#account-creation)
+
+Deprecated:
+
+- Old registration flow
+
 ## v1.5.22
 
 Changes:

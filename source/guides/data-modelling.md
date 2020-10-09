@@ -53,7 +53,11 @@ What are "Streams" ?
 And what are "Events" ?
 - **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g a weight measurement would have the type `mass/kg`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
 
-Be patient, it is going to become crystal-clear for you with the next example. 
+Be patient, it is going to become crystal-clear for you with this [video](https://youtu.be/zl9RTf6JTps) :
+
+[![Pryv.io Data Model](/assets/images/youtube_screen.png)](https://youtu.be/zl9RTf6JTps "Pryv.io Data Model")
+
+Now that you are getting familiar with the concepts, let's go through a practical example.  
 
 Let's suppose that your app, "Best Health App", enables your user to track his health metrics and his physical activity using a smartwatch. A simple way to model his data would be to use two streams, "Health Profile" and "Smartwatch":
 - "**Health Profile**" corresponds to the health metrics of the user, with for example, the sub-streams "**Height**" and "**Weight**" in which, as you can guess, the height and weight measurements are respectively added (events of type `length/cm` and `mass/kg`).
@@ -837,6 +841,7 @@ Let's take again the previous example where Grandma Linda provides your app an a
 Linda has delegated you access to her account, and you need to share the particular stream "Glucose" with her doctor Tom (see the example in [previous section](#perform-an-access-delegation)).
 
 Stream structure for Grandma Linda:
+
 ```js
 └── Health
     ├── Sleep ("sleep/analysis" events)
@@ -850,28 +855,33 @@ Where should her doctor keep the access token that will be generated for this sh
 When Linda gives a "read" access to Doctor Tom on her stream "Glucose", this will generate the access token "czuifgh567128lkj098w2dg". This access should be kept in a dedicated stream, along with other patients' tokens.  
 
 Stream structure for doctor Tom:
+
 ```js
 ├── Personal profile
 │   ├── Name ("name/id" events)
 │   ├── Hospital ("name/id" events)
 │   └── ...
-└── Patient accesses ("credentials/pryvApiEndpoint" events)
+└── Patient accesses ("credentials/pryv-api-endpoint" events)
 ```
 
-Doctor Tom will need to keep all access tokens to his patients' accounts in the dedicated stream **"Patient accesses"**.   
-Every time a patient grants him access to his data, the access token to his Pryv.io account will be saved in a `credentials/pryvApiEndpoint` event under the stream "Patient accesses" (see [App guidelines](/guides/app-guidelines/) for why we use this format).   
+Doctor Tom will need to keep all access tokens to his patients' accounts in the dedicated stream **"Patient accesses"**.  
+Every time a patient grants him access to his data, the access token to his Pryv.io account will be saved in a `credentials/pryv-api-endpoint` event under the stream "Patient accesses" (see [App guidelines](/guides/app-guidelines/) for why we use this format).  
 
-In the case of Linda, the following event will be created in the stream "Patient accesses" of Doctor Tom: 
+In the case of Linda, the following event will be created in the stream "Patient accesses" of Doctor Tom:  
+
 ```json
 {
     "method": "events.create",
     "params": {
       "streamIds": ["patient-accesses"],
-      "type": "credentials/pryvApiEndpoint",
+      "type": "credentials/pryv-api-endpoint",
       "content": "https://czuifgh567128lkj098w2dg@linda.pryv.me/"
     }
   }
 ```
+
+To access Linda's data, Doctor Tom will perform an [events.get](/reference/#get-events) call on the stored Pryv API endpoint.
+
 <p align="center">
 <img src="/assets/gifs/grandma-happy.gif" width="400" />
 </p>
