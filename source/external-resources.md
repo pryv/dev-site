@@ -13,9 +13,14 @@ This page presents libraries as well as example applications which can be used a
 
 You can find the source code here: [https://github.com/pryv/app-web-examples](https://github.com/pryv/app-web-examples).
 
-### Library
+### Libraries
 
-You can find the source code here: [https://github.com/pryv/lib-js](https://github.com/pryv/lib-js).
+You can find the source code for the main library here: [https://github.com/pryv/lib-js](https://github.com/pryv/lib-js).
+
+It has the following extensions:  
+
+- Socket.IO: [https://github.com/pryv/lib-js-socket.io](https://github.com/pryv/lib-js-socket.io)
+- Monitor: [https://github.com/pryv/lib-js-monitor](https://github.com/pryv/lib-js-monitor)
 
 ### Auth web application
 
