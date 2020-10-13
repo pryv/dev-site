@@ -62,6 +62,8 @@ module.exports = exports =
                           An invitation token, necessary when users registration is limited to a specific set of users.
                           Platform administrators may limit users registration by configuring a list of authorized invitation tokens.
                           If this is not the case, users registration is open to everyone and this parameter can be omitted.
+
+                          <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>Available in entreprise only.
                           """
           ,
             key: "language"
