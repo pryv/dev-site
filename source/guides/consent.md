@@ -51,11 +51,11 @@ With Pryv.io, we are aiming at implementing a way of collecting consent that is 
 
 Below are the step-by-step instructions on how to request consent from your user:
 
-1. Define the data you are collecting/processing, and check whether it falls under GDPR requirements: [more on the GDPR scope](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/) and in the [FAQ](https://api.pryv.com/faq-api/#personal-data).
+- **1** Define the data you are collecting/processing, and check whether it falls under GDPR requirements: more on [the GDPR scope here](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/) and in the [FAQ](https://api.pryv.com/faq-api/#personal-data).
 
-2. Structure your data into streams and events following our [data modelling guide](https://api.pryv.com/guides/data-modelling/).
+- **2** Structure your data into streams and events following our [data modelling guide](https://api.pryv.com/guides/data-modelling/).
 
-3. You are now ready to authenticate your app and request consent from your users. We have created a sample web application available [on Github](https://github.com/pryv/app-web-auth3) to register and authenticate your app users in a GDPR-compliant way by requesting their consent. You can test it [here](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).  
+- **3** You are now ready to authenticate your app and request consent from your users. We have created a sample web application available [on Github](https://github.com/pryv/app-web-auth3) to register and authenticate your app users in a GDPR-compliant way by requesting their consent. You can test it [here](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).  
 
 You will need to customize a few parameters to adapt it to your needs and ensure that you collect data from your users in the right way. In the [auth request](https://api.pryv.com/reference/#auth-request) that the app will perform, the parameter `clientData` will be the one containing the consent information:
 
@@ -89,13 +89,14 @@ The parameter `requestedPermissions` of the auth request contains details about 
 }
 ```
 
-4. Once the auth request has been sent, the web page will prompt the user to sign in using his Pryv.io credentials (or to create an account if he doesn't have one).
+
+- **4** Once the auth request has been sent, the web page will prompt the user to sign in using his Pryv.io credentials (or to create an account if he doesn't have one).
 
 <p align="center">
 <img src="/assets/images/signin.png" />
 </p>
 
-5. Once signed in, the consent message will appear.
+- **5** Once signed in, the consent message will appear.
 
 <p align="center">
 <img src="/assets/images/consent_message.png" />
@@ -107,4 +108,94 @@ If the user decides to "Accept" the consent request, the web page will open the 
 <img src="/assets/images/apiendpoint.png" />
 </p>
 
+- **6** You can test the created access by performing a [getAccessInfo](https://api.pryv.com/reference/#access-info) call: `https://ckg9hiq4n008m1ld3uhaxi9yr@mariana.pryv.me/access-info`.
+
+This will return information about the access in use:
+
+```json
+{
+    "meta": {
+        "apiVersion": "1.6.2",
+        "serverTime": 1602860299.642,
+        "serial": "2019061301"
+    },
+    "type": "app",
+    "name": "demo-request-consent",
+    "permissions": [
+        {
+            "streamId": "diary",
+            "level": "read"
+        }
+    ],
+    "id": "ckg9hiq4o008n1ld3xy7t46d6",
+    "token": "ckg9hiq4n008m1ld3uhaxi9yr",
+    "clientData": {
+        "app-web-auth:description": {
+            "type": "note/txt",
+            "content": "This is a consent message."
+        }
+    },
+    "created": 1602685422.023,
+    "createdBy": "ckbi19ena00p11xd3eemmdv2o",
+    "modified": 1602685422.023,
+    "modifiedBy": "ckbi19ena00p11xd3eemmdv2o",
+    "user": {
+        "username": "mariana"
+    }
+}
+```
+
 ### Hands-on example
+
+Let's illustrate the consent request process with a practical example. Bob wishes to invite Alice on a date to a restaurant but doesn't know her food preferences.
+He wants to request access on Alice's stream "Nutrition" to subtly analyze what she likes to eat...How can he do so?  
+
+Both Alice and Bob have already their Pryv.io accounts settled and furnished with structured data (in streams and events). The only thing Bob needs to do is customize the consent message, and send a request to Alice:
+
+- 1. In the sample web app for [authentication](https://github.com/pryv/app-web-auth3), he will set the parameter `Application ID` to his name (corresponding to the app/entity processing the requested data).
+
+<p align="center">
+<img src="/assets/images/bob-for-alice.png" />
+</p>
+
+He will then write the consent information under the parameter `clientData`:
+```json
+{
+    "app-web-auth:description":
+        {
+            "type": "note/txt",
+            "content": "Hi there! This is Bob. I'd really like to know more about what your tastes and preferences, and I'd need your approval to read personal information from your stream Nutrition. If you consent to share it with me, please click on Accept. 
+
+            You have a certain number of rights under the GDPR: the right to access personal data I may hold about you, the right to request that I amend any personal data which is incorrect or out-dated, and the right to request that I delete any personal information that I have about you. If you'd like to exercise any of these rights, please contact me at bob@privacy.com."
+        }
+}
+```
+
+<p align="center">
+<img src="/assets/images/request-access.png" />
+</p>
+
+Of course, Bob can also use interfaces and forms to make it more convenient and easy for Alice to make adjustments, and clickable links directing to simple forms that allow Alice to take a number of different actions and make requests about her personal data.
+
+- 2. In the parameter `requestedPermissions`, Bob will indicate the streams for Alice's Pryv.io account that he would want to access, and the level of permission required on these streams (read, write, contribute or manage):
+
+<p align="center">
+<img src="/assets/images/permissions1.png" />
+</p>
+
+
+- 3. By clicking on "Request Access", Alice will be prompted to sign in to her Pryv.io account. Once signed in, she will receive the following consent message:
+<p align="center">
+<img src="/assets/images/consent2.png" />
+</p>
+
+- 4. If she accepts, Bob will receive Alice's Pryv.io API endpoint that will allow him to read the stream "Nutrition".
+
+<p align="center">
+<img src="/assets/images/endpointalice.png" />
+</p>
+
+- 5. Bob is now ready to discover what Alice really likes...
+<p align="center">
+<img src="/assets/images/bigmac.png" />
+</p>
