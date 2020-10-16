@@ -178,7 +178,7 @@ Of course, Bob can also use interfaces and forms to make it more convenient and 
 
 - **3** By clicking on "Request Access", Alice will be prompted to sign in to her Pryv.io account. Once signed in, she will receive the following consent message:
 <p align="center">
-<img src="/assets/images/consent2.png" width="100" height="30"/>
+<img src="/assets/images/consent2.png" width="300" height="300"/>
 </p>
 
 - **4** If she accepts, Bob will receive Alice's Pryv.io API endpoint that will allow him to read the stream "Nutrition": `https://ckgceupbk009u1md3tx9wnseo@alice123.pryv.me/`
