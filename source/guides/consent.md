@@ -9,24 +9,24 @@ withTOC: true
 ## Table of contents
 
 1. [Introduction](#introduction)
-2. [GDPR consent principle](#pryv-io-custom-auth-step)
-3. [How to collect consent with Pryv.io](#authenticate-data-access-with-pryv-io)
-    1. [Consent request](#introduction)
-    2. [Hands-on example](#introduction)
+2. [GDPR consent principle](#gdpr-consent-principle)
+3. [How to collect consent with Pryv.io](#how-to-collect-consent-with-pryv-io)
+    1. [Consent request](#consent-request)
+    2. [Hands-on example](#hands-on-example)
 
 ## Introduction
 
-The GDPR is the **first privacy regulation** in history with the capacity to enforce both its requirements and its monetary penalties on virtually any company in the world. This means that if you are dealing with personal data, chances are that data privacy is a matter of concern for your company.  
+The GDPR is the **first privacy regulation** in history that can enforce both its requirements and its fines on virtually any company in the world. This means that if you are dealing with personal data, data privacy is a matter of concern in any way; and chances are, GDPR compliance specifically is a concern too.
 
-Consent is ultimately necessary to achieve privacy, because this is how individuals exercise control over their personal data. You already know by now that the GDPR will likely affect the way you do business and that there is now way to avoid it, but rather to master it: ["Master the GDPR Compliance Checklist with Pryv"](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit).
+Consent is ultimately necessary to achieve privacy, because this is how individuals exercise control over their personal data. You already know by now that the GDPR will likely affect the way you do business and that there is now way to avoid it, but rather to [master it](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit).
 
 This guide will focus on how to satisfy the GDPR requirements for consent as a legal basis with Pryv.io.
 
-For more general information about what the GDPR says for Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/). We show [here](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit) how you can leverage Pryv.io technology to achieve GDPR compliance while increasing your business efficiency. It goes over the GDPR checklist items point by point to ensure a complete understanding of the law, and shows how Pryv helps you solving it.
+For more general information about how the GDPR affects Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/). More generally, we show [here](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit) how you can leverage Pryv.io technology to achieve GDPR compliance while increasing your business efficiency. It goes over the GDPR checklist point by point to ensure a global understanding of the law, and shows how Pryv helps you solve it.
 
 ## GDPR consent principle
 
-It is against the law to collect or process personal data of EU residents without a valid legal basis for doing so. Before going any further, you will have to establish which legal basis or bases are considered valid for the type of data you process.  
+It is against the law to collect or process personal data of EU residents without a valid legal justification for doing so. Before going any further, you will have to establish which legal basis or bases are considered valid for the type of data you process.  
 And among them, consent. Consent is one of the six legal bases outlined in [Article 6](https://gdpr-info.eu/art-6-gdpr/) of the GDPR.
  
 ### Definition
@@ -35,7 +35,7 @@ And among them, consent. Consent is one of the six legal bases outlined in [Arti
 
 ### Why consent
 
-Consent is one of the easiest legal basis to satisfy because it allows you to freely manipulate the data you collect — provided you clearly explain what you are willing to do and obtain explicit permission from the data subject. Pryv made it easy for you: in the next few paragraphs, we will show you how to achieve privacy by simply building your app/product on top of Pryv.io.
+Consent is one of the most challenging legal basis to satisfy, as it only allows you to collect data for specific purposes the data subject consented to; meaning that you must provide him with a clear explanation on what you are willing to do and obtain explicit permission. Pryv made it easy for you: in the next few paragraphs, we will show you how to achieve privacy by simply building your app/product on top of Pryv.io.
 
 ## How to collect consent with Pryv.io
 
@@ -43,7 +43,7 @@ Privacy is embedded as default in Pryv, with dynamic consent as its cornerstone 
 
 ### Consent request
 
-Data in Pryv.io accounts is organized in streams and events, and accesses are distributed over streams. This means than when you wish to collect/process particular data from your app user, you actually need to request access on the "stream" in which this particular data is located.  
+Data in Pryv.io accounts is organized in streams and events, and accesses are distributed over streams. This means that when you wish to collect/process particular data from your app user, you actually need to request access on the "stream" in which this particular data is located.  
 
 Let's keep things simple for now; thus, suffice it to say that consent from the user will focus on "streams". If you wish to learn more about **Pryv.io Data Model**, you can do so in this [tech guide](https://api.pryv.com/guides/data-modelling/) or [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
 
@@ -72,9 +72,9 @@ The consent request must follow very specific requirements that you need to keep
 - **Consent must be informed**: Your app users must be fully informed of the data processing before granting consent. This means that your consent message should notify them of:
     - the name or title of the app/entity processing their data;
     - the purpose and the lawful basis (or bases) for processing their data;
-    - the type of data that will be collected/processed. The concerned data streams will need to be described in the paramter `Permissions` of the auth request; 
+    - the type of data that will be collected/processed. The concerned data streams will need to be described in the parameter `Permissions` of the auth request; 
     - their rights to access, erasure, and withdrawal.
-- **Consent needs to be distinguishable**: Consent cannot be included "by default" or implicitely in the terms and conditions. Your app users must be provided an opt-in method that requires them to explicitely answer the consent message by selecting the "Reject" or "Accept" button. You must separate your requests for consent from all other matters and make sure that the request is accessible and written in plain language for your app users. 
+- **Consent needs to be distinguishable**: Consent cannot be included "by default" or implicitly in the terms and conditions. Your app users must be provided an opt-in method that requires them to explicitly answer the consent message by selecting the "Reject" or "Accept" button. You must separate your requests for consent from all other matters and make sure that the request is accessible and written in plain language for your app users. 
 
 The parameter `Permissions` of the auth request contains details about the data that will be collected, meaning the concerned streams from the user's Pryv.io account and the level of permission required on these streams (read, write, contribute or manage):
 ```json
