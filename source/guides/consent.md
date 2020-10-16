@@ -45,7 +45,7 @@ Privacy is embedded as default in Pryv, with dynamic consent as its cornerstone 
 
 Data in Pryv.io accounts is organized in streams and events, and accesses are distributed over streams. This means that when you wish to collect/process particular data from your app user, you actually need to request access on the "stream" in which this particular data is located.  
 
-Let's keep things simple for now; thus, suffice it to say that consent from the user will focus on "streams". If you wish to learn more about **Pryv.io Data Model**, you can do so in this [tech guide](https://api.pryv.com/guides/data-modelling/) or [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
+Let's keep things simple for now; thus, suffice to say that consent from the user will focus on "streams". If you wish to learn more about the **Pryv.io Data Model**, you can do so in this [tech guide](https://api.pryv.com/guides/data-modelling/) or [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
 
 With Pryv.io, we are aiming at implementing a way of collecting consent that is straightforward, transparent, and meets the very specific requirements of the regulation: *freely given, specific, informed and unambiguous*.
 
@@ -58,6 +58,7 @@ Below are the step-by-step instructions on how to request consent from your user
 3. You are now ready to authenticate your app and request consent from your users. We have created a sample web application available [on Github](https://github.com/pryv/app-web-auth3) to register and authenticate your app users in a GDPR-compliant way by requesting their consent. You can test it [here](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).  
 
 You will need to customize a few parameters to adapt it to your needs and ensure that you collect data from your users in the right way. In the [auth request](https://api.pryv.com/reference/#auth-request) that the app will perform, the parameter `clientData` will be the one containing the consent information:
+
 ```json
 {
     "app-web-auth:description":
@@ -69,19 +70,22 @@ You will need to customize a few parameters to adapt it to your needs and ensure
 ```
 
 The consent request must follow very specific requirements that you need to keep in mind when customizing your consent message:
+
 - **Consent must be informed**: Your app users must be fully informed of the data processing before granting consent. This means that your consent message should notify them of:
+
     - the name or title of the app/entity processing their data;
     - the purpose and the lawful basis (or bases) for processing their data;
-    - the type of data that will be collected/processed. The concerned data streams will need to be described in the parameter `Permissions` of the auth request; 
+    - the type of data that will be collected/processed. The concerned data streams will need to be described in the parameter `requestedPermissions` of the auth request; 
     - their rights to access, erasure, and withdrawal.
 - **Consent needs to be distinguishable**: Consent cannot be included "by default" or implicitly in the terms and conditions. Your app users must be provided an opt-in method that requires them to explicitly answer the consent message by selecting the "Reject" or "Accept" button. You must separate your requests for consent from all other matters and make sure that the request is accessible and written in plain language for your app users. 
 
-The parameter `Permissions` of the auth request contains details about the data that will be collected, meaning the concerned streams from the user's Pryv.io account and the level of permission required on these streams (read, write, contribute or manage):
+The parameter `requestedPermissions` of the auth request contains details about the data that will be collected, meaning the concerned streams from the user's Pryv.io account and the level of permission required on these streams (read, write, contribute or manage):
+
 ```json
 {
-"streamId": "diary",
-"defaultName": "Journal",
-"level": "read"
+    "streamId": "diary",
+    "defaultName": "Journal",
+    "level": "read"
 }
 ```
 
