@@ -152,11 +152,7 @@ He wants to request access on Alice's stream "Nutrition" to subtly analyze what 
 
 Both Alice and Bob have already their Pryv.io accounts settled and furnished with structured data (in streams and events). The only thing Bob needs to do is customize the consent message, and send a request to Alice:
 
-- 1. In the sample web app for [authentication](https://github.com/pryv/app-web-auth3), he will set the parameter `Application ID` to his name (corresponding to the app/entity processing the requested data).
-
-<p align="center">
-<img src="/assets/images/bob-for-alice.png" />
-</p>
+- **1** In the sample web app for [authentication](https://github.com/pryv/app-web-auth3), he will set the parameter `Application ID` to his name (corresponding to the app/entity processing the requested data).
 
 He will then write the consent information under the parameter `clientData`:
 ```json
@@ -171,31 +167,29 @@ He will then write the consent information under the parameter `clientData`:
 }
 ```
 
-<p align="center">
-<img src="/assets/images/request-access.png" />
-</p>
-
 Of course, Bob can also use interfaces and forms to make it more convenient and easy for Alice to make adjustments, and clickable links directing to simple forms that allow Alice to take a number of different actions and make requests about her personal data.
 
-- 2. In the parameter `requestedPermissions`, Bob will indicate the streams for Alice's Pryv.io account that he would want to access, and the level of permission required on these streams (read, write, contribute or manage):
+- **2** In the parameter `requestedPermissions`, Bob will indicate the streams for Alice's Pryv.io account that he would want to access, and the level of permission required on these streams (read, write, contribute or manage):
 
 <p align="center">
 <img src="/assets/images/permissions1.png" />
 </p>
 
 
-- 3. By clicking on "Request Access", Alice will be prompted to sign in to her Pryv.io account. Once signed in, she will receive the following consent message:
+- **3** By clicking on "Request Access", Alice will be prompted to sign in to her Pryv.io account. Once signed in, she will receive the following consent message:
 <p align="center">
-<img src="/assets/images/consent2.png" />
+<img src="/assets/images/consent2.png" width="100" height="30"/>
 </p>
 
-- 4. If she accepts, Bob will receive Alice's Pryv.io API endpoint that will allow him to read the stream "Nutrition".
+- **4** If she accepts, Bob will receive Alice's Pryv.io API endpoint that will allow him to read the stream "Nutrition": `https://ckgceupbk009u1md3tx9wnseo@alice123.pryv.me/`
 
 <p align="center">
 <img src="/assets/images/endpointalice.png" />
 </p>
 
-- 5. Bob is now ready to discover what Alice really likes...
+- **5** Bob is now ready to discover what Alice really likes...
+
+
 <p align="center">
 <img src="/assets/images/bigmac.png" />
 </p>
