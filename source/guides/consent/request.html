@@ -16,7 +16,7 @@
 
 <body>
   <div class="container">
-    <h1>Pryv request consent</h1>
+    <h1>Pryv consent request</h1>
 
     <div class="card">
       <div class="card-body">
@@ -29,7 +29,7 @@
         <span id="please-login">
           Please login.
         </span>
-        <span id="logged-in">
+        <span id="logged-in" style="visibility: hidden">
           <br>
           <label>
               Bob can now discover your food preferences in his Pryv.io account using this API endpoint.
@@ -69,14 +69,16 @@
     function pryvAuthStateChange(state) { // called each time the authentication state changed
       console.log('##pryvAuthStateChange', state);
       if (state.id === Pryv.Browser.AuthStates.AUTHORIZED) {
-        document.getElementById('please-login').style.visibility = 'visible';
-        document.getElementById('logged-in').style.visibility = 'hidden';
+        document.getElementById('please-login').style.visibility = 'hidden';
+        document.getElementById('logged-in').style.visibility = 'visible';
         document.getElementById('apiEndpoint').innerHTML = state.apiEndpoint;
         
         connection = new Pryv.Connection(state.apiEndpoint);
         console.log('# Browser succeeded for user ' + connection.apiEndpoint);
       }
-      if (state.id === Pryv.Browser.AuthStates.LOGOUT) {
+      if (state.id === Pryv.Browser.AuthStates.INITIALIZED) {
+        document.getElementById('please-login').style.visibility = 'visible';
+        document.getElementById('logged-in').style.visibility = 'hidden';
         connection = null;
         console.log('# Logout');
       }
