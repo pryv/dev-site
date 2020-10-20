@@ -170,7 +170,9 @@ The payload looks as following:
 
 - **4** He will send the request to Alice through a mobile or web app such as [this one](/guides/consent/request/).
 
-INSERT SCREENSHOT OF APP
+| Before sign in and consent request     | After sign-in and accepting consent request                                                      |
+| ------------------------------------------------------------ |------------------------------------------------------------ |
+| <img src="images/request-app-1.png" alt="app-1" style="zoom:50%;" /> | <img src="images/request-app-1.png" alt="app-2" style="zoom:50%;" /> |
 
 - **5** The web app will perform an [Auth request](/reference/#auth-request), prompting Alice for permissions to her data and presenting her with the consent message.
 
@@ -204,3 +206,7 @@ You can find more information on what is defined as **"personal data"** in our [
 
 **Pryv.io Data Model** is summarized in [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
 To learn how to model your data into streams and events, you can check our [tech guide](https://api.pryv.com/guides/data-modelling/) on data modelling.
+
+### Web app examples
+
+You can found our sample web apps in our [Github repository](https://github.com/pryv/app-web-examples).

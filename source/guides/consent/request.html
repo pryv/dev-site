@@ -24,7 +24,7 @@
         <span id="pryv-button"></span>
         <br><br>
         <label id="welcome-message">
-          Dear Alice, you have received a data request on your Pryv.io account. Please login to answer the consent request.
+          Hello! You have received a consent request on your Pryv.io account.
         </label>
         <span id="please-login">
           Please login.
@@ -69,8 +69,8 @@
     function pryvAuthStateChange(state) { // called each time the authentication state changed
       console.log('##pryvAuthStateChange', state);
       if (state.id === Pryv.Browser.AuthStates.AUTHORIZED) {
-        document.getElementById('please-login').style.visibility = 'hidden';
-        document.getElementById('logged-in').style.visibility = 'visible';
+        document.getElementById('please-login').style.visibility = 'visible';
+        document.getElementById('logged-in').style.visibility = 'hidden';
         document.getElementById('apiEndpoint').innerHTML = state.apiEndpoint;
         
         connection = new Pryv.Connection(state.apiEndpoint);
