@@ -33,9 +33,6 @@
       </div>
     </div>
 
-    <div class="next-example">
-      Next example: <a href="../view-and-share/index.html">View and Share</a>
-    </div>
   </div>
 
   <script>
@@ -46,7 +43,7 @@
       onStateChange: pryvAuthStateChange,
       authRequest: {
         requestingAppId: "Alice's food preferences",
-        requestPermissions: [{
+        requestedPermissions: [{
           streamId: "nutrition",
           defaultName: "Nutrition",
           level: "read"
