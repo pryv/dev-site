@@ -13,6 +13,10 @@ withTOC: true
 
 # Released
 
+## 20.10.2020 - Consent request guide
+
+
+
 ## 28.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 Now user registration could be customized using the Pryv.io configuration. Either you want to have a registration without an email or 
