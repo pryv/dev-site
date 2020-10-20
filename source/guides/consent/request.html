@@ -30,6 +30,14 @@
         <span id="please-login">
           Please login.
         </span>
+        <span id="logged-in">
+          <br>
+          <label>
+              Bob can now discover your food preferences in his Pryv.io account using this API endpoint.
+          </label>
+          <br>
+          <label id="apiEndpoint"></label>
+        </span>
       </div>
     </div>
 
@@ -62,6 +70,10 @@
     function pryvAuthStateChange(state) { // called each time the authentication state changed
       console.log('##pryvAuthStateChange', state);
       if (state.id === Pryv.Browser.AuthStates.AUTHORIZED) {
+        document.getElementById('please-login').style.visibility = 'hidden';
+        document.getElementById('logged-in').style.visibility = 'visible';
+        document.getElementById('apiEndpoint').innerHTML = state.apiEndpoint;
+        
         connection = new Pryv.Connection(state.apiEndpoint);
         console.log('# Browser succeeded for user ' + connection.apiEndpoint);
       }
