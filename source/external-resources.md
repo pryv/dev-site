@@ -11,6 +11,12 @@ This page presents libraries as well as example applications which can be used a
 
 ### Web application examples
 
+The following use cases are implemented on top of Pryv.io (among others):
+
+- Collect form data
+- View collected data and share it
+- Collect and consume high-frequency data
+
 You can find the source code here: [https://github.com/pryv/app-web-examples](https://github.com/pryv/app-web-examples).
 
 ### Libraries
