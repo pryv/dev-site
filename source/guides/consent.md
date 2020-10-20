@@ -9,33 +9,18 @@ withTOC: true
 ## Table of contents
 
 1. [Introduction](#introduction)
-2. [GDPR consent principle](#gdpr-consent-principle)
-3. [How to collect consent with Pryv.io](#how-to-collect-consent-with-pryv-io)
+2. [How to collect consent with Pryv.io](#how-to-collect-consent-with-pryv-io)
     1. [Consent request](#consent-request)
     2. [Hands-on example](#hands-on-example)
+3. [References](#references)
 
 ## Introduction
 
-The GDPR is the **first privacy regulation** in history that can enforce both its requirements and its fines on virtually any company in the world. This means that if you are dealing with personal data, data privacy is a matter of concern in any way; and chances are, GDPR compliance specifically is a concern too.
+Managing consent is a critical issue for many developers when building personal data collecting applications. More than a checking-box option, it is what allows users to keep control over their personal information and businesses to keep track of data-related accesses and the purposes for which each data can be used. 
 
-Consent is ultimately necessary to achieve privacy, because this is how individuals exercise control over their personal data. You already know by now that the GDPR will likely affect the way you do business and that there is now way to avoid it, but rather to [master it](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit).
+This guide describes how Pryv.io implements consent to satisfy existing and forthcoming data protection and privacy requirements.
 
-This guide will focus on how to satisfy the GDPR requirements for consent as a legal basis with Pryv.io.
-
-For more general information about how the GDPR affects Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/). More generally, we show [here](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit) how you can leverage Pryv.io technology to achieve GDPR compliance while increasing your business efficiency. It goes over the GDPR checklist point by point to ensure a global understanding of the law, and shows how Pryv helps you solve it.
-
-## GDPR consent principle
-
-It is against the law to collect or process personal data of EU residents without a valid legal justification for doing so. Before going any further, you will have to establish which legal basis or bases are considered valid for the type of data you process.  
-And among them, consent. Consent is one of the six legal bases outlined in [Article 6](https://gdpr-info.eu/art-6-gdpr/) of the GDPR.
- 
-### Definition
-
-**Consent** under the GDPR is defined as *“any freely given, specific, informed and unambiguous indication of the data subject's wishes by which he or she, by a statement or by a clear affirmative action, signifies agreement to the processing of personal data relating to him or her”* ([Article 4](https://gdpr.eu/article-4-definitions/) of the GDPR).
-
-### Why consent
-
-Consent is one of the most challenging legal basis to satisfy, as it only allows you to collect data for specific purposes the data subject consented to; meaning that you must provide him with a clear explanation on what you are willing to do and obtain explicit permission. Pryv made it easy for you: in the next few paragraphs, we will show you how to achieve privacy by simply building your app/product on top of Pryv.io.
+**Consent** is one of the most challenging legal basis to satisfy, as it only allows you to collect data for specific purposes the data subject consented to; meaning that you must provide him with a clear explanation on what you are willing to do and obtain explicit permission. Pryv made it easy for you: in the next few paragraphs, we will show you how to achieve privacy by simply building your app on top of Pryv.io.
 
 ## How to collect consent with Pryv.io
 
@@ -51,7 +36,7 @@ With Pryv.io, we are aiming at implementing a way of collecting consent that is 
 
 Below are the step-by-step instructions on how to request consent from your user:
 
-- **1** Define the data you are collecting/processing, and check whether it falls under GDPR requirements: more on [the GDPR scope here](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/) and in the [FAQ](https://api.pryv.com/faq-api/#personal-data).
+- **1** Define the data you are collecting/processing, and check whether it falls under what legislation.
 
 - **2** Structure your data into streams and events following our [data modelling guide](https://api.pryv.com/guides/data-modelling/).
 
@@ -69,7 +54,8 @@ You will need to customize a few parameters to adapt it to your needs and ensure
 }
 ```
 
-The consent request must follow very specific requirements that you need to keep in mind when customizing your consent message:
+**Consent** under the GDPR is defined as *“any freely given, specific, informed and unambiguous indication of the data subject's wishes by which he or she, by a statement or by a clear affirmative action, signifies agreement to the processing of personal data relating to him or her”* ([Article 4](https://gdpr.eu/article-4-definitions/) of the GDPR).  
+This implies that the consent request must follow very specific requirements that you need to keep in mind when customizing your consent message:
 
 - **Consent must be informed**: Your app users must be fully informed of the data processing before granting consent. This means that your consent message should notify them of:
 
@@ -201,3 +187,11 @@ Bob is now ready to discover what Alice really likes...
 <p align="center">
 <img src="/assets/images/bigmac.png" />
 </p>
+
+
+## References
+
+For more general information about how the GDPR requirements affect Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/).  
+More generally, we show [here](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit) how you can leverage Pryv.io technology to achieve compliance while increasing your business efficiency. It goes over the GDPR checklist point by point to ensure a global understanding of the law, and shows how Pryv helps you solve it.
+
+You can also find more information on what is defined as **"personal data"** in our [FAQ](https://api.pryv.com/faq-api/#personal-data).
