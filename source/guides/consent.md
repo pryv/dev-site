@@ -108,39 +108,39 @@ If the user decides to "Accept" the consent request, the web page will open the 
 <img src="/assets/images/apiendpoint.png" />
 </p>
 
-- **6** You can test the created access by performing a [getAccessInfo](https://api.pryv.com/reference/#access-info) call: `https://ckg9hiq4n008m1ld3uhaxi9yr@mariana.pryv.me/access-info`.
+- **6** You can view the created access by performing a [getAccessInfo](https://api.pryv.com/reference/#access-info) call: `https://ckg9hiq4n008m1ld3uhaxi9yr@mariana.pryv.me/access-info`.
 
 This will return information about the access in use:
 
 ```json
 {
-    "meta": {
-        "apiVersion": "1.6.2",
-        "serverTime": 1602860299.642,
-        "serial": "2019061301"
-    },
-    "type": "app",
     "name": "demo-request-consent",
+    "type": "app",
     "permissions": [
         {
             "streamId": "diary",
             "level": "read"
         }
     ],
-    "id": "ckg9hiq4o008n1ld3xy7t46d6",
-    "token": "ckg9hiq4n008m1ld3uhaxi9yr",
     "clientData": {
         "app-web-auth:description": {
             "type": "note/txt",
             "content": "This is a consent message."
         }
     },
+    "user": {
+        "username": "mariana"
+    },
+    "id": "ckg9hiq4o008n1ld3xy7t46d6",
+    "token": "ckg9hiq4n008m1ld3uhaxi9yr",
     "created": 1602685422.023,
     "createdBy": "ckbi19ena00p11xd3eemmdv2o",
     "modified": 1602685422.023,
     "modifiedBy": "ckbi19ena00p11xd3eemmdv2o",
-    "user": {
-        "username": "mariana"
+    "meta": {
+        "apiVersion": "1.6.2",
+        "serverTime": 1602860299.642,
+        "serial": "2019061301"
     }
 }
 ```
@@ -150,44 +150,52 @@ This will return information about the access in use:
 Let's illustrate the consent request process with a practical example. Bob wishes to invite Alice on a date to a restaurant but doesn't know her food preferences.
 He wants to request access on Alice's stream "Nutrition" to subtly analyze what she likes to eat...How can he do so?  
 
-Both Alice and Bob have already their Pryv.io accounts settled and furnished with structured data (in streams and events). The only thing Bob needs to do is customize the consent message, and send a request to Alice:
+- **1** As Alice's food preferences qualify as personal data under GDPR requirements, he will have to formulate a proper request to access them
 
-- **1** In the sample web app for [authentication](https://github.com/pryv/app-web-auth3), he will set the parameter `Application ID` to his name (corresponding to the app/entity processing the requested data).
+- **2** Both Alice and Bob already have their Pryv.io accounts settled and furnished with structured data (in streams and events).
 
-He will then write the consent information under the parameter `clientData`:
+- **3** The only thing Bob needs to do is customize the consent message, and send a request to Alice:
+
+He must prepare the payload for the [Auth request](/reference/#auth-request) containing:
+
+- the streamId which data he wants to read in `requestedPermissions`
+- the consent message in `clientData`
+- an identifier for the request which will serve as the created access' name in `requestingAppId`
+
+The payload looks as following:
+
 ```json
 {
-    "app-web-auth:description":
-        {
+    "requestPermissions": [{
+        "streamId": "nutrition",
+        "defaultName": "Nutrition",
+        "level": "read"
+    }],
+    "clientData": {
+        "app-web-auth:description": {
             "type": "note/txt",
             "content": "Hi there! This is Bob. I'd really like to know more about what your tastes and preferences, and I'd need your approval to read personal information from your stream Nutrition. If you consent to share it with me, please click on Accept. 
 
             You have a certain number of rights under the GDPR: the right to access personal data I may hold about you, the right to request that I amend any personal data which is incorrect or out-dated, and the right to request that I delete any personal information that I have about you. If you'd like to exercise any of these rights, please contact me at bob@privacy.com."
         }
+    },
+    "requestingAppId": "Alice's food preferences"
 }
 ```
 
-Of course, Bob can also use interfaces and forms to make it more convenient and easy for Alice to make adjustments, and clickable links directing to simple forms that allow Alice to take a number of different actions and make requests about her personal data.
+- **4** He will send the request to Alice through a mobile or web app such as [this one](/guides/consent/request/).
 
-- **2** In the parameter `requestedPermissions`, Bob will indicate the streams for Alice's Pryv.io account that he would want to access, and the level of permission required on these streams (read, write, contribute or manage):
+INSERT SCREENSHOT OF APP
 
-<p align="center">
-<img src="/assets/images/permissions1.png" />
-</p>
-
-
-- **3** By clicking on "Request Access", Alice will be prompted to sign in to her Pryv.io account. Once signed in, she will receive the following consent message:
-<p align="center">
-<img src="/assets/images/consent2.png" width="300" height="500"/>
-</p>
-
-- **4** If she accepts, Bob will receive Alice's Pryv.io API endpoint that will allow him to read the stream "Nutrition": `https://ckgceupbk009u1md3tx9wnseo@alice123.pryv.me/`
+- **5** The web app will perform an [Auth request](/reference/#auth-request), prompting Alice for permissions to her data and presenting her with the consent message.
 
 <p align="center">
-<img src="/assets/images/endpointalice.png" />
+<img src="/assets/images/consent2.png" width="333" height="478"/>
 </p>
 
-- **5** Bob is now ready to discover what Alice really likes...
+- **6** If she accepts, the app should send the obtained API endpoint to Bob (which was not done here). If it were to be saved, the link would have contained a token for a create-only level [Access](/reference/#access) and would have saved it on his streams as presented in [this chapter of the data modelling guide](/guides/data-modelling/#store-data-accesses).
+
+Bob is now ready to discover what Alice really likes...
 
 
 <p align="center">
