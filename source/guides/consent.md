@@ -195,8 +195,7 @@ Bob is now ready to discover what Alice really likes...
 
 ### Data privacy requirements and legislation
 
-For more general information about how the GDPR requirements affect Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/).  
-More generally, we show [here](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit) how you can leverage Pryv.io technology to achieve compliance while increasing your business efficiency. It goes over the GDPR checklist point by point to ensure a global understanding of the law, and shows how Pryv helps you solve it.
+For more information about how the GDPR requirements affect Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/).  
 
 ### Personal data scope
 
