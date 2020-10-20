@@ -170,9 +170,9 @@ The payload looks as following:
 
 - **4** He will send the request to Alice through a mobile or web app such as [this one](/guides/consent/request/).
 
-| Before sign in and consent request     | After sign-in and accepting consent request                                                      |
+| Before sign in and consent request     |   After sign-in and accepting consent request                                                  |
 | ------------------------------------------------------------ |------------------------------------------------------------ |
-| <img src="images/request-app-1.png" alt="app-1" style="zoom:50%;" /> | <img src="images/request-app-1.png" alt="app-2" style="zoom:50%;" /> |
+| <img src="/assets/images/request-app-1.png" alt="app-1" style="zoom:50%;" /> | <img src="/assets/images/request-app-2.png" alt="app-2" style="zoom:50%;" /> |
 
 - **5** The web app will perform an [Auth request](/reference/#auth-request), prompting Alice for permissions to her data and presenting her with the consent message.
 
