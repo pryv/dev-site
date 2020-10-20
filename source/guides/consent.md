@@ -32,7 +32,7 @@ Data in Pryv.io accounts is organized in streams and events, and accesses are di
 
 Let's keep things simple for now; thus, suffice to say that consent from the user will focus on "streams". If you wish to learn more about the **Pryv.io Data Model**, you can do so in this [tech guide](https://api.pryv.com/guides/data-modelling/) or [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
 
-With Pryv.io, we are aiming at implementing a way of collecting consent that is straightforward, transparent, and meets the very specific requirements of the regulation: *freely given, specific, informed and unambiguous*.
+With Pryv.io, we are aiming at implementing a way of collecting consent that is straightforward, transparent, and meets the very specific requirements of the regulation: *freely given, specific, informed and unambiguous* ([Article 4](https://gdpr.eu/article-4-definitions/) of the GDPR).  
 
 Below are the step-by-step instructions on how to request consent from your user:
 
@@ -54,8 +54,7 @@ You will need to customize a few parameters to adapt it to your needs and ensure
 }
 ```
 
-**Consent** under the GDPR is defined as *“any freely given, specific, informed and unambiguous indication of the data subject's wishes by which he or she, by a statement or by a clear affirmative action, signifies agreement to the processing of personal data relating to him or her”* ([Article 4](https://gdpr.eu/article-4-definitions/) of the GDPR).  
-This implies that the consent request must follow very specific requirements that you need to keep in mind when customizing your consent message:
+The consent request must follow very specific requirements that you need to keep in mind when customizing your consent message:
 
 - **Consent must be informed**: Your app users must be fully informed of the data processing before granting consent. This means that your consent message should notify them of:
 
@@ -136,7 +135,7 @@ This will return information about the access in use:
 Let's illustrate the consent request process with a practical example. Bob wishes to invite Alice on a date to a restaurant but doesn't know her food preferences.
 He wants to request access on Alice's stream "Nutrition" to subtly analyze what she likes to eat...How can he do so?  
 
-- **1** As Alice's food preferences qualify as personal data under GDPR requirements, he will have to formulate a proper request to access them
+- **1** As Alice's food preferences qualify as personal data under GDPR requirements, he will have to formulate a proper request to access them.
 
 - **2** Both Alice and Bob already have their Pryv.io accounts settled and furnished with structured data (in streams and events).
 
@@ -179,7 +178,8 @@ INSERT SCREENSHOT OF APP
 <img src="/assets/images/consent2.png" width="333" height="478"/>
 </p>
 
-- **6** If she accepts, the app should send the obtained API endpoint to Bob (which was not done here). If it were to be saved, the link would have contained a token for a create-only level [Access](/reference/#access) and would have saved it on his streams as presented in [this chapter of the data modelling guide](/guides/data-modelling/#store-data-accesses).
+- **6** If she accepts, the app should send the obtained API endpoint to Bob (which was not done here).  
+In case Bob wants to save Alice's API endpoint along with other accesses that have been granted to him, he can do so as presented in [the chapter "Store data accesses" of the data modelling guide](/guides/data-modelling/#store-data-accesses).
 
 Bob is now ready to discover what Alice really likes...
 
@@ -191,7 +191,16 @@ Bob is now ready to discover what Alice really likes...
 
 ## References
 
+### Data privacy requirements and legislation
+
 For more general information about how the GDPR requirements affect Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/).  
 More generally, we show [here](https://docs.google.com/document/d/16JiKDiJFbkwMGAJmehRJkZ5Wxfm9Lcnz5X4YuHmuBuA/edit) how you can leverage Pryv.io technology to achieve compliance while increasing your business efficiency. It goes over the GDPR checklist point by point to ensure a global understanding of the law, and shows how Pryv helps you solve it.
 
-You can also find more information on what is defined as **"personal data"** in our [FAQ](https://api.pryv.com/faq-api/#personal-data).
+### Personal data scope
+
+You can find more information on what is defined as **"personal data"** in our [FAQ](https://api.pryv.com/faq-api/#personal-data).
+
+### Data modelling
+
+**Pryv.io Data Model** is summarized in [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
+To learn how to model your data into streams and events, you can check our [tech guide](https://api.pryv.com/guides/data-modelling/) on data modelling.
