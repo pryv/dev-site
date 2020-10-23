@@ -361,7 +361,7 @@ module.exports = exports =
 
                  2- The access token can be provided in the query string's `auth` parameter, for example during the Socket.IO handshake or for a direct HTTP GET call in a browser:
                  
-                 <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info?auth={token}
+                 <pre><code>curl https://<span class="api">{username}.pryv.me</span>/access-info?auth={token}
                  </code></pre>
 
                  """
