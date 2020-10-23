@@ -10,12 +10,18 @@ withTOC: true
 - **Pryv Explorer**: Web application to explore and manage data on your Pryv.io platform
 - **Open Pryv.io image for [Exoscale market](https://www.exoscale.com/marketplace/)**
 - **Pryv.io certificates auto-renewal**: Automatic SSL certification renewal
+- **Support oAuth 2.0 protocol for authentication and authorization**
 
 # Released
 
+## 22.10.2020 - React Native support for lib-js
+
+A react native application using the [Pryv.io JavaScript library](https://github.com/pryv/lib-js) is now available in our [Github repository](https://github.com/pryv/app-react-native-example).
+This app example displays an implementation of Pryv.io authentication protocol.
+
 ## 20.10.2020 - Consent implementation with Pryv.io
 
-We have released our new [tech guide](https://api.pryv.com/guides/consent) to help developers manage consent when building personal data collecting applications to satisfy existing and forthcoming privacy regulations. It outlines the logic of managing consent with Pryv.io, and guides you through a practical hands-on example involving a consent request.
+We have released our new [tech guide](https://api.pryv.com/guides/consent) to help developers manage consent when building personal data collecting applications to satisfy existing and forthcoming privacy regulations. It outlines the logic of managing consent with Pryv.io, and guides you through a practical hands-on example involving a consent request. More information on how to leverage your compliance in our [article](https://support.pryv.com/hc/en-us/articles/360017196459-Consent-management-with-Pryv-io).
 
 ## 28.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
