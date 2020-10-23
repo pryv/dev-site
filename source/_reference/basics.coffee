@@ -355,9 +355,10 @@ module.exports = exports =
                  </code></pre>
 
                  This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://visionmedia.github.io/superagent/) 
-                 or [Postman](https://www.getpostman.com).
+                 or [Postman](https://www.getpostman.com).  
+                 These tools implicitly translate the `${token}@` part of the URL to the `Authorization` header in basic auth format. Please use the main authorization method for tools that do not operate this translation, such as Grafana.
 
-                 Note that Pryv.io does not require a username, so only the token should be Base64 encoded. For more information see [RFC671](https://tools.ietf.org/html/rfc7617 ). 
+                 Note that Pryv.io does not require a username, so only the token should be Base64 encoded. For more information see [RFC671](https://tools.ietf.org/html/rfc7617 ).  
 
                  2- The access token can be provided in the query string's `auth` parameter, for example during the Socket.IO handshake or for a direct HTTP GET call in a browser:
                  
