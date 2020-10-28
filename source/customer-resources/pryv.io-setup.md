@@ -73,7 +73,7 @@ The procedure for the platform health monitoring is described in the [Pryv.io He
 
 ## Customize authentication, registration and reset password apps
 
-In order to perform the [authentication procedure](/reference/#authenticate-your-app), a web page is necessary. We provide a template web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
+In order to perform the [authentication procedure](/reference/#authenticate-your-app), a web page is necessary. We deliver Pryv.io platforms with a web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
 
 In order to customize your own, we suggest that you fork this repository and host the web app on your environment. The easiest way to begin is to fork it on GitHub and host it using GitHub-pages.
 
@@ -84,7 +84,7 @@ To use your own page, you will have to update the following platform variables:
 
 You will then need to provide your web page's URL in the [Auth request](/reference/#auth-request) `authUrl` parameter, or if you want to make it default, change the `DEFAULT_AUTH_URL` in the platform variables.
 
-**We urge you to fork this web application even if you don't wish to customize it as it follows the versioning of the Pryv Lab platform and may incur breaking changes during updates.**
+Or if you wish to proxy your custom app-web-auth3 app through the `https://sw.DOMAIN/access/...` URL, you will only need to change the `APP_WEB_AUTH_URL` instead of all other changes.
 
 ### GH pages
 
@@ -99,10 +99,16 @@ If you are hosting it on GitHub pages, you will need to adapt the platform varia
     - "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
 ```
 
-If you wish to make it default, you must additionally set as following:
+If you wish to make it default, set:
 
 ```yaml
   DEFAULT_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
+```
+
+or if you wish to proxy it through `https://sw.DOMAIN/access/`, set:
+
+```yaml
+  APP_WEB_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/"
 ```
 
 ### Your own server
@@ -116,10 +122,16 @@ If you are hosting it on your own server, you will need to adapt the platform va
     - "https://YOUR-SERVER-URL/access/access.html"
 ```
 
-If you wish to make it default, you must additionally set as following:
+If you wish to make it default, set:
 
 ```yaml
   DEFAULT_AUTH_URL: "https://YOUR-SERVER-URL/access/access.html"
+```
+
+or if you wish to proxy it through `https://sw.DOMAIN/access/`, set:
+
+```yaml
+  APP_WEB_AUTH_URL: "https://YOUR-SERVER-URL/"
 ```
 
 ## Set up email sending
