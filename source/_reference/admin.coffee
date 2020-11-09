@@ -103,6 +103,56 @@ module.exports = exports =
         ]
       ]
     ,
+      id: "platform-settings"
+      title: "Platform settings"
+      description: """
+                  Methods for managing platform settings.
+                  """
+      sections: [
+        id: "settings.update"
+        type: "method"
+        title: "Update platform settings"
+        http: "PUT /admin/settings"
+        description: """
+                    Updates the platform settings and saves them.
+                    """
+        params:
+          properties: [
+            key: "update"
+            type: "object"
+            http:
+              text: "request body"
+            description: """
+                        New values for the platform settings' fields.
+                        """
+          ],  
+        result:
+          http: "200 OK"
+          properties: [
+            key: "platform-settings"
+            type: "object"
+            description: """
+                        The updated platform settings.
+                        """
+          ],
+        id: "settings.notify"
+        type: "method"
+        title: "Notifies about configuration changes"
+        http: "POST /admin/notify"
+        description: """
+                    Notifies followers about platform settings' changes.
+                    """
+        params:
+          properties: [
+            key: "services"
+            type: "object"
+            description: """
+                        The services ???
+                        """
+          ],  
+        result:
+          http: "200 OK"
+      ],
       id: "platform-users"
       title: "Platform users"
       description: """
