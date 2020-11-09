@@ -4,6 +4,12 @@ title: API change log
 template: default.jade
 ---
 
+## 1.6.5
+
+Changes:
+
+- Custom Auth function now has access to all HTTP request headers
+
 ## 1.6.1
 
 Changes:
