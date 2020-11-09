@@ -19,7 +19,6 @@ withTOC: true
 4. [Custom Auth Step features](#custom-auth-step-features)
 5. [Authenticate data access with an external service](#authenticate-data-access-with-an-external-service)
 
-
 ## Introduction
 
 Authentication allows you to validate the identity of a registered user attempting to access resources. You can add a custom authentication step to your Pryv.io platform to verify more information than the authorization token when performing a request to access data.  
