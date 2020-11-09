@@ -87,16 +87,10 @@ module.exports = exports =
                           A confirmation of the user's username.
                           """
           ,
-            key: "server"
-            type: "string"
-            description: """
-                         The server where this account is hosted.
-                         """
-          ,
             key: "apiEndpoint"
             type: "string"
             description: """
-                         The apiEndpoint to reach this account. It includes an access token.
+                         The apiEndpoint to reach this account. It includes a personal access token.
                          """
           ]
         examples: [
@@ -110,8 +104,8 @@ module.exports = exports =
             language: examples.register.languageCodes[0]
             referer: examples.register.referers[0]
           result:
-            username: examples.users.five.username
-            apiEndpoint: examples.users.five.apiEndpoint.pryvLab
+            username: examples.users.two.username
+            apiEndpoint: examples.users.two.apiEndpoint.pryvLab
         ]
       ,
         id: "username.check"
