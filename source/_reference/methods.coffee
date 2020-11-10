@@ -1816,7 +1816,6 @@ module.exports = exports =
         ]
       examples: [
         params: {
-          "auth": examples.audit.auth,
           "accessId": examples.audit.log1.accessId,
           "fromTime": 1561000000,
           "toTime": 1562000000,
