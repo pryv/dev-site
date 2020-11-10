@@ -1726,6 +1726,7 @@ module.exports = exports =
       type: "method"
       title: "Get audit logs"
       http: "GET /audit/logs"
+      httpOnly: true
       description: """
                    Fetches accessible audit logs.
                    By default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).
