@@ -147,7 +147,7 @@ module.exports = exports =
             key: "services"
             type: "object"
             description: """
-                        The services ???
+                        The services
                         """
           ],  
         result:
