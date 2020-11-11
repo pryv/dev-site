@@ -167,45 +167,45 @@ module.exports = exports =
                         Successful updates
                         """
             properties: [
-            key: "key"
-            type: "string"
-          ,
-            key: "url"
-            type: "string"
-          ,
-            key: "role"
-            type: "string"
-            description: """
-                        The role of the machine (core, static, reg).
-                        """
+              key: "key"
+              type: "string"
+              ,
+              key: "url"
+              type: "string"
+              ,
+              key: "role"
+              type: "string"
+              description: """
+                          The role of the machine (core, static, reg).
+                          """
           ],
-          key: "failures"
-          type: "object"
-          description: """
-                       Updates failures
-                      """
-          properties: [
-            key: "key"
-            type: "string"
-          ,
-            key: "url"
-            type: "string"
-          ,
-            key: "role"
-            type: "string"
-            description: """
-                        The role of the machine (core, static, reg).
-                        """
-          ,
-            key: "error"
+            key: "failures"
             type: "object"
             description: """
-                        The error information.
+                        Updates failures
                         """
+            properties: [
+              key: "key"
+              type: "string"
+            ,
+              key: "url"
+              type: "string"
+            ,
+              key: "role"
+              type: "string"
+              description: """
+                          The role of the machine (core, static, reg).
+                          """
+            ,
+              key: "error"
+              type: "object"
+              description: """
+                          The error information.
+                          """
           ]
       ]
       ],
-      
+
       id: "platform-users"
       title: "Platform users"
       description: """
