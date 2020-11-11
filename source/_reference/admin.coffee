@@ -125,7 +125,7 @@ module.exports = exports =
             description: """
                         JSON config file containing the new values for the platform settings' fields.
                         """
-          ],  
+          ] 
         result:
           http: "200 OK"
           properties: [
@@ -141,7 +141,8 @@ module.exports = exports =
           description: """
                       The configuration format is invalid.
                       """
-        ], 
+        ]
+      ,
         id: "settings.notify"
         type: "method"
         title: "Notifies about configuration changes"
@@ -157,54 +158,25 @@ module.exports = exports =
             description: """
                         The services.
                         """
-          ],  
+          ]
         result:
           http: "200 OK"
           properties: [
             key: "successes"
-            type: "object"
+            type: "array of [services]()"
             description: """
-                        Successful updates.
+                        Services successfully updated.
                         """
-            properties: [
-              key: "key"
-              type: "string"
-              ,
-              key: "url"
-              type: "string"
-              ,
-              key: "role"
-              type: "string"
-              description: """
-                          The role of the machine (core, static, reg).
-                          """
-          ],
+          ,
             key: "failures"
-            type: "object"
+            type: "array of [services]()"
             description: """
-                        Updates' failures.
+                        Services failed to update.
                         """
-            properties: [
-              key: "key"
-              type: "string"
-            ,
-              key: "url"
-              type: "string"
-            ,
-              key: "role"
-              type: "string"
-              description: """
-                          The role of the machine (core, static, reg).
-                          """
-            ,
-              key: "error"
-              type: "object"
-              description: """
-                          The error information.
-                          """
           ]
       ]
-      ],
+    
+    ,
 
       id: "platform-users"
       title: "Platform users"
