@@ -123,7 +123,7 @@ module.exports = exports =
             http:
               text: "request body"
             description: """
-                        New values for the platform settings' fields.
+                        JSON config file containing the new values for the platform settings' fields.
                         """
           ],  
         result:
@@ -135,6 +135,13 @@ module.exports = exports =
                         The updated platform settings.
                         """
           ],
+        errors: [
+          key: "invalid-input"
+          http: "400"
+          description: """
+                      The configuration format is invalid.
+                      """
+        ], 
         id: "settings.notify"
         type: "method"
         title: "Notifies about configuration changes"
@@ -145,13 +152,58 @@ module.exports = exports =
         params:
           properties: [
             key: "services"
+            optional: true 
             type: "object"
             description: """
-                        The services
+                        The services.
                         """
           ],  
         result:
           http: "200 OK"
+          properties: [
+            key: "successes"
+            type: "object"
+            description: """
+                        Successful updates
+                        """
+            properties: [
+            key: "key"
+            type: "string"
+          ,
+            key: "url"
+            type: "string"
+          ,
+            key: "role"
+            type: "string"
+            description: """
+                        The role of the machine (core, static, reg).
+                        """
+          ],
+          key: "failures"
+          type: "object"
+          description: """
+                       Updates failures
+                      """
+          properties: [
+            key: "key"
+            type: "string"
+          ,
+            key: "url"
+            type: "string"
+          ,
+            key: "role"
+            type: "string"
+            description: """
+                        The role of the machine (core, static, reg).
+                        """
+          ,
+            key: "error"
+            type: "object"
+            description: """
+                        The error information.
+                        """
+          ]
+      ]
       ],
       id: "platform-users"
       title: "Platform users"
