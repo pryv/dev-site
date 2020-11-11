@@ -164,7 +164,7 @@ module.exports = exports =
             key: "successes"
             type: "object"
             description: """
-                        Successful updates
+                        Successful updates.
                         """
             properties: [
               key: "key"
@@ -182,7 +182,7 @@ module.exports = exports =
             key: "failures"
             type: "object"
             description: """
-                        Updates failures
+                        Updates' failures.
                         """
             properties: [
               key: "key"
