@@ -163,16 +163,60 @@ module.exports = exports =
           http: "200 OK"
           properties: [
             key: "successes"
-            type: "array of [services]()"
+            type: "array of services"
             description: """
                         Services successfully updated.
                         """
+            properties: [
+              key: "key"
+              type: "string"
+              description: """
+                          replace me
+                          """
+            ,
+              key: "url"
+              type: "string"
+              description: """
+                          replace me
+                          """
+            ,
+              key: "role"
+              type: "string"
+              description: """
+                          The role of the machine (core, static, reg).
+                          """
+            ]
           ,
             key: "failures"
-            type: "array of [services]()"
+            type: "array of services"
             description: """
                         Services failed to update.
                         """
+            properties: [
+              key: "key"
+              type: "string"
+              description: """
+                          replace me
+                          """
+            ,
+              key: "url"
+              type: "string"
+              description: """
+                          replace me
+                          """
+            ,
+              key: "role"
+              type: "string"
+              description: """
+                          The role of the machine (core, static, reg).
+                          """
+            ,
+              key: "error"
+              type: "object"
+              description: """
+                          The error information.
+                          """
+            ]
           ]
       ]
     
