@@ -171,13 +171,13 @@ module.exports = exports =
               key: "key"
               type: "string"
               description: """
-                          replace me
+                          The key of the service.
                           """
             ,
               key: "url"
               type: "string"
               description: """
-                          replace me
+                          The url of the service.
                           """
             ,
               key: "role"
@@ -196,13 +196,13 @@ module.exports = exports =
               key: "key"
               type: "string"
               description: """
-                          replace me
+                          The key of the service.
                           """
             ,
               key: "url"
               type: "string"
               description: """
-                          replace me
+                          The url of the service.
                           """
             ,
               key: "role"
