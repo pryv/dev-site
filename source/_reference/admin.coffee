@@ -109,6 +109,21 @@ module.exports = exports =
                   Methods for managing platform settings.
                   """
       sections: [
+        id: "settings.get"
+        type: "method"
+        title: "Retrieve platform settings"
+        http: "GET /admin/settings"
+        description: """
+
+                     """
+        result:
+          http: "200 OK"
+          properties: [
+            
+          ]
+
+      ,
+
         id: "settings.update"
         type: "method"
         title: "Update platform settings"
@@ -154,18 +169,18 @@ module.exports = exports =
           properties: [
             key: "services"
             optional: true 
-            type: "object"
+            type: "array of strings"
             description: """
-                        The services.
+                        The Pryv.io services to reboot. If empty, reboots all Pryv.io services. See your configuration's docker-compose file for the list of services.
                         """
           ]
         result:
           http: "200 OK"
           properties: [
             key: "successes"
-            type: "array of services"
+            type: "array of roles"
             description: """
-                        Services successfully updated.
+                        Roles successfully updated.
                         """
             properties: [
               key: "key"
