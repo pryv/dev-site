@@ -198,9 +198,7 @@ An intake of 500mg of paracetamol will be recorded this way:
   "params": {
     "streamIds": ["intake"],
     "type": "paracetamol/mg",
-    "content": {
-      "dose": 500
-    }
+    "content": 500
   }
 }
 ```
@@ -224,9 +222,7 @@ An intake of 500mg of paracetamol will be recorded this way:
   "params": {
     "streamIds": ["paracetamol"],
     "type": "mass/mg",
-    "content": {
-      "dose": 500
-    }
+    "content": 500
   }
 }
 ```
