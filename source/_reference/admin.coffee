@@ -112,7 +112,7 @@ module.exports = exports =
         id: "users.delete"
         type: "method"
         title: "Delete user"
-        http: "DELETE /platform-users/:username"
+        http: "DELETE /platform-users/{username}"
         httpOnly: true
         description: """
                     Delete user account from the Pryv.io platform. **This deletion is final**.
