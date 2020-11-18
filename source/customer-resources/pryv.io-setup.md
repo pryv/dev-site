@@ -81,6 +81,8 @@ To use your own page, you will have to update the following platform variables:
 
 - TRUSTED_AUTH_URLS
 - TRUSTED_APPS
+- PASSWORD_RESET_URL
+- DEFAULT_AUTH_URL (optional)
 
 You will then need to provide your web page's URL in the [Auth request](/reference/#auth-request) `authUrl` parameter, or if you want to make it default, change the `DEFAULT_AUTH_URL` in the platform variables.
 
@@ -97,6 +99,7 @@ If you are hosting it on GitHub pages, you will need to adapt the platform varia
   TRUSTED_AUTH_URLS:
     - "https://sw.DOMAIN/access/access.html"
     - "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
+  PASSWORD_RESET_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/reset-password.html"
 ```
 
 If you wish to make it default, set:
@@ -105,7 +108,7 @@ If you wish to make it default, set:
   DEFAULT_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
 ```
 
-or if you wish to proxy it through `https://sw.DOMAIN/access/`, set:
+or if you wish to proxy it through `https://sw.DOMAIN/access/`, **only** set:
 
 ```yaml
   APP_WEB_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/"
@@ -120,6 +123,7 @@ If you are hosting it on your own server, you will need to adapt the platform va
   TRUSTED_AUTH_URLS:
     - "https://sw.DOMAIN/access/access.html"
     - "https://YOUR-SERVER-URL/access/access.html"
+  PASSWORD_RESET_URL: "https://YOUR-SERVER-URL/access/reset-password.html"
 ```
 
 If you wish to make it default, set:
@@ -128,7 +132,7 @@ If you wish to make it default, set:
   DEFAULT_AUTH_URL: "https://YOUR-SERVER-URL/access/access.html"
 ```
 
-or if you wish to proxy it through `https://sw.DOMAIN/access/`, set:
+or if you wish to proxy it through `https://sw.DOMAIN/access/`, **only** set:
 
 ```yaml
   APP_WEB_AUTH_URL: "https://YOUR-SERVER-URL/"
