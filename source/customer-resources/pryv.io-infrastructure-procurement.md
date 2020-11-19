@@ -125,6 +125,13 @@ Linux:
 - Ubuntu 16.04, 18.04
 - CentOS
 
+### Docker
+
+Docker versions:
+
+- Docker
+- Docker-compose
+
 ### Single Node
 
 | Aspect               | Minimal Requirement              |
@@ -145,7 +152,7 @@ Linux:
 | Data Disk            | not needed           |
 | Service ports        | tcp/443              |
 
-## Register
+### Register
 
 | Aspect               | Minimal Requirement  |
 | -------------------- | -------------------- |
@@ -157,7 +164,7 @@ Linux:
 
 Disk space used on this node is proportional to the number of users registered in your Pryv.io instance. If you foresee a big number of user accounts (> 100'000), please increase the data disk space.
 
-## Core
+### Core
 
 | Aspect               | Minimal Requirement       |
 | -------------------- | ------------------------- |
@@ -175,21 +182,25 @@ Here's a matrix that shows how various load situations affect the resource needs
 | High Requests Per Second     | CPU Cores: Increase to at least 4.                           |
 | Image uploads and Previewing | CPU Cores: Increase to at least 4. RAM: Increase depending on needs. |
 
-# Operational Concerns
+## Emails
+
+TODO
+
+## Operational Concerns
 
 This section will introduce additional operational concerns not covered by your Pryv base installation. We recommend implementing measures to address these topics in order to guarantee safe operation and traceability of issues. 
 
-## System Hardening
+### System Hardening
 
 We recommend you follow a system hardening guide for the operating system of your choice. This should include installing firewalls, denying SSH access using passwords and other measures that form best practices. 
 
 Administrators accessing a regulated system must themselves conform to the regulations and have received adequate training. 
 
-## Backups
+### Backups
 
 See the [backup guide](backup). Making a copy of private user data is regulated by law. Please make sure you know the ramifications of making backup copies. 
 
-## Node Monitoring
+### Node Monitoring
 
 Make sure you monitor key performance metrics of your Pryv nodes and keep a history of these metrics for later viewing. This helps in tracking down performance issues and is considered a best practice. Your metrics should include: 
 
