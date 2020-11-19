@@ -6,7 +6,7 @@ customer: true
 withTOC: true
 ---
 
-In this document we address system administrators or equivalent that need to provision VMs and other web resources to run a Pryv.io platform.
+In this document we address system administrators or equivalent that need to provision VMs and other web resources to run a Pryv.io platform.  
 It will guide you through the process of deciding which platform setup you require, what virtual machines to provision to host your Pryv.io platform, firewalling settings, OS compatibility, domain name and SSL certificate requirements.
 
 ## Table of contents
@@ -15,9 +15,9 @@ It will guide you through the process of deciding which platform setup you requi
 
 A Pryv.io platform is composed of 3 roles: register, core and static-web.
 
-- The register component contains the DNS indicating the core machine for a user account.
-- The core service stores user data.
-- The static-web is used to proxy web applications over the same domain and holds default authentication and adminitration applications.
+- The **register** component contains the DNS indicating the core machine for a user account.
+- The **core** service stores user data.
+- The **static-web** is used to proxy web applications over the same domain and holds default authentication and adminitration applications.
 
 Pryv.io can be deployed in various ways, depending on requirements of your business case. This ranges from a starting phase where all components live on one virtual machine in a single location to a deployment spanning many machines across the globe. The present document guides the implementor through the different stages of his project.
 
@@ -27,21 +27,21 @@ Pryv.io can be deployed in various ways, depending on requirements of your busin
 
 The diagram above shows deployment of Pryv.io on a single node all services running on the same VM.
 
-### Cluster with single core
+### Cluster with a single core
 
 ![cluster-single-core](/assets/images/infrastructure/cluster-single-core.svg)
 
-Here we install all roles on separate machines. This variant is useful for when you intend to quickly scale the number of users as show in the following diagrams.
+Here we install all roles on separate machines. This variant is useful for when you intend to quickly scale the number of users as shown in the following diagrams.
 
-### Partitioning for Load
+### Cluster with partitioning for load
 
 ![cluster-load](/assets/images/infrastructure/cluster-load.svg)
 
-When partitioning for load, multiple *core* servers will receive user accounts in round-robin fashion. Any number of users can coexist on a *core*, up to the extreme of 1 user per machine. Please refer to section [VM sizing]() for how to compute the amount of cores you will need for your particular load. 
+When partitioning for load, multiple *core* servers will receive user accounts in a round-robin fashion. Any number of users can coexist on a *core*, up to the extreme of 1 user per machine. Please refer to the [Core number considerations]() section for how to compute the amount of cores you will need for your particular load. 
 
-When partitioning for load, we recommend the creation of one or more follower nodes for *register* roles. This avoids creating a single point of failure (TOD improve reason here).
+When partitioning for load, we recommend the creation of one or more follower nodes for *register* roles. This avoids creating a single point of failure (TODO improve reason here).
 
-### Partitioning for geographical compliance
+### Cluster with partitioning for geographical compliance
 
 ![cluster-compliance-zones](/assets/images/infrastructure/cluster-compliance-zones.svg)
 
@@ -49,15 +49,15 @@ The diagram above shows a Pryv.io system designed to partition data into multipl
 
 Being able to store data in different locations might even be the reason you're using Pryv.io. In systems where Pryv.io coexists with other server components it is important to apply the same logic to all the components - e.g. an SMTP server through which sensitive data transits would have to be deployed in multiple versions across compliance zones as well. Pryv offers consulting on the various legal and technical aspects of preserving user privacy and protecting data.
 
-Keep in mind that the granularity of distribution in this kind of scenario is always the user account. In extreme cases a privacy zone might contain data for a single user only.
+Keep in mind that the granularity of distribution in this kind of scenario is always the user account. In extreme cases a compliance zone might contain data for a single user only.
 
 ## Business Requirements
 
-The size and shape of any deployment will be determined by the business requirements that the Pryv.io cluster needs to meet. In this section, we aim to show what factors are relevant for designing a Pryv cluster. 
+The size of any deployment will be determined by the business requirements that the Pryv.io infrastructure needs to meet. In this section, we aim to show what factors are relevant for designing a Pryv.io infrastructure. 
 
 ### Granularity
 
-Pryv.ios fundamental entity is the user; data is kept vertically and not spread out. For this reason, the guidelines in this section will ask for requirements to be specified per user. 
+Pryv.io's fundamental entity is the user; data is kept vertically and not spread out. For this reason, the guidelines in this section will ask for requirements to be specified per user. 
 
 ### Data Production
 
@@ -83,13 +83,11 @@ The above table sums up the factors that influence the expected write load per u
 
 This table should help you to quantify the load generated by reading data back per user. 
 
-## VM sizing
+## Core number considerations
 
 This section aims to guide you through the sizing of your virtual machines, using the key metrics you compiled in the last section.
 
-### Core number Considerations
-
-Once a system gets bigger than a single node (see above), at least 3 machines will be required: one for the *static-web* role, one for *register* and finally *core*.
+Once a system gets bigger than a single node (see above), at least 3 machines will be required: one for the *static-web* role, one for *register* and one for *core*.
 
 If your system is distributed among multiple compliance zones, you will need at least one core per such zone. Inside of every compliance zone, the number of cores should be derived from the following maximum values for a single core: 
 
@@ -107,16 +105,9 @@ Additionally, you should consider load distribution across your user base. Depen
 
 Users will be assigned to the core that has the least amount of users in the same compliance zone. This results in a round-robin behaviour for a stable set of servers. In the presence of user deletion or when adding servers to an existing cluster, this will skew the distribution of users towards machines that have less users than the others.
 
-### System Requirements
+## System requirements
 
 The previous section should have allowed you to calculate how many cores to deploy in each compliance zone. The purpose of this section is to give you specifications for each machine in the three roles.
-
-## General requirements
-
-The Pryv.io 1.3 release uses nginx to terminate inbound HTTPS connections. You should
-have obtained a wildcard certificate for your domain to that effect. Note that we will never ask you for your private key; you combine your certificate with our configuration upon install. 
-
-Please follow this [link](https://www.digicert.com/ssl-certificate-installation-nginx.htm) to find instructions on how to convert a certificate for nginx.
 
 ### Operating systems
 
@@ -129,15 +120,15 @@ Linux:
 
 Docker versions:
 
-- Docker
-- Docker-compose
+- Docker v19
+- Docker-compose 1.21
 
 ### Single Node
 
 | Aspect               | Minimal Requirement              |
 | -------------------- | -------------------------------- |
-| RAM                  | 4-8GB                              |
-| CPU Cores            | 2-4                                |
+| RAM                  | 4                              |
+| CPU Cores            | 2                                |
 | OS Disk              | 15GB                             |
 | Data Disk            | Depending on storage needs |
 | Service ports        | tcp/443, udp/53                  |
@@ -162,7 +153,7 @@ Docker versions:
 | Data Disk            | 15GB                 |
 | Service ports        | tcp/443, udp/53      |
 
-Disk space used on this node is proportional to the number of users registered in your Pryv.io instance. If you foresee a big number of user accounts (> 100'000), please increase the data disk space.
+If you foresee a big number of user accounts (> 100'000), please increase the data disk space.
 
 ### Core
 
@@ -174,17 +165,23 @@ Disk space used on this node is proportional to the number of users registered i
 | Data Disk            | 15GB                      |
 | Service ports        | tcp/443                   |
 
-Here's a matrix that shows how various load situations affect the resource needs of your *core* servers: 
+Here's a matrix that shows how various load situations affect the resource needs of your *core* server(s):
 
 | Load Situation               | Resource Needs                                               |
 | ---------------------------- | ------------------------------------------------------------ |
-| Many users on a core         | Data Disk Space: Increase per user predictions. |
-| High Requests Per Second     | CPU Cores: Increase to at least 4.                           |
-| Image uploads and Previewing | CPU Cores: Increase to at least 4. RAM: Increase depending on needs. |
+| Large data per user          | Data Disk Space: Increase per data usage predictions         |
+| High Requests Per Second     | CPU Cores: Increase to at least 4                            |
+| Image uploads                | CPU Cores: Increase to at least 4. RAM: Increase depending on needs |
 
 ## Emails
 
 TODO
+
+## SSL
+
+Pryv.io uses NGINX to terminate inbound HTTPS connections. You should have obtained a wildcard certificate for your domain to that effect. Note that we will never ask you for your private key; you combine your certificate with our configuration upon install.
+
+Please follow this [link](https://www.digicert.com/ssl-certificate-installation-nginx.htm) to find instructions on how to convert a certificate for nginx.
 
 ## Operational Concerns
 
