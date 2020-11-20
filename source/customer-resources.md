@@ -37,6 +37,8 @@ In this space you will find links and reference documents that will help you mak
 
 - Generate SSL certificate: [HTML](/customer-resources/ssl-certificate/)
 
+  This document describes how to obtain a wildcard SSL certificate for your running Pryv.io platform using Let's Encrypt.
+
 - Installation validation: [HTML](/customer-resources/platform-validation/)
 
   This document describes the steps to validate that a Pryv.io platform is up and running after deployment.
@@ -83,9 +85,7 @@ In this space you will find links and reference documents that will help you mak
 
 ## Development resources
 
-- Authorization web application (app-web-auth v3): [Github](https://github.com/pryv/app-web-auth3)
-
-  This sample application provides a starting point to implement your own authorization or consent flow application. You might want to fork this repository and modify the code to fit your needs if you want to allow third party applications to interact with your platform.
+See the [Apps & Libs page](/external-resources/) for our example applications and libraries.
 
 ## Contact and support
 
