@@ -11,6 +11,12 @@ It will guide you through the process of deciding which platform setup you requi
 
 ## Table of contents
 
+- 1 [Platform setup](#platform-setup)
+- 2 [Business requirements](#business-requirements)
+- 3 [Core number considerations](#core-number-considerations)
+- 4 [System requirements](#system-requirements)
+- 5 [Operational concerns](#operational-concerns)
+
 ## Platform setup
 
 A Pryv.io platform is composed of 3 roles: register, core and static-web.
@@ -21,7 +27,7 @@ A Pryv.io platform is composed of 3 roles: register, core and static-web.
 
 Pryv.io can be deployed in various ways, depending on requirements of your business case. This ranges from a starting phase where all components live on one virtual machine in a single location to a deployment spanning many machines across the globe. The present document guides the implementor through the different stages of his project.
 
-### Single-node
+### Single-node mode
 
 ![single-node](/assets/images/infrastructure/single-node.svg)
 
@@ -37,7 +43,7 @@ Here we install all roles on separate machines. This variant is useful for when 
 
 ![cluster-load](/assets/images/infrastructure/cluster-load.svg)
 
-When partitioning for load, multiple *core* servers will receive user accounts in a round-robin fashion. Any number of users can coexist on a *core*, up to the extreme of 1 user per machine. Please refer to the [Core number considerations]() section for how to compute the amount of cores you will need for your particular load. 
+When partitioning for load, multiple *core* servers will receive user accounts in a round-robin fashion. Any number of users can coexist on a *core*, up to the extreme of 1 user per machine. Please refer to the [Core number considerations](#core-number-considerations) section for how to compute the amount of cores you will need for your particular load. 
 
 When partitioning for load, we recommend the creation of one or more follower nodes for *register* roles. This avoids creating a single point of failure (TODO improve reason here).
 
@@ -114,7 +120,6 @@ The previous section should have allowed you to calculate how many cores to depl
 Linux:
 
 - Ubuntu 16.04, 18.04
-- CentOS
 
 ### Docker
 
@@ -195,15 +200,3 @@ Make sure you monitor key performance metrics of your Pryv nodes and keep a hist
 * Disk (space left on devices, iops read and write)
 * RAM (swapping activity, reserved, free)
 * Network Interfaces (Packets, Bytes, Errors)
-
-## Customer Resources
-
-Please consult our [customer-resources page](https://api.pryv.com/customer-resources/#documents) for additional documents that will help you make the most of your Pryv.io platform.
-
-## Support
-
-If you need additional support in designing your Pryv.io deployment, please contact your sales contact or 
-
-sales@pryv.com.
-
-Happy Installing Pryv.io! Remember, we are there to help. Sincerely, 
