@@ -35,6 +35,8 @@ In this space you will find links and reference documents that will help you mak
   This document describes how to deploy a Pryv.io platform as well as essential information to help you decide on your infrastructure and sizing needs.
   You will also find information about how to operate your Pryv.io platform.
 
+- Generate SSL certificate: [HTML](/customer-resources/ssl-certificate/)
+
 - Installation validation: [HTML](/customer-resources/platform-validation/)
 
   This document describes the steps to validate that a Pryv.io platform is up and running after deployment.
