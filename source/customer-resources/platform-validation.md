@@ -117,7 +117,7 @@ If there are no errors in the logs, the machine might simply not be reachable fr
 1. SSH to the Register machine
 2. Make a DNS request: `dig @localhost reg.${DOMAIN}`
 
-If the request yields an answer, your firewall settings might be set wrong. You must allow INGRESS UDP/53 as defined in the **Deployment design guide** from the [Customer Resources page](/customer-resources/#documents).
+If the request yields an answer, your firewall settings might be set wrong. You must allow INGRESS UDP/53 as defined in the **Deployment design guide** from the [Customer Resources page](/customer-resources/#guides-and-documents).
 
 ## Core
 

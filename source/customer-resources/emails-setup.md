@@ -136,7 +136,7 @@ If you choose to use the domain associated with your Pryv.io platform, you shoul
 In the SPF record above, we declared that Mandrill can be used to send emails on behalf of the domain of our Pryv.io platform.
 You can of course replace Mandrill by the SPF address of the SMTP host(s) of your choice.
 
-Please refer to [the DNS configuration document](https://api.pryv.com/customer-resources/#documents) on how to set such SPF record in the Pryv.io DNS.
+Please refer to [the DNS configuration document](https://api.pryv.com/customer-resources/#guides-and-documents) on how to set such SPF record in the Pryv.io DNS.
 
 ### Email template default language
 

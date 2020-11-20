@@ -59,7 +59,7 @@ Now, the CLI will ask you to set a certain key to the TXT Record `_acme-challeng
     name: "DNS settings"
     settings:
       DNS_CUSTOM_ENTRIES:
-        description: "Additional DNS entries. See the DNS configuration document: https://api.pryv.com/customer-resources/#documents.
+        description: "Additional DNS entries. See the DNS configuration document: https://api.pryv.com/customer-resources/#guides-and-documents.
         Can be set to null if not used."
         value:
           _acme-challenge:
