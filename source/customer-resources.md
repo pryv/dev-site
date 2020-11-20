@@ -53,7 +53,7 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to add entries in your Pryv.io associated domain DNS zone.
 
-- Emails configuration: [HTML](/customer-resources/email-setup/)
+- Emails configuration: [HTML](/customer-resources/emails-setup/)
 
   This document describes how to configure the sending of Pryv.io emails for welcoming new users or resetting lost passwords.
 
