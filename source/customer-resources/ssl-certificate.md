@@ -8,7 +8,8 @@ withTOC: true
 
 This document describes how to generate a wildcard SSL certificate using [Let's Encrypt](https://letsencrypt.org/) and Pryv.io's DNS.
 
-The prerequisites for this are that you have [obtained a domain name](/customer-resources/pryv.io-setup/#obtain-a-domain-name) and [installed the Pryv.io platform](/customer-resources/pryv.io-setup/#set-the-platform-parameters).
+The prerequisites for this are that you have [obtained a domain name](/customer-resources/pryv.io-setup/#obtain-a-domain-name) and [installed the Pryv.io platform](/customer-resources/pryv.io-setup/#set-the-platform-parameters).  
+If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
 
 ## Certbot Installation
 

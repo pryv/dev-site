@@ -59,6 +59,8 @@ You will need to obtain a wildcard SSL certificate for *.DOMAIN to enable encryp
 
 We have automatic SSL certificate renewal on our roadmap, so let us know if you are interested.
 
+If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
+
 ## Validate your platform installation
 
 Now that your Pryv.io platform is configured and running, you can run the validation procedure from the [Pryv.io platform validation guide](/customer-resources/platform-validation).
