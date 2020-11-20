@@ -30,7 +30,7 @@ In this space you will find links and reference documents that will help you mak
 
 - Pryv.io platform setup guide: [HTML](/customer-resources/pryv.io-setup/)
 
-- Deployment Design Guide: [PDF](/assets/docs/deployment_design_guide_v6.pdf)
+- Infrastructure procurement (Previously "Deployment design guide"): [HTML](/customer-resources/infrastructure-procurement/)
 
   This document describes how to deploy a Pryv.io platform as well as essential information to help you decide on your infrastructure and sizing needs.
   You will also find information about how to operate your Pryv.io platform.
