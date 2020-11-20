@@ -16,6 +16,7 @@ It will guide you through the process of deciding which platform setup you requi
 - 3 [Core number considerations](#core-number-considerations)
 - 4 [System requirements](#system-requirements)
 - 5 [Operational concerns](#operational-concerns)
+- 6 [Previous version](#previous-version)
 
 ## Platform setup
 
@@ -200,3 +201,7 @@ Make sure you monitor key performance metrics of your Pryv nodes and keep a hist
 * Disk (space left on devices, iops read and write)
 * RAM (swapping activity, reserved, free)
 * Network Interfaces (Packets, Bytes, Errors)
+
+## Previous version
+
+The previous version of this document, named "Deployment design guide" is still available [here](/assets/docs/deployment_design_guide_v6.pdf).
