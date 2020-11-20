@@ -177,11 +177,7 @@ Here's a matrix that shows how various load situations affect the resource needs
 
 TODO
 
-## SSL
 
-Pryv.io uses NGINX to terminate inbound HTTPS connections. You should have obtained a wildcard certificate for your domain to that effect. Note that we will never ask you for your private key; you combine your certificate with our configuration upon install.
-
-Please follow this [link](https://www.digicert.com/ssl-certificate-installation-nginx.htm) to find instructions on how to convert a certificate for nginx.
 
 ## Operational Concerns
 
