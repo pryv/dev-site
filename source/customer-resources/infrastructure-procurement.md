@@ -133,19 +133,19 @@ Docker versions:
 
 | Aspect               | Minimal Requirement              |
 | -------------------- | -------------------------------- |
-| RAM                  | 4                              |
+| RAM                  | 4 GB                             |
 | CPU Cores            | 2                                |
-| OS Disk              | 15GB                             |
-| Data Disk            | Depending on storage needs |
+| OS Disk              | 15 GB                             |
+| Data Disk            | Depending on storage needs       |
 | Service ports        | tcp/443, udp/53                  |
 
 ### Static-web
 
 | Aspect               | Minimal Requirement  |
 | -------------------- | -------------------- |
-| RAM                  | 512 MB                  |
+| RAM                  | 512 MB               |
 | CPU Cores            | 1                    |
-| OS Disk              | 15GB                 |
+| OS Disk              | 15 GB                 |
 | Data Disk            | not needed           |
 | Service ports        | tcp/443              |
 
@@ -153,10 +153,10 @@ Docker versions:
 
 | Aspect               | Minimal Requirement  |
 | -------------------- | -------------------- |
-| RAM                  | 2GB                  |
+| RAM                  | 2 GB                  |
 | CPU Cores            | 1                    |
-| OS Disk              | 15GB                 |
-| Data Disk            | 15GB                 |
+| OS Disk              | 15 GB                 |
+| Data Disk            | 15 GB                 |
 | Service ports        | tcp/443, udp/53      |
 
 If you foresee a big number of user accounts (> 100'000), please increase the data disk space.
@@ -165,10 +165,10 @@ If you foresee a big number of user accounts (> 100'000), please increase the da
 
 | Aspect               | Minimal Requirement       |
 | -------------------- | ------------------------- |
-| RAM                  | 4GB                       |
+| RAM                  | 4 GB                       |
 | CPU Cores            | 2                         |
-| OS Disk              | 15GB                      |
-| Data Disk            | 15GB                      |
+| OS Disk              | 15 GB                      |
+| Data Disk            | 15 GB                      |
 | Service ports        | tcp/443                   |
 
 Here's a matrix that shows how various load situations affect the resource needs of your *core* server(s):
