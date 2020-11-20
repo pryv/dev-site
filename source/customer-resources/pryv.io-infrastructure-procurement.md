@@ -173,12 +173,6 @@ Here's a matrix that shows how various load situations affect the resource needs
 | High Requests Per Second     | CPU Cores: Increase to at least 4                            |
 | Image uploads                | CPU Cores: Increase to at least 4. RAM: Increase depending on needs |
 
-## Emails
-
-TODO
-
-
-
 ## Operational Concerns
 
 This section will introduce additional operational concerns not covered by your Pryv base installation. We recommend implementing measures to address these topics in order to guarantee safe operation and traceability of issues. 
