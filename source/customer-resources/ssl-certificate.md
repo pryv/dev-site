@@ -13,10 +13,10 @@ If you are using an infrastructure with appliances that perform the SSL terminat
 
 ## Certbot Installation
 
-- [reference](https://certbot.eff.org/lets-encrypt/ubuntuxenial-other)
+- [Reference](https://certbot.eff.org/lets-encrypt/ubuntuxenial-other)
 
 This procedure describes the commands for Ubuntu 16.04.  
-If you use another OS, use the reference link, choose *software: None of the above* and your OS and follow the installation instructions.
+If you are using another OS, go to the reference link, choose *software: None of the above* and your OS and follow the installation instructions.
 
 ```bash
 sudo apt-get update
@@ -67,7 +67,7 @@ Now, the CLI will ask you to set a certain key to the TXT Record `_acme-challeng
             description: "KEY"
 ```
 
-and reboot the follower and pryv services.
+And reboot the follower and pryv services.
 
 Verify that the key is set by running:  
 
@@ -88,7 +88,7 @@ mv fullchain.pem DOMAIN-bundle.crt
 mv privkey.pem DOMAIN-key.pem
 ```
 
-You might have to copy them as `live/` holds symbolic links
+You might have to copy them as `live/` holds symbolic links.
 
 Then copy them into:  
 
@@ -107,4 +107,4 @@ OR
 - `reg-slave`
 - `static`
 
-and reboot the follower and pryv services.
+And reboot the follower and pryv services.
