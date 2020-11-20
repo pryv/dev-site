@@ -24,15 +24,15 @@ A Pryv.io platform is composed of 3 roles: register, core and static-web.
 
 - The **register** component contains the DNS indicating the core machine for a user account.
 - The **core** service stores user data.
-- The **static-web** is used to proxy web applications over the same domain and holds default authentication and adminitration applications.
+- The **static-web** is used to proxy web applications over the same domain and holds default authentication and administration applications.
 
-Pryv.io can be deployed in various ways, depending on requirements of your business case. This ranges from a starting phase where all components live on one virtual machine in a single location to a deployment spanning many machines across the globe. The present document guides the implementor through the different stages of his project.
+Pryv.io can be deployed in various ways, depending on requirements of your business case. This ranges from a starting phase where all components live on one virtual machine in a single location, to a deployment spanning many machines across the globe. The present document guides the implementor through the different stages of his project.
 
 ### Single-node mode
 
 ![single-node](/assets/images/infrastructure/single-node.svg)
 
-The diagram above shows deployment of Pryv.io on a single node all services running on the same VM.
+The diagram above shows deployment of Pryv.io on a single node, all services running on the same VM.
 
 ### Cluster with a single core
 
@@ -46,7 +46,7 @@ Here we install all roles on separate machines. This variant is useful for when 
 
 When partitioning for load, multiple *core* servers will receive user accounts in a round-robin fashion. Any number of users can coexist on a *core*, up to the extreme of 1 user per machine. Please refer to the [Core number considerations](#core-number-considerations) section for how to compute the amount of cores you will need for your particular load. 
 
-When partitioning for load, we recommend the creation of one or more follower nodes for *register* roles. This avoids creating a single point of failure (TODO improve reason here).
+When partitioning for load, we recommend the creation of one or more follower nodes for *register* roles. This avoids creating a single point of failure.
 
 ### Cluster with partitioning for geographical compliance
 
@@ -54,7 +54,7 @@ When partitioning for load, we recommend the creation of one or more follower no
 
 The diagram above shows a Pryv.io system designed to partition data into multiple compliance zones. In practice, these will often correspond to countries (legislations) or smaller entities that handle data (and data privacy) differently.
 
-Being able to store data in different locations might even be the reason you're using Pryv.io. In systems where Pryv.io coexists with other server components it is important to apply the same logic to all the components - e.g. an SMTP server through which sensitive data transits would have to be deployed in multiple versions across compliance zones as well. Pryv offers consulting on the various legal and technical aspects of preserving user privacy and protecting data.
+Being able to store data in different locations might even be the reason you're using Pryv.io. In systems where Pryv.io coexists with other server components, it is important to apply the same logic to all the components - e.g. an SMTP server through which sensitive data transits would have to be deployed in multiple versions across compliance zones as well. Pryv offers consulting on the various legal and technical aspects of preserving user privacy and protecting data.
 
 Keep in mind that the granularity of distribution in this kind of scenario is always the user account. In extreme cases a compliance zone might contain data for a single user only.
 
@@ -181,11 +181,11 @@ Here's a matrix that shows how various load situations affect the resource needs
 
 ## Operational Concerns
 
-This section will introduce additional operational concerns not covered by your Pryv base installation. We recommend implementing measures to address these topics in order to guarantee safe operation and traceability of issues. 
+This section will introduce additional operational concerns not covered by your Pryv.io base installation. We recommend implementing measures to address these topics in order to guarantee safe operation and traceability of issues. 
 
 ### System Hardening
 
-We recommend you follow a system hardening guide for the operating system of your choice. This should include installing firewalls, denying SSH access using passwords and other measures that form best practices. 
+We recommend you to follow a system hardening guide for the operating system of your choice. This should include installing firewalls, denying SSH access using passwords and other measures that form best practices. 
 
 Administrators accessing a regulated system must themselves conform to the regulations and have received adequate training. 
 

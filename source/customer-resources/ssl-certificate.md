@@ -67,7 +67,7 @@ Now, the CLI will ask you to set a certain key to the TXT Record `_acme-challeng
             description: "KEY"
 ```
 
-And reboot the follower and pryv services.
+And reboot the follower and Pryv.io services.
 
 Verify that the key is set by running:  
 

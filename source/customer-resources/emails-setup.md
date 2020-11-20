@@ -19,7 +19,7 @@ The email settings are to be set either directly through the platform settings c
 
 Emails can be sent using:
 
-- sendmail
+- Sendmail
 - your SMTP server
 - Mandrill (deprecated)
 
@@ -48,7 +48,7 @@ This will override the SMTP settings.
 
 ### Your own SMTP server
 
-For production purposes, we strongly recommend to setup your own SMTP server. To activate its usage, disable sendmail as described above and set `EMAIL_SMTP_SETTINGS`:
+For production purposes, we strongly recommend to setup your own SMTP server. To activate its usage, disable Sendmail as described above and set `EMAIL_SMTP_SETTINGS`:
 
 in the platform.yml file:
 
@@ -126,7 +126,7 @@ in the admin panel:
 
 #### Using your Pryv.io domain
 
-SMTP servers use SPF records to help prevent email spooFing. In order to send an email on behalf of a certain domain, you will need to add the SPF record associated with your SMTP server to your domain's DNS zone.  
+SMTP servers use SPF records to help prevent email spoofing. In order to send an email on behalf of a certain domain, you will need to add the SPF record associated with your SMTP server to your domain's DNS zone.  
 If you choose to use the domain associated with your Pryv.io platform, you should add a SPF record similar to this one:
 
 ```
