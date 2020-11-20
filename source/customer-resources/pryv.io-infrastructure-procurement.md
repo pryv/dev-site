@@ -6,8 +6,8 @@ customer: true
 withTOC: true
 ---
 
-In this document we address system administrators or equivalent that need to provision VMs and other web resources to run a Pryv.io platform.  
-It will guide you through the process of deciding which platform setup you require, what virtual machines to provision to host your Pryv.io platform, firewalling settings, OS compatibility, domain name and SSL certificate requirements.
+In this document we address system administrators or equivalent that need to provision virtual machines and other web resources to run a Pryv.io platform.  
+It will guide you through the process of deciding which platform setup you require, what virtual machines to provision to host your Pryv.io platform, firewalling settings, OS compatibility and other operational concerns.
 
 ## Table of contents
 
