@@ -8,16 +8,13 @@ withTOC: true
 
 ## Table of contents
 
-1. [Usage](#usage)
-  1. [File location](#file-location)
-  2. [File organization](#file-organization)
-  3. [Key format](#key-format)
+1. [Usage](#usage)  
+  1. [Settings location](#settings-location)  
+  2. [Key format](#key-format)  
 2. [A Record](#a-record)
 3. [CNAME Record](#cname-record)
 4. [TXT Record](#txt-record)
 5. [SPF Record](#spf-record)
-6. [MX Record](#mx-record)
-
 
 This guide describes how to add DNS records in your Pryv.io associated domain DNS zone.  
 
@@ -35,9 +32,8 @@ Technically, this document describes how to add DNS records of type:
 - CNAME  
 - TXT  
 - SPF  
-- MX  
 
-### Settings access
+### Settings location
 
 These settings can either be changed through the admin panel or through the `config-leader/conf/platform.yml` file under `DNS_SETTINGS`:
 
