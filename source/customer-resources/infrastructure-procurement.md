@@ -30,7 +30,10 @@ Pryv.io can be deployed in various ways, depending on requirements of your busin
 
 ### Single-node mode
 
-![single-node](/assets/images/infrastructure/single-node-new.svg)
+<p align="center">
+<img src="/assets/images/infrastructure/single-node-new.svg" alt="single-node" style="zoom:33%;" />
+</p>
+
 
 The diagram above shows deployment of Pryv.io on a single node, all services running on the same VM.
 
