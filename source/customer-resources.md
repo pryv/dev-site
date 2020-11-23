@@ -51,7 +51,7 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to setup and configure your platform's system streams.
 
-- DNS configuration: [PDF](/assets/docs/20190501-dns-config-v3.pdf)
+- DNS configuration: [PDF](/customer-resources/dns-config/)
 
   This document describes how to add entries in your Pryv.io associated domain DNS zone.
 
