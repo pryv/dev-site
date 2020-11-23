@@ -13,12 +13,10 @@ withTOC: true
   2. [File organization](#file-organization)
   3. [Key format](#key-format)
 2. [A Record](#a-record)
-  1. [Root](#root)
-2. [CNAME Record](#cname-record)
-3. [TXT Record](#txt-record)
-  1. [Root](#root)
-4. [SPF Record](#spf-record)
-5. [MX Record](#mx-record)
+3. [CNAME Record](#cname-record)
+4. [TXT Record](#txt-record)
+5. [SPF Record](#spf-record)
+6. [MX Record](#mx-record)
 
 
 This guide describes how to add entries in your Pryv.io associated domain DNS zone.  
