@@ -147,4 +147,4 @@ DNS_SETTINGS:
 
 ## Previous version
 
-The previous guide for email configuration is still available [here](/assets/docs/20190501-dns-config-v3.pdf).
+The previous guide for DNS configuration is still available [here](/assets/docs/20190501-dns-config-v3.pdf).
