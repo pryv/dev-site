@@ -30,19 +30,19 @@ Pryv.io can be deployed in various ways, depending on requirements of your busin
 
 ### Single-node mode
 
-![single-node](/assets/images/infrastructure/single-node.svg)
+![single-node](/assets/images/infrastructure/single-node-new.svg)
 
 The diagram above shows deployment of Pryv.io on a single node, all services running on the same VM.
 
 ### Cluster with a single core
 
-![cluster-single-core](/assets/images/infrastructure/cluster-single-core.svg)
+![cluster-single-core](/assets/images/infrastructure/single-core.svg)
 
 Here we install all roles on separate machines. This variant is useful for when you intend to quickly scale the number of users as shown in the following diagrams.
 
 ### Cluster with partitioning for load
 
-![cluster-load](/assets/images/infrastructure/cluster-load.svg)
+![cluster-load](/assets/images/infrastructure/cluster.svg)
 
 When partitioning for load, multiple *core* servers will receive user accounts in a round-robin fashion. Any number of users can coexist on a *core*, up to the extreme of 1 user per machine. Please refer to the [Core number considerations](#core-number-considerations) section for how to compute the amount of cores you will need for your particular load. 
 
@@ -50,7 +50,7 @@ When partitioning for load, we recommend the creation of one or more follower no
 
 ### Cluster with partitioning for geographical compliance
 
-![cluster-compliance-zones](/assets/images/infrastructure/cluster-compliance-zones.svg)
+![cluster-compliance-zones](/assets/images/infrastructure/cluster-compliance-zones-new.svg)
 
 The diagram above shows a Pryv.io system designed to partition data into multiple compliance zones. In practice, these will often correspond to countries (legislations) or smaller entities that handle data (and data privacy) differently.
 
