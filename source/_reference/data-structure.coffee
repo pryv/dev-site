@@ -774,6 +774,38 @@ module.exports = exports =
 
   ,
 
+    id: "stream query"
+    title: "Logical stream query"
+    description: """
+                 `streams` parameter for [events.get](#get-events) query accepts **array** and **logical stream queries**.
+
+                 Note: The object representing the query must be sent as a JSON string when performing `GET /event` HTTP calls. 
+                 It can be sent As-this for batch calls.  
+
+                 **Syntax:**
+                  - `['A','B']` => Matches the streams of any of their children
+                  - `{NOT: ['A','B']}` => Does not match any of the streams or any of their children
+                  - `{OR: [selector1, selector2, ...]}` Any of the selector should be satisfied
+                  - `{AND: [selector1, selector2, ...]}` All of the selector must be satisfied    
+
+                **Example:**
+                Logical stream selection is usefull when events are in more than one stream.
+
+                To select all the events that are in 'A' or 'C' but not in 'Z'
+                ```
+                {AND: [{OR: ['A','B']}, {NOT: ['Z']}]}
+                ```
+                  
+                Note: `['A','B']` is a shotcut for `{OR: ['A','B']}` and the previous example can be wrote:
+                ```
+                {AND: [['A','B'], {NOT: ['Z']}]}
+                ```
+
+                 """
+    examples: []
+
+  ,
+
     id: "identifier"
     title: "Item identifier"
     description: """
