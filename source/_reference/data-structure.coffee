@@ -789,7 +789,7 @@ module.exports = exports =
                   - `{AND: [selector1, selector2, ...]}` All of the selector must be satisfied    
 
                 **Example:**
-                Logical stream selection is usefull when events are in more than one stream.
+                Logical stream selection is useful when events are in more than one stream.
 
                 To select all the events that are in 'A' or 'C' but not in 'Z'
                 ```
