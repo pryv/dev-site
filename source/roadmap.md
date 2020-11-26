@@ -15,9 +15,7 @@ withTOC: true
 
 ## 25.11.2020 - Open Pryv.io image for [Exoscale marketplace](https://www.exoscale.com/marketplace/)
 
-Open Pryv.io ready-to-go on [Exoscale marketplace](https://www.exoscale.com/marketplace/listing/open-pryv-io/), allowing you to deploy Open Pryv instantaneously with minimal start-up configuration by clicking [here](https://portal.exoscale.com/compute/instances/add?template-name=Open%20Pryv&instance-type=Small&os-group=other&disk=20), and benefit from the powerful and high-performance European cloud service.  
-
-The technical guide for launching Open Pryv.io with Exoscale is available [here](https://api.pryv.com/image-exoscale-open-pryv.io/).
+Open Pryv.io ready-to-go on Exoscale cloud service, allowing you to deploy Open Pryv instantaneously with minimal start-up configuration from [here](https://api.pryv.com/image-exoscale-open-pryv.io/).  
 
 ## 22.10.2020 - React Native support for lib-js
 
