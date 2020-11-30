@@ -321,10 +321,8 @@ module.exports = exports =
       optional: true
       readOnly: false
       description: """
-        (Only on create) If set, controls access expiry in seconds.
-        When given a number in this attribute (positive or zero),
-        the access will expire (and not be accessible any more) after this many
-        seconds.
+        If set, controls access expiry in seconds.  
+        When given a number in this attribute (positive or zero), the access will expire (and not be usable anymore) after this many seconds.
         """
     ,
       key: "expires"
