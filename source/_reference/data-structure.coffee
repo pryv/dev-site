@@ -261,6 +261,7 @@ module.exports = exports =
       key: "name"
       type: "string"
       unique: "per type and device"
+      readOnly: "(except at creation)"
       description: """
                    The name identifying the access for the user. (For personal and app access, the name is used as a technical identifier and not shown as-is to the user.)
                    """
@@ -268,6 +269,7 @@ module.exports = exports =
       key: "deviceName"
       type: "string"
       optional: true
+      readOnly: "(except at creation)"
       unique: "per type and name"
       description: """
                    For app accesses only. The name of the client device running the app, if applicable.
@@ -275,6 +277,7 @@ module.exports = exports =
     ,
       key: "permissions"
       type: "array of permission objects"
+      readOnly: "(except at creation)"
       description: """
                    Ignored for personal accesses. If permission levels conflict (e.g. stream set to "manage" and child stream set to "contribute"), only the highest level is considered. Each permission object has the following structure:
                    """
@@ -319,7 +322,7 @@ module.exports = exports =
       key: "expireAfter"
       type: "number"
       optional: true
-      readOnly: false
+      readOnly: "(except at creation)"
       description: """
         If set, controls access expiry in seconds.  
         When given a number in this attribute (positive or zero), the access will expire (and not be usable anymore) after this many seconds.
@@ -345,6 +348,7 @@ module.exports = exports =
       key: "clientData"
       type: "[key-value](##{_getDocId("key-value")})"
       optional: true
+      readOnly: "(except at creation)"
       description: """
                    Additional client data for the access.
                    """
