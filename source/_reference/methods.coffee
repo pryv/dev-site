@@ -191,7 +191,8 @@ module.exports = exports =
       http: "POST /auth/login"
       httpOnly: true
       description: """
-                   Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).   
+                   Authenticates the user against the provided credentials, opening a personal access session. By default, the session is valid for 14 days after the last token usage. This duration is configurable in the platform parameters.  
+                   This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).  
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
