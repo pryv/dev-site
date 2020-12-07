@@ -620,12 +620,15 @@ module.exports = exports =
                        """
         ,
           key: "streams"
-          type: "array of [identifier](##{dataStructure.getDocId("identifier")}) or JSON string of a [stream query](##{dataStructure.getDocId("stream query")})"
+          type: "array of streamId [identifiers](##{dataStructure.getDocId("identifier")}) or string of a [streams query](##{dataStructure.getDocId("streams-query")})"
           optional: true
           description: """
-                       **array:** If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
+
+                       **Array of streamIds:** Events assigned to any of the specified streams or their children will be returned. 
                        
-                       **JSON string** of a [stream query](##{dataStructure.getDocId("stream query")}) to perform logical selection of streams with includes and excludes. Serialization of objects and arrays in HTTP GET queries has various implementations. Pryv.io requires this query to be sent as a **JSON string**.
+                       **String of a [streams query](##{dataStructure.getDocId("streams-query")})**: Boolean expression used for filtering events by their streamIds sent as a **[stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) JSON object**.  
+
+                       By default, all accessible events are returned regardless of their stream.
                        """
         ,
           key: "tags"

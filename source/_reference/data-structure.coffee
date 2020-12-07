@@ -774,33 +774,33 @@ module.exports = exports =
 
   ,
 
-    id: "stream query"
-    title: "Logical stream query"
+    id: "streams-query"
+    title: "Boolean streams query"
     description: """
-                 `streams` parameter for [events.get](#get-events) query accepts **array** and **logical stream queries**.
+                 The `streams` parameter for [events.get](#get-events) query accepts an **array** of streamIds or a **boolean streams query** for more complex cases.
 
-                 Note: The object representing the query must be sent as a JSON string when performing `GET /event` HTTP calls. 
-                 It can be sent As-this for batch calls.  
+                 Format: The JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call. 
+                 It can be sent as-is for batch calls.  
 
                  **Syntax:**
-                  - `['A','B']` => Matches the streams of any of their children
+
+                 The streams query must match any of the following expressions or a combination of them:  
+                  - `['A','B']` => Matches the streams or any of their children
                   - `{NOT: ['A','B']}` => Does not match any of the streams or any of their children
-                  - `{OR: [selector1, selector2, ...]}` Any of the selector should be satisfied
-                  - `{AND: [selector1, selector2, ...]}` All of the selector must be satisfied    
+                  - `{OR: [expression1, expression2, ...]}` Any expression should be satisfied
+                  - `{AND: [expression1, expression2, ...]}` All expressions must be satisfied    
 
                 **Example:**
-                Logical stream selection is useful when events are in more than one stream.
+                A boolean streams query is useful when events are in more than one stream.
 
-                To select all the events that are in 'A' or 'C' but not in 'Z'
-                ```
-                {AND: [{OR: ['A','B']}, {NOT: ['Z']}]}
-                ```
-                  
-                Note: `['A','B']` is a shotcut for `{OR: ['A','B']}` and the previous example can be wrote:
-                ```
-                {AND: [['A','B'], {NOT: ['Z']}]}
-                ```
+                To select all the events that are in `A` or `C`, but not in `Z`:
 
+                ```
+                {"AND": [
+                  {"OR": ["A","B"]},
+                  {"NOT": ["Z"]}
+                ]}
+                ```
                  """
     examples: []
 
