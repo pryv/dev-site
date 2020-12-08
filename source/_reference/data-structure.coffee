@@ -787,7 +787,7 @@ module.exports = exports =
                  The streams query must match any of the following expressions or a combination of them:  
                   - `['A','B']` => Matches the streams or any of their children
                   - `{NOT: ['A','B']}` => Does not match any of the streams or any of their children
-                  - `{OR: [expression1, expression2, ...]}` Any expression should be satisfied
+                  - `{OR: [expression1, expression2, ...]}` Any expression must be satisfied
                   - `{AND: [expression1, expression2, ...]}` All expressions must be satisfied    
 
                 **Example:**
