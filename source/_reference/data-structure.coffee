@@ -794,20 +794,19 @@ module.exports = exports =
                  - **all**: all streamIds must match  
                  - **not**: none of the streamIds must match  
                  
-
-                 The filtered events must test as true for all the provided expressions.
+                 The returned events will be those matching all of the provided criteria.
                  
-                **Example:**  
+                 **Example:**  
 
-                To select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `running`:
+                 To select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `running`:
 
-                ```json
-                {
-                  "any": ["activity", "nutrition"],
-                  "all": ["health"],
-                  "not": ["running"]
-                }
-                ```
+                 ```json
+                 {
+                   "any": ["activity", "nutrition"],
+                   "all": ["health"],
+                   "not": ["running"]
+                 }
+                 ```
                  """
     examples: []
 
