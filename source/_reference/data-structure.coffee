@@ -784,26 +784,28 @@ module.exports = exports =
 
                  **Syntax:**
 
-                 The streams query must have at least an `ANY` or `ALL` property, with an optional `NOT`:  
+                 The streams query must have at least an `any` or `all` property, with an optional `not`:  
 
                  ```json
-                 { "ANY": ["streamA", "streamB"], "ALL": ["streamC"], "NOT": ["streamD"] }
+                 { "any": ["streamA", "streamB"], "all": ["streamC"], "not": ["streamD"] }
                  ```
 
-                 - **ANY**: any streamId must match
-                 - **ALL**: all streamIds must match
-                 - **NOT**: none of the streamIds must match
+                 - **any**: any streamId must match  
+                 - **all**: all streamIds must match  
+                 - **not**: none of the streamIds must match  
                  
-                **Example:**
-                A streams query is useful when events are in more than one stream.
 
-                To select all the events that are in `activity` or `nutrition`, tagged in "health", but not in "running":
+                 The filtered events must test as true for all the provided expressions.
+                 
+                **Example:**  
+
+                To select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `running`:
 
                 ```json
                 {
-                  "ANY": ["activity", "nutrition"],
-                  "ALL": ["health"],
-                  "NOT": ["running"]
+                  "any": ["activity", "nutrition"],
+                  "all": ["health"],
+                  "not": ["running"]
                 }
                 ```
                  """
