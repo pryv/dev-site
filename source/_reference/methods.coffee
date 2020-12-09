@@ -626,7 +626,7 @@ module.exports = exports =
 
                        **Array of streamIds:** Events assigned to any of the specified streams or their children will be returned. 
                        
-                       **String of a [streams query](##{dataStructure.getDocId("streams-query")})**: Boolean expression used for filtering events by their streamIds sent as a **[stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) JSON object**.  
+                       **String of a [streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations sent as a **[stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) JSON object**.  
 
                        By default, all accessible events are returned regardless of their stream.
                        """
@@ -717,6 +717,15 @@ module.exports = exports =
         params: {}
         result:
           events: [examples.events.picture, examples.events.activity, examples.events.position]
+      ,
+        title: "cURL with streams query for activity or nutrition that are tagged with the health stream (URL encoded)"
+        params: """
+                ```bash
+                curl -i "https://${token}@${username}.pryv.me/events?streams=%7B%22ANY%22%3A%5B%22activity%22%2C%22nutrition%22%5D%2C%22ALL%22%3A%5B%22health%22%5D%7D"
+                ```
+                """
+        result:
+          events: [examples.events.picture, examples.events.note, examples.events.position, examples.events.mass]
       ,
         title: "cURL for multiple streams"
         params: """

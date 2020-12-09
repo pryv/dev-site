@@ -775,31 +775,36 @@ module.exports = exports =
   ,
 
     id: "streams-query"
-    title: "Boolean streams query"
+    title: "streams query"
     description: """
-                 The `streams` parameter for [events.get](#get-events) query accepts an **array** of streamIds or a **boolean streams query** for more complex cases.
+                 The `streams` parameter for [events.get](#get-events) query accepts an **array** of streamIds or a **streams query** for more complex requests.
 
                  Format: The JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call. 
-                 It can be sent as-is for batch calls.  
+                 It can be sent as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.  
 
                  **Syntax:**
 
-                 The streams query must match any of the following expressions or a combination of them:  
-                  - `['A','B']` => Matches the streams or any of their children
-                  - `{NOT: ['A','B']}` => Does not match any of the streams or any of their children
-                  - `{OR: [expression1, expression2, ...]}` Any expression must be satisfied
-                  - `{AND: [expression1, expression2, ...]}` All expressions must be satisfied    
+                 The streams query must have at least an `ANY` or `ALL` property, with an optional `NOT`:  
 
+                 ```json
+                 { "ANY": ["streamA", "streamB"], "ALL": ["streamC"], "NOT": ["streamD"] }
+                 ```
+
+                 - **ANY**: any streamId must match
+                 - **ALL**: all streamIds must match
+                 - **NOT**: none of the streamIds must match
+                 
                 **Example:**
-                A boolean streams query is useful when events are in more than one stream.
+                A streams query is useful when events are in more than one stream.
 
-                To select all the events that are in `A` or `C`, but not in `Z`:
+                To select all the events that are in `activity` or `nutrition`, tagged in "health", but not in "running":
 
-                ```
-                {"AND": [
-                  {"OR": ["A","B"]},
-                  {"NOT": ["Z"]}
-                ]}
+                ```json
+                {
+                  "ANY": ["activity", "nutrition"],
+                  "ALL": ["health"],
+                  "NOT": ["running"]
+                }
                 ```
                  """
     examples: []
