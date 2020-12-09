@@ -779,9 +779,6 @@ module.exports = exports =
     description: """
                  The `streams` parameter for [events.get](#get-events) query accepts an **array** of streamIds or a **streams query** for more complex requests.
 
-                 Format: The JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call. 
-                 It can be sent as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.  
-
                  **Syntax:**
 
                  The streams query must have at least an `any` or `all` property, with an optional `not`:  
@@ -807,6 +804,11 @@ module.exports = exports =
                    "not": ["running"]
                  }
                  ```
+
+                 **Format:**  
+                 
+                 The JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call. 
+                 It can be sent as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.  
                  """
     examples: []
 
