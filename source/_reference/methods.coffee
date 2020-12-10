@@ -620,7 +620,7 @@ module.exports = exports =
                        """
         ,
           key: "streams"
-          type: "array of streamId [identifiers](##{dataStructure.getDocId("identifier")}) or [streams query](##{dataStructure.getDocId("streams-query")})"
+          type: "array of stream [identifiers](##{dataStructure.getDocId("identifier")}) or [streams query](##{dataStructure.getDocId("streams-query")})"
           optional: true
           description: """
 
@@ -628,7 +628,7 @@ module.exports = exports =
 
                        or
                        
-                       **[streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations.  
+                       **[Streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations.  
 
                        By default, all accessible events are returned regardless of their stream.
                        """
