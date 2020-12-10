@@ -795,13 +795,13 @@ module.exports = exports =
                  
                  **Example:**  
 
-                 To select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `running`:
+                 To select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `private`:
 
                  ```json
                  {
                    "any": ["activity", "nutrition"],
                    "all": ["health"],
-                   "not": ["running"]
+                   "not": ["private"]
                  }
                  ```
 
