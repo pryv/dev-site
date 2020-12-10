@@ -173,6 +173,32 @@ module.exports =
     modified: timestamp.now('-2h')
     modifiedBy: accesses.personal.id
 
+  running:
+    id: generateId()
+    time: timestamp.now('-1h')
+    streamIds: [ "running", "health" ]
+    streamId: "running" 
+    tags: []
+    type: "activity/plain"
+    content: null
+    created: timestamp.now('-1h')
+    createdBy: accesses.shared.id
+    modified: timestamp.now('-1h')
+    modifiedBy: accesses.shared.id
+
+  vegetablesEaten:
+    id: generateId()
+    time: timestamp.now('-3h')
+    streamIds: [ "vegetables", "health" ]
+    streamId: "vegetables" 
+    tags: []
+    type: "mass/kg"
+    content: 350
+    created: timestamp.now('-3h')
+    createdBy: accesses.shared.id
+    modified: timestamp.now('-3h')
+    modifiedBy: accesses.shared.id
+
   series:
     position:
       format: "flatJSON", 

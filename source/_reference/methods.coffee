@@ -721,11 +721,11 @@ module.exports = exports =
         title: "cURL with streams query for activity or nutrition that are tagged with the health stream (URL encoded)"
         params: """
                 ```bash
-                curl -i "https://${token}@${username}.pryv.me/events?streams=%7B%22any%22%3A%5B%22activity%22%2C%22nutrition%22%5D%2C%22not%22%3A%5B%22health%22%5D%7D"
+                curl -i "https://${token}@${username}.pryv.me/events?streams=%7B%22any%22%3A%5B%22activity%22%2C%22nutrition%22%5D%2C%22all%22%3A%5B%22health%22%5D%7D"
                 ```
                 """
         result:
-          events: [examples.events.picture, examples.events.note, examples.events.position, examples.events.mass]
+          events: [ examples.events.running, examples.events.vegetablesEaten ]
       ,
         title: "cURL for multiple streams"
         params: """
