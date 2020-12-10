@@ -620,13 +620,15 @@ module.exports = exports =
                        """
         ,
           key: "streams"
-          type: "array of streamId [identifiers](##{dataStructure.getDocId("identifier")}) or string of a [streams query](##{dataStructure.getDocId("streams-query")})"
+          type: "array of streamId [identifiers](##{dataStructure.getDocId("identifier")}) or [streams query](##{dataStructure.getDocId("streams-query")})"
           optional: true
           description: """
 
-                       **Array of streamIds:** Events assigned to any of the specified streams or their children will be returned. 
+                       **Array of streamIds:** Events assigned to any of the specified streams or their children will be returned.  
+
+                       or
                        
-                       **String of a [streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations sent as a **[stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) JSON object**.  
+                       **[streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations.  
 
                        By default, all accessible events are returned regardless of their stream.
                        """
@@ -635,7 +637,7 @@ module.exports = exports =
           type: "array of strings"
           optional: true
           description: """
-                       **(DEPRECATED)** Please use streamIds instead.
+                       **(DEPRECATED)** Please use [streams query](##{dataStructure.getDocId("streams-query")}) instead.
 
                        If set, only events assigned to any of the listed tags will be returned.
                        """
