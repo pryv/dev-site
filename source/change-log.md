@@ -4,6 +4,23 @@ title: API change log
 template: default.jade
 ---
 
+## 1.6.7
+
+New Features:
+
+- [Streams query](/reference/#streams-query) for [events.get API method](/reference/#get-events)
+
+Removals:
+
+- Deprecated "GET /who-am-i" API method removed
+- Remove pryvuser-cli, as it is now available through the [admin API](/reference-admin/)
+
+## 1.6.2
+
+Changes:
+
+- Custom auth function has now access to all request headers. See [custom authentication guide](/guides/custom-auth/).
+
 ## 1.6.1
 
 Changes:
