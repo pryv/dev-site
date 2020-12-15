@@ -8,11 +8,14 @@ withTOC: true
 # Future releases
 
 - **Pryv Explorer**: Web application to explore and manage data on your Pryv.io platform
-- **Open Pryv.io image for [Exoscale market](https://www.exoscale.com/marketplace/)**
 - **Pryv.io certificates auto-renewal**: Automatic SSL certification renewal
 - **Support oAuth 2.0 protocol for authentication and authorization**
 
 # Released
+
+## 25.11.2020 - Open Pryv.io image for [Exoscale marketplace](https://www.exoscale.com/marketplace/)
+
+Open Pryv.io ready-to-go on Exoscale cloud service, allowing you to deploy Open Pryv instantaneously with minimal start-up configuration from [here](https://api.pryv.com/image-exoscale-open-pryv.io/).  
 
 ## 22.10.2020 - React Native support for lib-js
 
