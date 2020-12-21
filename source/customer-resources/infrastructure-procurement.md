@@ -191,7 +191,7 @@ Administrators accessing a regulated system must themselves conform to the regul
 
 ### Backups
 
-See the [backup guide](backup). Making a copy of private user data is regulated by law. Please make sure you know the ramifications of making backup copies. 
+See the [backup guide](/customer-resources/backup/). Making a copy of private user data is regulated by law. Please make sure you know the ramifications of making backup copies. 
 
 ### Node Monitoring
 
