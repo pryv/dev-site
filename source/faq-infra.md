@@ -139,7 +139,7 @@ server {
 ### Port 53 is already in use (by Docker's embedded DNS)
 
 On some installations, the DNS container cannot be started because docker-compose attempts to bind on the same network interface and port as Docker's embedded DNS.  
-To fix this, you must specify the machine's public IP address in the docker-compose port mapping section of the DNS service as following:
+To fix this, you must specify the external network interface IP address (which may differ from the machine's public IP address, for example on AWS) in the docker-compose port mapping section of the DNS service as following:
 
 ```yaml
 ports:
