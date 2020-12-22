@@ -134,8 +134,8 @@
         {
           "title": "A picture",
           "content": {
-            "id": "ckfzdlvtr000zempv6mmoxhdk",
-            "time": 1602070589.151,
+            "id": "ckj0bdp83000zgipvtdskcpil",
+            "time": 1608657661.299,
             "streamIds": [
               "diary"
             ],
@@ -145,41 +145,41 @@
             "content": null,
             "attachments": [
               {
-                "id": "ckfzdlvtr0010empv24l8cutk",
+                "id": "ckj0bdp840010gipv4jtrdbg1",
                 "fileName": "photo.jpg",
                 "type": "image/jpeg",
                 "size": 2561,
-                "readToken": "ckfzdlvtr0011empvuwfuw4eo-zXZrCk9KK3EWHaBzarrQW6Rgbk2"
+                "readToken": "ckj0bdp840011gipvyeb9o5dp-DHVmCBSqLcc3CIAXlfR79SDCeZo"
               }
             ],
-            "created": 1602070589.151,
-            "createdBy": "ckfzdlvt90004empvbaaew3oe",
-            "modified": 1602070589.151,
-            "modifiedBy": "ckfzdlvt90004empvbaaew3oe"
+            "created": 1608657661.3,
+            "createdBy": "ckj0bdp780004gipvac7uodua",
+            "modified": 1608657661.3,
+            "modifiedBy": "ckj0bdp780004gipvac7uodua"
           }
         },
         {
           "title": "An activity",
           "content": {
-            "id": "ckfzdlvtr000oempvrz90642v",
-            "time": 1602074189.151,
+            "id": "ckj0bdp83000ogipv689gitff",
+            "time": 1608661261.299,
             "streamIds": [
               "jogging"
             ],
             "streamId": "jogging",
             "tags": [],
-            "type": "activity/pryv",
+            "type": "activity/plain",
             "content": null,
-            "created": 1602074189.151,
-            "createdBy": "ckfzdlvt90001empvuc3ge3dd",
-            "modified": 1602074189.151,
-            "modifiedBy": "ckfzdlvt90001empvuc3ge3dd"
+            "created": 1608661261.299,
+            "createdBy": "ckj0bdp770001gipv9819y3hz",
+            "modified": 1608661261.299,
+            "modifiedBy": "ckj0bdp770001gipv9819y3hz"
           }
         },
         {
           "title": "A position",
           "content": {
-            "id": "ckfzdlvtr0012empvhwl5luhf",
+            "id": "ckj0bdp840012gipv11xlydwt",
             "time": 1350373077.359,
             "streamIds": [
               "diary"
@@ -191,10 +191,10 @@
               "latitude": 40.714728,
               "longitude": -73.998672
             },
-            "created": 1602066989.151,
-            "createdBy": "ckfzdlvt80000empvki3gu92b",
-            "modified": 1602066989.151,
-            "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+            "created": 1608654061.3,
+            "createdBy": "ckj0bdp770000gipvh2540xnc",
+            "modified": 1608654061.3,
+            "modifiedBy": "ckj0bdp770000gipvh2540xnc"
           }
         }
       ]
@@ -280,26 +280,26 @@
                   "name": "Jogging",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1538960289.4216468,
-                  "createdBy": "ckfzdlvt80000empvki3gu92b",
-                  "modified": 1538960600.7689102,
-                  "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                  "created": 1545547387.066864,
+                  "createdBy": "ckj0bdp770000gipvh2540xnc",
+                  "modified": 1545547454.5043714,
+                  "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                 },
                 {
                   "id": "bicycling",
                   "name": "Bicycling",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1538960289.4216468,
-                  "createdBy": "ckfzdlvt80000empvki3gu92b",
-                  "modified": 1538960368.7355757,
-                  "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                  "created": 1545547387.066864,
+                  "createdBy": "ckj0bdp770000gipvh2540xnc",
+                  "modified": 1545547667.9637942,
+                  "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                 }
               ],
-              "created": 1538960285.151,
-              "createdBy": "ckfzdlvt80000empvki3gu92b",
-              "modified": 1538960418.5424933,
-              "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+              "created": 1545547357.299,
+              "createdBy": "ckj0bdp770000gipvh2540xnc",
+              "modified": 1545547538.8990545,
+              "modifiedBy": "ckj0bdp770000gipvh2540xnc"
             },
             {
               "id": "work",
@@ -307,82 +307,82 @@
               "parentId": null,
               "children": [
                 {
-                  "id": "ckfzdlvtr000dempvkzp086jo",
+                  "id": "ckj0bdp83000dgipv2321myir",
                   "name": "Noble Works Co.",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "ckfzdlvtr000fempv5ah4bhfv",
+                      "id": "ckj0bdp83000fgipvip1xag3u",
                       "name": "Last Be First",
-                      "parentId": "ckfzdlvtr000dempvkzp086jo",
+                      "parentId": "ckj0bdp83000dgipv2321myir",
                       "children": [],
-                      "created": 1538960307.1157203,
-                      "createdBy": "ckfzdlvt80000empvki3gu92b",
-                      "modified": 1538960644.6959856,
-                      "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                      "created": 1545547376.1471908,
+                      "createdBy": "ckj0bdp770000gipvh2540xnc",
+                      "modified": 1545547704.9740415,
+                      "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                     },
                     {
-                      "id": "ckfzdlvtr000gempv35gaj6g6",
+                      "id": "ckj0bdp83000ggipvij6pk6oj",
                       "name": "Big Tree",
-                      "parentId": "ckfzdlvtr000dempvkzp086jo",
+                      "parentId": "ckj0bdp83000dgipv2321myir",
                       "children": [],
-                      "created": 1538960307.1157203,
-                      "createdBy": "ckfzdlvt80000empvki3gu92b",
-                      "modified": 1538960511.634272,
-                      "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                      "created": 1545547376.1471908,
+                      "createdBy": "ckj0bdp770000gipvh2540xnc",
+                      "modified": 1545547626.4319828,
+                      "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                     },
                     {
-                      "id": "ckfzdlvtr000hempvvcggdbnk",
+                      "id": "ckj0bdp83000hgipvlh1mtmnp",
                       "name": "Inner Light",
-                      "parentId": "ckfzdlvtr000dempvkzp086jo",
+                      "parentId": "ckj0bdp83000dgipv2321myir",
                       "children": [],
-                      "created": 1538960307.1157203,
-                      "createdBy": "ckfzdlvt80000empvki3gu92b",
-                      "modified": 1538960659.2311664,
-                      "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                      "created": 1545547376.1471908,
+                      "createdBy": "ckj0bdp770000gipvh2540xnc",
+                      "modified": 1545547556.0765584,
+                      "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                     }
                   ],
-                  "created": 1538960289.9290743,
-                  "createdBy": "ckfzdlvt80000empvki3gu92b",
-                  "modified": 1538960368.628336,
-                  "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                  "created": 1545547359.6339922,
+                  "createdBy": "ckj0bdp770000gipvh2540xnc",
+                  "modified": 1545547496.630231,
+                  "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                 },
                 {
-                  "id": "ckfzdlvtr000eempv68zfpgay",
+                  "id": "ckj0bdp83000egipv49w029mu",
                   "name": "Freelancing",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "ckfzdlvtr000iempvls9tov1z",
+                      "id": "ckj0bdp83000igipvz8w9n0rn",
                       "name": "Funky Veggies",
-                      "parentId": "ckfzdlvtr000eempv68zfpgay",
+                      "parentId": "ckj0bdp83000egipv49w029mu",
                       "children": [],
-                      "created": 1538960310.218616,
-                      "createdBy": "ckfzdlvt80000empvki3gu92b",
-                      "modified": 1538960346.7260575,
-                      "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                      "created": 1545547367.2238088,
+                      "createdBy": "ckj0bdp770000gipvh2540xnc",
+                      "modified": 1545547503.7276022,
+                      "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                     },
                     {
-                      "id": "ckfzdlvtr000jempvl5h7uyxt",
+                      "id": "ckj0bdp83000jgipvn3p8jvcr",
                       "name": "Jojo Lapin & sons",
-                      "parentId": "ckfzdlvtr000eempv68zfpgay",
+                      "parentId": "ckj0bdp83000egipv49w029mu",
                       "children": [],
-                      "created": 1538960310.218616,
-                      "createdBy": "ckfzdlvt80000empvki3gu92b",
-                      "modified": 1538960402.949299,
-                      "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                      "created": 1545547367.2238088,
+                      "createdBy": "ckj0bdp770000gipvh2540xnc",
+                      "modified": 1545547708.0750675,
+                      "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                     }
                   ],
-                  "created": 1538960289.9290743,
-                  "createdBy": "ckfzdlvt80000empvki3gu92b",
-                  "modified": 1538960437.8859065,
-                  "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+                  "created": 1545547359.6339922,
+                  "createdBy": "ckj0bdp770000gipvh2540xnc",
+                  "modified": 1545547678.0849197,
+                  "modifiedBy": "ckj0bdp770000gipvh2540xnc"
                 }
               ],
-              "created": 1538960285.151,
-              "createdBy": "ckfzdlvt80000empvki3gu92b",
-              "modified": 1538960582.783682,
-              "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+              "created": 1545547357.299,
+              "createdBy": "ckj0bdp770000gipvh2540xnc",
+              "modified": 1545547422.09516,
+              "modifiedBy": "ckj0bdp770000gipvh2540xnc"
             }
           ]
         }
@@ -418,18 +418,21 @@
           "key": "name",
           "type": "string",
           "unique": "per type and device",
+          "readOnly": "(except at creation)",
           "description": "The name identifying the access for the user. (For personal and app access, the name is used as a technical identifier and not shown as-is to the user.)"
         },
         {
           "key": "deviceName",
           "type": "string",
           "optional": true,
+          "readOnly": "(except at creation)",
           "unique": "per type and name",
           "description": "For app accesses only. The name of the client device running the app, if applicable."
         },
         {
           "key": "permissions",
           "type": "array of permission objects",
+          "readOnly": "(except at creation)",
           "description": "Ignored for personal accesses. If permission levels conflict (e.g. stream set to \"manage\" and child stream set to \"contribute\"), only the highest level is considered. Each permission object has the following structure:",
           "properties": [
             {
@@ -470,8 +473,8 @@
           "key": "expireAfter",
           "type": "number",
           "optional": true,
-          "readOnly": false,
-          "description": "(Only on create) If set, controls access expiry in seconds.\nWhen given a number in this attribute (positive or zero),\nthe access will expire (and not be accessible any more) after this many\nseconds."
+          "readOnly": "(except at creation)",
+          "description": "If set, controls access expiry in seconds.  \nWhen given a number in this attribute (positive or zero), the access will expire (and not be usable anymore) after this many seconds."
         },
         {
           "key": "expires",
@@ -491,6 +494,7 @@
           "key": "clientData",
           "type": "[key-value](#data-structure-key-value)",
           "optional": true,
+          "readOnly": "(except at creation)",
           "description": "Additional client data for the access."
         },
         {
@@ -522,8 +526,8 @@
         {
           "title": "An app access",
           "content": {
-            "id": "ckfzdlvt90001empvuc3ge3dd",
-            "token": "ckfzdlvt90003empvwk2mhp1i",
+            "id": "ckj0bdp770001gipv9819y3hz",
+            "token": "ckj0bdp780003gipvhovrp59t",
             "type": "app",
             "name": "my-app-id",
             "permissions": [
@@ -532,16 +536,16 @@
                 "level": "contribute"
               }
             ],
-            "created": 1601987789.133,
-            "createdBy": "ckfzdlvt80000empvki3gu92b",
-            "modified": 1601987789.133,
-            "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+            "created": 1608574861.268,
+            "createdBy": "ckj0bdp770000gipvh2540xnc",
+            "modified": 1608574861.268,
+            "modifiedBy": "ckj0bdp770000gipvh2540xnc"
           }
         },
         {
           "title": "An app access with create-only and forbidden selfRevoke permissions",
           "content": {
-            "id": "ckfzdlvt9000cempvho3jrfar",
+            "id": "ckj0bdp78000cgipvyvpgg5ry",
             "token": "mailbox",
             "type": "shared",
             "name": "publicly available token",
@@ -555,10 +559,10 @@
                 "setting": "forbidden"
               }
             ],
-            "created": 1601987789.133,
-            "createdBy": "ckfzdlvt80000empvki3gu92b",
-            "modified": 1601987789.133,
-            "modifiedBy": "ckfzdlvt80000empvki3gu92b"
+            "created": 1608574861.268,
+            "createdBy": "ckj0bdp770000gipvh2540xnc",
+            "modified": 1608574861.268,
+            "modifiedBy": "ckj0bdp770000gipvh2540xnc"
           }
         }
       ]
@@ -711,13 +715,13 @@
         {
           "title": "A single audit log",
           "content": {
-            "id": "ckfzdlvtu001mempvawldl7nq",
+            "id": "ckj0bdp87001ogipvgtohiv9w",
             "type": "audit/core",
             "time": 1561988300,
             "forwardedFor": "172.18.0.7",
             "action": "GET /events",
             "query": "streamId=diary",
-            "accessId": "ckfzdlvtu001kempvmxd1b7m1",
+            "accessId": "ckj0bdp87001mgipvmjhp294k",
             "status": 403,
             "errorMessage": "Access session has expired.",
             "errorId": "forbidden"
@@ -917,8 +921,8 @@
         {
           "title": "A simple Webhook",
           "content": {
-            "id": "ckfzdlvtu001fempv1m1wwpn0",
-            "accessId": "ckfzdlvtu001dempvni86is3t",
+            "id": "ckj0bdp86001hgipvnxqinn1s",
+            "accessId": "ckj0bdp86001fgipv69xur4vg",
             "url": "https://notifications.service.com/pryv",
             "minIntervalMs": 5000,
             "maxRetries": 5,
@@ -928,22 +932,22 @@
             "failCount": 0,
             "lastRun": {
               "status": 200,
-              "timestamp": 1602070589.154
+              "timestamp": 1608657661.303
             },
             "runs": [
               {
                 "status": 200,
-                "timestamp": 1602070589.154
+                "timestamp": 1608657661.303
               },
               {
                 "status": 200,
-                "timestamp": 1602066989.154
+                "timestamp": 1608654061.303
               }
             ],
-            "created": 1601987789.154,
-            "createdBy": "ckfzdlvtu001dempvni86is3t",
-            "modified": 1601987789.154,
-            "modifiedBy": "ckfzdlvtu001dempvni86is3t"
+            "created": 1608574861.303,
+            "createdBy": "ckj0bdp86001fgipv69xur4vg",
+            "modified": 1608574861.303,
+            "modifiedBy": "ckj0bdp86001fgipv69xur4vg"
           }
         }
       ]
@@ -1001,6 +1005,12 @@
           "description": "Lists the detailed causes of the main error, if any."
         }
       ],
+      "examples": []
+    },
+    {
+      "id": "streams-query",
+      "title": "streams query",
+      "description": "The `streams` parameter for [events.get](#get-events) query accepts an **array** of streamIds or a **streams query** for more complex requests.\n\n**Syntax:**\n\nThe streams query must have at least an `any` or `all` property, with an optional `not`:  \n\n```json\n{ \"any\": [\"streamA\", \"streamB\"], \"all\": [\"streamC\"], \"not\": [\"streamD\"] }\n```\n\n- **any**: any streamId must match  \n- **all**: all streamIds must match  \n- **not**: none of the streamIds must match  \n\nThe returned events will be those matching all of the provided criteria.\n\n**Example:**  \n\nTo select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `private`:\n\n```json\n{\n  \"any\": [\"activity\", \"nutrition\"],\n  \"all\": [\"health\"],\n  \"not\": [\"private\"]\n}\n```\n\n**Format:**  \n\nThe JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call. \nIt can be sent as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.  ",
       "examples": []
     },
     {
