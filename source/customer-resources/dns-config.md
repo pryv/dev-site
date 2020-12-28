@@ -92,7 +92,8 @@ DNS_SETTINGS:
       ...
       value:
         my-service:
-          alias: "my-site.my-domain.com"
+          alias:
+            name: "my-site.my-domain.com"
 ```
 
 ## TXT Record
