@@ -114,14 +114,32 @@ module.exports = exports =
         title: "Retrieve platform settings"
         http: "GET /admin/settings"
         description: """
-
+                     Retrieves the platform settings.
                      """
         result:
           http: "200 OK"
           properties: [
-            
+            key: "settings"
+            type: "object"
+            description: """
+                         The platform settings.
+                         """
           ]
-
+        examples: [
+          title: "Fetching the platform settings. The result hereafter only display a small part of the settings."
+          params: {}
+          result:
+            settings:
+              API_SETTINGS:
+                name: "API settings"
+                settings: 
+                  EVENT_TYPES_URL:
+                    value: "https://my-service/event-types/flat.json"
+                    description: "URL of the file listing the validated Event types. See: https://api.pryv.com/faq-api/#event-types"
+                  TRUSTED_APPS:
+                    value: "*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://*.rec.la*",
+                    description: "Web pages authorized to run login API call.  See https://api.pryv.com/reference-full/#trusted-apps-verification.  You can remove the ones not related to your platform if you are not using Pryv's default apps The format is comma-separated list of {trusted-app-id}@{origin} pairs. Origins and appIds accept '*' wildcards, but never use wildcard appIds in production. Example: *@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://*.rec.la*"
+        ]
       ,
 
         id: "settings.update"
@@ -129,8 +147,8 @@ module.exports = exports =
         title: "Update platform settings"
         http: "PUT /admin/settings"
         description: """
-                    Updates the platform settings and saves them.
-                    """
+                     Updates the platform settings and saves them.
+                     """
         params:
           properties: [
             key: "update"
@@ -138,13 +156,13 @@ module.exports = exports =
             http:
               text: "request body"
             description: """
-                        JSON config file containing the new values for the platform settings' fields.
-                        """
+                         New values for the platform settings.
+                         """
           ] 
         result:
           http: "200 OK"
           properties: [
-            key: "platform-settings"
+            key: "settings"
             type: "object"
             description: """
                         The updated platform settings.
@@ -156,15 +174,31 @@ module.exports = exports =
           description: """
                       The configuration format is invalid.
                       """
+        ],
+        examples: [
+          title: "Updating the [event types](/event-types/) URL. The result hereafter only highlights the modified setting."
+          params:
+            API_SETTINGS:
+              settings: 
+                EVENT_TYPES_URL: 
+                  value: "https://my-service/event-types/flat.json"
+          result:
+            settings:
+              API_SETTINGS:
+                name: "API settings"
+                settings: 
+                  EVENT_TYPES_URL:
+                    value: "https://my-service/event-types/flat.json"
+                    description: "URL of the file listing the validated Event types. See: https://api.pryv.com/faq-api/#event-types"
         ]
       ,
         id: "settings.notify"
         type: "method"
-        title: "Notifies about configuration changes"
+        title: "Apply settings changes"
         http: "POST /admin/notify"
         description: """
-                    Notifies followers about platform settings' changes.
-                    """
+                     Reboots desired services with latest platform settings.
+                     """
         params:
           properties: [
             key: "services"
@@ -178,21 +212,15 @@ module.exports = exports =
           http: "200 OK"
           properties: [
             key: "successes"
-            type: "array of roles"
+            type: "array of machines"
             description: """
-                        Roles successfully updated.
+                        Machines successfully updated.
                         """
             properties: [
-              key: "key"
-              type: "string"
-              description: """
-                          The key of the service.
-                          """
-            ,
               key: "url"
               type: "string"
               description: """
-                          The url of the service.
+                          The url of the machine.
                           """
             ,
               key: "role"
@@ -203,21 +231,15 @@ module.exports = exports =
             ]
           ,
             key: "failures"
-            type: "array of services"
+            type: "array of machines"
             description: """
-                        Services failed to update.
+                        Machines failed to update.
                         """
             properties: [
-              key: "key"
-              type: "string"
-              description: """
-                          The key of the service.
-                          """
-            ,
               key: "url"
               type: "string"
               description: """
-                          The url of the service.
+                          The url of the machine.
                           """
             ,
               key: "role"
@@ -233,6 +255,25 @@ module.exports = exports =
                           """
             ]
           ]
+        examples: [
+          title: "Rebooting the DNS service with the latest settings."
+          params:
+            services: [
+              "dns"
+            ]
+          result:
+            successes: [
+              url: "https://co1.pryv.li"
+              role: "core"
+            ,
+              url: "config-follower:6000"
+              role: "reg-master"
+            ,
+              url: "https://sw.pryv.li"
+              role: "static"
+            ]
+            failures: []
+        ]
       ]
     
     ,
