@@ -275,15 +275,59 @@ module.exports = exports =
             failures: []
         ]
       ]
-    
+
     ,
 
       id: "platform-users"
       title: "Platform users"
       description: """
-                  Methods for managing platform users.
-                  """
+                   Methods for managing platform users.
+                   """
       sections: [
+        id: "platformUsers.getOne"
+        type: "method"
+        title: "Retrieve platform user information"
+        http: "GET /platform-users/{username}"
+        description: """
+                     Retrieves the platform user's information.
+                     """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                         The username of the platform user.
+                         """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "user"
+            type: "[platform user](#platform-user)"
+            description: """
+                        The platform user's information.
+                        """
+          ]
+        examples: [
+          title: "Fetching the platform settings. The result hereafter only display a small part of the settings."
+          params: {}
+          result:
+            user: 
+              username: "aiuwvd981b298dn8",
+              email: "jericho@pryv.com",
+              language: "en",
+              invitationToken: "undefined",
+              referer: "null",
+              id: "ck6j759f000011ps2octzo1ds",
+              registeredTimestamp: "1581504836193",
+              server: "co1.pryv.li",
+              registeredDate: "Wed, 12 Feb 2020 10:53:56 GMT"
+        ]
+
+      ,
+
         id: "users.delete"
         type: "method"
         title: "Delete user"
@@ -318,6 +362,80 @@ module.exports = exports =
           result:
             username: 'dutch'
         ]
+      ]
+    ]
+  ,
+
+    id: "data-structure"
+    title: "Data structure"
+    description: ""
+    sections: [
+      id: "platform-user"
+      title: "Platform user"
+      description: """
+                   A platform user's information.
+                   """
+      properties: [
+        key: "username"
+        type: "string"
+        description: """
+                      The platform user's username.
+                      """
+      ,
+        key: "email"
+        type: "string"
+        description: """
+                      The platform user's email.
+                      """
+      ,
+        key: "language"
+        type: "string"
+        description: """
+                      The platform user's preferred language.
+                      """
+      ,
+        key: "invitationToken"
+        type: "string"
+        description: """
+                      The invitation token provided at registration by the platform user.
+                      """
+      ,
+        key: "referer"
+        type: "string"
+        description: """
+                      The referer provided at registration by the platform user.
+                      """
+      ,
+        key: "registeredTimestamp"
+        type: "string"
+        description: """
+                      The UNIX timestamp of the platform user's registration.
+                      """
+      ,
+        key: "server"
+        type: "string"
+        description: """
+                      The URL of the core machine where the platform user's data is stored.
+                      """
+      ,
+        key: "registeredDate"
+        type: "string"
+        description: """
+                      The readable timestamp of the platform user's registration.
+                      """    
+      ]
+      examples: [
+        title: "A platform user."
+        content:
+          username: "aiuwvd981b298dn8",
+          email: "jericho@pryv.com",
+          language: "en",
+          invitationToken: "undefined",
+          referer: "null",
+          id: "ck6j759f000011ps2octzo1ds",
+          registeredTimestamp: "1581504836193",
+          server: "co1.pryv.li",
+          registeredDate: "Wed, 12 Feb 2020 10:53:56 GMT"
       ]
     ]
   ]
