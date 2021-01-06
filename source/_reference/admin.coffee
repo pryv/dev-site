@@ -114,6 +114,7 @@ module.exports = exports =
         title: "Retrieve platform settings"
         http: "GET /admin/settings"
         httpOnly: true
+        server: "admin"
         description: """
                      Retrieves the platform settings.
                      """
@@ -148,6 +149,7 @@ module.exports = exports =
         title: "Update platform settings"
         http: "PUT /admin/settings"
         httpOnly: true
+        server: "admin"
         description: """
                      Updates the platform settings and saves them.
                      """
@@ -199,6 +201,7 @@ module.exports = exports =
         title: "Apply settings changes"
         http: "POST /admin/notify"
         httpOnly: true
+        server: "admin"
         description: """
                      Reboots desired services with latest platform settings.
                      """
@@ -292,6 +295,7 @@ module.exports = exports =
         title: "Retrieve platform user information"
         http: "GET /platform-users/{username}"
         httpOnly: true
+        server: "admin"
         description: """
                      Retrieves the platform user's information.
                      """
@@ -337,6 +341,7 @@ module.exports = exports =
         title: "Delete user"
         http: "DELETE /platform-users/{username}"
         httpOnly: true
+        server: "admin"
         description: """
                     Delete user account from the Pryv.io platform. **This deletion is final**.
                     """
