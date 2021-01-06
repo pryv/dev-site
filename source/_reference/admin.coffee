@@ -113,6 +113,7 @@ module.exports = exports =
         type: "method"
         title: "Retrieve platform settings"
         http: "GET /admin/settings"
+        httpOnly: true
         description: """
                      Retrieves the platform settings.
                      """
@@ -146,6 +147,7 @@ module.exports = exports =
         type: "method"
         title: "Update platform settings"
         http: "PUT /admin/settings"
+        httpOnly: true
         description: """
                      Updates the platform settings and saves them.
                      """
@@ -196,6 +198,7 @@ module.exports = exports =
         type: "method"
         title: "Apply settings changes"
         http: "POST /admin/notify"
+        httpOnly: true
         description: """
                      Reboots desired services with latest platform settings.
                      """
@@ -288,6 +291,7 @@ module.exports = exports =
         type: "method"
         title: "Retrieve platform user information"
         http: "GET /platform-users/{username}"
+        httpOnly: true
         description: """
                      Retrieves the platform user's information.
                      """
