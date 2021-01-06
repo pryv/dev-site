@@ -336,7 +336,7 @@ module.exports = exports =
 
       ,
 
-        id: "users.delete"
+        id: "platformUsers.delete"
         type: "method"
         title: "Delete user"
         http: "DELETE /platform-users/{username}"
