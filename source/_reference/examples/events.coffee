@@ -18,7 +18,7 @@ module.exports =
     streamIds: [ streams.activities[0].children[0].id ]
     streamId: streams.activities[0].children[0].id
     tags: []
-    type: "activity/pryv"
+    type: "activity/plain"
     content: null
     created: timestamp.now()
     createdBy: accesses.app.id
@@ -32,7 +32,7 @@ module.exports =
     streamIds: [ streams.activities[0].children[1].id ]
     streamId: streams.activities[0].children[1].id
     tags: []
-    type: "activity/pryv"
+    type: "activity/plain"
     content: null
     created: timestamp.now()
     createdBy: accesses.app.id
@@ -46,7 +46,7 @@ module.exports =
     streamIds: [ streams.activities[1].children[1].id ]
     streamId: streams.activities[1].children[1].id
     tags: []
-    type: "activity/pryv"
+    type: "activity/plain"
     content: null
     attachments: [
       id: generateId()
@@ -98,6 +98,7 @@ module.exports =
     createdBy: accesses.app.id
     modified: timestamp.now('+10h')
     modifiedBy: accesses.app.id
+
   noteWithHistory:
     id: generateId()
     time: timestamp.now('-1h')
@@ -110,6 +111,7 @@ module.exports =
     createdBy: accesses.app.id
     modified: timestamp.now('+2h')
     modifiedBy: accesses.app.id
+
   noteHistory1:
     id: generateId()
     time: timestamp.now('-1h')
@@ -122,6 +124,7 @@ module.exports =
     createdBy: accesses.app.id
     modified: timestamp.now('+1h')
     modifiedBy: accesses.app.id
+
   noteHistory2:
     id: generateId()
     time: timestamp.now('-1h')
@@ -169,6 +172,32 @@ module.exports =
     createdBy: accesses.personal.id
     modified: timestamp.now('-2h')
     modifiedBy: accesses.personal.id
+
+  running:
+    id: generateId()
+    time: timestamp.now('-1h')
+    streamIds: [ "running", "health" ]
+    streamId: "running" 
+    tags: []
+    type: "activity/plain"
+    content: null
+    created: timestamp.now('-1h')
+    createdBy: accesses.shared.id
+    modified: timestamp.now('-1h')
+    modifiedBy: accesses.shared.id
+
+  vegetablesEaten:
+    id: generateId()
+    time: timestamp.now('-3h')
+    streamIds: [ "vegetables", "health" ]
+    streamId: "vegetables" 
+    tags: []
+    type: "mass/kg"
+    content: 350
+    created: timestamp.now('-3h')
+    createdBy: accesses.shared.id
+    modified: timestamp.now('-3h')
+    modifiedBy: accesses.shared.id
 
   series:
     position:

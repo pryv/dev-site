@@ -17,7 +17,7 @@ In this FAQ we answer common questions related to Pryv.io platform. You can cont
 
 ## Platform prerequisites
 
-In addition to the **Deployment design guide** document (available on request), a Pryv.io platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
+In addition to the **Infrastructure procurement** guide (available on request), a Pryv.io platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
 
 To encrypt data in transit, we require a **wildcard SSL certificate** for the domain **\*.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
 
@@ -139,7 +139,7 @@ server {
 ### Port 53 is already in use (by Docker's embedded DNS)
 
 On some installations, the DNS container cannot be started because docker-compose attempts to bind on the same network interface and port as Docker's embedded DNS.  
-To fix this, you must specify the machine's public IP address in the docker-compose port mapping section of the DNS service as following:
+To fix this, you must specify the external network interface IP address (which may differ from the machine's public IP address, for example on AWS) in the docker-compose port mapping section of the DNS service as following:
 
 ```yaml
 ports:

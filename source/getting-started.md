@@ -200,7 +200,7 @@ Here is an example of a **stream** with sub-streams (children): the **Digital Te
 
 ### Events
 
-**Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in one stream. 
+**Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in at least one stream. 
 Events either have a type from the list of [**standard event types**](/event-types/#directory) to allow interoperability, or an application-specific type. 
 
 Our user will therefore be adding events of different types, each related to specific streams:

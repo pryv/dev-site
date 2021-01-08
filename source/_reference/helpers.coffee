@@ -42,9 +42,12 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
       data += "-d '#{JSON.stringify(processedParams.update)}' "
     else
       data += "-d '#{JSON.stringify(processedParams)}' "
-  else 
+  else
     Object.keys(processedParams).forEach (k) ->
-      queryString += "&#{k}=#{processedParams[k]}"
+      if queryString == ""
+        queryString += "?#{k}=#{processedParams[k]}"
+      else
+        queryString += "&#{k}=#{processedParams[k]}"
   
   call = ""
   if (path == "/users")

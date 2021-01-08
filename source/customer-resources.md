@@ -30,10 +30,14 @@ In this space you will find links and reference documents that will help you mak
 
 - Pryv.io platform setup guide: [HTML](/customer-resources/pryv.io-setup/)
 
-- Deployment Design Guide: [PDF](/assets/docs/deployment_design_guide_v6.pdf)
+- Infrastructure procurement (Previously "Deployment design guide"): [HTML](/customer-resources/infrastructure-procurement/)
 
   This document describes how to deploy a Pryv.io platform as well as essential information to help you decide on your infrastructure and sizing needs.
   You will also find information about how to operate your Pryv.io platform.
+
+- Generate SSL certificate: [HTML](/customer-resources/ssl-certificate/)
+
+  This document describes how to obtain a wildcard SSL certificate for your running Pryv.io platform using Let's Encrypt.
 
 - Installation validation: [HTML](/customer-resources/platform-validation/)
 
@@ -47,11 +51,11 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to setup and configure your platform's system streams.
 
-- DNS configuration: [PDF](/assets/docs/20190501-dns-config-v3.pdf)
+- DNS configuration: [HTML](/customer-resources/dns-config/)
 
   This document describes how to add entries in your Pryv.io associated domain DNS zone.
 
-- Emails configuration: [PDF](/assets/docs/20190508-pryv.io-emails-v4.pdf)
+- Emails configuration: [HTML](/customer-resources/emails-setup/)
 
   This document describes how to configure the sending of Pryv.io emails for welcoming new users or resetting lost passwords.
 
@@ -81,9 +85,7 @@ In this space you will find links and reference documents that will help you mak
 
 ## Development resources
 
-- Authorization web application (app-web-auth v3): [Github](https://github.com/pryv/app-web-auth3)
-
-  This sample application provides a starting point to implement your own authorization or consent flow application. You might want to fork this repository and modify the code to fit your needs if you want to allow third party applications to interact with your platform.
+See the [Apps & Libs page](/external-resources/) for our example applications and libraries.
 
 ## Contact and support
 

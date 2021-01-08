@@ -28,7 +28,7 @@ It walks you through the different steps that have to be performed in order to s
 
 You need first to define which hardware or virtual machines you will provision to host your Pryv.io instance.  
 
-The **Deployment design guide** for the Pryv.io middleware from the [Customer Resources page](/customer-resources/#documents) will guide you for the provisionning and deployment of your machines.
+The **Infrastructure procurement guide** for the Pryv.io middleware from the [Customer Resources page](/customer-resources/#guides-and-documents) will guide you for the provisioning and deployment of your machines.
 
 It will help you with the choice of your Pryv.io deployment (single node or cluster), and provide you with resources sizing considerations.  
 
@@ -55,9 +55,11 @@ Along with the configuration files, you will find an Installation guide describi
 
 ## Obtain an SSL certificate
 
-You will need to obtain a wildcard SSL certificate for *.DOMAIN to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one using LetsEncrypt, for which we can provide you a quick guide.
+You will need to obtain a wildcard SSL certificate for *.DOMAIN to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one [using Let's Encrypt](/customer-resources/ssl-certificate/).
 
 We have automatic SSL certificate renewal on our roadmap, so let us know if you are interested.
+
+If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
 
 ## Validate your platform installation
 
@@ -81,6 +83,8 @@ To use your own page, you will have to update the following platform variables:
 
 - TRUSTED_AUTH_URLS
 - TRUSTED_APPS
+- PASSWORD_RESET_URL
+- DEFAULT_AUTH_URL (optional)
 
 You will then need to provide your web page's URL in the [Auth request](/reference/#auth-request) `authUrl` parameter, or if you want to make it default, change the `DEFAULT_AUTH_URL` in the platform variables.
 
@@ -97,6 +101,7 @@ If you are hosting it on GitHub pages, you will need to adapt the platform varia
   TRUSTED_AUTH_URLS:
     - "https://sw.DOMAIN/access/access.html"
     - "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
+  PASSWORD_RESET_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/reset-password.html"
 ```
 
 If you wish to make it default, set:
@@ -105,7 +110,7 @@ If you wish to make it default, set:
   DEFAULT_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
 ```
 
-or if you wish to proxy it through `https://sw.DOMAIN/access/`, set:
+or if you wish to proxy it through `https://sw.DOMAIN/access/`, **only** set:
 
 ```yaml
   APP_WEB_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/"
@@ -120,6 +125,7 @@ If you are hosting it on your own server, you will need to adapt the platform va
   TRUSTED_AUTH_URLS:
     - "https://sw.DOMAIN/access/access.html"
     - "https://YOUR-SERVER-URL/access/access.html"
+  PASSWORD_RESET_URL: "https://YOUR-SERVER-URL/access/reset-password.html"
 ```
 
 If you wish to make it default, set:
@@ -128,7 +134,7 @@ If you wish to make it default, set:
   DEFAULT_AUTH_URL: "https://YOUR-SERVER-URL/access/access.html"
 ```
 
-or if you wish to proxy it through `https://sw.DOMAIN/access/`, set:
+or if you wish to proxy it through `https://sw.DOMAIN/access/`, **only** set:
 
 ```yaml
   APP_WEB_AUTH_URL: "https://YOUR-SERVER-URL/"
@@ -147,7 +153,7 @@ In both cases, you will need to customize settings in the "Email configuration" 
 
 You can also customize the email templates in the configuration files.
 
-More details are provided in the **Emails configuration guide** that can be found in the [Customer Resources section](/customer-resources/#documents).
+More details are provided in the **Emails configuration guide** that can be found in the [Customer Resources section](/customer-resources/#guides-and-documents).
 
 ## Define your data model
 
@@ -175,4 +181,4 @@ EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
 
 ## Other documents
 
-More resources can be found in our [Customer Resources page](/customer-resources/#documents), or in the [FAQ](/faq-infra/).
+More resources can be found in our [Customer Resources page](/customer-resources/#guides-and-documents), or in the [FAQ](/faq-infra/).

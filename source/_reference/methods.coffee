@@ -191,7 +191,8 @@ module.exports = exports =
       http: "POST /auth/login"
       httpOnly: true
       description: """
-                   Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).   
+                   Authenticates the user against the provided credentials, opening a personal access session. By default, the session is valid for 14 days after the last token usage. This duration is configurable in the platform parameters.  
+                   This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).  
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
@@ -620,17 +621,24 @@ module.exports = exports =
                        """
         ,
           key: "streams"
-          type: "array of [identifier](##{dataStructure.getDocId("identifier")})"
+          type: "array of streamId [identifiers](##{dataStructure.getDocId("identifier")}) or [streams query](##{dataStructure.getDocId("streams-query")})"
           optional: true
           description: """
-                       If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
+
+                       **Array of streamIds:** Events assigned to any of the specified streams or their children will be returned.  
+
+                       or
+                       
+                       **[streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations.  
+
+                       By default, all accessible events are returned regardless of their stream.
                        """
         ,
           key: "tags"
           type: "array of strings"
           optional: true
           description: """
-                       **(DEPRECATED)** Please use streamIds instead.
+                       **(DEPRECATED)** Please use [streams query](##{dataStructure.getDocId("streams-query")}) instead.
 
                        If set, only events assigned to any of the listed tags will be returned.
                        """
@@ -712,6 +720,15 @@ module.exports = exports =
         params: {}
         result:
           events: [examples.events.picture, examples.events.activity, examples.events.position]
+      ,
+        title: "cURL with streams query for activity or nutrition that are tagged with the health stream (URL encoded)"
+        params: """
+                ```bash
+                curl -i "https://${token}@${username}.pryv.me/events?streams=%7B%22any%22%3A%5B%22activity%22%2C%22nutrition%22%5D%2C%22all%22%3A%5B%22health%22%5D%7D"
+                ```
+                """
+        result:
+          events: [ examples.events.running, examples.events.vegetablesEaten ]
       ,
         title: "cURL for multiple streams"
         params: """
@@ -1348,7 +1365,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      A similar stream already exists. The error's `data` contains the conflicting properties.
                      """
@@ -1404,7 +1421,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      A similar stream already exists. The error's `data` contains the conflicting properties.
                      """
@@ -1726,6 +1743,7 @@ module.exports = exports =
       type: "method"
       title: "Get audit logs"
       http: "GET /audit/logs"
+      httpOnly: true
       description: """
                    Fetches accessible audit logs.
                    By default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).
@@ -1816,7 +1834,6 @@ module.exports = exports =
         ]
       examples: [
         params: {
-          "auth": examples.audit.auth,
           "accessId": examples.audit.log1.accessId,
           "fromTime": 1561000000,
           "toTime": 1562000000,
@@ -1976,7 +1993,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      There is already a webhook for this URL created by the given access.
                      """
