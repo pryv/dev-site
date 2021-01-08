@@ -1365,7 +1365,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      A similar stream already exists. The error's `data` contains the conflicting properties.
                      """
@@ -1421,7 +1421,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      A similar stream already exists. The error's `data` contains the conflicting properties.
                      """
@@ -1993,7 +1993,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      There is already a webhook for this URL created by the given access.
                      """
