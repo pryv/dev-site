@@ -172,10 +172,10 @@ module.exports = exports =
         examples: [
           title: "Fetching one admin user's information."
           params:
-            username: 'admin'
+            username: 'harrytasker'
           result:
             user: 
-              examples.adminUsers.admin
+              examples.adminUsers.harrytasker
         ]
       ,
 
