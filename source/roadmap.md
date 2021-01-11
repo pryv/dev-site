@@ -13,6 +13,14 @@ withTOC: true
 
 # Released
 
+## 11.01.2021 - Complete admin and system API
+
+[Admin](/reference-admin/) and [system](/reference-system/) API references are now complete and available through [Open API definitions](/open-api/#definition-file).
+
+## 15.12.2020 - Stream queries
+
+You can now query events with more precision using [Streams queries](/reference/#streams-query).
+
 ## 25.11.2020 - Open Pryv.io image for [Exoscale marketplace](https://www.exoscale.com/marketplace/)
 
 Open Pryv.io ready-to-go on Exoscale cloud service, allowing you to deploy Open Pryv instantaneously with minimal start-up configuration from [here](https://api.pryv.com/image-exoscale-open-pryv.io/).  
