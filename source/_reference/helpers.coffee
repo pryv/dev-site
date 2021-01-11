@@ -50,12 +50,14 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
         queryString += "&#{k}=#{processedParams[k]}"
   
   call = ""
-  if (path == "/users")
+  if (path == "/users" && server == "core")
    call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"core-reg-curl\">{core-subdomain}</sapan>.pryv.me</span>#{path}#{queryString}\""
   else if (server == "core")
     call = "curl -i #{request}#{headers}#{data}\"https://#{basicAuth}<span class=\"api-curl\">{username}.pryv.me</span>#{path}#{queryString}\""
   else if (server == "register")
     call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"api-reg-curl\">reg.pryv.me</span>#{path}#{queryString}\""
+  else if (server == "admin")
+    call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"api-admin-curl\">lead.pryv.me</span>#{path}#{queryString}\""
     
   
   # use shell variable format to help with quick copy-paste
