@@ -11,3 +11,4 @@ module.exports =
   audit: require('./audit.coffee')
   serviceInfo: require('./serviceInfo.coffee')
   metadata: require('./metadata.coffee')
+  adminUsers: require('./adminUsers.coffee')

@@ -102,6 +102,246 @@ module.exports = exports =
           result: {}
         ]
       ]
+    
+    ,
+
+      id: "admin-users"
+      title: "Admin users"
+      description: """
+                   Methods for managing admin users.
+                   """
+      sections: [
+        id: "adminUsers.get"
+        type: "method"
+        title: "Retrieve admin users information"
+        http: "GET /users"
+        httpOnly: true
+        server: "admin"
+        description: """
+                     Retrieves the admin users information.
+                     """
+        params: {}
+        result:
+          http: "200 OK"
+          properties: [
+            key: "users"
+            type: "Array of [admin users](#admin-user)"
+            description: """
+                         The admin users information.
+                         """
+          ]
+        examples: [
+          title: "Fetching admin users."
+          params: {}
+          result:
+            users: [
+              examples.adminUsers.admin,
+              examples.adminUsers.harrytasker,
+            ]
+        ]
+
+      ,
+        id: "adminUsers.getOne"
+        type: "method"
+        title: "Retrieve admin user information"
+        http: "GET /users/{username}"
+        httpOnly: true
+        server: "admin"
+        description: """
+                     Retrieves the admin user's information.
+                     """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                         The username of the admin user.
+                         """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "user"
+            type: "[admin user](#admin-user)"
+            description: """
+                        The admin user's information.
+                        """
+          ]
+        examples: [
+          title: "Fetching one admin user's information."
+          params:
+            username: 'admin'
+          result:
+            user: 
+              examples.adminUsers.admin
+        ]
+      ,
+
+        id: "adminUsers.create"
+        type: "method"
+        title: "Create an admin user"
+        http: "POST /users"
+        httpOnly: true
+        server: "admin"
+        description: """
+                     Creates an admin user.
+                     """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            description: """
+                         The username of the admin user.
+                         """
+          ,
+            key: "password"
+            type: "string"
+            description: """
+                         The password of the admin user.
+                         """
+          ,
+            key: "permissions"
+            type: "string"
+            description: """
+                         The [permissions of the admin user](#admin-permissions).
+                         """
+          ,
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "user"
+            type: "[admin user](#admin-user)"
+            description: """
+                        The created admin user's information.
+                        """
+          ]
+        examples: [
+          title: "Creating an admin user."
+          params:
+            examples.adminUsers.harrytasker
+          result:
+            user: 
+              examples.adminUsers.harrytasker
+        ]
+
+      ,
+
+        id: "adminUsers.updatePermissions"
+        type: "method"
+        title: "Update an admin user's permissions"
+        http: "PUT /users/{username}/permissions"
+        httpOnly: true
+        server: "admin"
+        description: """
+                     Updates an admin user's permissions.
+                     """
+        params:
+          properties: [
+            key: "permissions"
+            type: "[admin permissions](#admin-permissions)"
+            description: """
+                         The permissions of the admin user.
+                         """
+          ,
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "user"
+            type: "[admin user](#admin-user)"
+            description: """
+                        The updated admin user's information.
+                        """
+          ]
+        examples: [
+          title: "Updating an admin user's permissions."
+          params:
+            permissions: examples.adminUsers.harrytasker.permissions
+          result:
+            user: 
+              examples.adminUsers.harrytasker
+        ]
+
+      ,
+
+        id: "adminUsers.resetPassword"
+        type: "method"
+        title: "Reset an admin user's password"
+        http: "POST /users/{username}/reset-password"
+        httpOnly: true
+        server: "admin"
+        description: """
+                     Resets an admin user's password.
+                     """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                         The username of the admin user for whom to reset the password.
+                         """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "password"
+            type: "string"
+            description: """
+                        The admin user's new password.
+                        """
+          ]
+        examples: [
+          title: "Resetting an admin user's password."
+          params:
+            username: "harrytasker"
+          result:
+            password: "d89786faffda5c9"
+        ]
+
+      ,
+
+        id: "adminUsers.delete"
+        type: "method"
+        title: "Delete admin user"
+        http: "DELETE /users/{username}"
+        httpOnly: true
+        server: "admin"
+        description: """
+                    Delete admin account.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                         The username of the admin user to delete.
+                         """
+          ]
+        result: 
+          http: "200 OK"
+          properties: [
+            key: "username"
+            type: "string"
+            description: """
+                         The username of the deleted platform user.
+                         """
+          ]
+        examples: [
+          title: "Deleting an admin user"
+          params:
+            username: 'harrytasker'
+          result:
+            username: 'harrytasker'
+        ]
+      ]
+
     ,
       id: "platform-settings"
       title: "Platform settings"
@@ -379,6 +619,61 @@ module.exports = exports =
     title: "Data structure"
     description: ""
     sections: [
+      id: "admin-user"
+      title: "Admin user"
+      description: """
+                   An admin user's information.
+                   """
+      properties: [
+        key: "username"
+        type: "string"
+        description: """
+                     An admin user's username.
+                     """
+      ,
+        key: "permissions"
+        type: "array of strings"
+        description: """
+                     An [admin user's permissions](#admin-permissions)
+                     """
+      ]
+      examples: [
+        title: "An admin user."
+        content: examples.adminUsers.admin
+      ]
+    ,
+      id: "admin-permissions"
+      title: "Admin permissions"
+      description: """
+                   An admin user's permissions.
+                   """
+      properties: [
+        key: "users"
+        type: "array of strings"
+        description: """
+                     Permissions over admin users.  
+                     Available permissions: `read`, `create`, `delete`, `resetPassword`, `changePermissions`.
+                     """
+      ,
+        key: "settings"
+        type: "array of strings"
+        description: """
+                     Permissions over platform settings.  
+                     Available permissions: `read`, `update`.
+                     """
+      ,
+        key: "platformUsers"
+        type: "array of strings"
+        description: """
+                     Permissions over platform users.  
+                     Available permissions: `read`, `delete`.
+                     """
+      ]
+      examples: [
+        title: "An admin user."
+        content: examples.adminUsers.admin
+      ]
+    ,
       id: "platform-user"
       title: "Platform user"
       description: """
