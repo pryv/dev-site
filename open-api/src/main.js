@@ -1,34 +1,44 @@
-const methodsRoot = require('../rendered/methods');
-const dataStructureRoot = require('../rendered/data-structure');
 const yaml = require('yaml');
 const fs = require('fs');
+const _ = require('lodash');
+
+const methodsRoot = require('../rendered/methods');
+const dataStructureRoot = require('../rendered/data-structure');
+const admin = require('../rendered/admin');
+const adminMethods = admin.sections.find(s => s.id === 'api-methods');
+const adminDataStructure = admin.sections.find(s => s.id === 'data-structure');
+const system = require('../rendered/system');
+const systemMethods = system.sections.find(s => s.id === 'api-methods');
+
 const metadata = require('./metadata');
 const metadata_open = require('./metadata_open');
+const metadata_admin = require('./metadata_admin');
+const metadata_system = require('./metadata_system');
 const removeNulls = require('./cleanup').removeNulls;
-const _ = require('lodash');
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
 const OUTPUT_FILE_PUBLIC = '../source/open-api/3.0/api.yaml';
-
 const OUTPUT_FILE_OPEN = 'open-api-format/api_open.yaml';
 const OUTPUT_FILE_PUBLIC_OPEN = '../source/open-api/3.0/api_open.yaml';
-
-const dataStructureMap = {};
-dataStructureRoot.sections.forEach(s => {
-  dataStructureMap[s.id] = s;
-});
-
-let api_enterprise = metadata;
-api_enterprise.paths = {};
+const OUTPUT_FILE_ADMIN = 'open-api-format/api_admin.yaml';
+const OUTPUT_FILE_PUBLIC_ADMIN = '../source/open-api/3.0/api_admin.yaml';
+const OUTPUT_FILE_SYSTEM = 'open-api-format/api_system.yaml';
+const OUTPUT_FILE_PUBLIC_SYSTEM = '../source/open-api/3.0/api_system.yaml';
 
 let api_open = metadata_open;
 api_open.paths = {};
+let api_enterprise = metadata;
+api_enterprise.paths = {};
+let api_admin = metadata_admin;
+api_admin.paths = {};
+let api_system = metadata_system;
+api_system.paths = {};
 
 // SCHEMAS (DATA STRUCTURES)
-function createSchemas() {
+function createSchemas(dataStruct) {
   let schemas = {};
 
-  dataStructureRoot.sections.forEach(ds => {
+  dataStruct.sections.forEach(ds => {
     let struct = {};
     if (ds.properties != null) {
       struct.type = 'object';
@@ -60,26 +70,29 @@ function createSchemas() {
   return schemas;
 }
 
-
-
-
 api_enterprise.components = {
-  schemas: createSchemas(),
+  schemas: createSchemas(dataStructureRoot),
 };
-
 api_open.components = {
-  schemas: createSchemas(),
+  schemas: createSchemas(dataStructureRoot),
+};
+api_admin.components = {
+  schemas: createSchemas(adminDataStructure),
+};
+api_system.components = {
+  schemas: {},
 };
 
-// Write api for Open-Pryv.io
-buildApi(api_open, true);
+buildApi(methodsRoot, api_open, true);
 api_open = removeNulls(api_open);
-writeToOutputOpen();
-
-// Write api for Pryv.io
-buildApi(api_enterprise, false);
+buildApi(methodsRoot, api_enterprise, false);
 api_enterprise = removeNulls(api_enterprise);
-writeToOutputEnterprise();
+buildApi(adminMethods, api_admin, false);
+api_admin = removeNulls(api_admin);
+buildApi(systemMethods, api_system, false);
+api_system = removeNulls(api_system);
+
+writeToOutputs();
 
 function translateSchemaLink(type) {
   return '#/components/schemas/' + type;
@@ -177,8 +190,8 @@ function toBeSkipped(methodId) {
   }
 }
 
-function buildApi(api, isOpen) {
-  methodsRoot.sections.forEach(section => {
+function buildApi(methods, api, isOpen) {
+  methods.sections.forEach(section => {
     if (section.entrepriseOnly && isOpen) {
       return;
     }
@@ -454,12 +467,13 @@ function extractResponses(path) {
   return responses;
 }
 
-function writeToOutputEnterprise() {
+function writeToOutputs() {
   fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api_enterprise));
   fs.writeFileSync(OUTPUT_FILE_PUBLIC, yaml.stringify(api_enterprise));
-}
-
-function writeToOutputOpen() {
   fs.writeFileSync(OUTPUT_FILE_OPEN, yaml.stringify(api_open));
   fs.writeFileSync(OUTPUT_FILE_PUBLIC_OPEN, yaml.stringify(api_open));
+  fs.writeFileSync(OUTPUT_FILE_ADMIN, yaml.stringify(api_admin));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC_ADMIN, yaml.stringify(api_admin));
+  fs.writeFileSync(OUTPUT_FILE_SYSTEM, yaml.stringify(api_system));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC_SYSTEM, yaml.stringify(api_system));
 }
