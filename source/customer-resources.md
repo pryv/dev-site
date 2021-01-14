@@ -71,9 +71,9 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to migrate a Pryv.io register service to a different machine.
 
-- User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
+- (deprecated) User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
 
-  This document presents a tool which allows to delete Pryv.io users.
+  This document presents a tool which allows to delete Pryv.io users. From Pryv.io 1.6, user deletion is available through the [admin API](/reference-admin/#delete-user)
 
 - How to backup: [HTML](/customer-resources/backup/)
 
