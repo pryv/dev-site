@@ -36,14 +36,14 @@ The system requirements for each machine are also specified.
 
 ## Obtain a domain name
 
-Now that your machines are ordered, you need to register your own domain name.
+Now that your machines are ordered, you need to register your own domain name.  
 
 You can either:  
 
-- obtain one yourself through a domain name registrar of your choice, make sure that you can configure your domain's DNS zone, including records of type A & NS.
+- obtain one yourself through a domain name registrar of your choice, make sure that you can configure your domain's **DNS zone**, including records of type A & NS.
 - or contact us directly to obtain a pryv.io subdomain, e.g. ***your-platform-name*.pryv.io**
 
-For each platform, you will have to define the following DNS Records:
+You will have to define the following DNS Records:
 
 ```
 dns1-pryv 1800 IN A ${YOUR-REG-MASTER-IP-ADDRESS}
@@ -52,10 +52,10 @@ pryv 1800 IN NS dns1-pryv.${YOUR-DOMAIN}.
 pryv 1800 IN NS dns2-pryv.${YOUR-DOMAIN}.
 ```
 
-- **If you have a single register machine**, you can repeat the reg-master's IP address instead of the reg-slave one.
-- **If you have a single-node setup**, you can use the machine's IP address instead of the register IP addresses.
+- **If you have a [single register machine](/customer-resources/infrastructure-procurement/#cluster-with-a-single-core)**, you can repeat the reg-master's IP address instead of the reg-slave one.
+- **If you have a [single-node setup](/customer-resources/infrastructure-procurement/#single-node-mode)**, you can use the machine's IP address instead of the register IP addresses.
 
-Your Pryv.io platform domain will then be pryv.${YOUR-DOMAIN}. For other environments such as staging, we suggest to define a similar subdomain:
+Your Pryv.io platform domain will then be `pryv.${YOUR-DOMAIN}`. For other environments such as staging, we suggest to define a similar subdomain:
 
 ```
 dns1-pryv-staging 1800 IN A ${YOUR-REG-MASTER-IP-ADDRESS}
@@ -63,6 +63,25 @@ dns2-pryv-staging 1800 IN A ${YOUR-REG-SLAVE-IP-ADDRESS}
 pryv-staging 1800 IN NS dns1-pryv.${YOUR-DOMAIN}.
 pryv-staging 1800 IN NS dns2-pryv.${YOUR-DOMAIN}.
 ```
+
+### Expose the Pryv.io API on a second-level domain
+
+Using the aforementioned steps, your Pryv.io API will be exposed under a subdomain like `pryv.${YOUR-DOMAIN}`. If you wish to expose it on a *second-level domain* such as `my-pryv-domain.io`, you will have to:
+
+- obtain a domain name through a registrar that allows to **change name servers**
+- use a second domain to define Type A DNS records pointing to your machine that you will provide as name servers by your registrar for your Pryv.io domain
+
+Second domain DNS Zone `${SECOND-DOMAIN}`:
+
+```
+dns1-pryv 1800 IN A ${YOUR-REG-MASTER-IP-ADDRESS}
+dns2-pryv 1800 IN A ${YOUR-REG-SLAVE-IP-ADDRESS}
+```
+
+You will then define name servers for your Pryv.io domain as:
+
+- `dns1-pryv.${SECOND-DOMAIN}`
+- `dns2-pryv.${SECOND-DOMAIN}`
 
 ## Obtain the license key, credentials and configuration files
 
