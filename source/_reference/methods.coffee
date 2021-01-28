@@ -17,7 +17,7 @@ module.exports = exports =
       id: "registration"
       title: "Registration"
       description: """
-                  Methods for user registration and username uniqueness check.
+                  Method for user registration.
                   """
       sections: [
         id: "users.create"
