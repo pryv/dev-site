@@ -83,6 +83,22 @@ You will then define name servers for your Pryv.io domain as:
 - `dns1-pryv.${SECOND-DOMAIN}`
 - `dns2-pryv.${SECOND-DOMAIN}`
 
+### Verify
+
+If your domain is set up correctly, the following command should yield the hostname of the machine you intend to use as a central Pryv Register server: 
+
+```
+dig NS +trace ${DOMAIN}
+```
+
+Normally, your NS records should resolve to the hostnames you gave to the Register server you intend to set up. Please check that the A records of the returned NS entries exist and point to the same machine.  
+
+```
+dig A ${HOSTNAME-RETURNED-IN-PREVIOUS-COMMAND}
+```
+
+If you don't have [dig](https://en.wikipedia.org/wiki/Dig_%28command%29) available, you can use [Google's toolbox](https://toolbox.googleapps.com/apps/dig/#NS/).
+
 ## Obtain the license key, credentials and configuration files
 
 In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files.
