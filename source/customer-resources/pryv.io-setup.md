@@ -85,19 +85,18 @@ You will then define name servers for your Pryv.io domain as:
 
 ### Verify
 
-If your domain is set up correctly, the following command should yield the hostname of the machine you intend to use as a central Pryv Register server: 
+If your domain is set up correctly, the following command should yield the hostname of the machine(s) you intend to use as a Pryv.io Register server:  
 
 ```
-dig NS +trace ${DOMAIN}
+dig NS +trace +nodnssec ${DOMAIN}
 ```
 
-Normally, your NS records should resolve to the hostnames you gave to the Register server you intend to set up. Please check that the A records of the returned NS entries exist and point to the same machine.  
+This command should yield the hostnames you have set for the name servers of your Pryv.io domain in the last block as:
 
 ```
-dig A ${HOSTNAME-RETURNED-IN-PREVIOUS-COMMAND}
+${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns1-pryv.${YOUR-DOMAIN}.
+${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns2-pryv.${YOUR-DOMAIN}.
 ```
-
-If you don't have [dig](https://en.wikipedia.org/wiki/Dig_%28command%29) available, you can use [Google's toolbox](https://toolbox.googleapps.com/apps/dig/#NS/).
 
 ## Obtain the license key, credentials and configuration files
 

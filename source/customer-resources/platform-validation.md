@@ -36,7 +36,6 @@ Depending on your skill set, this can be done using CLI tools or a web interface
 ## DNS checks:
 
 - dig version 9.12.3+
-- If you don't have access to `dig` or the right version, you can use [G Suite's Toolbox dig](https://toolbox.googleapps.com/apps/dig/)
 
 ## HTTP checks:
 
@@ -47,22 +46,35 @@ Depending on your skill set, this can be done using CLI tools or a web interface
 
 ## DNS is set as domain name server
 
-Run `dig NS ${DOMAIN}`.
+Run the following command:
 
-The `ANSWER` section should exist and list 2 hostnames such as:  
+```
+dig NS +trace +nodnssec ${DOMAIN}
+```
 
-~~~~~~~~
-;; ANSWER :
-${DOMAIN}.  SOME_TTL_NUMBER  IN  NS  dns1.${DOMAIN}.
-${DOMAIN}.  SOME_TTL_NUMBER  IN  NS  dns2.${DOMAIN}.
-~~~~~~~~
+The **2 last blocks** should display hostnames that resolve to the machine running your Pryv.io DNS such as:  
 
-If there is no `ANSWER` section, the name servers for the domain name `${DOMAIN}` are not defined or misconfigured.  
-Verify with your domain provider that the name servers are set correctly.
+```
+${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns1-pryv.${YOUR-DOMAIN}.
+${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns2-pryv.${YOUR-DOMAIN}.
+```
+
+The last block should be followed by a line indicating that it is coming from your Pryv.io DNS such as:
+
+```
+;; Received 123 bytes from ${YOUR-DNS-IP-ADDRESS}#53(dns1-pryv.${YOUR-DOMAIN}) in 15 ms
+```
+
+- If there are no blocks containing your machine's hostname, the name servers for the Pryv.io domain name `${DOMAIN}` are not defined or misconfigured. Verify with your domain provider that the name servers are set correctly.
+- If there is a single block displaying your machine's hostname, then your Pryv.io DNS is not running. See [DNS section](#dns).
 
 ## DNS
 
-Run `dig reg.${DOMAIN}`.
+Run the following command:  
+
+```
+dig reg.${DOMAIN}
+```
 
 The `ANSWER` section should exist and list a hostname such as:  
 
