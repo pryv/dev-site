@@ -13,7 +13,7 @@ It walks you through the different steps that have to be performed in order to s
 
 - 1 [Set up the machines](#set-up-the-machines)
 - 2 [Obtain a domain name](#obtain-a-domain-name)
-- 3 [Obtain the license key, credentials and config files](#obtain-the-license-key-credentials-and-config-files)
+- 3 [Obtain the license key, credentials and configuration files](#obtain-the-license-key-credentials-and-configuration-files)
 - 4 [Set the platform parameters](#set-the-platform-parameters)
 - 5 [Obtain an SSL certificate](#obtain-an-ssl-certificate)
 - 6 [Validate your platform installation](#validate-your-platform-installation)
