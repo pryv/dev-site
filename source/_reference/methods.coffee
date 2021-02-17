@@ -94,7 +94,7 @@ module.exports = exports =
                          """
           ]
         examples: [
-          title: "Creating a user"
+          title: "Creating a user."
           params:
             appId: examples.register.appids[0]
             username: examples.users.two.username
@@ -142,7 +142,7 @@ module.exports = exports =
                           """
           ]
         examples: [
-          title: "Deleting a user"
+          title: "Deleting a user."
           params:
             username: "mark-kaminski"
           result:
