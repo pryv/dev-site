@@ -578,11 +578,10 @@ module.exports = exports =
         trustedOnly: true
         server: "core"
         description: """
-                    Deletes a user account.  
-                    This method must be enabled in the platform configuration.  
-                    This method requires a personal token when performed by the account owner.  
-                    For account deletion by platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).
-                    For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.
+                    Deletes a user account. This method must be enabled in the platform configuration.  
+                    - When performed by the account owner, this method requires a personal token.
+                    - For platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).
+                    - For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.
                     """
         params:
           properties: [
