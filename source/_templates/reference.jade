@@ -226,7 +226,13 @@ mixin section(section, parentDocId, level, parent)
             text &nbsp;
           if section.previewOnly
             span.label.trusted-only Preview
-            text &nbsp; 
+            text &nbsp;
+          if section.server == "core"
+            span.label.core-server Core
+            text &nbsp;
+          if section.server == "register"
+            span.label.register-server Register
+            text &nbsp;
         +intro(section.description)
         +properties(section.properties)
         if section.params

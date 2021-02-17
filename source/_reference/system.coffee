@@ -19,7 +19,8 @@ module.exports = exports =
       id: "services-involved"
       title: "Services involved"
       description: """
-                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).
+                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).  
+                   A color tag on the API method indicates the server to which you should make the request.  
 
                    - The **core servers** own the account management processes, i.e. data creation and deletion
                    - The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
@@ -48,7 +49,9 @@ module.exports = exports =
     id: "api-methods"
     title: "API methods"
     description: """
-              The methods are called via HTTPS on the register server: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.
+              The methods are called via HTTPS on the register or core server depending on the method:   
+              - Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.  
+              - Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.  
               """
     sections: [
       id: "admin"
@@ -247,7 +250,7 @@ module.exports = exports =
             type: "Object"
             description: """
                         Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  
-                        The value you need to use as `hosting` parameter in the `users.create` method is a key of the `hostings` object.
+                        You need to use the `availableCore` URL as endpoint for the [Create user API method](#create-user).
                         """
           ]
         examples: [
@@ -329,26 +332,20 @@ module.exports = exports =
         id: "users.create"
         type: "method"
         title: "Create user"
-        http: "POST /user"
+        http: "POST /users"
         httpOnly: true
-        server: "register"
+        server: "core"
         description: """
-                    **(DEPRECATED)** Please use the [new create user method](/reference/#create-user).  
+                    Creates a new user account. The method's parameters can be customized with the [system streams configuration](/customer-resources/system-streams/).
 
-                    Creates a new user account on the specified core server.
+                    Before Pryv.io 1.6, this route was served by the register server on `/user`
                     """
         params:
           properties: [
-            key: "appid"
+            key: "appId"
             type: "string"
             description: """
                         Your app's unique identifier.
-                        """
-          ,
-            key: "hosting"
-            type: "string"
-            description: """
-                        The name of the core server that should host the account, see [Get Hostings](#get-hostings).
                         """
           ,
             key: "username"
@@ -369,7 +366,7 @@ module.exports = exports =
                           The user's e-mail address, used for password retrieval.
                           """
           ,
-            key: "invitationtoken"
+            key: "invitationToken"
             type: "string"
             optional: true
             description: """
@@ -380,7 +377,7 @@ module.exports = exports =
                           <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>Available in entreprise only.
                           """
           ,
-            key: "languageCode"
+            key: "language"
             type: "string"
             optional: true
             description: """
@@ -401,35 +398,24 @@ module.exports = exports =
                           A confirmation of the user's username.
                           """
           ,
-            key: "server"
-            type: "string"
-            description: """
-                          **(DEPRECATED)** Please use the `apiEndpoint` parameter.
-
-                          The server where this account is hosted.
-                          The result will be invalid for DNS-less setups.
-                          """ 
-          ,
             key: "apiEndpoint"
             type: "string"
             description: """
-                          The apiEndpoint to reach this account. Does not include an access token.
-                          """
+                         The apiEndpoint to reach this account. It includes a personal access token.
+                         """
           ]
         examples: [
-          title: "Creating a user"
-          params: 
-            appid: examples.register.appids[0]
-            hosting: Object.keys(examples.register.hostings[0].regions.europe.zones.switzerland.hostings)[0]
+          title: "Creating a user."
+          params:
+            appId: examples.register.appids[0]
             username: examples.users.two.username
             password: examples.users.two.password
             email: examples.users.two.email
-            invitationtoken: examples.register.invitationTokens[0]
-            languageCode: examples.register.languageCodes[0]
+            invitationToken: examples.register.invitationTokens[0]
+            language: examples.register.languageCodes[0]
             referer: examples.register.referers[0]
           result:
             username: examples.users.two.username
-            server: examples.users.two.username + "." + examples.register.platforms[0]
             apiEndpoint: examples.users.two.apiEndpoint.pryvLab
         ]
       ,
@@ -583,6 +569,50 @@ module.exports = exports =
           result: 
             "username": examples.users.two.username
         ]
+      ,
+        id: "users.delete"
+        type: "method"
+        title: "Delete user"
+        http: "DELETE /users/{username}"
+        httpOnly: true
+        trustedOnly: true
+        server: "core"
+        description: """
+                    Deletes a user account.  
+                    This method must be enabled in the platform configuration.  
+                    This method requires a personal token when performed by the account owner.  
+                    For account deletion by platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).
+                    For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                          The username of the account to delete.
+                          """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "userDeletion"
+            type: "object"
+            description: """
+                          The deleted user.
+                          """
+          ]
+        examples: [
+          title: "Deleting a user."
+          params:
+            username: "mark-kaminski"
+          result:
+            userDeletion: 
+              username: "mark-kaminski"
+        ]
       ]
+    , 
+      
     ]
   ]
