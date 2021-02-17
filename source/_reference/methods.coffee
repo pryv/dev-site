@@ -107,6 +107,48 @@ module.exports = exports =
             username: examples.users.two.username
             apiEndpoint: examples.users.two.apiEndpoint.pryvLab
         ]
+      ,
+        id: "users.delete"
+        type: "method"
+        title: "Delete user"
+        http: "DELETE /users/{username}"
+        httpOnly: true
+        previewOnly: true
+        trustedOnly: true
+        server: "core"
+        description: """
+                    Deletes a user account.  
+                    This method must be enabled in the platform configuration.  
+                    For account deletion by platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).
+                    For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                         The username of the account to delete.
+                         """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "userDeletion"
+            type: "object"
+            description: """
+                          The deleted user.
+                          """
+          ]
+        examples: [
+          title: "Deleting a user"
+          params:
+            username: "mark-kaminski"
+          result:
+            userDeletion: 
+              username: "mark-kaminski"
+        ]
       ]
     ,
     id: "auth"
