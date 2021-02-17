@@ -104,10 +104,10 @@ Here is the detailed list of parameters:
 - **isEditable**: Whether you can modify the events
     * boolean
     * optional, default false
-- **isRequiredInValidation**: Whether the field must exist in the [user registration call](/reference/#create-user)
+- **isRequiredInValidation**: Whether the field must exist in the [user registration call](/reference-system/#create-user)
     * boolean
     * optional, default false
-- **regexValidation**: The `regex string` that would be used for the field validation in the [user registration](/reference/#create-user)
+- **regexValidation**: The `regex string` that would be used for the field validation in the [user registration](/reference-system/#create-user)
     * string
     * optional, default null
 - **isShown**: Whether the stream and its events will be returned by [streams](/reference/#streams), [events](/reference/#events) or [account](/reference/#account-management) methods

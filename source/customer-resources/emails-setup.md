@@ -140,7 +140,7 @@ Please refer to [the DNS configuration document](https://api.pryv.com/customer-r
 
 ### Email template default language
 
-You can set the default language for the template that will be applied if you do not provide a `language` field in the [Create user API method](/reference/#create-user), by setting `EMAIL_TEMPLATES_DEFAULT_LANG`:  
+You can set the default language for the template that will be applied if you do not provide a `language` field in the [Create user API method](/reference-system/#create-user), by setting `EMAIL_TEMPLATES_DEFAULT_LANG`:  
 
 in the platform.yml file:
 
