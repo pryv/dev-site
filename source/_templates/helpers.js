@@ -8,8 +8,9 @@ helpers.printJSON = function (content) {
 helpers.getRestCall = function (params, http) {
   let [method, path] = http.split(" ");
   let myParams = _.clone(params);
-  // we can remove {id} as it is exposed in the rest PATH
+  // we can remove {id} & {username} as it is exposed in the rest PATH
   delete myParams.id;
+  delete myParams.username
 
   if (myParams.update != null && method === 'PUT') {
     let updateParams = myParams.update; 

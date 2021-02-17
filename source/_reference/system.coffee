@@ -570,6 +570,7 @@ module.exports = exports =
             "username": examples.users.two.username
         ]
       ,
+
         id: "users.delete"
         type: "method"
         title: "Delete user"
