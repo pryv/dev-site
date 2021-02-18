@@ -50,7 +50,7 @@ mixin adminTag(adminTag)
     span(onclick="location='/reference-system/#admin'").admin-tag
       span.label(title="Admin Only") A
 
-mixin http(http, httpOnly)
+mixin http(http, httpOnly, server)
   if http
     span.http
       span.label= httpOnly ? 'HTTP-only' : 'HTTP'
@@ -62,8 +62,10 @@ mixin http(http, httpOnly)
           -// YES, HACK
           span !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
         else
-          code !{http}
-
+          if server
+            code !{http.replace(' ', ' <a href="/reference-system/#api-methods">{'+server+'}</a>')}
+          else
+            code !{http}
 
 mixin typeText(string)
   if string
@@ -214,7 +216,7 @@ mixin section(section, parentDocId, level, parent)
             +adminTag(section.adminTag || (parent && parent.adminOnly))
             if ! section.httpOnly
               +methodId(section.id)
-            +http(section.http, section.httpOnly)
+            +http(section.http, section.httpOnly, section.server)
           if section.trustedOnly
             span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
             text &nbsp;
@@ -226,12 +228,6 @@ mixin section(section, parentDocId, level, parent)
             text &nbsp;
           if section.previewOnly
             span.label.trusted-only Preview
-            text &nbsp;
-          if section.server == "core"
-            span.label.core-server Core
-            text &nbsp;
-          if section.server == "register"
-            span.label.register-server Register
             text &nbsp;
         +intro(section.description)
         +properties(section.properties)
