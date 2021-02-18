@@ -63,7 +63,7 @@ mixin http(http, httpOnly, server)
           span !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
         else
           if server
-            code !{http.replace(' ', ' <a href="/reference-system/#api-methods">{'+server+'}</a>')}
+            code !{http.replace(' ', ' <a href="/reference-system/#api-endpoint">{'+server+'}</a>')}
           else
             code !{http}
 

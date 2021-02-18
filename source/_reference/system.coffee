@@ -26,6 +26,17 @@ module.exports = exports =
                    - The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
                    """
     ,
+      id: "endpoint-url"
+      title: "API endpoint"
+      description: """
+                   The methods are called via HTTPS on the register or core server depending on the method:   
+
+                   - Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.  
+                   - Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.  
+                  
+                   You can adapt the examples with "API" selector in the top navigation bar.
+                  """
+    ,
       id: "account-creation"
       title: "Account creation"
       description: """
@@ -49,10 +60,7 @@ module.exports = exports =
     id: "api-methods"
     title: "API methods"
     description: """
-              The methods are called via HTTPS on the register or core server depending on the method:   
-              - Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.  
-              - Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.  
-              """
+                 """
     sections: [
       id: "admin"
       title: "Admin"
