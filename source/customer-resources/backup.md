@@ -36,7 +36,7 @@ You should first backup core data, starting with MongoDB.
 The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/mongodb/backup/`.
 
 - Run the following command to export the InfluxDB data: 
-    `$ docker exec -t pryvio_influxdb /usr/bin/influxd backup -portable /var/backups/ `
+    `$ docker exec -t pryvio_influxdb /usr/bin/influxd backup -portable /pryv/backup/ `
 The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/influxdb/backup/`.
 
 - Backup the ${PRYV_CONF_ROOT} folder except the following:
