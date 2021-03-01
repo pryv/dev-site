@@ -132,21 +132,18 @@ module.exports = exports =
                  ```html
                  <script>
                  var socket = io("https://#{examples.users.one.username}.pryv.me/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
-                 });
                  </script>
                  ```
                  Own domain:
                  ```html
                  <script>
                  var socket = io("https://#{examples.users.one.username}.{domain}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
-                 });
                  </script>
                  ```
                  DNS-less:
                  ```html
                  <script>
                  var socket = io("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
-                 });
                  </script>
                  ```
                  """
