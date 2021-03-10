@@ -14,12 +14,13 @@ In this FAQ we answer common questions related to Pryv.io API. You can contact u
 - 3 [Event types](#event-types)
 - 4 [Other data structures](#other-data-structures)
 - 5 [API methods](#api-methods)
-- 6 [User creation](#user-creation)
-- 7 [Authentication](#authentication)
-- 8 [Account granularity](#account-granularity)
-- 9 [Access sharing](#access-sharing)
-- 10 [Notification system](#notification-system)
-- 11 [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api-)
+- 7 [Synchronization](#synchronization)
+- 8 [User creation](#user-creation)
+- 9 [Authentication](#authentication)
+- 10 [Account granularity](#account-granularity)
+- 11 [Access sharing](#access-sharing)
+- 12 [Notification system](#notification-system)
+- 13 [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api-)
 
 ## Personal data
 
@@ -96,6 +97,27 @@ Yes, the register service has 2 methods:
 ### What is the exact structure of the create attachment call?
 
 If you are having issues creating the package for the create attachment call with the client/framework/library you are using, you can print the details of the call by using cURL with the `-v` verbose option.
+
+## Synchronization
+
+## How can to keep a local cache containing events up to date?
+
+The [events.get Call](/reference/#get-events) offers `modifiedSince` and `includeDeletions` parameters to synchronize an existing set of events. 
+
+1. Initialize your event cache with an `events.get` and a time range with `fromTime` and `toTime`.  
+2. When receiving the events, loop into them to find the oldest `event.modified` value.
+3. Store this value add a very small number to it example 0.0000001. Let's call it `anchor`
+4. To synchronize the events you just need call `events.get` with a time range and `modifiedSince={anchor}` `includeDeletions=true`
+
+Note that the **scope** time-frame, streamIds should remain the same for each `events.get`
+
+The companion JavaScript lib [Monitor](https://github.com/pryv/lib-js-monitor), implements this pattern. 
+
+## How can I set an "Automatic" synchronization of my Events and Streams cache
+
+By coupling the precedent logic with and one of the [Notification Systems](/faq-api/#notification-system)
+
+If you use the [Pryv JavaScript Library](https://github.com/pryv/lib-js), it can be used in combination with our [Monitor](https://github.com/pryv/lib-js-monitor) and [Socket.io](https://github.com/pryv/lib-js-socket.io) add-ons to have "near real-time" updates.
 
 ## User creation
 
