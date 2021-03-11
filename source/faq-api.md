@@ -105,7 +105,7 @@ If you are having issues creating the package for the create attachment call wit
 The [events.get Call](/reference/#get-events) offers `modifiedSince` and `includeDeletions` parameters to synchronize an existing set of events. 
 
 1. Initialize your event cache with an `events.get` and a time range with `fromTime` and `toTime`.  
-2. When receiving the events, loop into them to find the oldest `event.modified` value.
+2. When receiving the events, loop into them to find the latest `event.modified` value.
 3. Store this value add a very small number to it example 0.0000001. Let's call it `anchor`
 4. To synchronize the events you just need call `events.get` with a time range and `modifiedSince={anchor}` `includeDeletions=true`
 
