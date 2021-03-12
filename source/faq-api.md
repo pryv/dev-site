@@ -103,6 +103,7 @@ If you are having issues creating the package for the create attachment call wit
 ### How to keep events in local cache up to date?
 
 The [events.get API method](/reference/#get-events) offers the `modifiedSince` and `includeDeletions` parameters to synchronize a set of events.  
+As the default parameters return the last 20 events, we should perform synchronization on a time range, which can be very big if needed.
 
 1. Initialize your events cache with an `events.get` call and a time range with `fromTime` and `toTime`.  
 2. When you receive the events, loop into them to find the latest `event.modified` value.
