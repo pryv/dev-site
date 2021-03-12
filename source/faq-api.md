@@ -100,22 +100,25 @@ If you are having issues creating the package for the create attachment call wit
 
 ## Synchronization
 
-## How can to keep a local cache containing events up to date?
+### How to keep events in local cache up to date?
 
-The [events.get Call](/reference/#get-events) offers `modifiedSince` and `includeDeletions` parameters to synchronize an existing set of events. 
+The [events.get API method](/reference/#get-events) offers the `modifiedSince` and `includeDeletions` parameters to synchronize a set of events.  
 
-1. Initialize your event cache with an `events.get` and a time range with `fromTime` and `toTime`.  
-2. When receiving the events, loop into them to find the latest `event.modified` value.
-3. Store this value add a very small number to it example 0.0000001. Let's call it `anchor`
-4. To synchronize the events you just need call `events.get` with a time range and `modifiedSince={anchor}` `includeDeletions=true`
+1. Initialize your events cache with an `events.get` call and a time range with `fromTime` and `toTime`.  
+2. When you receive the events, loop into them to find the latest `event.modified` value.
+3. Store this value in a variable we call `anchor` and add a very small number to it, for example: `0.0000001`.
+4. To synchronize the events you just need to call `events.get` with a time range and `&modifiedSince={anchor}&includeDeletions=true` query parameters.
 
-Note that the **scope** time-frame, streamIds should remain the same for each `events.get`
+The companion JavaScript library [Monitor](https://github.com/pryv/lib-js-monitor) implements this pattern.  
 
-The companion JavaScript lib [Monitor](https://github.com/pryv/lib-js-monitor), implements this pattern. 
+#### Limitation
 
-## How can I set an "Automatic" synchronization of my Events and Streams cache
+Note that if you have an [access](/reference/#access) with permissions on a certain set of streams (we'll call this a "scope"), you will not be able to detect events that are leaving this scope.  
+For example, let's say you have permissions on the streamId `diary`. If some client changes its streamIds by removing `diary`, you will not be able to detect this change.
 
-By coupling the precedent logic with and one of the [Notification Systems](/faq-api/#notification-system)
+### How can I setup an "Automatic" synchronization of my Events and Streams cache
+
+By coupling the precedent logic with a [Notification System](/faq-api/#notification-system)
 
 If you use the [Pryv JavaScript Library](https://github.com/pryv/lib-js), it can be used in combination with our [Monitor](https://github.com/pryv/lib-js-monitor) and [Socket.io](https://github.com/pryv/lib-js-socket.io) add-ons to have "near real-time" updates.
 
