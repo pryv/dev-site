@@ -579,6 +579,43 @@ module.exports = exports =
         ]
       ,
 
+        id: "username.core.get"
+        type: "method"
+        title: "Get core from username"
+        http: "GET /{username}/core"
+        httpOnly: true
+        server: "register"
+        description: """
+                    Get the core of a Pryv.io account according to the given username.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The username to look for.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "core"
+            type: "object"
+            description: "The core where the user account is stored."
+          ]
+        examples: [
+          title: "Retrieving the core URL for a given username."
+          params: {
+            username: "trench"
+          }
+          result:
+            core:
+              url: "https://co1.pryv.me/"
+        ]
+      ,
+
         id: "users.delete"
         type: "method"
         title: "Delete user"
