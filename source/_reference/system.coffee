@@ -579,23 +579,28 @@ module.exports = exports =
         ]
       ,
 
-        id: "username.core.get"
+        id: "cores.get"
         type: "method"
-        title: "Get core from username"
-        http: "GET /{username}/core"
+        title: "Get core"
+        http: "GET /cores"
         httpOnly: true
         server: "register"
         description: """
-                    Get the core of a Pryv.io account according to the given username.
+                    Get the core of a Pryv.io account according to the given username or email. You must provide **only** one of them.
                     """
         params:
           properties: [
             key: "username"
             type: "string"
-            http:
-              text: "set in request path"
             description: """
                         The username to look for.
+                        """
+          ,
+            key: "email"
+            type: "string"
+            description: """
+                        The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.  
+                        This is meant to prevent email discovery.
                         """
           ]
         result:
@@ -603,7 +608,7 @@ module.exports = exports =
           properties: [
             key: "core"
             type: "object"
-            description: "The core where the user account is stored."
+            description: "The core by usernamee"
           ]
         examples: [
           title: "Retrieving the core URL for a given username."
@@ -613,6 +618,14 @@ module.exports = exports =
           result:
             core:
               url: "https://co1.pryv.me/"
+        ,
+          title: "Retrieving the core URL for a non-existing email."
+          params: {
+            email: "adam-gibson@replacement.tech"
+          }
+          result:
+            core:
+              url: "https://co3.pryv.me/"
         ]
       ,
 
