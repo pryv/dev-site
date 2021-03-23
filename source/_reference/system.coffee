@@ -541,7 +541,7 @@ module.exports = exports =
         httpOnly: true
         server: "register"
         description: """
-                    Get the username of a Pryv.io account according to the given email.
+                    Get the username of a Pryv.io account according to the given email. This API method can be disabled in the [platform configuration](https://api.pryv.com/reference-admin/#platform-settings).
                     """
         params:
           properties: [
@@ -599,7 +599,7 @@ module.exports = exports =
             key: "email"
             type: "string"
             description: """
-                        The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.  
+                        The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.   
                         This is meant to prevent email discovery.
                         """
           ]
