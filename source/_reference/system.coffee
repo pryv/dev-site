@@ -608,7 +608,7 @@ module.exports = exports =
           properties: [
             key: "core"
             type: "object"
-            description: "The core by usernamee"
+            description: "The core by username"
           ]
         examples: [
           title: "Retrieving the core URL for a given username."
