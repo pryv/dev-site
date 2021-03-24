@@ -637,7 +637,7 @@ module.exports = exports =
         trustedOnly: true
         server: "core"
         description: """
-                    Deletes a user account. This method must be enabled in the platform configuration.  
+                    Deletes a user account. This method must be enabled in the platform configuration. You should fetch the URL of the core where the user data is stored using the [Get core](#get-core) method.  
                     - When performed by the account owner, this method requires a personal token.
                     - For platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).
                     - For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.
