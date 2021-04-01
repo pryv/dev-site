@@ -168,7 +168,20 @@ By default, our containers write logs into `stdout`, the reason for a failure ca
 
 ### Permission denied error
 
-During deployment, it is possible that some folders have only write permissions for root. Our containerized apps are run by UID `9999:9999`, so this can be fixed by running `chown -R 9999:9999 ${FOLDER}` from the host machine.
+During deployment and update, it is possible that some folders have incorrect permissions, preventing the Pryv.io process to read configuration and data files.  
+The corresponding error can be found in the container logs using:
+
+```
+docker logs -f --tail 50 pryvio_${CONTAINER_NAME}
+```
+
+It should have a message similar to:
+
+```
+Error: EACCES: permission denied
+```
+
+This can be fixed by running the provided `ensure-permissions-${ROLE}` script. If necessary, reboot the Pryv.io services as well.
 
 ### How do I reset data on my Pryv.io platform?
 
