@@ -369,7 +369,7 @@ sections:
             title: The system shall run on a UNIX operating system
             description: |
               The following UNIX operating systems are supported:  
-                - Ubuntu Server 16.04 LTS
+                - Ubuntu Server 18.04 LTS
 
           - reqid: CONTAINER
             title: The system should be packaged in a container for delivery and deployment
