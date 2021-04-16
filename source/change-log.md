@@ -4,6 +4,12 @@ title: API change log
 template: default.jade
 ---
 
+## 1.6.19
+
+New routes:
+
+- [Get core](/reference-system/#get-core) API method that returns the hostname of the core on which a certain user data is stored.
+
 ## 1.6.7
 
 New Features:
