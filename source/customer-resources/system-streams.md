@@ -25,6 +25,7 @@ The base system streams are the following:
   |_.storageUsed
     |_.dbDocuments
     |_.attachedFiles
+  |_.mfa
 |_.helpers
   |_.active
 ```

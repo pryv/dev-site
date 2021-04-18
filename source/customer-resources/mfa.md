@@ -8,21 +8,31 @@ withTOC: true
 
 This document describes how to configure Multi-Factor Authentication (MFA) for the Pryv.io [auth.login](https://api.pryv.com/reference/#login-user) API method.
 
-The prerequisite for this is to have an external communication service to send messages over another channel, such as emails or SMS.  
-Depending on your service capabilities, you will either use the **single** or the **challenge-verify** mode.
+The prerequisite for this is to have:
+
+- a running [entreprise version](/concepts/#entreprise-license-open-source-license) of Pryv.io
+- an external communication service to send messages over another channel, such as email or SMS.  
+
+Depending on your communication service capabilities, you will either use the **single** or the **challenge-verify** mode.
 
 ## Flow
 
-### 1. Activation
+You will need to define a template for the API call(s) that will be made to your communication service. The user-specific values that will be substituted in the template will be stored in the user's `.mfa` [system stream](/customer-resources/system-streams/#system-streams).
 
-MFA must be activated per user account. You can implement this in your onboarding flow or at a later time. After obtaining a `personal` token from an [auth.login](https://api.pryv.com/reference/#login-user) API call, you must call the [activate MFA](https://api.pryv.com/reference/#activate-mfa) API method, providing your account's **MFA profile** in the request body.  
-The MFA profile is a JSON object with values specific to the account. These values will be substituted to the endpoints' `url`, `body` and `headers` properties in the MFA configuration during the exchanges between the Pryv.io MFA service and your communication service. See 
+### Setup
 
-### 2. Confirmation
+MFA must be activated per user account. You can implement this in your onboarding flow or at a later time. After obtaining a `personal` token from an [auth.login](https://api.pryv.com/reference/#login-user) API call, you must call the [activate MFA](https://api.pryv.com/reference/#activate-mfa) API method, providing the user's MFA data. This will trigger the challenge sent to the user.
 
-### 3. Challenge
+You should use the [Confirm MFA activation](/reference/#confirm-mfa-activation) to send the obtained challenge in the payload it expects. If confirmation is successful, the MFA data provided at activation is saved in the user's `.mfa` stream.
 
-### 4. Verification
+### Usage
+
+Once MFA has been activated for an account, you will receive a `mfaToken` each time you perform a [Login user](/reference/#login-with-mfa) API call. You will use it to [Trigger the MFA challenge](/reference/#trigger-mfa-challenge) where data saved in the `.mfa` stream will be sent to your communication service.  
+You will send the received challenge the same way you did for confirmation, but this time using the [verify MFA challenge](/reference/#verify-mfa-challenge) route.  
+
+### Deactivation and recovery
+
+You may deactivate MFA using a personal token on the [deactivate MFA](/reference/#deactivate-mfa) API method. If you have lost access to your 2nd factor such as phone or email, you can also use the [recover MFA](/reference/#recover-mfa) route to deactivate it using one of the codes
 
 ## Modes
 
@@ -32,71 +42,32 @@ In **single** mode, the Pryv.io MFA service generates a secret code, sends it to
 
 In **challenge-verify** mode, the Pryv.io MFA service makes an HTTP request to your communication service to generate and send a code then forwards it during verification.
 
-The MFA settings are to be set either directly through the platform settings configuration file `platform.yml` or through the admin panel.
+The templates  are to be set either directly through the platform settings configuration file `platform.yml` or through the admin panel.
 
+## Configuration
 
+### Template
 
-## Single
-
-The configuration for single looks like this in the platform.yml file:  
-
-```yaml
-MFA_MESSAGE_SETTINGS:
-  description: "Allow to configure an external message API handling the MFA flow. See more information on: https://api.pryv.com/customer-resources/mfa/"
-  value:
-    mode: 'single'
-    endpoints:
-      single:
-        url: 'https://api.smsmode.com/http/1.6/sendSMS.do?language={{ lang }}&auth=my-auth-token'
-        method: 'POST'
-        body: '{"phone":"{{ phone }}"}'
-        headers:
-          'content-type': 'application/json'
-```
-
-or in the admin panel:
-
-```json
-{
-  "mode": "single",
-  "endpoints": {
-    "single": {
-      "url": "https://api.smsmode.com/http/1.6/sendSMS.do?language={{ lang }}&auth=my-auth-token",
-      "method": "POST",
-      "body": "{\"phone\":\"{{ phone }}\"}",
-      "headers": {
-        "content-type": "application/json"
-      }
-    }
-  }
-```
-
-## Endpoints
-
-### Configuration
-
-For single and **challenge-verify** mode, you will have to define how endpoints will be contacted. The configuration for an endpoint looks like this:
+For **single** and **challenge-verify** mode, you will have to define how endpoints will be contacted. The configuration for an endpoint looks like this:
 
 ```yaml
 url: 'https://api.smsapi.com/mfa/codes?language={{ language }}'
 method: 'POST'
 body: '{"phone":"{{ phone }}"}'
 headers:
-  authorization: 'Bearer: your-communcation-service-token'
+  authorization: 'Bearer: YOUR-COMMUNICATION-SERVER-API-KEY'
   'content-type': 'application/json'
 ```
 
-When you will trigger the endpoint, it will make the request according to your settings.
+### User data
 
-### Profile
+When activating MFA for a user account, variables provided in the request body at [activation](/reference/#activate-mfa) will be saved in the user's account. They look like this:  
 
-When activating MFA for a user account, variables provided in the request body at [activation](/reference/#activate-mfa) will be saved in the user's account. These variables will be substituted in the `url`, `body` and `headers` fields as described below.
-
-Example MFA profile:
-
-```yaml
-language: 'en'
-phone: '41791231212'
+```json
+{
+  "language": "en",
+  "phone": "41791231212"
+}
 ```
 
 ### Parameters
@@ -107,24 +78,72 @@ You can provide the URL, with the query parameters here as a string. Variables a
 
 #### method
 
-Currently supports HTTP POST and GET methods
+The HTTP method, currently supports HTTP `POST` and `GET` methods.
 
 #### body
 
-The request body that will be sent as a string. Variables are substituted in the string.
+The request body that will be sent, provided as a string. Variables are substituted in the string.
 
 #### headers
 
-The request headers that will be sent in the HTTP request. Variables are substituted in the values of these headers are substituted.  
+The request headers that will be sent in the HTTP request. Variables are substituted in the values of these headers.  
 As the request body is a string, you will have to provide the corresponding `content-type` header.
 
-## Examples
+## Single
 
-### SMS API
+For **single** mode, you can provide a `{{ code }}` variable which will be substituted with a code generated by the Pryv.io MFA service.  
+The example hereafter, stores the message in the user-specific data, where `{{ code }}` substitution also works.
 
-Reference: [https://www.smsapi.com/docs/#15-sms-authenticator](https://www.smsapi.com/docs/#15-sms-authenticator)
+### Template
 
-#### Config
+The configuration for single looks like this in the platform.yml file:  
+
+```yaml
+mode: 'single'
+endpoints:
+  single:
+    url: 'https://api.smsmode.com/http/1.6/sendSMS.do?accessToken=your-api-key&message={{ message }}&emetteur=Pryv%20Lab&numero={{ number }}'
+    method: 'GET'
+```
+
+or in the admin panel:
+
+```json
+{
+  "mode": "single",
+  "endpoints": {
+    "single": {
+      "url": "https://api.smsmode.com/http/1.6/sendSMS.do?accessToken=your-api-key&message={{ message }}&emetteur=Pryv%20Lab&numero={{ number }}",
+      "method": "GET"
+    }
+  }
+}
+```
+
+### User data
+
+with the following user data sent for activation:
+
+```json
+{
+  "number":"41791231212",
+  "message":"Your Pryv Lab MFA code is: {{ code }}"
+}
+```
+
+and verification:
+
+```json
+{
+  "code": "12345"
+}
+```
+
+## Challenge-Verify
+
+### Template
+
+The template looks like this in the `platform.yml` file:  
 
 ```yaml
 mode: 'challenge-verify'
@@ -145,31 +164,55 @@ endpoints:
       'content-type': 'application/json'
 ```
 
-#### Profile
+or in the admin panel:
 
-```yaml
-number: '41791231212
+```json
+{
+  "mode": "challenge-verify",
+  "endpoints": {
+    "challenge": {
+      "url": "https://api.smsapi.com/mfa/codes",
+      "method": "POST",
+      "body": "{\"phone_number\":\"{{ number }}\"}",
+      "headers": {
+        "authorization": "Bearer: your-api-key",
+        "content-type": "application/json"
+      }
+    },
+    "verify": {
+      "url": "https://api.smsapi.com/mfa/codes/verifications",
+      "method": "POST",
+      "body": "{\"phone_number\":\"{{ number }}\"}",
+      "headers": {
+        "authorization": "Bearer: your-api-key",
+        "content-type": "application/json"
+      }
+    }
+  }
+}
 ```
 
-### SMS mode
+### User data
 
-Reference: [https://www.smsmode.com/api-sms/](https://www.smsmode.com/api-sms/)
+with the following user data sent for activation:
 
-SMS mode offers a single API route for sending SMS messages. We use the HTTP GET version to illustrate this method. We have chosen to store the whole message in the user profile
-
-#### Config
-
-```yaml
-mode: 'single'
-endpoints:
-  single:
-    url: 'https://api.smsmode.com/http/1.6/sendSMS.do?accessToken=your-api-key&message={{ message }}&emetteur=Pryv%20Lab&numero={{ number }}'
-    method: 'GET'
+```json
+{
+  "number":"41791231212"
+}
 ```
 
-#### Profile
+and verification:
 
-```yaml
-message: 'Your Pryv Lab MFA code is: {{ token }}'
-number: '41791231212'
+```json
+{
+  "code": "12345"
+}
 ```
+
+## References
+
+The aforementionned examples use working templates and user data for:
+
+- SMS API: [https://www.smsapi.com/docs/#15-sms-authenticator](https://www.smsapi.com/docs/#15-sms-authenticator)
+- SMS mode: [https://www.smsmode.com/api-sms/](https://www.smsmode.com/api-sms/)
