@@ -24,7 +24,7 @@ You will need to define a template for the API call(s) that will be made to your
 MFA must be activated per user account. You can implement this in your onboarding flow or at a later time.  
 After obtaining a `personal` token from an [auth.login](https://api.pryv.com/reference/#login-user) API call, you must call the [activate MFA](https://api.pryv.com/reference/#activate-mfa) API method, providing the user's MFA data. This will trigger the challenge sent to the user.
 
-You should use the [Confirm MFA activation](/reference/#confirm-mfa-activation) to send the obtained challenge in the payload it expects. If confirmation is successful, the MFA data provided at activation is saved in the user's `.mfa` stream.
+You should use the [Confirm MFA activation](/reference/#confirm-mfa-activation) to send the obtained challenge in the payload it expects. If confirmation is successful, the MFA data provided at activation is saved in the user's `.mfa` stream, alongside `recoveryCodes` which you receive for [later deactivation](#deactivation-and-recovery).
 
 ### Usage
 
