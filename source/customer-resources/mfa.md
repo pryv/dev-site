@@ -21,7 +21,8 @@ You will need to define a template for the API call(s) that will be made to your
 
 ### Setup
 
-MFA must be activated per user account. You can implement this in your onboarding flow or at a later time. After obtaining a `personal` token from an [auth.login](https://api.pryv.com/reference/#login-user) API call, you must call the [activate MFA](https://api.pryv.com/reference/#activate-mfa) API method, providing the user's MFA data. This will trigger the challenge sent to the user.
+MFA must be activated per user account. You can implement this in your onboarding flow or at a later time.  
+After obtaining a `personal` token from an [auth.login](https://api.pryv.com/reference/#login-user) API call, you must call the [activate MFA](https://api.pryv.com/reference/#activate-mfa) API method, providing the user's MFA data. This will trigger the challenge sent to the user.
 
 You should use the [Confirm MFA activation](/reference/#confirm-mfa-activation) to send the obtained challenge in the payload it expects. If confirmation is successful, the MFA data provided at activation is saved in the user's `.mfa` stream.
 
@@ -96,7 +97,7 @@ The example hereafter, stores the message in the user-specific data, where `{{ c
 
 ### Single template
 
-The configuration for single looks like this in the platform.yml file:  
+The configuration for single mode describes the HTTP request made by the Pryv.io MFA service during [activation](/reference/#activate-mfa) and [challenge](/reference/#trigger-mfa-challenge). It looks like this in the platform.yml file:  
 
 ```yaml
 mode: 'single'
@@ -122,7 +123,7 @@ or in the admin panel:
 
 ### Single user data
 
-with the following user data sent for activation:
+with the following user data sent during [activation](/reference/#activate-mfa):
 
 ```json
 {
@@ -131,7 +132,7 @@ with the following user data sent for activation:
 }
 ```
 
-and verification:
+and [confirmation](/reference/#confirm-mfa-activation) / [verification](/reference/#verify-mfa-challenge):
 
 ```json
 {
@@ -142,6 +143,8 @@ and verification:
 ## Challenge-Verify
 
 ### Challenge-Verify template
+
+The configuration for challenge-verify mode describes the HTTP requests made by the Pryv.io MFA service during [activation](/reference/#activate-mfa) and [challenge](/reference/#trigger-mfa-challenge) under `challenge` and [confirmation](/reference/#confirm-mfa-activation) and [verification](/reference/#verify-mfa-challenge) under `verify`. It looks like this in the platform.yml file:  
 
 The template looks like this in the `platform.yml` file:  
 
@@ -194,7 +197,7 @@ or in the admin panel:
 
 ### Challenge-Verify user data
 
-with the following user data sent for activation:
+with the following user data sent during [activation](/reference/#activate-mfa):
 
 ```json
 {
@@ -202,7 +205,7 @@ with the following user data sent for activation:
 }
 ```
 
-and verification:
+and [confirmation](/reference/#confirm-mfa-activation) / [verification](/reference/#verify-mfa-challenge):
 
 ```json
 {
