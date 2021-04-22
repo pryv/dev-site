@@ -191,7 +191,7 @@ To erase all data on the platform, you need to delete the contents of the data f
 
 On the register master:
 
-```
+```bash
 cd ${PRYV_CONF_ROOT}
 ./stop-config-leader
 ./stop-pryv
@@ -203,7 +203,7 @@ rm -rf config-leader/database/*
 
 On core:
 
-```
+```bash
 cd ${PRYV_CONF_ROOT}
 ./stop-pryv
 rm -rf pryv/core/data/*
