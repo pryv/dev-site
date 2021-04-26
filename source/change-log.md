@@ -4,6 +4,12 @@ title: API change log
 template: default.jade
 ---
 
+## 1.6.20
+
+New routes:
+
+- [Deactivate MFA](/reference-admin/#deactivate-mfa-for-user) for admin API, for when the user has lost his 2nd factor.
+
 ## 1.6.19
 
 New routes:

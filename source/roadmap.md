@@ -13,6 +13,15 @@ withTOC: true
 
 # Released
 
+## 26.04.2021 - new MFA release with Pryv.io 1.6.20
+
+New MFA release:
+
+- New [MFA configuration guide](/customer-resources/mfa/)
+- Support for simple communication services: [single mode](/customer-resources/mfa/#modes)
+- Expand current implementation to template what is sent to the communcation service and store only user values in profiles.
+- Deactivate MFA through the Admin panel & API. See [change log](/change-log/).
+
 ## 11.01.2021 - Complete admin and system API
 
 [Admin](/reference-admin/) and [system](/reference-system/) API references are now complete and available through [Open API definitions](/open-api/#definition-file).
