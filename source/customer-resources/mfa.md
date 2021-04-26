@@ -100,23 +100,18 @@ The example hereafter, stores the message in the user-specific data, where `{{ c
 The configuration for single mode describes the HTTP request made by the Pryv.io MFA service during [activation](/reference/#activate-mfa) and [challenge](/reference/#trigger-mfa-challenge). It looks like this in the platform.yml file:  
 
 ```yaml
-mode: 'single'
-endpoints:
-  single:
-    url: 'https://api.smsmode.com/http/1.6/sendSMS.do?accessToken=your-api-key&message={{ message }}&emetteur=Pryv%20Lab&numero={{ number }}'
-    method: 'GET'
+single:
+  url: 'https://api.smsmode.com/http/1.6/sendSMS.do?accessToken=your-api-key&message={{ message }}&emetteur=Pryv%20Lab&numero={{ number }}'
+  method: 'GET'
 ```
 
 or in the admin panel:
 
 ```json
 {
-  "mode": "single",
-  "endpoints": {
-    "single": {
-      "url": "https://api.smsmode.com/http/1.6/sendSMS.do?accessToken=your-api-key&message={{ message }}&emetteur=Pryv%20Lab&numero={{ number }}",
-      "method": "GET"
-    }
+  "single": {
+    "url": "https://api.smsmode.com/http/1.6/sendSMS.do?accessToken=your-api-key&message={{ message }}&emetteur=Pryv%20Lab&numero={{ number }}",
+    "method": "GET"
   }
 }
 ```
@@ -149,47 +144,42 @@ The configuration for challenge-verify mode describes the HTTP requests made by 
 The template looks like this in the `platform.yml` file:  
 
 ```yaml
-mode: 'challenge-verify'
-endpoints:
-  challenge:
-    url: 'https://api.smsapi.com/mfa/codes'
-    method: 'POST'
-    body: '{"phone_number":"{{ number }}"}'
-    headers:
-      authorization: 'Bearer: your-api-key'
-      'content-type': 'application/json'
-  verify:
-    url: 'https://api.smsapi.com/mfa/codes/verifications'
-    method: 'POST'
-    body: '{"phone_number":"{{ number }}","code":"{{ code }}"}'
-    headers:
-      authorization: 'Bearer: your-api-key'
-      'content-type': 'application/json'
+challenge:
+  url: 'https://api.smsapi.com/mfa/codes'
+  method: 'POST'
+  body: '{"phone_number":"{{ number }}"}'
+  headers:
+    authorization: 'Bearer: your-api-key'
+    'content-type': 'application/json'
+verify:
+  url: 'https://api.smsapi.com/mfa/codes/verifications'
+  method: 'POST'
+  body: '{"phone_number":"{{ number }}","code":"{{ code }}"}'
+  headers:
+    authorization: 'Bearer: your-api-key'
+    'content-type': 'application/json'
 ```
 
 or in the admin panel:
 
 ```json
 {
-  "mode": "challenge-verify",
-  "endpoints": {
-    "challenge": {
-      "url": "https://api.smsapi.com/mfa/codes",
-      "method": "POST",
-      "body": "{\"phone_number\":\"{{ number }}\"}",
-      "headers": {
-        "authorization": "Bearer: your-api-key",
-        "content-type": "application/json"
-      }
-    },
-    "verify": {
-      "url": "https://api.smsapi.com/mfa/codes/verifications",
-      "method": "POST",
-      "body": "{\"phone_number\":\"{{ number }}\",\"code\":\"{{ code }}\"}",
-      "headers": {
-        "authorization": "Bearer: your-api-key",
-        "content-type": "application/json"
-      }
+  "challenge": {
+    "url": "https://api.smsapi.com/mfa/codes",
+    "method": "POST",
+    "body": "{\"phone_number\":\"{{ number }}\"}",
+    "headers": {
+      "authorization": "Bearer: your-api-key",
+      "content-type": "application/json"
+    }
+  },
+  "verify": {
+    "url": "https://api.smsapi.com/mfa/codes/verifications",
+    "method": "POST",
+    "body": "{\"phone_number\":\"{{ number }}\",\"code\":\"{{ code }}\"}",
+    "headers": {
+      "authorization": "Bearer: your-api-key",
+      "content-type": "application/json"
     }
   }
 }
