@@ -611,6 +611,36 @@ module.exports = exports =
           result:
             username: 'dutch'
         ]
+
+      ,
+
+        id: "platformUsers.deactivateMFA"
+        type: "method"
+        title: "Deactivate MFA for user"
+        http: "DELETE /platform-users/{username}/mfa"
+        httpOnly: true
+        server: "admin"
+        description: """
+                    Deactivate MFA for a user account from the Pryv.io platform.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                         The username of the platform user for whom to deactivate MFA.
+                         """
+          ]
+        result: 
+          http: "204 No Content"
+        examples: [
+          title: "Deactivating MFA for a platform user"
+          params:
+            username: 'palmer'
+          result: {}
+        ]
       ]
     ]
   ,
