@@ -17,18 +17,18 @@ Depending on your communication service capabilities, you will either use the **
 
 ## Flow
 
-You will need to define a template for the API call(s) that will be made to your communication service. The user-specific values that will be substituted in the template will be stored in the user's `.mfa` [system stream](/customer-resources/system-streams/#system-streams).
+You will need to define a template for the API call(s) that will be made to your communication service. The user-specific values that will be substituted in the template will be stored in the user's [private profile](/reference/#get-private-profile).
 
 ### Setup
 
 MFA must be activated per user account. You can implement this in your onboarding flow or at a later time.  
 After obtaining a `personal` token from an [auth.login](/reference/#login-user) API call, you must call the [activate MFA](/reference/#activate-mfa) API method, providing the user's MFA data. This will trigger the challenge sent to the user.
 
-You should [confirm MFA activation](/reference/#confirm-mfa-activation) by sending the obtained challenge in the payload the way it expects it. If confirmation is successful, the MFA data provided at activation is saved in the user's `.mfa` stream, alongside `recoveryCodes` which you receive for [later deactivation](#deactivation-and-recovery).
+You should [confirm MFA activation](/reference/#confirm-mfa-activation) by sending the obtained challenge in the payload which will be substituted in the related template. If confirmation is successful, the MFA data provided at activation is saved in the user's [private profile](/reference/#get-private-profile), alongside `recoveryCodes` which you receive for [later deactivation](#deactivation-and-recovery).
 
 ### Usage
 
-Once MFA has been activated for an account, you will receive a `mfaToken` each time you perform a [Login user](/reference/#login-with-mfa) API call. You will use it to [Trigger the MFA challenge](/reference/#trigger-mfa-challenge) where data saved in the `.mfa` stream will be sent to your communication service.  
+Once MFA has been activated for an account, you will receive a `mfaToken` each time you perform a [Login user](/reference/#login-with-mfa) API call. You will use it to [Trigger the MFA challenge](/reference/#trigger-mfa-challenge) where data saved in the [private profile](/reference/#get-private-profile) will be sent to your communication service.  
 You will send the received challenge the same way you did for confirmation, but this time using the [verify MFA challenge](/reference/#verify-mfa-challenge) route.  
 
 ### Deactivation and recovery
