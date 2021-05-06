@@ -1,0 +1,692 @@
+{
+  "id": "system",
+  "title": "System-level API",
+  "sections": [
+    {
+      "id": "basics",
+      "title": "Basics",
+      "description": "This document describes Pryv.io's **system-level** API, allowing developers to create and manage user accounts.",
+      "sections": [
+        {
+          "id": "services-involved",
+          "title": "Services involved",
+          "description": "Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).\n\n- The **core servers** own the account management processes, i.e. data creation and deletion\n- The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers."
+        },
+        {
+          "id": "account-creation",
+          "title": "Account creation",
+          "description": " The steps for creating a new Pryv.io account are the following:\n\n 1. The client calls the register server to get a list of available hostings (core server locations), see [Get Hostings](/reference-system/#get-hostings).\n 2. The client calls the URL under \"availableCore\" for the hosting it chose with the desired new account data, see [Create user](#create-user).\n 3. Data is verified.\n 4. If validation passes, the user is saved and an authenticated apiEndpoint is returned to the caller. See [app guidelines](/guides/app-guidelines/).\n\n**(DEPRECATED)** Please use the new account creation flow described above.\n\n 1. Client calls the register server to get a list of available hostings (core server locations), see [Get Hostings](#get-hostings).\n 2. Client calls register server with desired new account data (including which core server should host the account), see [Create user](#create-user).\n 3. register server verifies data, hands it over to specified core server if OK\n 4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to register server\n 5. register server updates directory if OK, returns status to client"
+        }
+      ]
+    },
+    {
+      "id": "api-methods",
+      "title": "API methods",
+      "description": "The methods are called via HTTPS on the register server: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.",
+      "sections": [
+        {
+          "id": "admin",
+          "title": "Admin",
+          "adminOnly": true,
+          "description": "Methods for platform administration.\n\nThese calls are limited to accredited persons and are flagged as `Admin only`.\n\nAdmin api calls are tagged with <span class=\"admin-tag\"><span title=\"Admin Only\" class=\"label\">A</span></span>\n\nThey must carry the admin key in the HTTP `Authorization` header.  \nThis key is defined within the platform configuration: `REGISTER_ADMIN_KEY`.",
+          "sections": [
+            {
+              "id": "users.get",
+              "type": "method",
+              "title": "Get users",
+              "http": "GET /admin/users",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Get the list of all users registered on the platform.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "toHTML",
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "If `true`, format the resulting users list as HTML tables."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "users",
+                    "type": "array",
+                    "description": "Array of user data."
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Fetching the users list for a Pryv.io platform",
+                  "params": {},
+                  "result": {
+                    "users": [
+                      {
+                        "username": "user1",
+                        "email": "red.miller@mail.ch",
+                        "language": "en",
+                        "invitationToken": "enjoy",
+                        "referer": "null",
+                        "id": "ckkfjh6m9001aj7tjtg5wy42i",
+                        "registeredTimestamp": "1557743399558",
+                        "server": "core1.pryv.me",
+                        "registeredDate": "Mon, 13 May 2019 10:29:59 GMT"
+                      },
+                      {
+                        "username": "user2",
+                        "email": "user2@gmail.com",
+                        "language": "fr",
+                        "invitationToken": "enjoy",
+                        "referer": "null",
+                        "id": "ckkfjh6m9001bj7tjs31ot044",
+                        "registeredTimestamp": "1536930239805",
+                        "server": "core2.pryv.me",
+                        "registeredDate": "Fri, 14 Sep 2018 13:03:59 GMT"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "servers.get",
+              "type": "method",
+              "title": "Get core servers",
+              "http": "GET /admin/servers",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Get the list of all core servers with the number of users on them.",
+              "params": {
+                "properties": []
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "servers",
+                    "type": "object",
+                    "description": "Object mapping each available core server to its user count."
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Fetching the core servers list for a Pryv.io platform",
+                  "params": {},
+                  "result": {
+                    "servers": {
+                      "core1.pryv.me": 1337,
+                      "core2.pryv.me": 42
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "servers.users.get",
+              "type": "method",
+              "title": "Get users on core server",
+              "http": "GET /admin/servers/{serverName}/users",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Get the list of all users registered on a specific core server.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "serverName",
+                    "type": "string",
+                    "http": {
+                      "text": "set in request path"
+                    },
+                    "description": "The name of the core server."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "users",
+                    "type": "array",
+                    "description": "Array of user data."
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Fetching the users list for a specifc core server.",
+                  "params": {
+                    "serverName": "core1.pryv.me"
+                  },
+                  "result": {
+                    "users": [
+                      {
+                        "username": "user1",
+                        "email": "red.miller@mail.ch",
+                        "language": "en",
+                        "invitationToken": "enjoy",
+                        "referer": "null",
+                        "id": "ckkfjh6m9001aj7tjtg5wy42i",
+                        "registeredTimestamp": "1557743399558",
+                        "server": "core1.pryv.me",
+                        "registeredDate": "Mon, 13 May 2019 10:29:59 GMT"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "servers.rename",
+              "type": "method",
+              "title": "Rename core server",
+              "http": "GET /admin/servers/{srcServerName}/rename/{dstServerName}",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Rename a core server, thus reassigning the users from srcServer to dstServer.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "srcServerName",
+                    "type": "string",
+                    "http": {
+                      "text": "set in request path"
+                    },
+                    "description": "The current name of the core server to rename."
+                  },
+                  {
+                    "key": "dstServerName",
+                    "type": "string",
+                    "http": {
+                      "text": "set in request path"
+                    },
+                    "description": "The new name of the core server."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "count",
+                    "type": "number",
+                    "description": "The count of reassigned users.\nIt can be 0 if `srcServerName` did not match any existing core server."
+                  }
+                ]
+              },
+              "errors": [
+                {
+                  "key": "INVALID_DATA",
+                  "http": "400",
+                  "description": "The server name (source or destination) is invalid because of an unrecognized format."
+                }
+              ],
+              "examples": [
+                {
+                  "title": "Renaming a core server.",
+                  "params": {
+                    "srcServerName": "core1.pryv.me",
+                    "dstServerName": "core2.pryv.me"
+                  },
+                  "result": {
+                    "count": 1
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "service",
+          "title": "Service",
+          "description": "Methods for collecting service information such as details about the platform and the API, connected apps or hostings (core server locations).",
+          "sections": [
+            {
+              "id": "hostings.get",
+              "type": "method",
+              "title": "Get hostings",
+              "http": "GET /hostings",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Get the list of all available hostings for data storage locations.",
+              "params": {
+                "properties": []
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "regions",
+                    "type": "Object",
+                    "description": "Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  \nThe value you need to use as `hosting` parameter in the `users.create` method is a key of the `hostings` object."
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Fetching the hostings for a Pryv.io platform",
+                  "params": {},
+                  "result": {
+                    "regions": {
+                      "europe": {
+                        "name": "Europe",
+                        "localizedName": {
+                          "fr": "Europe"
+                        },
+                        "zones": {
+                          "switzerland": {
+                            "name": "Switzerland",
+                            "localizedName": {
+                              "fr": "Suisse"
+                            },
+                            "hostings": {
+                              "core1": {
+                                "url": "https://my-hosting-provider.ch",
+                                "name": "Pilot core server",
+                                "description": "The single PoC core server",
+                                "available": true,
+                                "availableCore": "https://my-core.ch"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "apps.get",
+              "type": "method",
+              "title": "Get apps",
+              "http": "GET /apps",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Retrieve the list of applications connected to the platform.",
+              "params": {
+                "properties": []
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "apps",
+                    "type": "array",
+                    "description": "An array listing all the applications connected to the Pryv.io platform."
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Retrieving the list of applications connected to the platform.",
+                  "params": {},
+                  "result": {
+                    "apps": [
+                      {
+                        "id": "pryv-csv-importer",
+                        "displayName": "CSV Importer",
+                        "description": "Import existing data from CSV files",
+                        "iconURL": "https://pryv.github.io/static-web/apps/pryv-csv-importer/icon512.png",
+                        "appURL": "http://pryv.github.io/dev-tools/csv-importer",
+                        "active": false,
+                        "onboarding": false,
+                        "category": "Other",
+                        "support": [
+                          "iPad",
+                          "iPhone",
+                          "Web"
+                        ],
+                        "settingsPageURL": "http://pryv.github.io/dev-tools/csv-importer"
+                      },
+                      {
+                        "id": "ifttt-all",
+                        "displayName": "IFTTT",
+                        "description": "Connect Pryv to over 100 other products and services with Pryv Recipes on IFTTT",
+                        "iconURL": "https://pryv.github.io/static-web/apps/ifttt-all/icon512.png",
+                        "appURL": "https://ifttt.com/pryv",
+                        "active": false,
+                        "onboarding": false,
+                        "category": "Other",
+                        "support": [
+                          "iPad",
+                          "iPhone",
+                          "Web"
+                        ],
+                        "settingsPageURL": "https://ifttt.com/pryv"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "apps.getOne",
+              "type": "method",
+              "title": "Get app",
+              "http": "GET /apps/{appid}",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Retrieve information about a given application.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "appid",
+                    "type": "string",
+                    "http": {
+                      "text": "set in request path"
+                    },
+                    "description": "The id of the application to look for."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "app",
+                    "type": "object",
+                    "description": "An object listing information about the given application."
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Retrieving information about a given application.",
+                  "params": {},
+                  "result": {
+                    "app": {
+                      "id": "pryv-csv-importer",
+                      "displayName": "CSV Importer",
+                      "description": "Import existing data from CSV files",
+                      "iconURL": "https://pryv.github.io/static-web/apps/pryv-csv-importer/icon512.png",
+                      "appURL": "http://pryv.github.io/dev-tools/csv-importer",
+                      "active": false,
+                      "onboarding": false,
+                      "category": "Other",
+                      "support": [
+                        "iPad",
+                        "iPhone",
+                        "Web"
+                      ],
+                      "settingsPageURL": "http://pryv.github.io/dev-tools/csv-importer"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "users",
+          "title": "Users",
+          "description": "Methods for managing users.",
+          "sections": [
+            {
+              "id": "users.create",
+              "type": "method",
+              "title": "Create user",
+              "http": "POST /user",
+              "httpOnly": true,
+              "server": "register",
+              "description": "**(DEPRECATED)** Please use the [new create user method](/reference/#create-user).  \n\nCreates a new user account on the specified core server.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "appid",
+                    "type": "string",
+                    "description": "Your app's unique identifier."
+                  },
+                  {
+                    "key": "hosting",
+                    "type": "string",
+                    "description": "The name of the core server that should host the account, see [Get Hostings](#get-hostings)."
+                  },
+                  {
+                    "key": "username",
+                    "type": "string",
+                    "description": "The user's username."
+                  },
+                  {
+                    "key": "password",
+                    "type": "string",
+                    "description": "The user's password."
+                  },
+                  {
+                    "key": "email",
+                    "type": "string",
+                    "description": "The user's e-mail address, used for password retrieval."
+                  },
+                  {
+                    "key": "invitationtoken",
+                    "type": "string",
+                    "optional": true,
+                    "description": "An invitation token, necessary when users registration is limited to a specific set of users.\nPlatform administrators may limit users registration by configuring a list of authorized invitation tokens.\nIf this is not the case, users registration is open to everyone and this parameter can be omitted.\n\n<span class=\"entreprise-tag\"><span title=\"Entreprise License Only\" class=\"label\">Y</span></span>Available in entreprise only."
+                  },
+                  {
+                    "key": "languageCode",
+                    "type": "string",
+                    "optional": true,
+                    "description": "The user's preferred language as a 2-letter ISO language code."
+                  },
+                  {
+                    "key": "referer",
+                    "type": "string",
+                    "optional": true,
+                    "description": "A referer id potentially used for analytics."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "username",
+                    "type": "string",
+                    "description": "A confirmation of the user's username."
+                  },
+                  {
+                    "key": "server",
+                    "type": "string",
+                    "description": "**(DEPRECATED)** Please use the `apiEndpoint` parameter.\n\nThe server where this account is hosted.\nThe result will be invalid for DNS-less setups."
+                  },
+                  {
+                    "key": "apiEndpoint",
+                    "type": "string",
+                    "description": "The apiEndpoint to reach this account. Does not include an access token."
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Creating a user",
+                  "params": {
+                    "appid": "default",
+                    "hosting": "core1",
+                    "username": "user-123-abc",
+                    "password": "ChjUzDXwaTG2qdV",
+                    "email": "joseph-brenner@pryv.me",
+                    "invitationtoken": "o3in4o2",
+                    "languageCode": "en",
+                    "referer": "hospital-A"
+                  },
+                  "result": {
+                    "username": "user-123-abc",
+                    "server": "user-123-abc.pryv.me",
+                    "apiEndpoint": "https://{personal-token}@user-123-abc.pryv.me/"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "username.check",
+              "type": "method",
+              "title": "Check username",
+              "http": "GET /{username}/check_username",
+              "httpOnly": true,
+              "server": "register",
+              "description": "For the single node mode please use [this](/reference/#check-username) API endpoint.\n\nCheck the availability and validity of a given username.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "username",
+                    "type": "string",
+                    "http": {
+                      "text": "set in request path"
+                    },
+                    "description": "The username to check."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "reserved",
+                    "type": "boolean",
+                    "description": "Set to `true` if the given username is already taken, `false` otherwise."
+                  },
+                  {
+                    "key": "reason",
+                    "type": "string",
+                    "optional": true,
+                    "description": "Optional indication of the reason why the username is reserved.\nIf it mentions `RESERVED_USER_NAME`, this means that the given username is part of\nthe reserved usernames list configured within the register service."
+                  }
+                ]
+              },
+              "errors": [
+                {
+                  "key": "INVALID_USERNAME",
+                  "http": "400",
+                  "description": "The given username is invalid because of an unrecognized format."
+                }
+              ],
+              "examples": [
+                {
+                  "title": "Checking availability and validity of a given username",
+                  "params": {
+                    "username": "user-123-abc"
+                  },
+                  "result": {
+                    "reserved": false
+                  }
+                },
+                {
+                  "title": "Special case where the username is part of the reserved list.",
+                  "params": {
+                    "username": "pryvpryv"
+                  },
+                  "result": {
+                    "reserved": true,
+                    "reason": "RESERVED_USER_NAME"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "emails.check",
+              "type": "method",
+              "title": "Check email existence",
+              "http": "GET /{email}/check_email",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Check the existence of an account's email.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "email",
+                    "type": "string",
+                    "http": {
+                      "text": "set in request path"
+                    },
+                    "description": "The email address to check."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "exists",
+                    "type": "boolean",
+                    "description": "Set to `true` if the email address is already registered, `false` otherwise."
+                  }
+                ]
+              },
+              "errors": [
+                {
+                  "key": "INVALID_EMAIL",
+                  "http": "400",
+                  "description": "The email address is invalid because of an unrecognized format."
+                }
+              ],
+              "examples": [
+                {
+                  "title": "Checking the existence of an account's email address.",
+                  "params": {
+                    "email": "joseph-brenner@pryv.me"
+                  },
+                  "result": {
+                    "exists": false
+                  }
+                }
+              ]
+            },
+            {
+              "id": "email.username.get",
+              "type": "method",
+              "title": "Get username from email",
+              "http": "GET /{email}/username",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Get the username of a Pryv.io account according to the given email.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "email",
+                    "type": "string",
+                    "http": {
+                      "text": "set in request path"
+                    },
+                    "description": "The email address to look for."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "username",
+                    "type": "string",
+                    "description": "The username linked to the given email."
+                  }
+                ]
+              },
+              "errors": [
+                {
+                  "key": "UNKNOWN_EMAIL",
+                  "http": "404",
+                  "description": "The given email address is unknown (unregistered)."
+                }
+              ],
+              "examples": [
+                {
+                  "title": "Retrieving a username from a given email.",
+                  "params": {
+                    "email": "joseph-brenner@pryv.me"
+                  },
+                  "result": {
+                    "username": "user-123-abc"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

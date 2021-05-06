@@ -16,9 +16,14 @@
           "description": "The identifier ([collision-resistant cuid](https://usecuid.org/)) for the event. Automatically generated if not set when creating the event."
         },
         {
+          "key": "streamIds",
+          "type": "array of [identifier](#data-structure-identifier)",
+          "description": "The ids of the belonging streams."
+        },
+        {
           "key": "streamId",
           "type": "[identifier](#data-structure-identifier)",
-          "description": "The id of the belonging stream."
+          "description": "**(DEPRECATED)** Please use streamIds instead.\n\nThe id of the first element of the streamIds array."
         },
         {
           "key": "time",
@@ -46,7 +51,7 @@
           "key": "tags",
           "type": "array of strings",
           "optional": "(always present in read items)",
-          "description": "The tags associated with the event."
+          "description": "**(DEPRECATED)** Please use streamIds instead.\n\nThe tags associated with the event."
         },
         {
           "key": "description",
@@ -129,47 +134,56 @@
         {
           "title": "A picture",
           "content": {
-            "id": "ck862wm210010chpvidnw51su",
-            "time": 1585061618.473,
+            "id": "ckkfjh6m7000zj7tjdclm62od",
+            "time": 1611755035.712,
+            "streamIds": [
+              "diary"
+            ],
             "streamId": "diary",
             "tags": [],
             "type": "picture/attached",
             "content": null,
             "attachments": [
               {
-                "id": "ck862wm210011chpv91h1pz5d",
+                "id": "ckkfjh6m80010j7tj9gfp7g42",
                 "fileName": "photo.jpg",
                 "type": "image/jpeg",
                 "size": 2561,
-                "readToken": "ck862wm210012chpv2p2hx14n-I6V75lUFPNyRPzSFPnmoTqIPany"
+                "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA"
               }
             ],
-            "created": 1585061618.473,
-            "createdBy": "ck862wm1i0004chpvcorv9zs1",
-            "modified": 1585061618.473,
-            "modifiedBy": "ck862wm1i0004chpvcorv9zs1"
+            "created": 1611755035.712,
+            "createdBy": "ckkfjh6lj0004j7tjfmclu8zd",
+            "modified": 1611755035.712,
+            "modifiedBy": "ckkfjh6lj0004j7tjfmclu8zd"
           }
         },
         {
           "title": "An activity",
           "content": {
-            "id": "ck862wm21000nchpv3208clny",
-            "time": 1585065218.473,
+            "id": "ckkfjh6m7000oj7tjrzwhazuw",
+            "time": 1611758635.711,
+            "streamIds": [
+              "jogging"
+            ],
             "streamId": "jogging",
             "tags": [],
-            "type": "activity/pryv",
+            "type": "activity/plain",
             "content": null,
-            "created": 1585065218.473,
-            "createdBy": "ck862wm1i0001chpveac1g3je",
-            "modified": 1585065218.473,
-            "modifiedBy": "ck862wm1i0001chpveac1g3je"
+            "created": 1611758635.711,
+            "createdBy": "ckkfjh6li0001j7tjiy7oo6gc",
+            "modified": 1611758635.711,
+            "modifiedBy": "ckkfjh6li0001j7tjiy7oo6gc"
           }
         },
         {
           "title": "A position",
           "content": {
-            "id": "ck862wm210013chpvpj6f78m2",
+            "id": "ckkfjh6m80012j7tj7d39fd57",
             "time": 1350373077.359,
+            "streamIds": [
+              "diary"
+            ],
             "streamId": "diary",
             "tags": [],
             "type": "position/wgs84",
@@ -177,10 +191,10 @@
               "latitude": 40.714728,
               "longitude": -73.998672
             },
-            "created": 1585058018.473,
-            "createdBy": "ck862wm1h0000chpvf344943e",
-            "modified": 1585058018.473,
-            "modifiedBy": "ck862wm1h0000chpvf344943e"
+            "created": 1611751435.712,
+            "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+            "modified": 1611751435.712,
+            "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
           }
         }
       ]
@@ -208,12 +222,6 @@
           "type": "[identifier](#data-structure-identifier)",
           "optional": true,
           "description": "The identifier of the stream's parent, if any. A value of `null` indicates that the stream has no parent (i.e. root stream)."
-        },
-        {
-          "key": "singleActivity",
-          "type": "boolean",
-          "optional": true,
-          "description": "(**DEPRECATED**)  \nIf specified and `true`, the system will ensure that period events in this stream and its children never overlap."
         },
         {
           "key": "clientData",
@@ -272,110 +280,109 @@
                   "name": "Jogging",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1521951338.493939,
-                  "createdBy": "ck862wm1h0000chpvf344943e",
-                  "modified": 1521951562.3126118,
-                  "modifiedBy": "ck862wm1h0000chpvf344943e"
+                  "created": 1548644737.0646477,
+                  "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                  "modified": 1548644853.644764,
+                  "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                 },
                 {
                   "id": "bicycling",
                   "name": "Bicycling",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1521951338.493939,
-                  "createdBy": "ck862wm1h0000chpvf344943e",
-                  "modified": 1521951402.5261326,
-                  "modifiedBy": "ck862wm1h0000chpvf344943e"
+                  "created": 1548644737.0646477,
+                  "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                  "modified": 1548645019.8569207,
+                  "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                 }
               ],
-              "created": 1521951314.472,
-              "createdBy": "ck862wm1h0000chpvf344943e",
-              "modified": 1521951570.1331768,
-              "modifiedBy": "ck862wm1h0000chpvf344943e"
+              "created": 1548644731.711,
+              "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+              "modified": 1548644881.517619,
+              "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
             },
             {
               "id": "work",
               "name": "Work",
               "parentId": null,
-              "singleActivity": true,
               "children": [
                 {
-                  "id": "ck862wm20000cchpvkt6qzgos",
+                  "id": "ckkfjh6m7000dj7tjt1u570x3",
                   "name": "Noble Works Co.",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "ck862wm20000echpv0tcqp3aq",
+                      "id": "ckkfjh6m7000fj7tjxvpz4o9k",
                       "name": "Last Be First",
-                      "parentId": "ck862wm20000cchpvkt6qzgos",
+                      "parentId": "ckkfjh6m7000dj7tjt1u570x3",
                       "children": [],
-                      "created": 1521951345.8076959,
-                      "createdBy": "ck862wm1h0000chpvf344943e",
-                      "modified": 1521951352.933682,
-                      "modifiedBy": "ck862wm1h0000chpvf344943e"
+                      "created": 1548644758.21363,
+                      "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                      "modified": 1548644936.3642137,
+                      "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                     },
                     {
-                      "id": "ck862wm20000fchpv5cm06yi4",
+                      "id": "ckkfjh6m7000gj7tjs7n5azm5",
                       "name": "Big Tree",
-                      "parentId": "ck862wm20000cchpvkt6qzgos",
+                      "parentId": "ckkfjh6m7000dj7tjt1u570x3",
                       "children": [],
-                      "created": 1521951345.8076959,
-                      "createdBy": "ck862wm1h0000chpvf344943e",
-                      "modified": 1521951676.491873,
-                      "modifiedBy": "ck862wm1h0000chpvf344943e"
+                      "created": 1548644758.21363,
+                      "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                      "modified": 1548645119.771725,
+                      "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                     },
                     {
-                      "id": "ck862wm20000gchpv67zyzhol",
+                      "id": "ckkfjh6m7000hj7tjhmxmkzvu",
                       "name": "Inner Light",
-                      "parentId": "ck862wm20000cchpvkt6qzgos",
+                      "parentId": "ckkfjh6m7000dj7tjt1u570x3",
                       "children": [],
-                      "created": 1521951345.8076959,
-                      "createdBy": "ck862wm1h0000chpvf344943e",
-                      "modified": 1521951485.1222064,
-                      "modifiedBy": "ck862wm1h0000chpvf344943e"
+                      "created": 1548644758.21363,
+                      "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                      "modified": 1548644791.1741793,
+                      "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                     }
                   ],
-                  "created": 1521951322.3053699,
-                  "createdBy": "ck862wm1h0000chpvf344943e",
-                  "modified": 1521951390.7363095,
-                  "modifiedBy": "ck862wm1h0000chpvf344943e"
+                  "created": 1548644740.6699636,
+                  "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                  "modified": 1548644902.3595006,
+                  "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                 },
                 {
-                  "id": "ck862wm20000dchpvzbs7gofn",
+                  "id": "ckkfjh6m7000ej7tjecqkh0en",
                   "name": "Freelancing",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "ck862wm20000hchpv70a5f2pk",
+                      "id": "ckkfjh6m7000ij7tj0ohlviit",
                       "name": "Funky Veggies",
-                      "parentId": "ck862wm20000dchpvzbs7gofn",
+                      "parentId": "ckkfjh6m7000ej7tjecqkh0en",
                       "children": [],
-                      "created": 1521951341.9263306,
-                      "createdBy": "ck862wm1h0000chpvf344943e",
-                      "modified": 1521951376.7401385,
-                      "modifiedBy": "ck862wm1h0000chpvf344943e"
+                      "created": 1548644746.2029932,
+                      "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                      "modified": 1548644978.0848715,
+                      "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                     },
                     {
-                      "id": "ck862wm20000ichpvu47il9ga",
+                      "id": "ckkfjh6m7000jj7tjlaso1h7h",
                       "name": "Jojo Lapin & sons",
-                      "parentId": "ck862wm20000dchpvzbs7gofn",
+                      "parentId": "ckkfjh6m7000ej7tjecqkh0en",
                       "children": [],
-                      "created": 1521951341.9263306,
-                      "createdBy": "ck862wm1h0000chpvf344943e",
-                      "modified": 1521951567.6058087,
-                      "modifiedBy": "ck862wm1h0000chpvf344943e"
+                      "created": 1548644746.2029932,
+                      "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                      "modified": 1548645040.285391,
+                      "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                     }
                   ],
-                  "created": 1521951322.3053699,
-                  "createdBy": "ck862wm1h0000chpvf344943e",
-                  "modified": 1521951436.9561229,
-                  "modifiedBy": "ck862wm1h0000chpvf344943e"
+                  "created": 1548644740.6699636,
+                  "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+                  "modified": 1548645067.42553,
+                  "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
                 }
               ],
-              "created": 1521951314.472,
-              "createdBy": "ck862wm1h0000chpvf344943e",
-              "modified": 1521951439.6733043,
-              "modifiedBy": "ck862wm1h0000chpvf344943e"
+              "created": 1548644731.711,
+              "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+              "modified": 1548645084.5333047,
+              "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
             }
           ]
         }
@@ -411,18 +418,21 @@
           "key": "name",
           "type": "string",
           "unique": "per type and device",
+          "readOnly": "(except at creation)",
           "description": "The name identifying the access for the user. (For personal and app access, the name is used as a technical identifier and not shown as-is to the user.)"
         },
         {
           "key": "deviceName",
           "type": "string",
           "optional": true,
+          "readOnly": "(except at creation)",
           "unique": "per type and name",
           "description": "For app accesses only. The name of the client device running the app, if applicable."
         },
         {
           "key": "permissions",
           "type": "array of permission objects",
+          "readOnly": "(except at creation)",
           "description": "Ignored for personal accesses. If permission levels conflict (e.g. stream set to \"manage\" and child stream set to \"contribute\"), only the highest level is considered. Each permission object has the following structure:",
           "properties": [
             {
@@ -431,12 +441,24 @@
                 "tag"
               ],
               "type": "[identifier](#data-structure-identifier) | string",
-              "description": "The id of the stream or the tag the permission applies to, or `*` for all streams/tags. Stream permissions are recursively applied to child streams."
+              "description": "To be used with `level` property only.   \nThe id of the stream or the tag the permission applies to, or `*` for all streams/tags. Stream permissions are recursively applied to child streams. "
             },
             {
               "key": "level",
-              "type": "`read`|`contribute`|`manage`",
-              "description": "The level of access to the stream. With `contribute`, one can see and record events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams."
+              "type": "`read`|`contribute`|`manage`|`create-only`",
+              "description": "Used only with `streamId` or `tag` permissions.  \nThe level of access to the stream. With `contribute`, one can see and manipulate events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.  \n\nThe `create-only` level - only available for stream-based permissions - allows to read the stream and create events on it and its children."
+            },
+            {
+              "key": [
+                "feature"
+              ],
+              "type": "`selfRevoke`",
+              "description": "To be used only with `setting` property.  \nThe only supported feature is `selfRevoke`"
+            },
+            {
+              "key": "setting",
+              "type": "`forbidden`",
+              "description": "To be used only with `feature` permission. \nIf given in the permission list, this will forbid this access to call `accesses.delete {id}` and perform a self revocation.  "
             }
           ]
         },
@@ -451,8 +473,8 @@
           "key": "expireAfter",
           "type": "number",
           "optional": true,
-          "readOnly": false,
-          "description": "(Only on create and update) If set, controls access expiry in seconds.\nWhen given a number in this attribute (positive or zero),\nthe access will expire (and not be accessible any more) after this many\nseconds.\n\nUse `expireAfter=0` to immediately disable an access (without deleting it)."
+          "readOnly": "(except at creation)",
+          "description": "If set, controls access expiry in seconds.  \nWhen given a number in this attribute (positive or zero), the access will expire (and not be usable anymore) after this many seconds."
         },
         {
           "key": "expires",
@@ -472,6 +494,7 @@
           "key": "clientData",
           "type": "[key-value](#data-structure-key-value)",
           "optional": true,
+          "readOnly": "(except at creation)",
           "description": "Additional client data for the access."
         },
         {
@@ -503,8 +526,8 @@
         {
           "title": "An app access",
           "content": {
-            "id": "ck862wm1i0001chpveac1g3je",
-            "token": "ck862wm1i0003chpvtqfnwqac",
+            "id": "ckkfjh6li0001j7tjiy7oo6gc",
+            "token": "ckkfjh6lj0003j7tji7sat0tj",
             "type": "app",
             "name": "my-app-id",
             "permissions": [
@@ -513,10 +536,33 @@
                 "level": "contribute"
               }
             ],
-            "created": 1584978818.454,
-            "createdBy": "ck862wm1h0000chpvf344943e",
-            "modified": 1584978818.454,
-            "modifiedBy": "ck862wm1h0000chpvf344943e"
+            "created": 1611672235.687,
+            "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+            "modified": 1611672235.687,
+            "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
+          }
+        },
+        {
+          "title": "An app access with create-only and forbidden selfRevoke permissions",
+          "content": {
+            "id": "ckkfjh6lj000cj7tjofswlb5r",
+            "token": "mailbox",
+            "type": "shared",
+            "name": "publicly available token",
+            "permissions": [
+              {
+                "streamId": "inbox",
+                "level": "create-only"
+              },
+              {
+                "feature": "selfRevoke",
+                "setting": "forbidden"
+              }
+            ],
+            "created": 1611672235.687,
+            "createdBy": "ckkfjh6li0000j7tjmmpgdzs6",
+            "modified": 1611672235.687,
+            "modifiedBy": "ckkfjh6li0000j7tjmmpgdzs6"
           }
         }
       ]
@@ -669,13 +715,13 @@
         {
           "title": "A single audit log",
           "content": {
-            "id": "ck862wm23001nchpvx60hiyvl",
+            "id": "ckkfjh6mb001oj7tjvht2n4ah",
             "type": "audit/core",
             "time": 1561988300,
             "forwardedFor": "172.18.0.7",
             "action": "GET /events",
             "query": "streamId=diary",
-            "accessId": "ck862wm23001lchpvh7llbww8",
+            "accessId": "ckkfjh6mb001mj7tj16tm5no8",
             "status": 403,
             "errorMessage": "Access session has expired.",
             "errorId": "forbidden"
@@ -875,8 +921,8 @@
         {
           "title": "A simple Webhook",
           "content": {
-            "id": "ck862wm23001gchpv2fi0rpsg",
-            "accessId": "ck862wm23001echpve30ciylo",
+            "id": "ckkfjh6ma001hj7tj7arxaazj",
+            "accessId": "ckkfjh6ma001fj7tj09k3l6rb",
             "url": "https://notifications.service.com/pryv",
             "minIntervalMs": 5000,
             "maxRetries": 5,
@@ -886,22 +932,22 @@
             "failCount": 0,
             "lastRun": {
               "status": 200,
-              "timestamp": 1585061618.475
+              "timestamp": 1611755035.714
             },
             "runs": [
               {
                 "status": 200,
-                "timestamp": 1585061618.475
+                "timestamp": 1611755035.714
               },
               {
                 "status": 200,
-                "timestamp": 1585058018.475
+                "timestamp": 1611751435.714
               }
             ],
-            "created": 1584978818.475,
-            "createdBy": "ck862wm23001echpve30ciylo",
-            "modified": 1584978818.475,
-            "modifiedBy": "ck862wm23001echpve30ciylo"
+            "created": 1611672235.714,
+            "createdBy": "ckkfjh6ma001fj7tj09k3l6rb",
+            "modified": 1611672235.714,
+            "modifiedBy": "ckkfjh6ma001fj7tj09k3l6rb"
           }
         }
       ]
@@ -959,6 +1005,12 @@
           "description": "Lists the detailed causes of the main error, if any."
         }
       ],
+      "examples": []
+    },
+    {
+      "id": "streams-query",
+      "title": "streams query",
+      "description": "The `streams` parameter for [events.get](#get-events) query accepts an **array** of streamIds or a **streams query** for more complex requests.\n\n**Syntax:**\n\nThe streams query must have at least an `any` or `all` property, with an optional `not`:  \n\n```json\n{ \"any\": [\"streamA\", \"streamB\"], \"all\": [\"streamC\"], \"not\": [\"streamD\"] }\n```\n\n- **any**: any streamId must match  \n- **all**: all streamIds must match  \n- **not**: none of the streamIds must match  \n\nThe returned events will be those matching all of the provided criteria.\n\n**Example:**  \n\nTo select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `private`:\n\n```json\n{\n  \"any\": [\"activity\", \"nutrition\"],\n  \"all\": [\"health\"],\n  \"not\": [\"private\"]\n}\n```\n\n**Format:**  \n\nThe JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call. \nIt can be sent as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.  ",
       "examples": []
     },
     {

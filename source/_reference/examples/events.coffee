@@ -15,9 +15,10 @@ module.exports =
   activity:
     id: generateId()
     time: timestamp.now()
+    streamIds: [ streams.activities[0].children[0].id ]
     streamId: streams.activities[0].children[0].id
     tags: []
-    type: "activity/pryv"
+    type: "activity/plain"
     content: null
     created: timestamp.now()
     createdBy: accesses.app.id
@@ -28,9 +29,10 @@ module.exports =
     id: generateId()
     time: timestamp.now()
     duration: null
+    streamIds: [ streams.activities[0].children[1].id ]
     streamId: streams.activities[0].children[1].id
     tags: []
-    type: "activity/pryv"
+    type: "activity/plain"
     content: null
     created: timestamp.now()
     createdBy: accesses.app.id
@@ -41,9 +43,10 @@ module.exports =
     id: generateId()
     time: timestamp.now()
     duration: null
+    streamIds: [ streams.activities[1].children[1].id ]
     streamId: streams.activities[1].children[1].id
     tags: []
-    type: "activity/pryv"
+    type: "activity/plain"
     content: null
     attachments: [
       id: generateId()
@@ -60,6 +63,7 @@ module.exports =
   heartRate:
     id: generateId()
     time: 1385046854.282,
+    streamIds: [ "heart" ]
     streamId: "heart"
     tags: []
     type: "frequency/bpm"
@@ -69,33 +73,10 @@ module.exports =
     modified: timestamp.now()
     modifiedBy: accesses.app.id
 
-  heartSystolic:
-    id: generateId()
-    time: 1385046854.282
-    streamId: "systolic"
-    tags: []
-    type: "pressure/mmhg"
-    content: 120
-    created: timestamp.now()
-    createdBy: accesses.app.id
-    modified: timestamp.now()
-    modifiedBy: accesses.app.id
-
-  heartDiastolic:
-    id: generateId()
-    time: 1385046854.282
-    streamId: "diastolic"
-    tags: []
-    type: "pressure/mmhg"
-    content: 80
-    created: timestamp.now()
-    createdBy: accesses.app.id
-    modified: timestamp.now()
-    modifiedBy: accesses.app.id
-
   mass:
     id: generateId()
     time: timestamp.now()
+    streamIds: [ streams.health[0].children[2].id ]
     streamId: streams.health[0].children[2].id
     tags: []
     type: "mass/kg"
@@ -108,6 +89,7 @@ module.exports =
   note:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
@@ -116,9 +98,11 @@ module.exports =
     createdBy: accesses.app.id
     modified: timestamp.now('+10h')
     modifiedBy: accesses.app.id
+
   noteWithHistory:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
@@ -127,9 +111,11 @@ module.exports =
     createdBy: accesses.app.id
     modified: timestamp.now('+2h')
     modifiedBy: accesses.app.id
+
   noteHistory1:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
@@ -138,9 +124,11 @@ module.exports =
     createdBy: accesses.app.id
     modified: timestamp.now('+1h')
     modifiedBy: accesses.app.id
+
   noteHistory2:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "note/text"
@@ -153,6 +141,7 @@ module.exports =
   picture:
     id: generateId()
     time: timestamp.now('-1h')
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "picture/attached"
@@ -172,6 +161,7 @@ module.exports =
   position:
     id: generateId()
     time: 1350373077.359
+    streamIds: [ streams.diary[0].id ]
     streamId: streams.diary[0].id
     tags: []
     type: "position/wgs84"
@@ -182,6 +172,32 @@ module.exports =
     createdBy: accesses.personal.id
     modified: timestamp.now('-2h')
     modifiedBy: accesses.personal.id
+
+  running:
+    id: generateId()
+    time: timestamp.now('-1h')
+    streamIds: [ "running", "health" ]
+    streamId: "running" 
+    tags: []
+    type: "activity/plain"
+    content: null
+    created: timestamp.now('-1h')
+    createdBy: accesses.shared.id
+    modified: timestamp.now('-1h')
+    modifiedBy: accesses.shared.id
+
+  vegetablesEaten:
+    id: generateId()
+    time: timestamp.now('-3h')
+    streamIds: [ "vegetables", "health" ]
+    streamId: "vegetables" 
+    tags: []
+    type: "mass/kg"
+    content: 350
+    created: timestamp.now('-3h')
+    createdBy: accesses.shared.id
+    modified: timestamp.now('-3h')
+    modifiedBy: accesses.shared.id
 
   series:
     position:
@@ -203,6 +219,7 @@ module.exports =
     holderEvent:
       id: generateId()
       time: timestamp.now()
+      streamIds: [ "position" ]
       streamId: "position"
       tags: []
       type: "series:position/wgs84"

@@ -53,26 +53,33 @@ html.no-js(lang='en')
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Guides <b class="caret"></b>
                 ul.dropdown-menu
                   +menuItem('getting-started', 'Getting started')
+                  +menuItem('external-resources', 'Apps & Libs')
                   +menuItem('concepts', 'API concepts')
                   +menuItem('guides/data-modelling', 'Data modelling')
                   +menuItem('guides/webhooks', 'Webhooks')
+                  +menuItem('guides/custom-auth', 'Custom auth')
+                  +menuItem('guides/consent', 'Consent request')
                   +menuItem('guides/app-guidelines', 'App guidelines')
-                  +menuItem('external-resources', 'External resources')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') Reference <b class="caret"></b>
                 ul.dropdown-menu
                   +menuItem('reference', 'API reference')
-                  +menuItem('change-log', 'API change log')
+                  +menuItem('reference-admin', 'Admin API reference')
+                  +menuItem('reference-system', 'System API reference')
                   +menuItem('event-types', 'Event types')
-                  +menuItem('open-api', 'Open API')
-                  //+menuItem('standardStructure')
+                  +menuItem('open-api', 'Open API (Postman)')
+                  +menuItem('change-log', 'API change log')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown') FAQ <b class="caret"></b>
                 ul.dropdown-menu
                   +menuItem('faq-api', 'API')
                   +menuItem('faq-infra', 'Infrastructure')
-              //li
-                a(href='#') Blog
+              li
+                a(href='https://support.pryv.com/hc/en-us/community/topics') Community
+              li
+                a(href='https://github.com/pryv/open-pryv.io') Open Pryv.io
+              li
+                a(href='/roadmap/') Roadmap
             .navbar-right
               p.navbar-text.version
                 a(href='/change-log/', title='View change log') API version: <strong>#{apiReference.version}</strong>
@@ -109,7 +116,7 @@ html.no-js(lang='en')
         jQuery(document).ready(function($) {
           // Header is about 51 pixels. This equals to 'header + fuzz', fuzz was
           // determined experimentally.
-          var offset = 100;
+          var offset = 90;
 
           // Display TOC on the left side of the page.
           $('#toc').toc({
@@ -125,6 +132,22 @@ html.no-js(lang='en')
               target: '#toc',
               offset: offset
             });
+            scrollBy(0, 1); // make it scroll to be sure scrollspy gets it
+            
+            // fix offset when navigating
+            $('#toc li a, a.toc-anchor').click(function (e) {
+              e.preventDefault();
+              var target = $(this).attr('href');
+              window.location.hash = target;
+              
+              $(target)[0].scrollIntoView();
+              if ($(window).scrollTop() + $(window).height() !== $(document).height()) {
+                //only adjust when not at bottom
+                scrollBy(0, -offset + 40);
+              }
+              return true;
+            });
+          
           });
         });
 
@@ -147,10 +170,4 @@ html.no-js(lang='en')
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-    // Sales-Wings
-    script(type='text/javascript' id='SW-fd71dffa-76e8-479e-a37b-6e915b97b023')
-    script.
-      !function(){function a(){var a=document.createElement("script");
-      a.type="text/javascript",a.async=1,a.src="//go.saleswingsapp.com/assets/javascripts/sw/fd71dffa-76e8-479e-a37b-6e915b97b023";
-      var b=document.getElementById("SW-fd71dffa-76e8-479e-a37b-6e915b97b023");
-      b.parentNode.insertBefore(a,b)}window.attachEvent?window.attachEvent("onload",a):window.addEventListener("load",a,0)}();
+   

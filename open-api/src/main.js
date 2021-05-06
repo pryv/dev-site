@@ -1,61 +1,98 @@
-const methodsRoot = require('../rendered/methods');
-const dataStructureRoot = require('../rendered/data-structure');
 const yaml = require('yaml');
 const fs = require('fs');
-const metadata = require('./metadata');
-const removeNulls = require('./cleanup').removeNulls;
 const _ = require('lodash');
+
+const methodsRoot = require('../rendered/methods');
+const dataStructureRoot = require('../rendered/data-structure');
+const admin = require('../rendered/admin');
+const adminMethods = admin.sections.find(s => s.id === 'api-methods');
+const adminDataStructure = admin.sections.find(s => s.id === 'data-structure');
+const system = require('../rendered/system');
+const systemMethods = system.sections.find(s => s.id === 'api-methods');
+
+const metadata = require('./metadata');
+const metadata_open = require('./metadata_open');
+const metadata_admin = require('./metadata_admin');
+const metadata_system = require('./metadata_system');
+const removeNulls = require('./cleanup').removeNulls;
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
 const OUTPUT_FILE_PUBLIC = '../source/open-api/3.0/api.yaml';
+const OUTPUT_FILE_OPEN = 'open-api-format/api_open.yaml';
+const OUTPUT_FILE_PUBLIC_OPEN = '../source/open-api/3.0/api_open.yaml';
+const OUTPUT_FILE_ADMIN = 'open-api-format/api_admin.yaml';
+const OUTPUT_FILE_PUBLIC_ADMIN = '../source/open-api/3.0/api_admin.yaml';
+const OUTPUT_FILE_SYSTEM = 'open-api-format/api_system.yaml';
+const OUTPUT_FILE_PUBLIC_SYSTEM = '../source/open-api/3.0/api_system.yaml';
 
-const dataStructureMap = {};
-dataStructureRoot.sections.forEach(s => {
-  dataStructureMap[s.id] = s;
-});
-
-let api = metadata;
-api.paths = {};
+let api_open = metadata_open;
+api_open.paths = {};
+let api_enterprise = metadata;
+api_enterprise.paths = {};
+let api_admin = metadata_admin;
+api_admin.paths = {};
+let api_system = metadata_system;
+api_system.paths = {};
 
 // SCHEMAS (DATA STRUCTURES)
+function createSchemas(dataStruct) {
+  let schemas = {};
 
-const schemas = {};
+  dataStruct.sections.forEach(ds => {
+    let struct = {};
+    if (ds.properties != null) {
+      struct.type = 'object';
+      struct.properties = {};
+      ds.properties.forEach(p => {
+        struct.properties[p.key] = {
+          uniqueItems: p.unique,
+          readOnly: p.readOnly,
+          required: p.optional ? null : true,
+          description: p.description,
+        }
+        _.merge(struct.properties[p.key], parseType(p));
+      });
+    }
 
-dataStructureRoot.sections.forEach(ds => {
-  const struct = {};
-  if (ds.properties != null) {
-    struct.type = 'object';
-    struct.properties = {};
-    ds.properties.forEach(p => {
-      struct.properties[p.key] = {
-        uniqueItems: p.unique,
-        readOnly: p.readOnly,
-        required: p.optional ? null : true,
-        description: p.description,
-      }
-      _.merge(struct.properties[p.key], parseType(p));
-    });
-  }
+    if (ds.id === 'identifier') {
+      struct.type = 'string';
+    }
+    if (ds.id === 'timestamp') {
+      struct.type = 'number';
+    }
+    if (ds.id === 'key-value') {
+      struct.type = 'object';
+      struct.additionalProperties = true;
+    }
 
-  if (ds.id === 'identifier') {
-    struct.type = 'string';
-  }
-  if (ds.id === 'timestamp') {
-    struct.type = 'number';
-  }
-  if (ds.id === 'key-value') {
-    struct.type = 'object';
-    struct.additionalProperties = true;
-  }
-  
-   schemas[ds.id] = struct;
-});
+    schemas[ds.id] = struct;
+  });
+  return schemas;
+}
 
-
-
-api.components = {
-  schemas: schemas,
+api_enterprise.components = {
+  schemas: createSchemas(dataStructureRoot),
 };
+api_open.components = {
+  schemas: createSchemas(dataStructureRoot),
+};
+api_admin.components = {
+  schemas: createSchemas(adminDataStructure),
+};
+api_system.components = {
+  schemas: {},
+};
+
+buildApi(methodsRoot, api_open, true);
+api_open = removeNulls(api_open);
+buildApi(methodsRoot, api_enterprise, false);
+api_enterprise = removeNulls(api_enterprise);
+buildApi(adminMethods, api_admin, false);
+api_admin = removeNulls(api_admin);
+buildApi(systemMethods, api_system, false);
+api_system = removeNulls(api_system);
+
+writeToOutputs();
 
 function translateSchemaLink(type) {
   return '#/components/schemas/' + type;
@@ -153,117 +190,128 @@ function toBeSkipped(methodId) {
   }
 }
 
-methodsRoot.sections.forEach(section => {
-  section.sections.forEach(method => {
-    const path = parseBy(method.http, ' ', 1);
-    if (api.paths[path] == null) {
-      api.paths[path] = {};
-    }
-
-    const httpMethod = parseBy(method.http, ' ', 0).toLowerCase();
-
-    if (toBeSkipped(method.id)) {
+function buildApi(methods, api, isOpen) {
+  methods.sections.forEach(section => {
+    if (section.entrepriseOnly && isOpen) {
       return;
     }
+    function helper(method) {
+      const path = parseBy(method.http, ' ', 1);
+      if (api.paths[path] == null) {
+        api.paths[path] = {};
+      }
 
-    api.paths[path][httpMethod] = {
-      description: method.description,
-      operationId: method.id,
-      parameters: [], 
-      responses: [],
-    };
+      const httpMethod = parseBy(method.http, ' ', 0).toLowerCase();
 
-    function isGetOrDelete(verb) {
-      return verb == 'get' || verb == 'delete';
-    }
-    function isPostorPut(verb){
-      return verb == 'post' || verb == 'put';
-    }
-    function hasParams(method) {
-      return method.params != null && method.params.properties != null;
-    }
-    function hasSchemaParams(method) {
-      return method.params != null && method.params.description != null;
-    }
-    function hasResult(method) {
-      return method.result != null;
-    }
-    function hasError(method) {
-      return method.errors != null;
-    }
-    // handle body params
-    if (hasParams(method) && isPostorPut(httpMethod)) {
-      api.paths[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
-    }
-    if (hasSchemaParams(method)) {
-      api.paths[path][httpMethod].requestBody = {
-        description: parseBy(method.params.description, ':', 0),
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: translateSchemaLink(parseDataStructName(method.params.description, 2))
+      if (toBeSkipped(method.id)) {
+        return;
+      }
+
+      api.paths[path][httpMethod] = {
+        description: method.description,
+        operationId: method.id,
+        parameters: [],
+        responses: [],
+      };
+
+      function isGetOrDelete(verb) {
+        return verb == 'get' || verb == 'delete';
+      }
+      function isPostorPut(verb) {
+        return verb == 'post' || verb == 'put';
+      }
+      function hasParams(method) {
+        return method.params != null && method.params.properties != null;
+      }
+      function hasSchemaParams(method) {
+        return method.params != null && method.params.description != null;
+      }
+      function hasResult(method) {
+        return method.result != null;
+      }
+      function hasError(method) {
+        return method.errors != null;
+      }
+      // handle body params
+      if (hasParams(method) && isPostorPut(httpMethod)) {
+        api.paths[path][httpMethod].requestBody = extractBodyParams(method.params.properties);
+      }
+      if (hasSchemaParams(method)) {
+        api.paths[path][httpMethod].requestBody = {
+          description: parseBy(method.params.description, ':', 0),
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: translateSchemaLink(parseDataStructName(method.params.description, 2))
+              }
             }
           }
         }
-      }
-    };
+      };
 
-    // handle query params
-    if (hasParams(method) && isGetOrDelete(httpMethod)) {
-      const queryParamsRaw = extractQueryParams(method.params.properties);
-      api.paths[path][httpMethod].parameters = api.paths[path][httpMethod].parameters.concat(queryParamsRaw);
-    }
-    
-    // handle path params
-    const pathParamsRaw = extractPathParams(path)
-    const pathParams = [];
-    pathParamsRaw.forEach(p => {
-      pathParams.push({
-        name: p,
+      // handle query params
+      if (hasParams(method) && isGetOrDelete(httpMethod)) {
+        const queryParamsRaw = extractQueryParams(method.params.properties);
+        api.paths[path][httpMethod].parameters = api.paths[path][httpMethod].parameters.concat(queryParamsRaw);
+      }
+
+      // handle path params
+      const pathParamsRaw = extractPathParams(path)
+      const pathParams = [];
+      pathParamsRaw.forEach(p => {
+        pathParams.push({
+          name: p,
+        })
       })
-    })
-  
-    api.paths[path][httpMethod].parameters = api.paths[path][httpMethod].parameters.concat(pathParams);
-    
-    // handle responses - result
-    if (hasResult(method)) {
-      if (!Array.isArray(method.result)) {
-        method.result = [ method.result ];
+
+      api.paths[path][httpMethod].parameters = api.paths[path][httpMethod].parameters.concat(pathParams);
+
+      // handle responses - result
+      if (hasResult(method)) {
+        if (!Array.isArray(method.result)) {
+          method.result = [method.result];
+        }
+        api.paths[path][httpMethod].responses = extractResult(method)
       }
-      api.paths[path][httpMethod].responses = extractResult(method)
-    }
-    // handle responses - errors
-    if (hasError(method)) {
-      api.paths[path][httpMethod].responses = api.paths[path][httpMethod].responses.concat(extractError(method))
-    }
-    // make responses unique per HTTP status (currently overwriting previous responses)
-    api.paths[path][httpMethod].responses = responsesPerStatus(api.paths[path][httpMethod].responses);
+      // handle responses - errors
+      if (hasError(method)) {
+        api.paths[path][httpMethod].responses = api.paths[path][httpMethod].responses.concat(extractError(method))
+      }
+      // make responses unique per HTTP status (currently overwriting previous responses)
+      api.paths[path][httpMethod].responses = responsesPerStatus(api.paths[path][httpMethod].responses);
 
 
-    // special cases
-    switch (path) {
-      case '/auth/login':
-        api.paths[path][httpMethod].parameters.push({
-          in: 'header',
-          name: 'Origin',
-          schema: {
-            type: 'string',
-            format: 'uri'
-          },
-          required: true
-        });
-        const props = api.paths[path][httpMethod].requestBody.content[
-          'application/json'
-        ].schema.properties;
-        break;
+      // special cases
+      switch (path) {
+        case '/auth/login':
+          api.paths[path][httpMethod].parameters.push({
+            in: 'header',
+            name: 'Origin',
+            schema: {
+              type: 'string',
+              format: 'uri'
+            },
+            required: true
+          });
+          const props = api.paths[path][httpMethod].requestBody.content[
+            'application/json'
+          ].schema.properties;
+          break;
+      }
+    }
+    if (!section.sections) {
+      helper(section)
+    }
+    else {
+      section.sections.forEach(method => {
+        helper(method);
+      });
     }
 
   });
-});
+}
 
-api = removeNulls(api);
-writeToOutput();
 
 function responsesPerStatus(responses) {
   const objectResponses = {};
@@ -276,11 +324,11 @@ function responsesPerStatus(responses) {
 }
 
 function extractError(method) {
-  
+
   const errors = method.errors;
   const responses = [];
-  if (! errors) return responses;
-  
+  if (!errors) return responses;
+
   errors.forEach(e => {
     const response = {}
     response[e.http] = {
@@ -312,7 +360,7 @@ function extractResult(method) {
     }
     responses.push(response);
   });
-  
+
   return responses;
 
   function arrayOrNot(props) {
@@ -343,7 +391,7 @@ function arrayOrNotSingle(type) {
 
 function parseBy(string, sep, pos, end) {
   if (end) {
-    return string.split(sep).splice(pos, end+1).join(' ');
+    return string.split(sep).splice(pos, end + 1).join(' ');
   }
   return string.split(sep)[pos];
 }
@@ -354,9 +402,9 @@ function extractQueryParams(properties) {
     if (p.key === 'id') return;
 
     params.push({
-      name: p.key, 
+      name: p.key,
       description: p.description,
-      required: ! p.optional,
+      required: !p.optional,
       in: 'query',
     })
   });
@@ -375,13 +423,13 @@ function extractBodyParams(params) {
     }
   };
   params.forEach(param => {
-    if (param.http != null && 
-      param.http.text && 
+    if (param.http != null &&
+      param.http.text &&
       param.http.text === 'set in request path') {
       return;
     }
     if (param.key === 'update') {
-      return; 
+      return;
     }
     requestBody.content['application/json'].schema.properties[param.key] = {
       description: param.description,
@@ -399,27 +447,33 @@ function extractPathParams(path) {
   while (path.indexOf('{', indexEnd) > -1) {
     indexStart = path.indexOf('{', indexEnd);
     indexEnd = path.indexOf('}', indexStart);
-    params.push(path.substring(indexStart+1, indexEnd));
+    params.push(path.substring(indexStart + 1, indexEnd));
   }
   return params;
 }
 
-function extractResponses(path){
+function extractResponses(path) {
   const responses = [];
   responses.push({
-   'methods.result.http' :  //
-    headers = properties.forEach(p => {
-      params.push({
-        //p.key: 
+    'methods.result.http':  //
+      headers = properties.forEach(p => {
+        params.push({
+          //p.key: 
           //description: p.description,
           //schema: p.type,
         });
       }),
-    });
+  });
   return responses;
 }
 
-function writeToOutput() {
-  fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api));
-  fs.writeFileSync(OUTPUT_FILE_PUBLIC, yaml.stringify(api));
+function writeToOutputs() {
+  fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api_enterprise));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC, yaml.stringify(api_enterprise));
+  fs.writeFileSync(OUTPUT_FILE_OPEN, yaml.stringify(api_open));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC_OPEN, yaml.stringify(api_open));
+  fs.writeFileSync(OUTPUT_FILE_ADMIN, yaml.stringify(api_admin));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC_ADMIN, yaml.stringify(api_admin));
+  fs.writeFileSync(OUTPUT_FILE_SYSTEM, yaml.stringify(api_system));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC_SYSTEM, yaml.stringify(api_system));
 }

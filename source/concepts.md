@@ -34,11 +34,26 @@ See also [standard event types](/event-types/#directory).
 
 ### Streams
 
-Streams are the fundamental contexts in which events occur. Every event occurs in one stream. Streams follow a hierarchical structure—streams can have sub-streams—and usually match either user/app-specific organizational levels (e.g. life journal, work projects, etc.) or data sources (e.g. apps and/or devices).
+Streams are the fundamental contexts in which events occur. Every event occurs in at least one stream. Streams follow a hierarchical structure—streams can have sub-streams—and usually match either user/app-specific organizational levels (e.g. life journal, work projects, etc.) or data sources (e.g. apps and/or devices).
 
 <!-- TODO: See also [standard streams](/standard-structure/). -->
 
+### System streams
+
+System streams are the predefined structure of streams. It is loaded from the config and is not
+saved in the database. It could not be edited using streams API endpoints.
+
+Before each account stream id would see a **dot**.
+Current default streams include `.account` and `.helpers` streams and there will be more with 
+future features. 
+
+To filter all events that belong to the system-streams, you can filter the  events streamIds and
+search for the dot before each stream id.
+
+
 ### Tags
+
+**(DEPRECATED)** Please use streamIds instead.
 
 Tags can provide further context to events. Each event can be labeled with one or more tags. Each tag can be no more than 500 characters in size.
 
@@ -52,18 +67,22 @@ You can read more about the [HF series data structure](/reference-preview/#hf-se
 
 Custom applications can access Pryv user accounts via accesses. Each access defines what data it grants access to and how.
 
-- **Shared** accesses are used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), depending on the sharing user's choice. Access is obtained by presenting the access' key, called a **Token** (which can be transmitted via different communication channels depending on use cases).
-- **App** accesses are used by the majority of apps which do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs; this includes the management of shared accesses with lower or equivalent permissions. App accesses require the app to be registered. Access is obtained by the user authorizing the requesting app after authenticating on Pryv (OAuth2-three-legged-style).
-- **Personal** accesses are used by apps that need to access the entirety of the user's data and/or manage account settings. They grant full permissions, including management of other accesses. Personal accesses require the app to be registered as a trusted Pryv app. Access is obtained by the user directly authenticating with her personal credentials within the app.
+- **Shared** accesses are used for person-to-person sharing. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), depending on the sharing user's choice. Access is obtained by presenting the access' key, called a **Token** (which can be transmitted via different communication channels depending on use cases). This type of access can not create other accesses.
+- **App** accesses are used by the majority of apps that do not need full, unrestricted access to the user's data. They grant access to a specific set of data and/or with limited permission levels (e.g. read-only), according to the app's needs. An app Access is obtained by the user authorizing the requesting app after authenticating on Pryv (OAuth2-three-legged-style). This type of access can only create shared accesses with lower or equivalent permissions. If an app token is destroyed, it automatically destroys the shared tokens that were generated from this app token. 
+- **Personal** accesses are used by apps that need to access the entirety of the user's data and/or manage account settings. They grant full permissions, including management of other accesses. Personal accesses require the app to be registered as a trusted Pryv app. Access is obtained by the user directly authenticating with her personal credentials within the app. This type of access can create app accesses.
 
-Accesses can be made to expire after some time; see the `expireAfter` and `expires`
-attributes for more information. To disable an access please use `expireAfter=0`.
+Accesses can be made to expire after some time; see the `expireAfter` and `expires` attributes for more information.
+
+Accesses **cannot be updated**, to change Access properties it should be revoked with [`accesses.delete`](/reference/#delete-access) and re-created with [`accesses.create`](/reference/#create-access). The token can be preserved if provided during creation.
+
+For security reason, unless explicitly indicated by the permission `{ "feature": "selfRevoke", "setting": "forbidden"}` all accesses can be used to revoke (delete) themselves. In very specific cases, for example when a token is distributed publicly the `selfRevoke` feature should be set to `forbidden`.  
+
+## Entreprise License & Open-Source License
+
+Pryv.io is released under two licenses:
+
+1. **Open-Pryv.io**: Is distributed freely under [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) 
+2. **Pryv.io Entreprise**: Is distributed under a commercial license and comes with more features. In the API documentation these features are indicated with a <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>label.
+For more information about Pryv.io Entreprise edition, visit [pryv.com](https://pryv.com)
 
 
-<!-- TODO: See also [registering your app](#TODO). -->
-
-<!-- TODO: Rewrite this part....
-## Followed slices
-
-Users can view and possibly manipulate streams shared by other users as **followed slices** of life. A followed slice is a reference to another user's shared access, together with details on how to integrate the shared data within the user's own streams.
--->

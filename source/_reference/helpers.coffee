@@ -10,12 +10,16 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
     server = "core"
   
   request = if method != "GET" then "-X #{method} " else ""
-
   headers = ""
   queryString = ""
   basicAuth = ""
   if (server == "core")
-    if (method == "POST" && (path == "/auth/login" || path == "/account/request-password-reset" || path == "/account/reset-password" || path == "/mfa/recover"))
+    if (method == "POST" && (
+      path == "/auth/login" || 
+      path == "/account/request-password-reset" || 
+      path == "/account/reset-password" || 
+      path == "/mfa/recover"
+    ))
       headers = "-H 'Origin: https://sw.pryv.me' "
     else 
       if (hasQueryAuth)
@@ -38,15 +42,22 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
       data += "-d '#{JSON.stringify(processedParams.update)}' "
     else
       data += "-d '#{JSON.stringify(processedParams)}' "
-  else 
+  else
     Object.keys(processedParams).forEach (k) ->
-      queryString += "&#{k}=#{processedParams[k]}"
+      if queryString == ""
+        queryString += "?#{k}=#{processedParams[k]}"
+      else
+        queryString += "&#{k}=#{processedParams[k]}"
   
   call = ""
-  if (server == "core")
-    call = "curl -i #{request}#{headers}#{data}\"https://#{basicAuth}{username}.pryv.me#{path}#{queryString}\""
+  if (path.startsWith("/users") && server == "core")
+   call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"core-reg-curl\">{core-subdomain}</sapan>.pryv.me</span>#{path}#{queryString}\""
+  else if (server == "core")
+    call = "curl -i #{request}#{headers}#{data}\"https://#{basicAuth}<span class=\"api-curl\">{username}.pryv.me</span>#{path}#{queryString}\""
   else if (server == "register")
-    call = "curl -i #{request}#{headers}#{data}\"https://reg.pryv.me#{path}#{queryString}\""
+    call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"api-reg-curl\">reg.pryv.me</span>#{path}#{queryString}\""
+  else if (server == "admin")
+    call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"api-admin-curl\">lead.pryv.me</span>#{path}#{queryString}\""
     
   
   # use shell variable format to help with quick copy-paste
@@ -55,4 +66,7 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
 
 exports.getWebsocketCall = (params) -> 
   return JSON.stringify(params)
+
+exports.getBatchBlock = (methodId, params) -> 
+  return JSON.stringify({method: methodId, params: params}, null, 2)
 

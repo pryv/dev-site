@@ -81,6 +81,8 @@ module.exports =
       streamId: "health"
       level: "read"
     ]
+    user:
+      username: "jackslater"
     lastUsed: timestamp.now('-5m')
     expires: timestamp.now('-2m')
     deleted: timestamp.now('-1m')
@@ -97,3 +99,20 @@ module.exports =
       'events:get':	12
       'streams:get':	11
       'accesses:get':	6
+
+  createOnly:
+    id: generateId()
+    token: "mailbox"
+    type: "shared"
+    name: "publicly available token"
+    permissions: [
+      streamId: "inbox"
+      level: "create-only"
+    , 
+      feature: "selfRevoke"
+      setting: "forbidden"
+    ]
+    created: timestamp.now('-1d')
+    createdBy: idPersonal
+    modified: timestamp.now('-1d')
+    modifiedBy: idPersonal

@@ -28,9 +28,21 @@ permalink: false
       .col-md-4: a.btn.btn-primary.btn-lg.btn-block(href='/concepts/') API concepts
       .col-md-4: a.btn.btn-primary.btn-lg.btn-block(href='/reference/') API reference
 
-
     p.
       To learn about Pryv itself, see <a href="https://pryv.com">our main website</a>.
+
+.container
+  h2.page-header App examples & libraries
+  
+  p.
+    Discover our <a href="/external-resources/">applications and libraries</a> and implement your own using our tutorials:<br>
+
+    <ul>
+      <li>Web applications</li>
+      <li>iOs applications</li>
+      <li>Android applications</li>
+      <li>Integrations</li>
+    </ul>
 
 .container
   h2.page-header Features
@@ -41,7 +53,7 @@ permalink: false
 
         The API supports any timestamped content, including files. Health metrics, locations, pictures, audio samples, notes, activities, vegetable garden yields, you name it. See [the standard types directory](/event-types/).
 
-        Organization is handled via simple and proven constructs like a hierarchical structure (streams) and tags.
+        Organization is handled in a hierarchical structure with streams, that act as folders in a file system and encode context for your events.
 
         ![Event types](assets/images/event-type.png)
 
@@ -51,14 +63,13 @@ permalink: false
       ul.nav.nav-tabs
         li.active: a(href='#api-example-http', data-toggle='tab') HTTP
         li: a(href='#api-example-sockets', data-toggle='tab') Socket.IO
-        li: a(href='#api-example-httpAuth', data-toggle='tab') HTTP+Basic
+        li: a(href='#api-example-DNS-less', data-toggle='tab') DNS-less
       .tab-content
-        #api-example-httpAuth.tab-pane.active
+        #api-example-DNS-less.tab-pane.active
           :marked
             ```http
-            GET /events HTTP/1.1
-            Host: {user}.pryv.me
-            Authorization: Basic {Base64 encoded token}
+            GET {user}/events HTTP/1.1
+            Authorization: {token}
             ```
           .step-marker ⬇
           :marked

@@ -19,40 +19,61 @@ module.exports = exports =
       id: "services-involved"
       title: "Services involved"
       description: """
-                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central registry server (AKA user account directory).
+                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).  
+                   A color tag on the API method indicates the server to which you should make the request.  
 
                    - The **core servers** own the account management processes, i.e. data creation and deletion
-                   - The **registry server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
+                   - The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
                    """
+    ,
+      id: "endpoint-url"
+      title: "API endpoint"
+      description: """
+                   The methods are called via HTTPS on the register or core server depending on the method:   
+
+                   - Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.  
+                   - Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.  
+                  
+                   You can adapt the examples with "API" selector in the top navigation bar.
+                  """
     ,
       id: "account-creation"
       title: "Account creation"
       description: """
-                  The steps for creating a new Pryv.io account are the following:
+                   The steps for creating a new Pryv.io account are the following:
 
-                   1. Client calls the registry server to get a list of available hostings (core server locations), see [Get Hostings](#get-hostings).
-                   2. Client calls registry server with desired new account data (including which core server should host the account), see [Create user](#create-user).
-                   3. Registry server verifies data, hands it over to specified core server if OK
-                   4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to registry server
-                   5. Registry server updates directory if OK, returns status to client
+                   1. The client calls the register server to get a list of available hostings (core server locations), see [Get Hostings](/reference-system/#get-hostings).
+                   2. The client calls the URL under "availableCore" for the hosting it chose with the desired new account data, see [Create user](#create-user).
+                   3. Data is verified.
+                   4. If validation passes, the user is saved and an authenticated apiEndpoint is returned to the caller. See [app guidelines](/guides/app-guidelines/).
+
+                  **(DEPRECATED)** Please use the new account creation flow described above.
+
+                   1. Client calls the register server to get a list of available hostings (core server locations), see [Get Hostings](#get-hostings).
+                   2. Client calls register server with desired new account data (including which core server should host the account), see [Create user](#create-user).
+                   3. register server verifies data, hands it over to specified core server if OK
+                   4. Core server verifies data, creates account if OK (sending welcome email to user), returns status (including created account id) to register server
+                   5. register server updates directory if OK, returns status to client
                    """
     ]
   ,
     id: "api-methods"
     title: "API methods"
     description: """
-              The methods are called via HTTPS on the registry server: `https://reg.{domain}`
-              """
+                 """
     sections: [
       id: "admin"
       title: "Admin"
+      adminOnly: true
       description: """
                   Methods for platform administration.
 
                   These calls are limited to accredited persons and are flagged as `Admin only`.
                   
-                  They must carry an admin key in the HTTP `Authorization` header.
-                  Such keys are defined within the registry configuration (auth:authorizedKeys).
+                  Admin api calls are tagged with <span class="admin-tag"><span title="Admin Only" class="label">A</span></span>
+
+                  They must carry the admin key in the HTTP `Authorization` header.  
+                  This key is defined within the platform configuration: `REGISTER_ADMIN_KEY`.
                   """
       sections: [
         id: "users.get"
@@ -60,7 +81,6 @@ module.exports = exports =
         title: "Get users"
         http: "GET /admin/users"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all users registered on the platform.
@@ -98,7 +118,6 @@ module.exports = exports =
         title: "Get core servers"
         http: "GET /admin/servers"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all core servers with the number of users on them.
@@ -126,7 +145,6 @@ module.exports = exports =
         title: "Get users on core server"
         http: "GET /admin/servers/{serverName}/users"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Get the list of all users registered on a specific core server.
@@ -166,7 +184,6 @@ module.exports = exports =
         title: "Rename core server"
         http: "GET /admin/servers/{srcServerName}/rename/{dstServerName}"
         httpOnly: true
-        trustedOnly: "Admin only"
         server: "register"
         description: """
                     Rename a core server, thus reassigning the users from srcServer to dstServer.
@@ -241,7 +258,7 @@ module.exports = exports =
             type: "Object"
             description: """
                         Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  
-                        The value you need to use as `hosting` parameter in the `users.create` method is a key of the `hostings` object.
+                        You need to use the `availableCore` URL as endpoint for the [Create user API method](#create-user).
                         """
           ]
         examples: [
@@ -323,24 +340,20 @@ module.exports = exports =
         id: "users.create"
         type: "method"
         title: "Create user"
-        http: "POST /user"
+        http: "POST /users"
         httpOnly: true
-        server: "register"
+        server: "core"
         description: """
-                    Creates a new user account on the specified core server.
+                    Creates a new user account. The method's parameters can be customized with the [system streams configuration](/customer-resources/system-streams/).
+
+                    Before Pryv.io 1.6, this route was served by the register server on `/user`
                     """
         params:
           properties: [
-            key: "appid"
+            key: "appId"
             type: "string"
             description: """
                         Your app's unique identifier.
-                        """
-          ,
-            key: "hosting"
-            type: "string"
-            description: """
-                        The name of the core server that should host the account, see [Get Hostings](#get-hostings).
                         """
           ,
             key: "username"
@@ -361,16 +374,18 @@ module.exports = exports =
                           The user's e-mail address, used for password retrieval.
                           """
           ,
-            key: "invitationtoken"
+            key: "invitationToken"
             type: "string"
             optional: true
             description: """
                           An invitation token, necessary when users registration is limited to a specific set of users.
                           Platform administrators may limit users registration by configuring a list of authorized invitation tokens.
                           If this is not the case, users registration is open to everyone and this parameter can be omitted.
+
+                          <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>Available in entreprise only.
                           """
           ,
-            key: "languageCode"
+            key: "language"
             type: "string"
             optional: true
             description: """
@@ -391,26 +406,25 @@ module.exports = exports =
                           A confirmation of the user's username.
                           """
           ,
-            key: "server"
+            key: "apiEndpoint"
             type: "string"
             description: """
-                          The hostname of the core server hosting the new account.
-                          """
+                         The apiEndpoint to reach this account. It includes a personal access token.
+                         """
           ]
         examples: [
-          title: "Creating a user"
-          params: 
-            appid: examples.register.appids[0]
-            hosting: Object.keys(examples.register.hostings[0].regions.europe.zones.switzerland.hostings)[0]
+          title: "Creating a user."
+          params:
+            appId: examples.register.appids[0]
             username: examples.users.two.username
             password: examples.users.two.password
             email: examples.users.two.email
-            invitationtoken: examples.register.invitationTokens[0]
-            languageCode: examples.register.languageCodes[0]
+            invitationToken: examples.register.invitationTokens[0]
+            language: examples.register.languageCodes[0]
             referer: examples.register.referers[0]
           result:
             username: examples.users.two.username
-            server: examples.users.two.username + "." + examples.register.platforms[0]
+            apiEndpoint: examples.users.two.apiEndpoint.pryvLab
         ]
       ,
         id: "username.check"
@@ -420,6 +434,8 @@ module.exports = exports =
         httpOnly: true
         server: "register"
         description: """
+                    For the single node mode please use [this](/reference/#check-username) API endpoint.
+
                     Check the availability and validity of a given username.
                     """
         params:
@@ -447,7 +463,7 @@ module.exports = exports =
             description: """
                         Optional indication of the reason why the username is reserved.
                         If it mentions `RESERVED_USER_NAME`, this means that the given username is part of
-                        the reserved usernames list configured within the registry service.
+                        the reserved usernames list configured within the register service.
                         """
           ]
         errors: [
@@ -525,7 +541,7 @@ module.exports = exports =
         httpOnly: true
         server: "register"
         description: """
-                    Get the username of a Pryv.io account according to the given email.
+                    Get the username of a Pryv.io account according to the given email. This API method can be disabled in the [platform configuration](https://api.pryv.com/reference-admin/#platform-settings).
                     """
         params:
           properties: [
@@ -561,6 +577,100 @@ module.exports = exports =
           result: 
             "username": examples.users.two.username
         ]
+      ,
+
+        id: "cores.get"
+        type: "method"
+        title: "Get core"
+        http: "GET /cores"
+        httpOnly: true
+        server: "register"
+        description: """
+                    Get the core of a Pryv.io account according to the given username or email. You must provide **only** one of them.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            description: """
+                        The username to look for.
+                        """
+          ,
+            key: "email"
+            type: "string"
+            description: """
+                        The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.   
+                        This is meant to prevent email discovery.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "core"
+            type: "object"
+            description: "The core by username"
+          ]
+        examples: [
+          title: "Retrieving the core URL for a given username."
+          params: {
+            username: "trench"
+          }
+          result:
+            core:
+              url: "https://co1.pryv.me/"
+        ,
+          title: "Retrieving the core URL for a non-existing email."
+          params: {
+            email: "adam-gibson@replacement.tech"
+          }
+          result:
+            core:
+              url: "https://co3.pryv.me/"
+        ]
+      ,
+
+        id: "users.delete"
+        type: "method"
+        title: "Delete user"
+        http: "DELETE /users/{username}"
+        httpOnly: true
+        trustedOnly: true
+        server: "core"
+        description: """
+                    Deletes a user account. This method must be enabled in the platform configuration. You should fetch the URL of the core where the user data is stored using the [Get core](#get-core) method.  
+                    - When performed by the account owner, this method requires a personal token.
+                    - For platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).
+                    - For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.
+                    """
+        params:
+          properties: [
+            key: "username"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                          The username of the account to delete.
+                          """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "userDeletion"
+            type: "object"
+            description: """
+                          The deleted user.
+                          """
+          ]
+        examples: [
+          title: "Deleting a user."
+          params:
+            username: "mark-kaminski"
+          result:
+            userDeletion: 
+              username: "mark-kaminski"
+        ]
       ]
+    , 
+      
     ]
   ]

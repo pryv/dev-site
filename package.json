@@ -12,7 +12,9 @@
     "documentation"
   ],
   "scripts": {
-    "webserver": "node node_modules/rec-la/webserver/main.js ./build"
+    "webserver": "node node_modules/rec-la/webserver/main.js ./build",
+    "openapi": "cd open-api ; yarn transpile; yarn export",
+    "build": "make build"
   },
   "dependencies": {},
   "devDependencies": {
@@ -36,7 +38,7 @@
     "metalsmith-templates": "^0.7.0",
     "metalsmith-watch": "^1.0.1",
     "pryv-style": "git://github.com/pryv/style.git",
-    "rec-la": "^0.1.7",
+    "rec-la": "^0.1.11",
     "unix-timestamp": "^0.2.0"
   },
   "engines": {

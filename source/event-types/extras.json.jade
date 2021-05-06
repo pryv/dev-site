@@ -1,6 +1,9 @@
 ---
 include:
-  sourceData: event-types/_source/event-extras.json
+  sourceData: event-types/_source/event-types.json
 ---
 
-!= JSON.stringify(sourceData, null, '  ')
+-// load JSON file
+- var data = _.clone(sourceData)
+- delete data.classes
+!= JSON.stringify(data, null, '  ')

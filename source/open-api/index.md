@@ -6,11 +6,17 @@ customer: true
 withTOC: true
 ---
 
-# Definition file
+# Definition files
 
-Here is the Pryv.io API in OpenAPI 3.0 format: [api.yaml](/open-api/3.0/api.yaml).
+These OpenAPI documents describe the Pryv.io API and conform to the OpenAPI Specification. They are represented in YAML format and can be downloaded from the following links to be imported on other API tools such as Postman.
 
-This OpenAPI document describes the Pryv.io API and conforms to the OpenAPI Specification. It is represented in YAML format and can be downloaded from the above link to be imported on other API tools such as Postman.
+- The [API of Open-Pryv.io](/reference/) (open source version of Pryv.io) in OpenAPI 3.0 format: [api_open.yaml](/open-api/3.0/api_open.yaml).
+
+- The [API of Pryv.io](/reference/) (Entreprise license) in OpenAPI 3.0 format: [api.yaml](/open-api/3.0/api.yaml).
+
+- The [admin API](/reference-admin/) of Pryv.io in OpenAPI 3.0 format: [api_admin.yaml](/open-api/3.0/api_admin.yaml).
+
+- The [system API](/reference-system/) of Pryv.io in OpenAPI 3.0 format: [api_system.yaml](/open-api/3.0/api_system.yaml).
 
 # Usage
 
@@ -18,7 +24,7 @@ This OpenAPI document describes the Pryv.io API and conforms to the OpenAPI Spec
 
 ### Import
 
-The OpenAPI description of Pryv.io can be directly imported into Postman to test the API's functionality. 
+The OpenAPI description of Open-Pryv.io or Pryv.io Entreprise can be directly imported into Postman to test the API's functionality. 
 
 
 - **1.** If Postman has not yet been installed on your computer, you can download it from [here](http://www.getpostman.com). 
@@ -29,6 +35,7 @@ The OpenAPI description of Pryv.io can be directly imported into Postman to test
 You can choose to upload a file, enter a URL, or copy the YAML file on Postman. 
 
 Import the `open-api-format/api.yaml` from the [URL link](/open-api/3.0/api.yaml) or the YAML file directly with `Import as an API` and `Generate a Postman Collection` checked.
+If you are using the Open Source version of Pryv.io, import the `open-api-format/api_open.yaml` from the [URL link](/open-api/3.0/api_open.yaml).
 
 ### Environment
 
@@ -43,9 +50,11 @@ Fill in the variable `baseUrl` as shown below:
 ![Manage the Environment](/assets/images/manage.png)
 
 The variable `baseUrl` should be set as `https://{{token}}@{{username}}.pryv.me`, with the variables `username` and `token` corresponding to the username and access token of your Pryv account.
-You can find more information on how to create a Pryv user on the [dedicated page](http://api.pryv.com/getting-started/#create-a-pryv-lab-user), and obtain an Access Token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me).
+You can find more information on how to create a Pryv user on the [dedicated page](http://api.pryv.com/getting-started/#create-a-pryv-lab-user), and obtain an Access Token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).
 
 In our example, the `username` "testuser" associated to the `token` "cdtasdjhashdsa" are used to set the `baseUrl` variable as `https://cdtasdjhashdsa@testuser.pryv.me`.
+
+**Note that you should remove trailing slash for the variable `baseUrl` to have a working environment.**
 
 Finally, click on `Add` to update the environment.
 

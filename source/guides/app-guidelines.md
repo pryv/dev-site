@@ -8,7 +8,8 @@ withTOC: true
 
 General guidelines for writing applications and libraries for Pryv.io platforms.
 
-Web applications should be implemented to be platform agnostic, for example an app should be easily run for the [Pryv Lab platform](https://pryv.com/pryvlab/) as well as your own.
+Web applications should be implemented to be platform agnostic, so they can be run on your production environment as well as your staging one.  
+Our [example applications](/external-resources/#web-application-examples) can be run on our [Pryv Lab platform](https://pryv.com/pryvlab/) as well as your own.
 
 # Auto-configuration
 
@@ -19,7 +20,7 @@ For this we suggest to implement the following ways to load its configuration:
 
 1. **pryvApiEndpoint** query param
 
-  An URL in the [Basic HTTP Authentication form](/reference/#authentication).
+  An URL in the [Basic HTTP Authorization form](/reference/#authorization).
 
   Example:`https://cdtasdjhashdsa@testuser.pryv.me` as API endpoint (URL encoded)
 
@@ -34,7 +35,7 @@ For this we suggest to implement the following ways to load its configuration:
   Example: `https://reg.pryv.me/service/info` as service information URL (URL encoded)
 
   ```
-  https://sample.domain/app/index.html?pryvServiceInfo=https%3A%2F%2Freg.pryv.me%2Fservice%2Finfo
+  https://sample.domain/app/index.html?pryvServiceInfoUrl=https%3A%2F%2Freg.pryv.me%2Fservice%2Finfo
   ```
 
 **Prevalence** 
@@ -45,7 +46,7 @@ If multiple parameters are provided, the following order of priority should be u
 2. `pryvApiEndpoint` as query parameter
 3. `pryvServiceInfoUrl` as default value
 
-# Authentication
+# Authorization
 
 Using a `pryvApiEndpoint` to load an app allows to load data directly as it usually contains credentials. For cases where you require authentication, it is preferred to use `pryvServiceInfoUrl`:
 
@@ -57,7 +58,7 @@ st=>start: Start
 ready=>end: Ready
 fail=>end: Fail
 
-authProcess=>operation: Auth Process:>/reference/#authorizing-your-app
+authProcess=>operation: Auth Process:>/reference/#authenticate-your-app
 
 condApiEndPoint=>condition: pryvApiEndpoint?
 condServiceInfo=>condition: pryvServiceInfoUrl?

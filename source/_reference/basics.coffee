@@ -13,17 +13,23 @@ module.exports = exports =
   title: "Basics"
   sections: [
     id: "endpoint-url"
-    title: "Root endpoint URL"
+    title: "API endpoint"
     description: """
-                 ```
-                 https://{username}.pryv.me
-                 ```
+                 Depending on the Pryv.io setup or distribution, the root endpoint can have the following formats:
+
+                 Pryv Lab: `https://{username}.pryv.me`  
+                 Own Domain: `https://{username}.{domain}`  
+                 DNS-less (Open): `https://{hostname}/{username}`
 
                  Each user account has a dedicated root API endpoint as it is potentially served from a different location. The API endpoint format may vary, so check your platform's [service information](#service-info) if needed.
 
+                 You can adapt the examples with "API" selector in the top navigation bar.
+
                  """
     examples: [
-      title: "For instance, user '#{examples.users.one.username}' would be served from `https://#{examples.users.one.username}.pryv.me`"
+      title: "For instance, user '#{examples.users.one.username}' would be served from  
+
+              `https://#{examples.users.one.username}.pryv.me` or `https://host.your-domain.io/#{examples.users.one.username}`"
     ]
 
   ,
@@ -45,9 +51,17 @@ module.exports = exports =
     examples: [
       title: "Example request"
       content: """
+               Pryv Lab:
                ```http
                GET /events HTTP/1.1
                Host: {username}.pryv.me
+               Authorization: {token}
+               ```
+
+              DNS-less:
+              ```http
+               GET /{username}/events HTTP/1.1
+               Host: host.your-domain.io
                Authorization: {token}
                ```
                """
@@ -81,7 +95,9 @@ module.exports = exports =
     id: "call-with-websockets"
     title: "Call with websockets"
     description: """
-                 The API supports real-time interaction by accepting websocket connections via [Socket.IO](http://socket.io).
+                 The API supports real-time interaction by accepting websocket connections via [Socket.io 2.0](http://socket.io)
+
+                 For API versions prior to 1.5.8, use Socket.io 0.9.
                  """
     sections: [
       id: "connecting"
@@ -89,25 +105,45 @@ module.exports = exports =
       description: """
                    First, load the right Socket.IO client library.
 
-                   - For a web app, the Javascript lib is directly served by the API at:
-                     <pre><code>https://{username}.pryv.me/socket.io/socket.io.js</code></pre>
-
-                   - For other platforms see the [Socket.IO wiki](https://github.com/learnboost/socket.io/wiki#wiki-in-other-languages).
-
                    Then initialize the connection with the URL:
+                  
+                   Pryv Lab:
+                   ```
+                   https://{username}.pryv.me/{username}?auth={accessToken}
+                   ```
 
+                   Own Domain: 
                    ```
-                   https://{username}.pryv.me:443/{username}?auth={accessToken}&resource=/{username}
+                   https://{username}.{domain}/{username}?auth={accessToken}
                    ```
+                  
+                   DNS-less:
+                   ```
+                   https://host.your-domain.io/{username}/{username}?auth={accessToken}
+                   ```
+                   *Yes, the username is quoted 2 times..*
+
+                   For API versions prior to 1.5.8, append `&resource={username}`.
                    """
       examples: [
         title: "In a web app"
         content: """
+                 Pryv.me:
                  ```html
-                 <script src="https://#{examples.users.one.username}.pryv.me/socket.io/socket.io.js"></script>
                  <script>
-                 var socket = io.connect("https://#{examples.users.one.username}.pryv.me:443/#{examples.users.one.username}?auth=#{examples.accesses.app.token}&resource=/#{examples.users.one.username}");
-                 });
+                 var socket = io("https://#{examples.users.one.username}.pryv.me/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
+                 </script>
+                 ```
+                 Own domain:
+                 ```html
+                 <script>
+                 var socket = io("https://#{examples.users.one.username}.{domain}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
+                 </script>
+                 ```
+                 DNS-less:
+                 ```html
+                 <script>
+                 var socket = io("https://host.your-domain.io/#{examples.users.one.username}/#{examples.users.one.username}?auth=#{examples.accesses.app.token}");
                  </script>
                  ```
                  """
@@ -156,7 +192,8 @@ module.exports = exports =
                   - `accessesChanged`
                   - `systemBoot` (webhooks only)
 
-                Messages describe what type of resource has been changed (created, updated or deleted). It does not include the contents of the change, which must be retrieved through the API using a valid access token.  
+                Messages do not include the content of the changes, but they describe what type of resource has been changed (created, updated or deleted).
+                They inform the server that it needs to fetch new or updated data through the API by doing a HTTP GET request with a valid access token. 
                 The `systemBoot` message is executed when the notifications system is started in order to query possibly missed data changes.
                 """
   sections: [
@@ -210,8 +247,10 @@ module.exports = exports =
     description: """
                  Service information provides a unified way for third party services to access the necessary information related to a Pryv.io platform as this route is served by any Pryv.io API endpoint.
 
-                 For many applications, the first step is to authenticate a user. Knowing the path to `https://access.{domain}/` is necessary.  
-                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as `access`, containing the URL to access.                 
+                 For many applications, the first step is to authenticate a user. For this you need to know the path to **access** which is usually set to `https://access.{domain}/` or `https://{hostname}/access/`.  
+                 Fetching the path `/service/info` on any valid URL endpoint will return you a list of useful informations, such as **access**, containing the URL to access. 
+
+                 See [Auto-Configuration](/guides/app-guidelines/#auto-configuration) in the guide *App Guidelines*.              
                  """
     params:
       properties: []
@@ -228,7 +267,7 @@ module.exports = exports =
         key: "access"
         type: "string"
         description: """
-                    The URL of the access page.
+                    The URL to perform [authentication requests](#auth-request).
                     """
       ,
         key: "api"
@@ -266,6 +305,12 @@ module.exports = exports =
         description: """
                     The URL of the list of validated event types.
                     """
+      ,
+        key: "version"
+        type: "string"
+        description: """
+                    The API version.
+                    """
       ]
     examples: [
           title: "Retrieving service information."
@@ -280,6 +325,8 @@ module.exports = exports =
     title: "Data format"
     description: """
                  The API exchanges data with clients in JSON (MIME type `application/json`), except when uploading/downloading attached files.
+                 
+                 As input, the API accepts JSON payloads of maximum 10MB.
                  """
     examples: [
       title: "Example event"
@@ -288,60 +335,57 @@ module.exports = exports =
 
   ,
 
-    id: "authentication"
-    title: "Authentication"
+    id: "authorization"
+    title: "Authorization"
     description: """
                  All requests for retrieving and manipulating activity data must carry a valid [access token](##{dataStructure.getDocId("access")}). 
                  The preferred method is to use the HTTP `Authorization` header. 
 
-                 Access tokens are obtained via the [app authorization](#authorizing-your-app) or from sharing.
+                 Access tokens are obtained via the [app authentication](#authenticate-your-app) or from sharing.
                  
                  **Alternative methods:**
               
-                 1- Pryv.io supports the **Basic HTTP** Authentication Scheme This allows to present 
+                 1- Pryv.io supports the **Basic HTTP** Authorization Scheme This allows to present 
                  a Pryv.io endpoint as a single URL without exposing the token in query parameters:  
 
-                 ```
-                 curl https://{token}@{username}.pryv.me/access-info
-                 ```
+                 <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info
+                 </code></pre>
 
                  This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://visionmedia.github.io/superagent/) 
-                 or [Postman](https://www.getpostman.com).
+                 or [Postman](https://www.getpostman.com).  
+                 These tools implicitly translate the `${token}@` part of the URL to the `Authorization` header in basic auth format. Please use the main authorization method for tools that do not operate this translation, such as Grafana.
 
-                 Note that Pryv.io does not require a username, so only the token should be Base64 encoded. For more information see [RFC671](https://tools.ietf.org/html/rfc7617 ). 
+                 Note that Pryv.io does not require a username, so only the token should be Base64 encoded. For more information see [RFC671](https://tools.ietf.org/html/rfc7617 ).  
 
                  2- The access token can be provided in the query string's `auth` parameter, for example during the Socket.IO handshake or for a direct HTTP GET call in a browser:
                  
-                 ```
-                 https://{username}.pryv.me/access-info?auth={token}
-                 ```
+                 <pre><code>curl https://<span class="api">{username}.pryv.me</span>/access-info?auth={token}
+                 </code></pre>
 
                  """
     examples: [
       title: "HTTP `Authorization` header"
       content: """
-               ```http
-               GET /events HTTP/1.1
-               Host: {username}.pryv.me
+               <pre><code>GET <span class='api-user'></span>/events HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
                Authorization: {token}
-               ```
+               </code></pre>
                """
     ,
       title: "HTTP `Basic HTTP` authorization header"
       content: """
-               ```http
-               GET /events HTTP/1.1
-               Host: {username}.pryv.me
+               <pre><code>GET <span class='api-user'></span>/events HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
                Authorization: Basic {Base64 encoded token}
-               ```
+               </code></pre>
                """
     ,
       title: "HTTP `auth` query string parameter"
       content: """
-               ```http
-               GET /events?auth={token} HTTP/1.1
-               Host: {username}.pryv.me
-               ```
+               <pre><code>GET <span class='api-user'></span>/events?auth={token} HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               </code></pre>
                """
     ]
 
@@ -352,54 +396,61 @@ module.exports = exports =
     trustedOnly: true
     description: """
                  These API methods require that the `appId` parameter and `Origin` (or `Referer`) header are trusted.  
+                 
+                 Only Apps that need to use a Personal token are be registered as "Trusted Apps".  
+                  
+                 These are usually:
+                  1. The web app for the Authentication and Consent process such as [app-web-auth3](https://github.com/pryv/app-web-auth3)
+                  2. An admin panel for the end-user to manage Access Tokens and Profile.
 
-                 This setting can be changed in the Pryv.io servers configuration.  
+                 Trusted app api methods are tagged with <span class="trusted-tag"><span title="Trusted Apps Only" class="label">T</span></span>
+
+                 This setting can be adapted in the Pryv.io service configuration.  
                  By default, any valid `appId` works and the `Origin` (or `Referer`) header must be in the form `https://*.{domain}`, ex.: `https://login.{domain}`.
                  """
     examples: [
       title: "HTTP `Origin` header"
       content: """
-               ```http
-               POST /auth/login HTTP/1.1
-               Host: {username}.pryv.me
-               Origin: https://sw.{domain}
-               ```
+                <pre><code>POST <span class='api-user'></span>/auth/login HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               Origin: https://sw.{domain}</code></pre>
                """
     ,
       title: "HTTP `Referer` header"
       content: """
-               ```http
-               POST /auth/login HTTP/1.1
-               Host: {username}.pryv.me
-               Referer: https://sw.{domain}
-               ```
+                <pre><code>POST <span class='api-user'></span>/auth/login HTTP/1.1
+               Host: <span class='api-host'>{username}.pryv.me</span>
+               Authorization: Basic {Base64 encoded token}
+               Referer: https://sw.{domain}</code></pre>
                """
     ]
   ,
 
-    id: "authorizing-your-app"
-    title: "Authorizing your app"
+    id: "authenticate-your-app"
+    title: "Authenticate your app"
     description: """
                  To authenticate users in your app, and thus for users to grant your app access to their data, you must:
 
                  1. Choose an app identifier (min. length 6 chars)
-                 2. Send an auth request from your app
-                 3. Open the `authUrl` field of the HTTP response in a browser or webframe. The auth page will prompt the user to sign in using her Pryv credentials (or to create an account if she doesn't have one).
-                 4. The result of the sign in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
-                  - by polling the URL obtained in the `poll` field of the HTTP response to the auth request
+                 2. Fetch the [service information](#service-info)
+                 3. Send an [auth request](#auth-request) to the URL exposed by the **access** parameter of the service information
+                 4. Open the `authUrl` field of the HTTP response in a browser or webframe. The web page will prompt the user to sign in using her Pryv.io credentials (or to create an account if she doesn't have one).
+                 5. The result of the sign-in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
+                  - by [polling the URL](#poll-request) obtained in the `poll` field of the HTTP response to the auth request (preferred method)
                   - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
                  #### Generate token app
 
-                 You can also use the **Access token generator** to obtain an app token:
+                 The **Access token generator** is a simple web application that allows its user to enter the parameters of the [Auth request](#auth-request) and performs it. It is accessible at the following URL:
 
                  ```
-                 https://api.pryv.com/app-web-access/?pryv-reg=reg.{domain}
+                 https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=${pryvServiceInfoUrl}
                  ```
 
                  For example:
 
-                 [https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me](https://api.pryv.com/app-web-access/?pryv-reg=reg.pryv.me)
+                 [https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
 
 
                  
@@ -408,8 +459,11 @@ module.exports = exports =
       id: "auth-request"
       title: "Auth request"
       type: "method"
+      description: """
+                   The API endpoint to use is given by the [service information's](#service-info) `access` property.
+                   """
       http:
-        text: "POST to `https://reg.pryv.me/access`"
+        text: "POST to `{serviceInfo.access}`" 
       httpOnly: true
       params:
         properties: [
@@ -455,8 +509,8 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       The URL to redirect the user to after auth completes.
-                       Required if you are not using polling to retrieve the auth result (see Result below).
+                       The URL to redirect the user to after authentication completes.
+                       Required if you are not using polling to retrieve the authentication result (see Result below).
                        """
         ,
           key: "clientData"
@@ -480,28 +534,50 @@ module.exports = exports =
           description: """
                        Overrides the default [service information](#service-info) object that will be transmitted in the polling responses.
                        """
+        ,
+          key: "deviceName"
+          type: "string"
+          optional: true
+          description: """
+                       See [access data structure](##{dataStructure.getDocId("access")})
+                       """
+        ,
+          key: "expireAfter"
+          type: "number"
+          optional: true
+          description: """
+                       See [access data structure](##{dataStructure.getDocId("access")})
+                       """
+        ,
+          key: "referer"
+          type: "string"
+          optional: true
+          description: """
+                       Used when creating a user in the process of authentication. See [Create user method](/reference-system/#create-user).
+                       """
         ]
       result: [
-        title: "Result: in progress"
+        title: "Result: need sign-in"
         http: "200"
         properties: [
           key: "status"
           type: "`NEED_SIGNIN`"
           description: """
-                       Auth in progress.
+                       Authentication in progress.
                        """
         ,
           key: "url"
           type: "string"
           description: """
-                       **(DEPRECATED)**  
-                       Please use the `authUrl` parameter. The URL of the auth page to show the user from your app as popup or webframe.
+                       **(DEPRECATED)** Please use the `authUrl` parameter.
+
+                       The URL of the authentication page to show the user from your app as popup or webframe.
                        """
         ,
           key: "authUrl"
           type: "string"
           description: """
-                       The URL of the auth page to show the user from your app as popup or webframe.
+                       The URL of the authentication page to show the user from your app as popup or webframe.
                        """
         ,
           key: "key"
@@ -563,6 +639,80 @@ module.exports = exports =
                        The [service information](#service-info).
                        """
         ]
+      ]
+      examples: [
+        title: "Auth request on Pryv Lab"
+        content: """
+                 ```http
+                 POST https://access.pryv.me/access HTTP/1.1
+                 Host: access.pryv.me
+
+                 {
+                   "requestingAppId": "test-app-id",
+                   "requestedPermissions": [
+                     {
+                       "streamId": "diary",
+                       "level": "read",
+                       "defaultName": "Journal"
+                     },
+                     {
+                       "streamId": "position",
+                       "level": "contribute",
+                       "defaultName": "Position"
+                     }
+                   ],
+                   "languageCode": "fr"
+                 }
+                 ```
+                 """
+        result:
+          status: 'NEED_SIGNIN'
+          url: 'https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4',
+          authUrl: 'https://sw.pryv.me/access/access.html?poll=https://access.pryv.me/access/6CInm4R2TLaoqtl4'
+          key: '6CInm4R2TLaoqtl4'
+          poll: 'https://access.pryv.me/access/6CInm4R2TLaoqtl4',
+          poll_rate_ms: 1000,
+          requestingAppId: 'test-app-id',
+          requestedPermissions: [
+              {
+                  streamId: 'diary',
+                  level: 'read',
+                  defaultName: 'Journal'
+              },
+              {
+                  streamId: 'position',
+                  level: 'contribute',
+                  defaultName: 'Position'
+              }
+          ],
+          lang: 'fr',
+          serviceInfo: {}
+
+      ,
+        title: 'Auth request using cURL'
+        content: """
+                 ```bash
+                 curl -i -H 'Content-Type: application/json' -X POST -d '{"requestingAppId": "my-app-id","requestedPermissions": [{"streamId": "diary","level": "read","defaultName": "Journal"},{"streamId": "position","level": "contribute","defaultName": "Position"}]}' "https://access.pryv.me/access"
+                 ```
+                 """        
+      ]
+    ,
+      id: "poll-request"
+      title: "Poll request"
+      type: "method"
+      http:
+        text: "GET `{needSignInResponse.poll}`"
+      httpOnly: true
+      description: """
+                   The polling URL is given by the `poll` parameter in the result the [Auth Request](#auth-request) or a Poll request.
+                   """
+      ,
+      result: [
+        title: "Result: need sign-in"
+        http: "200"
+        description: """
+                     indentical to `RESULT: SIGN-IN` from [Auth Request](#auth-request)
+                     """
       ,
         title: "Result: accepted"
         http: "200"
@@ -570,24 +720,26 @@ module.exports = exports =
           key: "status"
           type: "`ACCEPTED`"
           description: """
-                       Auth successful.
+                       Authentication successful.
                        """
         ,
           key: "username"
           type: "string"
           description: """
-                       **(DEPRECATED)**  
-                       Please use the `pryvApiEndpoint` parameter. The authentified user's username.
+                       **(DEPRECATED)** Please use the `apiEndpoint` parameter.
+
+                       The authenticated user's username.
                        """
         ,
           key: "token"
           type: "string"
           description: """
-                       **(DEPRECATED)**  
-                       Please use the `pryvApiEndpoint` parameter. Your app's API access token.
+                       **(DEPRECATED)** Please use the `apiEndpoint` parameter.
+
+                       Your app's API access token.
                        """
         ,
-          key: "pryvApiEndpoint"
+          key: "apiEndpoint"
           type: "string"
           description: """
                        The API endpoint containing the authorization token. See [App Guidelines](/guides/app-guidelines/).
@@ -607,7 +759,7 @@ module.exports = exports =
           key: "status"
           type: "`REFUSED`"
           description: """
-                       Auth failed.
+                       Authentication failed.
                        """
         ,
           key: "reasonID"
@@ -631,119 +783,43 @@ module.exports = exports =
         ]
       ]
       examples: [
-        title: "Auth request"
+        title: 'Polling request on Pryv Lab'
         content: """
                  ```http
-                 POST /access HTTP/1.1
-                 Host: reg.pryv.me
-
+                 GET /access/6CInm4R2TLaoqtl4 HTTP/1.1
+                 Host: access.pryv.me
+                 ```
+                 """
+      ,
+        title: '**"Need sign-in"** response'
+        content: """
+                 identical to `RESULT: NEED SIGN-IN` from [Auth Request](#auth-request)
+                 ```
                  {
-                   "requestingAppId": "test-app-id",
-                   "requestedPermissions": [
-                     {
-                       "streamId": "diary",
-                       "level": "read",
-                       "defaultName": "Journal"
-                     },
-                     {
-                       "streamId": "position",
-                       "level": "contribute",
-                       "defaultName": "Position"
-                     }
-                   ],
-                   "languageCode": "fr"
+                   "status": "NEED_SIGNIN",
+                   ... 
                  }
                  ```
                  """
       ,
-        title: 'Auth request cURL'
-        content: """
-                 ```bash
-                 curl -i -H 'Content-Type: application/json' -X POST -d '{"requestingAppId": "my-app-id","requestedPermissions": [{"streamId": "diary","level": "read","defaultName": "Journal"},{"streamId": "position","level": "contribute","defaultName": "Position"}]}' "https://reg.pryv.me/access"
-                 ```
-                 """
-      ,
-        title: '"In progress" response'
+        title: '**"Accepted"** response'
         content: """
                  ```json
                  {
-                    "status": "NEED_SIGNIN",
-                    "code": 201,
-                    "key": "6CInm4R2TLaoqtl4",
-                    "requestingAppId": "test-app-id",
-                    "requestedPermissions": [
-                        {
-                            "streamId": "diary",
-                            "level": "read",
-                            "defaultName": "Journal"
-                        },
-                        {
-                            "streamId": "position",
-                            "level": "contribute",
-                            "defaultName": "Position"
-                        }
-                    ],
-                    "url": "https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4",
-                    "authUrl": "https://sw.pryv.me/access/access.html?poll=https://reg.pryv.me/access/6CInm4R2TLaoqtl4"
-                    "poll": "https://reg.pryv.me/access/6CInm4R2TLaoqtl4",
-                    "oauthState": null,
-                    "poll_rate_ms": 1000,
-                    "lang": "fr",
+                    "status": "ACCEPTED",
+                    "apiEndpoint": "https://#{examples.accesses.app.token}@#{examples.users.one.username}.pryv.me/",
                     "serviceInfo": {...}
                 }
                  ```
                  """
       ,
-        title: 'Polling request'
-        content: """
-                 ```http
-                 GET /access/6CInm4R2TLaoqtl4 HTTP/1.1
-                 Host: reg.pryv.me
-                 ```
-                 """
-      ,
-        title: "Auth request with custom serviceInfo and custom access app"
-        content: """
-                 ```http
-                 POST /access HTTP/1.1
-                 Host: reg.pryv.me
-
-                 {
-                   "requestingAppId": "my-custom-app-id",
-                   "requestedPermissions": [
-                     {
-                       "streamId": "diary",
-                       "level": "read",
-                       "defaultName": "Journal"
-                     }
-                   ],
-                   "authUrl": "https://auth.custom.com",
-                   "serviceInfo": {...}
-                 }
-                 ```
-                 """
-      ,
-        title: '"In progress" response'
+        title: '**"Refused"** response'
         content: """
                  ```json
                  {
-                    "status": "NEED_SIGNIN",
-                    "code": 201,
-                    "key": "o8maIIWoifro7WNJ",
-                    "requestingAppId": "my-custom-app-id",
-                    "requestedPermissions": [
-                        {
-                            "streamId": "diary",
-                            "level": "read",
-                            "defaultName": "Journal"
-                        }
-                    ],
-                    "url": "https://auth.custom.com?key=o8maIIWoifro7WNJ&requestingAppId=my-custom-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%o8maIIWoifro7WNJ",
-                    "authUrl": "https://auth.custom.com?poll=https://reg.pryv.me/access/o8maIIWoifro7WNJ"
-                    "poll": "https://reg.pryv.me/access/o8maIIWoifro7WNJ",
-                    "oauthState": null,
-                    "poll_rate_ms": 1000,
-                    "lang": "en",
+                    "status": "REFUSED",
+                    "resonID": "REASON_UNDEFINED",
+                    "message": "...."
                     "serviceInfo": {...}
                 }
                  ```
@@ -799,6 +875,10 @@ module.exports = exports =
                      The serial will change every time the core or register is updated. If you compare it with the serial of a previous response and notice a difference, you should reload the service information.
                      """
       ]
+      examples: [
+        title: "Metadata in API Response"
+        content: examples.metadata.apiResponse
+      ]
     ]
 
 
@@ -853,6 +933,12 @@ module.exports = exports =
         http: "404"
         description: """
                      The resource can't be found.
+                     """
+      ,
+        key: "removed-method"
+        http: "410"
+        description: """
+                     The resource or method has been removed from the API.
                      """
       ,
         key: "too-many-results"

@@ -5,9 +5,19 @@ template: default.jade
 withTOC: true
 ---
 
+In this FAQ we answer common questions related to Pryv.io platform. You can contact us directly if your question is not listed here.
+
+## Table of contents
+
+- 1 [Platform prerequisites](#platform-prerequisites)
+- 2 [Customize registration, login, password-reset pages](#customize-registration-login-password-reset-pages)
+- 3 [Host apps, resources on the same domain, and reuse the SSL certificate](#host-apps-resources-on-the-same-domain-and-reuse-the-ssl-certificate)
+- 4 [System administrators](#system-administrators)
+
+
 ## Platform prerequisites
 
-In addition to the **Deployment design guide** document (available on request), a Pryv.io platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
+In addition to the **Infrastructure procurement** guide (available on request), a Pryv.io platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
 
 To encrypt data in transit, we require a **wildcard SSL certificate** for the domain **\*.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
 
@@ -42,7 +52,7 @@ The last option will probably the easiest to implement. It offers good protectio
 
 ### Self-managed top-domain
 
-The DNS running on the registry must resolve all requests for the domain. Entries in the top-domain will look like:
+The DNS running on the register must resolve all requests for the domain. Entries in the top-domain will look like:
 
 ```
 ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
@@ -52,7 +62,7 @@ ${DOMAIN}	TTL_SECONDS IN NS ns1-${DOMAIN}
 ${DOMAIN}	TTL_SECONDS IN NS ns2-${DOMAIN}
 ```
 
-On single node or PoC installations, you will have only one registry, both Type A entries for the machine will point to the same IP address:
+On single node or PoC installations, you will have only one register, both Type A entries for the machine will point to the same IP address:
 
 ```
 ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
@@ -62,7 +72,7 @@ ${DOMAIN}	TTL_SECONDS IN NS ns1-${DOMAIN}
 ${DOMAIN}	TTL_SECONDS IN NS ns2-${DOMAIN}
 ```
 
-You can verify that the registry is set to resolve DNS queries for your domain using: `dig NS ${DOMAIN}`. The answer section must include:
+You can verify that the register is set to resolve DNS queries for your domain using: `dig NS ${DOMAIN}`. The answer section must include:
 
 ```
 ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns1-${DOMAIN}.${TOP_DOMAIN}
@@ -100,7 +110,7 @@ The following pages will show the changes that you apply to this repository:
 - Reset password: https://sw.${DOMAIN}/access/reset-password.html
 - Consent authorization: https://sw.${DOMAIN}/access/access.html
 
-## How to host apps, resources on the same domain / reuse the SSL certificate
+## Host apps, resources on the same domain and reuse the SSL certificate
 
 The web role is meant for this. It contains a proxy server that can be configured to serve apps from different sources such as GitHub pages under the same domain, thus allowing to reuse the SSL certificate.
 
@@ -129,7 +139,7 @@ server {
 ### Port 53 is already in use (by Docker's embedded DNS)
 
 On some installations, the DNS container cannot be started because docker-compose attempts to bind on the same network interface and port as Docker's embedded DNS.  
-To fix this, you must specify the machine's public IP address in the docker-compose port mapping section of the DNS service as following:
+To fix this, you must specify the external network interface IP address (which may differ from the machine's public IP address, for example on AWS) in the docker-compose port mapping section of the DNS service as following:
 
 ```yaml
 ports:
@@ -158,7 +168,20 @@ By default, our containers write logs into `stdout`, the reason for a failure ca
 
 ### Permission denied error
 
-During deployment, it is possible that some folders have only write permissions for root. Our containerized apps are run by UID `9999:9999`, so this can be fixed by running `chown -R 9999:9999 ${FOLDER}` from the host machine.
+During deployment and update, it is possible that some folders have incorrect permissions, preventing the Pryv.io process to read configuration and data files.  
+The corresponding error can be found in the container logs using:
+
+```
+docker logs -f --tail 50 pryvio_${CONTAINER_NAME}
+```
+
+It should have a message similar to:
+
+```
+Error: EACCES: permission denied
+```
+
+This can be fixed by running the provided `ensure-permissions-${ROLE}` script. If necessary, reboot the Pryv.io services as well.
 
 ### How do I reset data on my Pryv.io platform?
 
@@ -166,23 +189,27 @@ This step will erase all data from your platform. Perform this at your own risk 
 
 To erase all data on the platform, you need to delete the contents of the data folders and reboot the services.
 
-On the registry master:
+On the register master:
 
-```
+```bash
 cd ${PRYV_CONF_ROOT}
-./stop-containers
-rm -rf reg-master/redis/data/*
-./run-reg-master
+./stop-config-leader
+./stop-pryv
+rm -rf pryv/redis/data/*
+rm -rf config-leader/database/*
+./run-config-leader
+./run-pryv
 ```
 
 On core:
 
-```
+```bash
 cd ${PRYV_CONF_ROOT}
-./stop-containers
-rm -rf core/core/data/*
-rm -rf core/mongodb/data/*
-./run-core
+./stop-pryv
+rm -rf pryv/core/data/*
+rm -rf pryv/mongodb/data/*
+rm -rf pryv/influxdb/data/*
+./run-pryv
 ```
 
 ### How can I use the demo dashboard app (_app-web_) on my Pryv.io platform?

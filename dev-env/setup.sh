@@ -32,7 +32,7 @@ then
   git clone git@github.com:pryv/service-core.git dependencies/core
 fi
 
-coreBranch="release-1.4"
+coreBranch="master"
 
 echo "Service-core dependency is targeting the following branch: $coreBranch"
 

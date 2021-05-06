@@ -28,8 +28,9 @@ It describes what Webhooks are, why and how to use them on Pryv.io, illustrating
 6. [Endpoint setup](#endpoint-setup)
   1. [User identification](#user-identification)
   2. [Endpoint testing](#endpoint-testing)
-  3. [Webhook authentication](#webhook-authentication)
-7. [Conclusion](#conclusion)
+  3. [Webhook authorization](#webhook-authorization)
+7. [Events synchronization](#events-synchronization)
+8. [Conclusion](#conclusion)
 
 ## Introduction
 
@@ -72,7 +73,7 @@ Providing only an event identifier in the webhook payload will force the recipie
 
 ### Separation of responsibility 
 
-Importantly, only the app access used to create the webhook (or a personal one) can be used to modify it. This is meant to separate the responsibilities between the webhooks management and services that will consume the data following a notification.
+Importantly, only the access used to create the webhook (or a personal one) can be used to modify it. This is meant to separate the responsibilities between the webhooks management and services that will consume the data following a notification.
 
 Typically, a certain access will be used to setup one or multiple webhooks per user, while updated data will be fetched using a different set of permissions.
 
@@ -111,21 +112,19 @@ You can easily visualize the whole process on the following schema:
 
 Based on the previous use case (see the schema above), these are the steps to follow to setup event notifications with webhooks:
 
-If needed, create a new user account on the Pryv Lab platform [here](https://sw.pryv.me/access/register.html).
-
-1. You first need to obtain a token to create a webhook and store data into your account. You can generate an access token from the [Pryv Access Token Generator](/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
+If needed, create a new user account on the Pryv Lab platform [here](https://sw.pryv.me/access/register.html) and obtain a token to create a webhook and store data into your account. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).  
 You can set the permissions and leave other parameters unchanged:  
 ```json
 [
-    {
-      "streamId": "health",
-      "defaultName": "Health",
-      "level": "contribute"
-    }
+  {
+    "streamId": "health",
+    "defaultName": "Health",
+    "level": "contribute"
+  }
 ]
 ```
 
-2. You then need to create the webhook by making an API call on the [webhooks.create](/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made (see [User identification](#user-identification) on how to allow the service to identify the webhook's account).  
+1. You then need to create the webhook by making an API call on the [webhooks.create](/reference/#create-webhook) route with the necessary parameters. In particular, you need to provide the URL over which the HTTP POST requests will be made (see [User identification](#user-identification) on how to allow the service to identify the webhook's account).  
 For example:  
 ```json
 {
@@ -133,7 +132,7 @@ For example:
 }
 ```
 
-3. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfo=https://reg.pryv.me/service/info).  
+2. You should then provide an Access token to the notified service so that it can retrieve new data when changes occur. You can generate an access token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).  
 You can set the permissions and leave other parameters unchanged:  
 ```json
 [
@@ -145,7 +144,7 @@ You can set the permissions and leave other parameters unchanged:
 ]
 ```
 
-4. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](/reference/#create-event) method.  
+3. When your user adds new data to the platform, events related to his health are created and added to the `Health` stream using the [events.create](/reference/#create-event) method.  
 You can use the following parameters for a `count/steps` event:
 ```json
 {
@@ -155,7 +154,7 @@ You can use the following parameters for a `count/steps` event:
 }
 ```
 
-5. Once the event is created, the webhook is triggered. It notifies the external service that an `eventsChanged` has occured in the user account by sending an HTTP POST request to the provided webhook URL.  
+4. Once the event is created, the webhook is triggered. It notifies the external service that an `eventsChanged` has occured in the user account by sending an HTTP POST request to the provided webhook URL.  
 The request payload will look like this:  
 ```json
 {
@@ -163,14 +162,14 @@ The request payload will look like this:
       "eventsChanged"
     ],
     "meta": {
-      "apiVersion": "1.4.33",
+      "apiVersion": "1.6.20",
       "serial": "20190802",
       "serverTime": 1586254000.213
     }
 }
 ```
 
-6. As soon as the server receives the HTTP POST request on the URL, it must retrieve the events since the last change from the Pryv.io platform using the provided token.
+5. As soon as the server receives the HTTP POST request on the URL, it must retrieve the events since the last change from the Pryv.io platform using the provided token.
 It does so by performing an HTTP GET request on the events from the streamId `health` using the [events.get](/reference/#get-events) method with the `modifiedSince` parameter set.  
 The API response should look like this:
 ```json
@@ -179,6 +178,7 @@ The API response should look like this:
       {
         "id": "ck8pqobvr000voopvtlw9ct83",
         "time": 1586254000.167,
+        "streamIds": ["health"],
         "streamId": "health",
         "tags": [],
         "type": "count/steps",
@@ -192,7 +192,7 @@ The API response should look like this:
 }
 ```
 
-7. The server processes the data as configured. It must retrieve the information about the patient name and the type of the event that he posted (`count/steps` in this case).  
+6. The server processes the data as configured. It must retrieve the information about the patient name and the type of the event that he posted (`count/steps` in this case).  
 It sends then a notification message to Dr. Tom about the new event that was posted in the stream `Health`.
 
 ## Pryv.io Webhooks features
@@ -219,7 +219,7 @@ The `maxRetries` parameter can be configured by the Pryv.io platform administrat
 
 After a certain amount of consecutive failures to send a request, the webhook will be deactivated and no longer send requests when triggered. This will be indicated by the  `state` parameter which will be set to `inactive`.
 
-It will need to be manually reactivated using the [webhooks.update](/reference/#methods-webhooks-webhooks-update) method with the app access that created it or a personal one.
+It will need to be manually reactivated using the [webhooks.update](/reference/#methods-webhooks-webhooks-update) method with the access that created it or a personal one.
 
 ### Stats
 
@@ -235,7 +235,7 @@ The number of stored runs can be configured by the platform administrator.
 
 ### Deletion of the original access
 
-In case the app access that has created the webhook is deleted, it does not alter the webhook. It can still be modified using a personal access.
+In case the access that has created the webhook is deleted, it does not alter the webhook. It can still be modified using a personal access.
 
 ## Endpoint setup
 
@@ -263,7 +263,7 @@ In the query parameters:
 
 In order to test that your service's endpoint is reachable by the webhook calls, we offer the [webhooks.test](/reference/#test-webhook) API method that triggers the webhook execution.
 
-### Webhook authentication
+### Webhook authorization
 
 You might need to include a shared secret between your application and the webhook provider in order to control the API usage of your external service.
 
@@ -276,6 +276,13 @@ This secret can be provided in the same way as the username, illustrated above. 
   "url": "https://my-notifications.com/stefan.pryv.me/my-secret"
 }
 ```
+
+## Events synchronization
+
+In order to make sure that the events data you fetch following a webhook notification contains only the new changes, it is recommended to keep track of the timestamps of your requests.  Each Pryv.io API response contains [Metadata](/reference/#in-method-results) whose `serverTime` you should save at each request.  
+
+Following a notification, you can [retrieve the events](/reference/#get-events) using the `modifiedSince` parameter set to the `serverTime` of your last request.
+
 ## Conclusion
 
 If you wish to set up a Pryv.io webhook or get more information on the data structure, please refer to [its data structure reference](/reference/#webhook), while the methods relative to webhooks can be found in the [API methods section](/reference/#webhooks).

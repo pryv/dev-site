@@ -4,6 +4,7 @@ examples = require("./examples")
 helpers = require("./helpers")
 timestamp = require("unix-timestamp")
 _ = require("lodash")
+generateId = require("cuid")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
 _getDocId = (sectionId, methodId) ->
@@ -13,6 +14,14 @@ module.exports = exports =
   id: "methods"
   title: "API methods"
   sections: [
+      id: "registration"
+      title: "Registration"
+      description: """
+                  Method for user registration. This documentation has been moved to [System reference](/reference-system).
+                  """
+      sections: [
+      ]
+    ,
     id: "auth"
     title: "Authentication"
     trustedOnly: true
@@ -24,8 +33,10 @@ module.exports = exports =
       type: "method"
       title: "Login user"
       http: "POST /auth/login"
+      httpOnly: true
       description: """
-                   Authenticates the user against the provided credentials, opening a personal access session. This is one of the only API methods that do not expect an [auth parameter](#basics-authentication).   
+                   Authenticates the user against the provided credentials, opening a personal access session. By default, the session is valid for 14 days after the last token usage. This duration is configurable in the platform parameters.  
+                   This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).  
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
@@ -77,14 +88,19 @@ module.exports = exports =
 
       id: "auth.logout"
       type: "method"
+      httpOnly: true
       title: "Logout user"
       http: "POST /auth/logout"
       description: """
                    Terminates a personal access session by invalidating its access token (the user will have to login again).
+                   Simply provide the Authorization token in own of [the supported ways](/reference/#authorization), no request body is required.
                    """
       result:
         http: "200 OK"
-      examples: []
+      examples: [
+        params: {}
+        result: {}
+      ]
     ]
 
   ,
@@ -92,6 +108,7 @@ module.exports = exports =
     id: "mfa"
     title: "Multi-factor authentication"
     trustedOnly: true
+    entrepriseOnly: true
     description: """
                  Methods for handling multi-factor authentication (MFA) on top of the usual [Login method](##{_getDocId("auth", "auth.login")}).
                  """
@@ -99,6 +116,7 @@ module.exports = exports =
       id: "mfa.login"
       type: "method"
       title: "Login with MFA"
+      httpOnly: true
       http: "POST /auth/login"
       description: """
                    Proxied [Login](##{_getDocId("auth", "auth.login")}) call that initiates MFA authentication,
@@ -132,11 +150,12 @@ module.exports = exports =
       id: "mfa.activate"
       type: "method"
       title: "Activate MFA"
+      httpOnly: true
       http: "POST /mfa/activate"
       description: """
                    Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.
                    
-                   Requires a personal token as [authentication](#basics-authentication), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
+                   Requires a personal token as [authorization](#basics-authorization), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
                    """
       params:
         description: """
@@ -164,11 +183,12 @@ module.exports = exports =
       id: "mfa.confirm"
       type: "method"
       title: "Confirm MFA activation"
+      httpOnly: true
       http: "POST /mfa/confirm"
       description: """
                    Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
                    
-                   Requires a MFA session token as [authentication](#basics-authentication).
+                   Requires a MFA session token as [authorization](#basics-authorization).
                    """
       params:
         description: """
@@ -218,7 +238,7 @@ module.exports = exports =
       description: """
                    Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).
                    
-                   Requires a MFA session token as [authentication](#basics-authentication).
+                   Requires a MFA session token as [authorization](#basics-authorization).
                    """
       result:
         http: "200 OK"
@@ -241,11 +261,12 @@ module.exports = exports =
       id: "mfa.verify"
       type: "method"
       title: "Verify MFA challenge"
+      httpOnly: true
       http: "POST /mfa/verify"
       description: """
                    Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
                    
-                   Requires a MFA session token as [authentication](#basics-authentication).
+                   Requires a MFA session token as [authorization](#basics-authorization).
                    """
       params:
         description: """
@@ -279,11 +300,12 @@ module.exports = exports =
       id: "mfa.deactivate"
       type: "method"
       title: "Deactivate MFA"
+      httpOnly: true
       http: "POST /mfa/deactivate"
       description: """
                    Deactivate MFA for a given Pryv.io user.
                    
-                   Requires a personal token as [authentication](#basics-authentication).
+                   Requires a personal token as [authorization](#basics-authorization).
                    """
       result:
         http: "200 OK"
@@ -353,6 +375,66 @@ module.exports = exports =
 
   ,
 
+    id: "callBatch"
+    type: "method"
+    title: "Call batch"
+    http: "POST /"
+    description: """
+                  Sends a batch of API methods calls in one go (e.g. for to syncing offline changes when resuming connectivity).
+                  """
+    params:
+      description: """
+                    Array of method call objects, each defined as follows:
+                    """
+      properties: [
+        key: "method"
+        type: "string"
+        description: """
+                      The method id.
+                      """
+      ,
+        key: "params"
+        type: "object or array"
+        description: """
+                      The call parameters as required by the method.
+                      """
+      ]
+    result:
+      http: "200 OK"
+      properties: [
+        key: "results"
+        type: "array of call results"
+        description: "The results of each method call, in order."
+      ]
+    examples: [
+      title: "Ensure stream path for a new event. In this example the 'health' stream already exists."
+      params: [
+        method: "streams.create"
+        params: _.pick(examples.streams.health[0], "id", "name")
+      ,
+        method: "streams.create"
+        params: _.pick(examples.streams.healthSubstreams[1], "id", "name", "parentId")
+      ,
+        method: "events.create"
+        params: _.pick(examples.events.heartRate, "streamIds", "type", "content")
+      ]
+      result:
+        results: [
+          error:
+            id: 'item-already-exists'
+            message: 'A stream with id \"health\" already exists'
+            data: 
+              id: 'health'
+        ,
+          stream:
+            examples.streams.healthSubstreams[1]
+        ,
+          event:
+            examples.events.heartRate
+        ]
+    ]
+  ,
+
     id: "events"
     title: "Events"
     description: """
@@ -379,20 +461,29 @@ module.exports = exports =
           type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
           optional: true
           description: """
-                       The end time of the timeframe you want to retrieve events for. Default is the current time. Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
+                       The end time of the timeframe you want to retrieve events for. Default is the current time if `fromTime` is set. We recommend to set both `fromTime` and `toTime` (for example by choosing a very small number for `fromTime` or a large one for `toTime` if you want to retrieve all events). Note: events are considered to be within a given timeframe based on their `time` only (`duration` is not considered).
                        """
         ,
           key: "streams"
-          type: "array of [identifier](##{dataStructure.getDocId("identifier")})"
+          type: "array of stream [identifiers](##{dataStructure.getDocId("identifier")}) or [streams query](##{dataStructure.getDocId("streams-query")})"
           optional: true
           description: """
-                       If set, only events assigned to the specified streams and their sub-streams will be returned. By default, all accessible events are returned regardless of their stream.
+
+                       **Array of streamIds:** Events assigned to any of the specified streams or their children will be returned.  
+
+                       or
+                       
+                       **[Streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations.  
+
+                       By default, all accessible events are returned regardless of their stream.
                        """
         ,
           key: "tags"
           type: "array of strings"
           optional: true
           description: """
+                       **(DEPRECATED)** Please use [streams query](##{dataStructure.getDocId("streams-query")}) instead.
+
                        If set, only events assigned to any of the listed tags will be returned.
                        """
         ,
@@ -474,6 +565,15 @@ module.exports = exports =
         result:
           events: [examples.events.picture, examples.events.activity, examples.events.position]
       ,
+        title: "cURL with streams query for activity or nutrition that are tagged with the health stream (URL encoded)"
+        params: """
+                ```bash
+                curl -i "https://${token}@${username}.pryv.me/events?streams=%7B%22any%22%3A%5B%22activity%22%2C%22nutrition%22%5D%2C%22all%22%3A%5B%22health%22%5D%7D"
+                ```
+                """
+        result:
+          events: [ examples.events.running, examples.events.vegetablesEaten ]
+      ,
         title: "cURL for multiple streams"
         params: """
                 ```bash
@@ -490,7 +590,8 @@ module.exports = exports =
                 ```
                 """
         result:
-          events: [examples.events.mass, examples.itemDeletions[0], examples.itemDeletions[1], examples.itemDeletions[2]]
+          events: [examples.events.mass]
+          eventDeletions: [examples.itemDeletions[0], examples.itemDeletions[1], examples.itemDeletions[2]]
       ]
 
     ,
@@ -559,13 +660,6 @@ module.exports = exports =
           description: """
                        The created event.
                        """
-        ,
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       (**DEPRECATED**)  
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of inserting the new event.
-                       """
         ]
       errors: [
         key: "invalid-operation"
@@ -573,110 +667,21 @@ module.exports = exports =
         description: """
                      The referenced stream is in the trash, and we prevent the recording of new events into trashed streams.
                      """
-      ,
-        key: "periods-overlap"
-        http: "400"
-        description: """
-                     (**DEPRECATED**)  
-                     Only in `singleActivity` streams: the new event overlaps existing period events. The overlapped events' ids are listed as an array in the error's `data.overlappedIds`.
-                     """
       ]
       examples: [
         title: "Capturing a simple number value"
-        params: _.pick(examples.events.mass, "streamId", "type", "content")
+        params: _.pick(examples.events.mass, "streamIds", "type", "content")
         result:
           event: examples.events.mass
       ,
         title: "cURL with attachment"
         content: """
                  ```bash
-                 curl -i -F 'event={"streamId":"#{examples.events.picture.streamId}","type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" "https://${token}@${username}.pryv.me/events"
+                 curl -i -F 'event={"streamIds":["#{examples.events.picture.streamId}"],"type":"#{examples.events.picture.type}"}'  -F "file=@#{examples.events.picture.attachments[0].fileName}" "https://${token}@${username}.pryv.me/events"
                  ```
                  """
         result:
           event: examples.events.picture
-      ]
-
-    ,
-
-      id: "events.start"
-      type: "method"
-      title: "Start period"
-      http: "POST /events/start"
-      description: """
-                   **(DEPRECATED)**    
-                   Starts a new period event. This is equivalent to starting an event with a null `duration`. In `singleActivity` streams, also stops the previously running period event if any.
-
-                   See [Create event](##{_getDocId("events", "events.create")}) for details.
-                   """
-      examples: [
-        title: "Starting an activity"
-        params: _.pick(examples.events.activityRunning, "streamId", "type")
-        resultHTTP: "201 Created" # add here as no result doc present above
-        result:
-          event: examples.events.activityRunning
-      ]
-
-    ,
-
-      id: "events.stop"
-      type: "method"
-      title: "Stop period"
-      http: "POST /events/stop"
-      description: """
-                   **(DEPRECATED)**  
-                   Stops a running period event. In `singleActivity` streams, which guarantee that only one event is running at any given time, that event is automatically determined; for regular streams, the event to stop (or its type) must be specified.
-                   """
-      params:
-        properties: [
-          key: "streamId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       (**DEPRECATED**)  
-                       The id of the `singleActivity` stream in which to stop the running event. Either this or `id` must be specified.
-                       """
-        ,
-          key: "id"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       The id of the event to stop. Either this or `streamId` (and possibly `type`) must be specified.
-                       """
-        ,
-          key: "type"
-          type: "string"
-          description: """
-                       The type of the event to stop. `streamId` must be specified as well. If there are multiple running events matching, the closest one (by time) will be stopped.
-                       """
-        ,
-          key: "time"
-          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
-          optional: true
-          description: """
-                       The stop time. Default: now.
-                       """
-        ]
-      result:
-        http: "200 OK"
-        properties: [
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       The id of the event that was stopped or null if no running event was found.
-                       """
-        ]
-      errors: [
-        key: "invalid-operation"
-        http: "400"
-        description: """
-                     The specified event is not a running period event.
-                     """
-      ]
-      examples: [
-        params:
-          streamId: examples.events.activityRunning.streamId
-          time: timestamp.now()
-        result:
-          stoppedId: examples.events.activityRunning.id
       ]
 
     ,
@@ -714,36 +719,16 @@ module.exports = exports =
           description: """
                        The updated event.
                        """
-        ,
-          key: "stoppedId"
-          type: "[identifier](##{dataStructure.getDocId("identifier")})"
-          description: """
-                       (**DEPRECATED**)  
-                       Only in `singleActivity` streams. If set, indicates the id of the previously running period event that was stopped as a consequence of modifying the event.
-                       """
         ]
-      errors: [
-        key: "invalid-operation"
-        http: "400"
-        description: """
-                     (**DEPRECATED**)  
-                     Only in `singleActivity` streams. The duration of the period event cannot be set to `null` (i.e. still running) if one or more other period event(s) exist later in time. The error's `data.conflictingEventId` provides the id of the closest conflicting event.
-                     """
-      ,
-        key: "periods-overlap"
-        http: "400"
-        description: """
-                     (**DEPRECATED**)  
-                     Only in `singleActivity` streams. The time and/or duration of the period event cannot be set to overlap with other period events. The overlapping events' ids are listed as an array in the error's `data.overlappedIds`.
-                     """
-      ]
+      errors: []
       examples: [
-        title: "Adding a tag"
+        title: "Changing streams"
         params:
+          id: "ckbs54rfh0014ik0sabqobcsb"
           update:
-            tags: ["home"]
+            streamIds: ["position"]
         result:
-          event: _.defaults({ tags: ["home"], modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
+          event: _.defaults({ id: "ckbs54rfh0014ik0sabqobcsb", streamIds: ["position"], streamId: "position", modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.events.position)
       ]
 
     ,
@@ -905,6 +890,7 @@ module.exports = exports =
 
   id: "hfs"
   title: "HF events"
+  entrepriseOnly: true
   description: """
                 Methods to manipulate high-frequency data through HF events and [HF series](##{dataStructure.getDocId("high-frequency-series")}).
                """
@@ -948,7 +934,7 @@ module.exports = exports =
       ]
       examples: [
         title: "Creating a new HF event that will hold HF series"
-        params: _.pick(examples.events.series.holderEvent, "streamId", "type")
+        params: _.pick(examples.events.series.holderEvent, "streamIds", "type")
         result:
           event: examples.events.series.holderEvent
 
@@ -1223,7 +1209,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      A similar stream already exists. The error's `data` contains the conflicting properties.
                      """
@@ -1235,7 +1221,7 @@ module.exports = exports =
                      """
       ]
       examples: [
-        title: "Create sub-stream 'diastolic' of 'heart'"
+        title: "Create sub-stream 'white-cells' of 'blood'"
         params: _.pick(examples.streams.healthSubstreams[0], "id", "name", "parentId")
         result:
           stream: examples.streams.healthSubstreams[0]
@@ -1279,7 +1265,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      A similar stream already exists. The error's `data` contains the conflicting properties.
                      """
@@ -1348,7 +1334,7 @@ module.exports = exports =
         params:
           id: examples.streams.health[0].children[2].id
         result:
-          event: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.streams.health[0].children[2])
+          stream: _.defaults({ trashed: true, modified: timestamp.now(), modifiedBy: examples.accesses.app.id }, examples.streams.health[0].children[2])
       ,
         title: "Deleting"
         params:
@@ -1363,7 +1349,7 @@ module.exports = exports =
     title: "Accesses"
     description: """
                  Methods to retrieve and manipulate [accesses](##{dataStructure.getDocId("access")}), e.g. for sharing.
-                 Any app can manage shared accesses whose permissions are a subset of its own. (Full access management is available to trusted apps.)
+                 Any app token can manage shared accesses it created. Full access management is available to personal tokens.
                  """
     sections: [
       id: "accesses.get"
@@ -1371,10 +1357,9 @@ module.exports = exports =
       title: "Get accesses"
       http: "GET /accesses"
       description: """
-                   Gets manageable accesses. Only returns accesses that can
-                   be managed by the requesting access and that are active when
-                   making the request. To include accesses that have expired, use
-                   the `includeExpired` parameter.
+                   Gets accesses that were created by your access token, unless you're using a personal token then it returns all accesses.  
+                   Only returns accesses that are active when making the request. To include accesses that have expired or were deleted, use
+                   the `includeExpired` or `includeDeletions` parameters respectively.
                    """
       params:
         properties: [
@@ -1465,7 +1450,8 @@ module.exports = exports =
       title: "Delete access"
       http: "DELETE /accesses/{id}"
       description: """
-                   Deletes the specified access. You can only delete accesses whose permissions are a subset of those granted to your own access token.
+                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.  
+                   All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
                    """
       params:
         properties: [
@@ -1485,11 +1471,25 @@ module.exports = exports =
           description: """
                        The deletion record.
                        """
+        ,
+          key: "relatedDeletions"
+          type: "array of [item deletions](##{dataStructure.getDocId("item-deletion")})"
+          optional: true
+          description: """
+                       The deletion records of all the shared accesses that were generated from this app token when deleting it
+                       """
         ]
       examples: [
         params:
-          id: examples.accesses.shared.id
-        result: {accessDeletion:{id:examples.accesses.shared.id}}
+          id: examples.accesses.app.id
+        result: 
+          accessDeletion:
+            id: examples.accesses.app.id
+          relatedDeletions: [
+            id: generateId()
+          ,
+            id: generateId()
+          ]
       ]
 
     ,
@@ -1547,11 +1547,38 @@ module.exports = exports =
         ]
       examples: []
     ]
+  ,
 
+    id: "getAccessInfo"
+    type: "method"
+    title: "Access Info"
+    http: "GET /access-info"
+    description: """
+                  Retrieves information about the access in use.
+                  """
+    result:
+      http: "200 OK"
+      description: """
+            The current [Access properties](##{dataStructure.getDocId("access")}), as well as:
+            """
+      properties: [
+        key: "calls"
+        type: "[key-value](##{_getDocId("key-value")})"
+        description: "A map of API methods and the number of time each of them was called using the current access."
+      ,
+        key: "user"
+        type: "[key-value](##{_getDocId("key-value")})"
+        description: "A map of user account properties."
+      ]
+    examples: [
+      params: {}
+      result: examples.accesses.info
+    ]
   ,
 
     id: "audit"
     title: "Audit"
+    entrepriseOnly: true
     description: """
                  Methods to retrieve [Audit logs](##{dataStructure.getDocId("audit-log")}).
                  """
@@ -1560,6 +1587,7 @@ module.exports = exports =
       type: "method"
       title: "Get audit logs"
       http: "GET /audit/logs"
+      httpOnly: true
       description: """
                    Fetches accessible audit logs.
                    By default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).
@@ -1571,7 +1599,7 @@ module.exports = exports =
           optional: true
           description: """
                        The id of a specific access to audit.
-                       When specified, it fetches the audit logs that involve the matching access instead of the one used to authenticate this call.
+                       When specified, it fetches the audit logs that involve the matching access instead of the one used to authorize this call.
                        It has to correspond to a sub-access (expired and deleted included) in regards to the provided authorization token.
                        """
         ,
@@ -1650,7 +1678,6 @@ module.exports = exports =
         ]
       examples: [
         params: {
-          "auth": examples.audit.auth,
           "accessId": examples.audit.log1.accessId,
           "fromTime": 1561000000,
           "toTime": 1562000000,
@@ -1675,6 +1702,7 @@ module.exports = exports =
 
     id: "webhooks"
     title: "Webhooks"
+    entrepriseOnly: true
     description: """
                  Methods to retrieve and manipulate [webhooks](##{dataStructure.getDocId("webhook")}). These methods are only allowed for app and personal accesses.
                  """
@@ -1748,7 +1776,7 @@ module.exports = exports =
       title: "Create webhook"
       http: "POST /webhooks"
       description: """
-                   Creates a new webhook. You can only create webhooks with app accesses.
+                   Creates a new webhook. You can only create webhooks with `app` and `shared` accesses.
                    """
       params:
         description: """
@@ -1777,7 +1805,7 @@ module.exports = exports =
       title: "Update webhook"
       http: "PUT /webhooks/{id}"
       description: """
-                   Modifies the webhook. You can only modify webhooks with the app access that was used to create them, unless you are using a personal token.  
+                   Modifies the webhook. You can only modify webhooks with the access that was used to create them, unless you are using a personal token.  
                    Updating the `state` to `active` resets the `currentRetries` counter.
                    """
       params:
@@ -1809,7 +1837,7 @@ module.exports = exports =
         ]
       errors: [
         key: "item-already-exists"
-        http: "400"
+        http: "409"
         description: """
                      There is already a webhook for this URL created by the given access.
                      """
@@ -1829,7 +1857,7 @@ module.exports = exports =
       title: "Delete webhook"
       http: "DELETE /webhooks/{id}"
       description: """
-                   Deletes the specified webhook. You can only delete webhooks with the app access that was used to create them, unless you are using a personal token.
+                   Deletes the specified webhook. You can only delete webhooks with the access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [
@@ -1863,7 +1891,7 @@ module.exports = exports =
       title: "Test webhook"
       http: "POST /webhooks/{id}/test"
       description: """
-                   Sends a post request containing a message called `test` to the URL of the specified webhook's `url`. You can only test webhooks with the app access that was used to create them, unless you are using a personal token.
+                   Sends a post request containing a message called `test` to the URL of the specified webhook's `url`. You can only test webhooks with the access that was used to create them, unless you are using a personal token.
                    """
       params:
         properties: [
@@ -2209,6 +2237,8 @@ module.exports = exports =
       title: "Get account information"
       http: "GET /account"
       description: """
+                   **(DEPRECATED)** Please use events methods instead.  
+
                    Retrieves the user's account information.
                    """
       result:
@@ -2233,6 +2263,8 @@ module.exports = exports =
       title: "Update account information"
       http: "PUT /account"
       description: """
+                   **(DEPRECATED)** Please use events methods instead.  
+
                    Modifies the user's account information.
                    """
       params:
@@ -2254,7 +2286,13 @@ module.exports = exports =
                        The updated account information.
                        """
         ]
-      examples: []
+      examples: [
+        params:
+          email: examples.users.two.email
+        result:
+          account: _.omit(examples.users.two, "id", "password")
+
+      ]
 
     ,
 
@@ -2328,7 +2366,7 @@ module.exports = exports =
       title: "Reset password"
       http: "POST /account/reset-password"
       description: """
-                   Resets the user's password, authenticating the request with the given reset token (see [request password reset](##{_getDocId("account", "account.requestPasswordReset")}) ).  
+                   Resets the user's password, authorizing the request with the given reset token (see [request password reset](##{_getDocId("account", "account.requestPasswordReset")}) ).  
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
@@ -2361,96 +2399,6 @@ module.exports = exports =
         result: {}
       ]
     ]
-
-  ,
-
-    id: "utils"
-    title: "Utils"
-    description: """
-                 Utility methods that don't pertain to a particular resource type.
-                 """
-    sections: [
-      id: "getAccessInfo"
-      type: "method"
-      title: "Get current access info"
-      http: "GET /access-info"
-      description: """
-                   Retrieves information about the access in use.
-                   """
-      result:
-        http: "200 OK"
-        description: """
-              The current [Access properties](##{dataStructure.getDocId("access")}), as well as:
-              """
-        properties: [
-          key: "calls"
-          type: "[key-value](##{_getDocId("key-value")})"
-          description: "A map of API methods and the number of time each of them was called using the current access."
-        ]
-      examples: [
-        params: {}
-        result: examples.accesses.info
-      ]
-
-    ,
-
-      id: "callBatch"
-      type: "method"
-      title: "Call batch"
-      http: "POST /"
-      description: """
-                   Sends a batch of API methods calls in one go (e.g. for to syncing offline changes when resuming connectivity).
-                   """
-      params:
-        description: """
-                     Array of method call objects, each defined as follows:
-                     """
-        properties: [
-          key: "method"
-          type: "string"
-          description: """
-                       The method id.
-                       """
-        ,
-          key: "params"
-          type: "object or array"
-          description: """
-                       The call parameters as required by the method.
-                       """
-        ]
-      result:
-        http: "200 OK"
-        properties: [
-          key: "results"
-          type: "array of call results"
-          description: "The results of each method call, in order."
-        ]
-      examples: [
-        title: "Sync some health metrics"
-        params: [
-          method: "events.create"
-          params: _.pick(examples.events.heartRate, "time", "streamId", "type", "content")
-        ,
-          method: "events.create"
-          params: _.pick(examples.events.heartSystolic, "time", "streamId", "type", "content")
-        ,
-          method: "events.create"
-          params: _.pick(examples.events.heartDiastolic, "time", "streamId", "type", "content")
-        ]
-        result:
-          results: [
-            event:
-              examples.events.heartRate
-          ,
-            event:
-              examples.events.heartSystolic
-          ,
-            event:
-              examples.events.heartDiastolic
-          ]
-      ]
-    ]
-
   ]
 
 # Returns the in-doc id of the given method, for safe linking from other doc sections

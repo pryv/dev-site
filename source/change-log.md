@@ -4,14 +4,136 @@ title: API change log
 template: default.jade
 ---
 
+## 1.6.20
+
+New routes:
+
+- [Deactivate MFA](/reference-admin/#deactivate-mfa-for-user) for admin API, for when the user has lost his 2nd factor.
+
+## 1.6.19
+
+New routes:
+
+- [Get core](/reference-system/#get-core) API method that returns the hostname of the core on which a certain user data is stored.
+
+## 1.6.7
+
+New Features:
+
+- [Streams query](/reference/#streams-query) for [events.get API method](/reference/#get-events)
+
+Removals:
+
+- Deprecated "GET /who-am-i" API method removed
+- Remove pryvuser-cli, as it is now available through the [admin API](/reference-admin/)
+
+## 1.6.2
+
+Changes:
+
+- Custom auth function has now access to all request headers. See [custom authentication guide](/guides/custom-auth/).
+
+## 1.6.1
+
+Changes:
+
+- increase JSON input payload to 10MB for HF server. See [Data format](/reference/#data-format).
+
+## v1.6.0
+
+New features:
+
+- System streams:
+  - Customizable unique and indexed properties for registration
+  - Account data accessible through Events API
+  - More details on [System streams](/customer-resources/system-streams/)
+- Admin API:
+  - Edit platform parameters
+  - Manage platform users
+  - More details on [Admin reference](/reference-admin/)
+- Admin Panel:
+  - Web application for entreprise Pryv.io platform administration
+
+Changes:
+
+- New registration flow, more details on [Account creation](/reference-system/#account-creation)
+
+Deprecated:
+
+- Old registration flow
+
+## v1.5.22
+
+Changes:
+
+- Deleting an app token deletes the shared accesses that were generated from it (if any).
+
+## v1.5.18
+
+New Features:
+
+- Call 'GET /access-info' now returns the username to avoid having to extract it manually from `pryvApiEndpoint`.
+
+Changes:
+
+- Call 'POST /user' (create user) on register. The property `server` is now deprecated in favor of `apiEnpoint`.
+
+## v1.5.8
+
+New Features:
+
+- Socket.io v2
+
+Removals:
+
+- Socket.io v0.9
+
+## v1.5.6
+
+Changes:
+
+- Webhooks API routes now available for `shared` accesses.
+- Socket.io interface availablel for `shared` accesses.
+- Socket.io interface availablel for accesses with `create-only` permissions.
+
+## v1.5.5
+
+New feature: 
+
+- Access permission `{ "feature": "selfRevoke", "setting": "forbidden"}`, more details on [Access data structure](/reference/#access).
+
+## v1.5
+
+New Features:
+
+- Events can now be part of multiple streamIds
+- `authUrl` replaces `url` in **Auth request** in-progress response
+- `pryvApiEndpoint` replaces `username` and `token` in **Auth request** accepted response
+- `accesses.delete` has been extended for self revocation to `shared` and `app` accesses
+
+Deprecated:
+
+- `event.streamId`: replaced by `event.streamIds`
+- `event.tags`: their functionality will soon be totally replaced by streamIds
+- `url` in **Auth request** in-progress response
+- `username` and `token` in **Auth request** accepted response
+
+Removals:
+
+- Timetracking functionalities have been removed
+  - singleActivity streams are now standard streams
+  - `events.start`
+  - `events.stop`
+- `accesses.update`
+
 ## V1.4
 
 New features:
- - Auth request now accepts a custom `serviceInfo` object, which is returned by the polling url. In case of success, a `pryvApiEndpoint` field is returned. See [Auth request](/reference/#authorizing-your-app) for more details.
+ - Auth request now accepts a custom `serviceInfo` object, which is returned by the polling url. In case of success, a `pryvApiEndpoint` field is returned. See [Auth request](/reference/#auth-request) for more details.
  - Add `create-only` permission level. See the [Access data structure](/reference/#access) for more details.
- - Add multi-factor authentication for login using the optional MFA service. See the [MFA API methods](/reference-full/#multi-factor-authentication) for more details.
+ - Add multi-factor authentication for login using the optional MFA service. See the [MFA API methods](/reference/#multi-factor-authentication) for more details.
  - Add auditing capabilities through the Audit API. See the [Audit API methods](/reference/#audit) for more details.
- - Pryv.io API now supports the Basic HTTP Authentication scheme.
+ - Pryv.io API now supports the Basic HTTP Authorization scheme.
  - Release of webhooks to notify of data changes. See Webhook [data structure](/reference/#webhook) and [methods](/reference/#webhooks) for more details.
  - Add route `/service/info` that provides a unified way for third party services to access the necessary information related to a Pryv.io platform. See [description](/reference/#service-info) for more details.
  - Most API calls now present a `Pryv-Access-Id` response header that contains the id of the access used for the call. This is the case only when a valid authorization token has been provided during the request (even if the token is expired). See [metadata](/reference/#in-http-headers) for more details.
@@ -20,6 +142,13 @@ Changes:
 
  - Enrich [access-info](/reference/#get-current-access-info) result with exhaustive access properties.
  - Improve the update account API call, in particular when it applies a change of email address. It now correctly checks if the email address is not already in use before updating the account and throws consistent errors.
+
+Deprecated:
+
+- Timetracking functionalities
+  - singleActivity streams
+  - events.start
+  - events.stop
 
 ## V1.3
 

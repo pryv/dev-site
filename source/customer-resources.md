@@ -12,11 +12,7 @@ In this space you will find links and reference documents that will help you mak
 
 - API Reference: [api.pryv.com/reference](/reference/)
 
-  This reference can be shared with 3rd party and in-house application developers to interact with the Pryv.io platform.
-
-- API Reference including Trusted Apps: [api.pryv.com/reference-full](/reference-full/)
-
-  This reference contains the previous methods' reference and additional resources to develop a trusted application. Only for in-house developments as the platform owner.
+  This reference contains the documentation for application developers to interact with the Pryv.io platform.
 
 - API Reference for system management: [api.pryv.com/reference-system](/reference-system/)
 
@@ -30,26 +26,36 @@ In this space you will find links and reference documents that will help you mak
 
   In addition to the full reference, this includes upcoming features marked with a `PREVIEW` label.
 
-## Documents
+## Guides and Documents
 
-- Deployment Design Guide: [PDF](/assets/docs/deployment_design_guide_v6.pdf)
+- Pryv.io platform setup guide: [HTML](/customer-resources/pryv.io-setup/)
+
+- Infrastructure procurement (Previously "Deployment design guide"): [HTML](/customer-resources/infrastructure-procurement/)
 
   This document describes how to deploy a Pryv.io platform as well as essential information to help you decide on your infrastructure and sizing needs.
   You will also find information about how to operate your Pryv.io platform.
 
-- Installation validation: [PDF](/assets/docs/20190131-pryv.io-verification-v3.pdf)
+- Generate SSL certificate: [HTML](/customer-resources/ssl-certificate/)
 
-  This document describes some steps to validate that a Pryv.io platform is up and running after deployment.
+  This document describes how to obtain a wildcard SSL certificate for your running Pryv.io platform using Let's Encrypt.
 
-- System monitoring: [PDF](/assets/docs/20190201-API-healthchecks-v4.pdf)
+- Installation validation: [HTML](/customer-resources/platform-validation/)
 
-  This document describes some steps to perform regular healthcheck on a running Pryv.io platform.
+  This document describes the steps to validate that a Pryv.io platform is up and running after deployment.
 
-- DNS configuration: [PDF](/assets/docs/20190501-dns-config-v3.pdf)
+- System monitoring: [HTML](/customer-resources/healthchecks/)
+
+  This document describes the steps to perform regular healthchecks on a running Pryv.io platform.
+
+- System streams: [HTML](/customer-resources/system-streams/)
+
+  This document describes how to setup and configure your platform's system streams.
+
+- DNS configuration: [HTML](/customer-resources/dns-config/)
 
   This document describes how to add entries in your Pryv.io associated domain DNS zone.
 
-- Emails configuration: [PDF](/assets/docs/20190508-pryv.io-emails-v4.pdf)
+- Emails configuration: [HTML](/customer-resources/emails-setup/)
 
   This document describes how to configure the sending of Pryv.io emails for welcoming new users or resetting lost passwords.
 
@@ -65,23 +71,21 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to migrate a Pryv.io register service to a different machine.
 
-- User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
+- (deprecated) User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
 
-  This document presents a tool which allows to delete Pryv.io users.
+  This document presents a tool which allows to delete Pryv.io users. From Pryv.io 1.6, user deletion is available through the [admin API](/reference-admin/#delete-user)
 
-- How to backup: [PDF](/assets/docs/20191007-pryv.io-backup-v1.pdf)
+- How to backup: [HTML](/customer-resources/backup/)
 
   This document describes how to perform a backup of your Pryv.io platform and how to restore it in case of any data loss.
 
-- MFA configuration: [PDF](/assets/docs/20191205-pryv.io-mfa-v2.pdf)
+- MFA configuration: [HTML](/customer-resources/mfa/)
 
   This document describes how to enable and configure multi-factor authentication on top of Pryv.io logins.
 
 ## Development resources
 
-- Authorization web application (app-web-auth v3): [Github](https://github.com/pryv/app-web-auth3)
-
-  This sample application provides a starting point to implement your own authorization or consent flow application. You might want to fork this repository and modify the code to fit your needs if you want to allow third party applications to interact with your platform.
+See the [Apps & Libs page](/external-resources/) for our example applications and libraries.
 
 ## Contact and support
 

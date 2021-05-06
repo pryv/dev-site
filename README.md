@@ -24,6 +24,7 @@ See `dev-env/setup.sh` for more details.
 - `make clean` cleans up the `build` folder (not done by build/watch)
 - `make publish` builds and publishes the website
 - `yarn webserver` to run the site locally on [https://l.rec.la:4443/](https://l.rec.la:4443/)
+- `yarn openapi` generate open-api definitions
 
 (Read `makefile` for details.)
 
@@ -41,7 +42,13 @@ See `dev-env/setup.sh` for more details.
 
 See the [Pryv guidelines](http://pryv.github.io/guidelines/).
 
+### Jade
+
+If you're fighting with jade, compile the result with `make build`, then right-click + "View Page Source" to see the result.
+
 
 ## License
 
-[Revised BSD license](https://github.com/pryv/documents/blob/master/license-bsd-revised.md)
+Unlicensed 
+
+Copyright (c) 2020 Pryv S.A.
