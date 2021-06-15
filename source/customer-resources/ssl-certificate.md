@@ -51,7 +51,7 @@ Launch the process using:
 certbot certonly --manual --preferred-challenges dns
 ```
 
-When prompted for the domain, enter `*.DOMAIN` and accept to share the IP address by pressing `ENTER`.
+When prompted for the domain, enter `*.${DOMAIN}` and accept to share the IP address by pressing `ENTER`.
 
 Now, the CLI will ask you to set a certain key to the TXT Record `_acme-challenge`. Enter it in the platform variables by adding the following field as following:
 
@@ -69,23 +69,32 @@ Now, the CLI will ask you to set a certain key to the TXT Record `_acme-challeng
 
 And reboot the follower and Pryv.io services.
 
-Verify that the key is set by running:  
+Verify that the key is querying the name servers.  
+
+If you are running a single-node platform or cluster with a single DNS, you can run:  
 
 ```bash
-dig @dns1.DOMAIN TXT _acme-challenge.DOMAIN
+dig @reg.${DOMAIN} TXT _acme-challenge.${DOMAIN}
+```
+
+If you are running a cluster platform with more than 1 DNS, run:
+
+```bash
+dig @${NS1_HOSTNAME} TXT _acme-challenge.${DOMAIN}
+dig @${NS2_HOSTNAME} TXT _acme-challenge.${DOMAIN}
 ```
 
 Once you get the right key, go back to the CLI and press ENTER.
 
-You should now have a certificate in `/etc/letsencrypt/live/DOMAIN/`.
+You should now have a certificate in `/etc/letsencrypt/live/${DOMAIN}/`.
 
 ## Reorganize SSL certificate files
 
 Rename the files to match the NGINX settings:
 
 ```bash
-mv fullchain.pem DOMAIN-bundle.crt
-mv privkey.pem DOMAIN-key.pem
+mv fullchain.pem ${DOMAIN}-bundle.crt
+mv privkey.pem ${DOMAIN}-key.pem
 ```
 
 You might have to copy them as `live/` holds symbolic links.
