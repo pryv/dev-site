@@ -77,7 +77,7 @@ If you are running a single-node platform or cluster with a single DNS, you can 
 dig @reg.${DOMAIN} TXT _acme-challenge.${DOMAIN}
 ```
 
-If you are running a cluster platform with more than 1 DNS, run:
+If you are running a cluster platform with more than one DNS, run:
 
 ```bash
 dig @${NS1_HOSTNAME} TXT _acme-challenge.${DOMAIN}
