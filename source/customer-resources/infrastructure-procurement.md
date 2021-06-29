@@ -131,13 +131,13 @@ Docker versions:
 
 ### Single Node
 
-| Aspect               | Minimal Requirement              |
-| -------------------- | -------------------------------- |
-| RAM                  | 4 GB                             |
-| CPU Cores            | 2                                |
-| OS Disk              | 15 GB                             |
-| Data Disk            | Depending on storage needs       |
-| Service ports        | tcp/443, udp/53                  |
+| Aspect                | Minimal Requirement              |
+| --------------------- | -------------------------------- |
+| RAM                   | 4 GB                             |
+| CPU Cores             | 2                                |
+| Pryv.io services size | 30 GB                            |
+| Data size             | Depending on storage needs       |
+| Service ports         | tcp/443, udp/53                  |
 
 ### Static-web
 
@@ -145,8 +145,8 @@ Docker versions:
 | -------------------- | -------------------- |
 | RAM                  | 512 MB               |
 | CPU Cores            | 1                    |
-| OS Disk              | 15 GB                 |
-| Data Disk            | not needed           |
+| Pryv.io services size | 30 GB               |
+| Data size             | not needed          |
 | Service ports        | tcp/443              |
 
 ### Register
@@ -155,8 +155,8 @@ Docker versions:
 | -------------------- | -------------------- |
 | RAM                  | 2 GB                  |
 | CPU Cores            | 1                    |
-| OS Disk              | 15 GB                 |
-| Data Disk            | 15 GB                 |
+| Pryv.io services size | 30 GB               |
+| Data size             | 15 GB                 |
 | Service ports        | tcp/443, udp/53      |
 
 If you foresee a big number of user accounts (> 100'000), please increase the data disk space.
@@ -167,8 +167,8 @@ If you foresee a big number of user accounts (> 100'000), please increase the da
 | -------------------- | ------------------------- |
 | RAM                  | 4 GB                       |
 | CPU Cores            | 2                         |
-| OS Disk              | 15 GB                      |
-| Data Disk            | 15 GB                      |
+| Pryv.io services size | 30 GB               |
+| Data size             | 15 GB                 |
 | Service ports        | tcp/443                   |
 
 Here's a matrix that shows how various load situations affect the resource needs of your *core* server(s):
