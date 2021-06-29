@@ -126,8 +126,8 @@ Linux:
 
 Docker versions:
 
-- Docker v19
-- Docker-compose 1.21
+- Docker v19 or later
+- Docker-compose 1.21 or later
 
 ### Single Node
 
@@ -145,7 +145,7 @@ Docker versions:
 | -------------------- | -------------------- |
 | RAM                  | 512 MB               |
 | CPU Cores            | 1                    |
-| Pryv.io services size | 30 GB               |
+| Pryv.io services size | 10 GB               |
 | Data size             | not needed          |
 | Service ports        | tcp/443              |
 
@@ -155,7 +155,7 @@ Docker versions:
 | -------------------- | -------------------- |
 | RAM                  | 2 GB                  |
 | CPU Cores            | 1                    |
-| Pryv.io services size | 30 GB               |
+| Pryv.io services size | 20 GB               |
 | Data size             | 15 GB                 |
 | Service ports        | tcp/443, udp/53      |
 
@@ -168,7 +168,7 @@ If you foresee a big number of user accounts (> 100'000), please increase the da
 | RAM                  | 4 GB                       |
 | CPU Cores            | 2                         |
 | Pryv.io services size | 30 GB               |
-| Data size             | 15 GB                 |
+| Data size             | Depending on storage needs |
 | Service ports        | tcp/443                   |
 
 Here's a matrix that shows how various load situations affect the resource needs of your *core* server(s):
