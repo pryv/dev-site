@@ -152,7 +152,7 @@ module.exports = exports =
       id: "call-methods"
       title: "Call methods"
       description: """
-                   You call API methods by sending a corresponding Socket.IO `{method-id}` message, passing a parameters object and a callback:
+                   You call API methods by sending a corresponding Socket.IO [`{method-id}`](#method-ids) message, passing a parameters object and a callback:
 
                    ```javascript
                    // javascript
@@ -161,7 +161,7 @@ module.exports = exports =
                    });
                    ```
 
-                   See each method's doc for its id.
+                   See [methods ids](#method-ids)
                    """
       errors: [
         key: "invalid-method"
@@ -237,6 +237,22 @@ module.exports = exports =
                 ```
                 """
       ]
+    ]
+
+  ,
+
+    id: "method-ids"
+    title: "Method ids"
+    description: """
+                 Pryv.io API methods have ids that are available at each method's doc. For example, the id of the [Get events](#get-events) method is `events.get`.  
+                 This id is useful in the following:  
+
+                 - when calling an API method [using websockets](#call-with-websockets)
+                 - when making a [batch call](#call-batch)
+                 - for filtering per method id when fetching [audit logs](/guides/audit.log/)
+                 """
+    sections: [
+
     ]
 
   ,
