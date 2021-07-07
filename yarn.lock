@@ -1299,9 +1299,9 @@ read-metadata@0.0.2:
     yaml-js "0.0.8"
 
 rec-la@^0.1.11:
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/rec-la/-/rec-la-0.1.19.tgz#765317c0a3daeed7dbb706c1127737504c5adad5"
-  integrity sha512-mLTP66zogCez4+APiiO/Ji4aZzJgwg9blxNr4zxtjuziTxQa5PsNYKRr8e0TkwARDJP4qn0XJfy9QncB2uc1Ow==
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/rec-la/-/rec-la-0.1.20.tgz#ae576e016bb15cf5f9105e09641abffeaf40a197"
+  integrity sha512-2rExcqUY4L/6xw5BVSbGRZwZWYYufnchBgj9Eg9DP4Hj8MYFiwOwZ7lnpsrfXpajzImVrZs8DNfQT2fTwPLtQA==
   dependencies:
     cert2json "^1.0.10"
     express "^4.14.0"
