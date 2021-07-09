@@ -123,6 +123,14 @@ Here is the detailed list of parameters:
 Preferably these values should be modified with care, because fields like isUnique or isIndexed are not be updated after settings a update. They will be set for new user accounts, or through [event updates](/reference/#update-events) for existing ones.  
 If you remove system streams that have events, these events will become unreachable.
 
+## Platform settings
+
+You can find these settings in the platform configuration under the **Advanced API settings** tab, in the `ACCOUNT_SYSTEM_STREAMS` and `OTHER_SYSTEM_STREAMS` variables:
+
+```json
+"[{\"isIndexed\": true,\"isUnique\": true,\"isShown\": true,\"isEditable\": true,\"type\": \"email/string\",\"name\": \"Email\",\"id\": \"email\",\"isRequiredInValidation\": true}]"
+```
+
 # Backward compatibility
 
 Pryv.io 1.7.0 changes the system streams ids from `.` (dot) to `:_system:` and `:system:`. However, this change might break some customer applications that depended on the old syntax.  
