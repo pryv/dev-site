@@ -12,7 +12,7 @@ Changes:
   - See the [Audit logs guide](/guides/audit-logs/) for API usage  
   - See the [Audit setup guide](/customer-resources/audit-setup/) on how to set it up on your Pryv.io platform  
   - Audit logs are now available through the [Events API](/reference/#get-events), deprecating the [previous route](/reference/#get-audit-logs) and its [data structure](/reference/#audit-log)
-- System streams have been modified. Their prefix changes from `.` to `:_system:` & `:system:`. See the [System streams page](/customer-resources/system-streams/) for details.
+- System streams have been modified. Their prefix changes from `.` (dot) to `:_system:` & `:system:`. See the [System streams page](/customer-resources/system-streams/) for details.
 
 ## 1.6.20
 
