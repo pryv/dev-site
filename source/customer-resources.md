@@ -59,9 +59,9 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to configure the sending of Pryv.io emails for welcoming new users or resetting lost passwords.
 
-- Audit configuration: [PDF](/assets/docs/20190718-pryv.io-audit-v5.pdf)
+- Audit configuration: [HTML](/customer-resources/audit-setup/)
 
-  This document describes how to enable audit capabilities for your Pryv.io platform by configuring the Pryv.io router service and the audit API.
+  This document describes how to setup audit capabilities for your Pryv.io platform.
 
 - Core migration: [PDF](/assets/docs/20190604-migrate-core-v1.pdf)
 
