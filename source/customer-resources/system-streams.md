@@ -12,22 +12,26 @@ This document explains how to setup system streams.
 
 # System streams
 
-System streams are a predefined set of streams. They are loaded in memory by Pryv.io and not stored in the database. The base system streams contain the structure to store user account data, which can be extended in the platform configuration to include additional unique or indexed fields (more on that later in this document).
+System streams are a predefined set of streams. They are loaded in memory by Pryv.io and not stored in the database.  
+The base system streams contain the structure to store user account data, which can be extended in the platform configuration with custom streams to include additional unique or indexed fields (more on that later in this document).
 
-System streams can be recognized by their id prefixed by a **dot**.
+System streams can be recognized by their id prefixed by `:_system:` or `:system:`. In versions prior to 1.7 it was `.` (dot), See [backward compatiblity](#backward-compatibility) if you need to migrate your platform.
 
 The base system streams are the following:
 
 ```
-|_.account
-  |_.username
-  |_.language
-  |_.storageUsed
-    |_.dbDocuments
-    |_.attachedFiles
-|_.helpers
-  |_.active
+|_account
+  |_username
+  |_language
+  |_storageUsed
+    |_dbDocuments
+    |_attachedFiles
+|_helpers
+  |_active
+  |_unique
 ```
+
+They are prefixed with `:_system:`. Custom system streams that you define are prefixed with `:system:`.
 
 Please note that we have removed email from the default account, as some Pryv.io platforms don't include email for account anonymity. It can be added through custom streams in the platform configuration and is present in the template configuration we provide.
 
@@ -45,7 +49,7 @@ Some account properties can be marked as indexed, meaning they will be available
 
 Values of the system streams are stored in the [Events data structure](/reference/#event), you can define whether this event is editable or read-only after account registration.
 
-## Mandatory or optional
+## Mandatory or optional at registration
 
 Some values can be optional during the registration process.
 
@@ -113,3 +117,17 @@ Here is the detailed list of parameters:
 - **isShown**: Whether the stream and its events will be returned by [streams](/reference/#streams), [events](/reference/#events) or [account](/reference/#account-management) methods
     * boolean
     * optional, default false
+
+## Modification
+
+Preferably these values should be modified with care, because fields like isUnique or isIndexed are not be updated after settings a update. They will be set for new user accounts, or through [event updates](/reference/#update-events) for existing ones.  
+If you remove system streams that have events, these events will become unreachable.
+
+# Backward compatibility
+
+Pryv.io 1.7.0 changes the system streams ids from `.` (dot) to `:_system:` and `:system:`. However, this change might break some customer applications that depended on the old syntax.  
+
+To prevent this, we have introduced a platform setting so your Pryv.io platform accepts and returns system stream ids with the old `.` (dot) prefix.  
+You can find the backward compatibility setting in the platform configuration under the **Advanced API settings** tab, in the `BACKWARD_COMPATIBILITY_SYSTEM_STREAMS_PREFIX` variable.
+
+In order to migrate your applications at your pace, you can make API calls with the `disable-backward-compatibility-prefix: true` header to use the new prefix format.
