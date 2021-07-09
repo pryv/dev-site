@@ -1589,6 +1589,8 @@ module.exports = exports =
       http: "GET /audit/logs"
       httpOnly: true
       description: """
+                   **(DEPRECATED)** Please use the [Get events method](#get-events) instead.  
+                   
                    Fetches accessible audit logs.
                    By default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).
                    """
