@@ -33,25 +33,27 @@ The base system streams are the following:
 
 They are prefixed with `:_system:`. Custom system streams that you define are prefixed with `:system:`.
 
-Please note that we have removed email from the default account, as some Pryv.io platforms don't include email for account anonymity. It can be added through custom streams in the platform configuration and is present in the template configuration we provide.
+Please note that we have removed email from the default account, as some Pryv.io platforms don't include email for account anonymity. It can be added through custom streams in the platform configuration and is present by default in the template configuration we provide.
+
+There are 2 sets of custom streams that you may define: "account" and "other" ones. *Account* custom streams are children of the **account** stream and may have additionnal properties such as **unicity**, **indexation** and **requiredness at registration**. *Other* streams are located at the root of the streams.
 
 Here are the settings that you can configure for these system streams outside of their structure:
 
 ## Unicity
 
-You can define fields additional to `username` whose unicity constraint will be ensured platform-wide. These are often used for properties such as email or insurance number.
+You can define fields additional to `username` whose unicity constraint will be ensured platform-wide. These are often used for properties such as email or insurance number. Only available for account.
 
 ## Indexed
 
-Some account properties can be marked as indexed, meaning they will be available through the system API to fetch accross all accounts: [GET /users](/reference-system/#get-users).
+Some account properties can be marked as indexed, meaning they will be available through the system API to fetch accross all accounts: [GET /users](/reference-system/#get-users). Only available for account.
 
 ## Editability
 
-Values of the system streams are stored in the [Events data structure](/reference/#event), you can define whether this event is editable or read-only after account registration.
+Values of the system streams are stored in the [Events data structure](/reference/#event), you can define whether this event is editable or read-only after account registration. Only available for account.
 
-## Mandatory or optional at registration
+## Requiredness at registration
 
-Some values can be optional during the registration process.
+Some values can be required during the registration process. Only available for account.
 
 ## Format
 
@@ -63,30 +65,32 @@ You can define the `type` of the events that will be used to store the values.
 
 ## Visibility
 
-You can make some values stored at registration and indexed, but not to appear Pryv.io API outside of the administration API.
+You can make some values stored at registration and indexed, but not to appear Pryv.io API outside of the administration API. Only available for account.
 
 # Configuration
 
-By default, you platform configuration will contain the single email account stream which will appear as following:
+By default, your platform configuration will contain the single email account system stream which will appear as following:
 
 ```json
-{
-  "account": [
+[
     {
-      "id": "email",
-      "name": "Email",
-      "type": "email/string",
-      "isUnique": true,
-      "isIndexed": true,
-      "isEditable": true,
-      "isRequiredInValidation": true,
-      "isShown": true
+        "id": "email",
+        "name": "Email",
+        "type": "email/string",
+        "isUnique": true,
+        "isIndexed": true,
+        "isEditable": true,
+        "isRequiredInValidation": true,
+        "isShown": true
     }
-  ]
-}
+]
 ```
 
-Unicity and index properties won't work properly if added after the launch of the platform. As the values recorded previously will not be synchronized in the register database.
+Regarding *other* streams, it will be empty by default:
+
+```json
+[]
+```
 
 Here is the detailed list of parameters:
 
@@ -119,6 +123,8 @@ Here is the detailed list of parameters:
     * optional, default false
 
 ## Modification
+
+Unicity and index properties won't work properly if added after the launch of the platform. As the values recorded previously will not be synchronized in the register database.
 
 Preferably these values should be modified with care, because fields like isUnique or isIndexed are not be updated after settings a update. They will be set for new user accounts, or through [event updates](/reference/#update-events) for existing ones.  
 If you remove system streams that have events, these events will become unreachable.
