@@ -111,7 +111,7 @@ Here is the detailed list of parameters:
     * optional, default false
 - **isEditable**: Whether you can modify the events
     * boolean
-    * optional, default false
+    * optional, default true
 - **isRequiredInValidation**: Whether the field must exist in the [user registration call](/reference-system/#create-user)
     * boolean
     * optional, default false
@@ -120,7 +120,7 @@ Here is the detailed list of parameters:
     * optional, default null
 - **isShown**: Whether the stream and its events will be returned by [streams](/reference/#streams), [events](/reference/#events) or [account](/reference/#account-management) methods
     * boolean
-    * optional, default false
+    * optional, default true
 
 ## Modification
 
