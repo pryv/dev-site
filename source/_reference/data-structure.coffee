@@ -147,7 +147,7 @@ module.exports = exports =
         key: "integrity"
         type: "string"
         description: """
-                     A hash of the file, following **subresource integrity (SRI)** specifcation [See W3.org/TR/SRI](https://www.w3.org/TR/SRI/)
+                     SHA-256 hash of the file, encoded in base64, `sha256-....` following **subresource integrity (SRI)** specifcation [See W3.org/TR/SRI](https://www.w3.org/TR/SRI/)
                      """
       ]
     ,
