@@ -4,6 +4,28 @@ title: API change log
 template: default.jade
 ---
 
+## 1.7.0
+
+Changes:
+
+- Audit has been re-implemented, offering improved performance:  
+  - See the [Audit logs guide](/guides/audit-logs/) for API usage  
+  - See the [Audit setup guide](/customer-resources/audit-setup/) on how to set it up on your Pryv.io platform  
+  - Audit logs are now available through the [Events API](/reference/#get-events), deprecating the [previous route](/reference/#get-audit-logs) and its [data structure](/reference/#audit-log)
+- System streams have been modified. Their prefix changes from `.` (dot) to `:_system:` & `:system:`. See the [System streams page](/customer-resources/system-streams/) for details.
+
+## 1.6.20
+
+New routes:
+
+- [Deactivate MFA](/reference-admin/#deactivate-mfa-for-user) for admin API, for when the user has lost his 2nd factor.
+
+## 1.6.19
+
+New routes:
+
+- [Get core](/reference-system/#get-core) API method that returns the hostname of the core on which a certain user data is stored.
+
 ## 1.6.7
 
 New Features:

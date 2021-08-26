@@ -12,9 +12,17 @@ withTOC: true
 
 # Released
 
-## XX.XX.2021 - Attachment integrity hashes
+## XX.XX.2021 - Attachment integrity hashes with Pryv.io 1.7.XX
 A hash code is computed to check data integrity on attachments [Event](/reference/#data-structure-event)
 
+## 26.04.2021 - new MFA release with Pryv.io 1.6.20
+
+New MFA release:
+
+- New [MFA configuration guide](/customer-resources/mfa/)
+- Support for simple communication services: [single mode](/customer-resources/mfa/#modes)
+- Expand current implementation to template what is sent to the communcation service and store only user values in profiles.
+- Deactivate MFA through the Admin panel & API. See [change log](/change-log/).
 
 ## 11.01.2021 - Complete admin and system API
 

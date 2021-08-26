@@ -31,8 +31,8 @@ mixin text(string)
 
 mixin methodId(id)
   if id
-    span.method-id
-      span.label id
+    span(onclick="location='/reference/#method-ids'").method-id
+      span.label(title="Method Id") id
       span.label-value: code !{id}
 
 mixin entrepriseTag(entrepriseTag)
@@ -214,8 +214,7 @@ mixin section(section, parentDocId, level, parent)
             +trustedTag(section.trustedTag || (parent && parent.trustedOnly)) 
             +entrepriseTag(section.entrepriseTag || (parent && parent.entrepriseOnly)) 
             +adminTag(section.adminTag || (parent && parent.adminOnly))
-            if ! section.httpOnly
-              +methodId(section.id)
+            +methodId(section.id)
             +http(section.http, section.httpOnly, section.server)
           if section.trustedOnly
             span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only

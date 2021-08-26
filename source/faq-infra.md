@@ -52,7 +52,7 @@ The last option will probably the easiest to implement. It offers good protectio
 
 ### Self-managed top-domain
 
-The DNS running on the registry must resolve all requests for the domain. Entries in the top-domain will look like:
+The DNS running on the register must resolve all requests for the domain. Entries in the top-domain will look like:
 
 ```
 ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
@@ -62,7 +62,7 @@ ${DOMAIN}	TTL_SECONDS IN NS ns1-${DOMAIN}
 ${DOMAIN}	TTL_SECONDS IN NS ns2-${DOMAIN}
 ```
 
-On single node or PoC installations, you will have only one registry, both Type A entries for the machine will point to the same IP address:
+On single node or PoC installations, you will have only one register, both Type A entries for the machine will point to the same IP address:
 
 ```
 ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
@@ -72,7 +72,7 @@ ${DOMAIN}	TTL_SECONDS IN NS ns1-${DOMAIN}
 ${DOMAIN}	TTL_SECONDS IN NS ns2-${DOMAIN}
 ```
 
-You can verify that the registry is set to resolve DNS queries for your domain using: `dig NS ${DOMAIN}`. The answer section must include:
+You can verify that the register is set to resolve DNS queries for your domain using: `dig NS ${DOMAIN}`. The answer section must include:
 
 ```
 ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns1-${DOMAIN}.${TOP_DOMAIN}
@@ -189,23 +189,27 @@ This step will erase all data from your platform. Perform this at your own risk 
 
 To erase all data on the platform, you need to delete the contents of the data folders and reboot the services.
 
-On the registry master:
+On the register master:
 
-```
+```bash
 cd ${PRYV_CONF_ROOT}
-./stop-containers
-rm -rf reg-master/redis/data/*
-./run-reg-master
+./stop-config-leader
+./stop-pryv
+rm -rf pryv/redis/data/*
+rm -rf config-leader/database/*
+./run-config-leader
+./run-pryv
 ```
 
 On core:
 
-```
+```bash
 cd ${PRYV_CONF_ROOT}
-./stop-containers
-rm -rf core/core/data/*
-rm -rf core/mongodb/data/*
-./run-core
+./stop-pryv
+rm -rf pryv/core/data/*
+rm -rf pryv/mongodb/data/*
+rm -rf pryv/influxdb/data/*
+./run-pryv
 ```
 
 ### How can I use the demo dashboard app (_app-web_) on my Pryv.io platform?

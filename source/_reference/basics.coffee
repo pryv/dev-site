@@ -152,7 +152,7 @@ module.exports = exports =
       id: "call-methods"
       title: "Call methods"
       description: """
-                   You call API methods by sending a corresponding Socket.IO `{method-id}` message, passing a parameters object and a callback:
+                   You call API methods by sending a corresponding Socket.IO [`{method-id}`](#method-ids) message, passing a parameters object and a callback:
 
                    ```javascript
                    // javascript
@@ -161,7 +161,7 @@ module.exports = exports =
                    });
                    ```
 
-                   See each method's doc for its id.
+                   See [methods ids](#method-ids)
                    """
       errors: [
         key: "invalid-method"
@@ -182,61 +182,78 @@ module.exports = exports =
       ]
     ]
   ,
-  id: "subscribe-to-changes"
-  title: "Subscribe to changes"
-  description: """
-                Get notified when data changes by subscribing to messages. 
-                Available messages are: 
-                  - `eventsChanged`
-                  - `streamsChanged`
-                  - `accessesChanged`
-                  - `systemBoot` (webhooks only)
-
-                Messages do not include the content of the changes, but they describe what type of resource has been changed (created, updated or deleted).
-                They inform the server that it needs to fetch new or updated data through the API by doing a HTTP GET request with a valid access token. 
-                The `systemBoot` message is executed when the notifications system is started in order to query possibly missed data changes.
-                """
-  sections: [
-    id: "with-websockets"
-    title: "With websockets"
+  
+    id: "subscribe-to-changes"
+    title: "Subscribe to changes"
     description: """
-                 Get notified of data changes in a web application using websockets.
-                 """
-    examples: [
-      title: "Subscribe to events changes (Javascript)"
-      content: """
-                ```javascript
-                socket.on('eventsChanged', function() {
-                  // retrieve latest changes and act accordingly
-                });
+                  Get notified when data changes by subscribing to messages. 
+                  Available messages are: 
+                    - `eventsChanged`
+                    - `streamsChanged`
+                    - `accessesChanged`
+                    - `systemBoot` (webhooks only)
+
+                  Messages do not include the content of the changes, but they describe what type of resource has been changed (created, updated or deleted).
+                  They inform the server that it needs to fetch new or updated data through the API by doing a HTTP GET request with a valid access token. 
+                  The `systemBoot` message is executed when the notifications system is started in order to query possibly missed data changes.
+                  """
+    sections: [
+      id: "with-websockets"
+      title: "With websockets"
+      description: """
+                  Get notified of data changes in a web application using websockets.
+                  """
+      examples: [
+        title: "Subscribe to events changes (Javascript)"
+        content: """
+                  ```javascript
+                  socket.on('eventsChanged', function() {
+                    // retrieve latest changes and act accordingly
+                  });
+                  ```
+                  """
+      ]
+    ,
+      id: "with-webhooks"
+      title: "With webhooks"
+      description: """
+                  Get notified of data changes in a web service using [webhooks](#webhook).
+                  """
+      examples: [
+        title: "Webhooks data changes payload"
+        content: """
+                ```json
+                {
+                  "messages": [
+                    "eventsChanged",
+                    "streamsChanged"
+                  ],
+                  "meta": {
+                    "apiVersion": "1.4.11",
+                    "serial": "20190802",
+                    "serverTime": #{timestamp.now()}
+                  }
+                }
                 ```
                 """
+      ]
     ]
+
   ,
-    id: "with-webhooks"
-    title: "With webhooks"
+
+    id: "method-ids"
+    title: "Method ids"
     description: """
-                 Get notified of data changes in a web service using [webhooks](#webhook).
+                 Pryv.io API methods have ids that are available at each method's doc. For example, the id of the [Get events](#get-events) method is `events.get`.  
+                 This id is useful in the following:  
+
+                 - when calling an API method [using websockets](#call-with-websockets)
+                 - when making a [batch call](#call-batch)
+                 - for filtering per method id when fetching [audit logs](/guides/audit-log/)
                  """
-    examples: [
-      title: "Webhooks data changes payload"
-      content: """
-               ```json
-               {
-                 "messages": [
-                   "eventsChanged",
-                   "streamsChanged"
-                 ],
-                 "meta": {
-                   "apiVersion": "1.4.11",
-                   "serial": "20190802",
-                   "serverTime": #{timestamp.now()}
-                 }
-               }
-               ```
-               """
+    sections: [
+
     ]
-  ]
 
   ,
 

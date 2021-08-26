@@ -59,9 +59,9 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to configure the sending of Pryv.io emails for welcoming new users or resetting lost passwords.
 
-- Audit configuration: [PDF](/assets/docs/20190718-pryv.io-audit-v5.pdf)
+- Audit configuration: [HTML](/customer-resources/audit-setup/)
 
-  This document describes how to enable audit capabilities for your Pryv.io platform by configuring the Pryv.io router service and the audit API.
+  This document describes how to setup audit capabilities for your Pryv.io platform.
 
 - Core migration: [PDF](/assets/docs/20190604-migrate-core-v1.pdf)
 
@@ -79,7 +79,7 @@ In this space you will find links and reference documents that will help you mak
 
   This document describes how to perform a backup of your Pryv.io platform and how to restore it in case of any data loss.
 
-- MFA configuration: [PDF](/assets/docs/20191205-pryv.io-mfa-v2.pdf)
+- MFA configuration: [HTML](/customer-resources/mfa/)
 
   This document describes how to enable and configure multi-factor authentication on top of Pryv.io logins.
 
