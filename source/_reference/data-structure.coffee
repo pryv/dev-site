@@ -143,6 +143,12 @@ module.exports = exports =
         description: """
                      The auth token to pass in the query string when reading the file (instead of the regular `auth` parameter). The token is unique for the file and the access used to read it. This is a security measure in situations where it is impractical to use the `Authorization` HTTP header and/or where the file's URL is likely to be exposed. See also events method [get attachment](#methods-events-events-getAttachment).
                      """
+      ,
+        key: "integrity"
+        type: "string"
+        description: """
+                     A hash of the file, following **subresource integrity (SRI)** specifcation [See W3.org/TR/SRI](https://www.w3.org/TR/SRI/)
+                     """
       ]
     ,
       key: "clientData"

@@ -663,7 +663,8 @@
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA"
+                        "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA",
+                        "integrity": "sha256-X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE="
                       }
                     ],
                     "created": 1611755035.712,
@@ -768,7 +769,8 @@
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA"
+                        "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA",
+                        "integrity": "sha256-X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE="
                       }
                     ],
                     "created": 1611755035.712,
@@ -1030,7 +1032,8 @@
                       "fileName": "photo.jpg",
                       "type": "image/jpeg",
                       "size": 2561,
-                      "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA"
+                      "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA",
+                      "integrity": "sha256-X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE="
                     }
                   ],
                   "created": 1611755035.712,
@@ -1152,7 +1155,8 @@
                       "fileName": "travel-expense.jpg",
                       "type": "image/jpeg",
                       "size": 1111,
-                      "readToken": "ckkfjh6m7000sj7tjmsuwgr2e-khPWzScJ0HeoAGfV1wVesktM2pv"
+                      "readToken": "ckkfjh6m7000sj7tjmsuwgr2e-khPWzScJ0HeoAGfV1wVesktM2pv",
+                      "integrity": "sha256-X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE="
                     }
                   ],
                   "created": 1611758635.711,

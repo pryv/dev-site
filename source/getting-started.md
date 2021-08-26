@@ -275,7 +275,8 @@ These events will have the type `picture/attached` :
       "fileName": "meal1.jpg",
       "type": "image/jpeg",
       "size": 2561,
-      "readToken": "ck2bzkjdt0010e64dwu4sy8fe-3yTvQTD630qVT4qBFYtWDwrQ8mb"
+      "readToken": "ck2bzkjdt0010e64dwu4sy8fe-3yTvQTD630qVT4qBFYtWDwrQ8mb",
+      "integrity": "sha256-X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE="
     }
   ]
 }

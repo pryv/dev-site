@@ -7,11 +7,14 @@ withTOC: true
 
 # Future releases
 
-- **Pryv Explorer**: Web application to explore and manage data on your Pryv.io platform
 - **Pryv.io certificates auto-renewal**: Automatic SSL certification renewal
 - **Support oAuth 2.0 protocol for authentication and authorization**
 
 # Released
+
+## XX.XX.2021 - Attachment integrity hashes
+A hash code is computed to check data integrity on attachments [Event](/reference/#data-structure-event)
+
 
 ## 11.01.2021 - Complete admin and system API
 

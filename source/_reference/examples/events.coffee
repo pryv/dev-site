@@ -11,6 +11,14 @@ generateReadToken = () ->
     hash += dictionnary.charAt(Math.floor(Math.random() * dictionnary.length));
   return generateId() + '-' + hash
 
+generateIntegrity = () ->
+  hash = "";
+  dictionnary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/+";
+
+  for i in [1 .. 27]
+    hash += dictionnary.charAt(Math.floor(Math.random() * dictionnary.length));
+  return 'sha256-' + hash + '='
+
 module.exports =
   activity:
     id: generateId()
@@ -54,6 +62,7 @@ module.exports =
       type: "image/jpeg"
       size: 1111
       readToken: generateReadToken()
+      integrity: generateIntegrity()
     ]
     created: timestamp.now()
     createdBy: accesses.app.id
@@ -152,6 +161,7 @@ module.exports =
       type: "image/jpeg"
       size: 2561
       readToken: generateReadToken()
+      integrity: generateIntegrity()
     ]
     created: timestamp.now('-1h')
     createdBy: accesses.shared.id

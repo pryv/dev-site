@@ -785,7 +785,7 @@ module.exports = exports =
       result:
         http: "200 OK"
         description: """
-                     The file's content.
+                     The file's content, with a **Digest** header to check file integrity see [RFC3230](https://www.ietf.org/rfc/rfc3230.txt) and [RFC5843](https://datatracker.ietf.org/doc/html/rfc5843)
                      """
     ,
 

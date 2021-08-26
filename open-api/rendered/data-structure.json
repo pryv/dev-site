@@ -149,7 +149,8 @@
                 "fileName": "photo.jpg",
                 "type": "image/jpeg",
                 "size": 2561,
-                "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA"
+                "readToken": "ckkfjh6m80011j7tjpoiseepo-9etN1VgWwPk7Hnk1p76YFsIzJmA",
+                "integrity": "sha256-X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE="
               }
             ],
             "created": 1611755035.712,

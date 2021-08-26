@@ -11,9 +11,9 @@ module.exports = exports =
   description: """
                 |                          |                          |
                 | ------------------------ | ------------------------ |
-                | Date                     | 14th April 2021          |
-                | Documents Version        | 0.3                      |
-                | API-Version              | 1.6.18                   |
+                | Date                     | 26th August 2021          |
+                | Documents Version        | 0.4                      |
+                | API-Version              | 1.7.xx                   |
                 
                  This document describes the functional specifications for the Pryv.io
                 middleware system: the capabilities and functions that the
