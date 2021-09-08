@@ -40,7 +40,7 @@ Now that your machines are ordered, you need to register your own domain name.
 
 You can either:  
 
-- obtain one yourself through a domain name registrar of your choice, make sure that you can configure your domain's **DNS zone**, including records of type A & NS.
+- obtain one yourself through a domain name registrar of your choice, make sure that you can configure your domain's **DNS zone**, including records of type A & NS for subdomains.
 - or contact us directly to obtain a pryv.io subdomain, e.g. ***your-platform-name*.pryv.io**
 
 You will have to define the following DNS Records:
