@@ -15,6 +15,7 @@ withTOC: true
 3. [CNAME Record](#cname-record)
 4. [TXT Record](#txt-record)
 5. [SPF Record](#spf-record)
+6. [MX Record](#mx-record)
 
 This guide describes how to add DNS records in your Pryv.io associated domain DNS zone.  
 
@@ -140,6 +141,25 @@ DNS_SETTINGS:
       ...
       value:
         - "${SPF_RECORD}"
+```
+
+## MX Record
+
+You can enter an array of MX Records, providing the `name`, `priority` and `ttl` (Time To Live) values for each of these as following:
+
+```yaml
+DNS_SETTINGS:
+  ...
+  settings:
+    DNS_MX_RECORDS:
+      ...
+      value:
+        - name: my.mail.com
+          priority: 10
+          ttl: 10800
+        - name: my.other.mail.org
+          priority: 50
+          ttl: 10800
 ```
 
 ## Previous version
