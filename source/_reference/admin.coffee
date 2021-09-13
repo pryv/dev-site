@@ -520,6 +520,106 @@ module.exports = exports =
             ]
             failures: []
         ]
+      ,
+        id: "migrations.get"
+        type: "method"
+        title: "Retrieve platform migrations"
+        http: "GET /admin/migrations"
+        httpOnly: true
+        server: "admin"
+        description: """
+                     Retrieves the available platform settings migrations. To apply them use [Apply configuration migrations](#apply-configuration-migrations).
+                     """
+        result:
+          http: "200 OK"
+          properties: [
+            key: "migrations"
+            type: "array of migrations"
+            description: """
+                         Available migrations.
+                         """
+            properties: [
+              key: "versionsFrom"
+              type: "array of versions"
+              description: """
+                           The list of versions it upgrades from.
+                           """
+            ,
+              key: "versionTo"
+              type: "string"
+              description: """
+                           The version it upgrades to.
+                           """
+            ]
+          ]
+        examples: [
+          title: "Fetching available migrations for platform version 1.6.17"
+          params: {}
+          result:
+            migrations: [
+              versionsFrom: ['1.6.15', '1.6.16', '1.6.17', '1.6.18', '1.6.19', '1.6.20']
+              versionTo: '1.6.21'
+            ,
+              versionsFrom: ['1.6.21']
+              versionTo: '1.6.22'
+            ,
+              versionsFrom: ['1.6.22']
+              versionTo: '1.6.23'
+            ,
+              versionsFrom: ['1.6.23']
+              versionTo: '1.7.0'
+          ]
+        ]
+      ,
+        id: "migrations.apply"
+        type: "method"
+        title: "Apply configuration migrations"
+        http: "POST /admin/migrations/apply"
+        httpOnly: true
+        server: "admin"
+        description: """
+                     Apply the available platform configuration migrations. This will upgrade your platform.yml file to the latest available version. Use [Retrieve platform migrations](#retrieve-platform-migrations) to see available migrations.
+                     """
+        result:
+          http: "200 OK"
+          properties: [
+            key: "migrations"
+            type: "array of migrations"
+            description: """
+                         Available migrations.
+                         """
+            properties: [
+              key: "versionsFrom"
+              type: "array of versions"
+              description: """
+                           The list of versions it upgrades from.
+                           """
+            ,
+              key: "versionTo"
+              type: "string"
+              description: """
+                           The version it upgrades to.
+                           """
+            ]
+          ]
+        examples: [
+          title: "Applying available migrations from platform version 1.6.17 to 1.7.0"
+          params: {}
+          result:
+            migrations: [
+              versionsFrom: ['1.6.15', '1.6.16', '1.6.17', '1.6.18', '1.6.19', '1.6.20']
+              versionTo: '1.6.21'
+            ,
+              versionsFrom: ['1.6.21']
+              versionTo: '1.6.22'
+            ,
+              versionsFrom: ['1.6.22']
+              versionTo: '1.6.23'
+            ,
+              versionsFrom: ['1.6.23']
+              versionTo: '1.7.0'
+          ]
+        ]
       ]
 
     ,
