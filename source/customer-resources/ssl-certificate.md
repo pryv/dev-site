@@ -67,7 +67,12 @@ Now, the CLI will ask you to set a certain key to the TXT Record `_acme-challeng
             description: "KEY"
 ```
 
-And reboot the follower and Pryv.io services.
+And reboot the follower and Pryv.io services:
+
+```bash
+./restart-config-follower
+./restart-pryv
+```
 
 Verify that the key is querying the name servers.  
 
@@ -116,4 +121,15 @@ OR
 - `reg-slave`
 - `static`
 
-And reboot the follower and pryv services.
+Make sure that the certificates permissions are set correctly: 
+
+```bash
+./ensure-permissions --ignore-redis
+```
+
+And reboot the follower and pryv services: 
+
+```bash
+./restart-config-follower
+./restart-pryv
+```
