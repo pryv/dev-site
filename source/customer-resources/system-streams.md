@@ -31,11 +31,11 @@ The base system streams are the following:
   |_unique
 ```
 
-They are prefixed with `:_system:`. Custom system streams that you define are prefixed with `:system:`.
+They are prefixed with `:_system:`. Custom system streams that you define for your platform are prefixed with `:system:`.
 
 Please note that we have removed email from the default account, as some Pryv.io platforms don't include email for account anonymity. It can be added through custom streams in the platform configuration and is present by default in the template configuration we provide.
 
-There are 2 sets of custom streams that you may define: "account" and "other" ones. *Account* custom streams are children of the **account** stream and may have additionnal properties such as **unicity**, **indexation** and **requiredness at registration**. *Other* streams are located at the root of the streams.
+There are 2 sets of custom streams that you may define: "account" and "other" ones. *Account* custom streams are children of the **account** stream and may have additionnal properties such as **unicity**, **indexation** and **requiredness at registration**. *Other* streams are located at the root of the streams and cannot benefit from constraints as account ones do.
 
 Here are the settings that you can configure for these system streams outside of their structure:
 
@@ -57,11 +57,11 @@ Some values can be required during the registration process. Only available for 
 
 ## Format
 
-You can an enforce a property format for these values using a regular expression.
+You can an enforce a property format for these values using a regular expression. Only available for account.
 
 ## Event type
 
-You can define the `type` of the events that will be used to store the values.
+You can define the `type` of the events that will be used to store the values. Only available for account.
 
 ## Visibility
 
@@ -124,9 +124,9 @@ Here is the detailed list of parameters:
 
 ## Modification
 
-Unicity and index properties won't work properly if added after the launch of the platform. As the values recorded previously will not be synchronized in the register database.
+Unicity and index properties won't affect existing data if added after the launch of the platform. As the values recorded previously will not be synchronized in the register database.
 
-Preferably these values should be modified with care, because fields like isUnique or isIndexed are not be updated after settings a update. They will be set for new user accounts, or through [event updates](/reference/#update-events) for existing ones.  
+Preferably these values should be modified with care, because fields like isUnique or isIndexed are not be updated accross the platform following a configuration change. They will be set for new user accounts, or through [event updates](/reference/#update-events) for existing ones.  
 If you remove system streams that have events, these events will become unreachable.
 
 ## Platform settings
@@ -139,9 +139,9 @@ You can find these settings in the platform configuration under the **Advanced A
 
 # Backward compatibility
 
-Pryv.io 1.7.0 changes the system streams ids from `.` (dot) to `:_system:` and `:system:`. However, this change might break some customer applications that depended on the old syntax.  
+Pryv.io 1.7 changes the system streams ids from `.` (dot) to `:_system:` and `:system:`. However, this change might break some customer applications that depended on the old syntax.  
 
 To prevent this, we have introduced a platform setting so your Pryv.io platform accepts and returns system stream ids with the old `.` (dot) prefix.  
 You can find the backward compatibility setting in the platform configuration under the **Advanced API settings** tab, in the `BACKWARD_COMPATIBILITY_SYSTEM_STREAMS_PREFIX` variable.
 
-In order to migrate your applications at your pace, you can make API calls with the `disable-backward-compatibility-prefix: true` header to use the new prefix format.
+In order to migrate your front-end applications at your pace, you can make API calls with the `disable-backward-compatibility-prefix: true` header to use the new prefix format.
