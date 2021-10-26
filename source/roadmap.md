@@ -12,6 +12,12 @@ withTOC: true
 
 # Released
 
+## 25.10.2021 - new Audit log with Pryv.io 1.7.0
+
+- Audit log has been rebuild, improving performance of fetched audit data, adding granularity over which methods are audited
+- New integrity settings, computing hash for events and accesses data
+- Automated platform upgrade tool. See "Find Migrations" button in Admin panel and check [changelog](/change-log/) for API
+
 ## 26.04.2021 - new MFA release with Pryv.io 1.6.20
 
 New MFA release:
