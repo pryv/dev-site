@@ -9,8 +9,7 @@ template: default.jade
 Changes:
 
 - Audit has been re-implemented, offering improved performance:  
-  - See the [Audit logs guide](/guides/audit-logs/) for API usage  
-  - See the [Audit setup guide](/customer-resources/audit-setup/) on how to set it up on your Pryv.io platform  
+  - See the [Audit logs guide](/guides/audit-logs/) for API usage
   - Audit logs are now available through the [Events API](/reference/#get-events), deprecating the [previous route](/reference/#get-audit-logs) and its [data structure](/reference/#audit-log)
 - System streams have been modified. Their prefix changes from `.` (dot) to `:_system:` & `:system:`. See the [System streams page](/customer-resources/system-streams/) for details.
 - Tags have been removed from Events. In Pryv.io platforms that contained them, they are migrated to streams, See `BACKWARD_COMPATIBILITY_TAGS` platform parameter in your platform configuration. The tags functionality is ensured by [Streams queries](/reference/#streams-query) for the [events.get](/reference/#get-events) API method.
