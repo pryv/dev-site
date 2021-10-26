@@ -143,6 +143,14 @@ module.exports = exports =
         description: """
                      The auth token to pass in the query string when reading the file (instead of the regular `auth` parameter). The token is unique for the file and the access used to read it. This is a security measure in situations where it is impractical to use the `Authorization` HTTP header and/or where the file's URL is likely to be exposed. See also events method [get attachment](#methods-events-events-getAttachment).
                      """
+      ,
+        key: "integrity"
+        type: "[integrity](##{_getDocId("integrity")})"
+        optional: true
+        readOnly: true
+        description: """
+                     Integrity check for attachment object.
+                     """
       ]
     ,
       key: "clientData"
@@ -157,6 +165,14 @@ module.exports = exports =
       optional: true
       description: """
                    `true` if the event is in the trash.
+                   """
+    ,
+      key: "integrity"
+      type: "[integrity](##{_getDocId("integrity")})"
+      optional: true
+      readOnly: true
+      description: """
+                   Integrity check for event object.
                    """
     ].concat(changeTrackingProperties("event"))
     examples: [
@@ -351,6 +367,14 @@ module.exports = exports =
       readOnly: "(except at creation)"
       description: """
                    Additional client data for the access.
+                   """
+    ,
+      key: "integrity"
+      type: "[integrity](##{_getDocId("integrity")})"
+      optional: true
+      readOnly: true
+      description: """
+                   Integrity check for access object.
                    """
     ].concat(changeTrackingProperties("access"))
     examples: [
@@ -837,6 +861,21 @@ module.exports = exports =
       content: """
                - JavaScript: `Date.now() / 1000`
                - PHP (5+): `microtime(true)`
+               """
+    ]
+
+  ,
+
+    id: "integrity"
+    title: "Integrity"
+    description: """
+                 An integrity hash computed from the JSON object it is contained in.
+                 The hash is prefixed with the data structure it is computed for, as well as a representation version.
+                 """
+    examples: [
+      title: "A hash computed for an event with representation version 0:"
+      content: """
+               `EVENT:0:sha256-kxPeUwkkZfOyQmbvp0ObmHLhBYhioUjNFSzP3c25qSs=`
                """
     ]
   ]

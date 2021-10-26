@@ -13,6 +13,7 @@ Changes:
   - See the [Audit setup guide](/customer-resources/audit-setup/) on how to set it up on your Pryv.io platform  
   - Audit logs are now available through the [Events API](/reference/#get-events), deprecating the [previous route](/reference/#get-audit-logs) and its [data structure](/reference/#audit-log)
 - System streams have been modified. Their prefix changes from `.` (dot) to `:_system:` & `:system:`. See the [System streams page](/customer-resources/system-streams/) for details.
+- [Integrity hash](/reference/#data-structure-integrity) is computed for [Events, Attachments](/reference/#event) and [Accesses](/reference/#access). This functionality can be disabled.
 
 ## 1.6.20
 
