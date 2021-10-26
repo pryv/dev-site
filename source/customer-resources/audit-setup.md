@@ -16,7 +16,7 @@ Audit is only available in the [entreprise version](/concepts/#entreprise-licens
 
 Audit data can be written to any or both of the following:
 
-- in a dedicated **storage** where it will be indexed for [querying through the Events API](/reference/#get-events)
+- in a dedicated **storage** where it will be indexed for [querying through the Events API](/guides/audit-logs/)
 - in the host machine's **syslog** to which you can setup your own listeners
 
 # Filtering
@@ -57,7 +57,7 @@ Audit filters accept aggregation of all methods for a particular resource using 
 
 # Examples
 
-## log all
+## log everything
 
 ```json
 {
@@ -68,7 +68,7 @@ Audit filters accept aggregation of all methods for a particular resource using 
 }
 ```
 
-## log none
+## log nothing
 
 ```json
 {
@@ -79,7 +79,7 @@ Audit filters accept aggregation of all methods for a particular resource using 
 }
 ```
 
-## log only a few
+## log a few API methods
 
 ```json
 {
@@ -90,7 +90,7 @@ Audit filters accept aggregation of all methods for a particular resource using 
 }
 ```
 
-## log all, but a few
+## log everything, but a few
 
 ```json
 {
@@ -109,6 +109,31 @@ Audit filters accept aggregation of all methods for a particular resource using 
     "include": ["events.all"],
     "exclude": ["events.get"]
   }
+}
+```
+
+# Syslog
+
+**Introductory notes about syslog:**  
+
+*The syslog protocol is using a socket in order to transmit messages. For Linux, this socket is a SOCK_STREAM unix socket, which is identified by the name /dev/log. The syslog deamon for Ubuntu is rsyslogd, its configuration files are located in /etc/rsyslog.conf and /etc/rsyslog.d/*. In particular, the default logging rules can be found in /etc/rsyslog.d/50-default.conf. These rules typically tell to which actual log files the socket messages will be pipped to (e.g. /var/log/syslog), according to the message type (see the [Syslog wiki](https://en.wikipedia.org/wiki/Syslog) for more details about Facility and Security levels).*
+
+If activated, the Pryv.io service will write to the host machines syslog. This is useful if you wish to enable security logging, for actions such as blocking an IP address after it has performed too many forbidden requests using tools such as [fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page).
+
+A Pryv.io audit log will look like this in the syslog:
+
+```json
+Oct 26 14:58:46 co1-pryv-li pryv-audit[57]: ck6j759f000011ps2octzo1ds audit-log/pryv-api createdBy:system ["access-ck6j78uj600011ss2neygkpub","action-events.get"] {"source":{"name":"http","ip":"85.5.192.175"},"action":"events.get","query":{"toTime":"9900000000","fromTime":"-9900000000","limit":"1","sortAscending":"true","state":"all"}}
+```
+
+## Templating
+
+You can edit its template using the `AUDIT_SYSLOG_FORMAT` platform parameter:
+
+```json
+{
+  "template": "{userid} {type} createdBy:{createdBy} {streamIds} {content}",
+  "level": "notice"
 }
 ```
 
