@@ -16,6 +16,7 @@ Changes:
 - Tags have been removed from Events. In Pryv.io platforms that contained them, they are migrated to streams, See `BACKWARD_COMPATIBILITY_TAGS` platform parameter in your platform configuration. The tags functionality is ensured by [Streams queries](/reference/#streams-query) for the [events.get](/reference/#get-events) API method.
 - Permission levels are computed differently: If a child stream has a smaller permission than a parent, its level is indeed applied on the child (instead of the parent permission taking precendence as was done before).
 - [Integrity hash](/reference/#data-structure-integrity) is computed for [Events, Attachments](/reference/#event) and [Accesses](/reference/#access). This functionality can be disabled.
+- Automated platform migration using the [migrations.get](/reference-admin/#retrieve-platform-migrations) and [migrations.apply](/reference-admin/#apply-configuration-migrations) API methods.
 
 ## 1.6.20
 
