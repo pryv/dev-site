@@ -9,6 +9,7 @@ module.exports =
     id: idPersonal
     token: generateId()
     type: "personal"
+    integrity: "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE="
     created: timestamp.now('-1M')
     createdBy: "system"
     modified: timestamp.now('-1w')
@@ -23,6 +24,7 @@ module.exports =
       streamId: "health"
       level: "contribute"
     ]
+    integrity: "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE="
     created: timestamp.now('-1d')
     createdBy: idPersonal
     modified: timestamp.now('-1d')
@@ -37,6 +39,7 @@ module.exports =
       streamId: "family"
       level: "contribute"
     ]
+    integrity: "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE="
     created: timestamp.now('-12h')
     createdBy: idApp
     modified: timestamp.now('-12h')
@@ -51,6 +54,7 @@ module.exports =
       streamId: "work"
       level: "read"
     ]
+    integrity: "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE="
     created: timestamp.now()
     createdBy: idApp
     modified: timestamp.now()
@@ -65,6 +69,7 @@ module.exports =
       streamId: "health"
       level: "read"
     ]
+    integrity: "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE="
     created: timestamp.now('-2m')
     createdBy: idApp
     modified: timestamp.now('-2m')
@@ -112,6 +117,7 @@ module.exports =
       feature: "selfRevoke"
       setting: "forbidden"
     ]
+    integrity: "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE="
     created: timestamp.now('-1d')
     createdBy: idPersonal
     modified: timestamp.now('-1d')

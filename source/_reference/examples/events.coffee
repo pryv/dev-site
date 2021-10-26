@@ -20,6 +20,7 @@ module.exports =
     tags: []
     type: "activity/plain"
     content: null
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now()
     createdBy: accesses.app.id
     modified: timestamp.now()
@@ -34,6 +35,7 @@ module.exports =
     tags: []
     type: "activity/plain"
     content: null
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now()
     createdBy: accesses.app.id
     modified: timestamp.now()
@@ -54,7 +56,9 @@ module.exports =
       type: "image/jpeg"
       size: 1111
       readToken: generateReadToken()
+      integrity: "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
     ]
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now()
     createdBy: accesses.app.id
     modified: timestamp.now()
@@ -68,6 +72,7 @@ module.exports =
     tags: []
     type: "frequency/bpm"
     content: 90
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now()
     createdBy: accesses.app.id
     modified: timestamp.now()
@@ -81,6 +86,7 @@ module.exports =
     tags: []
     type: "mass/kg"
     content: 90
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now()
     createdBy: accesses.app.id
     modified: timestamp.now()
@@ -94,6 +100,7 @@ module.exports =
     tags: []
     type: "note/text"
     content: "道可道非常道。。。"
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now('-1h')
     createdBy: accesses.app.id
     modified: timestamp.now('+10h')
@@ -107,6 +114,7 @@ module.exports =
     tags: []
     type: "note/text"
     content: "Hi, I am the latest version of this event"
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now('-1h')
     createdBy: accesses.app.id
     modified: timestamp.now('+2h')
@@ -120,6 +128,7 @@ module.exports =
     tags: []
     type: "note/text"
     content: "Hi, I am the first modification"
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now('-1h')
     createdBy: accesses.app.id
     modified: timestamp.now('+1h')
@@ -133,6 +142,7 @@ module.exports =
     tags: []
     type: "note/text"
     content: "Hi, I was the initial event"
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now('-1h')
     createdBy: accesses.app.id
     modified: timestamp.now('0h')
@@ -152,7 +162,9 @@ module.exports =
       type: "image/jpeg"
       size: 2561
       readToken: generateReadToken()
+      integrity: "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
     ]
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now('-1h')
     createdBy: accesses.shared.id
     modified: timestamp.now('-1h')
@@ -168,6 +180,7 @@ module.exports =
     content:
       latitude: 40.714728
       longitude: -73.998672
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now('-2h')
     createdBy: accesses.personal.id
     modified: timestamp.now('-2h')
@@ -181,6 +194,7 @@ module.exports =
     tags: []
     type: "activity/plain"
     content: null
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now('-1h')
     createdBy: accesses.shared.id
     modified: timestamp.now('-1h')
@@ -194,6 +208,7 @@ module.exports =
     tags: []
     type: "mass/kg"
     content: 350
+    integrity: "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU="
     created: timestamp.now('-3h')
     createdBy: accesses.shared.id
     modified: timestamp.now('-3h')
