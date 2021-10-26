@@ -82,6 +82,16 @@ sections:
             - Delete
             - Share
 
+      - reqid: ATTACHMENTS
+        title: The system shall permit to Add, Update and Delete files on Events
+        descriptions: |
+          Files are linked to events as attachments.
+          An Event with Attachments shall present the following properties for each attachment
+            - **Filename**
+            - **Size** in bytes
+            - File **Type** in MIME format
+            - An **Integrity** hash if the corresponding setting is activated
+
   - id: dlc
     reqid: DLC
     title: Data life cycle management
@@ -121,10 +131,13 @@ sections:
               The system stores collected data records and associated information on physical storage.
 
           - reqid: INTEGRITY
-            ignore: true
-            title: The system shall ensure data integrity
+            title: The system shall add data integrity hash on attachments, events and accesses.
             description: | 
-              The system ensures the data records entered in the system is stored in its original form.
+              If the corresponding setting is activated, the system will compute a content hash integrity 
+              hash on attachments, events and accesses.
+              This hash shall be used:
+              - to check the integrity of data when Adding it to the system
+              - to check the integrity of data when Reading it from the system 
 
       - id: use
         title: Use and aggregate
