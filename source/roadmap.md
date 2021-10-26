@@ -7,7 +7,6 @@ withTOC: true
 
 # Future releases
 
-- **Pryv Explorer**: Web application to explore and manage data on your Pryv.io platform
 - **Pryv.io certificates auto-renewal**: Automatic SSL certification renewal
 - **Support oAuth 2.0 protocol for authentication and authorization**
 
