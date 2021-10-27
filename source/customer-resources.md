@@ -6,27 +6,15 @@ customer: true
 withTOC: true
 ---
 
-In this space you will find links and reference documents that will help you make the most of your Pryv.io platform.
+In this space you will find documents and guides for the installation and support of the **Pryv.io enterprise** version.
 
-## Links
-
-- API Reference: [api.pryv.com/reference](/reference/)
-
-  This reference contains the documentation for application developers to interact with the Pryv.io platform.
-
-- API Reference for system management: [api.pryv.com/reference-system](/reference-system/)
-
-  This reference contains system management methods' documentation, for the platform owner.
+## Documents
 
 - Functional Requirement Specification: [api.pryv.com/functional-specifications](/functional-specifications/)
 
   Functional specifications for the Pryv.io middleware system: the capabilities and functions that the system must be capable of performing.
 
-- API reference including incoming features: [api.pryv.com/reference-preview](/reference-preview/)
-
-  In addition to the full reference, this includes upcoming features marked with a `PREVIEW` label.
-
-## Guides and Documents
+## Guides
 
 - Pryv.io platform setup guide: [HTML](/customer-resources/pryv.io-setup/)
 
@@ -77,15 +65,11 @@ In this space you will find links and reference documents that will help you mak
 
 - How to backup: [HTML](/customer-resources/backup/)
 
-  This document describes how to perform a backup of your Pryv.io platform and how to restore it in case of any data loss.
+  This document describes how to perform a backup of your Pryv.io platform and how to restore it.
 
 - MFA configuration: [HTML](/customer-resources/mfa/)
 
-  This document describes how to enable and configure multi-factor authentication on top of Pryv.io logins.
-
-## Development resources
-
-See the [Apps & Libs page](/external-resources/) for our example applications and libraries.
+  This document describes how to enable and configure multi-factor authentication on top of the Pryv.io login.
 
 ## Contact and support
 
