@@ -10,7 +10,12 @@
         {
           "id": "services-involved",
           "title": "Services involved",
-          "description": "Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).\n\n- The **core servers** own the account management processes, i.e. data creation and deletion\n- The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers."
+          "description": "Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).  \nA color tag on the API method indicates the server to which you should make the request.  \n\n- The **core servers** own the account management processes, i.e. data creation and deletion\n- The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers."
+        },
+        {
+          "id": "endpoint-url",
+          "title": "API endpoint",
+          "description": "The methods are called via HTTPS on the register or core server depending on the method:   \n\n- Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.  \n- Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.  \n                  \nYou can adapt the examples with \"API\" selector in the top navigation bar."
         },
         {
           "id": "account-creation",
@@ -22,7 +27,7 @@
     {
       "id": "api-methods",
       "title": "API methods",
-      "description": "The methods are called via HTTPS on the register server: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.",
+      "description": "                 ",
       "sections": [
         {
           "id": "admin",
@@ -70,7 +75,7 @@
                         "language": "en",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "ckkfjh6m9001aj7tjtg5wy42i",
+                        "id": "ckv995ofq001a76pvebr5h2g8",
                         "registeredTimestamp": "1557743399558",
                         "server": "core1.pryv.me",
                         "registeredDate": "Mon, 13 May 2019 10:29:59 GMT"
@@ -81,7 +86,7 @@
                         "language": "fr",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "ckkfjh6m9001bj7tjs31ot044",
+                        "id": "ckv995ofq001b76pvalwohzxq",
                         "registeredTimestamp": "1536930239805",
                         "server": "core2.pryv.me",
                         "registeredDate": "Fri, 14 Sep 2018 13:03:59 GMT"
@@ -169,7 +174,7 @@
                         "language": "en",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "ckkfjh6m9001aj7tjtg5wy42i",
+                        "id": "ckv995ofq001a76pvebr5h2g8",
                         "registeredTimestamp": "1557743399558",
                         "server": "core1.pryv.me",
                         "registeredDate": "Mon, 13 May 2019 10:29:59 GMT"
@@ -261,7 +266,7 @@
                   {
                     "key": "regions",
                     "type": "Object",
-                    "description": "Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  \nThe value you need to use as `hosting` parameter in the `users.create` method is a key of the `hostings` object."
+                    "description": "Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  \nYou need to use the `availableCore` URL as endpoint for the [Create user API method](#create-user)."
                   }
                 ]
               },
@@ -429,21 +434,16 @@
               "id": "users.create",
               "type": "method",
               "title": "Create user",
-              "http": "POST /user",
+              "http": "POST /users",
               "httpOnly": true,
-              "server": "register",
-              "description": "**(DEPRECATED)** Please use the [new create user method](/reference/#create-user).  \n\nCreates a new user account on the specified core server.",
+              "server": "core",
+              "description": "Creates a new user account. The method's parameters can be customized with the [system streams configuration](/customer-resources/system-streams/).\n\nBefore Pryv.io 1.6, this route was served by the register server on `/user`",
               "params": {
                 "properties": [
                   {
-                    "key": "appid",
+                    "key": "appId",
                     "type": "string",
                     "description": "Your app's unique identifier."
-                  },
-                  {
-                    "key": "hosting",
-                    "type": "string",
-                    "description": "The name of the core server that should host the account, see [Get Hostings](#get-hostings)."
                   },
                   {
                     "key": "username",
@@ -461,13 +461,13 @@
                     "description": "The user's e-mail address, used for password retrieval."
                   },
                   {
-                    "key": "invitationtoken",
+                    "key": "invitationToken",
                     "type": "string",
                     "optional": true,
                     "description": "An invitation token, necessary when users registration is limited to a specific set of users.\nPlatform administrators may limit users registration by configuring a list of authorized invitation tokens.\nIf this is not the case, users registration is open to everyone and this parameter can be omitted.\n\n<span class=\"entreprise-tag\"><span title=\"Entreprise License Only\" class=\"label\">Y</span></span>Available in entreprise only."
                   },
                   {
-                    "key": "languageCode",
+                    "key": "language",
                     "type": "string",
                     "optional": true,
                     "description": "The user's preferred language as a 2-letter ISO language code."
@@ -489,33 +489,26 @@
                     "description": "A confirmation of the user's username."
                   },
                   {
-                    "key": "server",
-                    "type": "string",
-                    "description": "**(DEPRECATED)** Please use the `apiEndpoint` parameter.\n\nThe server where this account is hosted.\nThe result will be invalid for DNS-less setups."
-                  },
-                  {
                     "key": "apiEndpoint",
                     "type": "string",
-                    "description": "The apiEndpoint to reach this account. Does not include an access token."
+                    "description": "The apiEndpoint to reach this account. It includes a personal access token."
                   }
                 ]
               },
               "examples": [
                 {
-                  "title": "Creating a user",
+                  "title": "Creating a user.",
                   "params": {
-                    "appid": "default",
-                    "hosting": "core1",
+                    "appId": "default",
                     "username": "user-123-abc",
                     "password": "ChjUzDXwaTG2qdV",
                     "email": "joseph-brenner@pryv.me",
-                    "invitationtoken": "o3in4o2",
-                    "languageCode": "en",
+                    "invitationToken": "o3in4o2",
+                    "language": "en",
                     "referer": "hospital-A"
                   },
                   "result": {
                     "username": "user-123-abc",
-                    "server": "user-123-abc.pryv.me",
                     "apiEndpoint": "https://{personal-token}@user-123-abc.pryv.me/"
                   }
                 }
@@ -642,7 +635,7 @@
               "http": "GET /{email}/username",
               "httpOnly": true,
               "server": "register",
-              "description": "Get the username of a Pryv.io account according to the given email.",
+              "description": "Get the username of a Pryv.io account according to the given email. This API method can be disabled in the [platform configuration](https://api.pryv.com/reference-admin/#platform-settings).",
               "params": {
                 "properties": [
                   {
@@ -680,6 +673,108 @@
                   },
                   "result": {
                     "username": "user-123-abc"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "cores.get",
+              "type": "method",
+              "title": "Get core",
+              "http": "GET /cores",
+              "httpOnly": true,
+              "server": "register",
+              "description": "Get the core of a Pryv.io account according to the given username or email. You must provide **only** one of them.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "username",
+                    "type": "string",
+                    "description": "The username to look for."
+                  },
+                  {
+                    "key": "email",
+                    "type": "string",
+                    "description": "The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.   \nThis is meant to prevent email discovery."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "core",
+                    "type": "object",
+                    "description": "The core by username"
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Retrieving the core URL for a given username.",
+                  "params": {
+                    "username": "trench"
+                  },
+                  "result": {
+                    "core": {
+                      "url": "https://co1.pryv.me/"
+                    }
+                  }
+                },
+                {
+                  "title": "Retrieving the core URL for a non-existing email.",
+                  "params": {
+                    "email": "adam-gibson@replacement.tech"
+                  },
+                  "result": {
+                    "core": {
+                      "url": "https://co3.pryv.me/"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "users.delete",
+              "type": "method",
+              "title": "Delete user",
+              "http": "DELETE /users/{username}",
+              "httpOnly": true,
+              "trustedOnly": true,
+              "server": "core",
+              "description": "Deletes a user account. This method must be enabled in the platform configuration. You should fetch the URL of the core where the user data is stored using the [Get core](#get-core) method.  \n- When performed by the account owner, this method requires a personal token.\n- For platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).\n- For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.",
+              "params": {
+                "properties": [
+                  {
+                    "key": "username",
+                    "type": "string",
+                    "http": {
+                      "text": "set in request path"
+                    },
+                    "description": "The username of the account to delete."
+                  }
+                ]
+              },
+              "result": {
+                "http": "200 OK",
+                "properties": [
+                  {
+                    "key": "userDeletion",
+                    "type": "object",
+                    "description": "The deleted user."
+                  }
+                ]
+              },
+              "examples": [
+                {
+                  "title": "Deleting a user.",
+                  "params": {
+                    "username": "mark-kaminski"
+                  },
+                  "result": {
+                    "userDeletion": {
+                      "username": "mark-kaminski"
+                    }
                   }
                 }
               ]
