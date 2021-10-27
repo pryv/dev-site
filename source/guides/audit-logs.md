@@ -77,7 +77,18 @@ Audit logs are available through the [Events API](/reference/#get-events). Howev
 
 The logs you are allowed to query depend on the access you are using.
 
-Whe using a **personal** token, you can query actions performed by any other access.
+#### Personal token
+
+Whe using a **personal** token, you can query actions performed by any other access. You can also create accesses to audit any other access, by adding permissions to the audited access id, such as:
+
+```json
+{
+  "streamId": ":_audit:access-MY_AUDITED_ACCESS_ID",
+  "level": "read"
+}
+```
+
+#### App and shared tokens
 
 When using an **app** or **shared** token, you can only query actions performed by the access you are using.
 
