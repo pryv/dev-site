@@ -12,7 +12,7 @@ withTOC: true
 
 # Released
 
-## 25.10.2021 - new Audit log with Pryv.io 1.7.0
+## 25.10.2021 - New features with Pryv.io 1.7.0
 
 - Audit log has been rebuilt, improving performance of fetched audit data, adding granularity over which methods are audited. See the [Audit guide](/guides/audit-logs/) on how to use them and see the [Audit setup guide](/customer-resources/audit-setup/) on how to set it up on your Pryv.io platform.
 - New integrity feature, computing hash for events, attachments and accesses data.
