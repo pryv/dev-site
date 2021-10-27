@@ -9,6 +9,7 @@ withTOC: true
 
 - **Pryv.io certificates auto-renewal**: Automatic SSL certification renewal
 - **Support oAuth 2.0 protocol for authentication and authorization**
+- **Dynamic mapping**: plug your own storage to the Pryv.io API
 
 # Released
 
