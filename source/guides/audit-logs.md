@@ -69,7 +69,7 @@ You can take a look on what an `Audit log` looks like on Pryv.io :
 }
 ```
 
-As you may have recognized, it is an event of type `audit-log/pryv-api`. You can find its defails [here](/event-types/#log).
+As you may have recognized, it is an event of type `audit-log/pryv-api`. You can find its defails [here](/event-types/#audit-log).
 
 Audit logs are available through the [Events API](/reference/#get-events). However they are read only, thus cannot be modified.
 
