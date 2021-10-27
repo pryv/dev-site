@@ -295,7 +295,7 @@ module.exports = exports =
       type: "array of permission objects"
       readOnly: "(except at creation)"
       description: """
-                   Ignored for personal accesses. If permission levels conflict (e.g. stream set to "manage" and child stream set to "contribute"), only the highest level is considered. Each permission object has the following structure:
+                   Ignored for personal accesses. If permission levels conflict (e.g. stream set to "manage" and child stream set to "contribute"), the child stream level applies. Each permission object has the following structure:
                    """
       properties: [
         key: [ "streamId", "tag"]

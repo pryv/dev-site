@@ -13,7 +13,7 @@ Changes:
   - Audit logs are now available through the [Events API](/reference/#get-events), deprecating the [previous route](/reference/#get-audit-logs) and its [data structure](/reference/#audit-log)
 - System streams have been modified. Their prefix changes from `.` (dot) to `:_system:` & `:system:`. See the [System streams page](/customer-resources/system-streams/) for details.
 - Tags have been removed from Events. In Pryv.io platforms that contained them, they are migrated to streams, See `BACKWARD_COMPATIBILITY_TAGS` platform parameter in your platform configuration. The tags functionality is ensured by [Streams queries](/reference/#streams-query) for the [events.get](/reference/#get-events) API method.
-- Permission levels are computed differently: If a child stream has a smaller permission than a parent, its level is indeed applied on the child (instead of the parent permission taking precendence as was done before).
+- Permission levels are computed differently: If a child stream has a different permission than a parent, its level is indeed applied on the child (instead of the higher permission taking precendence as was done before).
 - [Integrity hash](/reference/#data-structure-integrity) is computed for [Events, Attachments](/reference/#event) and [Accesses](/reference/#access). This functionality can be disabled.
 - Automated platform migration using the [migrations.get](/reference-admin/#retrieve-platform-migrations) and [migrations.apply](/reference-admin/#apply-configuration-migrations) API methods.
 
