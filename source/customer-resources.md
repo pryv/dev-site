@@ -6,13 +6,19 @@ customer: true
 withTOC: true
 ---
 
-In this space you will find documents and guides for the installation and support of the **Pryv.io enterprise** version.
+In this space you will find documents, files and guides for the installation and support of the **Pryv.io enterprise** version.
 
 ## Documents
 
 - Functional Requirement Specification: [api.pryv.com/functional-specifications](/functional-specifications/)
 
   Functional specifications for the Pryv.io middleware system: the capabilities and functions that the system must be capable of performing.
+
+## Files
+
+- Pryv.io configuration files: [HTML](https://api.pryv.com/config-template-pryv.io/)
+
+  Configuration files to install Pryv.io (requires Pryv license and docker key).
 
 ## Guides
 

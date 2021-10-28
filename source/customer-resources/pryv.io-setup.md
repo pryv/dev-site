@@ -100,7 +100,7 @@ ${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns2-pryv.${YOUR-DOMAIN}.
 
 ## Obtain the license key, credentials and configuration files
 
-In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files.
+In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files, which you can download [here](https://api.pryv.com/config-template-pryv.io/).
 
 ## Set the platform parameters
 
