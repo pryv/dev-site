@@ -79,7 +79,7 @@ The logs you are allowed to query depend on the access you are using.
 
 #### Personal token
 
-Whe using a **personal** token, you can query actions performed by any other access. You can also create accesses to audit any other access, by adding [permissions](/reference/#access) to the audited access id, such as:
+Whe using a **personal** token, you can query actions performed by any other access. You can also create **app** and **shared** accesses to audit any other access, by adding [permissions](/reference/#access) to the audited access id, such as:
 
 ```json
 {
@@ -90,7 +90,7 @@ Whe using a **personal** token, you can query actions performed by any other acc
 
 #### App and shared tokens
 
-When using an **app** or **shared** token, you can only query actions performed by the access you are using.
+When using an **app** or **shared** token, you can only query actions performed by the access you are using, and the permissions you were explicitely given on others.
 
 ### How to filter audit queries?
 
