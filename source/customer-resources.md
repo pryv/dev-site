@@ -57,7 +57,7 @@ In this space you will find documents, files and guides for the installation and
 
   This document describes how to setup audit capabilities for your Pryv.io platform.
 
-- Core migration: [PDF](/assets/docs/20190604-migrate-core-v1.pdf)
+- Core migration: [HTML](/customer-resources/core-migration/)
 
   This document describes how to migrate a Pryv.io core service to a different machine.
 
