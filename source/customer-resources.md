@@ -61,7 +61,7 @@ In this space you will find documents, files and guides for the installation and
 
   This document describes how to migrate a Pryv.io core service to a different machine.
 
-- Register migration: [PDF](/assets/docs/20190604-migrate-register-v1.pdf)
+- Register migration: [HTML](/customer-resources/register-migration/)
 
   This document describes how to migrate a Pryv.io register service to a different machine.
 
