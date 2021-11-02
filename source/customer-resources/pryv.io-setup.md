@@ -28,7 +28,7 @@ It walks you through the different steps that have to be performed in order to s
 
 You need first to define which hardware or virtual machines you will provision to host your Pryv.io instance.  
 
-The **Infrastructure procurement guide** for the Pryv.io middleware from the [Customer Resources page](/customer-resources/#guides-and-documents) will guide you for the provisioning and deployment of your machines.
+The **Infrastructure procurement guide** for Pryv.io from the [Customer Resources page](/customer-resources/infrastructure-procurement/) will guide you for the provisioning and deployment of your machines.
 
 It will help you with the choice of your Pryv.io deployment (single node or cluster), and provide you with resources sizing considerations.  
 
@@ -206,7 +206,7 @@ In both cases, you will need to customize settings in the "Email configuration" 
 
 You can also customize the email templates in the configuration files.
 
-More details are provided in the **Emails configuration guide** that can be found in the [Customer Resources section](/customer-resources/#guides-and-documents).
+More details are provided in the **Emails configuration guide** that can be found in the [Customer Resources section](/customer-resources/emails-setup/).
 
 ## Define your data model
 
