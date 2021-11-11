@@ -1462,9 +1462,7 @@
         }
       },
       "additionalProperties": "false",
-      "required": [
-        
-      ]
+      "required": []
     },
     "picture/base64": {
       "description": "The picture is caried in base64 (utf-8) encoded in string",

@@ -1695,9 +1695,7 @@
             }
           },
           "additionalProperties": "false",
-          "required": [
-            
-          ]
+          "required": []
         }
       }
     },
