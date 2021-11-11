@@ -7,11 +7,15 @@ withTOC: true
 
 # Future releases
 
-- **Pryv.io certificates auto-renewal**: Automatic SSL certification renewal
 - **Support oAuth 2.0 protocol for authentication and authorization**
 - **Dynamic mapping**: plug your own storage to the Pryv.io API
 
 # Released
+
+## 12.11.2021 - Automatic SSL certificate generation with Pryv.io 1.7.4
+
+- Pryv introduces a service that generates a SSL certificate for your running Pryv.io installation and deploys it to all machines for cluster and single-node.  
+See [Generate SSL certificate guide](/customer-resources/ssl-certificate/) for more information.
 
 ## 25.10.2021 - New features with Pryv.io 1.7.0
 

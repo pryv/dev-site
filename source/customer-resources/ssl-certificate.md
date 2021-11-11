@@ -11,6 +11,12 @@ This document describes how to generate a wildcard SSL certificate using [Let's 
 The prerequisites for this are that you have [obtained a domain name](/customer-resources/pryv.io-setup/#obtain-a-domain-name) and [installed the Pryv.io platform](/customer-resources/pryv.io-setup/#set-the-platform-parameters).  
 If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
 
+## Automatic generation with Pryv.io 1.7.4 or later
+
+If you are runnng Pryv.io 1.7.4 or later, you can simply run the `renew-ssl-certificate` script provided with the configuration files to generate a SSL certificate for your Pryv.io platform.
+
+Otherwise, follow this guide.
+
 ## Certbot Installation
 
 - [Reference](https://certbot.eff.org/lets-encrypt/ubuntuxenial-other)
