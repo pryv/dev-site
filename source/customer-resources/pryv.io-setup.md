@@ -110,8 +110,6 @@ Along with the configuration files, you will find an Installation guide describi
 
 You will need to obtain a wildcard SSL certificate for *.DOMAIN to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one [using Let's Encrypt](/customer-resources/ssl-certificate/).
 
-We have automatic SSL certificate renewal on our roadmap, so let us know if you are interested.
-
 If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
 
 ## Validate your platform installation
