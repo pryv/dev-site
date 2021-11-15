@@ -13,7 +13,7 @@ If you are using an infrastructure with appliances that perform the SSL terminat
 
 ## Automatic generation with Pryv.io 1.7.4 or later
 
-If you are runnng Pryv.io 1.7.4 or later, you can simply run the `renew-ssl-certificate` script provided with the configuration files to generate a SSL certificate for your Pryv.io platform.
+If you are runnng Pryv.io 1.7.4 or later, you can simply run the `renew-ssl-certificate` script provided with [the configuration files](https://api.pryv.com/config-template-pryv.io/) to generate a SSL certificate for your Pryv.io platform.
 
 Otherwise, follow this guide.
 
