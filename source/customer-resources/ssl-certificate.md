@@ -17,6 +17,12 @@ If you are runnng Pryv.io 1.7.4 or later, you can simply run the `renew-ssl-cert
 
 Otherwise, follow this guide.
 
+### DNS check failure: Error: Servers are not reachable
+
+If you encounter this error, your network settings might prevent the `renewl-ssl-certificate` tool from peforming the pre-check of DNS challenge, namely the node process inside the `pryvio_ssl_certificate` container cannot get an answer from the `pryvio_dns` container.
+
+You can simply skip this by modifying the `acme:skipDnsChecks` parameter in `config-leader/ssl/conf/ssl-certificate.yml`. You can also increase the value of the time allocated for the DNS container(s) to reboot by increasing the `acme:dnsRebootWaitMs` parameter. On machines with limited resources, you can increase this value to `10000` (10 seconds).
+
 ## Certbot Installation
 
 - [Reference](https://certbot.eff.org/lets-encrypt/ubuntuxenial-other)
