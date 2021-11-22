@@ -86,6 +86,7 @@ module.exports = exports =
           password: examples.users.one.password
           appId: "my-app-id"
         result:
+          apiEndpoint: "https://" + examples.accesses.personal.token + "@" + examples.users.one.username + ".pryv.me/"
           token: examples.accesses.personal.token
           preferredLanguage: examples.users.one.language
       ]
