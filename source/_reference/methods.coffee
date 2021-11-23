@@ -62,6 +62,12 @@ module.exports = exports =
       result:
         http: "200 OK"
         properties: [
+          key: "apiEndpoint"
+          type: "string"
+          description: """
+                       The API endpoint containing the authorization token. See [App Guidelines](/guides/app-guidelines/).
+                       """
+        ,
           key: "token"
           type: "string"
           description: """
@@ -80,6 +86,7 @@ module.exports = exports =
           password: examples.users.one.password
           appId: "my-app-id"
         result:
+          apiEndpoint: "https://" + examples.accesses.personal.token + "@" + examples.users.one.username + ".pryv.me/"
           token: examples.accesses.personal.token
           preferredLanguage: examples.users.one.language
       ]
