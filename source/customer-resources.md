@@ -65,6 +65,10 @@ In this space you will find documents, files and guides for the installation and
 
   This document describes how to migrate a Pryv.io register service to a different machine.
 
+- Single-node to Cluster upgrade: [HTML](/customer-resources/single-node-to-cluster/)
+
+  This document describes how to upgrade a Pryv.io single-node installation to a cluster one.
+
 - (deprecated) User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
 
   This document presents a tool which allows to delete Pryv.io users. From Pryv.io 1.6, user deletion is available through the [admin API](/reference-admin/#delete-user)
