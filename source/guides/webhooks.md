@@ -9,8 +9,8 @@ withTOC: true
 In this guide we address developers that wish to implement notified systems with Webhooks.
 It describes what Webhooks are, why and how to use them on Pryv.io, illustrating it with a common use case.
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 1. [Introduction](#introduction)
 2. [Pryv.io Webhooks](#pryv-io-webhooks)
   1. [What are Webhooks?](#what-are-webhooks-)

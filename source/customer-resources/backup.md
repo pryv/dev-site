@@ -6,8 +6,8 @@ customer: true
 withTOC: true
 ---
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 1. [Introduction](#introduction)
 2. [Backup](#backup)
   1. [Core](#core)

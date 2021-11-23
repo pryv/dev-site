@@ -9,8 +9,8 @@ withTOC: true
 In this document we address system administrators or equivalent that need to provision virtual machines and other web resources to run a Pryv.io platform.  
 It will guide you through the process of deciding which platform setup you require, what virtual machines to provision to host your Pryv.io platform, firewalling settings, OS compatibility and other operational concerns.
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 - 1 [Platform setup](#platform-setup)
 - 2 [Business requirements](#business-requirements)
 - 3 [Core number considerations](#core-number-considerations)

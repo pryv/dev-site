@@ -6,8 +6,8 @@ customer: true
 withTOC: true
 ---
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 1. [Introduction](#introduction)
 2. [Pryv.io Custom Auth Step](#pryv-io-custom-auth-step)
   1. [Why using a custom auth step](#why-using-a-custom-auth-step)

@@ -6,8 +6,8 @@ customer: true
 withTOC: true
 ---
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 1. [Usage](#usage)  
   1. [Settings location](#settings-location)  
   2. [Key format](#key-format)  

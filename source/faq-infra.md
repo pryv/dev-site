@@ -7,8 +7,8 @@ withTOC: true
 
 In this FAQ we answer common questions related to Pryv.io platform. You can contact us directly if your question is not listed here.
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 - 1 [Platform prerequisites](#platform-prerequisites)
 - 2 [Customize registration, login, password-reset pages](#customize-registration-login-password-reset-pages)
 - 3 [Host apps, resources on the same domain, and reuse the SSL certificate](#host-apps-resources-on-the-same-domain-and-reuse-the-ssl-certificate)

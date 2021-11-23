@@ -1,13 +1,13 @@
 ---
 id: core-migration
-title: 'Pryv.io core migration'
+title: 'Pryv.io register migration'
 template: default.jade
 customer: true
 withTOC: true
 ---
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 1. [Summary](#summary)
 2. [Deploy and launch services on the *destination* machine](#deploy-and-launch-services-on-the-destination-machine)
 3. [(Optional) Backup Redis data](#-optional-backup-redis-data)
@@ -29,7 +29,7 @@ We assume that register is already deployed (config present, docker images downl
 
 Launch services by running `${PRYV_CONF_ROOT}/run-pryv` and verify that all containers are started using `docker ps` and check logs on `register` and `dns` containers.
 
-## (optional) backup Redis data
+## (Optional) Backup Redis data
 
 As we will use Redis replication, it is recommended to backup the database. Make a copy of the data located in `${PRYV_CONF_ROOT}/pryv/redis/data/`.
 

@@ -7,8 +7,8 @@ withTOC: true
 
 In this FAQ we answer common questions related to Pryv.io API. You can contact us directly if your question is not listed here.
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 - 1 [Personal data](#personal-data)
 - 2 [Streams](#streams)
 - 3 [Event types](#event-types)
