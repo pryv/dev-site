@@ -18,7 +18,7 @@ We migrate a single-node installation from a *source* machine to multiple *dest*
 
 Generate a few events and streams by hand for a naked eye comparison for data transferred after the migration.  
 
-## Adapt platform parameters:
+## Adapt platform parameters
 
 Fetch cluster configuration files for the same version [here](https://api.pryv.com/config-template-pryv.io/). Extract them, and edit the `config-leader/conf/template-platform.yml` (`platform.yml` for versions prior to 1.7).
 
@@ -43,6 +43,6 @@ You can overwrite the other sections with the ones from your `platform.yml`
 
 ## Replace config by cluster
 
-1. On *dest* register, download and untar config files for cluster deployment of same version
-2. Replace or copy the `config-leader/conf/platform.yml` file with the one you prepare earlier
+1. On *dest* register, download and untar config files for a cluster deployment of same version
+2. Replace or copy the `config-leader/conf/platform.yml` file with the one you prepared earlier
 3. On all *dest* machines run: `restart-config-follower` and `restart-pryv`
