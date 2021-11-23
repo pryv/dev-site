@@ -1,6 +1,6 @@
 ---
-id: core-migration
-title: 'Pryv.io core migration'
+id: register-migration
+title: 'Pryv.io register migration'
 template: default.jade
 customer: true
 withTOC: true
@@ -96,6 +96,8 @@ Run `${PRYV_CONF_ROOT}/run-pryv`
 As we are currently using docker-compose to specify the mounted volumes (containing the NGINX config), we just boot all services, even if they will unused as NGINX is proxying to the *dest* machine.
 
 ## Set the *source* register as replica of the *dest* register through a SSH tunnel
+
+As DNS requests might still be routed to the old machine, we need to keep its database updated.
 
 1. On the *dest* machine, open the Redis container port 6379 to localhost: Add `- "127.0.0.1:6379:6379"` to the `ports` section of the `redis` service in the `${PRYV_CONF_ROOT}/pryv/pryv.yml` docker-compose file and reboot it running `${PRYV_CONF_ROOT}/restart-pryv`
 2. Generate SSH key pair `ssh-keygen -t rsa -b 4096 -C "migration@remote"`

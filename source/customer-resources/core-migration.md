@@ -169,7 +169,7 @@ Log onto an account and verify that the data has been moved. You can monitor the
 
 ## Update core server IP address on Register
 
-SSH to the reg-master machine and edit **manually** (don't use the admin pane) the following parameters:
+SSH to the reg-master machine and edit **manually** (don't use the admin panel) the following parameters:
 
 in `${PRYV_CONF_ROOT}/config-leader/conf/platform.yml`:
 
