@@ -45,17 +45,25 @@ ssh-keygen -t rsa -b 4096 -C "migration@remote"
 
 3- Add the public one in `~/.ssh/authorized_keys` on *source*.
 
-4- Transfer Mongo data: on *dest*, run: 
+4- On *source*, create a dump of the MongoDB database:
+
+```bash
+docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongodump -d pryv-node -o /app/backup/
+```
+
+The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/mongodb/backup/`.
+
+5- Transfer Mongo data: on *dest*, run: 
 
 ```bash
 time rsync --verbose --copy-links \
   --archive --compress --delete -e \
   "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-  ${USERNAME}@${SOURCE_MACHINE}:${PRYV_CONF_ROOT}/pryv/mongodb/data/ \
-  ${PRYV_CONF_ROOT}/pryv/mongodb/data/
+  ${USERNAME}@${SOURCE_MACHINE}:${PRYV_CONF_ROOT}/pryv/mongodb/backup/ \
+  ${PRYV_CONF_ROOT}/pryv/mongodb/backup/
 ```
 
-5- Transfer other user data: on *dest*, run:  
+6- Transfer other user data: on *dest*, run:  
 
 ```bash
 time rsync --verbose --copy-links \
@@ -65,19 +73,21 @@ time rsync --verbose --copy-links \
   ${PRYV_CONF_ROOT}/pryv/core/data
 ```
 
-6- If needed, Repeat steps 2-3 to sync the biggest bulk of the data prior to the *cold* migration
-
 7- Shutdown services on *source*: `${PRYV_CONF_ROOT}/stop-pryv`
-
-8- Make last sync by executing steps 2-3
 
 If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv` 
 
 ## Launch services on *dest*
 
-Launch services: run `${PRYV_CONF_ROOT}/run-pryv`
+1. Launch services: run `${PRYV_CONF_ROOT}/run-pryv`
 
-and verify that it is running correctly as described in the [core validation guide](/customer-resources/platform-validation/#core).
+2. Restore MongoDB files, run:
+
+```bash
+docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongorestore /app/backup/
+```
+
+3. and verify that it is running correctly as described in the [core validation guide](/customer-resources/platform-validation/#core).
 
 ## Set NGINX redirection for core on *source*
 
