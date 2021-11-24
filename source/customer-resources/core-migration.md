@@ -32,9 +32,6 @@ We assume that a core service is already deployed (config present, docker images
 
 ## Transfer user data from *source* to *dest*
 
-User data migration has a down time which we'll call *cold* migration. To limit its duration, we transfer the bulk of the data from *source* to *dest* prior to the *cold* migration using `rsync`.  
-The *cold* migration consists of syncing the most recent data changes. After this, services will be started on *dest* and the `nginx` process on *source* will proxy calls while DNS entries are updated.
-
 1. Create an SSH key pair using the following command: 
 
 ```bash

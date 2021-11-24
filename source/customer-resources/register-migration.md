@@ -35,8 +35,6 @@ As we will use Redis replication, it is recommended to backup the database. Make
 
 ## Transfer user data
 
-User data migration has a down time which we'll call *cold* migration. After this, services will be started on *dest* and the `nginx` process on *source* will proxy calls while DNS entries are updated.
-
 1. Create an SSH key pair using:  
 
    ```bash
