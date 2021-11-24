@@ -35,8 +35,7 @@ As we will use Redis replication, it is recommended to backup the database. Make
 
 ## Transfer user data
 
-User data migration has a down time which we'll call *cold* migration. To limit its duration, we transfer the bulk of the data from *source* to *dest* prior to the *cold* migration using `rsync`.
-The *cold* migration consists of syncing the most recent data changes. After this, services will be started on *dest* and the `nginx` process on *source* will proxy calls while DNS entries are updated.
+User data migration has a down time which we'll call *cold* migration. After this, services will be started on *dest* and the `nginx` process on *source* will proxy calls while DNS entries are updated.
 
 1- Create an SSH key pair using:  
 
@@ -58,11 +57,7 @@ time rsync --verbose --copy-links \
   ${PRYV_CONF_ROOT}/pryv/redis/data
 ```
 
-5- If needed, Repeat step 2 to sync the biggest bulk of the data prior to the *cold* migration
-
-6- Shutdown services on *source*: `${PRYV_CONF_ROOT}/stop-pryv`
-
-7- Make last sync by executing steps 2
+5- Shutdown services on *source*: `${PRYV_CONF_ROOT}/stop-pryv`
 
 If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv`.
 
@@ -77,6 +72,18 @@ The following steps describe the configuration changes to make NGINX proxy calls
 upstream register_server {
   server register:9000 max_fails=3 fail_timeout=30s;
 }
+
+upstream mail_server {
+  server mail:9000 max_fails=3 fail_timeout=30s;
+}
+
+upstream leader_server {
+  server config-leader:7000 max_fails=3 fail_timeout=30s;
+}
+
+upstream admin_panel_server {
+  server admin_panel:80;
+}
 ```
 
 with
@@ -85,11 +92,26 @@ with
 upstream register_server {
   server ${DEST_REGISTER_IP_ADDRESS}:443;
 }
+
+upstream mail_server {
+  server ${DEST_REGISTER_IP_ADDRESS}:443;
+}
+
+upstream leader_server {
+  server ${DEST_REGISTER_IP_ADDRESS}:443;
+}
+
+upstream admin_panel_server {
+  server ${DEST_REGISTER_IP_ADDRESS}:80;
+}
 ```
 
 Change proxy protocol from `http` to `https`
 
 - Change: `http://register_server` to `https://register_server`
+- Change: `http://mail_server` to `https://mail_server`
+- Change: `http://leader_server` to `https://leader_server`
+- Change: `http://admin_panel_server` to `https://admin_panel_server`
 
 Run `${PRYV_CONF_ROOT}/run-pryv`
 
