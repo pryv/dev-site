@@ -45,7 +45,7 @@ ssh-keygen -t rsa -b 4096 -C "migration@remote"
 
 3. Add the public one in `~/.ssh/authorized_keys` on *dest*.
 
-4. Shutdown services on *source* to prevent new information from arriving: `${PRYV_CONF_ROOT}/stop-pryv`
+4. Shutdown NGINX on *source* to prevent new information from arriving: `docker stop pryvio_nginx`
 
 5. On *source*, create a dump of the MongoDB database:
 
