@@ -25,7 +25,7 @@ We copy the data from the old master register to the new master register, set th
 
 ## Deploy and launch services on the *destination* machine
 
-We assume that register is already deployed (config present, docker images downloaded) on the *dest* machine. This includes installation of SSL certificates.
+We assume that register is already deployed (config present, docker images downloaded) on the *dest* machine.
 
 Launch services by running `${PRYV_CONF_ROOT}/run-pryv` and verify that all containers are started using `docker ps` and check logs on `register` and `dns` containers.
 
@@ -73,7 +73,20 @@ User data migration has a down time which we'll call *cold* migration. After thi
 
    (Same comment as previous step about permissions.)
 
-7. On *dest*, run `./ensure-permissions-reg-master` script to help with enforcing correct permissions on data and log folders, then `${PRYV_CONF_ROOT}/restart-pryv` to ensure Redis picks up possible changes.
+7. Transfer SSL certificates, on *source*, run:
+
+```bash
+time rsync --verbose --copy-links \
+     --archive --compress -e \
+  "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+     ${PRYV_CONF_ROOT}/pryv/nginx/conf/secret \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/nginx/conf/secret/
+```
+
+   (Same comment as previous step about permissions.)
+
+
+8. On *dest*, run `./ensure-permissions-reg-master` script to help with enforcing correct permissions on data and log folders, then `${PRYV_CONF_ROOT}/restart-pryv` to ensure Redis picks up possible changes.
 
 If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv`.
 

@@ -28,7 +28,7 @@ Generate a few events and streams by hand for a naked eye comparison for data tr
 
 ## Deploy and launch services on the destination machine
 
-We assume that a core service is already deployed (config present, docker images downloaded) on the *dest* machine. This includes installation of SSL certificates.
+We assume that a core service is already deployed (config present, docker images downloaded) on the *dest* machine.
 
 ## Transfer user data from *source* to *dest*
 
@@ -79,7 +79,19 @@ time rsync --verbose --copy-links \
 
    (Same comment as previous step about permissions.)
 
-8. On *dest*, run `./ensure-permissions-core` script to help with enforcing correct permissions on data and log folders
+8. Transfer SSL certificates, on *source*, run:
+
+```bash
+time rsync --verbose --copy-links \
+     --archive --compress -e \
+  "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+     ${PRYV_CONF_ROOT}/pryv/nginx/conf/secret \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/nginx/conf/secret/
+```
+
+   (Same comment as previous step about permissions.)
+
+9. On *dest*, run `./ensure-permissions-core` script to help with enforcing correct permissions on data and log folders
 
 If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv` 
 
