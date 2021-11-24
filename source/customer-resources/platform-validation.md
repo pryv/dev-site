@@ -106,6 +106,13 @@ HTTP status:
 
 # Troubleshoot
 
+## File permissions
+
+If you encounter permission issues on data and log files, those handy scripts make sure they are set correctly:
+
+- On Register: `./ensure-permissions-reg-master`; after that run `${PRYV_CONF_ROOT}/restart-pryv` to ensure Redis picks up possible changes
+- On Core: `./ensure-permissions-core`
+
 ## DNS
 
 1. SSH to the machine
