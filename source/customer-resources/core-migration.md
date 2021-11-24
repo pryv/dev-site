@@ -28,24 +28,26 @@ Generate a few events and streams by hand for a naked eye comparison for data tr
 
 ## Deploy and launch services on the destination machine
 
-We assume that a core service is already deployed (config present, docker images downloaded) on the *dest* machine.  
+We assume that a core service is already deployed (config present, docker images downloaded) on the *dest* machine. This includes installation of SSL certificates.
 
 ## Transfer user data from *source* to *dest*
 
 User data migration has a down time which we'll call *cold* migration. To limit its duration, we transfer the bulk of the data from *source* to *dest* prior to the *cold* migration using `rsync`.  
 The *cold* migration consists of syncing the most recent data changes. After this, services will be started on *dest* and the `nginx` process on *source* will proxy calls while DNS entries are updated.
 
-1- Create an SSH key pair using the following command: 
+1. Create an SSH key pair using the following command: 
 
 ```bash
 ssh-keygen -t rsa -b 4096 -C "migration@remote"
 ```
 
-2- Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *dest*
+2. Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *dest*
 
-3- Add the public one in `~/.ssh/authorized_keys` on *source*.
+3. Add the public one in `~/.ssh/authorized_keys` on *source*.
 
-4- On *source*, create a dump of the MongoDB database:
+4. Shutdown services on *source* to prevent new information from arriving: `${PRYV_CONF_ROOT}/stop-pryv`
+
+5. On *source*, create a dump of the MongoDB database:
 
 ```bash
 docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongodump -d pryv-node -o /app/backup/
@@ -53,27 +55,31 @@ docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongodump -d pryv-node -o /ap
 
 The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/mongodb/backup/`.
 
-5- Transfer Mongo data: on *dest*, run: 
+6. Transfer Mongo data: on *source*, run: 
 
 ```bash
 time rsync --verbose --copy-links \
-  --archive --compress --delete -e \
+     --archive --compress -e \
   "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-  ${USERNAME}@${SOURCE_MACHINE}:${PRYV_CONF_ROOT}/pryv/mongodb/backup/ \
-  ${PRYV_CONF_ROOT}/pryv/mongodb/backup/
+     ${PRYV_CONF_ROOT}/pryv/mongodb/backup/ \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/mongodb/backup/ 
 ```
 
-6- Transfer other user data: on *dest*, run:  
+   (You may have to go via your home user directory on *dest* first if permission issues arise.)
+
+7. Transfer other user data: on *source*, run:  
 
 ```bash
 time rsync --verbose --copy-links \
-  --archive --compress --delete -e \
+     --archive --compress -e \
   "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-  ${USERNAME}@${SOURCE_MACHINE}:${PRYV_CONF_ROOT}/pryv/core/data/ \
-  ${PRYV_CONF_ROOT}/pryv/core/data
+     ${PRYV_CONF_ROOT}/pryv/core/data \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/core/data/
 ```
 
-7- Shutdown services on *source*: `${PRYV_CONF_ROOT}/stop-pryv`
+   (Same comment as previous step about permissions.)
+
+8. On *dest*, run `./ensure-permissions-core` script to help with enforcing correct permissions on data and log folders
 
 If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv` 
 

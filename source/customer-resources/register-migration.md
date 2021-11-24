@@ -25,7 +25,7 @@ We copy the data from the old master register to the new master register, set th
 
 ## Deploy and launch services on the *destination* machine
 
-We assume that register is already deployed (config present, docker images downloaded) on the *dest* machine.
+We assume that register is already deployed (config present, docker images downloaded) on the *dest* machine. This includes installation of SSL certificates.
 
 Launch services by running `${PRYV_CONF_ROOT}/run-pryv` and verify that all containers are started using `docker ps` and check logs on `register` and `dns` containers.
 
@@ -37,27 +37,43 @@ As we will use Redis replication, it is recommended to backup the database. Make
 
 User data migration has a down time which we'll call *cold* migration. After this, services will be started on *dest* and the `nginx` process on *source* will proxy calls while DNS entries are updated.
 
-1- Create an SSH key pair using:  
+1. Create an SSH key pair using:  
 
-```bash
-ssh-keygen -t rsa -b 4096 -C "migration@remote"
-```
+   ```bash
+   ssh-keygen -t rsa -b 4096 -C "migration@remote"
+   ```
 
-2- Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *dest*
+2. Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *source*
 
-3- Add the public one in `authorized_keys` on *source*
+3. Copy the public one to `~/.ssh/authorized_keys` of the *dest* register.
 
-4- Transfer Redis data: on *dest*, run: 
+4. Shutdown services on *source* to prevent new information from arriving: `${PRYV_CONF_ROOT}/stop-pryv`
 
-```bash
-time rsync --verbose --copy-links \
-  --archive --compress --delete -e \
-  "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-  ${USERNAME}@${SOURCE_MACHINE}:${PRYV_CONF_ROOT}/pryv/redis/data/ \
-  ${PRYV_CONF_ROOT}/pryv/redis/data
-```
+5. Transfer Redis data: on *source*, run:
 
-5- Shutdown services on *source*: `${PRYV_CONF_ROOT}/stop-pryv`
+   ```bash
+   time rsync --verbose --copy-links \
+     --archive --compress --delete -e \
+     "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+     ${PRYV_CONF_ROOT}/pryv/redis/data \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/redis/data/
+   ```
+   
+   You may have to go via your home user directory on *dest* first if permission issues arise.
+
+6. Transfer admin users data: on *source*, run:
+
+   ```bash
+   time rsync --verbose --copy-links \
+     --archive --compress -e \
+     "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+     ${PRYV_CONF_ROOT}/config-leader/database \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/config-leader/database/
+   ```
+
+   (Same comment as previous step about permissions.)
+
+7. On *dest*, run `./ensure-permissions-reg-master` script to help with enforcing correct permissions on data and log folders, then `${PRYV_CONF_ROOT}/restart-pryv` to ensure Redis picks up possible changes.
 
 If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv`.
 
@@ -122,12 +138,10 @@ As we are currently using docker-compose to specify the mounted volumes (contain
 As DNS requests might still be routed to the old machine, we need to keep its database updated.
 
 1. On the *dest* machine, open the Redis container port 6379 to localhost: Add `- "127.0.0.1:6379:6379"` to the `ports` section of the `redis` service in the `${PRYV_CONF_ROOT}/pryv/pryv.yml` docker-compose file and reboot it running `${PRYV_CONF_ROOT}/restart-pryv`
-2. Generate SSH key pair `ssh-keygen -t rsa -b 4096 -C "migration@remote"`
-3. Copy the public key to `~/.ssh/authorized_keys` of the *dest* register.
-4. Copy the private key to the *source* register in `${PRYV_CONF_ROOT}/pryv/redis/conf` so it is mounted in the container upon startup
-5. Set *source* register as replica of *dest* register and add the following to *source* register's redis config file `${PRYV_CONF_ROOT}/pryv/redis/conf/redis.conf`: `replicaof localhost 4567`
-6. Reboot services on *source*: `${PRYV_CONF_ROOT}/restart-pryv`
-7. On the *source* register, enter the redis container (`docker exec -ti pryvio_redis bash`), open a SSH tunnel: run `ssh -i ${PATH_TO_PRIVATE_KEY} -L 4567:127.0.0.1:6379 root@${DEST_REG_HOSTNAME} -N`.
+2. Copy the private key generated earlier to the *source* register in `${PRYV_CONF_ROOT}/pryv/redis/conf` so it is mounted in the container upon startup
+3. Set *source* register as replica of *dest* register and add the following to *source* register's redis config file `${PRYV_CONF_ROOT}/pryv/redis/conf/redis.conf`: `replicaof localhost 4567`
+4. Reboot services on *source*: `${PRYV_CONF_ROOT}/restart-pryv`
+5. On the *source* register, enter the redis container (`docker exec -ti pryvio_redis bash`), open a SSH tunnel: run `ssh -i ${PATH_TO_PRIVATE_KEY} -L 4567:127.0.0.1:6379 root@${DEST_REG_HOSTNAME} -N`.
 
 ## Update Name servers
 
