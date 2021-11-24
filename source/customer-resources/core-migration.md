@@ -41,9 +41,9 @@ The *cold* migration consists of syncing the most recent data changes. After thi
 ssh-keygen -t rsa -b 4096 -C "migration@remote"
 ```
 
-2. Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *dest*
+2. Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *source*
 
-3. Add the public one in `~/.ssh/authorized_keys` on *source*.
+3. Add the public one in `~/.ssh/authorized_keys` on *dest*.
 
 4. Shutdown services on *source* to prevent new information from arriving: `${PRYV_CONF_ROOT}/stop-pryv`
 
