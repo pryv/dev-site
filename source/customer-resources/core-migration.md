@@ -128,6 +128,10 @@ upstream hfs_server {
 upstream preview_server {
   server preview:9000 max_fails=3 fail_timeout=30s;
 }
+
+upstream mfa_server {
+  server mfa:7000 max_fails=3 fail_timeout=30s;
+}
 ```
 
 with
@@ -148,6 +152,10 @@ upstream hfs_server {
 upstream preview_server {
   server ${DEST_CORE_IP_ADDRESS}:443;
 }
+
+upstream mfa_server {
+  server ${DEST_CORE_IP_ADDRESS}:443;
+}
 ```
 
 In the same file, change the proxy protocol from `http` to `https`
@@ -156,6 +164,7 @@ In the same file, change the proxy protocol from `http` to `https`
 - Change: `http://websocket_server` to `http://websocket_server`
 - Change: `http://hfs_server` to `https://hfs_server`
 - Change: `http://preview_server` to `https://preview_server`
+- Change: `http://mfa_server` to `https://mfa_server`
 
 ## Reload NGINX on *source*
 
