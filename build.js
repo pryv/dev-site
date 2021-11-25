@@ -2,6 +2,7 @@ const metalsmith = require('metalsmith')(__dirname);
 const collections = require('metalsmith-collections');
 const define = require('metalsmith-define');
 const globals = require('./globals');
+const headingsId = require('metalsmith-headings-identifier');
 const ignore = require('metalsmith-ignore');
 const include = require('metalsmith-include');
 const layouts = require('metalsmith-layouts');
@@ -38,6 +39,10 @@ metalsmith
   .use(layouts({
     directory: 'source/_templates',
     engineOptions: { useMetadata: true }
+  }))
+  .use(headingsId({
+    // do NOT generate anchor link as the current jQuery ToC plugin does it already
+    linkTemplate: '<!--%s-->'
   }))
   .use(ignore([
     '_reference/**',
