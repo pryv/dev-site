@@ -212,22 +212,20 @@ body.home
       color:$white
 
 #main
-  ul:not(.nav):not(.dropdown-menu)
-    li
-      list-style-type: none
+  ul:not(.nav):not(.dropdown-menu), ol
+    & > li
+      margin-bottom: 11px // to match paragraphs
 
   ul:not(.nav):not(.dropdown-menu)
-    li
-      margin-left: 2.4em
-      line-height: 1.0
-      padding: 4px 0 10px 20px
+    & > li
+      list-style-type: none
+
   ol
     counter-reset: unset
-    li
+    padding-left: 1.25em
+    & > li
+      padding-left: 0
       list-style-type: decimal
-      margin-left: calc(2.4em + 17px)
-      line-height: 1.0
-      padding: 4px 0 10px 3px
       &::before
         content: none
 
