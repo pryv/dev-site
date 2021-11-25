@@ -48,7 +48,7 @@ permalink: false
   h2.page-header Features
   .row
     .col-md-4.marketing-icon
-      :marked
+      :markdown-it
         ### Events for anything, contextualized
 
         The API supports any timestamped content, including files. Health metrics, locations, pictures, audio samples, notes, activities, vegetable garden yields, you name it. See [the standard types directory](/event-types/).
@@ -66,13 +66,13 @@ permalink: false
         li: a(href='#api-example-DNS-less', data-toggle='tab') DNS-less
       .tab-content
         #api-example-DNS-less.tab-pane.active
-          :marked
+          :markdown-it
             ```http
             GET {user}/events HTTP/1.1
             Authorization: {token}
             ```
           .step-marker ⬇
-          :marked
+          :markdown-it
             ```json
             {
               "events": [
@@ -96,14 +96,14 @@ permalink: false
             }
             ```
         #api-example-http.tab-pane.active
-          :marked
+          :markdown-it
             ```http
             GET /events HTTP/1.1
             Host: {user}.pryv.me
             Authorization: {token}
             ```
           .step-marker ⬇
-          :marked
+          :markdown-it
             ```json
             {
               "events": [
@@ -127,7 +127,7 @@ permalink: false
             }
             ```
         #api-example-sockets.tab-pane
-          :marked
+          :markdown-it
             ```javascript
             socket.emit('events.get', {}, function (err, result) {
               // > result.events
@@ -144,7 +144,7 @@ permalink: false
             ```
 
     .col-md-4.marketing-icon
-      :marked
+      :markdown-it
         ### Decentralized & built&nbsp;for&nbsp;privacy
 
         Each user account can be served by a different server, which can be located anywhere.

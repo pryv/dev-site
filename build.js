@@ -1,50 +1,61 @@
 const metalsmith = require('metalsmith')(__dirname);
-const collections = require('metalsmith-collections');
-const define = require('metalsmith-define');
-const globals = require('./globals');
-const headingsId = require('metalsmith-headings-identifier');
-const ignore = require('metalsmith-ignore');
-const include = require('metalsmith-include');
-const layouts = require('metalsmith-layouts');
-const json = require('metalsmith-json');
-const markdown = require('metalsmith-markdownit');
-const permalinks = require('metalsmith-permalinks');
-const pug = require('metalsmith-pug');
-const stylus = require('metalsmith-stylus');
-const watch = process.argv[2] === 'watch' ? require('metalsmith-watch') : null;
+const msCollections = require('metalsmith-collections');
+const msDefine = require('metalsmith-define');
+const msHeadingsId = require('metalsmith-headings-identifier');
+const msIgnore = require('metalsmith-ignore');
+const msInclude = require('metalsmith-include');
+const msLayouts = require('metalsmith-layouts');
+const msJSON = require('metalsmith-json');
+const msMarkdownIt = require('metalsmith-markdownit');
+const msPermalinks = require('metalsmith-permalinks');
+const msPug = require('metalsmith-pug');
+const msStylus = require('metalsmith-stylus');
+const msWatch = process.argv[2] === 'watch' ? require('metalsmith-watch') : null;
+
+const markdownItOptions = {
+  typographer: true,
+  html: true
+};
+const markdownIt = require('markdown-it')(markdownItOptions);
+
+const globals = {
+  _: require('lodash'),
+  apiReference: require('./source/_reference'),
+  functionalSpecifications: require('./source/functional-specifications'),
+  testResults: require('./source/test-results'),
+  helpers: require('./source/_templates/helpers'),
+  markdown: (string) => markdownIt.render(string)
+};
 
 metalsmith
   .source('./source')
   .destination('./build')
   .clean(false) // to keep .git, CNAME etc.
-  .use(define(globals))
-  .use(json({ key: 'contents' }))
-  .use(include())
-  .use(collections({
+  .use(msDefine(globals))
+  .use(msJSON({ key: 'contents' }))
+  .use(msInclude())
+  .use(msCollections({
     appAccessSections: {
       pattern: 'app-access/_sections/*.md',
       sortBy: 'sectionOrder'
     }
   }))
-  .use(pug({ useMetadata: true }))
-  .use(markdown({
-    typographer: true,
-    html: true
-  }))
-  .use(stylus({
+  .use(msPug({ useMetadata: true }))
+  .use(msMarkdownIt(markdownItOptions))
+  .use(msStylus({
     paths: ['node_modules/pryv-style/stylus'],
     nib: true,
     compress: true
   }))
-  .use(layouts({
+  .use(msLayouts({
     directory: 'source/_templates',
     engineOptions: { useMetadata: true }
   }))
-  .use(headingsId({
+  .use(msHeadingsId({
     // do NOT generate anchor link as the current jQuery ToC plugin does it already
     linkTemplate: '<!--%s-->'
   }))
-  .use(ignore([
+  .use(msIgnore([
     '_reference/**',
     '_templates/*',
     'app-access/_sections/*',
@@ -52,14 +63,14 @@ metalsmith
     'functional-specifications/**',
     'test-results/**', 'test-results/_source/**', 'test-results/_source/.git'
   ]))
-  .use(permalinks({
+  .use(msPermalinks({
     // section id is optional in metadata
     pattern: ':sectionId/:id',
     relative: false
   }));
 
-if (watch) {
-  metalsmith.use(watch());
+if (msWatch) {
+  metalsmith.use(msWatch());
 }
 
 metalsmith.build(function (err) {
