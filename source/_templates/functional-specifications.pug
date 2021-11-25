@@ -80,7 +80,7 @@ mixin requirements(requirements, reqid, parentDocId)
       if ! requirement.ignore
         - var myId = reqid + requirement.reqid
         - var docId = functionalSpecifications.helpers.getDocId(myId)
-        requirement(id='#{docId}')
+        requirement(id=docId)
           +requirementId(myId)
           table.definitions
             tr
@@ -119,7 +119,7 @@ mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
     - var sectionTitle = sectionHeader + ' ' + section.title
     - var docId = functionalSpecifications.helpers.getDocId(parentDocId, section.id)
     - var sectionClass = (section.type || '')
-    section(id='#{docId}', class='#{sectionClass}')
+    section(id=docId, class=sectionClass)
       if level === 1
         +h1(sectionTitle)
       else if level === 2

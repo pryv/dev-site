@@ -1,13 +1,13 @@
 ---
 id: core-migration
 title: 'Pryv.io core migration'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 1. [Summary](#summary)
 2. [*(Optional)* Create user(s) with specific data on source for post-migration verification](#-optional-create-user-s-with-specific-data-on-source-for-post-migration-verification)
 3. [Deploy and launch services on the destination machine](#deploy-and-launch-services-on-the-destination-machine)

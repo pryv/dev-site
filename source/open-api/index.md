@@ -1,7 +1,7 @@
 ---
 id: open-api-3
 title: 'Open API 3.0'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

@@ -1,7 +1,7 @@
 ---
 id: reference
 title: API reference
-template: reference.jade
+layout: reference.pug
 withTOC: true
 withExamples: true
 showPreviewOnlyContent: true

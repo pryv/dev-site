@@ -1,7 +1,7 @@
 ---
 id: pryv.io-setup
 title: 'Pryv.io platform setup guide'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---
@@ -9,8 +9,8 @@ withTOC: true
 In this guide we address IT operators that wish to install their Pryv.io platform.
 It walks you through the different steps that have to be performed in order to set up your platform.
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 - 1 [Set up the machines](#set-up-the-machines)
 - 2 [Obtain a domain name](#obtain-a-domain-name)
 - 3 [Obtain the license key, credentials and configuration files](#obtain-the-license-key-credentials-and-configuration-files)

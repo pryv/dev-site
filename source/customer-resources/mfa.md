@@ -1,7 +1,7 @@
 ---
 id: MFA configuration
 title: 'Pryv.io Multi-Factor Authentication configuration'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

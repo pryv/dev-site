@@ -1,7 +1,7 @@
 ---
 id: change-log
 title: API change log
-template: default.jade
+layout: default.pug
 ---
 
 ## 1.7.0

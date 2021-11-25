@@ -1,7 +1,7 @@
 ---
 id: app-guidelines
 title: 'App guidelines'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

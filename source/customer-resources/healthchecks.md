@@ -1,7 +1,7 @@
 ---
 id: healthchecks
 title: 'Pryv.io Healthchecks'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

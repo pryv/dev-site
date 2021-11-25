@@ -1,13 +1,13 @@
 ---
 id: register-migration
 title: 'Pryv.io register migration'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---
 
-## Table of contents
-
+## Table of contents <!-- omit in toc -->
+<!-- no toc -->
 1. [Summary](#summary)
 2. [Deploy and launch services on the *destination* machine](#deploy-and-launch-services-on-the-destination-machine)
 3. [(Optional) Backup Redis data](#-optional-backup-redis-data)

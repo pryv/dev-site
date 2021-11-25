@@ -1,6 +1,6 @@
 ---
 id: tests
 title: Pryv.io Tests results
-template: tests.jade
+layout: tests.pug
 withTOC: true
 ---

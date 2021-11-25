@@ -216,12 +216,20 @@ body.home
     li
       list-style-type: none
 
-  ul:not(.nav):not(.dropdown-menu),
-  ol
+  ul:not(.nav):not(.dropdown-menu)
     li
       margin-left: 2.4em
       line-height: 1.0
       padding: 4px 0 10px 20px
+  ol
+    counter-reset: unset
+    li
+      list-style-type: decimal
+      margin-left: calc(2.4em + 17px)
+      line-height: 1.0
+      padding: 4px 0 10px 3px
+      &::before
+        content: none
 
   .content
     .meta
