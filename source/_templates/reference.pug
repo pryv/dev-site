@@ -201,7 +201,7 @@ mixin section(section, parentDocId, level, parent)
   // !preview & -full
   // -preview
   if (!section.trustedOnly && !section.previewOnly) || (!section.previewOnly && showTrustedOnlyContent) || showPreviewOnlyContent
-    section(id='#{docId}', class='#{sectionClass}')
+    section(id=docId, class=sectionClass)
       if level === 2
         +h2(section.title)
       else if level === 3
@@ -251,7 +251,7 @@ mixin section(section, parentDocId, level, parent)
 block content
   - var source = sourceOverride ? apiReference[sourceOverride] : apiReference
   each level1Section in source.sections
-    section(id='#{apiReference.helpers.getDocId(level1Section.id)}')
+    section(id=apiReference.helpers.getDocId(level1Section.id))
       +h1(level1Section.title)
       +intro(level1Section.description)
 
