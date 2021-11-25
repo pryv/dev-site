@@ -20,73 +20,94 @@ withTOC: true
 
 ## Summary
 
-The register migration procedure only takes into account the master registers.  
+The register migration procedure only takes into account the master registers. If you need to migrate a slave, simply deploy a new one and replication will take care of the data migration.  
+
 We copy the data from the old master register to the new master register, set the old register to proxy to the new one and enable replication between the 2 so they are synchronized during the DNS propagation phase.
 
-## Deploy and launch services on the *destination* machine
+## Setup *dest* machine
 
-We assume that register is already deployed (config present, docker images downloaded) on the *dest* machine.
+We assume that you have installed `docker` and `docker-compose` on the *dest* machine and have authenticated yourself with our private Docker repository.
 
-Launch services by running `${PRYV_CONF_ROOT}/run-pryv` and verify that all containers are started using `docker ps` and check logs on `register` and `dns` containers.
+## Transfer data
 
-## (optional) backup Redis data
+We will be transfering data using rsync, therefore, we setup a pair of keys for this:
 
-As we will use Redis replication, it is recommended to backup the database. Make a copy of the data located in `${PRYV_CONF_ROOT}/pryv/redis/data/`.
+1- Create an SSH key pair using the following command:  
 
-## Transfer user data
+```bash
+ssh-keygen -t rsa -b 4096 -C "migration@remote"
+```
 
-1. Create an SSH key pair using:  
+2- Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *source*  
 
-   ```bash
-   ssh-keygen -t rsa -b 4096 -C "migration@remote"
-   ```
+3- Add the public one in `~/.ssh/authorized_keys` on *dest*  
 
-2. Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *source*
+4- Shutdown services on *source* to prevent new information from arriving: `${PRYV_CONF_ROOT}/stop-pryv`  
 
-3. Copy the public one to `~/.ssh/authorized_keys` of the *dest* register.
+### Transfer config data
 
-4. Shutdown services on *source* to prevent new information from arriving: `${PRYV_CONF_ROOT}/stop-pryv`
-
-5. Transfer Redis data: on *source*, run:
-
-   ```bash
-   time rsync --verbose --copy-links \
-     --archive --compress --delete -e \
-     "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-     ${PRYV_CONF_ROOT}/pryv/redis/data \
-     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/redis/data/
-   ```
-   
-   You may have to go via your home user directory on *dest* first if permission issues arise.
-
-6. Transfer admin users data: on *source*, run:
-
-   ```bash
-   time rsync --verbose --copy-links \
-     --archive --compress -e \
-     "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-     ${PRYV_CONF_ROOT}/config-leader/database \
-     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/config-leader/database/
-   ```
-
-   (Same comment as previous step about permissions.)
-
-7. Transfer SSL certificates, on *source*, run:
+5- Transfer config leader, on *source*, run:  
 
 ```bash
 time rsync --verbose --copy-links \
      --archive --compress -e \
   "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-     ${PRYV_CONF_ROOT}/pryv/nginx/conf/secret \
-     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/nginx/conf/secret/
+     ${PRYV_CONF_ROOT}/config-leader \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/config-leader/
 ```
 
-   (Same comment as previous step about permissions.)
+You may have to go via your home user directory on *dest* first if permission issues arise.  
 
+6- Transfer config follower, on *source*, run:  
 
-8. On *dest*, run `./ensure-permissions-reg-master` script to help with enforcing correct permissions on data and log folders, then `${PRYV_CONF_ROOT}/restart-pryv` to ensure Redis picks up possible changes.
+```bash
+time rsync --verbose --copy-links \
+     --archive --compress -e \
+  "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+     ${PRYV_CONF_ROOT}/config-follower \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/config-follower/
+```
 
-If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv`.
+(Same comment as previous step about permissions.)  
+
+7- Fetch docker images on *dest* by running:  
+
+```bash
+${PRYV_CONF_ROOT}/run-config-follower
+${PRYV_CONF_ROOT}/run-pryv
+```
+
+8- Shutdown Pryv services on *dest* prior to transferring user data:  
+
+```bash
+${PRYV_CONF_ROOT}/stop-pryv
+```
+
+### Transfer user data and fetch docker images
+
+9- Transfer Redis data: on *source*, run:  
+
+```bash
+time rsync --verbose --copy-links \
+  --archive --compress --delete -e \
+  "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+  ${PRYV_CONF_ROOT}/pryv/redis/data \
+  ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/redis/data/
+```
+
+(Same comment as previous step about permissions.)  
+
+### Fix permissions and boot services on *dest*
+
+10- On *dest*, run `${PRYV_CONF_ROOT}/ensure-permissions-reg-master` script to help with enforcing correct permissions on data and log folders.  
+
+11- Then setup the config and boot services on *dest*:  
+
+```bash
+${PRYV_CONF_ROOT}/run-pryv
+```
+
+If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv`.  
 
 ## Set NGINX proxying
 

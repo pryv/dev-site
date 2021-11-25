@@ -36,13 +36,16 @@ The difference between a single and cluster lies in the "Machines and platform s
 
 You can overwrite the other sections with the ones from your `platform.yml`
 
-## Migrate data
+## Migrate Register master
 
-1. Perform the [Core migration](/customer-resources/core-migration/)
-2. Perform the [Register migration](/customer-resources/register-migration/)
+1- Perform the [Register migration](/customer-resources/register-migration/) for the reg-master machine
 
 ## Replace config by cluster
 
-1. On *dest* register, download and untar config files for a cluster deployment of same version
-2. Replace or copy the `config-leader/conf/platform.yml` file with the one you prepared earlier
-3. On all *dest* machines run: `restart-config-follower` and `restart-pryv`
+2- On *dest* reg-master, download and untar config files for a cluster deployment of same version  
+3- Replace or copy the `config-leader/conf/platform.yml` file with the one you prepared earlier  
+4- On *dest* reg-master run: `restart-config-follower` and `restart-pryv`  
+
+## Migrate user data to core machine
+
+5- Perform the [Core migration](/customer-resources/core-migration/)

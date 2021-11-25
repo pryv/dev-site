@@ -26,45 +26,96 @@ We copy the data from the old core to the new one then set the old core to proxy
 
 Generate a few events and streams by hand for a naked eye comparison for data transferred after the migration.  
 
-## Deploy and launch services on the destination machine
+## Setup *dest* machine
 
-We assume that a core service is already deployed (config present, docker images downloaded) on the *dest* machine.
+We assume that you have installed `docker` and `docker-compose` on the *dest* machine and have authenticated yourself with our private Docker repository.
 
-## Transfer user data from *source* to *dest*
+## Transfer data
 
-1. Create an SSH key pair using the following command: 
+We will be transfering data using rsync, therefore, we setup a pair of keys for this:  
+
+1- Create an SSH key pair using the following command:  
 
 ```bash
 ssh-keygen -t rsa -b 4096 -C "migration@remote"
 ```
 
-2. Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *source*
+2- Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *source*  
 
-3. Add the public one in `~/.ssh/authorized_keys` on *dest*.
+3- Add the public one in `~/.ssh/authorized_keys` on *dest*  
 
-4. Shutdown NGINX on *source* to prevent new information from arriving: `docker stop pryvio_nginx`
+### Transfer config data and fetch docker images
 
-5. On *source*, create a dump of the MongoDB database:
-
-```bash
-docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongodump -d pryv-node -o /app/backup/
-```
-
-The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/mongodb/backup/`.
-
-6. Transfer Mongo data: on *source*, run: 
+4- Transfer config data: on *source*, run:  
 
 ```bash
 time rsync --verbose --copy-links \
      --archive --compress -e \
   "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-     ${PRYV_CONF_ROOT}/pryv/mongodb/backup/ \
+     ${PRYV_CONF_ROOT}/config-follower \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/config-follower/
+```
+
+(You may have to go via your home user directory on *dest* first if permission issues arise.)  
+
+5- Fetch docker images on *dest* by running:  
+
+```bash
+${PRYV_CONF_ROOT}/run-config-follower
+${PRYV_CONF_ROOT}/run-pryv
+```
+
+6- Shutdown Pryv services prior to transferring user data:  
+
+```bash
+${PRYV_CONF_ROOT}/stop-pryv
+```
+
+### Transfer user data from *source* to *dest*
+
+7- Shutdown NGINX on *source* to prevent new information from arriving: `docker stop pryvio_nginx`  
+
+8- On *source*, create a dump of the MongoDB database:  
+
+```bash
+docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongodump -d pryv-node -o /app/backup/
+```
+
+The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/mongodb/backup/`  
+
+9- Transfer Mongo data: on *source*, run:  
+
+```bash
+time rsync --verbose --copy-links \
+     --archive --compress -e \
+  "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+     ${PRYV_CONF_ROOT}/pryv/mongodb/backup \
      ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/mongodb/backup/ 
 ```
 
-   (You may have to go via your home user directory on *dest* first if permission issues arise.)
+(You may have to go via your home user directory on *dest* first if permission issues arise.)  
 
-7. Transfer other user data: on *source*, run:  
+10- On *source*, create a dump of the InfluxDB database:  
+
+```bash
+docker exec -t pryvio_influxdb /usr/bin/influxd backup -portable /pryv/backup/
+```
+
+The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/influxdb/backup/`  
+
+11- Transfer InfluxDB data: on *source*, run:  
+
+```bash
+time rsync --verbose --copy-links \
+     --archive --compress -e \
+  "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+     ${PRYV_CONF_ROOT}/pryv/influxdb/backup \
+     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/influxdb/backup/ 
+```
+
+(Same comment as previous step about permissions.)  
+
+12- Transfer other user data: on *source*, run:  
 
 ```bash
 time rsync --verbose --copy-links \
@@ -74,35 +125,29 @@ time rsync --verbose --copy-links \
      ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/core/data/
 ```
 
-   (Same comment as previous step about permissions.)
+(Same comment as previous step about permissions.)  
 
-8. Transfer SSL certificates, on *source*, run:
+13- On *dest*, run `./ensure-permissions-core` script to help with enforcing correct permissions on data and log folders  
 
-```bash
-time rsync --verbose --copy-links \
-     --archive --compress -e \
-  "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-     ${PRYV_CONF_ROOT}/pryv/nginx/conf/secret \
-     ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/nginx/conf/secret/
-```
-
-   (Same comment as previous step about permissions.)
-
-9. On *dest*, run `./ensure-permissions-core` script to help with enforcing correct permissions on data and log folders
-
-If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv` 
+If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv`  
 
 ## Launch services on *dest*
 
-1. Launch services: run `${PRYV_CONF_ROOT}/run-pryv`
+1- Launch services: run `${PRYV_CONF_ROOT}/run-pryv`  
 
-2. Restore MongoDB files, run:
+2- Restore MongoDB files, run:  
 
 ```bash
 docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongorestore /app/backup/
 ```
 
-3. and verify that it is running correctly as described in the [core validation guide](/customer-resources/platform-validation/#core).
+3- Restore the InDuxDB files:  
+
+```bash
+docker exec -t pryvio_influxdb /usr/bin/influxd restore -portable /pryv/backup/
+```
+
+4- and verify that it is running correctly as described in the [core validation guide](/customer-resources/platform-validation/#core)  
 
 ## Set NGINX redirection for core on *source*
 
