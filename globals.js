@@ -4,5 +4,5 @@ module.exports = {
   functionalSpecifications: require('./source/functional-specifications'),
   testResults: require('./source/test-results'),
   helpers: require('./source/_templates/helpers'),
-  markdown: require('marked')
+  markdown: require('marked').parse
 };

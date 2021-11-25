@@ -2,7 +2,7 @@
 id: reference-admin
 title: Admin reference
 sourceOverride: admin
-template: reference.jade
+layout: reference.pug
 withTOC: true
 withExamples: true
 ---

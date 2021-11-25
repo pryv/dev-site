@@ -1,7 +1,7 @@
 ---
 id: faq
 title: 'FAQ - infrastructure'
-template: default.jade
+layout: default.pug
 withTOC: true
 ---
 

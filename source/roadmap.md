@@ -1,7 +1,7 @@
 ---
 id: roadmap
 title: 'Pryv.io roadmap'
-template: default.jade
+layout: default.pug
 withTOC: true
 ---
 

@@ -119,7 +119,7 @@ mixin exampleContent(content)
     else
       pre: code !{helpers.printJSON(content)}
 
--// settings: {id, http, [result.http], server} context to generate example forms (e.g. HTTP, cURL...)
+//- settings: {id, http, [result.http], server} context to generate example forms (e.g. HTTP, cURL...)
 mixin examples(examples, settings)
   if examples
     aside

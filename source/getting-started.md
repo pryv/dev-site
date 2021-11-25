@@ -1,7 +1,7 @@
 ---
 id: getting-started
 title: 'Get started with Pryv.io API'
-template: default.jade
+layout: default.pug
 withTOC: true
 ---
 

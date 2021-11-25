@@ -1,7 +1,7 @@
 ---
 id: consent
 title: 'Consent implementation with Pryv.io'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

@@ -1,7 +1,7 @@
 ---
 id: Email configuration
 title: 'Pryv.io email configuration'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

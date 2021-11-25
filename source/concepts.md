@@ -1,7 +1,7 @@
 ---
 id: concepts
 title: API concepts
-template: default.jade
+layout: default.pug
 withTOC: true
 ---
 

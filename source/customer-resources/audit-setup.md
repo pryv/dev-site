@@ -1,7 +1,7 @@
 ---
 id: audit-setup
 title: 'Pryv.io audit configuration'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

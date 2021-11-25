@@ -1,7 +1,7 @@
 ---
 id: custom-auth
 title: 'Custom Authentication'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

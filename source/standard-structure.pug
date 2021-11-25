@@ -1,7 +1,7 @@
 ---
 id: standard-structure
 title: Standard data structure reference
-template: default.jade
+layout: default.pug
 withTOC: true
 sourcePath: standard-structure/channels-folders.json
 include:
@@ -50,7 +50,7 @@ section#structure
   mixin renderFolders(folders)
     if (folders && folders.length)
       ul
-        - each folder in folders
+        each folder in folders
           li
             - if (folder.id)
               | <code>!{folder.id}</code>: <strong>standard</strong>;
@@ -59,7 +59,7 @@ section#structure
               | "!{folder.name}": <strong>example</strong>
             br
             | #{folder.description}
-            mixin renderFolders(folder.folders)
+            +renderFolders(folder.folders)
 
   mixin renderEventExamples(events)
     - if (events && events.length)
@@ -70,7 +70,7 @@ section#structure
 
   - var version = sourceData.version.version
   - var channels = sourceData['channels']
-  - each channel in channels
+  each channel in channels
     .channel
       h2
         - if (channel.id)
@@ -87,9 +87,9 @@ section#structure
 
       - if (channel.folders.length)
         h3 Folders
-        mixin renderFolders(channel.folders)
+        +renderFolders(channel.folders)
 
     - // Make event examples visibility optional.
     h3: a(onclick='javascript:$("#events-'+channel.id+'").toggle()') Event examples
     div(id='events-#{channel.id}', style='display:none;')
-      mixin renderEventExamples(channel.eventExamples)
+      +renderEventExamples(channel.eventExamples)

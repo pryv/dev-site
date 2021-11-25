@@ -1,7 +1,7 @@
 ---
 id: webhooks
 title: 'Pryv.io Webhooks'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

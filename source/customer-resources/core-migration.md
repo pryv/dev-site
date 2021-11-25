@@ -1,7 +1,7 @@
 ---
 id: core-migration
 title: 'Pryv.io core migration'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

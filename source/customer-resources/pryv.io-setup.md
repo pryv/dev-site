@@ -1,7 +1,7 @@
 ---
 id: pryv.io-setup
 title: 'Pryv.io platform setup guide'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---
