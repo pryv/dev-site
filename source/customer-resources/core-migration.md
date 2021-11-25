@@ -155,9 +155,6 @@ If you wish to reactivate service on the *source* machine, simply reboot the sto
    ```bash
    docker exec -t pryvio_influxdb /usr/bin/influxd restore -portable /pryv/backup/
    ```
-   
-4. and verify that it is running correctly as described in the [core validation guide](/customer-resources/platform-validation/#core)  
-
 
 ## Set NGINX redirection for core on *source*
 
