@@ -1,7 +1,7 @@
 ---
 id: backup
 title: 'Pryv.io Backup'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

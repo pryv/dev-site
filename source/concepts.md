@@ -1,7 +1,7 @@
 ---
 id: concepts
 title: API concepts
-template: default.jade
+layout: default.pug
 withTOC: true
 ---
 
@@ -35,8 +35,6 @@ See also [standard event types](/event-types/#directory).
 ### Streams
 
 Streams are the fundamental contexts in which events occur. Every event occurs in at least one stream. Streams follow a hierarchical structure—streams can have sub-streams—and usually match either user/app-specific organizational levels (e.g. life journal, work projects, etc.) or data sources (e.g. apps and/or devices).
-
-<!-- TODO: See also [standard streams](/standard-structure/). -->
 
 ### System streams
 

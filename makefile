@@ -4,10 +4,10 @@ FLAT_TYPES_URL=$(TYPES_BASE_URL)flat.json
 TYPES_SOURCE_TARGET=./source/event-types/_source
 
 build:
-	node --harmony build.js
+	node build.js
 
 watch:
-	node --harmony build.js watch
+	node build.js watch
 
 clean:
 	rm -rf build/*

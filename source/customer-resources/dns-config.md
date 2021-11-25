@@ -1,7 +1,7 @@
 ---
 id: dns-config
 title: 'Pryv.io DNS zone configuration'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

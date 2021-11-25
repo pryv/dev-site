@@ -1,7 +1,7 @@
 ---
 id: ssl-certificate
 title: 'Pryv.io SSL Certificate'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

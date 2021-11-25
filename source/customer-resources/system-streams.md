@@ -1,7 +1,7 @@
 ---
 id: system-streams
 title: 'Pryv.io system streams'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

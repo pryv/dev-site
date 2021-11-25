@@ -1,7 +1,7 @@
 ---
 id: data-modelling
 title: 'Data Modelling'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

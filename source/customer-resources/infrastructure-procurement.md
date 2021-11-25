@@ -1,7 +1,7 @@
 ---
 id: pryv.io-infrastructure-procurement
 title: 'Pryv.io infrastructure procurement'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

@@ -58,8 +58,8 @@ module.exports = exports =
                Authorization: {token}
                ```
 
-              DNS-less:
-              ```http
+               DNS-less:
+               ```http
                GET /{username}/events HTTP/1.1
                Host: host.your-domain.io
                Authorization: {token}

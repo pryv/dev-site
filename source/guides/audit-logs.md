@@ -1,7 +1,7 @@
 ---
 id: audit-logs
 title: 'Audit logs'
-template: default.jade
+layout: default.pug
 customer: true
 withTOC: true
 ---

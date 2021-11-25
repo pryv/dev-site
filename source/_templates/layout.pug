@@ -46,7 +46,7 @@ html.no-js(lang='en')
               - fullId = (parentId ? parentId + '/' : '') + id
               - var activeClass = fullId === fileId ? 'active' : ''
               li(class=activeClass + (options.disabled ? ' disabled' : ''))
-                a(href='/#{fileId}/')= text
+                a(href=`/${fileId}/`)= text
 
             ul.nav.navbar-nav
               li.dropdown

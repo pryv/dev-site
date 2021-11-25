@@ -42,9 +42,9 @@ See `dev-env/setup.sh` for more details.
 
 See the [Pryv guidelines](http://pryv.github.io/guidelines/).
 
-### Jade
+### Pug (formerly Jade)
 
-If you're fighting with jade, compile the result with `make build`, then right-click + "View Page Source" to see the result.
+If you're fighting with Pug, compile the result with `make build`, then right-click + "View Page Source" to see the result.
 
 
 ## License

@@ -106,7 +106,7 @@ mixin tests(tests)
     each test in tests
       tr
         td
-          test(id='#{test.id}')
+          test(id=test.id)
             code !{test.id}
         td
           if typeof(test.duration) === "undefined"
@@ -145,7 +145,7 @@ mixin component(component, parentDocId, level)
   - var sectionTitle = component.componentName
   - var docId = testResults.helpers.getDocId(parentDocId, component.componentName)
   - var sectionClass = ''
-  section(id='#{docId}', class='#{sectionClass}')
+  section(id=docId, class=sectionClass)
     if level === 1
       +h1(sectionTitle)
     else if level === 2
@@ -154,7 +154,7 @@ mixin component(component, parentDocId, level)
       +h3(sectionTitle)
     else
       +h4(sectionTitle)
-     .content
+    .content
       .meta
       +stats(component.stats) 
 
@@ -173,7 +173,7 @@ mixin section(section, parentDocId, level)
   - var sectionTitle = section.title
   - var docId = testResults.helpers.getDocId(parentDocId, section.id)
   - var sectionClass = (section.type || '')
-  section(id='#{docId}', class='#{sectionClass}')
+  section(id=docId, class=sectionClass)
     if level === 1
       +h1(sectionTitle)
     else if level === 2

@@ -1,7 +1,7 @@
 ---
 id: event-types
 title: Event types reference
-template: default.jade
+layout: default.pug
 withTOC: true
 sourcePath: hierarchical.json
 flatPath: flat.json
@@ -33,7 +33,7 @@ each className in classNames
 
 section#about
   h1 About types
-  :marked
+  :markdown-it
     You are free to use any type in your app, but for the sake of interoperability we heavily recommend that you extend the standard types listed here.
 
     To customize your own Pryv.io setup, clone the [Data Types repository](https://github.com/pryv/data-types) and follow the guide there.  
