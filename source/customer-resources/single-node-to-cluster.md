@@ -44,8 +44,9 @@ You can overwrite the other sections with the ones from your `platform.yml`
 
 2- On *dest* reg-master, download and untar config files for a cluster deployment of same version  
 3- Replace or copy the `config-leader/conf/platform.yml` file with the one you prepared earlier  
-4- On *dest* reg-master run: `restart-config-follower` and `restart-pryv`  
+4- Copy the SSL certificates from `config-leader/data/singlenode/nginx/conf/secret/` to each new `$ROLE` in `config-leader/data/${ROLE}/nginx/conf/secret/`
+5- On *dest* reg-master run: `restart-config-follower` and `restart-pryv`  
 
 ## Migrate user data to core machine
 
-5- Perform the [Core migration](/customer-resources/core-migration/)
+6- Perform the [Core migration](/customer-resources/core-migration/)
