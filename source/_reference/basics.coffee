@@ -362,22 +362,22 @@ module.exports = exports =
                  
                  **Alternative methods:**
               
-                 1- Pryv.io supports the **Basic HTTP** Authorization Scheme This allows to present 
-                 a Pryv.io endpoint as a single URL without exposing the token in query parameters:  
+                 1. Pryv.io supports the **Basic HTTP** Authorization Scheme This allows to present 
+                    a Pryv.io endpoint as a single URL without exposing the token in query parameters:  
 
-                 <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info
-                 </code></pre>
+                    <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info
+                    </code></pre>
 
-                 This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://visionmedia.github.io/superagent/) 
-                 or [Postman](https://www.getpostman.com).  
-                 These tools implicitly translate the `${token}@` part of the URL to the `Authorization` header in basic auth format. Please use the main authorization method for tools that do not operate this translation, such as Grafana.
+                    This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://visionmedia.github.io/superagent/) 
+                    or [Postman](https://www.getpostman.com).  
+                    These tools implicitly translate the `${token}@` part of the URL to the `Authorization` header in basic auth format. Please use the main authorization method for tools that do not operate this translation, such as Grafana.
 
-                 Note that Pryv.io does not require a username, so only the token should be Base64 encoded. For more information see [RFC671](https://tools.ietf.org/html/rfc7617 ).  
+                    Note that Pryv.io does not require a username, so only the token should be Base64 encoded. For more information see [RFC671](https://tools.ietf.org/html/rfc7617 ).  
 
-                 2- The access token can be provided in the query string's `auth` parameter, for example during the Socket.IO handshake or for a direct HTTP GET call in a browser:
+                 2. The access token can be provided in the query string's `auth` parameter, for example during the Socket.IO handshake or for a direct HTTP GET call in a browser:
                  
-                 <pre><code>curl https://<span class="api">{username}.pryv.me</span>/access-info?auth={token}
-                 </code></pre>
+                    <pre><code>curl https://<span class="api">{username}.pryv.me</span>/access-info?auth={token}
+                    </code></pre>
 
                  """
     examples: [
@@ -453,9 +453,10 @@ module.exports = exports =
                  2. Fetch the [service information](#service-info)
                  3. Send an [auth request](#auth-request) to the URL exposed by the **access** parameter of the service information
                  4. Open the `authUrl` field of the HTTP response in a browser or webframe. The web page will prompt the user to sign in using her Pryv.io credentials (or to create an account if she doesn't have one).
-                 5. The result of the sign-in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways: 
-                  - by [polling the URL](#poll-request) obtained in the `poll` field of the HTTP response to the auth request (preferred method)
-                  - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
+                 5. The result of the sign-in process: an authenticated Pryv API endpoint or a refusal can be obtained in two ways:
+                 
+                    - by [polling the URL](#poll-request) obtained in the `poll` field of the HTTP response to the auth request (preferred method)
+                    - by being redirected to the `returnURL` provided in the auth request with the result in query parameters
 
                  #### Generate token app
 
