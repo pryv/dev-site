@@ -11,6 +11,15 @@ This document describes how to generate a wildcard SSL certificate using [Let's 
 The prerequisites for this are that you have [obtained a domain name](/customer-resources/pryv.io-setup/#obtain-a-domain-name) and [installed the Pryv.io platform](/customer-resources/pryv.io-setup/#set-the-platform-parameters).  
 If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
 
+## Table of contents <!-- omit in toc -->
+
+1. [Automatic generation with Pryv.io 1.7.4 or later](#automatic-generation-with-pryvio-174-or-later)
+   1. [DNS check failure: Error: Servers are not reachable](#dns-check-failure-error-servers-are-not-reachable)
+2. [Certbot Installation](#certbot-installation)
+3. [Generate certificate using DNS validation](#generate-certificate-using-dns-validation)
+4. [Reorganize SSL certificate files](#reorganize-ssl-certificate-files)
+
+
 ## Automatic generation with Pryv.io 1.7.4 or later
 
 If you are runnng Pryv.io 1.7.4 or later, you can simply run the `renew-ssl-certificate` script provided with [the configuration files](https://api.pryv.com/config-template-pryv.io/) to generate a SSL certificate for your Pryv.io platform.
@@ -22,6 +31,7 @@ Otherwise, follow this guide.
 If you encounter this error, your network settings might prevent the `renewl-ssl-certificate` tool from peforming the pre-check of DNS challenge, namely the node process inside the `pryvio_ssl_certificate` container cannot get an answer from the `pryvio_dns` container.
 
 You can simply skip this by modifying the `acme:skipDnsChecks` parameter in `config-leader/ssl/conf/ssl-certificate.yml`. You can also increase the value of the time allocated for the DNS container(s) to reboot by increasing the `acme:dnsRebootWaitMs` parameter. On machines with limited resources, you can increase this value to `10000` (10 seconds).
+
 
 ## Certbot Installation
 
@@ -37,6 +47,7 @@ sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install certbot
 ```
+
 
 ## Generate certificate using DNS validation
 
@@ -104,6 +115,7 @@ dig @${NS2_HOSTNAME} TXT _acme-challenge.${DOMAIN}
 Once you get the right key, go back to the CLI and press ENTER.
 
 You should now have a certificate in `/etc/letsencrypt/live/${DOMAIN}/`.
+
 
 ## Reorganize SSL certificate files
 

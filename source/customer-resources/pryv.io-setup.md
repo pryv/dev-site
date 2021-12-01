@@ -6,23 +6,28 @@ customer: true
 withTOC: true
 ---
 
-In this guide we address IT operators that wish to install their Pryv.io platform.
-It walks you through the different steps that have to be performed in order to set up your platform.
+This guide, addressed to IT operators, walks you through the different steps that have to be performed in order to set up your Pryv.io platform.
+
 
 ## Table of contents <!-- omit in toc -->
-<!-- no toc -->
-- 1 [Set up the machines](#set-up-the-machines)
-- 2 [Obtain a domain name](#obtain-a-domain-name)
-- 3 [Obtain the license key, credentials and configuration files](#obtain-the-license-key-credentials-and-configuration-files)
-- 4 [Set the platform parameters](#set-the-platform-parameters)
-- 5 [Obtain an SSL certificate](#obtain-an-ssl-certificate)
-- 6 [Validate your platform installation](#validate-your-platform-installation)
-- 7 [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
-- 8 [Customize authentication, registration and reset password apps](#customize-authentication-registration-and-reset-password-apps)
-- 9 [Set up email sending](#set-up-email-sending)
-- 10 [Define your data model](#define-your-data-model)
-- 11 [Customize event types validation](#customize-event-types-validation)
-- 12 [Other documents](#other-documents)
+
+1. [Set up the machines](#set-up-the-machines)
+2. [Obtain a domain name](#obtain-a-domain-name)
+   1. [Expose the Pryv.io API on a second-level domain](#expose-the-pryvio-api-on-a-second-level-domain)
+   2. [Verify](#verify)
+3. [Obtain the license key, credentials and configuration files](#obtain-the-license-key-credentials-and-configuration-files)
+4. [Set the platform parameters](#set-the-platform-parameters)
+5. [Obtain an SSL certificate](#obtain-an-ssl-certificate)
+6. [Validate your platform installation](#validate-your-platform-installation)
+7. [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
+8. [Customize authentication, registration and reset password apps](#customize-authentication-registration-and-reset-password-apps)
+   1. [GH pages](#gh-pages)
+   2. [Your own server](#your-own-server)
+9. [Set up email sending](#set-up-email-sending)
+10. [Define your data model](#define-your-data-model)
+11. [Customize event types validation](#customize-event-types-validation)
+12. [Other documents](#other-documents)
+
 
 ## Set up the machines
 
@@ -33,6 +38,7 @@ The **Infrastructure procurement guide** for Pryv.io from the [Customer Resource
 It will help you with the choice of your Pryv.io deployment (single node or cluster), and provide you with resources sizing considerations.  
 
 The system requirements for each machine are also specified.
+
 
 ## Obtain a domain name
 
@@ -98,13 +104,16 @@ ${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns1-pryv.${YOUR-DOMAIN}.
 ${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns2-pryv.${YOUR-DOMAIN}.
 ```
 
+
 ## Obtain the license key, credentials and configuration files
 
 In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files, which you can download [here](https://api.pryv.com/config-template-pryv.io/).
 
+
 ## Set the platform parameters
 
 Along with the configuration files, you will find an Installation guide describing where to unpack them and how to set the platform variables.
+
 
 ## Obtain an SSL certificate
 
@@ -112,17 +121,20 @@ You will need to obtain a wildcard SSL certificate for *.DOMAIN to enable encryp
 
 If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
 
+
 ## Validate your platform installation
 
 Now that your Pryv.io platform is configured and running, you can run the validation procedure from the [Pryv.io platform validation guide](/customer-resources/platform-validation).
 
 It will walk you through the validation steps of your platform and contains a troubleshooting part in case of issue.
 
+
 ## Set up the platform health monitoring
 
 You can monitor its status by setting up regular healthcheck API calls to the Pryv.io API.
 
 The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks guide](/customer-resources/healthchecks).
+
 
 ## Customize authentication, registration and reset password apps
 
@@ -191,6 +203,7 @@ or if you wish to proxy it through `https://sw.DOMAIN/access/`, **only** set:
   APP_WEB_AUTH_URL: "https://YOUR-SERVER-URL/"
 ```
 
+
 ## Set up email sending
 
 Pryv.io allows to send emails in two situations:
@@ -204,7 +217,8 @@ In both cases, you will need to customize settings in the "Email configuration" 
 
 You can also customize the email templates in the configuration files.
 
-More details are provided in the **Emails configuration guide** that can be found in the [Customer Resources section](/customer-resources/emails-setup/).
+More details are provided in the [email configuration guide](/customer-resources/emails-setup/).
+
 
 ## Define your data model
 
@@ -218,6 +232,7 @@ We advise you to build your own file based on this template to describe your own
 
 We can also help you with the design and validation of your data model.
 
+
 ## Customize event types validation
 
 Your Pryv.io platform performs content validation for the types definition that you provide it. Events with undefined types are allowed but their content is not validated.  
@@ -230,6 +245,7 @@ You can host your definitions page on a public URL which will be loaded at the p
 EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
 ```
 
+
 ## Other documents
 
-More resources can be found in our [Customer Resources page](/customer-resources/#guides-and-documents), or in the [FAQ](/faq-infra/).
+More resources can be found in our [customer resources page](/customer-resources/#guides-and-documents), or in the [FAQ](/faq-infra/).

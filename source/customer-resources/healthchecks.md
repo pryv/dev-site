@@ -6,21 +6,36 @@ customer: true
 withTOC: true
 ---
 
+<!--
 |         |                       |
 | ------- | --------------------- |
-| Author  | Ilia Kebets 		      |
+| Author  | Ilia Kebets 	      |
 | Reviewer | Guillaume Bassand (v1-3), Anastasia Bouzdine (v4) |
 | Date    | 28.04.2020            |
-| Version | 4                    |
+| Version | 4                     |
+-->
 
-
-# Summary
-
-This procedure describes how to perform regular healthcheck API calls to the Pryv.io API in order to remotely monitor its status. You can directly jump to the [Healthchecks section](#healthchecks) to proceed to the healthchecks.
+This guide describes how to perform regular healthcheck API calls to the Pryv.io API in order to remotely monitor its status. You can directly jump to the [Healthchecks section](#healthchecks) to proceed to the healthchecks.
 
 Please note that the current procedure does not cover how to perform healthchecks per core machine, only per hosting. If you require core-level status, get in touch with your Pryv tech contact.
 
-# Variables
+
+## Table of contents <!-- omit in toc -->
+
+1. [Variables](#variables)
+2. [Tools](#tools)
+   1. [DNS checks:](#dns-checks)
+   2. [HTTP calls](#http-calls)
+3. [Preparation](#preparation)
+   1. [Create account](#create-account)
+   2. [Create token](#create-token)
+4. [Healthchecks](#healthchecks)
+   1. [DNS](#dns)
+   2. [Register](#register)
+   3. [Core](#core)
+
+
+## Variables
 
 As this guide is platform agnostic, we will use variables `${VARIABLE_NAME}` which must be replaced in the commands.
 
@@ -29,24 +44,26 @@ In particular, the following variables should be replaced :
 - the **core machines hostings**, identified with a `${HOSTING_NAME}`. In a Pryv.io platform, core machines are organized into clusters that we call hostings. Each of these has an identifier `${HOSTING_NAME}`, which can be found at the following URL: https://reg.${DOMAIN}/hostings. The `${HOSTING_NAME}` are the keys of the object `regions:REGION_NAME:zones:ZONE_NAME:hostings`. For DNS-less setups, it is fixed as `hosting1`.
 - the **access token** `${ACCESS_TOKEN}`, associated with a dedicated user account and that will be used in the API calls for healthchecks. The [preparation chapter](#preparation) describes how to obtain it.
 
-# Tools
+
+## Tools
 
 Depending on your skill set, this can be done using CLI tools or a web interface.
 
-## DNS checks:
+### DNS checks:
 
 - dig version 9.12.3+
 
-## HTTP calls
+### HTTP calls
 
 - cURL v7.54.0+
 
-# Preparation
+
+## Preparation
 
 As the current Pryv.io version does not have dedicated API endpoints for a thorough healthcheck, we create a dedicated user account in order to do so. 
 This preparation phase describes how to create an account and obtain a non-expirable token. This must be done once and the username/token pairs stored for automatic API healthcheck calls.
 
-## Create account
+### Create account
 
 We begin by creating an account. We propose to use the following credentials, but these can be modified at the user's discretion:
 
@@ -87,7 +104,7 @@ If you are using a default configuration, you can use the default web app:
     - **password** : healthmetrics
     - **password confirmation** : healthmetrics
 
-## Create token
+### Create token
 
 In order to obtain a non-expirable access token, you must do 2 calls. First sign in with the user password to obtain a temporary personal token, and then use it to obtain a non-expirable one.
 
@@ -164,15 +181,16 @@ If you are using a default configuration, you can use the default web app:
 7. Click on `Accept` button
 8. Copy the Access token and save it for this machine's healthchecks. We will refer to it as `${ACCESS_TOKEN}`.
 
-# Healthchecks
 
-## DNS
+## Healthchecks
+
+### DNS
 
 Run `Dig A healthmetrics01.${DOMAIN}`
 
 The expected result: An answer.
 
-## Register
+### Register
 
 The call to perform: **HTTP GET** `https://reg.${DOMAIN}/healthmetrics01/check_username` (`https://${HOSTNAME}/reg/healthmetrics01/check_username` for DNS-less)
 
@@ -180,7 +198,7 @@ Run `curl https://reg.${DOMAIN}/healthmetrics01/check_username` (`curl https://$
 
 The expected result: `Status: 200`
 
-## Core
+### Core
 
 Authorization header: `${ACCESS_TOKEN}`
 

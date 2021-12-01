@@ -17,17 +17,20 @@ Changes:
 - [Integrity hash](/reference/#data-structure-integrity) is computed for [Events, Attachments](/reference/#event) and [Accesses](/reference/#access). This functionality can be disabled.
 - Automated platform migration using the [migrations.get](/reference-admin/#retrieve-platform-migrations) and [migrations.apply](/reference-admin/#apply-configuration-migrations) API methods.
 
+
 ## 1.6.20
 
 New routes:
 
 - [Deactivate MFA](/reference-admin/#deactivate-mfa-for-user) for admin API, for when the user has lost his 2nd factor.
 
+
 ## 1.6.19
 
 New routes:
 
 - [Get core](/reference-system/#get-core) API method that returns the hostname of the core on which a certain user data is stored.
+
 
 ## 1.6.7
 
@@ -40,17 +43,20 @@ Removals:
 - Deprecated "GET /who-am-i" API method removed
 - Remove pryvuser-cli, as it is now available through the [admin API](/reference-admin/)
 
+
 ## 1.6.2
 
 Changes:
 
 - Custom auth function has now access to all request headers. See [custom authentication guide](/guides/custom-auth/).
 
+
 ## 1.6.1
 
 Changes:
 
 - increase JSON input payload to 10MB for HF server. See [Data format](/reference/#data-format).
+
 
 ## v1.6.0
 
@@ -75,11 +81,13 @@ Deprecated:
 
 - Old registration flow
 
+
 ## v1.5.22
 
 Changes:
 
 - Deleting an app token deletes the shared accesses that were generated from it (if any).
+
 
 ## v1.5.18
 
@@ -91,6 +99,7 @@ Changes:
 
 - Call 'POST /user' (create user) on register. The property `server` is now deprecated in favor of `apiEnpoint`.
 
+
 ## v1.5.8
 
 New Features:
@@ -101,6 +110,7 @@ Removals:
 
 - Socket.io v0.9
 
+
 ## v1.5.6
 
 Changes:
@@ -109,11 +119,13 @@ Changes:
 - Socket.io interface availablel for `shared` accesses.
 - Socket.io interface availablel for accesses with `create-only` permissions.
 
+
 ## v1.5.5
 
 New feature: 
 
 - Access permission `{ "feature": "selfRevoke", "setting": "forbidden"}`, more details on [Access data structure](/reference/#access).
+
 
 ## v1.5
 
@@ -139,6 +151,7 @@ Removals:
   - `events.stop`
 - `accesses.update`
 
+
 ## V1.4
 
 New features:
@@ -163,6 +176,7 @@ Deprecated:
   - events.start
   - events.stop
 
+
 ## V1.3
 
 New features:
@@ -178,6 +192,7 @@ Changes:
  - Some invalid requests that used to return a HTTP status code of 401 (Unauthorized) now return a 403 (Forbidden). Only the requests that are missing some form of authentication will return a 401 code.
  - `updates.ignoreProtectedFields` is now off by default. This means that updates that address protected fields will result in an error being returned.
 
+
 ## v1.2
 
 Changes:
@@ -190,6 +205,7 @@ Changes:
  - Add configuration option to ignore updates of read-only fields.
  - Tags have a maximum length of 500 characters. An error is returned from the API when this limit is exceeded.
 
+
 ## v1.1.8
 
 Changes:
@@ -197,6 +213,7 @@ Changes:
 - Fix edge-case behaviour on very large `streams.delete` operations.
 - Direct `events.get` API call now supports really large results. Changes made have improved this call's performance by around 30%. As a by-product of this change, we now do not send the 'Content-Size' HTTP header anymore.
 - Allow custom cuid-like ids when creating events.
+
 
 ## v1.1
 
@@ -207,9 +224,11 @@ New feature:
   `includeHistory` parameter to `true`, the response will contain an array of the previous versions
    of the event in the `history` field.
    
+
 ## v1.0
 
 Validated initial set of API features.
+
 
 ## v0.8
 

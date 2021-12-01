@@ -6,20 +6,40 @@ customer: true
 withTOC: true
 ---
 
-# Summary
-
 This document describes how to configure the Audit feature for your Pryv.io platform.
 
 Audit is only available in the [entreprise version](/concepts/#entreprise-license-open-source-license) of Pryv.io.
 
-# Outputs
+
+## Table of contents <!-- omit in toc -->
+
+1. [Outputs](#outputs)
+2. [Filtering](#filtering)
+3. [Rules](#rules)
+   1. [1. You must specify at least one of them](#1-you-must-specify-at-least-one-of-them)
+   2. [2. You can aggregate per resource](#2-you-can-aggregate-per-resource)
+4. [Examples](#examples)
+   1. [log everything](#log-everything)
+   2. [log nothing](#log-nothing)
+   3. [log a few API methods](#log-a-few-api-methods)
+   4. [log everything, but a few](#log-everything-but-a-few)
+   5. [log all events methods, but get](#log-all-events-methods-but-get)
+5. [Syslog](#syslog)
+   1. [Templating](#templating)
+6. [Support](#support)
+7. [Performance](#performance)
+8. [Previous version](#previous-version)
+
+
+## Outputs
 
 Audit data can be written to any or both of the following:
 
 - in a dedicated **storage** where it will be indexed for [querying through the Events API](/guides/audit-logs/)
 - in the host machine's **syslog** to which you can setup your own listeners
 
-# Filtering
+
+## Filtering
 
 for both of these outputs, you can define which API method you log by filtering per [method-id](/reference/#method-ids).
 
@@ -44,7 +64,8 @@ methods:
   exclude: ["events.get"]
 ```
 
-# Rules
+
+## Rules
 
 ### 1. You must specify at least one of them
 
@@ -55,9 +76,10 @@ At least one of the arrays must contain a valid value.
 The Pryv.io [API method ids](/reference/#method-ids) are built in the format `{resource}.{verb}`, for example: `events.get`.  
 Audit filters accept aggregation of all methods for a particular resource using `all` for the verb, for example: `events.all`
 
-# Examples
 
-## log everything
+## Examples
+
+### log everything
 
 ```json
 {
@@ -68,7 +90,7 @@ Audit filters accept aggregation of all methods for a particular resource using 
 }
 ```
 
-## log nothing
+### log nothing
 
 ```json
 {
@@ -79,7 +101,7 @@ Audit filters accept aggregation of all methods for a particular resource using 
 }
 ```
 
-## log a few API methods
+### log a few API methods
 
 ```json
 {
@@ -90,7 +112,7 @@ Audit filters accept aggregation of all methods for a particular resource using 
 }
 ```
 
-## log everything, but a few
+### log everything, but a few
 
 ```json
 {
@@ -101,7 +123,7 @@ Audit filters accept aggregation of all methods for a particular resource using 
 }
 ```
 
-## log all events methods, but get
+### log all events methods, but get
 
 ```json
 {
@@ -112,7 +134,8 @@ Audit filters accept aggregation of all methods for a particular resource using 
 }
 ```
 
-# Syslog
+
+## Syslog
 
 **Introductory notes about syslog:**  
 
@@ -126,7 +149,7 @@ A Pryv.io audit log will look like this in the syslog:
 Oct 26 14:58:46 co1-pryv-li pryv-audit[57]: ck6j759f000011ps2octzo1ds audit-log/pryv-api createdBy:system ["access-ck6j78uj600011ss2neygkpub","action-events.get"] {"source":{"name":"http","ip":"85.5.192.175"},"action":"events.get","query":{"toTime":"9900000000","fromTime":"-9900000000","limit":"1","sortAscending":"true","state":"all"}}
 ```
 
-## Templating
+### Templating
 
 You can edit its template using the `AUDIT_SYSLOG_FORMAT` platform parameter:
 
@@ -137,14 +160,17 @@ You can edit its template using the `AUDIT_SYSLOG_FORMAT` platform parameter:
 }
 ```
 
-# Support
+
+## Support
 
 If you have any question regarding auditing, check out our [forum](https://support.pryv.com/hc/en-us/community/topics) or ask a question at [support@pryv.com](mailto:support@pryv.com).
 
-# Performance
+
+## Performance
 
 As both syslog and storage logging require additionnal processing, we recommend to activate logging only for the methods that require it.
 
-# Previous version
+
+## Previous version
 
 For audit configuration previous to Pryv.io 1.7, please see the [PDF](/assets/docs/20190718-pryv.io-audit-v5.pdf).

@@ -6,24 +6,23 @@ customer: true
 withTOC: true
 ---
 
+This guide describes how to migrate the core role of Pryv.io to a new machine.
+
+We will copy the data from the old core to the new one, then set the old core to proxy to the new one so we can use it during the DNS propagation phase.
+
+
 ## Table of contents <!-- omit in toc -->
 
-1. [Summary](#summary)
-2. [*(Optional)* Create user(s) with specific data on source for post-migration verification](#optional-create-users-with-specific-data-on-source-for-post-migration-verification)
-3. [Setup *dest* machine](#setup-dest-machine)
-4. [Transfer data](#transfer-data)
+1. [*(Optional)* Create user(s) with specific data on source for post-migration verification](#optional-create-users-with-specific-data-on-source-for-post-migration-verification)
+2. [Setup *dest* machine](#setup-dest-machine)
+3. [Transfer data](#transfer-data)
    1. [Transfer config data and fetch docker images](#transfer-config-data-and-fetch-docker-images)
    2. [Transfer user data from *source* to *dest*](#transfer-user-data-from-source-to-dest)
-5. [Launch services on *dest*](#launch-services-on-dest)
-6. [Set NGINX redirection for core on *source*](#set-nginx-redirection-for-core-on-source)
-7. [Reload NGINX on *source*](#reload-nginx-on-source)
-8. [Verify](#verify)
-9. [Update core server IP address on register](#update-core-server-ip-address-on-register)
-
-
-## Summary
-
-We copy the data from the old core to the new one then set the old core to proxy to the new one so we can use it during the DNS propagation phase.
+4. [Launch services on *dest*](#launch-services-on-dest)
+5. [Set NGINX redirection for core on *source*](#set-nginx-redirection-for-core-on-source)
+6. [Reload NGINX on *source*](#reload-nginx-on-source)
+7. [Verify](#verify)
+8. [Update core server IP address on register](#update-core-server-ip-address-on-register)
 
 
 ## *(Optional)* Create user(s) with specific data on source for post-migration verification

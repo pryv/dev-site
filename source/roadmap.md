@@ -10,6 +10,7 @@ withTOC: true
 - **Support oAuth 2.0 protocol for authentication and authorization**
 - **Dynamic mapping**: plug your own storage to the Pryv.io API
 
+
 # Released
 
 ## 12.11.2021 - Automatic SSL certificate generation with Pryv.io 1.7.4

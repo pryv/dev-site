@@ -15,14 +15,17 @@ Users collect, manipulate and view events on their account (or other users' acco
 
 Stored data is all private by default. Users share data by explicitly opening read-only or collaborative accesses to specific parts of their data (**Accesses**).
 
+
 ## User accounts
 
 User accounts represent people or organizations that use Pryv as data subjects. Each account is identified by either a Pryv username or the URL of its corresponding API root endpoint. An account's data usually contains account settings (e.g. credentials, profile), events, contexts (streams, tags) and accesses.
+
 
 ## Servers
 
 Each user account is served from one root API endpoint on a Pryv server; one server can host one or more accounts.
 Server hosts can be chosen depending on privacy/legal context and other technical constraints. Data for each account is stored individually, i.e. separately from other accounts.
+
 
 ## Events
 
@@ -48,7 +51,6 @@ future features.
 To filter all events that belong to the system-streams, you can filter the  events streamIds and
 search for the dot before each stream id.
 
-
 ### Tags
 
 **(DEPRECATED)** Please use streamIds instead.
@@ -60,6 +62,7 @@ Tags can provide further context to events. Each event can be labeled with one o
 High-frequency series are collections of homogenous data points. They should be used when the structure of the data doesn't change and when a high volume of data at possibly high speeds (O(1Hz)) is expected.
 
 You can read more about the [HF series data structure](/reference-preview/#hf-series) through the preview reference.
+
 
 ## Accesses
 
@@ -75,6 +78,7 @@ Accesses **cannot be updated**, to change Access properties it should be revoked
 
 For security reason, unless explicitly indicated by the permission `{ "feature": "selfRevoke", "setting": "forbidden"}` all accesses can be used to revoke (delete) themselves. In very specific cases, for example when a token is distributed publicly the `selfRevoke` feature should be set to `forbidden`.  
 
+
 ## Entreprise License & Open-Source License
 
 Pryv.io is released under two licenses:
@@ -82,5 +86,3 @@ Pryv.io is released under two licenses:
 1. **Open-Pryv.io**: Is distributed freely under [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) 
 2. **Pryv.io Entreprise**: Is distributed under a commercial license and comes with more features. In the API documentation these features are indicated with a <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>label.
 For more information about Pryv.io Entreprise edition, visit [pryv.com](https://pryv.com)
-
-

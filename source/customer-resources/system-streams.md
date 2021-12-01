@@ -6,11 +6,26 @@ customer: true
 withTOC: true
 ---
 
-# Summary
-
 This document explains how to setup system streams.
 
-# System streams
+
+## Table of contents <!-- omit in toc -->
+
+1. [About system streams](#about-system-streams)
+   1. [Unicity](#unicity)
+   2. [Indexed](#indexed)
+   3. [Editability](#editability)
+   4. [Requiredness at registration](#requiredness-at-registration)
+   5. [Format](#format)
+   6. [Event type](#event-type)
+   7. [Visibility](#visibility)
+2. [Configuration](#configuration)
+   1. [Modification](#modification)
+   2. [Platform settings](#platform-settings)
+3. [Backward compatibility](#backward-compatibility)
+
+
+## About system streams
 
 System streams are a predefined set of streams. They are loaded in memory by Pryv.io and not stored in the database.  
 The base system streams contain the structure to store user account data, which can be extended in the platform configuration with custom streams to include additional unique or indexed fields (more on that later in this document).
@@ -39,35 +54,36 @@ There are 2 sets of custom streams that you may define: "account" and "other" on
 
 Here are the settings that you can configure for these system streams outside of their structure:
 
-## Unicity
+### Unicity
 
 You can define fields additional to `username` whose unicity constraint will be ensured platform-wide. These are often used for properties such as email or insurance number. Only available for account.
 
-## Indexed
+### Indexed
 
 Some account properties can be marked as indexed, meaning they will be available through the system API to fetch accross all accounts: [GET /users](/reference-system/#get-users). Only available for account.
 
-## Editability
+### Editability
 
 Values of the system streams are stored in the [Events data structure](/reference/#event), you can define whether this event is editable or read-only after account registration. Only available for account.
 
-## Requiredness at registration
+### Requiredness at registration
 
 Some values can be required during the registration process. Only available for account.
 
-## Format
+### Format
 
 You can an enforce a property format for these values using a regular expression. Only available for account.
 
-## Event type
+### Event type
 
 You can define the `type` of the events that will be used to store the values. Only available for account.
 
-## Visibility
+### Visibility
 
 You can make some values stored at registration and indexed, but not to appear Pryv.io API outside of the administration API. Only available for account.
 
-# Configuration
+
+## Configuration
 
 By default, your platform configuration will contain the single email account system stream which will appear as following:
 
@@ -103,7 +119,7 @@ Here is the detailed list of parameters:
 - **type**: the `type` of the events that will be stored in the stream
     * string
     * required
-- **isUnique**: Wether the field must be unique platform-wide
+- **isUnique**: Whether the field must be unique platform-wide
     * boolean
     * optional, default false
 - **isIndexed**: Whether the field is accessible through the [system administration GET users call](/reference-system/#get-users)
@@ -122,14 +138,14 @@ Here is the detailed list of parameters:
     * boolean
     * optional, default true
 
-## Modification
+### Modification
 
 Unicity and index properties won't affect existing data if added after the launch of the platform. As the values recorded previously will not be synchronized in the register database.
 
 Preferably these values should be modified with care, because fields like isUnique or isIndexed are not be updated accross the platform following a configuration change. They will be set for new user accounts, or through [event updates](/reference/#update-events) for existing ones.  
 If you remove system streams that have events, these events will become unreachable.
 
-## Platform settings
+### Platform settings
 
 You can find these settings in the platform configuration under the **Advanced API settings** tab, in the `ACCOUNT_SYSTEM_STREAMS` and `OTHER_SYSTEM_STREAMS` variables:
 
@@ -137,7 +153,8 @@ You can find these settings in the platform configuration under the **Advanced A
 "[{\"isIndexed\": true,\"isUnique\": true,\"isShown\": true,\"isEditable\": true,\"type\": \"email/string\",\"name\": \"Email\",\"id\": \"email\",\"isRequiredInValidation\": true}]"
 ```
 
-# Backward compatibility
+
+## Backward compatibility
 
 Pryv.io 1.7 changes the system streams ids from `.` (dot) to `:_system:` and `:system:`. However, this change might break some customer applications that depended on the old syntax.  
 

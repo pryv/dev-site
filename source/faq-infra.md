@@ -7,17 +7,18 @@ withTOC: true
 
 In this FAQ we answer common questions related to Pryv.io platform. You can contact us directly if your question is not listed here.
 
+
 ## Table of contents <!-- omit in toc -->
-<!-- no toc -->
-- 1 [Platform prerequisites](#platform-prerequisites)
-- 2 [Customize registration, login, password-reset pages](#customize-registration-login-password-reset-pages)
-- 3 [Host apps, resources on the same domain, and reuse the SSL certificate](#host-apps-resources-on-the-same-domain-and-reuse-the-ssl-certificate)
-- 4 [System administrators](#system-administrators)
+
+1. [Platform prerequisites](#platform-prerequisites)
+2. [Customize registration, login, password-reset pages](#customize-registration-login-password-reset-pages)
+3. [Host apps, resources on the same domain, and reuse the SSL certificate](#host-apps-resources-on-the-same-domain-and-reuse-the-ssl-certificate)
+4. [System administrators](#system-administrators)
 
 
 ## Platform prerequisites
 
-In addition to the **Infrastructure procurement** guide (available on request), a Pryv.io platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, eg.: https://user-123.pryv.me. This can be totally hidden from the end user.
+In addition to the **Infrastructure procurement** guide (available on request), a Pryv.io platform requires its own **domain name**, such as `pryv.me` to work. Apps will access data through the https://${username}.${domain} endpoint, e.g. https://user-123.pryv.me. This can be totally hidden from the end user.
 
 To encrypt data in transit, we require a **wildcard SSL certificate** for the domain **\*.domain**, this can be either bought or generated using [let's encrypt](https://letsencrypt.org/).
 
@@ -79,6 +80,7 @@ ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns1-${DOMAIN}.${TOP_DOMAIN}
 ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns2-${DOMAIN}.${TOP_DOMAIN}
 ```
 
+
 ## Customize registration, login, password-reset pages
 
 We deliver the platform with default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-auth3.
@@ -109,6 +111,7 @@ The following pages will show the changes that you apply to this repository:
 - Registration: https://sw.${DOMAIN}/access/register.html
 - Reset password: https://sw.${DOMAIN}/access/reset-password.html
 - Consent authorization: https://sw.${DOMAIN}/access/access.html
+
 
 ## Host apps, resources on the same domain and reuse the SSL certificate
 
@@ -146,7 +149,7 @@ ports:
 	- "EXTERNAL_INTERFACE_IP_ADDRESS:53:5353/udp"
 ```
 
-### docker login X11 error
+### `docker login` X11 error
 
 On a Pryv install using Ubuntu 18.X when running `docker login`: Ubuntu refuses to let you enter the password because it wants you to use a secure means of password entry. The error reads something like 'Cannot autolaunch D-Bus without X11 \$DISPLAY' ([docker-compose issue #6023](https://github.com/docker/compose/issues/6023)).
 Our workaround is:

@@ -7,20 +7,22 @@ withTOC: true
 
 In this FAQ we answer common questions related to Pryv.io API. You can contact us directly if your question is not listed here.
 
+
 ## Table of contents <!-- omit in toc -->
-<!-- no toc -->
-- 1 [Personal data](#personal-data)
-- 2 [Streams](#streams)
-- 3 [Event types](#event-types)
-- 4 [Other data structures](#other-data-structures)
-- 5 [API methods](#api-methods)
-- 7 [Synchronization](#synchronization)
-- 8 [User creation](#user-creation)
-- 9 [Authentication](#authentication)
-- 10 [Account granularity](#account-granularity)
-- 11 [Access sharing](#access-sharing)
-- 12 [Notification system](#notification-system)
-- 13 [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api-)
+
+1. [Personal data](#personal-data)
+2. [Streams](#streams)
+3. [Event types](#event-types)
+4. [Other data structures](#other-data-structures)
+5. [API methods](#api-methods)
+7. [Synchronization](#synchronization)
+8. [User creation](#user-creation)
+9. [Authentication](#authentication)
+10. [Account granularity](#account-granularity)
+11. [Access sharing](#access-sharing)
+12. [Notification system](#notification-system)
+13. [Test setup](#do-you-have-a-test-setup-where-i-could-experiment-with-your-api-)
+
 
 ## Personal data
 
@@ -35,6 +37,7 @@ For data to be considered as “personal” data, it has to observe the followin
 
 If the technical data from these devices is considered as “personal” data of the user, he has the right to access it anytime. It should therefore be stored in his account.
 If you prefer storing this data in a separate account, keep in mind that the user can ask for a copy of it anytime if it is “personal” data.
+
 
 ## Streams
 
@@ -70,6 +73,7 @@ The default set of validated types is defined in [https://api.pryv.com/event-typ
 
 Depending on the `type` field of the event, the content of the fields `content` and `attachments` are validated.
 
+
 ## Other data structures
 
 ### What information should be contained in the “Profile” section of the user ?
@@ -85,6 +89,7 @@ For example, a doctor can store all the tokens to patients’ accounts for which
 
 However this data structure has a limitation: it is only accessible with a “personal token” which requires the user to login with his password every time.
 
+
 ## API methods
 
 ### Is it possible to have a list of existing core servers ?
@@ -97,6 +102,7 @@ Yes, the register service has 2 methods:
 ### What is the exact structure of the create attachment call?
 
 If you are having issues creating the package for the create attachment call with the client/framework/library you are using, you can print the details of the call by using cURL with the `-v` verbose option.
+
 
 ## Synchronization
 
@@ -123,6 +129,7 @@ By coupling the precedent logic with a [Notification System](/faq-api/#notificat
 
 If you use the [Pryv JavaScript Library](https://github.com/pryv/lib-js), it can be used in combination with our [Monitor](https://github.com/pryv/lib-js-monitor) and [Socket.io](https://github.com/pryv/lib-js-socket.io) add-ons to have "near real-time" updates.
 
+
 ## User creation
 
 ### Is there an API call for user creation?
@@ -147,6 +154,7 @@ It is possible to create users with an API call, without having to fill the fiel
 
 It is possible to retrieve a username from an email address: [Get username from email](/reference-system/#get-username-from-email).
 This is useful for email authentication or if the user has lost his password.
+
 
 ## Authentication
 
@@ -189,11 +197,13 @@ You should implement the [auth request](/reference/#auth-request), displaying th
 
 The Pryv.io login supports multi-factor authentication (MFA). See its API reference methods [here](/reference/#multi-factor-authentication).
 
+
 ## Account granularity
 
 ### Should I store the data of more than one person in a single Pryv.io account?
 
 For compliance reasons, Pryv.io accounts are per-user. Storing multiple people data under the same account bypasses the authentication step which is the technical equivalent of consent.
+
 
 ## Access sharing
 
@@ -258,7 +268,6 @@ It is generally preferable to maximize the number of "app" tokens with limited s
 
 Below is an example of a single app "third-party-test" requesting access to the particular streams "Health" and "Personal Information" with a limited set of permissions :
 
-
 <img align="center" width="200" src="/assets/images/app-access.png" >
 
 
@@ -279,6 +288,7 @@ You can have a look at the webhooks and websockets data changes payload in the [
 
 Notifications are sent as soon as there is a data change in the "events", "streams" or "accesses" for the whole user account. It is therefore possible to get notified of a data change that would not be in the scope of the access token.
 Notifications are likely to be scoped in the near future. 
+
 
 ## Do you have a test setup where I could experiment with your API?
 

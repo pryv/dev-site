@@ -10,15 +10,19 @@ In this tutorial, we will help you to get started with Pryv.io. You can try out 
 We will guide you through:
 
 1. [Create a Pryv Lab user](#create-a-pryv-lab-user)
-2. [Create an Open Pryv.io user](#create-an-open-pryv-io-user)
+   1. [Pryv demo Dashboard](#pryv-demo-dashboard)
+2. [Create an Open Pryv.io user](#create-an-open-pryvio-user)
 3. [Obtain an Access Token](#obtain-an-access-token)
 4. [Data Modelling](#data-modelling)
+   1. [Streams](#streams)
+   2. [Events](#events)
 5. [Access Management](#access-management)
-6. [What's next](#what-is-next)
+6. [What is next?](#what-is-next)
 
 In addition, you can download the [OpenAPI document](/open-api/3.0/api.yaml) describing the Pryv.io API using the OpenAPI Specification and import it on other testing platforms for API such as Postman, as explained on our [Open API page](/open-api/).
 
-# Create a Pryv Lab user
+
+## Create a Pryv Lab user
 
 By registering on our Lab platform, you will have access to a Pryv.io user account in a fully-functional environment perfect for your first tests.
 
@@ -36,7 +40,6 @@ By registering on our Lab platform, you will have access to a Pryv.io user accou
 
 3. Click on the '**Create**' button.
 
-
 *Data in Pryv.io has a geographical location that doesn't change. This makes it easier to control what legislations apply.*
 
 Note that the email is optional for the account creation, but is required to reset your password.
@@ -51,7 +54,7 @@ You can sign in to your Pryv.io account on the following link: [https://sw.pryv.
 
 You have now access to your **Pryv Lab** account through the Pryv.io demo dashboard web application.
 
-## Pryv demo Dashboard
+### Pryv demo Dashboard
 
 The Pryv demo dashboard is a data visualization tool.
 
@@ -71,7 +74,8 @@ Once data is added to your account, you can select which streams to visualize on
 
 ![Johann Dashboard](/assets/images/getting-started/dashboard_johann.png)
 
-# Create an Open Pryv.io user
+
+## Create an Open Pryv.io user
 
 You should first setup the installation of your own Open Pryv.io platform by following the guidelines in the README of the [Github repository](https://github.com/pryv/open-pryv.io).
 
@@ -85,7 +89,8 @@ Once your platform is up and running, you can create a user account and launch t
 <br />
 3. Fill in the form and click on the '**Create**' button.
 
-# Obtain an Access Token
+
+## Obtain an Access Token
 
 Now that your Pryv.io account has been created using either Pryv lab or Open Pryv.io, you can start adding data. In order to do so by using code or API clients such as cURL or Postman, you first need to obtain an access token.
 
@@ -139,7 +144,8 @@ The API endpoint will have the following format :
   - For an **Open Pryv.io** account with username '**demopryv123**':
 ![Access Token Open Pryv](/assets/images/getting-started/access-token-open.png)
 
-# Data Modelling
+
+## Data Modelling
 
 In this section, we provide you information on the basic concepts of the Pryv.io data model.
 When adding data to your account, you need to comply with Pryv's conventions by organizing it into "streams" and "events".
@@ -309,7 +315,8 @@ More information on HF series is provided in the [**API reference**](/reference-
 
 To get more details on all possible event types, see the [**events API reference**](/reference/#event).
 
-# Access Management
+
+## Access Management
 
 You might want to give permissions to applications and third-parties to access and manage your account (by reading or adding new data).
 
@@ -358,7 +365,8 @@ As you can see from the example above, each permission specifies a `streamId`, t
 
 A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](/reference/#access).
 
-# What is next?
+
+## What is next?
 
 This concludes our first tour of Pryv.io and some basic things you can do with it. Where to go from here?
 

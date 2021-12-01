@@ -7,6 +7,7 @@ withTOC: true
 
 This page presents libraries as well as example applications which can be used as indications to develop one's own application to interact with Pryv.io.
 
+
 ## Web + NodeJS
 
 ### Web application examples
@@ -38,6 +39,7 @@ You can find the source code here: [https://github.com/pryv/app-web-auth3](https
 Web application for the [MFA flow](https://api.pryv.com/reference/#multi-factor-authentication).  
 You can find the source code here: [https://github.com/pryv/app-web-mfa](https://github.com/pryv/app-web-mfa).
 
+
 ## iOS
 
 ### iOS Swift example app
@@ -52,6 +54,7 @@ You can find the source code here: [https://github.com/pryv/lib-swift](https://g
 
 You can find the source code here: [https://github.com/pryv/bridge-ios-healthkit](https://github.com/pryv/bridge-ios-healthkit).
 
+
 ## Java
 
 ### Java application examples
@@ -65,6 +68,7 @@ You can find the source code here: [https://github.com/pryv/app-android-example]
 ### Library
 
 You can find the source code here: [https://github.com/pryv/lib-java](https://github.com/pryv/lib-java).
+
 
 ## Integrations
 
@@ -81,6 +85,7 @@ You can find the source code here: [https://github.com/pryv/bridge-tableau](http
 ### Power BI
 
 You can find the source code here: [https://github.com/pryv/plugin-powerbi](https://github.com/pryv/plugin-powerbi).
+
 
 ## Other
 

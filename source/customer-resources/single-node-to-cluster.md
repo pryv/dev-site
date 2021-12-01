@@ -6,19 +6,16 @@ customer: true
 withTOC: true
 ---
 
+This guide describes how to migrate a single-node installation from a *source* machine to multiple *dest* machines in a cluster setup.
+
+
 ## Table of contents <!-- omit in toc -->
 
-1. [Summary](#summary)
-2. [*(Optional)* Create user(s) with specific data on source for post-migration verification](#optional-create-users-with-specific-data-on-source-for-post-migration-verification)
-3. [Adapt platform parameters](#adapt-platform-parameters)
-4. [Migrate register master](#migrate-register-master)
-5. [Replace config by cluster](#replace-config-by-cluster)
-6. [Migrate user data to core machine](#migrate-user-data-to-core-machine)
-
-
-## Summary
-
-We migrate a single-node installation from a *source* machine to multiple *dest* machines in a cluster setup.
+1. [*(Optional)* Create user(s) with specific data on source for post-migration verification](#optional-create-users-with-specific-data-on-source-for-post-migration-verification)
+2. [Adapt platform parameters](#adapt-platform-parameters)
+3. [Migrate register master](#migrate-register-master)
+4. [Replace config by cluster](#replace-config-by-cluster)
+5. [Migrate user data to core machine](#migrate-user-data-to-core-machine)
 
 
 ## *(Optional)* Create user(s) with specific data on source for post-migration verification
@@ -46,9 +43,11 @@ The difference between a single and cluster lies in the "Machines and platform s
 
 You can overwrite the other sections with the ones from your `platform.yml`
 
+
 ## Migrate register master
 
 1. Perform the [register migration](/customer-resources/register-migration/) for the reg-master machine
+
 
 ## Replace config by cluster
 
@@ -56,6 +55,7 @@ You can overwrite the other sections with the ones from your `platform.yml`
 3. Replace or copy the `config-leader/conf/platform.yml` file with the one you prepared earlier  
 4. Copy the SSL certificates from `config-leader/data/singlenode/nginx/conf/secret/` to each new `$ROLE` in `config-leader/data/${ROLE}/nginx/conf/secret/`
 5. On *dest* reg-master run: `restart-config-follower` and `restart-pryv`  
+
 
 ## Migrate user data to core machine
 

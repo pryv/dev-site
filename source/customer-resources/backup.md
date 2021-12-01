@@ -6,24 +6,23 @@ customer: true
 withTOC: true
 ---
 
-## Table of contents <!-- omit in toc -->
-<!-- no toc -->
-1. [Introduction](#introduction)
-2. [Backup](#backup)
-  1. [Core](#core)
-  2. [Register](#register)
-  3. [Static-web](#static-web)
-3. [Restore](#restore)
-  1. [Core](#core)
-  2. [Register](#register)
-  3. [Static-web](#static-web)
-
-
-## Introduction
-
 This guide describes how to perform a backup of your Pryv.io platform and how to restore it in case of any data loss. You will have to backup user data as well as configuration files of each role: core, register, static-web.
 
 We will refer to the root of your Pryv.io installation on each role (usually `/var/pryv/`) as `${PRYV_CONF_ROOT}`.
+
+
+## Table of contents <!-- omit in toc -->
+
+1. [Backup](#backup)
+   1. [Core](#core)
+   2. [Register](#register)
+   3. [Static-web](#static-web)
+   4. [Important notice](#important-notice)
+2. [Restore](#restore)
+   1. [Core](#core-1)
+   2. [Register](#register-1)
+   3. [Static-web](#static-web-1)
+
 
 ## Backup
 
@@ -67,6 +66,7 @@ During the time of the backup, if user accounts are created between the core and
 ## Restore
 
 Once you have backed up data, you can use it to restore your Pryv.io platform as described in the following procedure.
+
 
 ### Core
 

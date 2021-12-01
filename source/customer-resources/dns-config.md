@@ -6,18 +6,23 @@ customer: true
 withTOC: true
 ---
 
+This guide describes how to add DNS records in your Pryv.io associated domain DNS zone.  
+
+
 ## Table of contents <!-- omit in toc -->
-<!-- no toc -->
-1. [Usage](#usage)  
-  1. [Settings location](#settings-location)  
-  2. [Key format](#key-format)  
+
+1. [Usage](#usage)
+   1. [Settings location](#settings-location)
+   2. [Key format](#key-format)
 2. [A Record](#a-record)
+   1. [Root](#root)
 3. [CNAME Record](#cname-record)
 4. [TXT Record](#txt-record)
+   1. [Root TXT](#root-txt)
 5. [SPF Record](#spf-record)
 6. [MX Record](#mx-record)
+7. [Previous version](#previous-version)
 
-This guide describes how to add DNS records in your Pryv.io associated domain DNS zone.  
 
 ## Usage
 
@@ -53,6 +58,7 @@ Using the admin panel, you will be provided with an error when applying the upda
 All DNS lookups are made in **lower case**, so make sure that the keys that you define for A, CNAME and TXT records are set in lower case.  
 This requires to manually lower casing keys such as the ones provided for DNS validation.  
 
+
 ## A Record
 
 To associate the `123.123.123.123` IP address to the hostname `my-service.${DOMAIN}`, enter:
@@ -81,6 +87,7 @@ DNS_SETTINGS:
       value: "123.123.123.123"
 ```
 
+
 ## CNAME Record
 
 To associate a CNAME alias pointing to `my-site.my-domain.com` from `www.${DOMAIN}`, enter:  
@@ -96,6 +103,7 @@ DNS_SETTINGS:
           alias:
             name: "my-site.my-domain.com"
 ```
+
 
 ## TXT Record
 
@@ -129,6 +137,7 @@ DNS_SETTINGS:
         - "my-dns-challenge"
 ```
 
+
 ## SPF Record
 
 SPF records are simply TXT records located at the root of the domain. They are defined as following:
@@ -142,6 +151,7 @@ DNS_SETTINGS:
       value:
         - "${SPF_RECORD}"
 ```
+
 
 ## MX Record
 
@@ -161,6 +171,7 @@ DNS_SETTINGS:
           priority: 50
           ttl: 10800
 ```
+
 
 ## Previous version
 

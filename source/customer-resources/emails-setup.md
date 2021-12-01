@@ -6,21 +6,35 @@ customer: true
 withTOC: true
 ---
 
-This document describes how to configure the settings for the sending of email for:
+This document describes how to configure the settings for the sending of email for 1) account creation and 2) password reset requests.
 
-- Account creation,
-- Password reset requests.
-
-The prerequisite for this is to have a running Pryv.io platform. Refer to the [Pryv.io setup guide](/customer-resources/pryv.io-setup/) for its installation.
+The prerequisite for this is a running Pryv.io platform (refer to the [Pryv.io setup guide](/customer-resources/pryv.io-setup/)).
 
 The email settings are to be set either directly through the platform settings configuration file `platform.yml` or through the admin panel.
+
+
+## Table of contents <!-- omit in toc -->
+
+1. [Transport](#transport)
+   1. [Sendmail](#sendmail)
+   2. [Your own SMTP server](#your-own-smtp-server)
+2. [Email settings](#email-settings)
+   1. [Activation](#activation)
+   2. [Sender](#sender)
+      1. [Using your Pryv.io domain](#using-your-pryvio-domain)
+   3. [Email template default language](#email-template-default-language)
+3. [Templates](#templates)
+   1. [Welcome](#welcome)
+   2. [Password reset](#password-reset)
+4. [Previous version](#previous-version)
+
 
 ## Transport
 
 Emails can be sent using:
 
 - Sendmail
-- your SMTP server
+- Your own SMTP server
 - Mandrill (deprecated)
 
 ### Sendmail
@@ -75,6 +89,7 @@ in the admin panel:
   }
 }
 ```
+
 
 ## Email settings
 
@@ -156,6 +171,7 @@ in the admin panel:
 en
 ```
 
+
 ## Templates
 
 Pryv.io currently supports email templates in 3 languages. They can be provided in [pug](https://pugjs.org/api/getting-started.html) format, a templating language for HTML. These templates can be set in the platform.yml file or through the admin panel:
@@ -185,6 +201,7 @@ p We have received word that you have lost your password. If you have asked for 
 p <a href="#{RESET_URL}?resetToken=#{RESET_TOKEN}" target="_blank">Click here</a> to reset your Pryv password.
 p Pryv team 
 ```
+
 
 ## Previous version
 
