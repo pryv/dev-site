@@ -151,9 +151,11 @@ with the following user data sent during [activation](/reference/#activate-mfa):
 ```json
 {
   "number":"41791231212",
-  "message":"Your Pryv Lab MFA code is: {{ code }}"
+  "message":"Your%20Pryv%20Lab%20MFA%20code%20is%3A%20{{ code }}"
 }
 ```
+
+Note that the message `Your Pryv Lab MFA code is: {{ code }}` has been URL encoded as it will appear in query parameters, but the `{{ code }}` variable is kept as-is since it must be substituted by the Pryv MFA service.
 
 and [confirmation](/reference/#confirm-mfa-activation) / [verification](/reference/#verify-mfa-challenge):
 

@@ -166,7 +166,7 @@ module.exports = exports =
                    """
       params:
         description: """
-              The parameters depend entirely on the chosen MFA method and will be forwarded to the service generating the challenge.
+              The parameters depend entirely on the chosen MFA method and will be forwarded as-is to the service generating the challenge. Make sure to URL encode parameters if they appear in query parameters.
               """
       result:
         http: "302 Found"
