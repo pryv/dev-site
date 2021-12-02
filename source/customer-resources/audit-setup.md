@@ -16,8 +16,8 @@ Audit is only available in the [entreprise version](/concepts/#entreprise-licens
 1. [Outputs](#outputs)
 2. [Filtering](#filtering)
 3. [Rules](#rules)
-   1. [You must specify at least one of them](#1-you-must-specify-at-least-one-of-them)
-   2. [You can aggregate per resource](#2-you-can-aggregate-per-resource)
+   1. [You must specify at least one of them](#you-must-specify-at-least-one-of-them)
+   2. [You can aggregate per resource](#you-can-aggregate-per-resource)
 4. [Examples](#examples)
    1. [log everything](#log-everything)
    2. [log nothing](#log-nothing)
@@ -67,11 +67,11 @@ methods:
 
 ## Rules
 
-### 1. You must specify at least one of them
+### You must specify at least one of them
 
 At least one of the arrays must contain a valid value.
 
-### 2. You can aggregate per resource
+### You can aggregate per resource
 
 The Pryv.io [API method ids](/reference/#method-ids) are built in the format `{resource}.{verb}`, for example: `events.get`.  
 Audit filters accept aggregation of all methods for a particular resource using `all` for the verb, for example: `events.all`
