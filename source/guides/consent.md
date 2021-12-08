@@ -127,7 +127,7 @@ This will return information about the access in use:
     "modified": 1602685422.023,
     "modifiedBy": "ckbi19ena00p11xd3eemmdv2o",
     "meta": {
-        "apiVersion": "1.7.0",
+        "apiVersion": "1.7.10",
         "serverTime": 1602860299.642,
         "serial": "2019061301"
     }

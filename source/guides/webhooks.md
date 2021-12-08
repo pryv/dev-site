@@ -162,7 +162,7 @@ The request payload will look like this:
       "eventsChanged"
     ],
     "meta": {
-      "apiVersion": "1.7.0",
+      "apiVersion": "1.7.10",
       "serial": "20190802",
       "serverTime": 1586254000.213
     }
