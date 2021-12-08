@@ -6,7 +6,7 @@ layout: default.pug
 
 ## 1.7.10
 
-- API change: Don't coerce event content
+- API change: Don't coerce the event content values according to type
 - Fixes: Allow event types validation for array
 
 ## 1.7.9
