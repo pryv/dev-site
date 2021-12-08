@@ -4,6 +4,15 @@ title: API change log
 layout: default.pug
 ---
 
+## 1.7.10
+
+- API change: Don't coerce event content
+- Fixes: Allow event types validation for array
+
+## 1.7.9
+
+- Security fix: make password reset token single-use
+
 ## 1.7.0
 
 Changes:
