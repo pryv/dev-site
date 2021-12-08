@@ -218,3 +218,48 @@ rm -rf pryv/influxdb/data/*
 ### How can I use the demo dashboard app (_app-web_) on my Pryv.io platform?
 
 App-web is hosted on GitHub pages and can be used for your Pryv.io platform as described in [its documentation](https://github.com/pryv/app-web#usage).
+
+### Can I use my own SSL termination with Pryv.io?
+
+Yes, you need to provide the following changes to the template configuration files found in `config-leader/data/${ROLE}`, where `${ROLE}` is `singlenode` or `core`, `reg-master`, `reg-slave` and `static` depending on your deployment.
+
+In the `config-leader/data/${ROLE}/nginx/conf/nginx.conf` files, comment out the following lines by adding a `#` at their beginning as following:
+
+```nginx
+#ssl_certificate      /app/conf/secret/DOMAIN-bundle.crt;
+#ssl_certificate_key  /app/conf/secret/DOMAIN-key.pem;
+```
+
+In the `config-leader/data/${ROLE}/nginx/conf/site-443.conf` and `config-leader/data/${ROLE}/nginx/conf/site-443-mfa.conf` files, change the `listen` directive from `443 ssl` to `80` for each `server` block as following:
+
+```nginx
+server {
+  listen    80;
+  # ...
+}
+```
+
+### My security policy requires that all outgoing traffic goes through a proxy, will Pryv.io work?
+
+Yes, you need to provide the following changes to the template configuration files found in `config-leader/data/${ROLE}`, where `${ROLE}` is `singlenode` or `core`, `reg-master`, `reg-slave` and `static` depending on your deployment.
+
+In the `config-leader/data/${ROLE}/pryv.yml` files, add the environment variables `http_proxy` and `https_proxy` to the `reverse_proxy` service:
+
+```yaml
+reverse_proxy:
+  image: "eu.gcr.io/pryvio/nginx:1.3.40"
+  container_name: pryvio_nginx
+  # ...
+  environment:
+    - http_proxy
+    - https_proxy
+```
+
+In the `run-config-leader`, `run-config-follower` and `run-pryv` scripts, add the following lines at the beginning, right under the shebang `#!/usr/bin/env bash`:
+
+```bash
+export http_proxy=${YOUR-PROXY-HOSTNAME-WITH-PORT}
+export https_proxy=${YOUR-PROXY-HOSTNAME-WITH-PORT}
+```
+
+Do the same for the `restart-` scripts.
