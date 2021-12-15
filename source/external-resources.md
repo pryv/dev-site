@@ -63,7 +63,7 @@ You can find the source code here: [https://github.com/pryv/app-java-examples](h
 
 ### Android application example
 
-You can find the source code here: [https://github.com/pryv/app-android-example](https://github.com/pryv/app-android-example).
+You can find the source code here: [https://github.com/pryv/example-app-android](https://github.com/pryv/example-app-android).
 
 ### Library
 
