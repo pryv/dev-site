@@ -291,6 +291,4 @@ ${PRYV_CONF_ROOT}/restart-pryv
 
 ### What URLs must I allow for outbound connections?
 
-- `eu.gcr.io`: our private Docker repository
-- `*.DOMAIN`: in a cluster deployment, the different machines send some requests between each other on their public hostnames such as `co1.DOMAIN`, `reg.DOMAIN`, `lead.DOMAIN`, etc.
-- All URLs referred to in the platform configuration variables: see `Platform configuration` in your admin panel
+You can checkout [this section in the operational concerns](/customer-resources/infrastructure-procurement/#outbound-connections) of the infrastructure procurement guide.
