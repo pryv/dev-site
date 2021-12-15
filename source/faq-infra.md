@@ -263,3 +263,34 @@ export https_proxy=${YOUR-PROXY-HOSTNAME-WITH-PORT}
 ```
 
 Do the same for the `restart-` scripts.
+
+### How can I provide custom environment variables to the Pryv services?
+
+You can simply add them in the docker-compose template files located in `config-leader/data/${ROLE}/pryv.yml`, where `${ROLE}` is `singlenode` or `core`, `reg-master`, `reg-slave` and `static` depending on your deployment.
+
+In the docker-compose file, you should add the `environment` property to the service you wish to add environment variables and add your variables in an array such as:
+
+```yaml
+version: '3.5'
+services:
+  # ...
+  core: 
+    # ...
+    environment: 
+      - NUM_PROCS=4
+      - STARTING_PORT=3000
+      - MY_VAR="hello"
+```
+
+Once you have added this, you should propagate the config and restart the services by running the following scripts on the machines you wish to apply those changes to.
+
+```bash
+${PRYV_CONF_ROOT}/restart-config-follower
+${PRYV_CONF_ROOT}/restart-pryv
+```
+
+### What URLs must I allow for outbound connections?
+
+- `eu.gcr.io`: our private Docker repository
+- `*.DOMAIN`: in a cluster deployment, the different machines send some requests between each other on their public hostnames such as `co1.DOMAIN`, `reg.DOMAIN`, `lead.DOMAIN`, etc
+- All URLs that you provide in the platform variables: List all URLs provided in the `Platform configuration` of your admin panel
