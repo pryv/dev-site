@@ -5,7 +5,7 @@ layout: default.pug
 withTOC: true
 ---
 
-In this tutorial, we will help you to get started with Pryv.io. You can try out and evaluate the Pryv.io API for your projects using either our [Lab platform](https://pryv.com/pryvlab/) or the Open source version of Pryv.io available [here](https://github.com/pryv/open-pryv.io). 
+In this tutorial, we will help you to get started with Pryv.io. You can try out and evaluate the Pryv.io API for your projects using either our [Lab platform](https://pryv.com/pryvlab/) or the Open source version of Pryv.io available [here](https://github.com/pryv/open-pryv.io).
 
 We will guide you through:
 
@@ -63,7 +63,7 @@ The Pryv demo dashboard is a data visualization tool.
 It enables you to visualize the "events" you created, corresponding to timestamped data - that can be in the form of notes, images, GPS location, data points, etc - and to organize them into "streams", while managing the access level to this data.
 To get more information on the Pryv data model of events and streams, you can jump to the [**dedicated chapter**](#data-modelling).
 
-The dashboard offers a visual display of the data you will create and add to your account throughout this guide. 
+The dashboard offers a visual display of the data you will create and add to your account throughout this guide.
 As shown below, once you connect to your account, the home page of your dashboard displays the list of streams of your account, where a default stream `Diary` is automatically created.
 
 ![Pryv Lab Dashboard: Streams](/assets/images/getting-started/streams_dashboard.png)
@@ -82,7 +82,7 @@ You should first setup the installation of your own Open Pryv.io platform by fol
 Once your platform is up and running, you can create a user account and launch the authentication process.
 
 1. Launch your Open Pryv.io locally
-2. Open the registration page on the following link : [https://my-computer.rec.la:4443/www/access/register.html](https://my-computer.rec.la:4443/www/access/register.html). 
+2. Open the registration page on the following link : [https://my-computer.rec.la:4443/www/access/register.html](https://my-computer.rec.la:4443/www/access/register.html).
 <p align="center">
 <img src="/assets/images/getting-started/register-open.png" alt="register-open" style="zoom:33%;" />
 </p>
@@ -100,7 +100,7 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
 2. Set up the required parameters :
 
     1. Fill in the Service Info URL related to your Pryv.io platform:
-      - with **Pryv Lab** 
+      - with **Pryv Lab**
    <img src="/assets/images/getting-started/service-info-lab.png" alt="service-info-lab" style="zoom:150%;" />
       - with **Open Pryv.io**
    <img src="/assets/images/getting-started/service-info-open.png" alt="service-info-open" style="zoom:150%;" />
@@ -136,7 +136,7 @@ The easiest is to use the **Pryv Access Token Generation** page (which is a raw 
   <p align="center">
   <img src="/assets/images/getting-started/consent.png" alt="consent" style="zoom:33%;" />
   </p>
-6. **The API endpoint for the user account has been generated.** 
+6. **The API endpoint for the user account has been generated.**
 Each user account has a dedicated root API endpoint that is potentially served from a different location.
 The API endpoint will have the following format :
   - For a **Pryv Lab** account with username '**demopryv123**':
@@ -152,10 +152,10 @@ When adding data to your account, you need to comply with Pryv's conventions by 
 
 To see examples and possible scenarios you might encounter, please check the [**dedicated page**](/guides/data-modelling) to learn how the data model should be structured and implemented depending on your use case.
 
-The Pryv.io data model is composed of two entities: **events** and **streams**.   
+The Pryv.io data model is composed of two entities: **events** and **streams**.
 
-All the data that you collect and aggregate should follow an organisation in streams and events. 
-Inside each stream can be found timestamped events : 
+All the data that you collect and aggregate should follow an organisation in streams and events.
+Inside each stream can be found timestamped events :
 
 ![Pryv.io Data Model](/assets/images/data_model_allergens.svg)
 
@@ -206,8 +206,8 @@ Here is an example of a **stream** with sub-streams (children): the **Digital Te
 
 ### Events
 
-**Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in at least one stream. 
-Events either have a type from the list of [**standard event types**](/event-types/#directory) to allow interoperability, or an application-specific type. 
+**Events** are the primary unit of content in Pryv.io. An event is a timestamped piece of typed data, and always occurs in at least one stream.
+Events either have a type from the list of [**standard event types**](/event-types/#directory) to allow interoperability, or an application-specific type.
 
 Our user will therefore be adding events of different types, each related to specific streams:
 
@@ -252,8 +252,8 @@ Pryv offers the possibility to manipulate a broad range of event types that can 
   "streamIds": ["heart"],
   "type": "blood-pressure/bpm-mmhg",
   "content": {
-      "systolic": 120, 
-      "diastolic": 80, 
+      "systolic": 120,
+      "diastolic": 80,
       "rate": 95
       },
   "time": 1682359123.3923
@@ -262,7 +262,7 @@ Pryv offers the possibility to manipulate a broad range of event types that can 
 
 More specific event types also involve :
 
-**Attachments** that can be added to events, for example for our user to post pictures of his nutrition in a dedicated substream under his `Health Profile` stream. 
+**Attachments** that can be added to events, for example for our user to post pictures of his nutrition in a dedicated substream under his `Health Profile` stream.
 
 <img src="/assets/images/getting-started/attachment.png" alt="attachment" style="zoom:45%;" />
 
@@ -320,7 +320,7 @@ To get more details on all possible event types, see the [**events API reference
 
 You might want to give permissions to applications and third-parties to access and manage your account (by reading or adding new data).
 
-In a previous [section](#obtain-an-access-token), we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. This token represents the access your application has to a user account; it only expires when the user retracts his consent. 
+In a previous [section](#obtain-an-access-token), we generated a token to be able to give access to Pryv.io user account to an app or a trusted third party of our choice. This token represents the access your application has to a user account; it only expires when the user retracts his consent.
 This token should be stored permanently and securely in your application.
 
 Pryv.io enables you to define accesses with different levels of permissions for third-parties to interact with your data, or only particular folders of your data.
@@ -329,7 +329,7 @@ Let's imagine that our user wants his doctor Tom to give him feedback on his dai
 
 ![Example with doctor feedback](/assets/images/data_model_allergens_doctor.svg)
 
-To do so, he needs to give permission to the doctor Tom to "read" the data from the stream `Allergen exposure App` and to "manage" the streams `Doctor's feedback` in which he will be adding his feedback, and `Health Profile` in which he will record events related to his patient's health. The level "manage" will enable Tom to fully control the stream and to add his comments as new events in the stream `Comment`. 
+To do so, he needs to give permission to the doctor Tom to "read" the data from the stream `Allergen exposure App` and to "manage" the streams `Doctor's feedback` in which he will be adding his feedback, and `Health Profile` in which he will record events related to his patient's health. The level "manage" will enable Tom to fully control the stream and to add his comments as new events in the stream `Comment`.
 
 The access for doctor Tom will be created by a `POST` call on accesses (see [accesses.create](/reference/#create-access)):
 
@@ -370,7 +370,7 @@ A more exhaustive explanation of the concept of "Access" and the different "leve
 
 This concludes our first tour of Pryv.io and some basic things you can do with it. Where to go from here?
 
-- To implement your digital apps with Pryv.io, you can check some web app examples and tutorials on the [dedicated Github repository](https://github.com/pryv/app-web-examples).
+- To implement your digital apps with Pryv.io, you can check some web app examples and tutorials on the [dedicated Github repository](https://github.com/pryv/example-apps-web).
 - To faster your onboarding with Pryv.io, watch our video tutorials on our [Youtube channel](https://www.youtube.com/user/pryvme/videos).
 - Our [external resources](/external-resources/) page presents some third party and unsupported libraries and sample applications.
 - The [API Reference](/reference/) explains all the calls you can make to Pryv.io and their parameters.
