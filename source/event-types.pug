@@ -3,8 +3,6 @@ id: event-types
 title: Event types reference
 layout: default.pug
 withTOC: true
-sourcePath: hierarchical.json
-flatPath: flat.json
 include:
   sourceData: event-types/_source/event-types.json
 ---
@@ -36,7 +34,7 @@ section#about
   :markdown-it
     You are free to use any type in your app, but for the sake of interoperability we heavily recommend that you extend the standard types listed here.
 
-    To customize your own Pryv.io setup, clone the [Data Types repository](https://github.com/pryv/data-types) and follow the guide there.  
+    To customize your own Pryv.io setup, clone the [Data Types repository](https://github.com/pryv/data-types) and follow the guide there.
 
     ## Basics
 
@@ -53,7 +51,7 @@ section#about
     ## Format specification
 
     For each of the types described below, the event content's structure is specified with
-    [JSON-schema](http://tools.ietf.org/html/draft-zyp-json-schema-04#page-8).
+    [JSON-schema](http://json-schema.org/specification.html).
     Notes:
 
     - A "null" content type means that the event has no `content` property (because the core event
@@ -67,8 +65,8 @@ section#about
 
     This directory is available as a JSON file for automated processing:
 
-    - [Hierarchical structure](!{sourcePath}): `classes['{class}'].formats['{format}']`
-    - [Flat structure](!{flatPath}): `types['{class}/{format}']`
+    - [Hierarchical structure](hierarchical.json): `classes['{class}'].formats['{format}']`
+    - [Flat structure](flat.json): `types['{class}/{format}']`
 
     ## Submitting types & issues
 
@@ -93,7 +91,7 @@ section#directory
         strong !{header}:&nbsp;
         if (header === 'enum')
           | !{value.join(", ")}
-        else 
+        else
           | !{value}
 
   mixin definition(name, schema)
