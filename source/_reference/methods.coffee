@@ -35,8 +35,8 @@ module.exports = exports =
       http: "POST /auth/login"
       httpOnly: true
       description: """
-                   Authenticates the user against the provided credentials, opening a personal access session. By default, the session is valid for 14 days after the last token usage. This duration is configurable in the platform parameters.  
-                   This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).  
+                   Authenticates the user against the provided credentials, opening a personal access session. By default, the session is valid for 14 days after the last token usage. This duration is configurable in the platform parameters.
+                   This is one of the only API methods that do not expect an [auth parameter](#basics-authorization).
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
@@ -161,7 +161,7 @@ module.exports = exports =
       http: "POST /mfa/activate"
       description: """
                    Initiates the MFA activation flow for a given Pryv.io user, triggering the MFA challenge.
-                   
+
                    Requires a personal token as [authorization](#basics-authorization), which should be obtained during a prior [Login call](##{_getDocId("auth", "auth.login")}).
                    """
       params:
@@ -194,7 +194,7 @@ module.exports = exports =
       http: "POST /mfa/confirm"
       description: """
                    Confirms the MFA activation by verifying the MFA challenge triggered by a prior [MFA activation call](##{_getDocId("mfa", "mfa.activate")}).
-                   
+
                    Requires a MFA session token as [authorization](#basics-authorization).
                    """
       params:
@@ -222,7 +222,7 @@ module.exports = exports =
         params:
           code: '1234'
         result:
-          recoveryCodes: [ 
+          recoveryCodes: [
             'fba6e1f6-9f8f-4a0a-9c4f-8cf3458b4c55',
             'eb81be18-3168-4a44-8914-d97187df991c',
             'f7d7e863-0589-4779-8ddd-6c7e33df66af',
@@ -244,7 +244,7 @@ module.exports = exports =
       http: "POST /mfa/challenge"
       description: """
                    Triggers the MFA challenge, depending on the chosen MFA method (e.g. send a verification code by SMS).
-                   
+
                    Requires a MFA session token as [authorization](#basics-authorization).
                    """
       result:
@@ -272,7 +272,7 @@ module.exports = exports =
       http: "POST /mfa/verify"
       description: """
                    Verifies the MFA challenge triggered by a prior [MFA challenge call](##{_getDocId("mfa", "mfa.challenge")}).
-                   
+
                    Requires a MFA session token as [authorization](#basics-authorization).
                    """
       params:
@@ -311,7 +311,7 @@ module.exports = exports =
       http: "POST /mfa/deactivate"
       description: """
                    Deactivate MFA for a given Pryv.io user.
-                   
+
                    Requires a personal token as [authorization](#basics-authorization).
                    """
       result:
@@ -323,7 +323,7 @@ module.exports = exports =
                        "MFA deactivated."
                        """
         ]
-    , 
+    ,
 
       id: "mfa.recover"
       type: "method"
@@ -331,7 +331,7 @@ module.exports = exports =
       http: "POST /mfa/recover"
       description: """
                    Deactivate MFA for a given Pryv.io user using a MFA recovery code.
-                   
+
                    This is useful when [Deactivate MFA](##{_getDocId("mfa", "mfa.deactivate")}) can not be used (in case of 2nd factor loss).
                    Instead, requires a MFA recovery code (obtained when [confirming the MFA activation](##{_getDocId("mfa", "mfa.confirm")})), as well as the usual [Login](##{_getDocId("auth", "auth.login")}) parameters.
                    """
@@ -430,7 +430,7 @@ module.exports = exports =
           error:
             id: 'item-already-exists'
             message: 'A stream with id \"health\" already exists'
-            data: 
+            data:
               id: 'health'
         ,
           stream:
@@ -476,11 +476,11 @@ module.exports = exports =
           optional: true
           description: """
 
-                       **Array of streamIds:** Events assigned to any of the specified streams or their children will be returned.  
+                       **Array of streamIds:** Events assigned to any of the specified streams or their children will be returned.
 
                        or
-                       
-                       **[Streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations.  
+
+                       **[Streams query](##{dataStructure.getDocId("streams-query")})**: Object used for filtering events by complex streamIds relations.
 
                        By default, all accessible events are returned regardless of their stream.
                        """
@@ -509,7 +509,7 @@ module.exports = exports =
                        """
         ,
           key: "sortAscending"
-          type: "`true`|`false`"
+          type: "boolean"
           optional: true
           description: """
                        If `true`, events will be sorted from oldest to newest. Default: false (sort descending).
@@ -996,7 +996,7 @@ module.exports = exports =
       description: """
                    Adds new HF series data points to a HF event.
 
-                   The HF series data will only store one set of values for any given deltaTime. This means you can update existing data points by 'adding' new data with the original deltaTime.  
+                   The HF series data will only store one set of values for any given deltaTime. This means you can update existing data points by 'adding' new data with the original deltaTime.
                    """
       params:
         description: """
@@ -1310,7 +1310,7 @@ module.exports = exports =
                        """
         ,
           key: "mergeEventsWithParent"
-          type: "`true`|`false`"
+          type: "boolean"
           description: """
                        Required if actually deleting the item and if it (or any of its descendants) has linked events, ignored otherwise. If `true`, the linked events will be assigned to the parent of the deleted item; if `false`, the linked events will be deleted.
                        """
@@ -1364,7 +1364,7 @@ module.exports = exports =
       title: "Get accesses"
       http: "GET /accesses"
       description: """
-                   Gets accesses that were created by your access token, unless you're using a personal token then it returns all accesses.  
+                   Gets accesses that were created by your access token, unless you're using a personal token then it returns all accesses.
                    Only returns accesses that are active when making the request. To include accesses that have expired or were deleted, use
                    the `includeExpired` or `includeDeletions` parameters respectively.
                    """
@@ -1457,7 +1457,7 @@ module.exports = exports =
       title: "Delete access"
       http: "DELETE /accesses/{id}"
       description: """
-                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.  
+                   Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.
                    All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
                    """
       params:
@@ -1489,7 +1489,7 @@ module.exports = exports =
       examples: [
         params:
           id: examples.accesses.app.id
-        result: 
+        result:
           accessDeletion:
             id: examples.accesses.app.id
           relatedDeletions: [
@@ -1596,8 +1596,8 @@ module.exports = exports =
       http: "GET /audit/logs"
       httpOnly: true
       description: """
-                   **(DEPRECATED)** Please use the [Get events method](#get-events) instead.  
-                   
+                   **(DEPRECATED)** Please use the [Get events method](#get-events) instead.
+
                    Fetches accessible audit logs.
                    By default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).
                    """
@@ -1680,7 +1680,7 @@ module.exports = exports =
         http: "403"
         description: """
                      Authorization token is not authorized to audit the given access.
-                     
+
                      When providing a specific access id, if the result of [Get Accesses](##{_getDocId("accesses", "accesses.get")})
                      using the provided Authorization token does not contain the given access, then it is not auditable.
                      """
@@ -1814,7 +1814,7 @@ module.exports = exports =
       title: "Update webhook"
       http: "PUT /webhooks/{id}"
       description: """
-                   Modifies the webhook. You can only modify webhooks with the access that was used to create them, unless you are using a personal token.  
+                   Modifies the webhook. You can only modify webhooks with the access that was used to create them, unless you are using a personal token.
                    Updating the `state` to `active` resets the `currentRetries` counter.
                    """
       params:
@@ -1832,7 +1832,7 @@ module.exports = exports =
           http:
             text: "request body"
           description: """
-                       New values for the webhook's fields: see [webhook](##{dataStructure.getDocId("webhook")}). All fields are optional, and only modified values must be included.  
+                       New values for the webhook's fields: see [webhook](##{dataStructure.getDocId("webhook")}). All fields are optional, and only modified values must be included.
                        """
         ]
       result:
@@ -1853,12 +1853,12 @@ module.exports = exports =
       ]
       examples: [
         title: "Reactivating a webhook"
-        params: 
+        params:
           state: 'active'
         result:
           webhook: examples.webhooks.hasFailed
       ]
-    
+
     ,
 
       id: "webhooks.delete"
@@ -2246,7 +2246,7 @@ module.exports = exports =
       title: "Get account information"
       http: "GET /account"
       description: """
-                   **(DEPRECATED)** Please use events methods instead.  
+                   **(DEPRECATED)** Please use events methods instead.
 
                    Retrieves the user's account information.
                    """
@@ -2272,7 +2272,7 @@ module.exports = exports =
       title: "Update account information"
       http: "PUT /account"
       description: """
-                   **(DEPRECATED)** Please use events methods instead.  
+                   **(DEPRECATED)** Please use events methods instead.
 
                    Modifies the user's account information.
                    """
@@ -2349,7 +2349,7 @@ module.exports = exports =
       title: "Request password reset"
       http: "POST /account/request-password-reset"
       description: """
-                   Requests the resetting of the user's password. An e-mail containing an expiring reset token (e.g. in a link) will be sent to the user.  
+                   Requests the resetting of the user's password. An e-mail containing an expiring reset token (e.g. in a link) will be sent to the user.
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
@@ -2375,7 +2375,7 @@ module.exports = exports =
       title: "Reset password"
       http: "POST /account/reset-password"
       description: """
-                   Resets the user's password, authorizing the request with the given reset token (see [request password reset](##{_getDocId("account", "account.requestPasswordReset")}) ).  
+                   Resets the user's password, authorizing the request with the given reset token (see [request password reset](##{_getDocId("account", "account.requestPasswordReset")}) ).
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
