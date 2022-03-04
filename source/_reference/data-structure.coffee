@@ -95,7 +95,7 @@ module.exports = exports =
       optional: "(always present in read items)"
       description: """
                    **(DEPRECATED)** Please use streamIds instead.
-                   
+
                    The tags associated with the event.
                    """
     ,
@@ -266,6 +266,13 @@ module.exports = exports =
                    The token identifying the access. Automatically generated if not set when creating the access; **slugified if necessary**.
                    """
     ,
+      key: "apiEndpoint"
+      type: "string"
+      readOnly: true
+      description: """
+                   The API endpoint with the access' authorization token. See [app guidelines](/guides/app-guidelines/).
+                   """
+    ,
       key: "type"
       type: "`personal`|`app`|`shared`"
       readOnly: "(except at creation)"
@@ -301,31 +308,31 @@ module.exports = exports =
         key: [ "streamId", "tag"]
         type: "[identifier](##{_getDocId("identifier")}) | string"
         description: """
-                     To be used with `level` property only.   
-                     The id of the stream or the tag the permission applies to, or `*` for all streams/tags. Stream permissions are recursively applied to child streams. 
+                     To be used with `level` property only.
+                     The id of the stream or the tag the permission applies to, or `*` for all streams/tags. Stream permissions are recursively applied to child streams.
                      """
       ,
         key: "level"
         type: "`read`|`contribute`|`manage`|`create-only`"
         description: """
-                     Used only with `streamId` or `tag` permissions.  
-                     The level of access to the stream. With `contribute`, one can see and manipulate events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.  
-                     
+                     Used only with `streamId` or `tag` permissions.
+                     The level of access to the stream. With `contribute`, one can see and manipulate events for the stream/tag (and child streams for stream permissions); with `manage`, one can in addition create, modify and delete child streams.
+
                      The `create-only` level - only available for stream-based permissions - allows to read the stream and create events on it and its children.
                      """
       ,
         key: [ "feature"]
         type: "`selfRevoke`"
         description: """
-                     To be used only with `setting` property.  
+                     To be used only with `setting` property.
                      The only supported feature is `selfRevoke`
                      """
       ,
         key: "setting"
         type: "`forbidden`"
         description: """
-                     To be used only with `feature` permission. 
-                     If given in the permission list, this will forbid this access to call `accesses.delete {id}` and perform a self revocation.  
+                     To be used only with `feature` permission.
+                     If given in the permission list, this will forbid this access to call `accesses.delete {id}` and perform a self revocation.
                      """
       ]
     ,
@@ -340,7 +347,7 @@ module.exports = exports =
       optional: true
       readOnly: "(except at creation)"
       description: """
-        If set, controls access expiry in seconds.  
+        If set, controls access expiry in seconds.
         When given a number in this attribute (positive or zero), the access will expire (and not be usable anymore) after this many seconds.
         """
     ,
@@ -479,7 +486,7 @@ module.exports = exports =
     id: "audit-log"
     title: "Audit log"
     description: """
-                 **(DEPRECATED)** Audit logs are available as events of type [log/user-api and log/user-api-error](/event-types/#log) through the [Get events method](#get-events).  
+                 **(DEPRECATED)** Audit logs are available as events of type [log/user-api and log/user-api-error](/event-types/#log) through the [Get events method](#get-events).
 
                  Audit logs keep track of details about the actions performed by clients against Pryv.io accounts through the Pryv.io API.
                  These logs can be fetched by presenting an authorization token, allowing to audit the actions that involved a given token.
@@ -566,7 +573,7 @@ module.exports = exports =
     id: "high-frequency-series"
     title: "HF series"
     description: """
-                 High-frequency series are collections of homogenous data points. 
+                 High-frequency series are collections of homogenous data points.
 
                  To store a HF series in Pryv.io, you must first [create a HF event](#create-hf-event).
 
@@ -610,14 +617,14 @@ module.exports = exports =
     id: "webhook"
     title: "Webhook"
     description: """
-                 Webhooks provide push notifications to web servers using HTTP POST requests.  
-                 
-                 Once created, they will run, executing a HTTP POST request to the provided URL for each [data change](#with-webhooks) in the user account. 
+                 Webhooks provide push notifications to web servers using HTTP POST requests.
+
+                 Once created, they will run, executing a HTTP POST request to the provided URL for each [data change](#with-webhooks) in the user account.
 
                  When the webhooks service is booted, it will send a `webhooksServiceBoot` message to all active webhooks. This allows to query the API for potentially missed notifications during its down time.
 
                  Only the app access used to create the webhook or a personal access can retrieve and modify it. This is meant to separate the responsibilities between the actor that sets the webhooks and the one(s) that consume the data following the webhook setup.
-                 
+
 
                  """
     properties: [
@@ -640,7 +647,7 @@ module.exports = exports =
       unique: "per app access"
       readOnly: "(except at creation)"
       description: """
-                   The URL where the HTTP POST requests will be made. To identify the source of the webhook on your notifications server, you can use the `url`'s hostname, path or query parameters. For example: 
+                   The URL where the HTTP POST requests will be made. To identify the source of the webhook on your notifications server, you can use the `url`'s hostname, path or query parameters. For example:
 
                    ```json
                    {
@@ -653,7 +660,7 @@ module.exports = exports =
       type: "number"
       readOnly: true
       description: """
-                   The webhooks run rate is throttled by a minimum interval between HTTP calls in milliseconds, sending an array of changes that occured during this period. Its value is set by the platform admin. 
+                   The webhooks run rate is throttled by a minimum interval between HTTP calls in milliseconds, sending an array of changes that occured during this period. Its value is set by the platform admin.
                    """
     ,
       key: "maxRetries"
@@ -714,7 +721,7 @@ module.exports = exports =
       type: "array of Run objects"
       readOnly: true
       description: """
-                   Array of Run objects in inverse chronological order (newest first) which allows to monitor a webhook's health. Its length is set by the platform admin. 
+                   Array of Run objects in inverse chronological order (newest first) which allows to monitor a webhook's health. Its length is set by the platform admin.
                    """
     ].concat(changeTrackingProperties("webhook"))
     examples: [
@@ -809,19 +816,19 @@ module.exports = exports =
 
                  **Syntax:**
 
-                 The streams query must have at least an `any` or `all` property, with an optional `not`:  
+                 The streams query must have at least an `any` or `all` property, with an optional `not`:
 
                  ```json
                  { "any": ["streamA", "streamB"], "all": ["streamC"], "not": ["streamD"] }
                  ```
 
-                 - **any**: any streamId must match  
-                 - **all**: all streamIds must match  
-                 - **not**: none of the streamIds must match  
-                 
+                 - **any**: any streamId must match
+                 - **all**: all streamIds must match
+                 - **not**: none of the streamIds must match
+
                  The returned events will be those matching all of the provided criteria.
-                 
-                 **Example:**  
+
+                 **Example:**
 
                  To select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `private`:
 
@@ -833,10 +840,10 @@ module.exports = exports =
                  }
                  ```
 
-                 **Format:**  
-                 
-                 The JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call. 
-                 It can be sent as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.  
+                 **Format:**
+
+                 The JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call.
+                 It can be sent as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.
                  """
     examples: []
 

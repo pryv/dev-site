@@ -1,10 +1,11 @@
 generateId = require("cuid")
 timestamp = require("unix-timestamp")
+helpers = require("../helpers")
 
 idPersonal = generateId()
 idApp = generateId()
 
-module.exports =
+accesses =
   personal:
     id: idPersonal
     token: generateId()
@@ -73,7 +74,7 @@ module.exports =
     created: timestamp.now('-2m')
     createdBy: idApp
     modified: timestamp.now('-2m')
-    modifiedBy: idApp  
+    modifiedBy: idApp
     deleted: timestamp.now('-1m')
 
   info:
@@ -113,7 +114,7 @@ module.exports =
     permissions: [
       streamId: "inbox"
       level: "create-only"
-    , 
+    ,
       feature: "selfRevoke"
       setting: "forbidden"
     ]
@@ -122,3 +123,8 @@ module.exports =
     createdBy: idPersonal
     modified: timestamp.now('-1d')
     modifiedBy: idPersonal
+
+for key, a of accesses
+  a.apiEndpoint = helpers.getApiEndpoint(a.token, "user1")
+
+module.exports = accesses

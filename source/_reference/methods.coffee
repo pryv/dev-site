@@ -65,7 +65,7 @@ module.exports = exports =
           key: "apiEndpoint"
           type: "string"
           description: """
-                       The API endpoint containing the authorization token. See [App Guidelines](/guides/app-guidelines/).
+                       The API endpoint containing the authorization token. See [app guidelines](/guides/app-guidelines/).
                        """
         ,
           key: "token"
@@ -86,7 +86,7 @@ module.exports = exports =
           password: examples.users.one.password
           appId: "my-app-id"
         result:
-          apiEndpoint: "https://" + examples.accesses.personal.token + "@" + examples.users.one.username + ".pryv.me/"
+          apiEndpoint: helpers.getApiEndpoint(examples.accesses.personal.token, examples.users.one.username)
           token: examples.accesses.personal.token
           preferredLanguage: examples.users.one.language
       ]

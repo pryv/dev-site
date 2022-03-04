@@ -8,20 +8,20 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
   [method, path] = http.split(" ")
   if (server == null || server == undefined)
     server = "core"
-  
+
   request = if method != "GET" then "-X #{method} " else ""
   headers = ""
   queryString = ""
   basicAuth = ""
   if (server == "core")
     if (method == "POST" && (
-      path == "/auth/login" || 
-      path == "/account/request-password-reset" || 
-      path == "/account/reset-password" || 
+      path == "/auth/login" ||
+      path == "/account/request-password-reset" ||
+      path == "/account/reset-password" ||
       path == "/mfa/recover"
     ))
       headers = "-H 'Origin: https://sw.pryv.me' "
-    else 
+    else
       if (hasQueryAuth)
         queryString = "?auth={token}"
       else
@@ -48,7 +48,7 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
         queryString += "?#{k}=#{processedParams[k]}"
       else
         queryString += "&#{k}=#{processedParams[k]}"
-  
+
   call = ""
   if (path.startsWith("/users") && server == "core")
    call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"core-reg-curl\">{core-subdomain}</sapan>.pryv.me</span>#{path}#{queryString}\""
@@ -58,15 +58,17 @@ exports.getCurlCall = (params, http, server, hasQueryAuth) ->
     call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"api-reg-curl\">reg.pryv.me</span>#{path}#{queryString}\""
   else if (server == "admin")
     call = "curl -i #{request}#{headers}#{data}\"https://<span class=\"api-admin-curl\">lead.pryv.me</span>#{path}#{queryString}\""
-    
-  
+
+
   # use shell variable format to help with quick copy-paste
   return call.replace /({\w+?})/g, (match) ->
     "$#{match}"
 
-exports.getWebsocketCall = (params) -> 
+exports.getWebsocketCall = (params) ->
   return JSON.stringify(params)
 
-exports.getBatchBlock = (methodId, params) -> 
+exports.getBatchBlock = (methodId, params) ->
   return JSON.stringify({method: methodId, params: params}, null, 2)
 
+exports.getApiEndpoint = (token, username, domain = "pryv.me") ->
+  return "https://#{token}@#{username}.#{domain}/"

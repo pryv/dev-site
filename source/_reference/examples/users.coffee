@@ -1,5 +1,6 @@
 generateId = require("cuid")
 register = require("./register")
+helpers = require("../helpers")
 
 module.exports =
   one:
@@ -21,8 +22,8 @@ module.exports =
       dbDocuments: 355501
       attachedFiles: 1570208
     apiEndpoint:
-      pryvLab: "https://{personal-token}@user-123-abc.pryv.me/"
-      ownDomain: "https://{personal-token}@user-123-abc.${DOMAIN}/"
+      pryvLab: helpers.getApiEndpoint("{personal-token}", "user-123-abc")
+      ownDomain: helpers.getApiEndpoint("{personal-token}", "user-123-abc", "${DOMAIN}")
       dnsLess: "https://{personal-token}@${HOSTNAME}/user-123-abc"
   three:
     username: "user1"
