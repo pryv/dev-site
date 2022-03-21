@@ -8,16 +8,21 @@ withTOC: true
 
 This document describes how to generate a wildcard SSL certificate using [Let's Encrypt](https://letsencrypt.org/) and Pryv.io's DNS.
 
-The prerequisites for this are that you have [obtained a domain name](/customer-resources/pryv.io-setup/#obtain-a-domain-name) and [installed the Pryv.io platform](/customer-resources/pryv.io-setup/#set-the-platform-parameters).  
+As prerequisite, you must have…
+- [obtained a domain name](/customer-resources/pryv.io-setup/#obtain-a-domain-name),
+- and [installed the Pryv.io platform](/customer-resources/pryv.io-setup/#set-the-platform-parameters).
+
 If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
+
 
 ## Table of contents <!-- omit in toc -->
 
 1. [Automatic generation with Pryv.io 1.7.4 or later](#automatic-generation-with-pryvio-174-or-later)
    1. [DNS check failure: Error: Servers are not reachable](#dns-check-failure-error-servers-are-not-reachable)
-2. [Certbot Installation](#certbot-installation)
-3. [Generate certificate using DNS validation](#generate-certificate-using-dns-validation)
-4. [Reorganize SSL certificate files](#reorganize-ssl-certificate-files)
+2. [Manual generation with Pryv 1.7.3 or earlier](#manual-generation-with-pryv-173-or-earlier)
+   1. [Install Certbot](#install-certbot)
+   2. [Generate certificate using DNS validation](#generate-certificate-using-dns-validation)
+   3. [Reorganize SSL certificate files](#reorganize-ssl-certificate-files)
 
 
 ## Automatic generation with Pryv.io 1.7.4 or later
@@ -33,11 +38,15 @@ If you encounter this error, your network settings might prevent the `renewl-ssl
 You can simply skip this by modifying the `acme:skipDnsChecks` parameter in `config-leader/ssl/conf/ssl-certificate.yml`. You can also increase the value of the time allocated for the DNS container(s) to reboot by increasing the `acme:dnsRebootWaitMs` parameter. On machines with limited resources, you can increase this value to `10000` (10 seconds).
 
 
-## Certbot Installation
+## Manual generation with Pryv 1.7.3 or earlier
+
+Unless specified otherwise, the steps are to be performed on the single-node or `reg-master` machine, depending on your setup. Certbot can be installed and run anywhere, of course.
+
+### Install Certbot
 
 - [Reference](https://certbot.eff.org/lets-encrypt/ubuntuxenial-other)
 
-This procedure describes the commands for Ubuntu 16.04.  
+This procedure describes the commands for Ubuntu 16.04.
 If you are using another OS, go to the reference link, choose *software: None of the above* and your OS and follow the installation instructions.
 
 ```bash
@@ -48,8 +57,7 @@ sudo apt-get update
 sudo apt-get install certbot
 ```
 
-
-## Generate certificate using DNS validation
+### Generate certificate using DNS validation
 
 - [Reference](https://certbot.eff.org/docs/using.html#manual)
 
@@ -65,10 +73,10 @@ Make sure your DNS supports the Let's Encrypt CAA by verifying that it has this 
         description: "Certificate authority allowed to issue SSL certificates for this domain"
 ```
 
-If you are not familiar with this process, it is recommended to do a dry-run as the Let's Encrypt API has a call limit, which may block you in case of multiple failed attempts.  
+If you are not familiar with this process, it is recommended to do a dry-run as the Let's Encrypt API has a call limit, which may block you in case of multiple failed attempts.
 For this, append `--dry-run` to the command below. Once it works, simply repeat it without `--dry-run`.
 
-Launch the process using:  
+Launch the process using:
 
 ```bash
 certbot certonly --manual --preferred-challenges dns
@@ -90,16 +98,18 @@ Now, the CLI will ask you to set a certain key to the TXT Record `_acme-challeng
             description: "KEY"
 ```
 
-And reboot the follower and Pryv.io services:
+And reboot the follower and Pryv.io services, using either method:
 
-```bash
-./restart-config-follower
-./restart-pryv
-```
+- On each follower machine, run:
+  ```bash
+  ./restart-config-follower
+  ./restart-pryv
+  ```
+- From the admin panel web app, push 'Update'
 
-Verify that the key is querying the name servers.  
+Verify that the key is querying the name servers.
 
-If you are running a single-node platform or cluster with a single DNS, you can run:  
+If you are running a single-node platform or cluster with a single DNS, you can run:
 
 ```bash
 dig @reg.${DOMAIN} TXT _acme-challenge.${DOMAIN}
@@ -116,8 +126,7 @@ Once you get the right key, go back to the CLI and press ENTER.
 
 You should now have a certificate in `/etc/letsencrypt/live/${DOMAIN}/`.
 
-
-## Reorganize SSL certificate files
+### Reorganize SSL certificate files
 
 Rename the files to match the NGINX settings:
 
@@ -128,7 +137,7 @@ mv privkey.pem ${DOMAIN}-key.pem
 
 You might have to copy them as `live/` holds symbolic links.
 
-Then copy them into:  
+Then copy them into:
 
 ```bash
 ${PRYV_CONF_ROOT}/config-leader/data/${ROLE}/nginx/conf/secret/
@@ -145,15 +154,17 @@ OR
 - `reg-slave`
 - `static`
 
-Make sure that the certificates permissions are set correctly: 
+Make sure that the certificates permissions are set correctly:
 
 ```bash
-./ensure-permissions --ignore-redis
+./ensure-permissions[-${ROLE}] --ignore-redis
 ```
 
-And reboot the follower and pryv services: 
+And reboot the follower and pryv services, using either method:
 
-```bash
-./restart-config-follower
-./restart-pryv
-```
+- On each follower machine, run:
+  ```bash
+  ./restart-config-follower
+  ./restart-pryv
+  ```
+- From the admin panel web app, push 'Update'
