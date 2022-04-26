@@ -14,8 +14,6 @@
   "scripts": {
     "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"
   },
-  "dependencies": {
-  },
   "devDependencies": {
     "coffeescript": "^2.6.1",
     "cuid": "^2.1.8",

@@ -1,0 +1,87 @@
+#!/bin/sh
+set -e
+
+# Sets up the Pryv API documentation build environment
+
+# working dir fix
+scriptsFolder=$(cd $(dirname "$0"); pwd)
+cd $scriptsFolder/..
+
+# check for well known prereqs that might be missing
+hash node 2>&- || { echo >&2 "I require Node.js"; exit 1; }
+hash just 2>&- || { echo >&2 "I require 'just'"; exit 1; }
+
+# –––––––––––––----------------------------------------------------------------
+# Dependency: test-results repo copy
+# –––––––––––––----------------------------------------------------------------
+
+if [ ! -d dependencies/test-results ]
+then
+  echo "
+  test-results dependency: setting up repo copy...
+  "
+  git clone git@github.com:pryv/test-results-pryv.io.git dependencies/test-results
+fi
+
+echo "
+test-results dependency: checking out branch 'master'...
+"
+cd dependencies/test-results
+git checkout master
+git pull
+yarn install
+cd $scriptsFolder/..
+
+# –––––––––––––----------------------------------------------------------------
+# Dependency: service-core repo copy
+# –––––––––––––----------------------------------------------------------------
+
+if [ ! -d dependencies/core ]
+then
+  echo "
+  service-core dependency: setting up repo copy...
+  "
+  git clone git@github.com:pryv/service-core.git dependencies/core
+fi
+
+coreBranch="master"
+
+echo "
+service-core dependency: checking out branch '$coreBranch'...
+"
+
+cd dependencies/core
+git checkout $coreBranch
+git pull
+
+echo "
+service-core dependency: installing node modules if necessary...
+"
+just install-stable
+
+echo "
+service-core dependency: compiling...
+"
+just compile-release
+
+# –––––––––––––----------------------------------------------------------------
+# Finally setup dev site build
+# –––––––––––––----------------------------------------------------------------
+
+cd $scriptsFolder/..
+
+# install this repository's dependencies
+npm install
+
+# setup build folder
+if [ ! -d build ]
+then
+  echo "Setting up 'build' folder for publishing to GitHub pages."
+  git clone git@github.com:pryv/pryv.github.io.git build
+fi
+
+echo "
+
+If no errors were listed above, the setup is complete.
+See the README for more info on writing and publishing.
+"

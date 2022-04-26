@@ -15,8 +15,8 @@ _help:
 # –––––––––––––----------------------------------------------------------------
 
 # Set up the dev environment
-setup-dev-env:
-    scripts/setup-dev-env
+setup:
+    scripts/setup
 
 # Install node modules afresh
 install *params: clean
