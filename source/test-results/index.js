@@ -1,5 +1,5 @@
 // for loading .coffee files
-require('coffee-script').register();
+require('coffeescript').register();
 const fs = require('fs');
 const path = require('path');
 
@@ -14,7 +14,7 @@ function loadTests() {
   };
   Object.keys(tests).forEach(service => {
 
-    tests[service].forEach(version => { 
+    tests[service].forEach(version => {
       result.sections.push({
         id: service + ' ' + version.version,
         title: service + ' ' + version.version,
@@ -33,5 +33,3 @@ exports.sections = [
 
 exports.version = '0.0.1';
 exports.helpers = require('./helpers.coffee');
-
-

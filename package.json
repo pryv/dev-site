@@ -12,9 +12,7 @@
     "documentation"
   ],
   "scripts": {
-    "webserver": "node node_modules/rec-la/webserver/main.js ./build",
-    "openapi": "cd open-api ; yarn transpile; yarn export",
-    "build": "make build"
+    "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"
   },
   "dependencies": {
   },

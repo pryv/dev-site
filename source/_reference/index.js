@@ -1,5 +1,5 @@
 // for loading .coffee files
-require('coffee-script').register();
+require('coffeescript').register();
 
 exports.sections = [
   require('./basics.coffee'),
@@ -13,4 +13,3 @@ exports.helpers = require('./helpers.coffee');
 
 exports.system = require('./system.coffee');
 exports.admin = require('./admin.coffee');
-

@@ -7,25 +7,25 @@ scriptsFolder=$(cd $(dirname "$0"); pwd)
 cd $scriptsFolder/..
 
 # check for well known prereqs that might be missing
-hash git 2>&- || { echo >&2 "I require git."; exit 1; }
-hash yarn 2>&- || { echo >&2 "I require node and yarn."; exit 1; }
+hash node 2>&- || { echo >&2 "I require Node.js"; exit 1; }
+hash just 2>&- || { echo >&2 "I require 'just'"; exit 1; }
 
 
-# resolve test-results dependency
+# setup test-results repo copy
 if [ ! -d dependencies/test-results ]
 then
   echo "Setting up 'source/test-results/_source' folder for test-results dependency."
   git clone git@github.com:pryv/test-results-pryv.io.git dependencies/test-results
 fi
 
-# ensure service-core dependency is up-to-date
+# ensure test-results repo copy is up-to-date
 cd dependencies/test-results
 git checkout master
 git pull
 yarn install
 cd $scriptsFolder/..
 
-# resolve service-core dependency
+# setup service-core repo copy
 if [ ! -d dependencies/core ]
 then
   echo "Setting up 'source/event-types/_source' folder for service-core dependency."
@@ -36,20 +36,20 @@ coreBranch="master"
 
 echo "Service-core dependency is targeting the following branch: $coreBranch"
 
-# ensure service-core dependency is up-to-date
+# ensure service-core repo copy is up-to-date
 cd dependencies/core
 git checkout $coreBranch
 git pull
 echo "Installing Node modules from 'package.json' if necessary."
-yarn install
+just install-stable
 echo "Creating dist."
-yarn release
+just compile-release
 
 
 cd $scriptsFolder/..
 
 # install this repository's dependencies
-yarn install
+just install
 
 # setup build folder
 if [ ! -d build ]

@@ -1,5 +1,5 @@
 // for loading .coffee files
-require('coffee-script').register();
+require('coffeescript').register();
 const yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
