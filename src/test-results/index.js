@@ -1,11 +1,7 @@
 // for loading .coffee files
 require('coffeescript').register();
-const fs = require('fs');
-const path = require('path');
 
-
-
-function loadTests() {
+function loadTests () {
   const tests = require('../../dependencies/test-results');
   const result = {
     id: 'services',
@@ -13,15 +9,13 @@ function loadTests() {
     sections: []
   };
   Object.keys(tests).forEach(service => {
-
     tests[service].forEach(version => {
       result.sections.push({
         id: service + ' ' + version.version,
         title: service + ' ' + version.version,
         version: version
       });
-    })
-
+    });
   });
   return result;
 }

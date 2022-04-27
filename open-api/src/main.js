@@ -11,9 +11,9 @@ const system = require('../rendered/system');
 const systemMethods = system.sections.find(s => s.id === 'api-methods');
 
 const metadata = require('./metadata');
-const metadata_open = require('./metadata_open');
-const metadata_admin = require('./metadata_admin');
-const metadata_system = require('./metadata_system');
+const metadataOpen = require('./metadata-open');
+const metadataAdmin = require('./metadata-admin');
+const metadataSystem = require('./metadata-system');
 const removeNulls = require('./cleanup').removeNulls;
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
@@ -25,21 +25,21 @@ const OUTPUT_FILE_PUBLIC_ADMIN = '../src/open-api/3.0/api_admin.yaml';
 const OUTPUT_FILE_SYSTEM = 'open-api-format/api_system.yaml';
 const OUTPUT_FILE_PUBLIC_SYSTEM = '../src/open-api/3.0/api_system.yaml';
 
-let api_open = metadata_open;
-api_open.paths = {};
-let api_enterprise = metadata;
-api_enterprise.paths = {};
-let api_admin = metadata_admin;
-api_admin.paths = {};
-let api_system = metadata_system;
-api_system.paths = {};
+let apiOpen = metadataOpen;
+apiOpen.paths = {};
+let apiEnterprise = metadata;
+apiEnterprise.paths = {};
+let apiAdmin = metadataAdmin;
+apiAdmin.paths = {};
+let apiSystem = metadataSystem;
+apiSystem.paths = {};
 
 // SCHEMAS (DATA STRUCTURES)
-function createSchemas(dataStruct) {
-  let schemas = {};
+function createSchemas (dataStruct) {
+  const schemas = {};
 
   dataStruct.sections.forEach(ds => {
-    let struct = {};
+    const struct = {};
     if (ds.properties != null) {
       struct.type = 'object';
       struct.properties = {};
@@ -48,8 +48,8 @@ function createSchemas(dataStruct) {
           uniqueItems: p.unique,
           readOnly: p.readOnly,
           required: p.optional ? null : true,
-          description: p.description,
-        }
+          description: p.description
+        };
         _.merge(struct.properties[p.key], parseType(p));
       });
     }
@@ -70,45 +70,44 @@ function createSchemas(dataStruct) {
   return schemas;
 }
 
-api_enterprise.components = {
-  schemas: createSchemas(dataStructureRoot),
+apiEnterprise.components = {
+  schemas: createSchemas(dataStructureRoot)
 };
-api_open.components = {
-  schemas: createSchemas(dataStructureRoot),
+apiOpen.components = {
+  schemas: createSchemas(dataStructureRoot)
 };
-api_admin.components = {
-  schemas: createSchemas(adminDataStructure),
+apiAdmin.components = {
+  schemas: createSchemas(adminDataStructure)
 };
-api_system.components = {
-  schemas: {},
+apiSystem.components = {
+  schemas: {}
 };
 
-buildApi(methodsRoot, api_open, true);
-api_open = removeNulls(api_open);
-buildApi(methodsRoot, api_enterprise, false);
-api_enterprise = removeNulls(api_enterprise);
-buildApi(adminMethods, api_admin, false);
-api_admin = removeNulls(api_admin);
-buildApi(systemMethods, api_system, false);
-api_system = removeNulls(api_system);
+buildApi(methodsRoot, apiOpen, true);
+apiOpen = removeNulls(apiOpen);
+buildApi(methodsRoot, apiEnterprise, false);
+apiEnterprise = removeNulls(apiEnterprise);
+buildApi(adminMethods, apiAdmin, false);
+apiAdmin = removeNulls(apiAdmin);
+buildApi(systemMethods, apiSystem, false);
+apiSystem = removeNulls(apiSystem);
 
 writeToOutputs();
 
-function translateSchemaLink(type) {
+function translateSchemaLink (type) {
   return '#/components/schemas/' + type;
 }
 
-function parseType(property) {
-
+function parseType (property) {
   let typeToMerge = {};
-  let struct = parseDataStructName(property.type, 1);
+  const struct = parseDataStructName(property.type, 1);
 
   // array
   if (isArray(property.type)) {
     typeToMerge = {
       type: 'array',
       items: {}
-    }
+    };
     const type = parseArrayType(property.type);
     if (struct) {
       // referenced component
@@ -124,12 +123,11 @@ function parseType(property) {
       type: 'string',
       enum: parseEnum(property.type)
     };
-
   } else {
     if (struct) {
       // referenced component
       typeToMerge = {
-        '$ref': translateSchemaLink(struct)
+        $ref: translateSchemaLink(struct)
       };
     } else {
       // primary type
@@ -139,22 +137,22 @@ function parseType(property) {
   return typeToMerge;
 }
 
-function isEnum(type) {
+function isEnum (type) {
   return type.indexOf('|') >= 0;
 }
 
-function parseEnum(type) {
+function parseEnum (type) {
   const enums = type.split('|');
   return enums.map(e => {
     return e.substring(1, e.length - 1);
   });
 }
 
-function parseArrayType(type) {
+function parseArrayType (type) {
   return parseBy(type, ' ', 2, 3);
 }
 
-function isArray(type) {
+function isArray (type) {
   return type.startsWith('array of');
 }
 
@@ -164,38 +162,37 @@ function isArray(type) {
  * - returns the data structure id if yes
  * - removes endPad letters from the end of the string. This is useful when it ends by ")"
  */
-function parseDataStructName(text, endPad) {
+function parseDataStructName (text, endPad) {
   const token = '#data-structure-';
-  let tokenLength = token.length;
+  const tokenLength = token.length;
   const startIndex = text.indexOf(token);
   if (startIndex < 0) return false;
 
-  let schemaIndex = startIndex + tokenLength;
+  const schemaIndex = startIndex + tokenLength;
   const schema = text.substring(schemaIndex, text.length - endPad);
   return schema;
 }
 
 // METHODS
 
-function toBeSkipped(methodId) {
+function toBeSkipped (methodId) {
   switch (methodId) {
     case 'mfa.login':
     case 'hfs.create':
     case 'hfs.update':
     case 'hfs.delete':
       return true;
-      break;
     default:
       return false;
   }
 }
 
-function buildApi(methods, api, isOpen) {
+function buildApi (methods, api, isOpen) {
   methods.sections.forEach(section => {
     if (section.entrepriseOnly && isOpen) {
       return;
     }
-    function helper(method) {
+    function helper (method) {
       const path = parseBy(method.http, ' ', 1);
       if (api.paths[path] == null) {
         api.paths[path] = {};
@@ -211,25 +208,25 @@ function buildApi(methods, api, isOpen) {
         description: method.description,
         operationId: method.id,
         parameters: [],
-        responses: [],
+        responses: []
       };
 
-      function isGetOrDelete(verb) {
-        return verb == 'get' || verb == 'delete';
+      function isGetOrDelete (verb) {
+        return verb === 'get' || verb === 'delete';
       }
-      function isPostorPut(verb) {
-        return verb == 'post' || verb == 'put';
+      function isPostorPut (verb) {
+        return verb === 'post' || verb === 'put';
       }
-      function hasParams(method) {
+      function hasParams (method) {
         return method.params != null && method.params.properties != null;
       }
-      function hasSchemaParams(method) {
+      function hasSchemaParams (method) {
         return method.params != null && method.params.description != null;
       }
-      function hasResult(method) {
+      function hasResult (method) {
         return method.result != null;
       }
-      function hasError(method) {
+      function hasError (method) {
         return method.errors != null;
       }
       // handle body params
@@ -247,8 +244,8 @@ function buildApi(methods, api, isOpen) {
               }
             }
           }
-        }
-      };
+        };
+      }
 
       // handle query params
       if (hasParams(method) && isGetOrDelete(httpMethod)) {
@@ -257,13 +254,13 @@ function buildApi(methods, api, isOpen) {
       }
 
       // handle path params
-      const pathParamsRaw = extractPathParams(path)
+      const pathParamsRaw = extractPathParams(path);
       const pathParams = [];
       pathParamsRaw.forEach(p => {
         pathParams.push({
-          name: p,
-        })
-      })
+          name: p
+        });
+      });
 
       api.paths[path][httpMethod].parameters = api.paths[path][httpMethod].parameters.concat(pathParams);
 
@@ -272,15 +269,14 @@ function buildApi(methods, api, isOpen) {
         if (!Array.isArray(method.result)) {
           method.result = [method.result];
         }
-        api.paths[path][httpMethod].responses = extractResult(method)
+        api.paths[path][httpMethod].responses = extractResult(method);
       }
       // handle responses - errors
       if (hasError(method)) {
-        api.paths[path][httpMethod].responses = api.paths[path][httpMethod].responses.concat(extractError(method))
+        api.paths[path][httpMethod].responses = api.paths[path][httpMethod].responses.concat(extractError(method));
       }
       // make responses unique per HTTP status (currently overwriting previous responses)
       api.paths[path][httpMethod].responses = responsesPerStatus(api.paths[path][httpMethod].responses);
-
 
       // special cases
       switch (path) {
@@ -294,43 +290,36 @@ function buildApi(methods, api, isOpen) {
             },
             required: true
           });
-          const props = api.paths[path][httpMethod].requestBody.content[
-            'application/json'
-          ].schema.properties;
           break;
       }
     }
     if (!section.sections) {
-      helper(section)
-    }
-    else {
+      helper(section);
+    } else {
       section.sections.forEach(method => {
         helper(method);
       });
     }
-
   });
 }
 
-
-function responsesPerStatus(responses) {
+function responsesPerStatus (responses) {
   const objectResponses = {};
   let status;
   responses.forEach(r => {
     status = Object.keys(r)[0];
     objectResponses[status] = r[status];
-  })
+  });
   return objectResponses;
 }
 
-function extractError(method) {
-
+function extractError (method) {
   const errors = method.errors;
   const responses = [];
   if (!errors) return responses;
 
   errors.forEach(e => {
-    const response = {}
+    const response = {};
     response[e.http] = {
       description: e.key
     };
@@ -339,13 +328,12 @@ function extractError(method) {
   return responses;
 }
 
-function extractResult(method) {
-
-  const result = method.result
+function extractResult (method) {
+  const result = method.result;
   const responses = [];
   result.forEach(r => {
     const status = parseBy(r.http, ' ', 0);
-    const response = {}
+    const response = {};
     response[status] = {};
 
     if (r.description) {
@@ -356,14 +344,14 @@ function extractResult(method) {
         'application/json': {
           schema: arrayOrNot(r.properties)
         }
-      }
+      };
     }
     responses.push(response);
   });
 
   return responses;
 
-  function arrayOrNot(props) {
+  function arrayOrNot (props) {
     const schemaItems = [];
     props.forEach(p => {
       schemaItems.push(arrayOrNotSingle(p.type));
@@ -374,14 +362,14 @@ function extractResult(method) {
 
 // if array, type=array, type is extracted
 // if not array, just returns $ref
-function arrayOrNotSingle(type) {
-  let schema = {};
+function arrayOrNotSingle (type) {
+  const schema = {};
   if (type.startsWith('array of')) {
     schema.type = 'array';
     schema.items = parseBy(type, ' ', 2, 3);
   } else {
     if (parseDataStructName(type, 1)) {
-      schema['$ref'] = parseDataStructName(type, 1) ? translateSchemaLink(parseDataStructName(type, 1)) : type
+      schema.$ref = parseDataStructName(type, 1) ? translateSchemaLink(parseDataStructName(type, 1)) : type;
     } else {
       schema.type = type;
     }
@@ -389,14 +377,14 @@ function arrayOrNotSingle(type) {
   return schema;
 }
 
-function parseBy(string, sep, pos, end) {
+function parseBy (string, sep, pos, end) {
   if (end) {
     return string.split(sep).splice(pos, end + 1).join(' ');
   }
   return string.split(sep)[pos];
 }
 
-function extractQueryParams(properties) {
+function extractQueryParams (properties) {
   const params = [];
   properties.forEach(p => {
     if (p.key === 'id') return;
@@ -405,13 +393,13 @@ function extractQueryParams(properties) {
       name: p.key,
       description: p.description,
       required: !p.optional,
-      in: 'query',
-    })
+      in: 'query'
+    });
   });
   return params;
 }
 
-function extractBodyParams(params) {
+function extractBodyParams (params) {
   const requestBody = {
     content: {
       'application/json': {
@@ -439,7 +427,7 @@ function extractBodyParams(params) {
   return requestBody;
 }
 
-function extractPathParams(path) {
+function extractPathParams (path) {
   // /events/{id}
   const params = [];
   let indexStart;
@@ -452,28 +440,13 @@ function extractPathParams(path) {
   return params;
 }
 
-function extractResponses(path) {
-  const responses = [];
-  responses.push({
-    'methods.result.http':  //
-      headers = properties.forEach(p => {
-        params.push({
-          //p.key:
-          //description: p.description,
-          //schema: p.type,
-        });
-      }),
-  });
-  return responses;
-}
-
-function writeToOutputs() {
-  fs.writeFileSync(OUTPUT_FILE, yaml.stringify(api_enterprise));
-  fs.writeFileSync(OUTPUT_FILE_PUBLIC, yaml.stringify(api_enterprise));
-  fs.writeFileSync(OUTPUT_FILE_OPEN, yaml.stringify(api_open));
-  fs.writeFileSync(OUTPUT_FILE_PUBLIC_OPEN, yaml.stringify(api_open));
-  fs.writeFileSync(OUTPUT_FILE_ADMIN, yaml.stringify(api_admin));
-  fs.writeFileSync(OUTPUT_FILE_PUBLIC_ADMIN, yaml.stringify(api_admin));
-  fs.writeFileSync(OUTPUT_FILE_SYSTEM, yaml.stringify(api_system));
-  fs.writeFileSync(OUTPUT_FILE_PUBLIC_SYSTEM, yaml.stringify(api_system));
+function writeToOutputs () {
+  fs.writeFileSync(OUTPUT_FILE, yaml.stringify(apiEnterprise));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC, yaml.stringify(apiEnterprise));
+  fs.writeFileSync(OUTPUT_FILE_OPEN, yaml.stringify(apiOpen));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC_OPEN, yaml.stringify(apiOpen));
+  fs.writeFileSync(OUTPUT_FILE_ADMIN, yaml.stringify(apiAdmin));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC_ADMIN, yaml.stringify(apiAdmin));
+  fs.writeFileSync(OUTPUT_FILE_SYSTEM, yaml.stringify(apiSystem));
+  fs.writeFileSync(OUTPUT_FILE_PUBLIC_SYSTEM, yaml.stringify(apiSystem));
 }

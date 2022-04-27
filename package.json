@@ -14,7 +14,7 @@
   "scripts": {
     "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"
   },
-  "devDependencies": {
+  "dependencies": {
     "coffeescript": "^2.7.0",
     "cuid": "^2.1.8",
     "js-yaml": "^4.1.0",
@@ -36,13 +36,16 @@
     "metalsmith-stylus": "^3.0.0",
     "metalsmith-watch": "^1.0.3",
     "pryv-style": "git://github.com/pryv/style.git",
-    "rec-la": "^0.2.1",
+    "rec.la": "^0.3.0",
+    "semistandard": "^16.0.1",
     "unix-timestamp": "^1.0.2"
   },
   "engines": {
     "node": "16.x"
   },
-  "dependencies": {
-    "rec.la": "^0.3.0"
+  "semistandard": {
+    "ignore": [
+      "src/assets/**"
+    ]
   }
 }

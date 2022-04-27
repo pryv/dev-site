@@ -5,6 +5,7 @@ dev-site.iml
 dist
 node_modules
 npm-debug.log
+open-api/transpiled/**/*.js
 out
 src/event-types/extras.json
 src/event-types/hierarchical.json
