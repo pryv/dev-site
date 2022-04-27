@@ -53,7 +53,7 @@ then
   git clone git@github.com:pryv/service-core.git dependencies/core
 fi
 
-coreBranch="release/1.8"
+coreBranch="master"
 
 echo ""
 echo "# service-core dependency: checking out branch '$coreBranch'..."
