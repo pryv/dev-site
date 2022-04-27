@@ -1,5 +1,4 @@
 const metalsmith = require('metalsmith')(__dirname);
-const msCollections = require('metalsmith-collections');
 const msDefine = require('metalsmith-define');
 const msHeadingsId = require('metalsmith-headings-identifier');
 const msIgnore = require('metalsmith-ignore');
@@ -34,12 +33,6 @@ metalsmith
   .use(msDefine(globals))
   .use(msJSON({ key: 'contents' }))
   .use(msInclude())
-  .use(msCollections({
-    appAccessSections: {
-      pattern: 'app-access/_sections/*.md',
-      sortBy: 'sectionOrder'
-    }
-  }))
   .use(msPug({ useMetadata: true }))
   .use(msMarkdownIt(markdownItOptions))
   .use(msStylus({
@@ -58,7 +51,6 @@ metalsmith
   .use(msIgnore([
     '_reference/**',
     '_templates/*',
-    'app-access/_sections/*',
     'event-types/_source/*',
     'functional-specifications/**',
     'test-results/**'
