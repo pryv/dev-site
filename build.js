@@ -20,16 +20,16 @@ const markdownIt = require('markdown-it')(markdownItOptions);
 
 const globals = {
   _: require('lodash'),
-  apiReference: require('./source/_reference'),
-  functionalSpecifications: require('./source/functional-specifications'),
-  testResults: require('./source/test-results'),
-  helpers: require('./source/_templates/helpers'),
+  apiReference: require('./src/_reference'),
+  functionalSpecifications: require('./src/functional-specifications'),
+  testResults: require('./src/test-results'),
+  helpers: require('./src/_templates/helpers'),
   markdown: (string) => markdownIt.render(string)
 };
 
 metalsmith
-  .source('./source')
-  .destination('./build')
+  .source('./src')
+  .destination('./dist')
   .clean(false) // to keep .git, CNAME etc.
   .use(msDefine(globals))
   .use(msJSON({ key: 'contents' }))
@@ -48,7 +48,7 @@ metalsmith
     compress: true
   }))
   .use(msLayouts({
-    directory: 'source/_templates',
+    directory: 'src/_templates',
     engineOptions: { useMetadata: true }
   }))
   .use(msHeadingsId({
@@ -61,7 +61,7 @@ metalsmith
     'app-access/_sections/*',
     'event-types/_source/*',
     'functional-specifications/**',
-    'test-results/**', 'test-results/_source/**', 'test-results/_source/.git'
+    'test-results/**'
   ]))
   .use(msPermalinks({
     // section id is optional in metadata

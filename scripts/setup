@@ -17,15 +17,15 @@ hash just 2>&- || { echo >&2 "I require 'just'"; exit 1; }
 
 if [ ! -d dependencies/test-results ]
 then
-  echo "
-  test-results dependency: setting up repo copy...
-  "
+  echo ""
+  echo "# test-results dependency: setting up repo copy..."
+  echo ""
   git clone git@github.com:pryv/test-results-pryv.io.git dependencies/test-results
 fi
 
-echo "
-test-results dependency: checking out branch 'master'...
-"
+echo ""
+echo "# test-results dependency: checking out branch 'master'..."
+echo ""
 cd dependencies/test-results
 git checkout master
 git pull
@@ -38,30 +38,30 @@ cd $scriptsFolder/..
 
 if [ ! -d dependencies/core ]
 then
-  echo "
-  service-core dependency: setting up repo copy...
-  "
+  echo ""
+  echo "# service-core dependency: setting up repo copy..."
+  echo ""
   git clone git@github.com:pryv/service-core.git dependencies/core
 fi
 
-coreBranch="master"
+coreBranch="release/1.8"
 
-echo "
-service-core dependency: checking out branch '$coreBranch'...
-"
+echo ""
+echo "# service-core dependency: checking out branch '$coreBranch'..."
+echo ""
 
 cd dependencies/core
 git checkout $coreBranch
 git pull
 
-echo "
-service-core dependency: installing node modules if necessary...
-"
+echo ""
+echo "# service-core dependency: installing node modules if necessary..."
+echo ""
 just install-stable
 
-echo "
-service-core dependency: compiling...
-"
+echo ""
+echo "# service-core dependency: compiling..."
+echo ""
 just compile-release
 
 # –––––––––––––----------------------------------------------------------------
@@ -70,18 +70,21 @@ just compile-release
 
 cd $scriptsFolder/..
 
-# install this repository's dependencies
+echo ""
+echo "# Installing node modules if necessary..."
+echo ""
 npm install
 
-# setup build folder
-if [ ! -d build ]
+# setup `dist/` folder
+if [ ! -d dist ]
 then
-  echo "Setting up 'build' folder for publishing to GitHub pages."
-  git clone git@github.com:pryv/pryv.github.io.git build
+  echo ""
+  echo "# Setting up 'dist/' folder for publishing to GitHub pages..."
+  echo ""
+  git clone git@github.com:pryv/pryv.github.io.git dist
 fi
 
-echo "
-
-If no errors were listed above, the setup is complete.
-See the README for more info on writing and publishing.
-"
+echo ""
+echo "If no errors were listed above, the setup is complete."
+echo "See the README for more info on writing and publishing."
+echo ""

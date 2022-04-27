@@ -1,4 +1,4 @@
-const version = require('../../source/_reference/index').version;
+const version = require('../../src/_reference/index').version;
 module.exports = {
     openapi: '3.0.0',
     info: {

@@ -4,7 +4,7 @@ export PATH := "./node_modules/.bin:" + env_var('PATH')
 typesBaseURL := "https://raw.github.com/pryv/data-types/master/dist/"
 eventTypesURL := typesBaseURL + "event-types.json"
 flatTypesURL := typesBaseURL + "flat.json"
-typesSourceTarget := "./source/event-types/_source"
+typesSourceTarget := "./src/event-types/_source"
 
 # Default: display available recipes
 _help:
@@ -18,24 +18,11 @@ _help:
 setup:
     scripts/setup
 
-# Install node modules afresh
-install *params: clean
-    npm install {{params}}
-
-# Clean up node modules & build
-clean:
-    rm -rf node_modules
-    rm -rf build/*
-
-# Install node modules strictly as specified (typically for CI)
-install-stable:
-    npm ci
-
 # –––––––––––––----------------------------------------------------------------
 # Build & related
 # –––––––––––––----------------------------------------------------------------
 
-# Build the site from source
+# Build the site from `src/` into `dist/`
 build:
     node build.js
 
@@ -57,13 +44,23 @@ retrieve-tests:
     @echo ""
     @cd dependencies/test-results && git pull
 
-# Build & publish on `pryv.github.io` (a.k.a. `api.pryv.com`)
-publish: retrieve-types retrieve-tests build
-    @cd build && git add . && git add -u . && git commit -m "Updated generated files" && git push
+# Clean up the contents of `dist/`
+clean:
+    rm -rf dist/*
 
-# Start a `rec.la` web server on `build/`
+# Build & publish on `pryv.github.io` (a.k.a. `api.pryv.com`)
+publish: retrieve-types retrieve-tests clean build
+    #!/bin/sh
+    set -e
+    cd dist
+    git add .
+    git add -u .
+    git commit -m "Updated generated files"
+    git push
+
+# Start a `rec.la` web server on `dist/`
 serve:
-    node node_modules/rec-la/webserver/main.js ./build
+    node node_modules/rec-la/webserver/main.js ./dist
 
 # –––––––––––––----------------------------------------------------------------
 # OpenAPI definitions
@@ -78,14 +75,16 @@ _open-api-install:
 
 # Transpile source into `open-api/transpiled/` (code) and `open-api/rendered/` (JSON)
 _open-api-transpile:
-    #!/usr/bin/env sh
+    #!/bin/sh
+    set -e
     cd open-api
-    coffee -c -o transpiled ../source/_reference
+    coffee -c -o transpiled ../src/_reference
     find transpiled \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "" -e "s/\.coffee/\.js/g"
     node src/render
 
 # Export to `open-api/open-api-format/`
 _open-api-export:
-    #!/usr/bin/env sh
+    #!/bin/sh
+    set -e
     cd open-api
     node src/main

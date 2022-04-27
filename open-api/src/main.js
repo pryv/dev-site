@@ -17,13 +17,13 @@ const metadata_system = require('./metadata_system');
 const removeNulls = require('./cleanup').removeNulls;
 
 const OUTPUT_FILE = 'open-api-format/api.yaml';
-const OUTPUT_FILE_PUBLIC = '../source/open-api/3.0/api.yaml';
+const OUTPUT_FILE_PUBLIC = '../src/open-api/3.0/api.yaml';
 const OUTPUT_FILE_OPEN = 'open-api-format/api_open.yaml';
-const OUTPUT_FILE_PUBLIC_OPEN = '../source/open-api/3.0/api_open.yaml';
+const OUTPUT_FILE_PUBLIC_OPEN = '../src/open-api/3.0/api_open.yaml';
 const OUTPUT_FILE_ADMIN = 'open-api-format/api_admin.yaml';
-const OUTPUT_FILE_PUBLIC_ADMIN = '../source/open-api/3.0/api_admin.yaml';
+const OUTPUT_FILE_PUBLIC_ADMIN = '../src/open-api/3.0/api_admin.yaml';
 const OUTPUT_FILE_SYSTEM = 'open-api-format/api_system.yaml';
-const OUTPUT_FILE_PUBLIC_SYSTEM = '../source/open-api/3.0/api_system.yaml';
+const OUTPUT_FILE_PUBLIC_SYSTEM = '../src/open-api/3.0/api_system.yaml';
 
 let api_open = metadata_open;
 api_open.paths = {};
@@ -458,7 +458,7 @@ function extractResponses(path) {
     'methods.result.http':  //
       headers = properties.forEach(p => {
         params.push({
-          //p.key: 
+          //p.key:
           //description: p.description,
           //schema: p.type,
         });

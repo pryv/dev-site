@@ -8,29 +8,29 @@ Source content for api.pryv.com (API reference, recommendations, guides, etc.)
 Prerequisites: [Node.js](https://nodejs.org/en/download/) 16, [just](https://github.com/casey/just#installation)
 
 Then:
-1. `just setup` to install node modules, setup `build/` as well as repository copies of `service-core` and `test-results` (see `scrips/setup` for details)
-2. `just build` for the initial compilation into `build/`
+1. `just setup` to install node modules and setup `dist/` as well as repository copies of `service-core` and `test-results` (see `scripts/setup` for details)
+2. `just build` for the initial compilation into `dist/`
 
 Running `just` with no argument displays the available commands (defined in `justfile`).
 
 
 ## Build & publish
 
-- `just build` generates the website from the source into the `build` folder
-- `just watch` watches the source folder and rebuilds on changes
-- `just clean` cleans up the `build` folder (not done by build/watch)
+- `just build` generates the website from `src/` into `dist/`
+- `just watch` watches `src/` and rebuilds on changes
+- `just clean` cleans up `dist/` (not done by build/watch)
 - `just publish` builds and publishes the website
 - `just serve` to run the site locally on [https://l.rec.la:4443/](https://l.rec.la:4443/)
 
-**Note:** data types are sourced from repo [pryv/data-types](https://github.com/pryv/data-types) on `just retrieve-types` and `just publish` into `source/event-types/_source`.
+**Note:** data types are sourced from repo [pryv/data-types](https://github.com/pryv/data-types) on `just retrieve-types` and `just publish` into `src/event-types/_source`.
 
 **Note:** test results are sourced from repo [pryv/test-results-pryv.io](https://github.com/pryv/test-results-pryv.io) on `just retrieve-tests` and `just publish` into `dependencies/test-results`.
 
 
 ## Don't forget
 
-- [API version bump](/source/_reference/index.js#L11)
-- [Change log](/source/change-log.md)
+- [API version bump](/src/_reference/index.js#L11)
+- [Change log](/src/change-log.md)
 
 
 ## OpenAPI 3.0 definitions
