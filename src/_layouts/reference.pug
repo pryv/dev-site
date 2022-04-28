@@ -1,33 +1,5 @@
 extends layout
-
-mixin h1(string)
-  if string
-    | !{markdown('# ' + string)}
-
-mixin h2(string)
-  if string
-    | !{markdown('## ' + string)}
-
-mixin h3(string)
-  if string
-    | !{markdown('### ' + string)}
-
-mixin h4(string)
-  if string
-    | !{markdown('#### ' + string)}
-
-mixin h5(string)
-  if string
-    | !{markdown('##### ' + string)}
-
-mixin intro(string)
-  if string
-    .intro
-      | !{markdown(string)}
-
-mixin text(string)
-  if string
-    | !{markdown(string)}
+include includes/mixins
 
 mixin methodId(id)
   if id
@@ -50,67 +22,12 @@ mixin adminTag(adminTag)
     span(onclick="location='/reference-system/#admin'").admin-tag
       span.label(title="Admin Only") A
 
-mixin http(http, httpOnly, server)
-  if http
-    span.http
-      span.label= httpOnly ? 'HTTP-only' : 'HTTP'
-      span.label-value
-        if http.code
-          code !{http.code}
-        else if http.text
-          - var output = markdown(http.text)
-          -// YES, HACK
-          span !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
-        else
-          if server
-            code !{http.replace(' ', ' <a href="/reference-system/#api-endpoint">{'+server+'}</a>')}
-          else
-            code !{http}
-
-mixin typeText(string)
-  if string
-    - var output = markdown(string)
-    -// YES, HACK
-    span.type !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
-
-mixin labelValue(label, cssClass, value)
-  if value
-    span(class='label label-default ' + cssClass)
-      | !{label + (typeof(value) === 'string' ? ' ' + value : '')}
-
-mixin properties(properties)
-  if properties
-    table.definitions
-      each prop in properties
-        tr
-          th
-            if prop.key instanceof Array
-              - var i = 0
-              each key in prop.key
-                code !{key}
-                if i < prop.key.length - 1
-                  | |
-                - i++
-            else
-              code !{prop.key}
-          td
-            .header
-              -// TODO make type specification flexible
-              +typeText(prop.type)
-              +labelValue('unique', 'unique', prop.unique)
-              +labelValue('optional', 'optional', prop.optional)
-              +labelValue('read-only', 'read-only', prop.readOnly)
-              +http(prop.http)
-            .description !{markdown(prop.description)}
-            +properties(prop.properties)
-
 mixin result(result)
   if result
     +h4(result.title || 'Result')
     +http(result.http)
     +text(result.description)
     +properties(result.properties)
-
 
 mixin exampleContent(content)
   if content
@@ -152,7 +69,7 @@ mixin examples(examples, settings)
                       API-Version: !{apiReference.version}
 
                       !{helpers.printJSON(ex.result)}
-             
+
               if settings.id
                 .tab-pane.sockets
                   if settings.httpOnly
@@ -171,7 +88,7 @@ mixin examples(examples, settings)
                   else
                     if settings.id == "callBatch"
                       | !{markdown('Yes it works! Calling a method `callBatch` within a **call batch** would make no sense. Look at Rest or Socket.io calls.')}
-                    pre: code. 
+                    pre: code.
                       !{helpers.getBatchBlock(settings.id, ex.params)}
                     if ex.result
                       .step-marker ⬇
@@ -190,7 +107,6 @@ mixin examples(examples, settings)
                       API-Version: !{apiReference.version}
 
                       !{helpers.printJSON(ex.result)}
-
 
 mixin section(section, parentDocId, level, parent)
   - var isMethod = section.type === 'method'
@@ -211,8 +127,8 @@ mixin section(section, parentDocId, level, parent)
       .content
         .meta
           if isMethod
-            +trustedTag(section.trustedTag || (parent && parent.trustedOnly)) 
-            +entrepriseTag(section.entrepriseTag || (parent && parent.entrepriseOnly)) 
+            +trustedTag(section.trustedTag || (parent && parent.trustedOnly))
+            +entrepriseTag(section.entrepriseTag || (parent && parent.entrepriseOnly))
             +adminTag(section.adminTag || (parent && parent.adminOnly))
             +methodId(section.id)
             +http(section.http, section.httpOnly, section.server)
@@ -247,7 +163,7 @@ mixin section(section, parentDocId, level, parent)
       if section.sections
         each subSection in section.sections
           +section(subSection, docId, level + 1, section)
-  
+
 block content
   - var source = sourceOverride ? apiReference[sourceOverride] : apiReference
   each level1Section in source.sections
@@ -258,7 +174,6 @@ block content
       if level1Section.sections
         each level2Section in level1Section.sections
           +section(level2Section, level1Section.id, 2)
-
 
 //- Support for switching examples format
 

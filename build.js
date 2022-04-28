@@ -22,7 +22,7 @@ const globals = {
   apiReference: require('./src/_reference'),
   functionalSpecifications: require('./src/functional-specifications'),
   testResults: require('./src/test-results'),
-  helpers: require('./src/_templates/helpers'),
+  helpers: require('./src/_layouts/helpers'),
   markdown: (string) => markdownIt.render(string)
 };
 
@@ -41,7 +41,7 @@ metalsmith
     compress: true
   }))
   .use(msLayouts({
-    directory: 'src/_templates',
+    directory: 'src/_layouts',
     engineOptions: { useMetadata: true }
   }))
   .use(msHeadingsId({
@@ -50,7 +50,7 @@ metalsmith
   }))
   .use(msIgnore([
     '_reference/**',
-    '_templates/*',
+    '_layouts/**',
     'event-types/_source/*',
     'functional-specifications/**',
     'test-results/**'

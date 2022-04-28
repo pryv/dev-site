@@ -1,33 +1,5 @@
 extends layout
-
-mixin h1(string)
-  if string
-    | !{markdown('# ' + string)}
-
-mixin h2(string)
-  if string
-    | !{markdown('## ' + string)}
-
-mixin h3(string)
-  if string
-    | !{markdown('### ' + string)}
-
-mixin h4(string)
-  if string
-    | !{markdown('#### ' + string)}
-
-mixin h5(string)
-  if string
-    | !{markdown('##### ' + string)}
-
-mixin intro(string)
-  if string
-    .intro
-      | !{markdown(string)}
-
-mixin text(string)
-  if string
-    | !{markdown(string)}
+include includes/mixins
 
 mixin requirementId(id)
   if id
@@ -38,41 +10,6 @@ mixin requirementId(id)
 mixin reference(ref)
   if ref.url
    a(href=ref.url) !{ref.description}
-
-
-mixin typeText(string)
-  if string
-    - var output = markdown(string)
-    -// YES, HACK
-    span.type !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
-
-mixin labelValue(label, cssClass, value)
-  if value
-    span(class='label label-default ' + cssClass)
-      | !{label + (typeof(value) === 'string' ? ' ' + value : '')}
-
-
-mixin properties(properties)
-  if properties
-    table.definitions
-      each prop in properties
-        tr
-          th
-            if prop.key instanceof Array
-              - var i = 0
-              each key in prop.key
-                code !{key}
-                if i < prop.key.length - 1
-                  | |
-                - i++
-            else
-              code !{prop.key}
-          td
-            .header
-              -// TODO make type specification flexible
-              +typeText(prop.type)
-            .description !{markdown(prop.description)}
-            +properties(prop.properties)
 
 mixin requirements(requirements, reqid, parentDocId)
   if requirements
@@ -85,34 +22,33 @@ mixin requirements(requirements, reqid, parentDocId)
           table.definitions
             tr
               th
-                code !{"Title"}
+                code Title
               td
                 .header
                   -// TODO make type specification flexible
                   +typeText(requirement.title)
             tr
               th
-                code !{"Desc"}
+                code Desc
               td
-                .description !{markdown(requirement.description || '')}
+                .description !{markdown(requirement.description || '')}
             if requirement.refs
               tr
                 th
-                  code !{"Refs"}
+                  code Refs
                 td
                   ol
                     each ref in requirement.refs
-                      li 
+                      li
                         +reference(ref)
-
 
 mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
   if ! section.ignore
     - var reqid = 'REQ_'
-    if nreqid 
+    if nreqid
       - reqid = '' + nreqid
-    if section.reqid 
-      - reqid = reqid + section.reqid + '_' 
+    if section.reqid
+      - reqid = reqid + section.reqid + '_'
     - var sectionHeader = ''
     if nsectionHeader
       - sectionHeader = nsectionHeader
@@ -147,6 +83,3 @@ block content
     - sectionNum++
     - sectionHeader = sectionNum + '.'
     +section(level1Section, level1Section.id, 1, '', sectionHeader)
-
-
-
