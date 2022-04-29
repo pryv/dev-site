@@ -20,8 +20,8 @@ const markdownIt = require('markdown-it')(markdownItOptions);
 const globals = {
   _: require('lodash'),
   apiReference: require('./src/_reference'),
-  functionalSpecifications: require('./src/functional-specifications'),
-  testResults: require('./src/test-results'),
+  functionalSpecifications: require('./src/_functional-specifications'),
+  testResults: require('./src/_test-results'),
   helpers: require('./src/_layouts/helpers'),
   markdown: (string) => markdownIt.render(string)
 };
@@ -51,9 +51,9 @@ metalsmith
   .use(msIgnore([
     '_reference/**',
     '_layouts/**',
-    'event-types/_source/*',
-    'functional-specifications/**',
-    'test-results/**'
+    '_functional-specifications/**',
+    '_test-results/**',
+    'event-types/_source/*'
   ]))
   .use(msPermalinks({
     // section id is optional in metadata

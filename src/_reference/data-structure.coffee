@@ -1,5 +1,5 @@
 examples = require("./examples")
-helpers = require("./helpers")
+helpers = require("../_layouts/helpers")
 _ = require("lodash")
 timestamp = require('unix-timestamp')
 

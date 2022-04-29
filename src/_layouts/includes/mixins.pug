@@ -18,6 +18,11 @@ mixin h5(string)
   if string
     | !{markdown('##### ' + string)}
 
+mixin heading(string, level)
+  if string
+    - const tag = `h${level}`
+    | <!{tag}>!{string}</!{tag}>
+
 mixin intro(string)
   if string
     .intro

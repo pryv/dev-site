@@ -1,10 +1,4 @@
 
-_ = require("lodash")
-
-# For use within the data declaration here; external callers use `getDocId` (which checks validity)
-_getDocId = (sectionId) ->
-  return helpers.getDocId("introduction", sectionId)
-
 module.exports = exports =
   id: "introduction"
   title: "Introduction"
@@ -14,7 +8,7 @@ module.exports = exports =
                 | Date                     | 25th October 2021          |
                 | Documents Version        | 1.1                      |
                 | API-Version              | 1.7.1                   |
-                
+
                  This document describes the functional specifications for the Pryv.io
                 middleware system: the capabilities and functions that the
                 system must be capable of performing.

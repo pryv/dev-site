@@ -9,7 +9,6 @@ exports.sections = [
 ];
 
 exports.version = '1.7.10';
-exports.helpers = require('./helpers.coffee');
 
 exports.system = require('./system.coffee');
 exports.admin = require('./admin.coffee');

@@ -1,5 +1,5 @@
 examples = require("./examples")
-helpers = require("./helpers")
+helpers = require("../_layouts/helpers")
 _ = require("lodash")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
@@ -19,8 +19,8 @@ module.exports = exports =
       id: "services-involved"
       title: "Services involved"
       description: """
-                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).  
-                   A color tag on the API method indicates the server to which you should make the request.  
+                   Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).
+                   A color tag on the API method indicates the server to which you should make the request.
 
                    - The **core servers** own the account management processes, i.e. data creation and deletion
                    - The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers.
@@ -29,11 +29,11 @@ module.exports = exports =
       id: "endpoint-url"
       title: "API endpoint"
       description: """
-                   The methods are called via HTTPS on the register or core server depending on the method:   
+                   The methods are called via HTTPS on the register or core server depending on the method:
 
-                   - Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.  
-                   - Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.  
-                  
+                   - Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.
+                   - Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.
+
                    You can adapt the examples with "API" selector in the top navigation bar.
                   """
     ,
@@ -69,10 +69,10 @@ module.exports = exports =
                   Methods for platform administration.
 
                   These calls are limited to accredited persons and are flagged as `Admin only`.
-                  
+
                   Admin api calls are tagged with <span class="admin-tag"><span title="Admin Only" class="label">A</span></span>
 
-                  They must carry the admin key in the HTTP `Authorization` header.  
+                  They must carry the admin key in the HTTP `Authorization` header.
                   This key is defined within the platform configuration: `REGISTER_ADMIN_KEY`.
                   """
       sections: [
@@ -257,7 +257,7 @@ module.exports = exports =
             key: "regions"
             type: "Object"
             description: """
-                        Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  
+                        Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.
                         You need to use the `availableCore` URL as endpoint for the [Create user API method](#create-user).
                         """
           ]
@@ -291,7 +291,7 @@ module.exports = exports =
         examples: [
           title: "Retrieving the list of applications connected to the platform."
           params: {}
-          result: 
+          result:
             "apps": examples.register.apps
         ]
       ,
@@ -326,7 +326,7 @@ module.exports = exports =
         examples: [
           title: "Retrieving information about a given application."
           params: {}
-          result: 
+          result:
             "app": examples.register.apps[0]
         ]
       ]
@@ -574,7 +574,7 @@ module.exports = exports =
           params: {
             email: examples.users.two.email
           }
-          result: 
+          result:
             "username": examples.users.two.username
         ]
       ,
@@ -599,7 +599,7 @@ module.exports = exports =
             key: "email"
             type: "string"
             description: """
-                        The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.   
+                        The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.
                         This is meant to prevent email discovery.
                         """
           ]
@@ -637,7 +637,7 @@ module.exports = exports =
         trustedOnly: true
         server: "core"
         description: """
-                    Deletes a user account. This method must be enabled in the platform configuration. You should fetch the URL of the core where the user data is stored using the [Get core](#get-core) method.  
+                    Deletes a user account. This method must be enabled in the platform configuration. You should fetch the URL of the core where the user data is stored using the [Get core](#get-core) method.
                     - When performed by the account owner, this method requires a personal token.
                     - For platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).
                     - For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.
@@ -666,11 +666,11 @@ module.exports = exports =
           params:
             username: "mark-kaminski"
           result:
-            userDeletion: 
+            userDeletion:
               username: "mark-kaminski"
         ]
       ]
-    , 
-      
+    ,
+
     ]
   ]

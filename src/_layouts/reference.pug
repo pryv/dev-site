@@ -60,7 +60,7 @@ mixin examples(examples, settings)
               if settings.http
                 .tab-pane.http
                   pre: code.
-                    !{apiReference.helpers.getCurlCall(ex.params, settings.http, settings.server, false)}
+                    !{helpers.getCurlCall(ex.params, settings.http, settings.server, false)}
                   if ex.result
                     .step-marker ⬇
                     pre: code.
@@ -98,7 +98,7 @@ mixin examples(examples, settings)
               if settings.http
                 .tab-pane.httpAuth
                   pre: code.
-                    !{apiReference.helpers.getCurlCall(ex.params, settings.http, settings.server, true)}
+                    !{helpers.getCurlCall(ex.params, settings.http, settings.server, true)}
                   if ex.result
                     .step-marker ⬇
                     pre: code.
@@ -110,7 +110,7 @@ mixin examples(examples, settings)
 
 mixin section(section, parentDocId, level, parent)
   - var isMethod = section.type === 'method'
-  - var docId = apiReference.helpers.getDocId(parentDocId, section.id)
+  - var docId = helpers.getDocId(parentDocId, section.id)
   - var sectionClass = (section.type || '')
   // it's either:
   // !trusted & !preview
@@ -118,12 +118,7 @@ mixin section(section, parentDocId, level, parent)
   // -preview
   if (!section.trustedOnly && !section.previewOnly) || (!section.previewOnly && showTrustedOnlyContent) || showPreviewOnlyContent
     section(id=docId, class=sectionClass)
-      if level === 2
-        +h2(section.title)
-      else if level === 3
-        +h3(section.title)
-      else
-        +h4(section.title)
+      +heading(sectionTitle, level)
       .content
         .meta
           if isMethod
@@ -167,7 +162,7 @@ mixin section(section, parentDocId, level, parent)
 block content
   - var source = sourceOverride ? apiReference[sourceOverride] : apiReference
   each level1Section in source.sections
-    section(id=apiReference.helpers.getDocId(level1Section.id))
+    section(id=helpers.getDocId(level1Section.id))
       +h1(level1Section.title)
       +intro(level1Section.description)
 

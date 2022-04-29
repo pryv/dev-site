@@ -1,7 +1,7 @@
 basics = require('./basics')
 dataStructure = require('./data-structure.coffee')
 examples = require("./examples")
-helpers = require("./helpers")
+helpers = require("../_layouts/helpers")
 timestamp = require("unix-timestamp")
 _ = require("lodash")
 generateId = require("cuid")

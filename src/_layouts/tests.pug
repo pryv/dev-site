@@ -11,8 +11,8 @@ mixin reference(ref)
   if ref.url
    a(href=ref.url) !{ref.description}
 
-mixin stats(stats)
-  +h4('Summary')
+mixin stats(stats, level)
+  +heading('Summary', level)
   table.definitions
         tr
           th
@@ -46,9 +46,9 @@ mixin tests(tests)
         td
           +typeText(test.title)
 
-mixin testsets(testsets)
+mixin testsets(testsets, level)
   if testsets
-    +h4('Tests')
+    +heading('Tests', level)
     table
       thead
         tr
@@ -60,29 +60,22 @@ mixin testsets(testsets)
           tr
             td(colspan=3)
               b
-               | !{testResults.helpers.ucFirst(setTitle)}
+               | !{helpers.capitalize(setTitle)}
           +tests(testsets[setTitle].tests)
 
 mixin component(component, parentDocId, level)
-  - var sectionTitle = markdown('Component `' + component.componentName + '`')
-  - var docId = testResults.helpers.getDocId(parentDocId, component.componentName)
+  - var sectionTitle = `<code>${component.componentName}</code> component`
+  - var docId = helpers.getDocId(parentDocId, component.componentName)
   - var sectionClass = ''
   section(id=docId, class=sectionClass)
-    if level === 1
-      +h1(sectionTitle)
-    else if level === 2
-      +h2(sectionTitle)
-    else if level === 3
-      +h3(sectionTitle)
-    else
-      +h4(sectionTitle)
+    +heading(sectionTitle, level)
     .content
       .meta
-      +stats(component.stats)
-      +testsets(component.sets, parentDocId)
+      +stats(component.stats, level + 1)
+      +testsets(component.sets, level + 1)
 
 mixin version(version, parentDocId, level)
-  +stats(version.stats)
+  +stats(version.stats, level + 1)
   +intro('Date: ' + version.date)
   if version.components
     each component in version.components
@@ -90,17 +83,10 @@ mixin version(version, parentDocId, level)
 
 mixin section(section, parentDocId, level)
   - var sectionTitle = section.title
-  - var docId = testResults.helpers.getDocId(parentDocId, section.id)
+  - var docId = helpers.getDocId(parentDocId, section.id)
   - var sectionClass = (section.type || '')
   section(id=docId, class=sectionClass)
-    if level === 1
-      +h1(sectionTitle)
-    else if level === 2
-      +h2(sectionTitle)
-    else if level === 3
-      +h3(sectionTitle)
-    else
-      +h4(sectionTitle)
+    +heading(sectionTitle, level)
     .content
       .meta
       +intro(section.description)
@@ -112,7 +98,7 @@ mixin section(section, parentDocId, level)
         +version(section.version, parentDocId, level + 1)
 
 block content
-  - var source = sourceOverride ? testResults[sourceOverride] : testResults
+  - var source = testResults
   - var sectionHeader = ''
   each level1Section in source.sections
     +section(level1Section, level1Section.id, 1)

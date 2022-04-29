@@ -1,5 +1,5 @@
 examples = require("./examples")
-helpers = require("./helpers")
+helpers = require("../_layouts/helpers")
 _ = require("lodash")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)
@@ -13,7 +13,7 @@ module.exports = exports =
     id: "basics"
     title: "Basics"
     description: """
-                 This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.  
+                 This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.
                  This service is only available with an [**Entreprise license**](https://api.pryv.com/concepts/#entreprise-license-open-source-license).
                  """
     sections: [
@@ -26,9 +26,9 @@ module.exports = exports =
       id: "authorization"
       title: "Authorization"
       description: """
-                   All requests for retrieving and manipulating admin data must carry a valid JSON web token that is obtained at login. 
-                   
-                   It must be assigned to the `authorization` header. 
+                   All requests for retrieving and manipulating admin data must carry a valid JSON web token that is obtained at login.
+
+                   It must be assigned to the `authorization` header.
                    """
     ]
   ,
@@ -102,7 +102,7 @@ module.exports = exports =
           result: {}
         ]
       ]
-    
+
     ,
 
       id: "admin-users"
@@ -174,7 +174,7 @@ module.exports = exports =
           params:
             username: 'harrytasker'
           result:
-            user: 
+            user:
               examples.adminUsers.harrytasker
         ]
       ,
@@ -223,7 +223,7 @@ module.exports = exports =
           params:
             examples.adminUsers.harrytasker
           result:
-            user: 
+            user:
               examples.adminUsers.harrytasker
         ]
 
@@ -261,7 +261,7 @@ module.exports = exports =
           params:
             permissions: examples.adminUsers.harrytasker.permissions
           result:
-            user: 
+            user:
               examples.adminUsers.harrytasker
         ]
 
@@ -324,7 +324,7 @@ module.exports = exports =
                          The username of the admin user to delete.
                          """
           ]
-        result: 
+        result:
           http: "200 OK"
           properties: [
             key: "username"
@@ -374,7 +374,7 @@ module.exports = exports =
             settings:
               API_SETTINGS:
                 name: "API settings"
-                settings: 
+                settings:
                   EVENT_TYPES_URL:
                     value: "https://my-service/event-types/flat.json"
                     description: "URL of the file listing the validated Event types. See: https://api.pryv.com/faq-api/#event-types"
@@ -402,7 +402,7 @@ module.exports = exports =
             description: """
                          New values for the platform settings.
                          """
-          ] 
+          ]
         result:
           http: "200 OK"
           properties: [
@@ -423,14 +423,14 @@ module.exports = exports =
           title: "Updating the [event types](/event-types/) URL. The result hereafter only highlights the modified setting."
           params:
             API_SETTINGS:
-              settings: 
-                EVENT_TYPES_URL: 
+              settings:
+                EVENT_TYPES_URL:
                   value: "https://my-service/event-types/flat.json"
           result:
             settings:
               API_SETTINGS:
                 name: "API settings"
-                settings: 
+                settings:
                   EVENT_TYPES_URL:
                     value: "https://my-service/event-types/flat.json"
                     description: "URL of the file listing the validated Event types. See: https://api.pryv.com/faq-api/#event-types"
@@ -448,7 +448,7 @@ module.exports = exports =
         params:
           properties: [
             key: "services"
-            optional: true 
+            optional: true
             type: "array of strings"
             description: """
                         The Pryv.io services to reboot. If empty, reboots all Pryv.io services. See your configuration's docker-compose file for the list of services.
@@ -662,7 +662,7 @@ module.exports = exports =
           title: "Fetching the platform settings. The result hereafter only display a small part of the settings."
           params: {}
           result:
-            user: 
+            user:
               username: "aiuwvd981b298dn8",
               email: "jericho@pryv.com",
               language: "en",
@@ -695,7 +695,7 @@ module.exports = exports =
                          The username of the platform user to delete.
                          """
           ]
-        result: 
+        result:
           http: "200 OK"
           properties: [
             key: "username"
@@ -733,7 +733,7 @@ module.exports = exports =
                          The username of the platform user for whom to deactivate MFA.
                          """
           ]
-        result: 
+        result:
           http: "204 No Content"
         examples: [
           title: "Deactivating MFA for a platform user"
@@ -781,21 +781,21 @@ module.exports = exports =
         key: "users"
         type: "array of strings"
         description: """
-                     Permissions over admin users.  
+                     Permissions over admin users.
                      Available permissions: `read`, `create`, `delete`, `resetPassword`, `changePermissions`.
                      """
       ,
         key: "settings"
         type: "array of strings"
         description: """
-                     Permissions over platform settings.  
+                     Permissions over platform settings.
                      Available permissions: `read`, `update`.
                      """
       ,
         key: "platformUsers"
         type: "array of strings"
         description: """
-                     Permissions over platform users.  
+                     Permissions over platform users.
                      Available permissions: `read`, `delete`.
                      """
       ]
@@ -856,7 +856,7 @@ module.exports = exports =
         type: "string"
         description: """
                       The readable timestamp of the platform user's registration.
-                      """    
+                      """
       ]
       examples: [
         title: "A platform user."

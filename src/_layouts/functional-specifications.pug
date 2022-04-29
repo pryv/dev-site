@@ -16,7 +16,7 @@ mixin requirements(requirements, reqid, parentDocId)
     each requirement in requirements
       if ! requirement.ignore
         - var myId = reqid + requirement.reqid
-        - var docId = functionalSpecifications.helpers.getDocId(myId)
+        - var docId = helpers.getDocId(myId)
         requirement(id=docId)
           +requirementId(myId)
           table.definitions
@@ -53,17 +53,10 @@ mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
     if nsectionHeader
       - sectionHeader = nsectionHeader
     - var sectionTitle = sectionHeader + ' ' + section.title
-    - var docId = functionalSpecifications.helpers.getDocId(parentDocId, section.id)
+    - var docId = helpers.getDocId(parentDocId, section.id)
     - var sectionClass = (section.type || '')
     section(id=docId, class=sectionClass)
-      if level === 1
-        +h1(sectionTitle)
-      else if level === 2
-        +h2(sectionTitle)
-      else if level === 3
-        +h3(sectionTitle)
-      else
-        +h4(sectionTitle)
+      +heading(sectionTitle, level)
       .content
         .meta
         +intro(section.description)
@@ -76,7 +69,7 @@ mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
           +section(subSection, parentDocId, level + 1, reqid, sectionHeader + subSectionNum + '.')
 
 block content
-  - var source = sourceOverride ? functionalSpecifications[sourceOverride] : functionalSpecifications
+  - var source = functionalSpecifications
   - var sectionNum = 0
   - var sectionHeader = ''
   each level1Section in source.sections
