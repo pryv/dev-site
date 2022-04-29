@@ -112,13 +112,13 @@ mixin section(section, parentDocId, level, parent)
   - var isMethod = section.type === 'method'
   - var docId = helpers.getDocId(parentDocId, section.id)
   - var sectionClass = (section.type || '')
-  // it's either:
-  // !trusted & !preview
-  // !preview & -full
-  // -preview
+  //- it's either:
+  //- !trusted & !preview
+  //- !preview & -full
+  //- -preview
   if (!section.trustedOnly && !section.previewOnly) || (!section.previewOnly && showTrustedOnlyContent) || showPreviewOnlyContent
     section(id=docId, class=sectionClass)
-      +heading(sectionTitle, level)
+      +heading(section.title, level)
       .content
         .meta
           if isMethod
