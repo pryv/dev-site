@@ -3,7 +3,6 @@ require('coffeescript').register();
 
 exports.sections = [
   require('./basics.coffee'),
-  // TODO: include authorization flow here?
   require('./methods.coffee'),
   require('./data-structure.coffee')
 ];

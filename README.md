@@ -24,7 +24,7 @@ Running `just` with no argument displays the available commands (defined in `jus
 
 **Note:** data types are sourced from repo [pryv/data-types](https://github.com/pryv/data-types) on `just retrieve-types` and `just publish` into `src/event-types/_source`.
 
-**Note:** test results are sourced from repo [pryv/test-results-pryv.io](https://github.com/pryv/test-results-pryv.io) on `just retrieve-tests` and `just publish` into `dependencies/test-results`.
+**Note:** test results are sourced from repo [pryv/dev-test-results](https://github.com/pryv/dev-test-results) on `just retrieve-tests` and `just publish` into `dependencies/test-results`.
 
 
 ## Don't forget
