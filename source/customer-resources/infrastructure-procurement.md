@@ -205,6 +205,14 @@ Here's a matrix that shows how various load situations affect the resource needs
 
 This section will introduce additional operational concerns not covered by your Pryv.io base installation. We recommend implementing measures to address these topics in order to guarantee safe operation and traceability of issues. 
 
+### Outbound connections
+
+You must allow outbound connections to the following hostnames:
+
+- `eu.gcr.io`: our private Docker repository
+- `*.DOMAIN`: in a cluster deployment, the different machines send some requests between each other on their public hostnames such as `co1.DOMAIN`, `reg.DOMAIN`, `lead.DOMAIN`, etc.
+- All URLs referred to in the platform configuration variables: see `Platform configuration` in your admin panel
+
 ### System Hardening
 
 We recommend you to follow a system hardening guide for the operating system of your choice. This should include installing firewalls, denying SSH access using passwords and other measures that form best practices. 
