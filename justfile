@@ -53,8 +53,7 @@ publish: retrieve-types retrieve-tests clean build
     #!/bin/sh
     set -e
     cd dist
-    git add .
-    git add -u .
+    git add --all
     git commit -m "Updated generated files"
     git push
 
