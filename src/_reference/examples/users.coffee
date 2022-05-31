@@ -1,6 +1,6 @@
 generateId = require("cuid")
 register = require("./register")
-helpers = require("../../_layouts/helpers")
+helpers = require("../helpers")
 
 module.exports =
   one:

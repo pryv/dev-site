@@ -5,7 +5,7 @@
     {
       "id": "basics",
       "title": "Basics",
-      "description": "This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.  \nThis service is only available with an [**Entreprise license**](https://api.pryv.com/concepts/#entreprise-license-open-source-license).",
+      "description": "This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.\nThis service is only available with an [**Entreprise license**](https://api.pryv.com/concepts/#entreprise-license-open-source-license).",
       "sections": [
         {
           "id": "admin-service",
@@ -15,7 +15,7 @@
         {
           "id": "authorization",
           "title": "Authorization",
-          "description": "All requests for retrieving and manipulating admin data must carry a valid JSON web token that is obtained at login. \n\nIt must be assigned to the `authorization` header. "
+          "description": "All requests for retrieving and manipulating admin data must carry a valid JSON web token that is obtained at login.\n\nIt must be assigned to the `authorization` header."
         }
       ]
     },
@@ -984,17 +984,17 @@
             {
               "key": "users",
               "type": "array of strings",
-              "description": "Permissions over admin users.  \nAvailable permissions: `read`, `create`, `delete`, `resetPassword`, `changePermissions`."
+              "description": "Permissions over admin users.\nAvailable permissions: `read`, `create`, `delete`, `resetPassword`, `changePermissions`."
             },
             {
               "key": "settings",
               "type": "array of strings",
-              "description": "Permissions over platform settings.  \nAvailable permissions: `read`, `update`."
+              "description": "Permissions over platform settings.\nAvailable permissions: `read`, `update`."
             },
             {
               "key": "platformUsers",
               "type": "array of strings",
-              "description": "Permissions over platform users.  \nAvailable permissions: `read`, `delete`."
+              "description": "Permissions over platform users.\nAvailable permissions: `read`, `delete`."
             }
           ],
           "examples": [

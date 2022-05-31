@@ -30,14 +30,14 @@ build:
 watch:
     node build.js watch
 
-# Retrieves event types from their repo
+# Retrieve event types from their repo
 retrieve-types:
     @echo ""
     @echo "Retrieving data types from {{typesBaseURL}}..."
     @echo ""
     @cd {{typesSourceTarget}} && curl -LO {{eventTypesURL}} -LO {{flatTypesURL}}
 
-# Retrieves test results from their repo
+# Retrieve test results from their repo
 retrieve-tests:
     @echo ""
     @echo "Retrieving test results from repo..."
@@ -82,6 +82,7 @@ _open-api-transpile:
     set -e
     cd open-api
     coffee -c -o transpiled ../src/_reference
+    cp ../src/_reference/helpers.js transpiled/.
     find transpiled \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "" -e "s/\.coffee/\.js/g"
     node src/render
 

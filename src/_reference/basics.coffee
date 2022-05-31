@@ -1,6 +1,6 @@
 dataStructure = require("./data-structure.coffee")
 examples = require("./examples")
-helpers = require("../_layouts/helpers")
+helpers = require("./helpers")
 _ = require("lodash")
 timestamp = require('unix-timestamp')
 

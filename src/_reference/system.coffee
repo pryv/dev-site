@@ -1,5 +1,5 @@
 examples = require("./examples")
-helpers = require("../_layouts/helpers")
+helpers = require("./helpers")
 _ = require("lodash")
 
 # For use within the data declaration here; external callers use `getDocId` (which checks validity)

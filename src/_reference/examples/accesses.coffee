@@ -1,6 +1,6 @@
 generateId = require("cuid")
 timestamp = require("unix-timestamp")
-helpers = require("../../_layouts/helpers")
+helpers = require("../helpers")
 
 idPersonal = generateId()
 idApp = generateId()

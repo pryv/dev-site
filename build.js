@@ -22,7 +22,7 @@ const globals = {
   apiReference: require('./src/_reference'),
   functionalSpecifications: require('./src/_functional-specifications'),
   testResults: require('./src/_test-results'),
-  helpers: require('./src/_layouts/helpers'),
+  helpers: require('./src/_reference/helpers'),
   markdown: (string) => markdownIt.render(string)
 };
 
