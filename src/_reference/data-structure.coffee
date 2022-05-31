@@ -816,7 +816,7 @@ module.exports = exports =
 
                  **Syntax:**
 
-                 The streams query must have at least an `any` or `all` property, with an optional `not`:
+                 The streams query must have at least one `any` property, with an optional `not`:
 
                  ```json
                  { "any": ["streamA", "streamB"], "all": ["streamC"], "not": ["streamD"] }
