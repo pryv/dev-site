@@ -11,11 +11,11 @@ This page lists official libraries, as well as example code for you to develop y
 ## Web & Node.js
 
 ### JavaScript library
-➔ [npm](https://www.npmjs.com/package/pryv), [GitHub](https://github.com/pryv/lib-js)
+➔ [npm](https://www.npmjs.com/package/pryv), [GitHub](https://github.com/pryv/lib-js) (monorepo including add-ons)
 
-Optional extensions:
-- **JS lib Socket.IO extension** ➔ [npm](https://www.npmjs.com/package/@pryv/socket.io), [GitHub](https://github.com/pryv/lib-js-socket.io)
-- **JS lib Monitor extension** ➔ [npm](https://www.npmjs.com/package/@pryv/monitor), [GitHub](https://github.com/pryv/lib-js-monitor)
+Optional add-ons:
+- **JS lib Socket.IO add-on** ➔ [npm](https://www.npmjs.com/package/@pryv/socket.io)
+- **JS lib Monitor add-on** ➔ [npm](https://www.npmjs.com/package/@pryv/monitor)
 
 ### Example web apps
 ➔ [GitHub](https://github.com/pryv/example-apps-web)
