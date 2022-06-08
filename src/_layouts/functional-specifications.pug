@@ -1,0 +1,78 @@
+extends layout
+include includes/mixins
+
+mixin requirementId(id)
+  if id
+    span.method-id
+      span.label id
+      span.label-value: code !{id}
+
+mixin reference(ref)
+  if ref.url
+   a(href=ref.url) !{ref.description}
+
+mixin requirements(requirements, reqid, parentDocId)
+  if requirements
+    each requirement in requirements
+      if ! requirement.ignore
+        - var myId = reqid + requirement.reqid
+        - var docId = helpers.getDocId(myId)
+        requirement(id=docId)
+          +requirementId(myId)
+          table.definitions
+            tr
+              th
+                code Title
+              td
+                .header
+                  -// TODO make type specification flexible
+                  +typeText(requirement.title)
+            tr
+              th
+                code Desc
+              td
+                .description !{markdown(requirement.description || '')}
+            if requirement.refs
+              tr
+                th
+                  code Refs
+                td
+                  ol
+                    each ref in requirement.refs
+                      li
+                        +reference(ref)
+
+mixin section(section, parentDocId, level, nreqid, nsectionHeader, sectionNum)
+  if ! section.ignore
+    - var reqid = 'REQ_'
+    if nreqid
+      - reqid = '' + nreqid
+    if section.reqid
+      - reqid = reqid + section.reqid + '_'
+    - var sectionHeader = ''
+    if nsectionHeader
+      - sectionHeader = nsectionHeader
+    - var sectionTitle = sectionHeader + ' ' + section.title
+    - var docId = helpers.getDocId(parentDocId, section.id)
+    - var sectionClass = (section.type || '')
+    section(id=docId, class=sectionClass)
+      +heading(sectionTitle, level)
+      .content
+        .meta
+        +intro(section.description)
+        +properties(section.properties)
+        +requirements(section.requirements, reqid, parentDocId)
+      if section.sections
+        - var subSectionNum = 0
+        each subSection in section.sections
+          - subSectionNum++
+          +section(subSection, parentDocId, level + 1, reqid, sectionHeader + subSectionNum + '.')
+
+block content
+  - var source = functionalSpecifications
+  - var sectionNum = 0
+  - var sectionHeader = ''
+  each level1Section in source.sections
+    - sectionNum++
+    - sectionHeader = sectionNum + '.'
+    +section(level1Section, level1Section.id, 1, '', sectionHeader)

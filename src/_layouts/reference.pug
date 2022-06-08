@@ -1,0 +1,253 @@
+extends layout
+include includes/mixins
+
+mixin methodId(id)
+  if id
+    span(onclick="location='/reference/#method-ids'").method-id
+      span.label(title="Method Id") id
+      span.label-value: code !{id}
+
+mixin entrepriseTag(entrepriseTag)
+  if entrepriseTag
+    span(onclick="location='/concepts/#entreprise-license-open-source-license'").entreprise-tag
+      span.label(title="Entreprise License Only") Y
+
+mixin trustedTag(trustedTag)
+  if trustedTag
+    span(onclick="location='/reference/#trusted-apps-verification'").trusted-tag
+      span.label(title="Trusted Apps Only") T
+
+mixin adminTag(adminTag)
+  if adminTag
+    span(onclick="location='/reference-system/#admin'").admin-tag
+      span.label(title="Admin Only") A
+
+mixin result(result)
+  if result
+    +h4(result.title || 'Result')
+    +http(result.http)
+    +text(result.description)
+    +properties(result.properties)
+
+mixin exampleContent(content)
+  if content
+    if typeof(content) === 'string'
+      +text(content)
+    else
+      pre: code !{helpers.printJSON(content)}
+
+//- settings: {id, http, [result.http], server} context to generate example forms (e.g. HTTP, cURL...)
+mixin examples(examples, settings)
+  if examples
+    aside
+      - for (var i = 0; i < examples.length; i++)
+        - var ex = examples[i]
+        .example
+          +text(ex.title)
+          if ex.content || typeof(ex.params) === 'string'
+            +exampleContent(ex.content)
+            +exampleContent(ex.params)
+            if ex.result
+              .step-marker ⬇
+              +exampleContent(ex.result)
+          else if ex.params
+            .tab-content
+              .tab-pane.json.active
+                pre: code !{helpers.getRestCall(ex.params, settings.http)}
+                if ex.result
+                  .step-marker ⬇
+                  pre: code !{helpers.printJSON(ex.result)}
+              if settings.http
+                .tab-pane.http
+                  pre: code.
+                    !{helpers.getCurlCall(ex.params, settings.http, settings.server, false)}
+                  if ex.result
+                    .step-marker ⬇
+                    pre: code.
+                      HTTP/1.1 !{ex.resultHTTP || settings.result.http || settings.result[0].http}
+                      Content-Type: application/json; charset=utf-8
+                      API-Version: !{apiReference.version}
+
+                      !{helpers.printJSON(ex.result)}
+
+              if settings.id
+                .tab-pane.sockets
+                  if settings.httpOnly
+                    pre !{helpers.httpOnly()}
+                  else
+                    pre: code.
+                      socket.emit('!{settings.id}', !{helpers.getWebsocketCall(ex.params)}, callback);
+                    if ex.result
+                      .step-marker ⬇
+                      pre: code !{helpers.printJSON(ex.result)}
+
+              if settings.id
+                .tab-pane.batch
+                  if settings.httpOnly
+                    pre !{helpers.httpOnly()}
+                  else
+                    if settings.id == "callBatch"
+                      | !{markdown('Yes it works! Calling a method `callBatch` within a **call batch** would make no sense. Look at Rest or Socket.io calls.')}
+                    pre: code.
+                      !{helpers.getBatchBlock(settings.id, ex.params)}
+                    if ex.result
+                      .step-marker ⬇
+                      pre: code !{helpers.printJSON(ex.result)}
+
+
+              if settings.http
+                .tab-pane.httpAuth
+                  pre: code.
+                    !{helpers.getCurlCall(ex.params, settings.http, settings.server, true)}
+                  if ex.result
+                    .step-marker ⬇
+                    pre: code.
+                      HTTP/1.1 !{ex.resultHTTP || settings.result.http || settings.result[0].http}
+                      Content-Type: application/json; charset=utf-8
+                      API-Version: !{apiReference.version}
+
+                      !{helpers.printJSON(ex.result)}
+
+mixin section(section, parentDocId, level, parent)
+  - var isMethod = section.type === 'method'
+  - var docId = helpers.getDocId(parentDocId, section.id)
+  - var sectionClass = (section.type || '')
+  //- it's either:
+  //- !trusted & !preview
+  //- !preview & -full
+  //- -preview
+  if (!section.trustedOnly && !section.previewOnly) || (!section.previewOnly && showTrustedOnlyContent) || showPreviewOnlyContent
+    section(id=docId, class=sectionClass)
+      +heading(section.title, level)
+      .content
+        .meta
+          if isMethod
+            +trustedTag(section.trustedTag || (parent && parent.trustedOnly))
+            +entrepriseTag(section.entrepriseTag || (parent && parent.entrepriseOnly))
+            +adminTag(section.adminTag || (parent && parent.adminOnly))
+            +methodId(section.id)
+            +http(section.http, section.httpOnly, section.server)
+          if section.trustedOnly
+            span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
+            text &nbsp;
+          if section.entrepriseOnly
+            span(onclick="location='/concepts/#entreprise-license-open-source-license'").label.entreprise-only Entreprise license only
+            text &nbsp;
+          if section.adminOnly
+            span(onclick="location='/reference-system/#admin'").label.admin-only Admin only
+            text &nbsp;
+          if section.previewOnly
+            span.label.trusted-only Preview
+            text &nbsp;
+        +intro(section.description)
+        +properties(section.properties)
+        if section.params
+          +h4(section.params.title || 'Parameters')
+          +text(section.params.description)
+          +properties(section.params.properties)
+        if section.result
+          if section.result instanceof Array
+            each result in section.result
+              +result(result)
+          else
+            +result(section.result)
+        if section.errors
+          +h4('Specific errors')
+          +properties(section.errors)
+      +examples(section.examples, section)
+      if section.sections
+        each subSection in section.sections
+          +section(subSection, docId, level + 1, section)
+
+block content
+  - var source = sourceOverride ? apiReference[sourceOverride] : apiReference
+  each level1Section in source.sections
+    section(id=helpers.getDocId(level1Section.id))
+      +h1(level1Section.title)
+      +intro(level1Section.description)
+
+      if level1Section.sections
+        each level2Section in level1Section.sections
+          +section(level2Section, level1Section.id, 2)
+
+//- Support for switching examples format
+
+block custom-navbar-items
+  form.navbar-form.navbar-right
+    .form-group
+      label(for='examples-api') API:&nbsp;
+      select#examples-api.form-control
+        option(value='pryv.me', selected='selected') Pryv Lab: ${username}.pryv.me
+        option(value='DNS-less') DNS-less: ${hostname}/${username}
+        option(value='Own') Own domain: ${username}.${domain}
+    .form-group
+      label(for='examples-format') &nbsp;Format:&nbsp;
+      select#examples-format.form-control
+        option(value='json', selected='selected') REST payload
+        option(value='batch') Batch block
+        option(value='http') cURL
+        option(value='httpAuth') cURL auth
+        option(value='sockets') Socket.IO
+
+block custom-scripts
+  // Code examples format switch
+  script.
+    $(document).ready(function () {
+      setExamplesFormat($('#examples-format').get(0).value);
+      for (c of ['-user', '-host', '', '-curl']) {
+         $("span").siblings('.api' + c).addClass('hljs-string'); // add source code class to all items
+      }
+      setExamplesAPI('pryv.me');
+    });
+    $('#examples-format').on('change', function () {
+      setExamplesFormat(this.value);
+    });
+    $('#examples-api').on('change', function () {
+      setExamplesAPI(this.value);
+    });
+    function setExamplesAPI(value) {
+      switch (value) {
+        case 'DNS-less':
+          $("span").siblings( ".api-user").text('{username}');
+          $("span").siblings( ".api-host").text('{hostname}');
+          $("span").siblings( ".api-reg").text('{hostname}/reg');
+          $("span").siblings( ".api-reg-curl").text('${hostname}/reg');
+          $("span").siblings( ".api" ).text('{hostname}/{username}');
+          $("span").siblings( ".api-curl" ).text('${hostname}/${username}');
+          $("span").siblings( ".core-reg-curl" ).text('${core-hostname}');
+        break;
+        case 'Own':
+          $("span").siblings( ".api-user").text('');
+          $("span").siblings( ".api-host").text('{username}.{domain}');
+          $("span").siblings( ".api-reg" ).text('reg.{domain}');
+          $("span").siblings( ".api-reg-curl" ).text('reg.${domain}');
+          $("span").siblings( ".api" ).text('{username}.{domain}');
+          $("span").siblings( ".api-curl" ).text('${username}.${domain}');
+          $("span").siblings( ".core-reg-curl" ).text('${core-subdomain}.${domain}');
+          $("span").siblings( ".api-admin" ).text('lead.{domain}');
+          $("span").siblings( ".api-admin-curl" ).text('lead.${domain}');
+        break;
+        default: // pryv.me
+          $("span").siblings( ".api-user").text('');
+          $("span").siblings( ".api-host").text('{username}.pryv.me');
+          $("span").siblings( ".api-reg" ).text('reg.pryv.me');
+          $("span").siblings( ".api-reg-curl" ).text('reg.pryv.me');
+          $("span").siblings( ".api" ).text('{username}.pryv.me');
+          $("span").siblings( ".api-curl" ).text('${username}.pryv.me');
+          $("span").siblings( ".core-reg-curl" ).text('${core-subdomain}.pryv.me');
+          $("span").siblings( ".api-admin" ).text('lead.pryv.me');
+          $("span").siblings( ".api-admin-curl" ).text('lead.pryv.me');
+        break;
+      }
+      console.log('Switched to ' + value);
+    }
+    function setExamplesFormat(format) {
+      var removeSelectors = [];
+      ['json', 'http', 'sockets', 'httpAuth', 'batch'].forEach(function (f) {
+        if (format !== f) {
+          removeSelectors.push('.example .tab-pane.' + f + '.active');
+        }
+      });
+      $(removeSelectors.join(',')).removeClass("active");
+      $('.example .tab-pane.' + format).addClass("active");
+    }

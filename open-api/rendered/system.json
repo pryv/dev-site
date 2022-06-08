@@ -10,12 +10,12 @@
         {
           "id": "services-involved",
           "title": "Services involved",
-          "description": "Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).  \nA color tag on the API method indicates the server to which you should make the request.  \n\n- The **core servers** own the account management processes, i.e. data creation and deletion\n- The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers."
+          "description": "Unlike user account data, which is fully managed by the core server hosting each account, managing the accounts themselves (e.g. retrieval, creation, deletion) is handled by the core servers *and* the central register server (AKA user account directory).\nA color tag on the API method indicates the server to which you should make the request.\n\n- The **core servers** own the account management processes, i.e. data creation and deletion\n- The **register server** maintains the list of account usernames and their hosting locations; it helps account management by providing checks (for creation) and is notified of all relevant changes by the core servers."
         },
         {
           "id": "endpoint-url",
           "title": "API endpoint",
-          "description": "The methods are called via HTTPS on the register or core server depending on the method:   \n\n- Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.  \n- Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.  \n                  \nYou can adapt the examples with \"API\" selector in the top navigation bar."
+          "description": "The methods are called via HTTPS on the register or core server depending on the method:\n\n- Register: `https://reg.{domain}` or `https://{hostname}/reg` for DNS-less setup.\n- Core: `https://{core-subdomain}.{domain}` or `https://{hostname}` for DNS-less setup.\n\nYou can adapt the examples with \"API\" selector in the top navigation bar."
         },
         {
           "id": "account-creation",
@@ -33,7 +33,7 @@
           "id": "admin",
           "title": "Admin",
           "adminOnly": true,
-          "description": "Methods for platform administration.\n\nThese calls are limited to accredited persons and are flagged as `Admin only`.\n\nAdmin api calls are tagged with <span class=\"admin-tag\"><span title=\"Admin Only\" class=\"label\">A</span></span>\n\nThey must carry the admin key in the HTTP `Authorization` header.  \nThis key is defined within the platform configuration: `REGISTER_ADMIN_KEY`.",
+          "description": "Methods for platform administration.\n\nThese calls are limited to accredited persons and are flagged as `Admin only`.\n\nAdmin api calls are tagged with <span class=\"admin-tag\"><span title=\"Admin Only\" class=\"label\">A</span></span>\n\nThey must carry the admin key in the HTTP `Authorization` header.\nThis key is defined within the platform configuration: `REGISTER_ADMIN_KEY`.",
           "sections": [
             {
               "id": "users.get",
@@ -75,7 +75,7 @@
                         "language": "en",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "cl0clahyz001a910f5137gsv8",
+                        "id": "cl3tv0yap001acmkgaegf7ymi",
                         "registeredTimestamp": "1557743399558",
                         "server": "core1.pryv.me",
                         "registeredDate": "Mon, 13 May 2019 10:29:59 GMT"
@@ -86,7 +86,7 @@
                         "language": "fr",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "cl0clahyz001b910fcilq69oc",
+                        "id": "cl3tv0yap001bcmkg4ig5bhrf",
                         "registeredTimestamp": "1536930239805",
                         "server": "core2.pryv.me",
                         "registeredDate": "Fri, 14 Sep 2018 13:03:59 GMT"
@@ -174,7 +174,7 @@
                         "language": "en",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "cl0clahyz001a910f5137gsv8",
+                        "id": "cl3tv0yap001acmkgaegf7ymi",
                         "registeredTimestamp": "1557743399558",
                         "server": "core1.pryv.me",
                         "registeredDate": "Mon, 13 May 2019 10:29:59 GMT"
@@ -266,7 +266,7 @@
                   {
                     "key": "regions",
                     "type": "Object",
-                    "description": "Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.  \nYou need to use the `availableCore` URL as endpoint for the [Create user API method](#create-user)."
+                    "description": "Object containing multiple regions, containing themselves multiple zones, containing themselves multiple **hostings**.\nYou need to use the `availableCore` URL as endpoint for the [Create user API method](#create-user)."
                   }
                 ]
               },
@@ -695,7 +695,7 @@
                   {
                     "key": "email",
                     "type": "string",
-                    "description": "The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.   \nThis is meant to prevent email discovery."
+                    "description": "The email to look for. When using the email parameter, you will always get a core returned, even if no such email is registered.\nThis is meant to prevent email discovery."
                   }
                 ]
               },
@@ -742,7 +742,7 @@
               "httpOnly": true,
               "trustedOnly": true,
               "server": "core",
-              "description": "Deletes a user account. This method must be enabled in the platform configuration. You should fetch the URL of the core where the user data is stored using the [Get core](#get-core) method.  \n- When performed by the account owner, this method requires a personal token.\n- For platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).\n- For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.",
+              "description": "Deletes a user account. This method must be enabled in the platform configuration. You should fetch the URL of the core where the user data is stored using the [Get core](#get-core) method.\n- When performed by the account owner, this method requires a personal token.\n- For platform administrators, please refer to [its Delete user method](/reference-admin/#delete-user).\n- For Open Pryv.io users, this method requires to provide the [auth:adminAccessKey](https://github.com/pryv/open-pryv.io#config) as `Authorization` header.",
               "params": {
                 "properties": [
                   {

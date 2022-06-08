@@ -1,12 +1,13 @@
 .DS_Store
 .project
-build
 dependencies
 dev-site.iml
+dist
 node_modules
 npm-debug.log
+open-api/transpiled/**/*.js
 out
-source/event-types/extras.json
-source/event-types/hierarchical.json
+src/event-types/extras.json
+src/event-types/hierarchical.json
 .idea
 .vscode

@@ -1,0 +1,104 @@
+extends layout
+include includes/mixins
+
+mixin testId(id)
+  if id
+    span.method-id
+      span.label id
+      span.label-value: code !{id}
+
+mixin reference(ref)
+  if ref.url
+   a(href=ref.url) !{ref.description}
+
+mixin stats(stats, level)
+  +heading('Summary', level)
+  table.definitions
+        tr
+          th
+            strong !{stats['tests']}
+          td
+            strong tests total
+        tr
+          th !{stats['passes']}
+          td ✅ passing
+        tr
+          th !{stats['pending']}
+          td ❓ pending
+        tr
+          th !{stats['failures']}
+          td ❌ failing
+
+mixin tests(tests)
+  if tests
+    each test in tests
+      tr
+        td
+          test(id=test.id)
+            code !{test.id}
+        td(style='text-align: center;')
+          if typeof(test.duration) === "undefined"
+            | ❓
+          else if Object.keys(test.err).length > 0
+            | ❌
+          else
+            | ✅
+        td
+          +typeText(test.title)
+
+mixin testsets(testsets, level)
+  if testsets
+    +heading('Tests', level)
+    table
+      thead
+        tr
+          th Id
+          th(style='text-align: center;') Status
+          th Test
+      tbody
+        each setTitle in Object.keys(testsets)
+          tr
+            td(colspan=3)
+              b
+               | !{helpers.capitalize(setTitle)}
+          +tests(testsets[setTitle].tests)
+
+mixin component(component, parentDocId, level)
+  - var sectionTitle = `<code>${component.componentName}</code> component`
+  - var docId = helpers.getDocId(parentDocId, component.componentName)
+  - var sectionClass = ''
+  section(id=docId, class=sectionClass)
+    +heading(sectionTitle, level)
+    .content
+      .meta
+      +stats(component.stats, level + 1)
+      +testsets(component.sets, level + 1)
+
+mixin version(version, parentDocId, level)
+  +stats(version.stats, level + 1)
+  +intro('Date: ' + version.date)
+  if version.components
+    each component in version.components
+      +component(component, parentDocId, level)
+
+mixin section(section, parentDocId, level)
+  - var sectionTitle = section.title
+  - var docId = helpers.getDocId(parentDocId, section.id)
+  - var sectionClass = (section.type || '')
+  section(id=docId, class=sectionClass)
+    +heading(sectionTitle, level)
+    .content
+      .meta
+      +intro(section.description)
+      +properties(section.properties)
+    if section.sections
+      each subSection in section.sections
+        +section(subSection, parentDocId, level + 1)
+    if section.version
+        +version(section.version, parentDocId, level + 1)
+
+block content
+  - var source = testResults
+  - var sectionHeader = ''
+  each level1Section in source.sections
+    +section(level1Section, level1Section.id, 1)

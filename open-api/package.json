@@ -1,15 +1,11 @@
 {
-  "name": "code",
+  "name": "open-api-export",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/main.js",
   "license": "MIT",
-  "scripts": {
-    "transpile": "./node_modules/.bin/coffee -c -o transpiled ../source/_reference && ./scripts/replace-links.sh && node src/render",
-    "export": "node src/main"
-  },
   "dependencies": {
-    "coffeescript": "^2.4.1",
-    "lodash": "^4.17.15",
-    "yaml": "^1.7.0"
+    "coffeescript": "^2.7.0",
+    "lodash": "^4.17.21",
+    "yaml": "^2.0.1"
   }
 }

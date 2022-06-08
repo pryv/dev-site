@@ -1,0 +1,87 @@
+mixin h1(string)
+  if string
+    | !{markdown('# ' + string)}
+
+mixin h2(string)
+  if string
+    | !{markdown('## ' + string)}
+
+mixin h3(string)
+  if string
+    | !{markdown('### ' + string)}
+
+mixin h4(string)
+  if string
+    | !{markdown('#### ' + string)}
+
+mixin h5(string)
+  if string
+    | !{markdown('##### ' + string)}
+
+mixin heading(string, level)
+  if string
+    - const tag = `h${level}`
+    | <!{tag}>!{string}</!{tag}>
+
+mixin intro(string)
+  if string
+    .intro
+      | !{markdown(string)}
+
+mixin text(string)
+  if string
+    | !{markdown(string)}
+
+mixin http(http, httpOnly, server)
+  if http
+    span.http
+      span.label= httpOnly ? 'HTTP-only' : 'HTTP'
+      span.label-value
+        if http.code
+          code !{http.code}
+        else if http.text
+          - var output = markdown(http.text)
+          -// YES, HACK
+          span !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
+        else
+          if server
+            code !{http.replace(' ', ' <a href="/reference-system/#api-endpoint">{'+server+'}</a>')}
+          else
+            code !{http}
+
+mixin typeText(string)
+  if string
+    - var output = markdown(string)
+    -// YES, HACK
+    span.type !{output.indexOf('<p>') === 0 ? output.substr(3, output.length - 8) : output}
+
+mixin labelValue(label, cssClass, value)
+  if value
+    span(class='label label-default ' + cssClass)
+      | !{label + (typeof(value) === 'string' ? ' ' + value : '')}
+
+mixin properties(properties)
+  if properties
+    table.definitions
+      each prop in properties
+        tr
+          th
+            if prop.key instanceof Array
+              - var i = 0
+              each key in prop.key
+                code !{key}
+                if i < prop.key.length - 1
+                  | |
+                - i++
+            else
+              code !{prop.key}
+          td
+            .header
+              -// TODO make type specification flexible
+              +typeText(prop.type)
+              +labelValue('unique', 'unique', prop.unique)
+              +labelValue('optional', 'optional', prop.optional)
+              +labelValue('read-only', 'read-only', prop.readOnly)
+              +http(prop.http)
+            .description !{markdown(prop.description)}
+            +properties(prop.properties)

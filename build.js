@@ -1,5 +1,4 @@
 const metalsmith = require('metalsmith')(__dirname);
-const msCollections = require('metalsmith-collections');
 const msDefine = require('metalsmith-define');
 const msHeadingsId = require('metalsmith-headings-identifier');
 const msIgnore = require('metalsmith-ignore');
@@ -20,26 +19,20 @@ const markdownIt = require('markdown-it')(markdownItOptions);
 
 const globals = {
   _: require('lodash'),
-  apiReference: require('./source/_reference'),
-  functionalSpecifications: require('./source/functional-specifications'),
-  testResults: require('./source/test-results'),
-  helpers: require('./source/_templates/helpers'),
+  apiReference: require('./src/_reference'),
+  functionalSpecifications: require('./src/_functional-specifications'),
+  testResults: require('./src/_test-results'),
+  helpers: require('./src/_reference/helpers'),
   markdown: (string) => markdownIt.render(string)
 };
 
 metalsmith
-  .source('./source')
-  .destination('./build')
+  .source('./src')
+  .destination('./dist')
   .clean(false) // to keep .git, CNAME etc.
   .use(msDefine(globals))
   .use(msJSON({ key: 'contents' }))
   .use(msInclude())
-  .use(msCollections({
-    appAccessSections: {
-      pattern: 'app-access/_sections/*.md',
-      sortBy: 'sectionOrder'
-    }
-  }))
   .use(msPug({ useMetadata: true }))
   .use(msMarkdownIt(markdownItOptions))
   .use(msStylus({
@@ -48,7 +41,7 @@ metalsmith
     compress: true
   }))
   .use(msLayouts({
-    directory: 'source/_templates',
+    directory: 'src/_layouts',
     engineOptions: { useMetadata: true }
   }))
   .use(msHeadingsId({
@@ -57,11 +50,10 @@ metalsmith
   }))
   .use(msIgnore([
     '_reference/**',
-    '_templates/*',
-    'app-access/_sections/*',
-    'event-types/_source/*',
-    'functional-specifications/**',
-    'test-results/**', 'test-results/_source/**', 'test-results/_source/.git'
+    '_layouts/**',
+    '_functional-specifications/**',
+    '_test-results/**',
+    'event-types/_source/*'
   ]))
   .use(msPermalinks({
     // section id is optional in metadata

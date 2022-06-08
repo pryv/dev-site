@@ -1,0 +1,19 @@
+
+module.exports = exports =
+  id: "introduction"
+  title: "Introduction"
+  description: """
+                |                          |                          |
+                | ------------------------ | ------------------------ |
+                | Date                     | 25th October 2021          |
+                | Documents Version        | 1.1                      |
+                | API-Version              | 1.7.1                   |
+
+                 This document describes the functional specifications for the Pryv.io
+                middleware system: the capabilities and functions that the
+                system must be capable of performing.
+
+                This document applies only to Pryv.io releases under Enterprise License.
+
+                This document does not apply to Open Pryv.io release.
+               """

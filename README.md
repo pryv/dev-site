@@ -3,52 +3,55 @@
 Source content for api.pryv.com (API reference, recommendations, guides, etc.)
 
 
-## Contribute
+## Installation
 
-### Prerequisites
+Prerequisites: [Node.js](https://nodejs.org/en/download/) 16, [just](https://github.com/casey/just#installation)
 
-Node v16+, Yarn v1+
+Then:
+1. `just setup` to install node modules and setup `dist/` as well as repository copies of `service-core` and `test-results` (see `scripts/setup` for details)
+2. `just build` for the initial compilation into `dist/`
 
-`make setup` sets up the environment.
-
-**Note:** The setup command will install the node dependencies as well as the following external dependencies:
-- pryv/service-core
-- pryv/test-results
-
-See `dev-env/setup.sh` for more details.
-
-### Build & publish
-
-- `make build` generates the website from the source into the `build` folder
-- `make watch` watches the source folder and rebuilds on changes
-- `make clean` cleans up the `build` folder (not done by build/watch)
-- `make publish` builds and publishes the website
-- `yarn webserver` to run the site locally on [https://l.rec.la:4443/](https://l.rec.la:4443/)
-- `yarn openapi` generate open-api definitions
-
-(Read `makefile` for details.)
-
-**Note:** data types are sourced from repo [pryv/data-types](https://github.com/pryv/data-types) on `make retrieve-types` and `make publish` into `source/event-types/_source`.
+Running `just` with no argument displays the available commands (defined in `justfile`).
 
 
-**Note:** test results are sourced from repo [pryv/test-results-pryv.io](https://github.com/pryv/test-results-pryv.io) on `make retrieve-tests` and `make publish` into `source/event-types/_source`.
+## Build & publish
 
-### Don't forget
+- `just build` generates the website from `src/` into `dist/`
+- `just watch` watches `src/` and rebuilds on changes
+- `just clean` cleans up `dist/` (not done by build/watch)
+- `just publish` builds and publishes the website
+- `just serve` to run the site locally on [https://l.rec.la:4443/](https://l.rec.la:4443/)
 
-- [API version bump](/source/_reference/index.js#L11)
-- [Change log](/source/change-log.md)
+**Note:** data types are sourced from repo [pryv/data-types](https://github.com/pryv/data-types) on `just retrieve-types` and `just publish` into `src/event-types/_source`.
 
-### Coding conventions
+**Note:** test results are sourced from repo [pryv/dev-test-results](https://github.com/pryv/dev-test-results) on `just retrieve-tests` and `just publish` into `dependencies/test-results`.
 
-See the [Pryv guidelines](http://pryv.github.io/guidelines/).
 
-### Pug (formerly Jade)
+## Don't forget
 
-If you're fighting with Pug, compile the result with `make build`, then right-click + "View Page Source" to see the result.
+- [API version bump](/src/_reference/index.js#L11)
+- [Change log](/src/change-log.md)
+
+
+## OpenAPI 3.0 definitions
+
+The sub-package in `open-api/` implements the generation of OpenAPI definitions from the source reference documentation.
+
+### Generating definitions
+
+```
+just open-api
+```
+
+### Importing in Postman
+
+1. Import `open-api-format/api.yaml` (with `Import as an API` and `Generate a Postman Collection` checked)
+2. Set the environment variables of pryv.me : `username`, `token` and `password` correspond to the variables created for your Pryv.me account (in our example, `username` is `testuser`, the `token` is `ck3iwe3o700yf1ld3hh86rz3m` with `password` being `testuser`), and the `baseUrl` variable should be set as `https://{{token}}@{{username}}.pryv.me`.
+3. Enjoy
 
 
 ## License
 
-Unlicensed 
+Unlicensed
 
 Copyright (c) 2020 Pryv S.A.
