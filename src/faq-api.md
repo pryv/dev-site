@@ -41,7 +41,7 @@ If you prefer storing this data in a separate account, keep in mind that the use
 
 ## Streams
 
-### Is the stream structure declared globally or at the level of each user account ? 
+### Is the stream structure declared globally or at the level of each user account ?
 
 The stream structure is independent from one user account to another. It is declared and managed by apps: the stream structure can be created by the app when the user logs in for the first time for example.
 
@@ -78,14 +78,14 @@ Depending on the `type` field of the event, the content of the fields `content` 
 
 ### What information should be contained in the “Profile” section of the user ?
 
-Profile sets are plain key-value structure in which you can store any user-level settings (e.g. credentials).   
-This structure is likely to be deprecated soon, and with the exception of the “Public profile set”, we recommend our customers to use dedicated streams to store account information of their users. 
+Profile sets are plain key-value structure in which you can store any user-level settings (e.g. credentials).
+This structure is likely to be deprecated soon, and with the exception of the “Public profile set”, we recommend our customers to use dedicated streams to store account information of their users.
 
-### What are “Followed slices” that can be stored in Pryv accounts ? 
+### What are “Followed slices” that can be stored in Pryv accounts ?
 
 Followed slices are meant to store another user's access tokens in one's account. For practical reasons, we generally advise you to store the access tokens in a dedicated stream.
 
-For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a [Followed Slice](/reference/#followed-slice).  
+For example, a doctor can store all the tokens to patients’ accounts for which he has been granted the access in a [Followed Slice](/reference/#followed-slice).
 
 However this data structure has a limitation: it is only accessible with a “personal token” which requires the user to login with his password every time.
 
@@ -108,26 +108,26 @@ If you are having issues creating the package for the create attachment call wit
 
 ### How to keep events in local cache up to date?
 
-The [events.get API method](/reference/#get-events) offers the `modifiedSince` and `includeDeletions` parameters to synchronize a set of events.  
+The [events.get API method](/reference/#get-events) offers the `modifiedSince` and `includeDeletions` parameters to synchronize a set of events.
 As the default parameters return the last 20 events, we should perform synchronization on a time range, which can be very big if needed.
 
-1. Initialize your events cache with an `events.get` call and a time range with `fromTime` and `toTime`.  
+1. Initialize your events cache with an `events.get` call and a time range with `fromTime` and `toTime`.
 2. When you receive the events, loop into them to find the latest `event.modified` value.
 3. Store this value in a variable we call `anchor` and add a very small number to it, for example: `0.0000001`.
 4. To synchronize the events you just need to call `events.get` with a time range and `&modifiedSince={anchor}&includeDeletions=true` query parameters.
 
-The companion JavaScript library [Monitor](https://github.com/pryv/lib-js-monitor) implements this pattern.  
+The JavaScript library's [Monitor add-on](https://github.com/pryv/lib-js/tree/master/components/pryv-monitor) implements this pattern.
 
 #### Limitation
 
-Note that if you have an [access](/reference/#access) with permissions on a certain set of streams (we'll call this a "scope"), you will not be able to detect events that are leaving this scope.  
+Note that if you have an [access](/reference/#access) with permissions on a certain set of streams (we'll call this a "scope"), you will not be able to detect events that are leaving this scope.
 For example, let's say you have permissions on the streamId `diary`. If some client changes its streamIds by removing `diary`, you will not be able to detect this change.
 
 ### How can I setup an "Automatic" synchronization of my Events and Streams cache
 
 By coupling the precedent logic with a [Notification System](/faq-api/#notification-system)
 
-If you use the [Pryv JavaScript Library](https://github.com/pryv/lib-js), it can be used in combination with our [Monitor](https://github.com/pryv/lib-js-monitor) and [Socket.io](https://github.com/pryv/lib-js-socket.io) add-ons to have "near real-time" updates.
+If you use the [Pryv JavaScript Library](https://github.com/pryv/lib-js), it can be used in combination with our [Monitor](https://github.com/pryv/lib-js/tree/master/components/pryv-monitor) and [Socket.io](https://github.com/pryv/lib-js/tree/master/components/pryv-socket.io) add-ons to have "near real-time" updates.
 
 
 ## User creation
@@ -150,7 +150,7 @@ We suggest using the following format as a placeholder: `${USERNAME}@${DOMAIN}`.
 
 It is possible to create users with an API call, without having to fill the fields manually.
 
-### Is there a search tool to retrieve a username from the user information (name, surname, etc) ? 
+### Is there a search tool to retrieve a username from the user information (name, surname, etc) ?
 
 It is possible to retrieve a username from an email address: [Get username from email](/reference-system/#get-username-from-email).
 This is useful for email authentication or if the user has lost his password.
@@ -162,7 +162,7 @@ This is useful for email authentication or if the user has lost his password.
 
 You can check how to authenticate your app [here](/reference/#authenticate-your-app).
 
-We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-auth3). 
+We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-auth3).
 
 We advise our customers to customize it, and we provide some [guidelines](/customer-resources/pryv.io-setup/#customize-authentication-registration-and-reset-password-apps) for the customization.
 
@@ -215,7 +215,7 @@ Using a token previously obtained, you can generate a new one using the [accesse
 
 Once you have obtained an access token to a user's account, for example for a doctor to access particular streams of his patients' data, we advise you to store it in a dedicated stream.
 
-You can find an example in the [data modelling guide](/guides/data-modelling/#consent-aggregation) of how to do consent aggregation with Pryv.io and store access tokens to user accounts. 
+You can find an example in the [data modelling guide](/guides/data-modelling/#consent-aggregation) of how to do consent aggregation with Pryv.io and store access tokens to user accounts.
 
 ### How can I request access to someone's data ?
 
@@ -223,7 +223,7 @@ In order to request an access to someone's data, one must implement a page that 
 
 A simple web app demonstrating this implementation can be seen [here](https://github.com/pryv/app-web-access).
 
-### What are the different access types ? 
+### What are the different access types ?
 
 There are three main access types - **personal**, **app** and **shared** - that are defined and explained [here](/concepts/#accesses).
 
@@ -245,11 +245,11 @@ You can send an auth request to your users at their first login to grant your ap
 
 This works as a delegation of access, and the “app” token will be able to generate sub-tokens of a “shared” type and give permission to data that was in its scope.
 
-### What level of permissions do I need to create/delete/modify streams in a user’s account ? 
+### What level of permissions do I need to create/delete/modify streams in a user’s account ?
 
 The access level “manage” on a stream gives you the permission to manipulate (read, create, modify, delete) all the substreams of this stream (see more details on the **Access** structure [here](/reference/#access)).
 
-### Can I limit the number of apps that can send an auth request to users ? 
+### Can I limit the number of apps that can send an auth request to users ?
 
 There is currently no API secret to restrict the auth request usage.
 You can contact us directly if you wish to implement a verification protocol for the requesting apps.
@@ -264,7 +264,7 @@ To see an example of access structure implementation, you can check the [Data Mo
 
 You can give each third-party an “app” token with limited permissions to a particular scope of streams.
 
-It is generally preferable to maximize the number of "app" tokens with limited set of permissions than to use a "master" token generating shared type of accesses to third parties, as it allows to track accesses made over data for audit capabilities. 
+It is generally preferable to maximize the number of "app" tokens with limited set of permissions than to use a "master" token generating shared type of accesses to third parties, as it allows to track accesses made over data for audit capabilities.
 
 Below is an example of a single app "third-party-test" requesting access to the particular streams "Health" and "Personal Information" with a limited set of permissions :
 
@@ -275,7 +275,7 @@ Below is an example of a single app "third-party-test" requesting access to the 
 
 ### Should I use “websockets” or “webhooks” to subscribe to changes ?
 
-**Websockets** should be used to get notified of data changes in a web application (on the frontend side).  
+**Websockets** should be used to get notified of data changes in a web application (on the frontend side).
 **Webhooks** are more suited to get notified of data changes in a web service (on the backend side).
 
 More details on websockets and webhooks can be found [here](/reference/#subscribe-to-changes).
@@ -287,7 +287,7 @@ You can have a look at the webhooks and websockets data changes payload in the [
 ### Is the server notified of data changes in all streams of the account or only the streams for which permission was granted in the provided access token ?
 
 Notifications are sent as soon as there is a data change in the "events", "streams" or "accesses" for the whole user account. It is therefore possible to get notified of a data change that would not be in the scope of the access token.
-Notifications are likely to be scoped in the near future. 
+Notifications are likely to be scoped in the near future.
 
 
 ## Do you have a test setup where I could experiment with your API?
