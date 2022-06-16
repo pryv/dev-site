@@ -4,6 +4,10 @@ title: API change log
 layout: default.pug
 ---
 
+## 1.7.13
+
+- Fixes for miscellaneous issues, including issues with the system streams backward compatibility flag (`BACKWARD_COMPATIBILITY_SYSTEM_STREAMS_PREFIX`), occasionally sluggish performance when querying events by type, and an occasional failure to restart services after a configuration change.
+
 ## 1.7.10
 
 - API change: Don't coerce the event content values according to type
@@ -17,7 +21,7 @@ layout: default.pug
 
 Changes:
 
-- Audit has been re-implemented, offering improved performance:  
+- Audit has been re-implemented, offering improved performance:
   - See the [Audit logs guide](/guides/audit-logs/) for API usage
   - Audit logs are now available through the [Events API](/reference/#get-events), deprecating the [previous route](/reference/#get-audit-logs) and its [data structure](/reference/#audit-log)
 - System streams have been modified. Their prefix changes from `.` (dot) to `:_system:` & `:system:`. See the [System streams page](/customer-resources/system-streams/) for details.
@@ -131,7 +135,7 @@ Changes:
 
 ## v1.5.5
 
-New feature: 
+New feature:
 
 - Access permission `{ "feature": "selfRevoke", "setting": "forbidden"}`, more details on [Access data structure](/reference/#access).
 
@@ -229,10 +233,10 @@ Changes:
 New feature:
 
 - Versioning:
-  - a new endpoint on `/events/{id}` allows to retrieve a specific event by his `id`. Setting the 
+  - a new endpoint on `/events/{id}` allows to retrieve a specific event by his `id`. Setting the
   `includeHistory` parameter to `true`, the response will contain an array of the previous versions
    of the event in the `history` field.
-   
+
 
 ## v1.0
 
