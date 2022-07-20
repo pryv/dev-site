@@ -4,6 +4,10 @@ title: API change log
 layout: default.pug
 ---
 
+## 1.7.14
+
+- Fixes two issues, both related to selfRevoke and one to the system streams backward compatibility flag, causing a crash and preventing creations of accesses with selfRevoke permissions.
+
 ## 1.7.13
 
 - Fixes for miscellaneous issues, including issues with the system streams backward compatibility flag (`BACKWARD_COMPATIBILITY_SYSTEM_STREAMS_PREFIX`), occasionally sluggish performance when querying events by type, and an occasional failure to restart services after a configuration change.
