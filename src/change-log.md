@@ -6,7 +6,7 @@ layout: default.pug
 
 ## 1.7.14
 
-- Fixes two issues, both related to selfRevoke and one to the system streams backward compatibility flag, causing a crash and preventing creations of accesses with selfRevoke permissions.
+- Fixes two issues with `selfRevoke` permissions, one of which related to the system streams backward compatibility flag; the issues caused a crash and prevented creation of accesses with `selfRevoke` permissions.
 
 ## 1.7.13
 
