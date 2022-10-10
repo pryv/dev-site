@@ -79,6 +79,18 @@ module.exports = exports =
           description: """
                        The user's preferred language as a 2-letter ISO language code.
                        """
+        ,
+          key: "passwordExpires"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          description: """
+                       _If password maximum age rule is enabled_: The time the password will expire, according to platform setting `PASSWORD_AGE_MAX_DAYS`.
+                       """
+        ,
+          key: "passwordCanBeChanged"
+          type: "[timestamp](##{dataStructure.getDocId("timestamp")})"
+          description: """
+                       _If password minimum age rule is enabled_: The time after which the password can be changed, according to platform setting `PASSWORD_AGE_MIN_DAYS`. Can be in the past.
+                       """
         ]
       examples: [
         params:
@@ -2311,6 +2323,7 @@ module.exports = exports =
       http: "POST /account/change-password"
       description: """
                    Modifies the user's password.
+                   Enforces password complexity, reuse and minimum age rules if enabled (set via the corresponding platform settings).
                    """
       params:
         properties: [
@@ -2332,7 +2345,13 @@ module.exports = exports =
         key: "invalid-operation"
         http: "400"
         description: """
-                     The given password does not match.
+                     The given password does not match, cannot be changed at this time (if password minimum age rule enabled) or the new password was already used recently (if password reuse rule enabled).
+                     """
+      ,
+        key: "invalid-parameters-format"
+        http: "400"
+        description: """
+                     The new password does not match password complexity rules (if enabled).
                      """
       ]
       examples: [
@@ -2376,6 +2395,7 @@ module.exports = exports =
       http: "POST /account/reset-password"
       description: """
                    Resets the user's password, authorizing the request with the given reset token (see [request password reset](##{_getDocId("account", "account.requestPasswordReset")}) ).
+                   Enforces password complexity, reuse and minimum age rules if enabled (set via the corresponding platform settings).
                    This method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](##{basics.getDocId("trusted-apps-verification")}).
                    """
       params:
@@ -2400,6 +2420,19 @@ module.exports = exports =
         ]
       result:
         http: "200 OK"
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The password cannot be changed at this time (if password minimum age rule enabled), or the new password was already used recently (if password reuse rule enabled).
+                     """
+      ,
+        key: "invalid-parameters-format"
+        http: "400"
+        description: """
+                     The new password does not match password complexity rules (if enabled).
+                     """
+      ]
       examples: [
         params:
           resetToken: "chtplghfp0000hqjx814u6393"

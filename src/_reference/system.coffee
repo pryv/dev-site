@@ -345,6 +345,7 @@ module.exports = exports =
         server: "core"
         description: """
                     Creates a new user account. The method's parameters can be customized with the [system streams configuration](/customer-resources/system-streams/).
+                    Enforces password complexity rules if enabled (set via the corresponding platform settings).
 
                     Before Pryv.io 1.6, this route was served by the register server on `/user`
                     """
@@ -412,6 +413,13 @@ module.exports = exports =
                          The apiEndpoint to reach this account. It includes a personal access token.
                          """
           ]
+        errors: [
+          key: "invalid-parameters-format"
+          http: "400"
+          description: """
+                      The password does not match password complexity rules (if enabled).
+                      """
+        ]
         examples: [
           title: "Creating a user."
           params:
