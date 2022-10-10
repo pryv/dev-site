@@ -7,7 +7,7 @@ exports.sections = [
   require('./data-structure.coffee')
 ];
 
-exports.version = '1.7.13';
+exports.version = '1.7.14';
 
 exports.system = require('./system.coffee');
 exports.admin = require('./admin.coffee');

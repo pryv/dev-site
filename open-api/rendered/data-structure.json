@@ -148,8 +148,8 @@
         {
           "title": "A picture",
           "content": {
-            "id": "cl4grcnwj000zt7kg2lv6hsmo",
-            "time": 1655364374.659,
+            "id": "cl92l5jum000zu40f7c0ubz1f",
+            "time": 1665391350.334,
             "streamIds": [
               "diary"
             ],
@@ -159,26 +159,26 @@
             "content": null,
             "attachments": [
               {
-                "id": "cl4grcnwj0010t7kgc39oh0tc",
+                "id": "cl92l5jum0010u40f0ebo0r1q",
                 "fileName": "photo.jpg",
                 "type": "image/jpeg",
                 "size": 2561,
-                "readToken": "cl4grcnwj0011t7kg0ll4a5gs-8xJ5D941gP2YxId9uUiYSACkidH",
+                "readToken": "cl92l5jum0011u40fae9m32nz-uhzAvnkrVB2Sx7BEtrnidrnUSPA",
                 "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
               }
             ],
             "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-            "created": 1655364374.659,
-            "createdBy": "cl4grcnwa0004t7kg5w7kfxsx",
-            "modified": 1655364374.659,
-            "modifiedBy": "cl4grcnwa0004t7kg5w7kfxsx"
+            "created": 1665391350.334,
+            "createdBy": "cl92l5jud0004u40ffx0zecac",
+            "modified": 1665391350.334,
+            "modifiedBy": "cl92l5jud0004u40ffx0zecac"
           }
         },
         {
           "title": "An activity",
           "content": {
-            "id": "cl4grcnwi000ot7kgeriof929",
-            "time": 1655367974.658,
+            "id": "cl92l5jum000ou40f9kj68qpq",
+            "time": 1665394950.334,
             "streamIds": [
               "jogging"
             ],
@@ -187,16 +187,16 @@
             "type": "activity/plain",
             "content": null,
             "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-            "created": 1655367974.658,
-            "createdBy": "cl4grcnwa0001t7kg62kwdya3",
-            "modified": 1655367974.658,
-            "modifiedBy": "cl4grcnwa0001t7kg62kwdya3"
+            "created": 1665394950.334,
+            "createdBy": "cl92l5jud0001u40f9ey0eaj2",
+            "modified": 1665394950.334,
+            "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
           }
         },
         {
           "title": "A position",
           "content": {
-            "id": "cl4grcnwj0012t7kgasytc4jp",
+            "id": "cl92l5jum0012u40f012qav3n",
             "time": 1350373077.359,
             "streamIds": [
               "diary"
@@ -209,10 +209,10 @@
               "longitude": -73.998672
             },
             "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-            "created": 1655360774.659,
-            "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-            "modified": 1655360774.659,
-            "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+            "created": 1665387750.334,
+            "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+            "modified": 1665387750.334,
+            "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
           }
         }
       ]
@@ -298,26 +298,26 @@
                   "name": "Jogging",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1592254085.7112887,
-                  "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                  "modified": 1592254154.4552112,
-                  "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                  "created": 1602281055.8335605,
+                  "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                  "modified": 1602281320.4051867,
+                  "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                 },
                 {
                   "id": "bicycling",
                   "name": "Bicycling",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1592254085.7112887,
-                  "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                  "modified": 1592254163.287375,
-                  "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                  "created": 1602281055.8335605,
+                  "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                  "modified": 1602281375.7251782,
+                  "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                 }
               ],
-              "created": 1592254070.658,
-              "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-              "modified": 1592254403.056339,
-              "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+              "created": 1602281046.334,
+              "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+              "modified": 1602281335.909994,
+              "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
             },
             {
               "id": "work",
@@ -325,82 +325,82 @@
               "parentId": null,
               "children": [
                 {
-                  "id": "cl4grcnwi000dt7kgel6rc665",
+                  "id": "cl92l5jum000du40f2jb1634t",
                   "name": "Noble Works Co.",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "cl4grcnwi000ft7kg75zmhrjm",
+                      "id": "cl92l5jum000fu40fhwnd5h8j",
                       "name": "Last Be First",
-                      "parentId": "cl4grcnwi000dt7kgel6rc665",
+                      "parentId": "cl92l5jum000du40f2jb1634t",
                       "children": [],
-                      "created": 1592254125.08248,
-                      "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                      "modified": 1592254157.146889,
-                      "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                      "created": 1602281061.2842002,
+                      "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                      "modified": 1602281316.8537385,
+                      "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                     },
                     {
-                      "id": "cl4grcnwi000gt7kg8kz49r8q",
+                      "id": "cl92l5jum000gu40f5nhse05w",
                       "name": "Big Tree",
-                      "parentId": "cl4grcnwi000dt7kgel6rc665",
+                      "parentId": "cl92l5jum000du40f2jb1634t",
                       "children": [],
-                      "created": 1592254125.08248,
-                      "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                      "modified": 1592254284.3611674,
-                      "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                      "created": 1602281061.2842002,
+                      "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                      "modified": 1602281081.67049,
+                      "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                     },
                     {
-                      "id": "cl4grcnwi000ht7kga49z7ze2",
+                      "id": "cl92l5jum000hu40f89984rmi",
                       "name": "Inner Light",
-                      "parentId": "cl4grcnwi000dt7kgel6rc665",
+                      "parentId": "cl92l5jum000du40f2jb1634t",
                       "children": [],
-                      "created": 1592254125.08248,
-                      "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                      "modified": 1592254308.8170128,
-                      "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                      "created": 1602281061.2842002,
+                      "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                      "modified": 1602281281.0641804,
+                      "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                     }
                   ],
-                  "created": 1592254096.3486178,
-                  "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                  "modified": 1592254096.8155642,
-                  "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                  "created": 1602281049.7805083,
+                  "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                  "modified": 1602281075.489053,
+                  "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                 },
                 {
-                  "id": "cl4grcnwi000et7kgfupm8npj",
+                  "id": "cl92l5jum000eu40f2fbtaw22",
                   "name": "Freelancing",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "cl4grcnwi000it7kgb8x8go9u",
+                      "id": "cl92l5jum000iu40f67l75cao",
                       "name": "Funky Veggies",
-                      "parentId": "cl4grcnwi000et7kgfupm8npj",
+                      "parentId": "cl92l5jum000eu40f2fbtaw22",
                       "children": [],
-                      "created": 1592254106.2023919,
-                      "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                      "modified": 1592254159.0017977,
-                      "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                      "created": 1602281057.0715237,
+                      "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                      "modified": 1602281364.4615557,
+                      "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                     },
                     {
-                      "id": "cl4grcnwi000jt7kgcd1a0sq1",
+                      "id": "cl92l5jum000ju40fa9kf4e7y",
                       "name": "Jojo Lapin & sons",
-                      "parentId": "cl4grcnwi000et7kgfupm8npj",
+                      "parentId": "cl92l5jum000eu40f2fbtaw22",
                       "children": [],
-                      "created": 1592254106.2023919,
-                      "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                      "modified": 1592254410.416133,
-                      "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                      "created": 1602281057.0715237,
+                      "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                      "modified": 1602281192.8819149,
+                      "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                     }
                   ],
-                  "created": 1592254096.3486178,
-                  "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-                  "modified": 1592254374.425223,
-                  "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+                  "created": 1602281049.7805083,
+                  "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+                  "modified": 1602281219.961959,
+                  "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
                 }
               ],
-              "created": 1592254070.658,
-              "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-              "modified": 1592254181.266589,
-              "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey"
+              "created": 1602281046.334,
+              "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+              "modified": 1602281181.9939659,
+              "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
             }
           ]
         }
@@ -557,8 +557,8 @@
         {
           "title": "An app access",
           "content": {
-            "id": "cl4grcnwa0001t7kg62kwdya3",
-            "token": "cl4grcnwa0003t7kg2i23dtvm",
+            "id": "cl92l5jud0001u40f9ey0eaj2",
+            "token": "cl92l5jud0003u40f94waa53j",
             "type": "app",
             "name": "my-app-id",
             "permissions": [
@@ -568,17 +568,17 @@
               }
             ],
             "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-            "created": 1655281574.65,
-            "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-            "modified": 1655281574.65,
-            "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey",
-            "apiEndpoint": "https://cl4grcnwa0003t7kg2i23dtvm@user1.pryv.me/"
+            "created": 1665308550.325,
+            "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+            "modified": 1665308550.325,
+            "modifiedBy": "cl92l5jud0000u40fdbjlbbcj",
+            "apiEndpoint": "https://cl92l5jud0003u40f94waa53j@user1.pryv.me/"
           }
         },
         {
           "title": "An app access with create-only and forbidden selfRevoke permissions",
           "content": {
-            "id": "cl4grcnwa000ct7kgaezv5hmv",
+            "id": "cl92l5jue000cu40f5qdrdrld",
             "token": "mailbox",
             "type": "shared",
             "name": "publicly available token",
@@ -593,10 +593,10 @@
               }
             ],
             "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-            "created": 1655281574.65,
-            "createdBy": "cl4grcnw90000t7kg2uhkf8ey",
-            "modified": 1655281574.65,
-            "modifiedBy": "cl4grcnw90000t7kg2uhkf8ey",
+            "created": 1665308550.326,
+            "createdBy": "cl92l5jud0000u40fdbjlbbcj",
+            "modified": 1665308550.326,
+            "modifiedBy": "cl92l5jud0000u40fdbjlbbcj",
             "apiEndpoint": "https://mailbox@user1.pryv.me/"
           }
         }
@@ -750,13 +750,13 @@
         {
           "title": "A single audit log",
           "content": {
-            "id": "cl4grcnwj001ot7kgb5q2at7v",
+            "id": "cl92l5jun001ou40feihv1tul",
             "type": "audit/core",
             "time": 1561988300,
             "forwardedFor": "172.18.0.7",
             "action": "GET /events",
             "query": "streamId=diary",
-            "accessId": "cl4grcnwj001mt7kg1ero6cwg",
+            "accessId": "cl92l5jun001mu40f5dqogl2v",
             "status": 403,
             "errorMessage": "Access session has expired.",
             "errorId": "forbidden"
@@ -956,8 +956,8 @@
         {
           "title": "A simple Webhook",
           "content": {
-            "id": "cl4grcnwj001ht7kg9s8m0yck",
-            "accessId": "cl4grcnwj001ft7kg07jifoj9",
+            "id": "cl92l5jun001hu40f2yjo81r7",
+            "accessId": "cl92l5jun001fu40f23f89pup",
             "url": "https://notifications.service.com/pryv",
             "minIntervalMs": 5000,
             "maxRetries": 5,
@@ -967,22 +967,22 @@
             "failCount": 0,
             "lastRun": {
               "status": 200,
-              "timestamp": 1655364374.659
+              "timestamp": 1665391350.335
             },
             "runs": [
               {
                 "status": 200,
-                "timestamp": 1655364374.659
+                "timestamp": 1665391350.335
               },
               {
                 "status": 200,
-                "timestamp": 1655360774.659
+                "timestamp": 1665387750.335
               }
             ],
-            "created": 1655281574.659,
-            "createdBy": "cl4grcnwj001ft7kg07jifoj9",
-            "modified": 1655281574.659,
-            "modifiedBy": "cl4grcnwj001ft7kg07jifoj9"
+            "created": 1665308550.335,
+            "createdBy": "cl92l5jun001fu40f23f89pup",
+            "modified": 1665308550.335,
+            "modifiedBy": "cl92l5jun001fu40f23f89pup"
           }
         }
       ]
