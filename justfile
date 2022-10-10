@@ -59,7 +59,7 @@ publish: retrieve-types retrieve-tests clean build
 
 # Start a `rec.la` web server on `dist/`
 serve:
-    node node_modules/rec.la/webserver/main.js ./dist
+    rec.la ./dist
 
 # Run code linting
 lint *params:
