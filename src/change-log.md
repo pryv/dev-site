@@ -4,6 +4,13 @@ title: API change log
 layout: default.pug
 ---
 
+## 1.8.0
+
+New features:
+
+- Password policy support: rules for password complexity (length, character categories), age (minimum, maximum i.e. expiration) and reuse (i.e. history) can be enabled in the platform settings under 'Advanced API settings'
+- External data stores support (a.k.a. dynamic mapping, or personal data mapping); enterprise users please contact us for the details.
+
 ## 1.7.14
 
 - Fixes two issues with `selfRevoke` permissions, one of which related to the system streams backward compatibility flag; the issues caused a crash and prevented creation of accesses with `selfRevoke` permissions.
