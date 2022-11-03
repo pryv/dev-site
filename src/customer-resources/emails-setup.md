@@ -174,7 +174,7 @@ en
 
 ## Templates
 
-Pryv.io currently supports email templates in 3 languages. They can be provided in [pug](https://pugjs.org/api/getting-started.html) format, a templating language for HTML. These templates can be set in the platform.yml file or through the admin panel:
+Pryv.io currently comes with email templates in 3 languages. Other languages can be provided in [pug](https://pugjs.org/api/getting-started.html) format, a templating language for HTML. These templates can be set in the platform.yml file or through the admin panel:
 
 ### Welcome
 
