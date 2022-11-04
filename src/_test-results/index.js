@@ -70,10 +70,12 @@ function loadTestResults () {
       });
 
       component.sets = {};
-      component.tests.forEach(test => {
+      for (const test of component.tests) {
         const testData = parseTestName(test.title);
         if (!testData) {
-          throw new Error(`Missing id for test '${test.title}' in ${test.file}\n`);
+          // throw new Error(`Missing id for test '${test.title}' in ${test.file}\n`);
+          console.log(`Missing id for test '${test.title}' in ${test.file}`, test);
+          continue;
         }
 
         testData.duration = test.duration;
@@ -93,7 +95,7 @@ function loadTestResults () {
           component.sets[setTitle] = { tests: [] };
         }
         component.sets[setTitle].tests.push(testData);
-      });
+      }
       delete component.tests;
 
       service.components.push(component);
