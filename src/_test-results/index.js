@@ -73,6 +73,7 @@ function loadTestResults () {
       for (const test of component.tests) {
         const testData = parseTestName(test.title);
         if (!testData) {
+          // TODO: consider re-enabling this once tests are cleaned up and stable
           // throw new Error(`Missing id for test '${test.title}' in ${test.file}\n`);
           console.log(`Missing id for test '${test.title}' in ${test.file}`, test);
           continue;
