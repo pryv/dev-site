@@ -57,6 +57,16 @@
                 "key": "preferredLanguage",
                 "type": "string",
                 "description": "The user's preferred language as a 2-letter ISO language code."
+              },
+              {
+                "key": "passwordExpires",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "description": "_If password maximum age rule is enabled_: The time the password will expire, according to platform setting `PASSWORD_AGE_MAX_DAYS`."
+              },
+              {
+                "key": "passwordCanBeChanged",
+                "type": "[timestamp](#data-structure-timestamp)",
+                "description": "_If password minimum age rule is enabled_: The time after which the password can be changed, according to platform setting `PASSWORD_AGE_MIN_DAYS`. Can be in the past."
               }
             ]
           },
@@ -68,8 +78,8 @@
                 "appId": "my-app-id"
               },
               "result": {
-                "apiEndpoint": "https://cl92l5jud0002u40fh4e582db@chuangzi.pryv.me/",
-                "token": "cl92l5jud0002u40fh4e582db",
+                "apiEndpoint": "https://cla71mn110002pr0f2ff5dc5l@chuangzi.pryv.me/",
+                "token": "cla71mn110002pr0f2ff5dc5l",
                 "preferredLanguage": "zh"
               }
             }
@@ -275,7 +285,7 @@
                 "code": "1234"
               },
               "result": {
-                "token": "cl92l5jud0002u40fh4e582db"
+                "token": "cla71mn110002pr0f2ff5dc5l"
               }
             }
           ]
@@ -431,15 +441,15 @@
                   "name": "Heart",
                   "parentId": "health",
                   "children": [],
-                  "created": 1665394950.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665394950.334,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667841268.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667841268.516,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry"
                 }
               },
               {
                 "event": {
-                  "id": "cl92l5jum000tu40f7ne70hvz",
+                  "id": "cla71mn1g000tpr0fhvv9fht9",
                   "time": 1385046854.282,
                   "streamIds": [
                     "heart"
@@ -449,10 +459,10 @@
                   "type": "frequency/bpm",
                   "content": 90,
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1665394950.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665394950.334,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667841268.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667841268.516,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry"
                 }
               }
             ]
@@ -570,8 +580,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "cl92l5jum000zu40f7c0ubz1f",
-                    "time": 1665391350.334,
+                    "id": "cla71mn1g000zpr0f381udhqc",
+                    "time": 1667837668.516,
                     "streamIds": [
                       "diary"
                     ],
@@ -581,23 +591,23 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "cl92l5jum0010u40f0ebo0r1q",
+                        "id": "cla71mn1g0010pr0fd3pb6g5k",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "cl92l5jum0011u40fae9m32nz-uhzAvnkrVB2Sx7BEtrnidrnUSPA",
+                        "readToken": "cla71mn1g0011pr0fggjeh6p4-Eg3SFSWjFDrRlWKQzSnHizzi0Gr",
                         "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
                       }
                     ],
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665391350.334,
-                    "createdBy": "cl92l5jud0004u40ffx0zecac",
-                    "modified": 1665391350.334,
-                    "modifiedBy": "cl92l5jud0004u40ffx0zecac"
+                    "created": 1667837668.516,
+                    "createdBy": "cla71mn120004pr0fc98x26dc",
+                    "modified": 1667837668.516,
+                    "modifiedBy": "cla71mn120004pr0fc98x26dc"
                   },
                   {
-                    "id": "cl92l5jum000ou40f9kj68qpq",
-                    "time": 1665394950.334,
+                    "id": "cla71mn1g000opr0fabsv8eof",
+                    "time": 1667841268.516,
                     "streamIds": [
                       "jogging"
                     ],
@@ -606,13 +616,13 @@
                     "type": "activity/plain",
                     "content": null,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665394950.334,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665394950.334,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                    "created": 1667841268.516,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667841268.516,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry"
                   },
                   {
-                    "id": "cl92l5jum0012u40f012qav3n",
+                    "id": "cla71mn1g0012pr0f5x4o8nw2",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -625,10 +635,10 @@
                       "longitude": -73.998672
                     },
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665387750.334,
-                    "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                    "modified": 1665387750.334,
-                    "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                    "created": 1667834068.516,
+                    "createdBy": "cla71mn110000pr0f1i0ofptn",
+                    "modified": 1667834068.516,
+                    "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                   }
                 ]
               }
@@ -639,8 +649,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "cl92l5jum0013u40fbyffeik7",
-                    "time": 1665391350.334,
+                    "id": "cla71mn1g0013pr0f6dfnfxk0",
+                    "time": 1667837668.516,
                     "streamIds": [
                       "running",
                       "health"
@@ -650,14 +660,14 @@
                     "type": "activity/plain",
                     "content": null,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665391350.334,
-                    "createdBy": "cl92l5jud0004u40ffx0zecac",
-                    "modified": 1665391350.334,
-                    "modifiedBy": "cl92l5jud0004u40ffx0zecac"
+                    "created": 1667837668.516,
+                    "createdBy": "cla71mn120004pr0fc98x26dc",
+                    "modified": 1667837668.516,
+                    "modifiedBy": "cla71mn120004pr0fc98x26dc"
                   },
                   {
-                    "id": "cl92l5jum0014u40fdel5dy6w",
-                    "time": 1665384150.334,
+                    "id": "cla71mn1g0014pr0fgv906kun",
+                    "time": 1667830468.516,
                     "streamIds": [
                       "vegetables",
                       "health"
@@ -667,10 +677,10 @@
                     "type": "mass/kg",
                     "content": 350,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665384150.334,
-                    "createdBy": "cl92l5jud0004u40ffx0zecac",
-                    "modified": 1665384150.334,
-                    "modifiedBy": "cl92l5jud0004u40ffx0zecac"
+                    "created": 1667830468.516,
+                    "createdBy": "cla71mn120004pr0fc98x26dc",
+                    "modified": 1667830468.516,
+                    "modifiedBy": "cla71mn120004pr0fc98x26dc"
                   }
                 ]
               }
@@ -681,8 +691,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "cl92l5jum000zu40f7c0ubz1f",
-                    "time": 1665391350.334,
+                    "id": "cla71mn1g000zpr0f381udhqc",
+                    "time": 1667837668.516,
                     "streamIds": [
                       "diary"
                     ],
@@ -692,23 +702,23 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "cl92l5jum0010u40f0ebo0r1q",
+                        "id": "cla71mn1g0010pr0fd3pb6g5k",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "cl92l5jum0011u40fae9m32nz-uhzAvnkrVB2Sx7BEtrnidrnUSPA",
+                        "readToken": "cla71mn1g0011pr0fggjeh6p4-Eg3SFSWjFDrRlWKQzSnHizzi0Gr",
                         "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
                       }
                     ],
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665391350.334,
-                    "createdBy": "cl92l5jud0004u40ffx0zecac",
-                    "modified": 1665391350.334,
-                    "modifiedBy": "cl92l5jud0004u40ffx0zecac"
+                    "created": 1667837668.516,
+                    "createdBy": "cla71mn120004pr0fc98x26dc",
+                    "modified": 1667837668.516,
+                    "modifiedBy": "cla71mn120004pr0fc98x26dc"
                   },
                   {
-                    "id": "cl92l5jum000vu40f5j0o6eq2",
-                    "time": 1665391350.334,
+                    "id": "cla71mn1g000vpr0f1dludi0p",
+                    "time": 1667837668.516,
                     "streamIds": [
                       "diary"
                     ],
@@ -717,13 +727,13 @@
                     "type": "note/text",
                     "content": "道可道非常道。。。",
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665391350.334,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665430950.334,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                    "created": 1667837668.516,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667877268.516,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry"
                   },
                   {
-                    "id": "cl92l5jum0012u40f012qav3n",
+                    "id": "cla71mn1g0012pr0f5x4o8nw2",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -736,14 +746,14 @@
                       "longitude": -73.998672
                     },
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665387750.334,
-                    "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                    "modified": 1665387750.334,
-                    "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                    "created": 1667834068.516,
+                    "createdBy": "cla71mn110000pr0f1i0ofptn",
+                    "modified": 1667834068.516,
+                    "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                   },
                   {
-                    "id": "cl92l5jum000uu40fb7f07ewv",
-                    "time": 1665394950.334,
+                    "id": "cla71mn1g000upr0f07625op7",
+                    "time": 1667841268.516,
                     "streamIds": [
                       "weight"
                     ],
@@ -752,22 +762,22 @@
                     "type": "mass/kg",
                     "content": 90,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665394950.334,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665394950.334,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                    "created": 1667841268.516,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667841268.516,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry"
                   }
                 ]
               }
             },
             {
               "title": "cURL with deletions",
-              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1665308550.338\"\"\n```",
+              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1667754868.519\"\"\n```",
               "result": {
                 "events": [
                   {
-                    "id": "cl92l5jum000uu40fb7f07ewv",
-                    "time": 1665394950.334,
+                    "id": "cla71mn1g000upr0f07625op7",
+                    "time": 1667841268.516,
                     "streamIds": [
                       "weight"
                     ],
@@ -776,24 +786,24 @@
                     "type": "mass/kg",
                     "content": 90,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665394950.334,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665394950.334,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                    "created": 1667841268.516,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667841268.516,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry"
                   }
                 ],
                 "eventDeletions": [
                   {
-                    "id": "cl92l5jun001cu40f3u7m0z22",
-                    "deleted": 1665391350.335
+                    "id": "cla71mn1h001cpr0f08091wzj",
+                    "deleted": 1667837668.517
                   },
                   {
-                    "id": "cl92l5jun001du40fduwgfjru",
-                    "deleted": 1665358950.335
+                    "id": "cla71mn1h001dpr0f0p622ohw",
+                    "deleted": 1667805268.517
                   },
                   {
-                    "id": "cl92l5jun001eu40f9swx00be",
-                    "deleted": 1665322950.335
+                    "id": "cla71mn1h001epr0f6llqfu0w",
+                    "deleted": 1667769268.517
                   }
                 ]
               }
@@ -840,8 +850,8 @@
               },
               "result": {
                 "event": {
-                  "id": "cl92l5jum000wu40f6nth7w37",
-                  "time": 1665391350.334,
+                  "id": "cla71mn1g000wpr0fhlsd4y9a",
+                  "time": 1667837668.516,
                   "streamIds": [
                     "diary"
                   ],
@@ -850,15 +860,15 @@
                   "type": "note/text",
                   "content": "Hi, I am the latest version of this event",
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1665391350.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665402150.334,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667837668.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667848468.516,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry"
                 },
                 "history": [
                   {
-                    "id": "cl92l5jum000xu40fgh837sli",
-                    "time": 1665391350.334,
+                    "id": "cla71mn1g000xpr0ff9s1e8g1",
+                    "time": 1667837668.516,
                     "streamIds": [
                       "diary"
                     ],
@@ -867,14 +877,14 @@
                     "type": "note/text",
                     "content": "Hi, I am the first modification",
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665391350.334,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665398550.334,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                    "created": 1667837668.516,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667844868.516,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry"
                   },
                   {
-                    "id": "cl92l5jum000yu40fd98t2cn3",
-                    "time": 1665391350.334,
+                    "id": "cla71mn1g000ypr0f873hgp07",
+                    "time": 1667837668.516,
                     "streamIds": [
                       "diary"
                     ],
@@ -883,10 +893,10 @@
                     "type": "note/text",
                     "content": "Hi, I was the initial event",
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1665391350.334,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665394950.334,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                    "created": 1667837668.516,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667841268.516,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry"
                   }
                 ]
               }
@@ -931,8 +941,8 @@
               },
               "result": {
                 "event": {
-                  "id": "cl92l5jum000uu40fb7f07ewv",
-                  "time": 1665394950.334,
+                  "id": "cla71mn1g000upr0f07625op7",
+                  "time": 1667841268.516,
                   "streamIds": [
                     "weight"
                   ],
@@ -941,10 +951,10 @@
                   "type": "mass/kg",
                   "content": 90,
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1665394950.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665394950.334,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667841268.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667841268.516,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry"
                 }
               }
             },
@@ -953,8 +963,8 @@
               "content": "```bash\ncurl -i -F 'event={\"streamIds\":[\"diary\"],\"type\":\"picture/attached\"}'  -F \"file=@photo.jpg\" \"https://${token}@${username}.pryv.me/events\"\n```",
               "result": {
                 "event": {
-                  "id": "cl92l5jum000zu40f7c0ubz1f",
-                  "time": 1665391350.334,
+                  "id": "cla71mn1g000zpr0f381udhqc",
+                  "time": 1667837668.516,
                   "streamIds": [
                     "diary"
                   ],
@@ -964,19 +974,19 @@
                   "content": null,
                   "attachments": [
                     {
-                      "id": "cl92l5jum0010u40f0ebo0r1q",
+                      "id": "cla71mn1g0010pr0fd3pb6g5k",
                       "fileName": "photo.jpg",
                       "type": "image/jpeg",
                       "size": 2561,
-                      "readToken": "cl92l5jum0011u40fae9m32nz-uhzAvnkrVB2Sx7BEtrnidrnUSPA",
+                      "readToken": "cla71mn1g0011pr0fggjeh6p4-Eg3SFSWjFDrRlWKQzSnHizzi0Gr",
                       "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
                     }
                   ],
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1665391350.334,
-                  "createdBy": "cl92l5jud0004u40ffx0zecac",
-                  "modified": 1665391350.334,
-                  "modifiedBy": "cl92l5jud0004u40ffx0zecac"
+                  "created": 1667837668.516,
+                  "createdBy": "cla71mn120004pr0fc98x26dc",
+                  "modified": 1667837668.516,
+                  "modifiedBy": "cla71mn120004pr0fc98x26dc"
                 }
               }
             }
@@ -1037,8 +1047,8 @@
                     "position"
                   ],
                   "streamId": "position",
-                  "modified": 1665394950.338,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
+                  "modified": 1667841268.52,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry",
                   "time": 1350373077.359,
                   "tags": [],
                   "type": "position/wgs84",
@@ -1047,8 +1057,8 @@
                     "longitude": -73.998672
                   },
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1665387750.334,
-                  "createdBy": "cl92l5jud0000u40fdbjlbbcj"
+                  "created": 1667834068.516,
+                  "createdBy": "cla71mn110000pr0f1i0ofptn"
                 }
               }
             }
@@ -1074,34 +1084,34 @@
           "examples": [
             {
               "title": "cURL",
-              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/cl92l5jum000qu40f5fzb7ybc\"\"\n```",
+              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/cla71mn1g000qpr0f9rwaa9x4\"\"\n```",
               "result": {
                 "event": {
-                  "id": "cl92l5jum000qu40f5fzb7ybc",
-                  "time": 1665394950.334,
+                  "id": "cla71mn1g000qpr0f9rwaa9x4",
+                  "time": 1667841268.516,
                   "duration": null,
                   "streamIds": [
-                    "cl92l5jum000eu40f2fbtaw22"
+                    "cla71mn1g000epr0f33rq9x8l"
                   ],
-                  "streamId": "cl92l5jum000eu40f2fbtaw22",
+                  "streamId": "cla71mn1g000epr0f33rq9x8l",
                   "tags": [],
                   "type": "activity/plain",
                   "content": null,
                   "attachments": [
                     {
-                      "id": "cl92l5jum000ru40f6jq31e3b",
+                      "id": "cla71mn1g000rpr0f8rt38ogt",
                       "fileName": "travel-expense.jpg",
                       "type": "image/jpeg",
                       "size": 1111,
-                      "readToken": "cl92l5jum000su40f1hv6g93b-qTQa5qp8kEZST6C1YuOSkHL6hzk",
+                      "readToken": "cla71mn1g000spr0ffjx14ova-M2iocxQpqUdpnIOT63PuiZfRvAv",
                       "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
                     }
                   ],
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1665394950.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665394950.334,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667841268.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667841268.516,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry"
                 }
               }
             }
@@ -1170,26 +1180,26 @@
           "examples": [
             {
               "params": {
-                "id": "cl92l5jum000qu40f5fzb7ybc",
-                "fileId": "cl92l5jum000ru40f6jq31e3b"
+                "id": "cla71mn1g000qpr0f9rwaa9x4",
+                "fileId": "cla71mn1g000rpr0f8rt38ogt"
               },
               "result": {
                 "event": {
-                  "id": "cl92l5jum000qu40f5fzb7ybc",
-                  "time": 1665394950.334,
+                  "id": "cla71mn1g000qpr0f9rwaa9x4",
+                  "time": 1667841268.516,
                   "duration": null,
                   "streamIds": [
-                    "cl92l5jum000eu40f2fbtaw22"
+                    "cla71mn1g000epr0f33rq9x8l"
                   ],
-                  "streamId": "cl92l5jum000eu40f2fbtaw22",
+                  "streamId": "cla71mn1g000epr0f33rq9x8l",
                   "tags": [],
                   "type": "activity/plain",
                   "content": null,
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1665394950.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665394950.334,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667841268.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667841268.516,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry"
                 }
               }
             }
@@ -1241,15 +1251,15 @@
             {
               "title": "Trashing",
               "params": {
-                "id": "cl92l5jum000vu40f5j0o6eq2"
+                "id": "cla71mn1g000vpr0f1dludi0p"
               },
               "result": {
                 "event": {
                   "trashed": true,
-                  "modified": 1665394950.338,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "id": "cl92l5jum000vu40f5j0o6eq2",
-                  "time": 1665391350.334,
+                  "modified": 1667841268.52,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry",
+                  "id": "cla71mn1g000vpr0f1dludi0p",
+                  "time": 1667837668.516,
                   "streamIds": [
                     "diary"
                   ],
@@ -1258,19 +1268,19 @@
                   "type": "note/text",
                   "content": "道可道非常道。。。",
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1665391350.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667837668.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry"
                 }
               }
             },
             {
               "title": "Deleting",
               "params": {
-                "id": "cl92l5jum000vu40f5j0o6eq2"
+                "id": "cla71mn1g000vpr0f1dludi0p"
               },
               "result": {
                 "eventDeletion": {
-                  "id": "cl92l5jum000vu40f5j0o6eq2"
+                  "id": "cla71mn1g000vpr0f1dludi0p"
                 }
               }
             }
@@ -1326,8 +1336,8 @@
               },
               "result": {
                 "event": {
-                  "id": "cl92l5jum0015u40fdqwc14kp",
-                  "time": 1665394950.334,
+                  "id": "cla71mn1g0015pr0f481n897l",
+                  "time": 1667841268.516,
                   "streamIds": [
                     "position"
                   ],
@@ -1352,10 +1362,10 @@
                       "longitude"
                     ]
                   },
-                  "created": 1665394950.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665394950.334,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667841268.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667841268.516,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry"
                 }
               }
             }
@@ -1551,7 +1561,7 @@
                 "format": "seriesBatch",
                 "data": [
                   {
-                    "eventId": "cl92l5jum0016u40f7imp2eyt",
+                    "eventId": "cla71mn1g0016pr0f21d438m5",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1575,7 +1585,7 @@
                     }
                   },
                   {
-                    "eventId": "cl92l5jum0017u40fdb7r9vo0",
+                    "eventId": "cla71mn1g0017pr0fb7tu9tcw",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1695,76 +1705,76 @@
               "result": {
                 "streams": [
                   {
-                    "id": "cl92l5jum000du40f2jb1634t",
+                    "id": "cla71mn1g000dpr0f2385caep",
                     "name": "Noble Works Co.",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "cl92l5jum000fu40fhwnd5h8j",
+                        "id": "cla71mn1g000fpr0f8f5caqct",
                         "name": "Last Be First",
-                        "parentId": "cl92l5jum000du40f2jb1634t",
+                        "parentId": "cla71mn1g000dpr0f2385caep",
                         "children": [],
-                        "created": 1602281061.2842002,
-                        "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                        "modified": 1602281316.8537385,
-                        "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                        "created": 1604727386.3865309,
+                        "createdBy": "cla71mn110000pr0f1i0ofptn",
+                        "modified": 1604727400.7133877,
+                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                       },
                       {
-                        "id": "cl92l5jum000gu40f5nhse05w",
+                        "id": "cla71mn1g000gpr0fc2gj7hx2",
                         "name": "Big Tree",
-                        "parentId": "cl92l5jum000du40f2jb1634t",
+                        "parentId": "cla71mn1g000dpr0f2385caep",
                         "children": [],
-                        "created": 1602281061.2842002,
-                        "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                        "modified": 1602281081.67049,
-                        "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                        "created": 1604727386.3865309,
+                        "createdBy": "cla71mn110000pr0f1i0ofptn",
+                        "modified": 1604727470.7840247,
+                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                       },
                       {
-                        "id": "cl92l5jum000hu40f89984rmi",
+                        "id": "cla71mn1g000hpr0fchw772x2",
                         "name": "Inner Light",
-                        "parentId": "cl92l5jum000du40f2jb1634t",
+                        "parentId": "cla71mn1g000dpr0f2385caep",
                         "children": [],
-                        "created": 1602281061.2842002,
-                        "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                        "modified": 1602281281.0641804,
-                        "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                        "created": 1604727386.3865309,
+                        "createdBy": "cla71mn110000pr0f1i0ofptn",
+                        "modified": 1604727652.8235917,
+                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                       }
                     ],
-                    "created": 1602281049.7805083,
-                    "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                    "modified": 1602281075.489053,
-                    "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                    "created": 1604727378.544908,
+                    "createdBy": "cla71mn110000pr0f1i0ofptn",
+                    "modified": 1604727596.3537292,
+                    "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                   },
                   {
-                    "id": "cl92l5jum000eu40f2fbtaw22",
+                    "id": "cla71mn1g000epr0f33rq9x8l",
                     "name": "Freelancing",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "cl92l5jum000iu40f67l75cao",
+                        "id": "cla71mn1g000ipr0fdt247f5x",
                         "name": "Funky Veggies",
-                        "parentId": "cl92l5jum000eu40f2fbtaw22",
+                        "parentId": "cla71mn1g000epr0f33rq9x8l",
                         "children": [],
-                        "created": 1602281057.0715237,
-                        "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                        "modified": 1602281364.4615557,
-                        "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                        "created": 1604727398.7325797,
+                        "createdBy": "cla71mn110000pr0f1i0ofptn",
+                        "modified": 1604727407.374359,
+                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                       },
                       {
-                        "id": "cl92l5jum000ju40fa9kf4e7y",
+                        "id": "cla71mn1g000jpr0ffj4f3x8x",
                         "name": "Jojo Lapin & sons",
-                        "parentId": "cl92l5jum000eu40f2fbtaw22",
+                        "parentId": "cla71mn1g000epr0f33rq9x8l",
                         "children": [],
-                        "created": 1602281057.0715237,
-                        "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                        "modified": 1602281192.8819149,
-                        "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                        "created": 1604727398.7325797,
+                        "createdBy": "cla71mn110000pr0f1i0ofptn",
+                        "modified": 1604727409.6642864,
+                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                       }
                     ],
-                    "created": 1602281049.7805083,
-                    "createdBy": "cl92l5jud0000u40fdbjlbbcj",
-                    "modified": 1602281219.961959,
-                    "modifiedBy": "cl92l5jud0000u40fdbjlbbcj"
+                    "created": 1604727378.544908,
+                    "createdBy": "cla71mn110000pr0f1i0ofptn",
+                    "modified": 1604727469.1290112,
+                    "modifiedBy": "cla71mn110000pr0f1i0ofptn"
                   }
                 ]
               }
@@ -1816,10 +1826,10 @@
                   "name": "White cells",
                   "parentId": "blood",
                   "children": [],
-                  "created": 1665394950.334,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665394950.334,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2"
+                  "created": 1667841268.516,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667841268.516,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry"
                 }
               }
             }
@@ -1880,12 +1890,12 @@
               "result": {
                 "stream": {
                   "name": "Slothing",
-                  "modified": 1665394950.338,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
+                  "modified": 1667841268.52,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry",
                   "id": "sport",
                   "parentId": null,
-                  "created": 1602281046.334,
-                  "createdBy": "cl92l5jud0000u40fdbjlbbcj"
+                  "created": 1604727364.516,
+                  "createdBy": "cla71mn110000pr0f1i0ofptn"
                 }
               }
             }
@@ -1947,14 +1957,14 @@
               "result": {
                 "stream": {
                   "trashed": true,
-                  "modified": 1665394950.338,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
+                  "modified": 1667841268.52,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry",
                   "id": "weight",
                   "name": "Weight",
                   "parentId": "health",
                   "children": [],
-                  "created": 1602281047.851432,
-                  "createdBy": "cl92l5jud0000u40fdbjlbbcj"
+                  "created": 1604727366.702853,
+                  "createdBy": "cla71mn110000pr0f1i0ofptn"
                 }
               }
             },
@@ -2021,8 +2031,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "cl92l5jud0004u40ffx0zecac",
-                    "token": "cl92l5jud0005u40f9rnsa53z",
+                    "id": "cla71mn120004pr0fc98x26dc",
+                    "token": "cla71mn120005pr0f8abuguja",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -2032,11 +2042,11 @@
                       }
                     ],
                     "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-                    "created": 1665351750.326,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665351750.326,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "apiEndpoint": "https://cl92l5jud0005u40f9rnsa53z@user1.pryv.me/"
+                    "created": 1667798068.502,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667798068.502,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry",
+                    "apiEndpoint": "https://cla71mn120005pr0f8abuguja@user1.pryv.me/"
                   }
                 ]
               }
@@ -2047,8 +2057,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "cl92l5jud0004u40ffx0zecac",
-                    "token": "cl92l5jud0005u40f9rnsa53z",
+                    "id": "cla71mn120004pr0fc98x26dc",
+                    "token": "cla71mn120005pr0f8abuguja",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -2058,17 +2068,17 @@
                       }
                     ],
                     "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-                    "created": 1665351750.326,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665351750.326,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "apiEndpoint": "https://cl92l5jud0005u40f9rnsa53z@user1.pryv.me/"
+                    "created": 1667798068.502,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667798068.502,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry",
+                    "apiEndpoint": "https://cla71mn120005pr0f8abuguja@user1.pryv.me/"
                   }
                 ],
                 "accessDeletions": [
                   {
-                    "id": "cl92l5jue0008u40ffzipbz53",
-                    "token": "cl92l5jue0009u40ff2ox3lln",
+                    "id": "cla71mn120008pr0f20le97yf",
+                    "token": "cla71mn120009pr0fhiis5rt3",
                     "type": "shared",
                     "name": "Health parameters survey",
                     "permissions": [
@@ -2078,12 +2088,12 @@
                       }
                     ],
                     "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-                    "created": 1665394830.326,
-                    "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "modified": 1665394830.326,
-                    "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
-                    "deleted": 1665394890.326,
-                    "apiEndpoint": "https://cl92l5jue0009u40ff2ox3lln@user1.pryv.me/"
+                    "created": 1667841148.502,
+                    "createdBy": "cla71mn110001pr0f63n86rry",
+                    "modified": 1667841148.502,
+                    "modifiedBy": "cla71mn110001pr0f63n86rry",
+                    "deleted": 1667841208.502,
+                    "apiEndpoint": "https://cla71mn120009pr0fhiis5rt3@user1.pryv.me/"
                   }
                 ]
               }
@@ -2129,8 +2139,8 @@
               },
               "result": {
                 "access": {
-                  "id": "cl92l5jue0006u40f2fvhhc7e",
-                  "token": "cl92l5jue0007u40f4lbj0uvz",
+                  "id": "cla71mn120006pr0f4nia4h04",
+                  "token": "cla71mn120007pr0ffs289hj5",
                   "type": "shared",
                   "name": "For colleagues",
                   "permissions": [
@@ -2140,11 +2150,11 @@
                     }
                   ],
                   "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-                  "created": 1665394950.326,
-                  "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "modified": 1665394950.326,
-                  "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
-                  "apiEndpoint": "https://cl92l5jue0007u40f4lbj0uvz@user1.pryv.me/"
+                  "created": 1667841268.502,
+                  "createdBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1667841268.502,
+                  "modifiedBy": "cla71mn110001pr0f63n86rry",
+                  "apiEndpoint": "https://cla71mn120007pr0ffs289hj5@user1.pryv.me/"
                 }
               }
             }
@@ -2187,18 +2197,18 @@
           "examples": [
             {
               "params": {
-                "id": "cl92l5jud0001u40f9ey0eaj2"
+                "id": "cla71mn110001pr0f63n86rry"
               },
               "result": {
                 "accessDeletion": {
-                  "id": "cl92l5jud0001u40f9ey0eaj2"
+                  "id": "cla71mn110001pr0f63n86rry"
                 },
                 "relatedDeletions": [
                   {
-                    "id": "cl92l5juq001ru40f296d7slz"
+                    "id": "cla71mn1k001rpr0fh5b82vz1"
                   },
                   {
-                    "id": "cl92l5juq001su40f3c7xbpr2"
+                    "id": "cla71mn1k001spr0f65ur61am"
                   }
                 ]
               }
@@ -2282,8 +2292,8 @@
         {
           "params": {},
           "result": {
-            "id": "cl92l5jue000au40f7zqn8nau",
-            "token": "cl92l5jue000bu40ffpya7ntl",
+            "id": "cla71mn12000apr0fb27van1f",
+            "token": "cla71mn12000bpr0fgyk86039",
             "type": "app",
             "name": "Current access",
             "deviceName": "My awesome device",
@@ -2296,16 +2306,16 @@
             "user": {
               "username": "jackslater"
             },
-            "lastUsed": 1665394650.326,
-            "expires": 1665394830.326,
-            "deleted": 1665394890.326,
+            "lastUsed": 1667840968.502,
+            "expires": 1667841148.502,
+            "deleted": 1667841208.502,
             "clientData": {
               "consent": "My custom consent message."
             },
-            "created": 1665394830.326,
-            "createdBy": "cl92l5jud0001u40f9ey0eaj2",
-            "modified": 1665394830.326,
-            "modifiedBy": "cl92l5jud0001u40f9ey0eaj2",
+            "created": 1667841148.502,
+            "createdBy": "cla71mn110001pr0f63n86rry",
+            "modified": 1667841148.502,
+            "modifiedBy": "cla71mn110001pr0f63n86rry",
             "calls": {
               "getAccessInfo": 12,
               "profile:get": 5,
@@ -2313,7 +2323,7 @@
               "streams:get": 11,
               "accesses:get": 6
             },
-            "apiEndpoint": "https://cl92l5jue000bu40ffpya7ntl@user1.pryv.me/"
+            "apiEndpoint": "https://cla71mn12000bpr0fgyk86039@user1.pryv.me/"
           }
         }
       ]
@@ -2403,7 +2413,7 @@
           "examples": [
             {
               "params": {
-                "accessId": "cl92l5jun001mu40f5dqogl2v",
+                "accessId": "cla71mn1h001mpr0f3cbudteg",
                 "fromTime": 1561000000,
                 "toTime": 1562000000,
                 "status": 403,
@@ -2415,37 +2425,37 @@
               "result": {
                 "auditLogs": [
                   {
-                    "id": "cl92l5jun001ou40feihv1tul",
+                    "id": "cla71mn1h001opr0f41zd7g5p",
                     "type": "audit/core",
                     "time": 1561988300,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "cl92l5jun001mu40f5dqogl2v",
+                    "accessId": "cla71mn1h001mpr0f3cbudteg",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "cl92l5jun001pu40fcbo26cbv",
+                    "id": "cla71mn1h001ppr0fg47ifg8k",
                     "type": "audit/core",
                     "time": 1561988900,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=diary",
-                    "accessId": "cl92l5jun001mu40f5dqogl2v",
+                    "accessId": "cla71mn1h001mpr0f3cbudteg",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
                   },
                   {
-                    "id": "cl92l5jun001qu40f2ixsa657",
+                    "id": "cla71mn1h001qpr0f9ferabuc",
                     "type": "audit/core",
                     "time": 1561989200,
                     "forwardedFor": "172.18.0.7",
                     "action": "GET /events",
                     "query": "streamId=work",
-                    "accessId": "cl92l5jun001mu40f5dqogl2v",
+                    "accessId": "cla71mn1h001mpr0f3cbudteg",
                     "status": 403,
                     "errorMessage": "Access session has expired.",
                     "errorId": "forbidden"
@@ -2488,8 +2498,8 @@
               "result": {
                 "webhooks": [
                   {
-                    "id": "cl92l5jun001hu40f2yjo81r7",
-                    "accessId": "cl92l5jun001fu40f23f89pup",
+                    "id": "cla71mn1h001hpr0fd9brfjpj",
+                    "accessId": "cla71mn1h001fpr0fctyx65en",
                     "url": "https://notifications.service.com/pryv",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2499,26 +2509,26 @@
                     "failCount": 0,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1665391350.335
+                      "timestamp": 1667837668.517
                     },
                     "runs": [
                       {
                         "status": 200,
-                        "timestamp": 1665391350.335
+                        "timestamp": 1667837668.517
                       },
                       {
                         "status": 200,
-                        "timestamp": 1665387750.335
+                        "timestamp": 1667834068.517
                       }
                     ],
-                    "created": 1665308550.335,
-                    "createdBy": "cl92l5jun001fu40f23f89pup",
-                    "modified": 1665308550.335,
-                    "modifiedBy": "cl92l5jun001fu40f23f89pup"
+                    "created": 1667754868.517,
+                    "createdBy": "cla71mn1h001fpr0fctyx65en",
+                    "modified": 1667754868.517,
+                    "modifiedBy": "cla71mn1h001fpr0fctyx65en"
                   },
                   {
-                    "id": "cl92l5jun001ju40fhmh921at",
-                    "accessId": "cl92l5jun001fu40f23f89pup",
+                    "id": "cla71mn1h001jpr0ff0700ol1",
+                    "accessId": "cla71mn1h001fpr0fctyx65en",
                     "url": "https://notifications.pryv.me/webhooks",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2528,46 +2538,46 @@
                     "failCount": 2,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1665394945.335
+                      "timestamp": 1667841263.517
                     },
                     "runs": [
                       {
                         "status": 500,
-                        "timestamp": 1665394945.335
+                        "timestamp": 1667841263.517
                       },
                       {
                         "status": 500,
-                        "timestamp": 1665394940.335
+                        "timestamp": 1667841258.517
                       },
                       {
                         "status": 200,
-                        "timestamp": 1665394350.335
+                        "timestamp": 1667840668.517
                       },
                       {
                         "status": 200,
-                        "timestamp": 1665393750.335
+                        "timestamp": 1667840068.517
                       },
                       {
                         "status": 200,
-                        "timestamp": 1665393150.335
+                        "timestamp": 1667839468.517
                       },
                       {
                         "status": 200,
-                        "timestamp": 1665392550.335
+                        "timestamp": 1667838868.517
                       },
                       {
                         "status": 200,
-                        "timestamp": 1665391950.335
+                        "timestamp": 1667838268.517
                       },
                       {
                         "status": 200,
-                        "timestamp": 1665391350.335
+                        "timestamp": 1667837668.517
                       }
                     ],
-                    "created": 1665222150.335,
-                    "createdBy": "cl92l5jun001fu40f23f89pup",
-                    "modified": 1665222150.335,
-                    "modifiedBy": "cl92l5jun001fu40f23f89pup"
+                    "created": 1667668468.517,
+                    "createdBy": "cla71mn1h001fpr0fctyx65en",
+                    "modified": 1667668468.517,
+                    "modifiedBy": "cla71mn1h001fpr0fctyx65en"
                   }
                 ]
               }
@@ -2607,8 +2617,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "cl92l5jun001hu40f2yjo81r7",
-                  "accessId": "cl92l5jun001fu40f23f89pup",
+                  "id": "cla71mn1h001hpr0fd9brfjpj",
+                  "accessId": "cla71mn1h001fpr0fctyx65en",
                   "url": "https://notifications.service.com/pryv",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2618,22 +2628,22 @@
                   "failCount": 0,
                   "lastRun": {
                     "status": 200,
-                    "timestamp": 1665391350.335
+                    "timestamp": 1667837668.517
                   },
                   "runs": [
                     {
                       "status": 200,
-                      "timestamp": 1665391350.335
+                      "timestamp": 1667837668.517
                     },
                     {
                       "status": 200,
-                      "timestamp": 1665387750.335
+                      "timestamp": 1667834068.517
                     }
                   ],
-                  "created": 1665308550.335,
-                  "createdBy": "cl92l5jun001fu40f23f89pup",
-                  "modified": 1665308550.335,
-                  "modifiedBy": "cl92l5jun001fu40f23f89pup"
+                  "created": 1667754868.517,
+                  "createdBy": "cla71mn1h001fpr0fctyx65en",
+                  "modified": 1667754868.517,
+                  "modifiedBy": "cla71mn1h001fpr0fctyx65en"
                 }
               }
             }
@@ -2666,8 +2676,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "cl92l5jun001ku40f817q78e3",
-                  "accessId": "cl92l5jun001gu40f9ugwgpi8",
+                  "id": "cla71mn1h001kpr0f447tabbx",
+                  "accessId": "cla71mn1h001gpr0f78yv3c8c",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2677,10 +2687,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1665394945.335,
-                  "createdBy": "cl92l5jun001gu40f9ugwgpi8",
-                  "modified": 1665394945.335,
-                  "modifiedBy": "cl92l5jun001gu40f9ugwgpi8"
+                  "created": 1667841263.517,
+                  "createdBy": "cla71mn1h001gpr0f78yv3c8c",
+                  "modified": 1667841263.517,
+                  "modifiedBy": "cla71mn1h001gpr0f78yv3c8c"
                 }
               }
             }
@@ -2737,8 +2747,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "cl92l5jun001iu40f3kogevqk",
-                  "accessId": "cl92l5jun001fu40f23f89pup",
+                  "id": "cla71mn1h001ipr0f7emu2na1",
+                  "accessId": "cla71mn1h001fpr0fctyx65en",
                   "url": "https://notifications.pryv.me/myusername/ui3HDAw43",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2748,28 +2758,28 @@
                   "failCount": 5,
                   "lastRun": {
                     "status": 404,
-                    "timestamp": 1665394935.335
+                    "timestamp": 1667841253.517
                   },
                   "runs": [
                     {
                       "status": 404,
-                      "timestamp": 1665394935.335
+                      "timestamp": 1667841253.517
                     },
                     {
                       "status": 404,
-                      "timestamp": 1665394895.335
+                      "timestamp": 1667841213.517
                     },
                     {
                       "status": 404,
-                      "timestamp": 1665394875.335
+                      "timestamp": 1667841193.517
                     },
                     {
                       "status": 404,
-                      "timestamp": 1665394865.335
+                      "timestamp": 1667841183.517
                     },
                     {
                       "status": 404,
-                      "timestamp": 1665394860.335
+                      "timestamp": 1667841178.517
                     }
                   ]
                 }
@@ -2808,11 +2818,11 @@
           "examples": [
             {
               "params": {
-                "id": "cl92l5jun001ku40f817q78e3"
+                "id": "cla71mn1h001kpr0f447tabbx"
               },
               "result": {
                 "webhookDeletion": {
-                  "id": "cl92l5jun001ku40f817q78e3"
+                  "id": "cla71mn1h001kpr0f447tabbx"
                 }
               }
             }
@@ -2851,8 +2861,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "cl92l5jun001ku40f817q78e3",
-                  "accessId": "cl92l5jun001gu40f9ugwgpi8",
+                  "id": "cla71mn1h001kpr0f447tabbx",
+                  "accessId": "cla71mn1h001gpr0f78yv3c8c",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2862,10 +2872,10 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1665394945.335,
-                  "createdBy": "cl92l5jun001gu40f9ugwgpi8",
-                  "modified": 1665394945.335,
-                  "modifiedBy": "cl92l5jun001gu40f9ugwgpi8"
+                  "created": 1667841263.517,
+                  "createdBy": "cla71mn1h001gpr0f78yv3c8c",
+                  "modified": 1667841263.517,
+                  "modifiedBy": "cla71mn1h001gpr0f78yv3c8c"
                 }
               }
             }
@@ -3263,7 +3273,7 @@
           "type": "method",
           "title": "Change password",
           "http": "POST /account/change-password",
-          "description": "Modifies the user's password.",
+          "description": "Modifies the user's password.\nEnforces password complexity, reuse and minimum age rules if enabled (set via the corresponding platform settings).",
           "params": {
             "properties": [
               {
@@ -3285,7 +3295,12 @@
             {
               "key": "invalid-operation",
               "http": "400",
-              "description": "The given password does not match."
+              "description": "The given password does not match, cannot be changed at this time (if password minimum age rule enabled) or the new password was already used recently (if password reuse rule enabled)."
+            },
+            {
+              "key": "invalid-parameters-format",
+              "http": "400",
+              "description": "The new password does not match password complexity rules (if enabled)."
             }
           ],
           "examples": [
@@ -3330,7 +3345,7 @@
           "type": "method",
           "title": "Reset password",
           "http": "POST /account/reset-password",
-          "description": "Resets the user's password, authorizing the request with the given reset token (see [request password reset](#methods-account-account-requestPasswordReset) ).\nThis method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).",
+          "description": "Resets the user's password, authorizing the request with the given reset token (see [request password reset](#methods-account-account-requestPasswordReset) ).\nEnforces password complexity, reuse and minimum age rules if enabled (set via the corresponding platform settings).\nThis method requires that the `appId` and `Origin` (or `Referer`) header comply with the [trusted app verification](#basics-trusted-apps-verification).",
           "params": {
             "properties": [
               {
@@ -3353,6 +3368,18 @@
           "result": {
             "http": "200 OK"
           },
+          "errors": [
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "The password cannot be changed at this time (if password minimum age rule enabled), or the new password was already used recently (if password reuse rule enabled)."
+            },
+            {
+              "key": "invalid-parameters-format",
+              "http": "400",
+              "description": "The new password does not match password complexity rules (if enabled)."
+            }
+          ],
           "examples": [
             {
               "params": {

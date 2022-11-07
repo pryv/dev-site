@@ -75,7 +75,7 @@
                         "language": "en",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "cl92l5jun001au40fcpom63tg",
+                        "id": "cla71mn1h001apr0fd45zfzui",
                         "registeredTimestamp": "1557743399558",
                         "server": "core1.pryv.me",
                         "registeredDate": "Mon, 13 May 2019 10:29:59 GMT"
@@ -86,7 +86,7 @@
                         "language": "fr",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "cl92l5jun001bu40f7jgz2t7h",
+                        "id": "cla71mn1h001bpr0f21630mm6",
                         "registeredTimestamp": "1536930239805",
                         "server": "core2.pryv.me",
                         "registeredDate": "Fri, 14 Sep 2018 13:03:59 GMT"
@@ -174,7 +174,7 @@
                         "language": "en",
                         "invitationToken": "enjoy",
                         "referer": "null",
-                        "id": "cl92l5jun001au40fcpom63tg",
+                        "id": "cla71mn1h001apr0fd45zfzui",
                         "registeredTimestamp": "1557743399558",
                         "server": "core1.pryv.me",
                         "registeredDate": "Mon, 13 May 2019 10:29:59 GMT"
@@ -437,7 +437,7 @@
               "http": "POST /users",
               "httpOnly": true,
               "server": "core",
-              "description": "Creates a new user account. The method's parameters can be customized with the [system streams configuration](/customer-resources/system-streams/).\n\nBefore Pryv.io 1.6, this route was served by the register server on `/user`",
+              "description": "Creates a new user account. The method's parameters can be customized with the [system streams configuration](/customer-resources/system-streams/).\nEnforces password complexity rules if enabled (set via the corresponding platform settings).\n\nBefore Pryv.io 1.6, this route was served by the register server on `/user`",
               "params": {
                 "properties": [
                   {
@@ -495,6 +495,13 @@
                   }
                 ]
               },
+              "errors": [
+                {
+                  "key": "invalid-parameters-format",
+                  "http": "400",
+                  "description": "The password does not match password complexity rules (if enabled)."
+                }
+              ],
               "examples": [
                 {
                   "title": "Creating a user.",

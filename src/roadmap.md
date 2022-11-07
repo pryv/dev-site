@@ -8,10 +8,13 @@ withTOC: true
 # Future releases
 
 - **Support oAuth 2.0 protocol for authentication and authorization**
-- **Dynamic mapping**: plug your own storage to the Pryv.io API
-
 
 # Released
+
+## 07.10.2022 - Dynamic mapping support & HDS SECU_AUTH with 1.8.0
+
+- Expose external (e.g. legacy) data warehouses through Pryv.io: [see original announcement](https://www.pryv.com/2022/01/19/pryv-personal-data-mapping-enables-automatic-integration-with-existing-warehouses-bridging-the-gap-for-privacy-compliance-and-managing-data-subject-requests-on-personal-data-access-and-proce/) (documentation on request)
+- Compliance with HDS requirements SECU_AUTH 3 & 4: Enforce rules for password complexity and password age (including past passwords history)
 
 ## 12.11.2021 - Automatic SSL certificate generation with Pryv.io 1.7.4
 
