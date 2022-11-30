@@ -1,13 +1,15 @@
 .DS_Store
+.idea
 .project
+.vscode
 dependencies
 dev-site.iml
 dist
+linkcheck-cache.json
+linkcheck-issues.json
 node_modules
 npm-debug.log
 open-api/transpiled/**/*.js
 out
 src/event-types/extras.json
 src/event-types/hierarchical.json
-.idea
-.vscode

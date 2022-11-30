@@ -249,7 +249,7 @@ module.exports = exports =
 
                  - when calling an API method [using websockets](#call-with-websockets)
                  - when making a [batch call](#call-batch)
-                 - for filtering per method id when fetching [audit logs](/guides/audit-log/)
+                 - for filtering per method id when fetching [audit logs](/guides/audit-logs/)
                  """
     sections: [
 

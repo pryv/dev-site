@@ -9,6 +9,7 @@ const msMarkdownIt = require('metalsmith-markdownit');
 const msPermalinks = require('metalsmith-permalinks');
 const msPug = require('metalsmith-pug');
 const msStylus = require('metalsmith-stylus');
+const msLinkCheck = require('metalsmith-linkcheck');
 const msWatch = process.argv[2] === 'watch' ? require('metalsmith-watch') : null;
 
 const markdownItOptions = {
@@ -59,6 +60,10 @@ metalsmith
     // section id is optional in metadata
     pattern: ':sectionId/:id',
     relative: false
+  }))
+  .use(msLinkCheck({
+    checkFile: '../linkcheck-cache.json',
+    failFile: '../linkcheck-issues.json'
   }));
 
 if (msWatch) {
