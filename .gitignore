@@ -5,7 +5,7 @@
 dependencies
 dev-site.iml
 dist
-linkcheck-cache.json
+.linkcheck-cache.json
 linkcheck-issues.json
 node_modules
 npm-debug.log

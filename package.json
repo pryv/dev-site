@@ -3,21 +3,24 @@
   "version": "0.4.1",
   "private": true,
   "description": "Pryv API reference, recommendations, guides, etc.",
-  "author": "Pryv team <developers@pryv.com>",
-  "homepage": "api.pryv.com",
   "keywords": [
     "Pryv",
     "developers",
     "API",
     "documentation"
   ],
+  "homepage": "api.pryv.com",
+  "author": "Pryv team <developers@pryv.com>",
   "scripts": {
     "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"
   },
   "dependencies": {
+    "async": "^2.6.1",
+    "cheerio": "^1.0.0-rc.2",
     "coffeescript": "^2.7.0",
     "cuid": "^2.1.8",
     "js-yaml": "^4.1.0",
+    "jsonfile": "^4.0.0",
     "jstransformer-markdown-it": "^3.0.0",
     "jstransformer-pug": "^0.4.0",
     "lodash": "^4.17.21",
@@ -29,7 +32,6 @@
     "metalsmith-include": "^0.0.2",
     "metalsmith-json": "^0.1.2",
     "metalsmith-layouts": "^2.3.1",
-    "metalsmith-linkcheck": "^0.3.4",
     "metalsmith-markdownit": "^0.5.0",
     "metalsmith-permalinks": "^2.2.0",
     "metalsmith-pug": "^2.0.0",
@@ -37,7 +39,10 @@
     "metalsmith-watch": "^1.0.3",
     "pryv-style": "git://github.com/pryv/style.git",
     "rec.la": "^0.3.2",
+    "request": "^2.88.0",
+    "resolve-pathname": "^2.2.0",
     "semistandard": "^16.0.1",
+    "underscore": "^1.9.1",
     "unix-timestamp": "^1.0.2"
   },
   "engines": {

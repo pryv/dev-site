@@ -23,12 +23,12 @@ setup:
 # –––––––––––––----------------------------------------------------------------
 
 # Build the site from `src/` into `dist/`
-build:
-    node build.js
+build *params:
+    node build.js {{params}}
 
 # Build the site then watch and update when source files change
-watch:
-    node build.js watch
+watch *params:
+    node build.js --watch {{params}}
 
 # Retrieve event types from their repo
 retrieve-types:

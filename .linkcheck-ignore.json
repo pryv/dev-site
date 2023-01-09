@@ -1,0 +1,16 @@
+[
+  "https://support.pryv.com/hc/en-us/community/topics",
+  "https://$%7BCORE_MACHINE_HOSTNAME%7D/status",
+  "https://reg.$%7BDOMAIN%7D/wactiv/check_username",
+  "https://$%7BHOSTNAME%7D/reg/wactiv/check_username",
+  "https://my-computer.rec.la:4443/www/access/register.html",
+  "https://support.pryv.com/hc/en-us/articles/360017196459-Consent-management-with-Pryv-io",
+  "https://support.pryv.com/hc/en-us/articles/360014131139",
+  "https://support.pryv.com/hc/en-us/articles/360015645339-Develop-iOS-applications-with-our-Swift-library",
+  "https://support.pryv.com/hc/en-us/articles/360015324699-Open-Pryv-io-now-available-through-Docker-containers",
+  "https://support.pryv.com/hc/en-us/articles/360015327139-Pryv-io-gets-Open-Source",
+  "https://support.pryv.com/hc/en-us/articles/360015309120-Pryv-io-integration-with-Postman",
+  "https://support.pryv.com/hc/en-us/articles/360014071180-Webhooks-at-Pryv-io",
+  "https://support.pryv.com/hc/en-us/articles/360015326619-Audit-Logs-in-Pryv-io",
+  "https://support.pryv.com/hc/en-us/articles/360014131139-High-Frequency-data-in-Pryv-io"
+]

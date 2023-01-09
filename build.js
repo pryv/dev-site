@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const metalsmith = require('metalsmith')(__dirname);
 const msDefine = require('metalsmith-define');
 const msHeadingsId = require('metalsmith-headings-identifier');
@@ -9,8 +11,14 @@ const msMarkdownIt = require('metalsmith-markdownit');
 const msPermalinks = require('metalsmith-permalinks');
 const msPug = require('metalsmith-pug');
 const msStylus = require('metalsmith-stylus');
-const msLinkCheck = require('metalsmith-linkcheck');
-const msWatch = process.argv[2] === 'watch' ? require('metalsmith-watch') : null;
+const msLinkCheck = require('./metalsmith-plugins/linkcheck');
+const msWatch = require('metalsmith-watch');
+
+const args = process.argv.slice(2);
+const options = {
+  noLinkCheck: args.includes('--nolinkcheck'),
+  watch: args.includes('--watch')
+};
 
 const markdownItOptions = {
   typographer: true,
@@ -60,13 +68,17 @@ metalsmith
     // section id is optional in metadata
     pattern: ':sectionId/:id',
     relative: false
-  }))
-  .use(msLinkCheck({
-    checkFile: '../linkcheck-cache.json',
-    failFile: '../linkcheck-issues.json'
   }));
 
-if (msWatch) {
+if (!options.noLinkCheck) {
+  metalsmith.use(msLinkCheck({
+    ignoreFile: '.linkcheck-ignore.json',
+    checkFile: '.linkcheck-cache.json',
+    failFile: 'linkcheck-issues.json'
+  }));
+}
+
+if (options.watch) {
   metalsmith.use(msWatch());
 }
 
