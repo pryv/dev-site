@@ -46,7 +46,7 @@ You can now query events with more precision using [Streams queries](/reference/
 
 ## 25.11.2020 - Open Pryv.io image for [Exoscale marketplace](https://www.exoscale.com/marketplace/)
 
-Open Pryv.io ready-to-go on Exoscale cloud service, allowing you to deploy Open Pryv instantaneously with minimal start-up configuration from [here](https://api.pryv.com/image-exoscale-open-pryv.io/).
+Open Pryv.io ready-to-go on Exoscale cloud service, allowing you to deploy Open Pryv instantaneously with minimal start-up configuration from [here](https://api.pryv.com/ops-image-exoscale-open-pryv.io/).
 
 ## 22.10.2020 - React Native support for lib-js
 
@@ -64,7 +64,7 @@ have your own unique fields, now it is possible to do so. Also, admin panel user
 
 ## 27.08.2020 - Collect and Share High Frequency Data with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Push the boundaries of your High Frequency Data. Discover how to collect, view and share high-frequency data in our [tutorial video](https://www.youtube.com/watch?v=l6uOXr1_ivA) for our high-frequency [app](https://api.pryv.com/example-apps-web/hf-data/).
+Push the boundaries of your High Frequency Data. Discover how to collect, view and share high-frequency data in our [tutorial video](https://www.youtube.com/watch?v=l6uOXr1_ivA) for our high-frequency app.
 The code for the Desktop and Mobile version is available in our [Github repository](https://github.com/pryv/example-apps-web/tree/release/hf-example/hf-data).
 
 Read more about high frequency data [here](https://support.pryv.com/hc/en-us/articles/360014131139).

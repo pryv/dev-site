@@ -368,7 +368,7 @@ module.exports = exports =
                     <pre><code>curl https://{token}@<span class="api">{username}.pryv.me</span>/access-info
                     </code></pre>
 
-                    This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://visionmedia.github.io/superagent/)
+                    This method is not supported by modern browsers but by tools such as [cURL](https://curl.haxx.se), the Node.js library [superagent](https://www.npmjs.com/package/superagent)
                     or [Postman](https://www.getpostman.com).
                     These tools implicitly translate the `${token}@` part of the URL to the `Authorization` header in basic auth format. Please use the main authorization method for tools that do not operate this translation, such as Grafana.
 

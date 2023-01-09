@@ -399,7 +399,7 @@ module.exports = exports =
     title: "Call batch"
     http: "POST /"
     description: """
-                  Sends a batch of API methods calls in one go (e.g. for to syncing offline changes when resuming connectivity).
+                  Sends a batch of API methods calls in one go (e.g. for syncing offline changes when resuming connectivity).
                   """
     params:
       description: """
