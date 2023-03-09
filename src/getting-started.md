@@ -358,10 +358,11 @@ Thus, each access is defined by a "name", a set of "permissions" and a "type" th
 Pryv.io distinguishes between three access types ("shared", "app" and "personal") which are explained in the [corresponding section](/concepts/#accesses).
 
 As you can see from the example above, each permission specifies a `streamId`, the id of the stream to which we want to give access, and an access `level`, which can be one of the following:
-- `read`: Enables users to view the stream and its contents (sub-streams and events).
-- `contribute`: Enables users to contribute to one or multiple events of the stream. Cannot create, update, delete and move streams.
-- `manage`: Enables users to fully control the stream. Can create, update, delete and move the stream.
-- `create-only`: Enables users to read the stream and create events on it and its children.
+
+- `read`: Authorizes read-only access to the stream and its contents (sub-streams and events).
+- `contribute`: Authorizes read-only access to the stream (like `read`), plus adding/updating/deleting events therein. Does _not_ authorizes modifying the streams themselves.
+- `manage`: Authorizes full control of the stream and its contents.
+- `create-only`: Authorizes read-only access to the stream and its sub-streams (_not their events_), and adding new events therein.
 
 A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](/reference/#access).
 
