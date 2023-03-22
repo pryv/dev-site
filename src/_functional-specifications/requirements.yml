@@ -405,6 +405,11 @@ sections:
             description: |
               Unauthorized API calls are logged on the host operating system using syslog.
 
+          - reqid: PASS
+            title: The system shall support password policy rules
+            description: |
+              Rules for password complexity (length, character categories), age (minimum, maximum i.e. expiration) and reuse (i.e. history) can be enabled in the platform settings.
+
           - reqid: AUTH
             title: The system shall store in a log file authorized API calls
             description: |
