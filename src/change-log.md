@@ -4,6 +4,9 @@ title: API change log
 layout: default.pug
 ---
 
+## 1.8.1
+
+Fixes migration issue when upgrading from `1.6.x` to `1.8.0`
 ## 1.8.0
 
 New features:
