@@ -48,7 +48,7 @@ Unless specified otherwise, the steps are to be performed on the single-node or 
 
 - [Reference](https://certbot.eff.org/lets-encrypt/ubuntuxenial-other)
 
-This procedure describes the commands for Ubuntu 16.04.
+This procedure describes the commands for Ubuntu 18.04.
 If you are using another OS, go to the reference link, choose *software: None of the above* and your OS and follow the installation instructions.
 
 ```bash
