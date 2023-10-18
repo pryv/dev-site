@@ -163,7 +163,7 @@ You can edit its template using the `AUDIT_SYSLOG_FORMAT` platform parameter:
 
 ## Support
 
-If you have any question regarding auditing, check out our [forum](https://support.pryv.com/hc/en-us/community/topics) or ask a question at [support@pryv.com](mailto:support@pryv.com).
+If you have any question regarding auditing ask a question at [support@pryv.com](mailto:support@pryv.com).
 
 
 ## Performance

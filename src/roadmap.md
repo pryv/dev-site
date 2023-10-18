@@ -59,7 +59,7 @@ This app example displays an implementation of Pryv.io authentication protocol.
 
 ## 20.10.2020 - Consent implementation with Pryv.io
 
-We have released our new [tech guide](https://api.pryv.com/guides/consent) to help developers manage consent when building personal data collecting applications to satisfy existing and forthcoming privacy regulations. It outlines the logic of managing consent with Pryv.io, and guides you through a practical hands-on example involving a consent request. More information on how to leverage your compliance in our [article](https://support.pryv.com/hc/en-us/articles/360017196459-Consent-management-with-Pryv-io).
+We have released our new [tech guide](https://api.pryv.com/guides/consent) to help developers manage consent when building personal data collecting applications to satisfy existing and forthcoming privacy regulations. It outlines the logic of managing consent with Pryv.io, and guides you through a practical hands-on example involving a consent request.
 
 ## 28.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
@@ -70,8 +70,6 @@ have your own unique fields, now it is possible to do so. Also, admin panel user
 
 Push the boundaries of your High Frequency Data. Discover how to collect, view and share high-frequency data in our [tutorial video](https://www.youtube.com/watch?v=l6uOXr1_ivA) for our high-frequency app.
 The code for the Desktop and Mobile version is available in our [Github repository](https://github.com/pryv/example-apps-web/tree/release/hf-example/hf-data).
-
-Read more about high frequency data [here](https://support.pryv.com/hc/en-us/articles/360014131139).
 
 ## 24.08.2020 - Custom Authentication with Pryv.io
 
@@ -99,8 +97,6 @@ Learn how to grow your own [iOS App(le)s](https://github.com/pryv/app-ios-swift-
 
 Discover Apple HealthKit bridge video here: https://youtu.be/PIBh2_joFqQ.
 
-More on the release [here](https://support.pryv.com/hc/en-us/articles/360015645339-Develop-iOS-applications-with-our-Swift-library).
-
 ## 24.07.2020 - View and share data
 
 Following our [Collect survey data tutorial](https://github.com/pryv/example-apps-web/tree/master/collect-survey-data), enable your users to visualize and share data with our new template web app.
@@ -114,7 +110,7 @@ Simplify your authorization process for your Open Pryv.io platform by forking ou
 
 ## 15.07.2020 - Dockerized Open Pryv.io
 
-Open Pryv.io is now available through Docker containers : discover the new release [here](https://support.pryv.com/hc/en-us/articles/360015324699-Open-Pryv-io-now-available-through-Docker-containers) and [swim](https://youtu.be/RwxEo4c_ed0) with the whale.
+Open Pryv.io is now available through Docker containers : [youtube](https://youtu.be/RwxEo4c_ed0) with the whale.
 
 ## 14.07.2020 - Customize your Pryv.io web apps
 
@@ -130,21 +126,22 @@ Discover how to easily create a form and collect data with Pryv.io in our [tutor
 
 ## 08.06.2020 - Pryv.io goes Open Source
 
-Pryv releases an [Open-Source Solution](https://support.pryv.com/hc/en-us/articles/360015327139-Pryv-io-gets-Open-Source) for Personal Data & Privacy Management.
+Pryv releases an [Open-Source Solution](https://github.com/pryv/open-pryv.io) for Personal Data & Privacy Management.
 
 ## 17.01.2020 - Pryv.io integration with Postman
 
-Check how Postman can help to facilitate & accelerate the Pryv.io API integration [here](https://support.pryv.com/hc/en-us/articles/360015309120-Pryv-io-integration-with-Postman).
+Check how Postman can help to facilitate & accelerate the Pryv.io API integration 
+Integrate Open Pryv.io with Postman in our [1min video](https://www.youtube.com/watch?v=jv_cZPAbUo4), and download our newly [created OpenAPI definition](https://api.pryv.com/open-api/3.0/api.yaml) file to boost your way to privacy !.
 
 ## 04.01.2020 - Webhooks at Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Pryv.io notifies your app of any data changes from now. Learn more about Webhooks [here](https://support.pryv.com/hc/en-us/articles/360014071180-Webhooks-at-Pryv-io) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Pryv.io notifies your app of any data changes from now. Learn more about Webhooks (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
 Our [Webhooks technical guide](/guides/webhooks/) explains their different features and how they are set up.
 
 ## 23.11.2019 - Audit Logs in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](https://support.pryv.com/hc/en-us/articles/360015326619-Audit-Logs-in-Pryv-io) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](https://www.pryv.com/2020/01/25/audit-logs-in-pryv-io-when-every-single-piece-of-information-matters/) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
 
 ## 02.06.2019 - High Frequency Data in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Learn more about how you can store data at high frequency and high data density in Pryv.io [here](https://support.pryv.com/hc/en-us/articles/360014131139-High-Frequency-data-in-Pryv-io) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Learn more about how you can store data at high frequency and high data density in Pryv.io [here](https://api.pryv.com/reference/#hf-series) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
