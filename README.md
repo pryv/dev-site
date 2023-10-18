@@ -52,6 +52,4 @@ just open-api
 
 ## License
 
-Unlicensed
-
-Copyright (c) 2020 Pryv S.A.
+[BSD-3-Clause](https://github.com/pryv/dev-site/blob/master/LICENSE)
