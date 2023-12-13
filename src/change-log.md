@@ -10,6 +10,7 @@ Many under-the-hood changes and a couple fixes, including:
 
 - Stream response to `streams.delete` method to avoid potential timeout
 - Deleted stream ids are now already reusable when following the auth process
+- Username is not available anymore form `username` system stream. It should be retreived from `access-info`.
 
 ## 1.8.1
 

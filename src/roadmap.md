@@ -11,6 +11,14 @@ withTOC: true
 
 # Released
 
+## 01.10.2023 - 1.9.0
+
+Many under-the-hood changes and a couple fixes, including:
+
+- Stream response to `streams.delete` method to avoid potential timeout
+- Deleted stream ids are now already reusable when following the auth process
+- Username is not available anymore form `username` system stream. It should be retreived from `access-info`.
+
 ## 07.05.2023 - 1.8.1
 
 - Fixes migration issues found in 1.8.0  

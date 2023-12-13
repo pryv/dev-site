@@ -32,11 +32,12 @@ The base system streams contain the structure to store user account data, which 
 
 System streams can be recognized by their id prefixed by `:_system:` or `:system:`. In versions prior to 1.7 it was `.` (dot), See [backward compatiblity](#backward-compatibility) if you need to migrate your platform.
 
+In version 1.9.0 username system stream  `username` has been removed. Username is now exposed by [access-info](/reference/#access-info)
+
 The base system streams are the following:
 
 ```
 |_account
-  |_username
   |_language
   |_storageUsed
     |_dbDocuments
@@ -56,7 +57,7 @@ Here are the settings that you can configure for these system streams outside of
 
 ### Unicity
 
-You can define fields additional to `username` whose unicity constraint will be ensured platform-wide. These are often used for properties such as email or insurance number. Only available for account.
+You can define fields whose unicity constraint will be ensured platform-wide. These are often used for properties such as email or insurance number. Only available for account.
 
 ### Indexed
 
