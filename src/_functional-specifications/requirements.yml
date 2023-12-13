@@ -382,7 +382,7 @@ sections:
             title: The system shall run on a UNIX operating system
             description: |
               The following UNIX operating systems are supported:  
-                - Ubuntu Server 18.04 LTS
+                - Ubuntu Server 18.04 LTS to Ubuntu Server 22.04 LTS. On Unbuntu 20.04 and 22.04 the local dns must be deactivated (systemd-resolved)
 
           - reqid: CONTAINER
             title: The system should be packaged in a container for delivery and deployment

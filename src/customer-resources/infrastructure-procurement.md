@@ -141,7 +141,7 @@ The previous section should have allowed you to calculate how many cores to depl
 
 Linux:
 
-- Ubuntu 16.04, 18.04, 20.04
+- Ubuntu 16.04, 18.04, 20.04, 22.04
 
 ### Docker
 
