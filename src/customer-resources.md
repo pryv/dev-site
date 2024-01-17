@@ -15,6 +15,10 @@ In this space you will find documents, files and guides for the installation and
 
   Functional specifications for the Pryv.io middleware system: the capabilities and functions that the system must be capable of performing.
 
+- Tests Results: [tests](/tests)
+
+  Result of tests suite on `service-core` for the latest Pryv.io version
+
 
 ## Files
 
