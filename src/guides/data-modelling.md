@@ -8,6 +8,8 @@ withTOC: true
 
 In the following section, you will find all the necessary information to design your own data model.
 
+You should have read the **White Paper** [Data In Pryv](/data-in-pryv/) which outlines how pryv.io manages data and why we designed it this way.
+
 Please be aware that this guide is NOT intended to be read cover to cover (read *Clean Code* from [Uncle Bob](https://fr.wikipedia.org/wiki/Robert_C._Martin) instead), but rather to be used as a training manual to assist you in designing your data model.
 
 The general introduction describes Pryv.io data modelling conventions to help you understand how you should build your own data model. Then we provide you with a broad range of use cases that you can encounter while building your data model.
@@ -30,7 +32,8 @@ The general introduction describes Pryv.io data modelling conventions to help yo
 
 ## References
 
-- [Template Excel document for Allergen Data Model](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/)
+- [White Paper - Data In Pryv](/data-in-pryv))
+- [Template Excel document for Allergen Data Model](/assets/files/Template_Data_Model_Allergen.xlsx))
 - [API Reference](/reference/)
 - [Event types Reference](/event-types/)
 - [Event types Github repository](https://github.com/pryv/data-types) 
@@ -94,7 +97,7 @@ Here is your starting point.
 <img src="/assets/gifs/building-model.gif" width="400" />
 </p> 
 
-Building your own data model means defining your streams and events structure following this [template document](https://docs.google.com/spreadsheets/d/1UUb94rovSegFucEUtl9jcx4UcTAClfkKh9T2meVM5Zo/). Such a document serves as reference for the potentially multiple actors that will implement apps for a single Pryv.io platform.  
+Building your own data model means defining your streams and events structure following this [template document](/assets/files/Template_Data_Model_Allergen.xlsx). Such a document serves as reference for the potentially multiple actors that will implement apps for a single Pryv.io platform.  
 
 The Allergen data model on which the document is based is described in the stream structure below. The smartwatch collects geolocation data from the user, which is used by the Allergen Exposure app to compute ther user's daily exposure to allergens:  
 ![Example Streams Structure](/assets/images/data_model_allergens.svg)

@@ -53,7 +53,8 @@ const defaults = {
 function processConfig (config) {
   config = config || {};
   config = _.extend(_.clone(defaults), config);
-
+  if (config.processed) return config;
+  config.processed = true;
   const baseDir = path.join(__dirname, '..');
   config.checkFile = path.join(baseDir, config.checkFile);
   config.ignoreFile = path.join(baseDir, config.ignoreFile);
