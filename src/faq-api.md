@@ -5,7 +5,8 @@ layout: default.pug
 withTOC: true
 ---
 
-In this FAQ we answer common questions related to Pryv.io API. You can contact us directly if your question is not listed here.
+In this FAQ we answer common questions related to Pryv.io API. You can contact us on [Github Discussion](https://github.com/orgs/pryv/discussions) if your question is not listed here.
+
 
 
 ## Table of contents <!-- omit in toc -->
