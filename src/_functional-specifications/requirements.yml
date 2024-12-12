@@ -28,8 +28,8 @@ sections:
         description: |
           Access to the system is done using a Web API.
         refs: 
-          - url: https://api.pryv.com/
-            description: The Pryv.io HTTP API is described online at https://api.pryv.com/
+          - url: https://pryv.github.io/
+            description: The Pryv.io HTTP API is described online at https://pryv.github.io/
 
   - id: data-types
     reqid: DATA
@@ -234,7 +234,7 @@ sections:
         description: |
           The system provides Personal, Apps and Shared Accesses.
         refs:
-          - url: https://api.pryv.com/concepts/#accesses
+          - url: https://pryv.github.io/concepts/#accesses
             description: Accesses concept description
 
       - reqid: DELEGATE
@@ -255,7 +255,7 @@ sections:
             - Delete
             - List
         refs:
-          - url: https://api.pryv.com/reference/#followed-slices
+          - url: https://pryv.github.io/reference/#followed-slices
             description: Followed Slices API documentation
 
   - id: notifications
@@ -425,7 +425,7 @@ sections:
             description: |
               The data model supports client-side encryption by encapsulating encrypted data into the `encrypted/*` data type.
             refs:
-              - url: https://api.pryv.com/event-types/#encrypted
+              - url: https://pryv.github.io/event-types/#encrypted
                 description: Encrypted data-type reference
 
       - id: audit

@@ -96,7 +96,7 @@ Now that your Pryv.io account has been created using either Pryv lab or Open Pry
 
 The easiest is to use the **Pryv Access Token Generation** page (which is a raw implementation of [Pryv.io's oAuth-like process](/reference/#authenticate-your-app)).
 
-1. Go to the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/).
+1. Go to the [Pryv Access Token Generator](https://pryv.github.io/app-web-access/).
 2. Set up the required parameters :
 
     1. Fill in the Service Info URL related to your Pryv.io platform:

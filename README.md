@@ -1,6 +1,6 @@
 # Pryv API (developers) website
 
-Source content for api.pryv.com (API reference, recommendations, guides, etc.)
+Source content for pryv.github.io (API reference, recommendations, guides, etc.)
 
 
 ## Installation

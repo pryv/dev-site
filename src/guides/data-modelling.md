@@ -54,7 +54,7 @@ What are "Streams" ?
 - **Streams** are the main way of encoding context for events. They act as folders in a file system ("Health", "Geolocation", etc), and follow a tree structure with multiple roots.  
 
 And what are "Events" ?
-- **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g a weight measurement would have the type `mass/kg`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://api.pryv.com/event-types/) or a custom type that can be created for the intended use case.  
+- **Events** are the primary unit of content in Pryv.io. They are similar to files that are inserted in their corresponding folders. An event is a timestamped piece of typed data (e.g a weight measurement would have the type `mass/kg`), and belongs to one or multiple streams. It can either have a type from the [list of standard event types](https://pryv.github.io/event-types/) or a custom type that can be created for the intended use case.  
 
 Be patient, it is going to become crystal-clear for you with this [video](https://youtu.be/zl9RTf6JTps) :
 
@@ -243,9 +243,9 @@ In this regard, multiplying the number of streams is a preferable solution when 
 ## Define a custom event type
 
 Time to get our hands dirty.  
-If your event type is not referenced in the [default Event Types list](https://api.pryv.com/event-types/), you can create your own.
+If your event type is not referenced in the [default Event Types list](https://pryv.github.io/event-types/), you can create your own.
 
-Does it mean you can create absolutely any event type you want? Well, not exactly. It will need to follow the specification `{class}/{format}` (e.g `note/txt`). **Events with undeclared types are allowed but their content is not validated.** You can find more information on this in the [corresponding section](https://api.pryv.com/event-types/#basics).    
+Does it mean you can create absolutely any event type you want? Well, not exactly. It will need to follow the specification `{class}/{format}` (e.g `note/txt`). **Events with undeclared types are allowed but their content is not validated.** You can find more information on this in the [corresponding section](https://pryv.github.io/event-types/#basics).    
 
 For example, let's say that you need to create a custom event type for your 12-lead ECG recording `ecg/12-lead-recording`. If you want to perform content validation and ensure that every time you retrieve a new event it has the right structure, the procedure is the following:
 
@@ -269,7 +269,7 @@ For example, let's say that you need to create a custom event type for your 12-l
 4. Publish these files on a webserver and indicate the `flat.json` file in the platform parameters :
 
 ```json
-EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
+EVENT_TYPES_URL: "https://pryv.github.io/event-types/flat.json"
 ```  
 
 The detailed steps can be found [here](https://github.com/pryv/data-types#how-to-customize-your-data-types).

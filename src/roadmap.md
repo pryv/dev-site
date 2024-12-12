@@ -58,7 +58,7 @@ You can now query events with more precision using [Streams queries](/reference/
 
 ## 25.11.2020 - Open Pryv.io image for [Exoscale marketplace](https://www.exoscale.com/marketplace/)
 
-Open Pryv.io ready-to-go on Exoscale cloud service, allowing you to deploy Open Pryv instantaneously with minimal start-up configuration from [here](https://api.pryv.com/ops-image-exoscale-open-pryv.io/).
+Open Pryv.io ready-to-go on Exoscale cloud service, allowing you to deploy Open Pryv instantaneously with minimal start-up configuration from [here](https://pryv.github.io/ops-image-exoscale-open-pryv.io/).
 
 ## 22.10.2020 - React Native support for lib-js
 
@@ -67,7 +67,7 @@ This app example displays an implementation of Pryv.io authentication protocol.
 
 ## 20.10.2020 - Consent implementation with Pryv.io
 
-We have released our new [tech guide](https://api.pryv.com/guides/consent) to help developers manage consent when building personal data collecting applications to satisfy existing and forthcoming privacy regulations. It outlines the logic of managing consent with Pryv.io, and guides you through a practical hands-on example involving a consent request.
+We have released our new [tech guide](https://pryv.github.io/guides/consent) to help developers manage consent when building personal data collecting applications to satisfy existing and forthcoming privacy regulations. It outlines the logic of managing consent with Pryv.io, and guides you through a practical hands-on example involving a consent request.
 
 ## 28.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
@@ -139,17 +139,17 @@ Pryv releases an [Open-Source Solution](https://github.com/pryv/open-pryv.io) fo
 ## 17.01.2020 - Pryv.io integration with Postman
 
 Check how Postman can help to facilitate & accelerate the Pryv.io API integration 
-Integrate Open Pryv.io with Postman in our [1min video](https://www.youtube.com/watch?v=jv_cZPAbUo4), and download our newly [created OpenAPI definition](https://api.pryv.com/open-api/3.0/api.yaml) file to boost your way to privacy !.
+Integrate Open Pryv.io with Postman in our [1min video](https://www.youtube.com/watch?v=jv_cZPAbUo4), and download our newly [created OpenAPI definition](https://pryv.github.io/open-api/3.0/api.yaml) file to boost your way to privacy !.
 
 ## 04.01.2020 - Webhooks at Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Pryv.io notifies your app of any data changes from now. Learn more about Webhooks (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Pryv.io notifies your app of any data changes from now. Learn more about Webhooks (available for [Entreprise license](https://pryv.github.io/concepts/#entreprise-license-open-source-license) only).
 Our [Webhooks technical guide](/guides/webhooks/) explains their different features and how they are set up.
 
 ## 23.11.2019 - Audit Logs in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](https://www.pryv.com/2020/01/25/audit-logs-in-pryv-io-when-every-single-piece-of-information-matters/) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](https://www.pryv.com/2020/01/25/audit-logs-in-pryv-io-when-every-single-piece-of-information-matters/) (available for [Entreprise license](https://pryv.github.io/concepts/#entreprise-license-open-source-license) only).
 
 ## 02.06.2019 - High Frequency Data in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Learn more about how you can store data at high frequency and high data density in Pryv.io [here](https://api.pryv.com/reference/#hf-series) (available for [Entreprise license](https://api.pryv.com/concepts/#entreprise-license-open-source-license) only).
+Learn more about how you can store data at high frequency and high data density in Pryv.io [here](https://pryv.github.io/reference/#hf-series) (available for [Entreprise license](https://pryv.github.io/concepts/#entreprise-license-open-source-license) only).

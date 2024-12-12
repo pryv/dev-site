@@ -34,7 +34,7 @@ Privacy is embedded as default in Pryv, with dynamic consent as its cornerstone 
 
 Data in Pryv.io accounts is organized in streams and events, and accesses are distributed over streams. This means that when you wish to collect/process particular data from your app user, you actually need to request access on the "stream" in which this particular data is located.
 
-Let's keep things simple for now; thus, suffice to say that consent from the user will focus on "streams". If you wish to learn more about the **Pryv.io Data Model**, you can do so in this [tech guide](https://api.pryv.com/guides/data-modelling/) or [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
+Let's keep things simple for now; thus, suffice to say that consent from the user will focus on "streams". If you wish to learn more about the **Pryv.io Data Model**, you can do so in this [tech guide](https://pryv.github.io/guides/data-modelling/) or [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
 
 With Pryv.io, we are aiming at implementing a way of collecting consent that is straightforward, transparent, and meets the very specific requirements of the regulation: *freely given, specific, informed and unambiguous* ([Article 4](https://gdpr.eu/article-4-definitions/) of the GDPR).
 
@@ -42,11 +42,11 @@ Below are the step-by-step instructions on how to request consent from your user
 
 - **1** Define the data you are collecting/processing, and check whether it falls under what legislation.
 
-- **2** Structure your data into streams and events following our [data modelling guide](https://api.pryv.com/guides/data-modelling/).
+- **2** Structure your data into streams and events following our [data modelling guide](https://pryv.github.io/guides/data-modelling/).
 
-- **3** You are now ready to authenticate your app and request consent from your users. We have created a sample web application available [on Github](https://github.com/pryv/app-web-auth3) to register and authenticate your app users in a GDPR-compliant way by requesting their consent. You can test it [here](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).
+- **3** You are now ready to authenticate your app and request consent from your users. We have created a sample web application available [on Github](https://github.com/pryv/app-web-auth3) to register and authenticate your app users in a GDPR-compliant way by requesting their consent. You can test it [here](https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).
 
-You will need to customize a few parameters to adapt it to your needs and ensure that you collect data from your users in the right way. In the [auth request](https://api.pryv.com/reference/#auth-request) that the app will perform, the parameter `clientData` will be the one containing the consent information:
+You will need to customize a few parameters to adapt it to your needs and ensure that you collect data from your users in the right way. In the [auth request](https://pryv.github.io/reference/#auth-request) that the app will perform, the parameter `clientData` will be the one containing the consent information:
 
 ```json
 {
@@ -97,7 +97,7 @@ If the user decides to "Accept" the consent request, the web page will open the 
 <img src="/assets/images/apiendpoint.png" />
 </p>
 
-- **6** You can view the created access by performing a [getAccessInfo](https://api.pryv.com/reference/#access-info) call: `https://ckg9hiq4n008m1ld3uhaxi9yr@mariana.pryv.me/access-info`.
+- **6** You can view the created access by performing a [getAccessInfo](https://pryv.github.io/reference/#access-info) call: `https://ckg9hiq4n008m1ld3uhaxi9yr@mariana.pryv.me/access-info`.
 
 This will return information about the access in use:
 
@@ -203,12 +203,12 @@ For more information about how the GDPR requirements affect Swiss companies, you
 
 ### Personal data scope
 
-You can find more information on what is defined as **"personal data"** in our [FAQ](https://api.pryv.com/faq-api/#personal-data).
+You can find more information on what is defined as **"personal data"** in our [FAQ](https://pryv.github.io/faq-api/#personal-data).
 
 ### Data modelling
 
 **Pryv.io Data Model** is summarized in [this video](https://www.youtube.com/watch?v=zl9RTf6JTps).
-To learn how to model your data into streams and events, you can check our [tech guide](https://api.pryv.com/guides/data-modelling/) on data modelling.
+To learn how to model your data into streams and events, you can check our [tech guide](https://pryv.github.io/guides/data-modelling/) on data modelling.
 
 ### Web app examples
 

@@ -44,7 +44,7 @@ In this function, you have access to the fields described below, as well as the 
 - `user` (object): the user object (properties include `id`)  
 - `accessToken` (string): as read in the `Authorization` header or `auth` parameter  
 - `callerId` (string): optional additional id passed after `accessToken` in the `Authorization` header after a separating space (header format is thus `[<access-token> <caller-id>]`)  
-- `access` (object): the access object (see [API doc](https://api.pryv.com/reference/#access))  
+- `access` (object): the access object (see [API doc](https://pryv.github.io/reference/#access))  
 
 ```javascript
 // Example of customAuthStepFn.js

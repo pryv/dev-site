@@ -28,12 +28,12 @@ Implementing use cases such as:
 ### Auth web app
 ➔ [GitHub](https://github.com/pryv/app-web-auth3)
 
-Handling registration, [auth requests](https://api.pryv.com/reference/#authenticate-your-app), password reset and email change
+Handling registration, [auth requests](https://pryv.github.io/reference/#authenticate-your-app), password reset and email change
 
 ### Multi-Factor Authentication app
 ➔ [GitHub](https://github.com/pryv/app-web-mfa)
 
-Handles the [MFA flow](https://api.pryv.com/reference/#multi-factor-authentication).
+Handles the [MFA flow](https://pryv.github.io/reference/#multi-factor-authentication).
 
 
 ## iOS

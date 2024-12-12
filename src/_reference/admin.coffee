@@ -14,7 +14,7 @@ module.exports = exports =
     title: "Basics"
     description: """
                  This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.
-                 This service is only available with an [**Entreprise license**](https://api.pryv.com/concepts/#entreprise-license-open-source-license).
+                 This service is only available with an [**Entreprise license**](https://pryv.github.io/concepts/#entreprise-license-open-source-license).
                  """
     sections: [
       id: "admin-service"
@@ -377,10 +377,10 @@ module.exports = exports =
                 settings:
                   EVENT_TYPES_URL:
                     value: "https://my-service/event-types/flat.json"
-                    description: "URL of the file listing the validated Event types. See: https://api.pryv.com/faq-api/#event-types"
+                    description: "URL of the file listing the validated Event types. See: https://pryv.github.io/faq-api/#event-types"
                   TRUSTED_APPS:
                     value: "*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://*.rec.la*",
-                    description: "Web pages authorized to run login API call.  See https://api.pryv.com/reference-full/#trusted-apps-verification.  You can remove the ones not related to your platform if you are not using Pryv's default apps The format is comma-separated list of {trusted-app-id}@{origin} pairs. Origins and appIds accept '*' wildcards, but never use wildcard appIds in production. Example: *@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://*.rec.la*"
+                    description: "Web pages authorized to run login API call.  See https://pryv.github.io/reference-full/#trusted-apps-verification.  You can remove the ones not related to your platform if you are not using Pryv's default apps The format is comma-separated list of {trusted-app-id}@{origin} pairs. Origins and appIds accept '*' wildcards, but never use wildcard appIds in production. Example: *@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://*.rec.la*"
         ]
       ,
 
@@ -433,7 +433,7 @@ module.exports = exports =
                 settings:
                   EVENT_TYPES_URL:
                     value: "https://my-service/event-types/flat.json"
-                    description: "URL of the file listing the validated Event types. See: https://api.pryv.com/faq-api/#event-types"
+                    description: "URL of the file listing the validated Event types. See: https://pryv.github.io/faq-api/#event-types"
         ]
       ,
         id: "settings.notify"

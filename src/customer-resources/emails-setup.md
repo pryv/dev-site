@@ -151,7 +151,7 @@ If you choose to use the domain associated with your Pryv.io platform, you shoul
 In the SPF record above, we declared that Mandrill can be used to send emails on behalf of the domain of our Pryv.io platform.
 You can of course replace Mandrill by the SPF address of the SMTP host(s) of your choice.
 
-Please refer to [the DNS configuration document](https://api.pryv.com/customer-resources/#guides-and-documents) on how to set such SPF record in the Pryv.io DNS.
+Please refer to [the DNS configuration document](https://pryv.github.io/customer-resources/#guides-and-documents) on how to set such SPF record in the Pryv.io DNS.
 
 ### Email template default language
 
@@ -183,7 +183,7 @@ The welcome template accepts the following variables:
 - USERNAME
 
 ```
-<img src="https://api.pryv.com/style/images/logo-256.png" alt="Logo"> 
+<img src="https://pryv.github.io/style/images/logo-256.png" alt="Logo"> 
 <h1><span style="color:#bd1026">Hey</span> #{USERNAME},</h1>
 <h2><span style="color:#bd1026">Thanks for creating your Pryv account</span></h2>
 ```

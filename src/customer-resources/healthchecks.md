@@ -172,7 +172,7 @@ The response body should contain a valid access token under the `access:token` f
 
 If you are using a default configuration, you can use the default web app:
 
-1. Go to https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.${DOMAIN}/service/info (https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://${HOSTNAME}/reg/service/info for DNS-less)
+1. Go to https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.${DOMAIN}/service/info (https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://${HOSTNAME}/reg/service/info for DNS-less)
 2. Click on `Master Token`radio button
 3. Click on `Request Access` button
 4. Click on `Sign in` Pryv button

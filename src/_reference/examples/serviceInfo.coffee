@@ -9,4 +9,4 @@ module.exports =
     home: "https://www.pryv.com"
     support: "https://pryv.com/helpdesk"
     terms: "https://pryv.com/pryv-lab-terms-of-use/"
-    eventTypes: "https://api.pryv.com/event-types/flat.json"
+    eventTypes: "https://pryv.github.io/event-types/flat.json"

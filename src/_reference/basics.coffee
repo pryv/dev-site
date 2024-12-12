@@ -463,12 +463,12 @@ module.exports = exports =
                  The **Access token generator** is a simple web application that allows its user to enter the parameters of the [Auth request](#auth-request) and performs it. It is accessible at the following URL:
 
                  ```
-                 https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=${pryvServiceInfoUrl}
+                 https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=${pryvServiceInfoUrl}
                  ```
 
                  For example:
 
-                 [https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
+                 [https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info](https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
 
 
 

@@ -9,7 +9,7 @@
     "API",
     "documentation"
   ],
-  "homepage": "api.pryv.com",
+  "homepage": "pryv.github.io",
   "author": "Pryv team <info@pryv.com>",
   "scripts": {
     "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"

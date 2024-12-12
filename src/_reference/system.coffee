@@ -549,7 +549,7 @@ module.exports = exports =
         httpOnly: true
         server: "register"
         description: """
-                    Get the username of a Pryv.io account according to the given email. This API method can be disabled in the [platform configuration](https://api.pryv.com/reference-admin/#platform-settings).
+                    Get the username of a Pryv.io account according to the given email. This API method can be disabled in the [platform configuration](https://pryv.github.io/reference-admin/#platform-settings).
                     """
         params:
           properties: [

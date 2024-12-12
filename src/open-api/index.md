@@ -50,7 +50,7 @@ Fill in the variable `baseUrl` as shown below:
 ![Manage the Environment](/assets/images/manage.png)
 
 The variable `baseUrl` should be set as `https://{{token}}@{{username}}.pryv.me`, with the variables `username` and `token` corresponding to the username and access token of your Pryv account.
-You can find more information on how to create a Pryv user on the [dedicated page](http://api.pryv.com/getting-started/#create-a-pryv-lab-user), and obtain an Access Token from the [Pryv Access Token Generator](https://api.pryv.com/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).
+You can find more information on how to create a Pryv user on the [dedicated page](http://pryv.github.io/getting-started/#create-a-pryv-lab-user), and obtain an Access Token from the [Pryv Access Token Generator](https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).
 
 In our example, the `username` "testuser" associated to the `token` "cdtasdjhashdsa" are used to set the `baseUrl` variable as `https://cdtasdjhashdsa@testuser.pryv.me`.
 

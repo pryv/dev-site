@@ -48,7 +48,7 @@ retrieve-tests:
 clean:
     rm -rf dist/*
 
-# Build & publish on `pryv.github.io` (a.k.a. `api.pryv.com`)
+# Build & publish on `pryv.github.io` (a.k.a. `pryv.github.io`)
 publish: retrieve-types retrieve-tests clean build
     #!/bin/sh
     set -e

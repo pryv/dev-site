@@ -68,7 +68,7 @@ If you wish to give a Pryv access token to an external service and to control it
 
 ### Are my events content validated?
 
-The default set of validated types is defined in [https://api.pryv.com/event-types](/event-types/), they are validated upon creation and modification. To validate custom types, it is possible to provide a different source of event types, following the [JSON schema format](/event-types/#format-specification).
+The default set of validated types is defined in [https://pryv.github.io/event-types](/event-types/), they are validated upon creation and modification. To validate custom types, it is possible to provide a different source of event types, following the [JSON schema format](/event-types/#format-specification).
 
 ### What kind of validation do you perform?
 

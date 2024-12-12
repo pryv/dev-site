@@ -25,7 +25,7 @@ Generate a few events and streams by hand for a naked eye comparison for data tr
 
 ## Adapt platform parameters
 
-Fetch cluster configuration files for the same version [here](https://api.pryv.com/config-template-pryv.io/). Extract them, and edit the `config-leader/conf/template-platform.yml` (`platform.yml` for versions prior to 1.7).
+Fetch cluster configuration files for the same version [here](https://pryv.github.io/config-template-pryv.io/). Extract them, and edit the `config-leader/conf/template-platform.yml` (`platform.yml` for versions prior to 1.7).
 
 The difference between a single and cluster lies in the "Machines and platform settings" section.
 

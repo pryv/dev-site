@@ -107,7 +107,7 @@ ${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns2-pryv.${YOUR-DOMAIN}.
 
 ## Obtain the license key, credentials and configuration files
 
-In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files, which you can download [here](https://api.pryv.com/config-template-pryv.io/).
+In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files, which you can download [here](https://pryv.github.io/config-template-pryv.io/).
 
 
 ## Set the platform parameters
@@ -242,7 +242,7 @@ See the [Event Types](/event-types/) page for more information.
 You can host your definitions page on a public URL which will be loaded at the platform boot. You can define this URL in the platform parameters as following:
 
 ```yaml
-EVENT_TYPES_URL: "https://api.pryv.com/event-types/flat.json"
+EVENT_TYPES_URL: "https://pryv.github.io/event-types/flat.json"
 ```
 
 
