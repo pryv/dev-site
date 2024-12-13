@@ -10,7 +10,7 @@
     "documentation"
   ],
   "homepage": "pryv.github.io",
-  "author": "Pryv team <info@pryv.com>",
+  "author": "Pryv",
   "scripts": {
     "test": "echo 'This project doesn’t use npm scripts – enter `just` for the available development commands\n' && exit 1"
   },

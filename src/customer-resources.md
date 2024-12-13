@@ -91,4 +91,4 @@ In this space you will find documents, files and guides for the installation and
 
 ## Contact and support
 
-You can get in touch with Pryv's support by sending an email to [support@pryv.com](mailto:support@pryv.com) or filling in the form at [Pryv's Helpdesk](http://pryv.com/helpdesk/)
+You can get in touch with Pryv's support at [Open Pryv - Issues and question](https://github.com/pryv/open-pryv.io/issues)

@@ -375,4 +375,3 @@ This concludes our first tour of Pryv.io and some basic things you can do with i
 - To faster your onboarding with Pryv.io, watch our video tutorials on our [Youtube channel](https://www.youtube.com/user/pryvme/videos).
 - Our [external resources](/external-resources/) page presents some third party and unsupported libraries and sample applications.
 - The [API Reference](/reference/) explains all the calls you can make to Pryv.io and their parameters.
-- To obtain your own Pryv.io installation, please get in contact with our [Sales Team](mailto:sales@pryv.com).

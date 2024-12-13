@@ -664,7 +664,7 @@ module.exports = exports =
           result:
             user:
               username: "aiuwvd981b298dn8",
-              email: "jericho@pryv.com",
+              email: "jericho@pryv.io",
               language: "en",
               invitationToken: "undefined",
               referer: "null",
@@ -862,7 +862,7 @@ module.exports = exports =
         title: "A platform user."
         content:
           username: "aiuwvd981b298dn8",
-          email: "jericho@pryv.com",
+          email: "jericho@pryv.io",
           language: "en",
           invitationToken: "undefined",
           referer: "null",

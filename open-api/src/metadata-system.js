@@ -6,7 +6,7 @@ module.exports = {
     version: version,
     title: 'Pryv.io System API',
     contact: {
-      email: 'support@pryv.com'
+      url: 'https://github.com/pryv/open-pryv.io/issues'
     },
     license: {
       name: 'MIT',

@@ -25,7 +25,7 @@ Many under-the-hood changes and a couple fixes, including:
 
 ## 07.10.2022 - Dynamic mapping support & HDS SECU_AUTH with 1.8.0
 
-- Expose external (e.g. legacy) data warehouses through Pryv.io: [see original announcement](https://www.pryv.com/2022/01/19/pryv-personal-data-mapping-enables-automatic-integration-with-existing-warehouses-bridging-the-gap-for-privacy-compliance-and-managing-data-subject-requests-on-personal-data-access-and-proce/) (documentation on request)
+- Expose external (e.g. legacy) data warehouses through Pryv.io. (documentation)[https://github.com/pryv/pryv-datastore]
 - Compliance with HDS requirements SECU_AUTH 3 & 4: Enforce rules for password complexity and password age (including past passwords history)
 
 ## 12.11.2021 - Automatic SSL certificate generation with Pryv.io 1.7.4
@@ -148,7 +148,7 @@ Our [Webhooks technical guide](/guides/webhooks/) explains their different featu
 
 ## 23.11.2019 - Audit Logs in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Keep track of actions performed by your app users against Pryv.io accounts with [audit logs](https://www.pryv.com/2020/01/25/audit-logs-in-pryv-io-when-every-single-piece-of-information-matters/) (available for [Entreprise license](https://pryv.github.io/concepts/#entreprise-license-open-source-license) only).
+Keep track of actions performed by your app users against Pryv.io accounts with audit logs.
 
 ## 02.06.2019 - High Frequency Data in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 

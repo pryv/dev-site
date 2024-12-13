@@ -135,7 +135,7 @@ in the admin panel:
 ```json
 {
   "name": "Pryv Lab no reply",
-  "address": "no-reply@pryv.com"
+  "address": "no-reply@pryv.io"
 }
 ```
 
