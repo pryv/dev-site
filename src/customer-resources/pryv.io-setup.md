@@ -15,7 +15,7 @@ This guide, addressed to IT operators, walks you through the different steps tha
 2. [Obtain a domain name](#obtain-a-domain-name)
    1. [Expose the Pryv.io API on a second-level domain](#expose-the-pryvio-api-on-a-second-level-domain)
    2. [Verify](#verify)
-3. [Obtain the license key, credentials and configuration files](#obtain-the-license-key-credentials-and-configuration-files)
+3. [Obtain the configuration files](#obtain-the-configuration-files)
 4. [Set the platform parameters](#set-the-platform-parameters)
 5. [Obtain an SSL certificate](#obtain-an-ssl-certificate)
 6. [Validate your platform installation](#validate-your-platform-installation)
@@ -105,9 +105,9 @@ ${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns2-pryv.${YOUR-DOMAIN}.
 ```
 
 
-## Obtain the license key, credentials and configuration files
+## Obtain the configuration files
 
-In order to be able to run your Pryv.io instance, you will need to get a license key for your platform from Pryv and the credentials to pull the Docker images defined in the configuration files, which you can download [here](https://pryv.github.io/config-template-pryv.io/).
+In order to be able to run your Pryv.io instance, you will need to get the configuration files, which you can download [here](https://pryv.github.io/config-template-pryv.io/).
 
 
 ## Set the platform parameters
