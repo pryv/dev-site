@@ -35,7 +35,7 @@ The source code of the different Entreprise version components:
 
 - Pryv.io configuration files: [HTML](https://pryv.github.io/config-template-pryv.io/)
 
-  Configuration files to install Pryv.io (requires Pryv license and docker key).
+  Configuration files to install Pryv.io Entrepise Version.
 
 
 ## Guides
