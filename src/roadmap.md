@@ -69,12 +69,12 @@ This app example displays an implementation of Pryv.io authentication protocol.
 
 We have released our new [tech guide](https://pryv.github.io/guides/consent) to help developers manage consent when building personal data collecting applications to satisfy existing and forthcoming privacy regulations. It outlines the logic of managing consent with Pryv.io, and guides you through a practical hands-on example involving a consent request.
 
-## 28.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 28.09.2020 - System Streams with Pryv.io <span onclick="location='/concepts/#entreprise-version--open-pryvio'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 Now user registration could be customized using the Pryv.io configuration. Either you want to have a registration without an email or
 have your own unique fields, now it is possible to do so. Also, admin panel users could easily delete not active users.
 
-## 27.08.2020 - Collect and Share High Frequency Data with Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 27.08.2020 - Collect and Share High Frequency Data with Pryv.io <span onclick="location='/concepts/#entreprise-version--open-pryvio'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 Push the boundaries of your High Frequency Data. Discover how to collect, view and share high-frequency data in our [tutorial video](https://www.youtube.com/watch?v=l6uOXr1_ivA) for our high-frequency app.
 The code for the Desktop and Mobile version is available in our [Github repository](https://github.com/pryv/example-apps-web/tree/release/hf-example/hf-data).
@@ -83,7 +83,7 @@ The code for the Desktop and Mobile version is available in our [Github reposito
 
 Provide your Pryv.io platform with a custom auth step to authenticate your Pryv.io API requests or authorize them against another web service. Detailed information in our [new technical guide](/guides/custom-auth/), illustrated with our [video use case](https://www.youtube.com/watch?v=Z1Ufo_9b_E4&feature=youtu.be): *How to check Alice's identity when she tries to access Bob's data for which he gave her access to ?*
 
-## 12.08.2020 - Admin panel for Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 12.08.2020 - Admin panel for Pryv.io <span onclick="location='/concepts/#entreprise-version--open-pryvio'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 We have released a web application for your Pryv.io platform administration. It allows you to manage the platform settings of your platform. Contact us directly if you wish to get your admin panel for Pryv.io!
 
@@ -141,15 +141,15 @@ Pryv releases an [Open-Source Solution](https://github.com/pryv/open-pryv.io) fo
 Check how Postman can help to facilitate & accelerate the Pryv.io API integration 
 Integrate Open Pryv.io with Postman in our [1min video](https://www.youtube.com/watch?v=jv_cZPAbUo4), and download our newly [created OpenAPI definition](https://pryv.github.io/open-api/3.0/api.yaml) file to boost your way to privacy !.
 
-## 04.01.2020 - Webhooks at Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 04.01.2020 - Webhooks at Pryv.io <span onclick="location='/concepts/#entreprise-version--open-pryvio'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Pryv.io notifies your app of any data changes from now. Learn more about Webhooks (available for [Entreprise license](https://pryv.github.io/concepts/#entreprise-license-open-source-license) only).
+Pryv.io notifies your app of any data changes from now. Learn more about Webhooks (available for [Entreprise license](https://pryv.github.io/concepts/#entreprise-version--open-pryvio) only).
 Our [Webhooks technical guide](/guides/webhooks/) explains their different features and how they are set up.
 
-## 23.11.2019 - Audit Logs in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 23.11.2019 - Audit Logs in Pryv.io <span onclick="location='/concepts/#entreprise-version--open-pryvio'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
 Keep track of actions performed by your app users against Pryv.io accounts with audit logs.
 
-## 02.06.2019 - High Frequency Data in Pryv.io <span onclick="location='/concepts/#entreprise-license-open-source-license'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
+## 02.06.2019 - High Frequency Data in Pryv.io <span onclick="location='/concepts/#entreprise-version--open-pryvio'" class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>
 
-Learn more about how you can store data at high frequency and high data density in Pryv.io [here](https://pryv.github.io/reference/#hf-series) (available for [Entreprise license](https://pryv.github.io/concepts/#entreprise-license-open-source-license) only).
+Learn more about how you can store data at high frequency and high data density in Pryv.io [here](https://pryv.github.io/reference/#hf-series) (available for [Entreprise version](https://pryv.github.io/concepts/#entreprise-version--open-pryvio) only).

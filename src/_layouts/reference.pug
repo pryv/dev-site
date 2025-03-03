@@ -9,8 +9,8 @@ mixin methodId(id)
 
 mixin entrepriseTag(entrepriseTag)
   if entrepriseTag
-    span(onclick="location='/concepts/#entreprise-license-open-source-license'").entreprise-tag
-      span.label(title="Entreprise License Only") Y
+    span(onclick="location='/concepts/#entreprise-version--open-pryvio'").entreprise-tag
+      span.label(title="Entreprise Version Only") Y
 
 mixin trustedTag(trustedTag)
   if trustedTag
@@ -131,7 +131,7 @@ mixin section(section, parentDocId, level, parent)
             span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
             text &nbsp;
           if section.entrepriseOnly
-            span(onclick="location='/concepts/#entreprise-license-open-source-license'").label.entreprise-only Entreprise license only
+            span(onclick="location='/concepts/#entreprise-version--open-pryvio'").label.entreprise-only Entreprise version only
             text &nbsp;
           if section.adminOnly
             span(onclick="location='/reference-system/#admin'").label.admin-only Admin only

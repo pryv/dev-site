@@ -8,7 +8,7 @@ withTOC: true
 
 This document describes how to configure the Audit feature for your Pryv.io platform.
 
-Audit is only available in the [entreprise version](/concepts/#entreprise-license-open-source-license) of Pryv.io.
+Audit is only available in the [entreprise version](/concepts/#entreprise-version--open-pryvio) of Pryv.io.
 
 
 ## Table of contents <!-- omit in toc -->

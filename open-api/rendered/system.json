@@ -464,7 +464,7 @@
                     "key": "invitationToken",
                     "type": "string",
                     "optional": true,
-                    "description": "An invitation token, necessary when users registration is limited to a specific set of users.\nPlatform administrators may limit users registration by configuring a list of authorized invitation tokens.\nIf this is not the case, users registration is open to everyone and this parameter can be omitted.\n\n<span class=\"entreprise-tag\"><span title=\"Entreprise License Only\" class=\"label\">Y</span></span>Available in entreprise only."
+                    "description": "An invitation token, necessary when users registration is limited to a specific set of users.\nPlatform administrators may limit users registration by configuring a list of authorized invitation tokens.\nIf this is not the case, users registration is open to everyone and this parameter can be omitted.\n\n<span class=\"entreprise-tag\"><span title=\"Entreprise version\" class=\"label\">Y</span></span>Available in entreprise version only."
                   },
                   {
                     "key": "language",

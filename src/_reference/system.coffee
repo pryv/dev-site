@@ -383,7 +383,7 @@ module.exports = exports =
                           Platform administrators may limit users registration by configuring a list of authorized invitation tokens.
                           If this is not the case, users registration is open to everyone and this parameter can be omitted.
 
-                          <span class="entreprise-tag"><span title="Entreprise License Only" class="label">Y</span></span>Available in entreprise only.
+                          <span class="entreprise-tag"><span title="Entreprise version Only" class="label">Y</span></span>Available in entreprise version only.
                           """
           ,
             key: "language"

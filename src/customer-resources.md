@@ -8,6 +8,17 @@ withTOC: true
 
 In this space you will find documents, files and guides for the installation and support of the **Pryv.io enterprise** version.
 
+In February 2025, the closed-sourced version of Pryv.io was released under [BSD-3-Clause](https://opensource.org/license/bsd-3-clause) license. Open-Pryv.io and the Enterprise version share the same codebase but are substantially different to be kept alongside. The name "Enterprise version", is kept to distinguish the two distributions.  
+
+The source code of the different Entreprise version components:
+- [service-core](https://github.com/pryv/service-core): Main API component
+- [service-register](https://github.com/pryv/service-register): Register and DNS
+- [service-mail](https://github.com/pryv/service-mail): E-mail & template service
+- [service-mfa](https://github.com/pryv/service-mfa): Mutli-factor authentication service
+- [service-config-leader](https://github.com/pryv/service-config-leader): Configuration management centralization
+- [service-config-follower](https://github.com/pryv/service-config-follower): Subscribe to config-leader
+- [service-ssl-certificate](https://github.com/pryv/service-ssl-certificate): Let's encrypt automated certificate request
+
 
 ## Documents
 

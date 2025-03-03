@@ -14,7 +14,7 @@ module.exports = exports =
     title: "Basics"
     description: """
                  This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.
-                 This service is only available with an [**Entreprise license**](https://pryv.github.io/concepts/#entreprise-license-open-source-license).
+                 This service is only available with an [**Entreprise version**](https://pryv.github.io/concepts/#entreprise-version--open-pryvio).
                  """
     sections: [
       id: "admin-service"

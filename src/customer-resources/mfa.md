@@ -10,7 +10,7 @@ This document describes how to configure Multi-Factor Authentication (MFA) for t
 
 The prerequisite for this is to have:
 
-- a running [entreprise version](/concepts/#entreprise-license-open-source-license) of Pryv.io
+- a running [entreprise version](/concepts/#entreprise-version--open-pryvio) of Pryv.io
 - an external communication service to send messages over another channel, such as email or SMS.  
 
 Depending on your communication service capabilities, you will either use the **single** or the **challenge-verify** mode.
