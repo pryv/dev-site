@@ -7,9 +7,20 @@ withTOC: true
 
 # Future releases
 
-- **Support oAuth 2.0 protocol for authentication and authorization**
+- Check progress and features plan on [Github V2 Project](https://github.com/orgs/pryv/projects/5)
 
 # Released
+
+## 19.05.2025 - 1.9.3
+
+- Added Audit from Entreprise version to Open-Pryv.io.
+
+## 02.02.2025 - 1.9.2
+
+Full Open source for enterprise version
+- Refactored Attachments (Event Files) Logic to be modular for future cloud storage of files such as S3.
+- Implemented ferretDB compatibility allowing full-open source modules
+- Replaced rec.la by backloop.dev
 
 ## 01.10.2023 - 1.9.0
 

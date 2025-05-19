@@ -3,6 +3,15 @@ id: change-log
 title: API change log
 layout: default.pug
 ---
+### 1.9.3
+- Added Audit from Entreprise version to Open-Pryv.io.
+
+### 1.9.2
+- Refactored Attachments (Event Files) Logic to be modular for future cloud storage of files such as S3.
+
+### 1.9.1
+- Implemented ferretDB compatibility allowing full-open source modules
+- Replaced rec.la by backloop.dev
 
 ## 1.9.0
 
