@@ -1667,6 +1667,12 @@
                 "description": "The id of the parent stream from which to retrieve streams. Default: `null` (returns all accessible streams from the root level)."
               },
               {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "optional": true,
+                "description": "The id of the stream to retrieve. Default: `null` (returns all accessible streams from the root level)."
+              },
+              {
                 "key": "state",
                 "type": "`default`|`all`",
                 "optional": true,
