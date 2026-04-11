@@ -8,7 +8,7 @@ Source content for pryv.github.io (API reference, recommendations, guides, etc.)
 Prerequisites: [Node.js](https://nodejs.org/en/download/) 16, [just](https://github.com/casey/just#installation)
 
 Then:
-1. `just setup` to install node modules and setup `dist/` as well as repository copies of `service-core` and `test-results` (see `scripts/setup` for details)
+1. `just setup` to install node modules and setup `dist/` as well as repository copies of `open-pryv.io` and `test-results` (see `scripts/setup` for details)
 2. `just build` for the initial compilation into `dist/`
 
 Running `just` with no argument displays the available commands (defined in `justfile`).

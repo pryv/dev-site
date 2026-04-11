@@ -3,6 +3,41 @@ id: change-log
 title: API change log
 layout: default.pug
 ---
+## 2.0.0-pre
+
+First v2 preview — major consolidation and new features.
+
+**Open source**
+- Open Pryv.io v2 is now fully open source under [BSD-3-Clause](https://opensource.org/license/bsd-3-clause). The former "Enterprise version" and Open Pryv.io are now the same codebase.
+- Docker image published as [`pryvio/open-pryv.io`](https://hub.docker.com/r/pryvio/open-pryv.io) (was `pryvio/core` for v1). Pull `pryvio/open-pryv.io:2.0.0-pre`.
+
+**Consolidated runtime**
+- Registration, MFA, high-frequency series and previews are now served by a single binary (`bin/master.js`), replacing the previous per-service Docker images (`pryvio/core`, `pryvio/hfs`, `pryvio/preview`, `service-register`, `service-mfa`).
+- Cluster mode: configurable N API workers + M HFS workers + optional previews worker under one master process.
+
+**Multi-factor authentication** (ported from the former Enterprise version)
+- New API: `mfa.activate`, `mfa.confirm`, `mfa.challenge`, `mfa.verify`, `mfa.deactivate`, `mfa.recover`.
+- When a user has MFA active, `auth.login` returns `{ mfaToken }` instead of a regular access token. Clients must follow up with `mfa.verify` (SMS code) to obtain the Pryv access token.
+- Back-office `system.deactivateMfa` remains available alongside the user-facing `mfa.deactivate`.
+- Disabled by default (`services.mfa.mode: disabled`) — existing deployments see no change.
+
+**Registration merged into core** (was `service-register`)
+- All `/reg/*` endpoints are now served by the main binary. No separate register service to deploy.
+- Backing store is PlatformDB (rqlite) — replaces the previous redis/leveldb storage.
+- Legacy routes, invitations, DNS-less registration and multi-core indirection are all preserved.
+
+**Multi-core deployments**
+- Per-user routes (`/:username/*`) enforce core affinity. Cross-core requests receive **HTTP 421 Misdirected Request** with body `{ error: { id: 'wrong-core', message, coreUrl } }` — clients must retry directly against `coreUrl`. No HTTP redirect is issued (cross-origin redirects strip `Authorization` headers, WebSockets cannot follow).
+- `/reg/*` and `/system/*` remain load-balanceable.
+- New `core.url` per-core config override for **DNSless multi-core** deployments where FQDNs cannot be derived from `{core.id}.{dns.domain}`. Other cores discover the URL via `Platform.coreIdToUrl()` (PlatformDB-backed).
+
+**Storage**
+- **PostgreSQL backend** (optional): full MongoDB parity for events, streams, accounts. Select via `storages.engines.*` config. **Note:** v1→v2 data migration currently only operates from a MongoDB v1 source; migration into a PostgreSQL v2 backend is not yet supported. See [INSTALL.md](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md).
+- **rqlite** is now the only platform-storage engine — the legacy sqlite platform store was removed. `master.js` always spawns `rqlited`.
+
+**Known gaps in 2.0.0-pre**
+- **OAuth2 authorization-code flow** (RFC 6749 `/oauth2/authorize`, `/oauth2/token`, client registration, refresh tokens, PKCE) is **not** in this preview. Clients that need OAuth2-style authorization must continue using the existing `/reg/access` polling flow (now core-affinity aware in multi-core deployments).
+
 ### 1.9.3
 - Added Audit from Entreprise version to Open-Pryv.io.
 

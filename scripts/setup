@@ -41,21 +41,21 @@ git pull
 cd $scriptsFolder/..
 
 # –––––––––––––----------------------------------------------------------------
-# Dependency: service-core repo copy
+# Dependency: open-pryv.io repo copy (formerly service-core)
 # –––––––––––––----------------------------------------------------------------
 
 if [ ! -d dependencies/core ]
 then
   echo ""
-  echo "# service-core dependency: setting up repo copy..."
+  echo "# open-pryv.io dependency: setting up repo copy..."
   echo ""
-  git clone git@github.com:pryv/service-core.git dependencies/core
+  git clone git@github.com:pryv/open-pryv.io.git dependencies/core
 fi
 
 coreBranch="master"
 
 echo ""
-echo "# service-core dependency: checking out branch '$coreBranch'..."
+echo "# open-pryv.io dependency: checking out branch '$coreBranch'..."
 echo ""
 
 cd dependencies/core
@@ -63,14 +63,9 @@ git checkout $coreBranch
 git pull
 
 echo ""
-echo "# service-core dependency: installing node modules if necessary..."
+echo "# open-pryv.io dependency: installing node modules if necessary..."
 echo ""
 just install-stable
-
-echo ""
-echo "# service-core dependency: compiling..."
-echo ""
-just compile-release
 
 # –––––––––––––----------------------------------------------------------------
 # Finally setup dev site build
