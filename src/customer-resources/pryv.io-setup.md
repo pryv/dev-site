@@ -6,6 +6,8 @@ customer: true
 withTOC: true
 ---
 
+> **Note (v2):** This guide was written for the v1 multi-service topology (separate register, core, static-web roles). In v2, Pryv.io runs as a single binary and Docker image with built-in registration and DNS. See the [INSTALL.md](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md) in the repository for v2-specific setup instructions.
+
 This guide, addressed to IT operators, walks you through the different steps that have to be performed in order to set up your Pryv.io platform.
 
 

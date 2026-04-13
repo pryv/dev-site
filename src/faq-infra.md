@@ -86,7 +86,7 @@ ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns2-${DOMAIN}.${TOP_DOMAIN}
 We deliver the platform with default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-auth3.
 
 To customize it, fork the repository, make stub commit on the `gh-pages` branch to activate the [GitHub Pages](https://pages.github.com/).
-Modify the NGINX configuration on the static-web machine `static/nginx/site.conf` (or `pryv/nginx/site.conf` for single node). Change line:
+Modify the NGINX configuration in `pryv/nginx/site.conf`. Change line:
 
 ```
 proxy_pass        https://pryv.github.io/app-web-auth3/;
@@ -115,9 +115,9 @@ The following pages will show the changes that you apply to this repository:
 
 ## Host apps, resources on the same domain and reuse the SSL certificate
 
-The web role is meant for this. It contains a proxy server that can be configured to serve apps from different sources such as GitHub pages under the same domain, thus allowing to reuse the SSL certificate.
+The built-in NGINX proxy can be configured to serve apps from different sources such as GitHub pages under the same domain, thus allowing to reuse the SSL certificate.
 
-Using the web role, apps can be served on any path from the hostname https://sw.${DOMAIN}/ such as https://sw.${DOMAIN}/MY_APP/.
+Apps can be served on any path from the hostname https://sw.${DOMAIN}/ such as https://sw.${DOMAIN}/MY_APP/.
 
 This is done by adding the following `location` clause in the `pryv/nginx/conf/site.conf` file:
 
@@ -184,27 +184,13 @@ It should have a message similar to:
 Error: EACCES: permission denied
 ```
 
-This can be fixed by running the provided `ensure-permissions-${ROLE}` script. If necessary, reboot the Pryv.io services as well.
+This can be fixed by running the provided `ensure-permissions` script. If necessary, reboot the Pryv.io services as well.
 
 ### How do I reset data on my Pryv.io platform?
 
 This step will erase all data from your platform. Perform this at your own risk and make sure that you know what you are doing.
 
 To erase all data on the platform, you need to delete the contents of the data folders and reboot the services.
-
-On the register master:
-
-```bash
-cd ${PRYV_CONF_ROOT}
-./stop-config-leader
-./stop-pryv
-rm -rf pryv/redis/data/*
-rm -rf config-leader/database/*
-./run-config-leader
-./run-pryv
-```
-
-On core:
 
 ```bash
 cd ${PRYV_CONF_ROOT}
@@ -221,16 +207,16 @@ App-web is hosted on GitHub pages and can be used for your Pryv.io platform as d
 
 ### Can I use my own SSL termination with Pryv.io?
 
-Yes, you need to provide the following changes to the template configuration files found in `config-leader/data/${ROLE}`, where `${ROLE}` is `singlenode` or `core`, `reg-master`, `reg-slave` and `static` depending on your deployment.
+Yes, you need to provide the following changes to your NGINX configuration.
 
-In the `config-leader/data/${ROLE}/nginx/conf/nginx.conf` files, comment out the following lines by adding a `#` at their beginning as following:
+In the `nginx/conf/nginx.conf` file, comment out the following lines by adding a `#` at their beginning as following:
 
 ```nginx
 #ssl_certificate      /app/conf/secret/DOMAIN-bundle.crt;
 #ssl_certificate_key  /app/conf/secret/DOMAIN-key.pem;
 ```
 
-In the `config-leader/data/${ROLE}/nginx/conf/site-443.conf` and `config-leader/data/${ROLE}/nginx/conf/site-443-mfa.conf` files, change the `listen` directive from `443 ssl` to `80` for each `server` block as following:
+In the `nginx/conf/site-443.conf` file, change the `listen` directive from `443 ssl` to `80` for each `server` block as following:
 
 ```nginx
 server {
@@ -241,9 +227,9 @@ server {
 
 ### My security policy requires that all outgoing traffic goes through a proxy, will Pryv.io work?
 
-Yes, you need to provide the following changes to the template configuration files found in `config-leader/data/${ROLE}`, where `${ROLE}` is `singlenode` or `core`, `reg-master`, `reg-slave` and `static` depending on your deployment.
+Yes, you need to provide the following changes to your deployment configuration.
 
-In the `config-leader/data/${ROLE}/pryv.yml` files, add the environment variables `http_proxy` and `https_proxy` to the `reverse_proxy` service:
+In your `docker-compose.yml` (or equivalent), add the environment variables `http_proxy` and `https_proxy` to the reverse proxy service:
 
 ```yaml
 reverse_proxy:

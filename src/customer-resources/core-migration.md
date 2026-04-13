@@ -6,6 +6,8 @@ customer: true
 withTOC: true
 ---
 
+> **Note (v2):** This guide was written for the v1 topology where core, HFS, preview, and MFA ran as separate containers with separate NGINX upstreams. In v2, all services run from a single binary and Docker image. The data migration steps (MongoDB, InfluxDB, user files) still apply, but the NGINX configuration is simplified to a single upstream.
+
 This guide describes how to migrate the core role of Pryv.io to a new machine.
 
 We will copy the data from the old core to the new one, then set the old core to proxy to the new one so we can use it during the DNS propagation phase.

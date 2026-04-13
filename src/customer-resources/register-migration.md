@@ -6,6 +6,8 @@ customer: true
 withTOC: true
 ---
 
+> **Deprecated (v2)** — In Pryv.io v2, registration is built into the core binary. There is no separate register service to migrate. For v2 deployments, follow the [core migration](/customer-resources/core-migration/) guide instead. This page is preserved for v1 operators only.
+
 This guide describes how to migrate the register role of Pryv.io to a new machine.
 
 The register migration procedure only takes into account the master registers. If you need to migrate a slave, simply deploy a new one and replication will take care of the data migration.  

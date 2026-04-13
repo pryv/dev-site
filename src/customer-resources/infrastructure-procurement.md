@@ -6,6 +6,8 @@ customer: true
 withTOC: true
 ---
 
+> **Note (v2):** This guide was written for the v1 multi-service topology (separate register, core, static-web machines). In v2, Pryv.io runs as a single binary and Docker image — a single machine is sufficient for most deployments. Multi-core scaling uses horizontal replication of the same binary. The sizing guidelines below remain useful for capacity planning but the role-per-machine model no longer applies.
+
 In this document we address system administrators or equivalent that need to provision virtual machines and other web resources to run a Pryv.io platform.  
 It will guide you through the process of deciding which platform setup you require, what virtual machines to provision to host your Pryv.io platform, firewalling settings, OS compatibility and other operational concerns.
 

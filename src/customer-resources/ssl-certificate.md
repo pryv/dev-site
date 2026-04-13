@@ -139,27 +139,16 @@ mv privkey.pem ${DOMAIN}-key.pem
 
 You might have to copy them as `live/` holds symbolic links.
 
-Then copy them into:
+Then copy them into your NGINX secret directory:
 
 ```bash
-${PRYV_CONF_ROOT}/config-leader/data/${ROLE}/nginx/conf/secret/
+${PRYV_CONF_ROOT}/pryv/nginx/conf/secret/
 ```
-
-with `${ROLE}` being:
-
-- `singlenode`
-
-OR
-
-- `core`
-- `reg-master`
-- `reg-slave`
-- `static`
 
 Make sure that the certificates permissions are set correctly:
 
 ```bash
-./ensure-permissions[-${ROLE}] --ignore-redis
+./ensure-permissions --ignore-redis
 ```
 
 And reboot the follower and pryv services, using either method:

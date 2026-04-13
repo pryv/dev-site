@@ -15,6 +15,8 @@ withTOC: true
 | Version | 4                     |
 -->
 
+> **Note (v2):** This guide was written for the v1 multi-service topology (separate register, core, static-web roles). In v2, Pryv.io runs as a single binary — validation is simpler. The general principles still apply but role-specific steps should be adapted to the unified deployment.
+
 This procedure describes the steps to validate that a Pryv.io platform is up and running. You can directly jump to the [Checklist section](#checklist) to proceed to a quick check-up of your Pryv.io platform.
 Troubleshooting steps can be found at the end of this document in case of validation failure.
 

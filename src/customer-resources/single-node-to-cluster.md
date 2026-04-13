@@ -6,6 +6,8 @@ customer: true
 withTOC: true
 ---
 
+> **Note (v2):** This guide was written for the v1 topology where scaling meant deploying separate service roles on different machines. In v2, scaling to multi-core uses horizontal replication of the same binary with rqlite-based coordination. See [SINGLE-TO-MULTIPLE.md](https://github.com/pryv/open-pryv.io/blob/master/SINGLE-TO-MULTIPLE.md) in the repository for the v2 procedure.
+
 This guide describes how to migrate a single-node installation from a *source* machine to multiple *dest* machines in a cluster setup.
 
 
