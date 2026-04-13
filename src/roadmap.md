@@ -78,10 +78,6 @@ New MFA release:
 
 You can now query events with more precision using [Streams queries](/reference/#streams-query).
 
-## 25.11.2020 - Open Pryv.io image for [Exoscale marketplace](https://www.exoscale.com/marketplace/)
-
-Open Pryv.io ready-to-go on Exoscale cloud service, allowing you to deploy Open Pryv instantaneously with minimal start-up configuration from [here](https://pryv.github.io/ops-image-exoscale-open-pryv.io/).
-
 ## 22.10.2020 - React Native support for lib-js
 
 A react native application using the [Pryv.io JavaScript library](https://github.com/pryv/lib-js) is now available in our [Github repository](https://github.com/pryv/app-react-native-example).
