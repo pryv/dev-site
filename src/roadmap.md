@@ -11,7 +11,7 @@ withTOC: true
 
 # Released
 
-## 2026-04 - 2.0.0-pre
+## 11.04.2026 - 2.0.0-pre
 
 Open-Pryv.io v2: the former "Enterprise version" and Open-Pryv.io are now the same codebase, distributed as a single binary and Docker image under BSD-3-Clause. All features are always enabled.
 
