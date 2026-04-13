@@ -676,6 +676,314 @@ module.exports = exports =
             userDeletion:
               username: "mark-kaminski"
         ]
+
+      ,
+
+        id: "access.create"
+        type: "method"
+        title: "Create access request"
+        http: "POST /reg/access"
+        httpOnly: true
+        server: "register"
+        description: """
+                    Creates a new access authorization request. The requesting app calls this method, then polls
+                    the returned URL until the user accepts or refuses the request.
+                    This implements the Pryv.io OAuth-like authorization flow.
+                    """
+        params:
+          properties: [
+            key: "requestingAppId"
+            type: "string"
+            description: """
+                        The id of the app requesting access.
+                        """
+          ,
+            key: "requestedPermissions"
+            type: "array of permission objects"
+            description: """
+                        The permissions requested by the app.
+                        """
+          ,
+            key: "returnURL"
+            type: "string"
+            optional: true
+            description: """
+                        An optional URL to redirect the user to after accepting or refusing.
+                        """
+          ,
+            key: "clientData"
+            type: "object"
+            optional: true
+            description: """
+                        Optional metadata the requesting app wants to attach to the request.
+                        """
+          ]
+        result:
+          http: "201 Created"
+          properties: [
+            key: "status"
+            type: "string"
+            description: """
+                        The current status of the request (`NEED_SIGNIN`).
+                        """
+          ,
+            key: "key"
+            type: "string"
+            description: """
+                        The polling key. Use it to poll and to build the auth URL.
+                        """
+          ,
+            key: "poll"
+            type: "string"
+            description: """
+                        The full URL to poll for status updates.
+                        """
+          ,
+            key: "poll_rate_ms"
+            type: "number"
+            description: """
+                        The recommended polling interval in milliseconds.
+                        """
+          ]
+
+      ,
+
+        id: "access.poll"
+        type: "method"
+        title: "Poll access request"
+        http: "GET /reg/access/{key}"
+        httpOnly: true
+        server: "register"
+        description: """
+                    Polls the status of a pending access request. The requesting app calls this periodically
+                    until it receives `ACCEPTED`, `REFUSED`, or `ERROR`.
+
+                    Possible statuses: `NEED_SIGNIN` (waiting), `ACCEPTED` (token issued), `REFUSED`, `ERROR`.
+                    """
+        params:
+          properties: [
+            key: "key"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The polling key returned by [Create access request](#create-access-request).
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "status"
+            type: "string"
+            description: """
+                        The current status.
+                        """
+          ,
+            key: "username"
+            type: "string"
+            description: """
+                        (When `ACCEPTED`) The username that granted the access.
+                        """
+          ,
+            key: "token"
+            type: "string"
+            description: """
+                        (When `ACCEPTED`) The personal or app token.
+                        """
+          ,
+            key: "apiEndpoint"
+            type: "string"
+            description: """
+                        (When `ACCEPTED`) The API endpoint for subsequent requests.
+                        """
+          ]
+
+      ,
+
+        id: "access.update"
+        type: "method"
+        title: "Accept/Refuse access request"
+        http: "POST /reg/access/{key}"
+        httpOnly: true
+        server: "register"
+        description: """
+                    Updates the state of an access request. Called by the auth page after the user has
+                    signed in and accepted or refused the permissions.
+                    """
+        params:
+          properties: [
+            key: "key"
+            type: "string"
+            http:
+              text: "set in request path"
+            description: """
+                        The polling key.
+                        """
+          ,
+            key: "status"
+            type: "string"
+            description: """
+                        The new status: `ACCEPTED`, `REFUSED`, `ERROR`, or `REDIRECTED`.
+                        """
+          ,
+            key: "username"
+            type: "string"
+            description: """
+                        (Required when `ACCEPTED`) The username granting the access.
+                        """
+          ,
+            key: "token"
+            type: "string"
+            description: """
+                        (Required when `ACCEPTED`) The token for the access.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "status"
+            type: "string"
+            description: """
+                        The updated status.
+                        """
+          ]
+
+      ,
+
+        id: "invitationtoken.check"
+        type: "method"
+        title: "Check invitation token"
+        http: "POST /access/invitationtoken/check"
+        httpOnly: true
+        server: "register"
+        description: """
+                    Checks whether an invitation token is valid. Returns plain text `true` or `false`.
+                    Used when user registration is limited to holders of valid invitation tokens.
+                    """
+        params:
+          properties: [
+            key: "invitationtoken"
+            type: "string"
+            description: """
+                        The invitation token to verify.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: ""
+            type: "string"
+            description: """
+                        Plain text: `true` if valid, `false` otherwise.
+                        """
+          ]
+
+      ,
+
+        id: "invitations.list"
+        type: "method"
+        title: "List invitation tokens"
+        http: "GET /reg/admin/invitations"
+        httpOnly: true
+        adminOnly: true
+        server: "register"
+        description: """
+                    Lists all invitation tokens configured on the platform. Requires admin authorization.
+                    """
+        result:
+          http: "200 OK"
+          properties: [
+            key: "invitations"
+            type: "array"
+            description: """
+                        The list of invitation tokens.
+                        """
+          ]
+
+      ,
+
+        id: "invitations.generate"
+        type: "method"
+        title: "Generate invitation tokens"
+        http: "GET /reg/admin/invitations/post"
+        httpOnly: true
+        adminOnly: true
+        server: "register"
+        description: """
+                    Generates new invitation tokens. Requires admin authorization.
+                    """
+        params:
+          properties: [
+            key: "count"
+            type: "number"
+            http:
+              text: "query parameter"
+            description: """
+                        Number of tokens to generate (default: 1).
+                        """
+          ,
+            key: "message"
+            type: "string"
+            optional: true
+            http:
+              text: "query parameter"
+            description: """
+                        Optional description for the generated tokens.
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "data"
+            type: "object"
+            description: """
+                        The generated invitation tokens.
+                        """
+          ]
+
+      ,
+
+        id: "dns.records"
+        type: "method"
+        title: "Update DNS records"
+        http: "POST /reg/records"
+        httpOnly: true
+        adminOnly: true
+        server: "register"
+        description: """
+                    Admin endpoint for updating runtime DNS entries (e.g. ACME challenge records for SSL
+                    certificate provisioning). Records are persisted to PlatformDB and propagated to all
+                    cores in a multi-core deployment. Requires admin authorization.
+                    """
+        params:
+          properties: [
+            key: "subdomain"
+            type: "string"
+            description: """
+                        The subdomain to set records for.
+                        """
+          ,
+            key: "records"
+            type: "object"
+            description: """
+                        The DNS records to set (e.g. `{ "TXT": "challenge-value" }`).
+                        """
+          ]
+        result:
+          http: "200 OK"
+          properties: [
+            key: "subdomain"
+            type: "string"
+            description: """
+                        The subdomain.
+                        """
+          ,
+            key: "status"
+            type: "string"
+            description: """
+                        `ok` on success.
+                        """
+          ]
       ]
     ,
 

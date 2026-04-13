@@ -976,6 +976,15 @@ module.exports = exports =
         description: """
                      The request cannot be served temporarily because the user's account has exceeded its limits. The user must log into her account and fix the issue.
                      """
+      ,
+        key: "wrong-core"
+        http: "421"
+        description: """
+                     **Multi-core deployments only.** The request reached a core that does not host the requested user account.
+                     The error's `data.coreUrl` contains the correct API endpoint for this user. Clients MUST retry the
+                     request directly against `coreUrl`. An HTTP redirect is not used because cross-origin redirects strip
+                     the `Authorization` header.
+                     """
       ]
     ]
   ]
