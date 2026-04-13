@@ -59,7 +59,7 @@ module.exports = function (context, callback) {
 
 ### How to set up the custom auth step
 
-For Pryv.io entreprise version, you can add the custom auth step using the admin panel, available on `https://adm.DOMAIN`. Please request a template version above or equal v1.0.35 to be able to access it.
+You can add the custom auth step using the admin panel, available on `https://adm.DOMAIN`.
 
 ## Authenticate data access with Pryv.io
 

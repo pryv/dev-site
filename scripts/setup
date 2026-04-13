@@ -41,7 +41,7 @@ git pull
 cd $scriptsFolder/..
 
 # –––––––––––––----------------------------------------------------------------
-# Dependency: open-pryv.io repo copy (formerly service-core)
+# Dependency: open-pryv.io repo copy
 # –––––––––––––----------------------------------------------------------------
 
 if [ ! -d dependencies/core ]

@@ -79,9 +79,6 @@ Accesses **cannot be updated**, to change Access properties it should be revoked
 For security reason, unless explicitly indicated by the permission `{ "feature": "selfRevoke", "setting": "forbidden"}` all accesses can be used to revoke (delete) themselves. In very specific cases, for example when a token is distributed publicly the `selfRevoke` feature should be set to `forbidden`.  
 
 
-## Entreprise version & Open-Pryv.io
+## Open-Pryv.io
 
-Pryv.io is released a single license:
-
-1. **Open-Pryv.io**: Is distributed freely under [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) 
-2. **Pryv.io Entreprise**: Is distributed freely under [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) since February 2025. It comes with more features; the API documentation of these features are indicated with a <span class="entreprise-tag"><span title="Entreprise Version Only" class="label">Y</span></span>label.
+As of v2, Pryv.io is distributed as a single open-source codebase under [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause). All features (audit, MFA, high-frequency series, webhooks, previews, multi-core) are included in every deployment. The former "Enterprise version" and Open-Pryv.io have been merged into one unified binary (`bin/master.js`) and Docker image ([`pryvio/open-pryv.io`](https://hub.docker.com/r/pryvio/open-pryv.io)).

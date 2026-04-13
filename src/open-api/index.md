@@ -10,9 +10,7 @@ withTOC: true
 
 These OpenAPI documents describe the Pryv.io API and conform to the OpenAPI Specification. They are represented in YAML format and can be downloaded from the following links to be imported on other API tools such as Postman.
 
-- The [API of Open-Pryv.io](/reference/) (open source version of Pryv.io) in OpenAPI 3.0 format: [api_open.yaml](/open-api/3.0/api_open.yaml).
-
-- The [API of Pryv.io](/reference/) (Entreprise license) in OpenAPI 3.0 format: [api.yaml](/open-api/3.0/api.yaml).
+- The [Pryv.io API](/reference/) in OpenAPI 3.0 format: [api.yaml](/open-api/3.0/api.yaml).
 
 - The [admin API](/reference-admin/) of Pryv.io in OpenAPI 3.0 format: [api_admin.yaml](/open-api/3.0/api_admin.yaml).
 
@@ -24,7 +22,7 @@ These OpenAPI documents describe the Pryv.io API and conform to the OpenAPI Spec
 
 ### Import
 
-The OpenAPI description of Open-Pryv.io or Pryv.io Entreprise can be directly imported into Postman to test the API's functionality. 
+The OpenAPI description of Pryv.io can be directly imported into Postman to test the API's functionality. 
 
 
 - **1.** If Postman has not yet been installed on your computer, you can download it from [here](http://www.getpostman.com). 

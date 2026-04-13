@@ -7,11 +7,6 @@ mixin methodId(id)
       span.label(title="Method Id") id
       span.label-value: code !{id}
 
-mixin entrepriseTag(entrepriseTag)
-  if entrepriseTag
-    span(onclick="location='/concepts/#entreprise-version--open-pryvio'").entreprise-tag
-      span.label(title="Entreprise Version Only") Y
-
 mixin trustedTag(trustedTag)
   if trustedTag
     span(onclick="location='/reference/#trusted-apps-verification'").trusted-tag
@@ -123,15 +118,11 @@ mixin section(section, parentDocId, level, parent)
         .meta
           if isMethod
             +trustedTag(section.trustedTag || (parent && parent.trustedOnly))
-            +entrepriseTag(section.entrepriseTag || (parent && parent.entrepriseOnly))
             +adminTag(section.adminTag || (parent && parent.adminOnly))
             +methodId(section.id)
             +http(section.http, section.httpOnly, section.server)
           if section.trustedOnly
             span(onclick="location='/reference/#trusted-apps-verification'").label.trusted-only Trusted apps only
-            text &nbsp;
-          if section.entrepriseOnly
-            span(onclick="location='/concepts/#entreprise-version--open-pryvio'").label.entreprise-only Entreprise version only
             text &nbsp;
           if section.adminOnly
             span(onclick="location='/reference-system/#admin'").label.admin-only Admin only
