@@ -6,156 +6,112 @@ customer: true
 withTOC: true
 ---
 
-This document describes how to generate a wildcard SSL certificate using [Let's Encrypt](https://letsencrypt.org/) and Pryv.io's DNS.
+This document describes how to obtain and install the SSL certificate used by a Pryv.io deployment.
 
-As prerequisite, you must have…
-- [obtained a domain name](/customer-resources/pryv.io-setup/#obtain-a-domain-name),
-- and [installed the Pryv.io platform](/customer-resources/pryv.io-setup/#set-the-platform-parameters).
+> **Since v2 (2026)** the core no longer ships its own `renew-ssl-certificate` helper. You provide the certificate from a source of your choice — [Let's Encrypt](https://letsencrypt.org/) / [certbot](https://certbot.eff.org/), your internal CA, a commercial CA, or your reverse-proxy's auto-renewal (Caddy, Traefik, `nginx-proxy-manager`, …) — and point the core at the resulting files.
 
-If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
+Prerequisite: you have [obtained a domain name](/customer-resources/pryv.io-setup/#obtain-a-domain-name) and installed the core ([INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md)).
 
 
 ## Table of contents <!-- omit in toc -->
 
-1. [Automatic generation with Pryv.io 1.7.4 or later](#automatic-generation-with-pryvio-174-or-later)
-   1. [DNS check failure: Error: Servers are not reachable](#dns-check-failure-error-servers-are-not-reachable)
-2. [Manual generation with Pryv 1.7.3 or earlier](#manual-generation-with-pryv-173-or-earlier)
-   1. [Install Certbot](#install-certbot)
-   2. [Generate certificate using DNS validation](#generate-certificate-using-dns-validation)
-   3. [Reorganize SSL certificate files](#reorganize-ssl-certificate-files)
+1. [Which certificate do I need?](#which-certificate-do-i-need)
+2. [Where the certificate plugs in](#where-the-certificate-plugs-in)
+   1. [Built-in HTTPS (core terminates TLS)](#built-in-https-core-terminates-tls)
+   2. [Behind your own reverse proxy](#behind-your-own-reverse-proxy)
+3. [Issuing a certificate with Let's Encrypt / certbot](#issuing-a-certificate-with-lets-encrypt--certbot)
+   1. [HTTP-01 challenge (single-core, public host)](#http-01-challenge-single-core-public-host)
+   2. [DNS-01 challenge (required for wildcards)](#dns-01-challenge-required-for-wildcards)
+4. [Renewal](#renewal)
+5. [v1 procedure (legacy)](#v1-procedure-legacy)
 
 
-## Automatic generation with Pryv.io 1.7.4 or later
+## Which certificate do I need?
 
-If you are running Pryv.io 1.7.4 or later, you can simply run the `renew-ssl-certificate` script provided with [the configuration files](https://pryv.github.io/config-template-pryv.io/) to generate a SSL certificate for your Pryv.io platform.
+| Deployment                                 | Certificate                                                         |
+| ------------------------------------------ | ------------------------------------------------------------------- |
+| Single-core with `dnsLess.isActive: true`  | Plain cert for `your-domain.com` (one hostname)                     |
+| Multi-core using embedded DNS              | **Wildcard** cert for `*.mc.example.com` (every user gets a subdomain) |
+| Multi-core with DNSless overrides          | Per-core plain certs (one cert per `core.url`)                      |
 
-Note: from version 1.9.0 it's required to set a valid email address in the configuration file `config-leader/ssl/conf/ssl-certificate.yml`
-
-Otherwise, follow this guide.
-
-### DNS check failure: Error: Servers are not reachable
-
-If you encounter this error, your network settings might prevent the `renewl-ssl-certificate` tool from peforming the pre-check of DNS challenge, namely the node process inside the `pryvio_ssl_certificate` container cannot get an answer from the `pryvio_dns` container.
-
-You can simply skip this by modifying the `acme:skipDnsChecks` parameter in `config-leader/ssl/conf/ssl-certificate.yml`. You can also increase the value of the time allocated for the DNS container(s) to reboot by increasing the `acme:dnsRebootWaitMs` parameter. On machines with limited resources, you can increase this value to `10000` (10 seconds).
+A wildcard certificate requires the **DNS-01** ACME challenge.
 
 
-## Manual generation with Pryv 1.7.3 or earlier
+## Where the certificate plugs in
 
-Unless specified otherwise, the steps are to be performed on the single-node or `reg-master` machine, depending on your setup. Certbot can be installed and run anywhere, of course.
+### Built-in HTTPS (core terminates TLS)
 
-### Install Certbot
-
-- [Reference](https://certbot.eff.org/instructions)
-
-This procedure describes the commands for Ubuntu 18.04.
-If you are using another OS, go to the reference link, choose *software: None of the above* and your OS and follow the installation instructions.
-
-```bash
-sudo apt-get update
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:certbot/certbot
-sudo apt-get update
-sudo apt-get install certbot
-```
-
-### Generate certificate using DNS validation
-
-- [Reference](https://certbot.eff.org/docs/using.html#manual)
-
-Make sure your DNS supports the Let's Encrypt CAA by verifying that it has this field in its platform variables:
+Set the paths in your override YAML — the core will load them directly:
 
 ```yaml
-  ADVANCED_API_SETTINGS:
-    optional: true
-    name: "Advanced API settings"
-    settings:
-      SSL_CAA_ISSUER:
-        value: letsencrypt.org
-        description: "Certificate authority allowed to issue SSL certificates for this domain"
+http:
+  ip: 0.0.0.0
+  port: 443
+  ssl:
+    keyFile: /etc/ssl/pryv/privkey.pem
+    certFile: /etc/ssl/pryv/fullchain.pem
+    caFile:  /etc/ssl/pryv/chain.pem        # optional, add the issuer chain if your CA is not in the OS trust store
 ```
 
-If you are not familiar with this process, it is recommended to do a dry-run as the Let's Encrypt API has a call limit, which may block you in case of multiple failed attempts.
-For this, append `--dry-run` to the command below. Once it works, simply repeat it without `--dry-run`.
+Restart `bin/master.js` to pick up a renewed certificate (future versions may hot-reload — not yet guaranteed).
 
-Launch the process using:
+### Behind your own reverse proxy
+
+Terminate TLS in your proxy and forward plain HTTP to the core on port 3000 (API) and port 4000 (HFS). A sample NGINX block is in [INSTALL — Running behind nginx](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#running--behind-nginx). The proxy is also the right place to host your auto-renewal (certbot hook, Caddy's built-in ACME, Traefik, etc.).
+
+
+## Issuing a certificate with Let's Encrypt / certbot
+
+Install certbot from [the project instructions](https://certbot.eff.org/instructions).
+
+### HTTP-01 challenge (single-core, public host)
+
+The core (or your reverse proxy) must serve `/.well-known/acme-challenge/` on port 80 during the challenge. With certbot's standalone mode:
 
 ```bash
-certbot certonly --manual --preferred-challenges dns
+sudo certbot certonly --standalone -d your-domain.com
+# → certs land in /etc/letsencrypt/live/your-domain.com/
 ```
 
-When prompted for the domain, enter `*.${DOMAIN}` and accept to share the IP address by pressing `ENTER`.
+Then point `http.ssl` at `/etc/letsencrypt/live/your-domain.com/fullchain.pem` and `privkey.pem`, or copy them into the path your reverse proxy expects.
 
-Now, the CLI will ask you to set a certain key to the TXT Record `_acme-challenge`. Enter it in the platform variables by adding the following field as following:
+### DNS-01 challenge (required for wildcards)
 
-```yaml
-  DNS_SETTINGS:
-    name: "DNS settings"
-    settings:
-      DNS_CUSTOM_ENTRIES:
-        description: "Additional DNS entries. See the DNS configuration document: https://pryv.github.io/customer-resources/#guides-and-documents.
-        Can be set to null if not used."
-        value:
-          _acme-challenge:
-            description: "KEY"
+```bash
+sudo certbot certonly --manual --preferred-challenges dns \
+    -d "*.mc.example.com" -d "mc.example.com"
 ```
 
-And reboot the follower and Pryv.io services, using either method:
+Certbot prompts you for a `_acme-challenge.mc.example.com` TXT record. Publish it in whichever DNS system answers for that domain (your registrar's zone, the core's embedded DNS if `dns.active: true`, an external provider, …) and wait for propagation:
 
-- On each follower machine, run:
+```bash
+dig TXT _acme-challenge.mc.example.com
+```
+
+When the right value comes back, continue the certbot prompt.
+
+For a non-interactive pipeline, certbot has DNS plugins for common providers (Route 53, Cloudflare, OVH, …) — see [certbot plugins](https://eff-certbot.readthedocs.io/en/stable/using.html#dns-plugins). An API-driven plugin is the only practical way to run fully-automated wildcard renewal.
+
+
+## Renewal
+
+- **certbot** auto-registers a systemd timer/cron job (`certbot renew`) that runs twice a day. Reload the core (or your reverse proxy) after each successful renewal:
+
   ```bash
-  ./restart-config-follower
-  ./restart-pryv
+  # /etc/letsencrypt/renewal-hooks/post/reload-pryv.sh
+  #!/usr/bin/env bash
+  systemctl reload nginx          # or: systemctl restart pryv-core
   ```
-- From the admin panel web app, push 'Update'
 
-Verify that the key is querying the name servers.
+- **Reverse-proxy-managed certificates** (Caddy, Traefik, nginx-proxy-manager, …) take care of renewal transparently — nothing to do on the Pryv.io side.
 
-If you are running a single-node platform or cluster with a single DNS, you can run:
 
-```bash
-dig @reg.${DOMAIN} TXT _acme-challenge.${DOMAIN}
-```
+## v1 procedure (legacy)
 
-If you are running a cluster platform with more than one DNS, run:
+Operators still running Pryv.io v1 can use the procedure shipped with the [v1 config template](https://pryv.github.io/config-template-pryv.io/):
 
-```bash
-dig @${NS1_HOSTNAME} TXT _acme-challenge.${DOMAIN}
-dig @${NS2_HOSTNAME} TXT _acme-challenge.${DOMAIN}
-```
+- From 1.7.4 onward, run `./renew-ssl-certificate`. Make sure `config-leader/ssl/conf/ssl-certificate.yml` has a valid email address (mandatory since 1.9.0).
+- If the pre-check fails with *"Servers are not reachable"* (the `pryvio_ssl_certificate` container cannot reach `pryvio_dns`), flip `acme.skipDnsChecks` to `true` in the same file, or raise `acme.dnsRebootWaitMs` to give DNS containers more time to start.
+- Certificate files end up in `${PRYV_CONF_ROOT}/pryv/nginx/conf/secret/` as `${DOMAIN}-bundle.crt` and `${DOMAIN}-key.pem`. Run `./ensure-permissions --ignore-redis` and reboot (`./restart-config-follower && ./restart-pryv`, or *Update* from the admin panel).
 
-Once you get the right key, go back to the CLI and press ENTER.
-
-You should now have a certificate in `/etc/letsencrypt/live/${DOMAIN}/`.
-
-### Reorganize SSL certificate files
-
-Rename the files to match the NGINX settings:
-
-```bash
-mv fullchain.pem ${DOMAIN}-bundle.crt
-mv privkey.pem ${DOMAIN}-key.pem
-```
-
-You might have to copy them as `live/` holds symbolic links.
-
-Then copy them into your NGINX secret directory:
-
-```bash
-${PRYV_CONF_ROOT}/pryv/nginx/conf/secret/
-```
-
-Make sure that the certificates permissions are set correctly:
-
-```bash
-./ensure-permissions --ignore-redis
-```
-
-And reboot the follower and pryv services, using either method:
-
-- On each follower machine, run:
-  ```bash
-  ./restart-config-follower
-  ./restart-pryv
-  ```
-- From the admin panel web app, push 'Update'
+None of the paths or scripts above exist in v2 — use the v2 procedures earlier on this page instead.

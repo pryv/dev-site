@@ -6,207 +6,141 @@ customer: true
 withTOC: true
 ---
 
-<!--
-|         |                       |
-| ------- | --------------------- |
-| Author  | Ilia Kebets 	      |
-| Reviewer | Guillaume Bassand (v1-3), Anastasia Bouzdine (v4) |
-| Date    | 28.04.2020            |
-| Version | 4                     |
--->
+This guide describes how to perform regular healthcheck API calls against a Pryv.io deployment in order to monitor its status remotely.
 
-> **Note (v2):** This guide was written for the v1 multi-service topology. In v2, Pryv.io runs as a single binary serving all roles. The healthcheck endpoints are still valid but the separate DNS/Register/Core distinction no longer applies to single-binary deployments.
+> **Since v2 (2026)** Pryv.io runs as a single binary; there is no longer a DNS / register / core split. All the checks below hit one and the same service. In **multi-core** mode, each core exposes the same endpoints — run the checks per core to detect a single faulty instance.
 
-This guide describes how to perform regular healthcheck API calls to the Pryv.io API in order to remotely monitor its status. You can directly jump to the [Healthchecks section](#healthchecks) to proceed to the healthchecks.
-
-Please note that the current procedure does not cover how to perform healthchecks per core machine, only per hosting. If you require core-level status, get in touch with your Pryv tech contact.
+The checks in this guide require a dedicated healthcheck user account with a non-expirable access token. Create it once and reuse the `(username, token)` pair in your monitoring system.
 
 
 ## Table of contents <!-- omit in toc -->
 
 1. [Variables](#variables)
 2. [Tools](#tools)
-   1. [DNS checks:](#dns-checks)
-   2. [HTTP calls](#http-calls)
-3. [Preparation](#preparation)
-   1. [Create account](#create-account)
-   2. [Create token](#create-token)
+3. [Preparation — create the healthcheck account](#preparation--create-the-healthcheck-account)
+   1. [Create the user](#create-the-user)
+   2. [Obtain a non-expirable access token](#obtain-a-non-expirable-access-token)
 4. [Healthchecks](#healthchecks)
-   1. [DNS](#dns)
-   2. [Register](#register)
-   3. [Core](#core)
+   1. [1. DNS resolution (multi-core only)](#1-dns-resolution-multi-core-only)
+   2. [2. Registration endpoint reachable](#2-registration-endpoint-reachable)
+   3. [3. Core API + base storage reachable](#3-core-api--base-storage-reachable)
+   4. [4. (Optional) HFS port reachable](#4-optional-hfs-port-reachable)
 
 
 ## Variables
 
-As this guide is platform agnostic, we will use variables `${VARIABLE_NAME}` which must be replaced in the commands.
+Replace the following variables in the commands below:
 
-In particular, the following variables should be replaced :
-- the **domain name**, which will be called `${DOMAIN}`,
-- the **core machines hostings**, identified with a `${HOSTING_NAME}`. In a Pryv.io platform, core machines are organized into clusters that we call hostings. Each of these has an identifier `${HOSTING_NAME}`, which can be found at the following URL: https://reg.${DOMAIN}/hostings. The `${HOSTING_NAME}` are the keys of the object `regions:REGION_NAME:zones:ZONE_NAME:hostings`. For DNS-less setups, it is fixed as `hosting1`.
-- the **access token** `${ACCESS_TOKEN}`, associated with a dedicated user account and that will be used in the API calls for healthchecks. The [preparation chapter](#preparation) describes how to obtain it.
+- `${DOMAIN}` — the public domain. In a single-core `dnsLess` deployment this is the whole public URL's host (e.g. `api.example.com`). In multi-core mode it's the shared domain used for user subdomains (e.g. `mc.example.com`).
+- `${USER}` — the healthcheck username (recommendation: `healthmetrics01`).
+- `${ACCESS_TOKEN}` — a non-expirable access token for `${USER}`, obtained in the preparation section.
+- `${USER_URL}` — the full base URL for user API calls:
+  - single-core / dnsLess: `https://${DOMAIN}/${USER}` (path-based)
+  - multi-core: `https://${USER}.${DOMAIN}` (subdomain-based)
+- `${REG_URL}` — the base URL for registration endpoints:
+  - single-core / dnsLess: `https://${DOMAIN}/reg`
+  - multi-core: any core's URL, e.g. `https://core-a.${DOMAIN}/reg`
 
 
 ## Tools
 
-Depending on your skill set, this can be done using CLI tools or a web interface.
-
-### DNS checks:
-
-- dig version 9.12.3+
-
-### HTTP calls
-
-- cURL v7.54.0+
+- `dig` v9.12+ (multi-core DNS check only)
+- `curl` v7.54+
 
 
-## Preparation
+## Preparation — create the healthcheck account
 
-As the current Pryv.io version does not have dedicated API endpoints for a thorough healthcheck, we create a dedicated user account in order to do so. 
-This preparation phase describes how to create an account and obtain a non-expirable token. This must be done once and the username/token pairs stored for automatic API healthcheck calls.
+### Create the user
 
-### Create account
-
-We begin by creating an account. We propose to use the following credentials, but these can be modified at the user's discretion:
-
-- **username** : healthmetrics
-- **password** : healthmetrics
-- **email** : healthmetrics01@${DOMAIN}
+Registration endpoint is the same in both topologies — just pick the right `${REG_URL}`:
 
 ```bash
 curl -i -X POST -H 'Content-Type: application/json' \
-    -d '{"hosting":"${HOSTING_NAME}",
-    "username": "healthmetrics01",
-    "password":"healthmetrics01",
-    "email": "healthmetrics01@${DOMAIN}",
-    "language": "en",
-    "appid":"pryv-metrics"}' \
-    "https://reg.${DOMAIN}/user/"
+    -d '{"appId":"pryv-metrics",
+         "username":"healthmetrics01",
+         "password":"healthmetrics01",
+         "email":"healthmetrics01@example.com",
+         "languageCode":"en"}' \
+    "${REG_URL}/users"
 ```
 
-for DNS-less, use:
+If you enabled registration invitation tokens (`services.register.invitationTokens`), add `"invitationtoken":"..."` to the body.
 
-```bash
-curl -i -X POST -H 'Content-Type: application/json' \
-    -d '{"hosting":"${HOSTING_NAME}",
-    "username": "healthmetrics01",
-    "password":"healthmetrics01",
-    "email": "healthmetrics01@${DOMAIN}",
-    "language": "en",
-    "appid":"pryv-metrics"}' \
-    "https://${HOSTNAME}/reg/user/"
-```
+Alternatively, use the built-in web app at `https://${DOMAIN}/access/register.html` (or wherever you mounted `app-web-auth3`).
 
-If you are using a default configuration, you can use the default web app:
+### Obtain a non-expirable access token
 
-1. Go to https://sw.${DOMAIN}/access/register.html
-2. Fill the fields with:
-    - **email** : healthmetrics01@${DOMAIN}
-    - **username** : healthmetrics
-    - **password** : healthmetrics
-    - **password confirmation** : healthmetrics
+Two calls: sign in with the password to get a personal token, then use it to create a shared access token.
 
-### Create token
-
-In order to obtain a non-expirable access token, you must do 2 calls. First sign in with the user password to obtain a temporary personal token, and then use it to obtain a non-expirable one.
-
-**- Sign in:**
+**Sign in:**
 
 ```bash
 curl -i -H "Content-Type: application/json" \
-    -H "Origin: https://sw.${DOMAIN}" \
     -X POST \
     -d '{"username":"healthmetrics01",
-    "password":"healthmetrics01",
-    "appId":"pryv-metrics"}' \
-    "https://healthmetrics01.${DOMAIN}/auth/login"
+         "password":"healthmetrics01",
+         "appId":"pryv-metrics"}' \
+    "${USER_URL}/auth/login"
+# → { "token": "${PERSONAL_TOKEN}", ... }
 ```
 
-The response body should contain a valid personal token under the field `token`:
-
-```bash
-{
-    "token":"${PERSONAL_TOKEN}",
-    "preferredLanguage":"en",
-    "meta": {
-        "apiVersion":"1.3.51",
-        "serverTime":1548952964.011
-    }
-}
-```
-
-**- Obtain token**
+**Create the shared access:**
 
 ```bash
 curl -i -X POST -H 'Content-Type: application/json' \
     -H 'Authorization: ${PERSONAL_TOKEN}' \
     -d '{"name":"metricsAccess",
-    "permissions":[{"streamId":"*","level":"manage"}]}' \
-    "https://healthmetrics01.${DOMAIN}/accesses"
+         "permissions":[{"streamId":"*","level":"manage"}]}' \
+    "${USER_URL}/accesses"
+# → { "access": { "token": "${ACCESS_TOKEN}", ... } }
 ```
 
-The response body should contain a valid access token under the `access:token` field:
-
-```json
-{
-    "access": {
-        "name":"metricsAccess",
-        "permissions": [
-            {
-                "streamId":"*",
-                "level":"manage"
-            }
-        ],
-        "type":"shared",
-        "token":"${ACCESS_TOKEN}",
-        "created":1548953274.877,
-        "createdBy":"cjrkulo5s00040t0cb5xwlupi",
-        "modified":1548953274.877,
-        "modifiedBy":"cjrkulo5s00040t0cb5xwlupi",
-        "id":"cjrkusc1p00060t0czs7ect45",
-    },
-    "meta": {
-        "apiVersion":"1.3.51",
-        "serverTime":1548953274.902
-    }
-}
-```
-
-If you are using a default configuration, you can use the default web app:
-
-1. Go to https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.${DOMAIN}/service/info (https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://${HOSTNAME}/reg/service/info for DNS-less)
-2. Click on `Master Token`radio button
-3. Click on `Request Access` button
-4. Click on `Sign in` Pryv button
-5. Enter credentials: `healthmetrics01/healthmetrics01` in the pop-up window
-6. Click on `Sign in` button
-7. Click on `Accept` button
-8. Copy the Access token and save it for this machine's healthchecks. We will refer to it as `${ACCESS_TOKEN}`.
+Store `${ACCESS_TOKEN}` in your monitoring system's secret store.
 
 
 ## Healthchecks
 
-### DNS
+### 1. DNS resolution (multi-core only)
 
-Run `Dig A healthmetrics01.${DOMAIN}`
+Skip this section in single-core `dnsLess` mode (no user subdomains).
 
-The expected result: An answer.
+```bash
+dig A healthmetrics01.${DOMAIN}
+```
 
-### Register
+**Expected:** an `ANSWER SECTION` with an A record pointing at one of the core IPs.
 
-The call to perform: **HTTP GET** `https://reg.${DOMAIN}/healthmetrics01/check_username` (`https://${HOSTNAME}/reg/healthmetrics01/check_username` for DNS-less)
+### 2. Registration endpoint reachable
 
-Run `curl https://reg.${DOMAIN}/healthmetrics01/check_username` (`curl https://${HOSTNAME}/reg/healthmetrics01/check_username` for DNS-less)
+Uses the registration subsystem and (transitively) the rqlite platform DB:
 
-The expected result: `Status: 200`
+```bash
+curl -i "${REG_URL}/healthmetrics01/check_username"
+```
 
-### Core
+**Expected:** `HTTP/1.1 200 OK` with a JSON body reporting whether the username is taken.
 
-Authorization header: `${ACCESS_TOKEN}`
+### 3. Core API + base storage reachable
 
-The call to perform: **HTTP GET** `https://healthmetrics01.${DOMAIN}/events?limit=1`
+Uses authentication, base storage (PostgreSQL / MongoDB) and event retrieval:
 
-Run `curl -i -H 'Authorization: ${ACCESS_TOKEN}'`
-`"https://healthmetrics01.${DOMAIN}/events?limit=1" `
+```bash
+curl -i -H 'Authorization: ${ACCESS_TOKEN}' \
+    "${USER_URL}/events?limit=1"
+```
 
-The expected result: `Status: 200`
+**Expected:** `HTTP/1.1 200 OK` with a JSON `events` array (possibly empty if you haven't written any).
+
+### 4. (Optional) HFS port reachable
+
+Only relevant if your deployment exposes the high-frequency series endpoints. HFS listens on port 4000; your reverse proxy should forward `/{user}/events/{id}/series` to it. A cheap check is the OPTIONS response on the series route:
+
+```bash
+curl -i -X OPTIONS -H 'Authorization: ${ACCESS_TOKEN}' \
+    "${USER_URL}/events/nonexistent/series"
+```
+
+**Expected:** `HTTP/1.1 2xx` or a documented 4xx from the HFS stack (a 502/504 would indicate the HFS worker is down or unreachable from the proxy). See [INSTALL — HFS Host header](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#important-nginx-notes) for the one NGINX pitfall to watch out for.
+
+
+If you need per-worker or per-process checks, get in touch with your Pryv tech contact — there is currently no public per-worker status endpoint.

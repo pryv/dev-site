@@ -6,248 +6,141 @@ customer: true
 withTOC: true
 ---
 
-> **Note (v2):** This guide was written for the v1 multi-service topology (separate register, core, static-web roles). In v2, Pryv.io runs as a single binary and Docker image with built-in registration and DNS. See the [INSTALL.md](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md) in the repository for v2-specific setup instructions.
+This guide, addressed to IT operators, walks through the steps to set up a Pryv.io platform from scratch.
 
-This guide, addressed to IT operators, walks you through the different steps that have to be performed in order to set up your Pryv.io platform.
+> **Since v2 (2026)** Pryv.io is a single binary / single Docker image — `pryvio/open-pryv.io`. The authoritative install document is [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md) in the repository: it covers prerequisites, config skeleton, data directories, running standalone with built-in HTTPS, and running behind nginx. The guide below is the higher-level platform perspective — procurement, domain, certificate, validation, customization — and links out to INSTALL for the install-time specifics.
 
 
 ## Table of contents <!-- omit in toc -->
 
-1. [Set up the machines](#set-up-the-machines)
+1. [Provision the machine(s)](#provision-the-machines)
 2. [Obtain a domain name](#obtain-a-domain-name)
-   1. [Expose the Pryv.io API on a second-level domain](#expose-the-pryvio-api-on-a-second-level-domain)
-   2. [Verify](#verify)
-3. [Obtain the configuration files](#obtain-the-configuration-files)
-4. [Set the platform parameters](#set-the-platform-parameters)
-5. [Obtain an SSL certificate](#obtain-an-ssl-certificate)
-6. [Validate your platform installation](#validate-your-platform-installation)
-7. [Set up the platform health monitoring](#set-up-the-platform-health-monitoring)
-8. [Customize authentication, registration and reset password apps](#customize-authentication-registration-and-reset-password-apps)
-   1. [GH pages](#gh-pages)
-   2. [Your own server](#your-own-server)
-9. [Set up email sending](#set-up-email-sending)
-10. [Define your data model](#define-your-data-model)
-11. [Customize event types validation](#customize-event-types-validation)
-12. [Other documents](#other-documents)
+   1. [Single-core (`dnsLess`)](#single-core-dnsless)
+   2. [Multi-core with embedded DNS](#multi-core-with-embedded-dns)
+   3. [Multi-core with externally-managed DNS](#multi-core-with-externally-managed-dns)
+3. [Install and configure the core](#install-and-configure-the-core)
+4. [Obtain an SSL certificate](#obtain-an-ssl-certificate)
+5. [Validate the installation](#validate-the-installation)
+6. [Set up health monitoring](#set-up-health-monitoring)
+7. [Customize authentication / registration / password-reset pages](#customize-authentication--registration--password-reset-pages)
+8. [Set up email sending](#set-up-email-sending)
+9. [Define your data model](#define-your-data-model)
+10. [Customize event-type validation](#customize-event-type-validation)
+11. [Other documents](#other-documents)
 
 
-## Set up the machines
+## Provision the machine(s)
 
-You need first to define which hardware or virtual machines you will provision to host your Pryv.io instance.  
-
-The **Infrastructure procurement guide** for Pryv.io from the [Customer Resources page](/customer-resources/infrastructure-procurement/) will guide you for the provisioning and deployment of your machines.
-
-It will help you with the choice of your Pryv.io deployment (single node or cluster), and provide you with resources sizing considerations.  
-
-The system requirements for each machine are also specified.
+Decide whether you need a **single-core** install (most deployments) or a **multi-core** install (scale-out or geographical compliance). The [infrastructure procurement guide](/customer-resources/infrastructure-procurement/) covers sizing tables, OS/Docker requirements and the network ports to open.
 
 
 ## Obtain a domain name
 
-Now that your machines are ordered, you need to register your own domain name.  
+Register a domain with a provider that lets you edit A records (and, for multi-core, NS records). The DNS setup differs depending on the topology.
 
-You can either:  
+### Single-core (`dnsLess`)
 
-- obtain one yourself through a domain name registrar of your choice, make sure that you can configure your domain's **DNS zone**, including records of type A & NS for subdomains.
-- or contact us directly to obtain a pryv.io subdomain, e.g. ***your-platform-name*.pryv.io**
-
-You will have to define the following DNS Records:
+The core sits on a single public URL (e.g. `https://api.example.com`) and does not run its own DNS. You only need:
 
 ```
-dns1-pryv 1800 IN A ${YOUR-REG-MASTER-IP-ADDRESS}
-dns2-pryv 1800 IN A ${YOUR-REG-SLAVE-IP-ADDRESS}
-pryv 1800 IN NS dns1-pryv.${YOUR-DOMAIN}.
-pryv 1800 IN NS dns2-pryv.${YOUR-DOMAIN}.
+api.example.com   3600  IN  A  <core-ip>
 ```
 
-- **If you have a [single register machine](/customer-resources/infrastructure-procurement/#cluster-with-a-single-core)**, you can repeat the reg-master's IP address instead of the reg-slave one.
-- **If you have a [single-node setup](/customer-resources/infrastructure-procurement/#single-node-mode)**, you can use the machine's IP address instead of the register IP addresses.
+Set the matching `dnsLess.publicUrl: https://api.example.com` in your override YAML.
 
-Your Pryv.io platform domain will then be `pryv.${YOUR-DOMAIN}`. For other environments such as staging, we suggest to define a similar subdomain:
+### Multi-core with embedded DNS
 
-```
-dns1-pryv-staging 1800 IN A ${YOUR-REG-MASTER-IP-ADDRESS}
-dns2-pryv-staging 1800 IN A ${YOUR-REG-SLAVE-IP-ADDRESS}
-pryv-staging 1800 IN NS dns1-pryv.${YOUR-DOMAIN}.
-pryv-staging 1800 IN NS dns2-pryv.${YOUR-DOMAIN}.
-```
-
-### Expose the Pryv.io API on a second-level domain
-
-Using the aforementioned steps, your Pryv.io API will be exposed under a subdomain like `pryv.${YOUR-DOMAIN}`. If you wish to expose it on a *second-level domain* such as `my-pryv-domain.io`, you will have to:
-
-- obtain a domain name through a registrar that allows to **change name servers**
-- use a second domain to define Type A DNS records pointing to your machine that you will provide as name servers by your registrar for your Pryv.io domain
-
-Second domain DNS Zone `${SECOND-DOMAIN}`:
+Every core runs a small DNS server that resolves `{username}.{domain}` to the user's home core. At the registrar, delegate the Pryv.io subdomain's NS records to the cores:
 
 ```
-dns1-pryv 1800 IN A ${YOUR-REG-MASTER-IP-ADDRESS}
-dns2-pryv 1800 IN A ${YOUR-REG-SLAVE-IP-ADDRESS}
+# at your top-domain registrar:
+dns1.mc.example.com  3600  IN  A   <core-a-ip>
+dns2.mc.example.com  3600  IN  A   <core-b-ip>
+mc                   3600  IN  NS  dns1.mc.example.com.
+mc                   3600  IN  NS  dns2.mc.example.com.
+
+# A record used by rqlite peer discovery — must list every core:
+lsc.mc.example.com   60    IN  A   <core-a-ip>
+lsc.mc.example.com   60    IN  A   <core-b-ip>
 ```
 
-You will then define name servers for your Pryv.io domain as:
+If you have a single machine in this mode, use the same IP for both `dns1` and `dns2` entries and the single `lsc` A record.
 
-- `dns1-pryv.${SECOND-DOMAIN}`
-- `dns2-pryv.${SECOND-DOMAIN}`
+### Multi-core with externally-managed DNS
 
-### Verify
-
-If your domain is set up correctly, the following command should yield the hostname of the machine(s) you intend to use as a Pryv.io Register server:  
-
-```
-dig NS +trace +nodnssec ${DOMAIN}
-```
-
-This command should yield the hostnames you have set for the name servers of your Pryv.io domain in the last block as:
-
-```
-${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns1-pryv.${YOUR-DOMAIN}.
-${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns2-pryv.${YOUR-DOMAIN}.
-```
+Use this when DNS is managed by an external provider (Cloudflare, Route 53, an internal DNS server, a load balancer) rather than the core. Set an explicit `core.url` per core in the override YAML — see [INSTALL — DNSless multi-core](https://github.com/pryv/open-pryv.io/blob/master/SINGLE-TO-MULTIPLE.md#dnsless-multi-core-externally-managed-dns) — and still publish the `lsc.{domain}` A record(s) so rqlite peers can discover each other.
 
 
-## Obtain the configuration files
+## Install and configure the core
 
-In order to be able to run your Pryv.io instance, you will need to get the configuration files, which you can download [here](https://pryv.github.io/config-template-pryv.io/).
+See [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md). The short story:
 
+1. `docker pull pryvio/open-pryv.io` (or clone the repo and `just setup-dev-env && just install` for a native install).
+2. Write a minimal `override-config.yml` — the template is in [INSTALL — Minimal production config](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#minimal-production-config).
+3. Start `bin/master.js` (or the Docker image) with `NODE_ENV=production` and your override file.
 
-## Set the platform parameters
+For multi-core, the upgrade path from an existing single-core install is documented in [single-node to cluster](/customer-resources/single-node-to-cluster/) and upstream in [SINGLE-TO-MULTIPLE.md](https://github.com/pryv/open-pryv.io/blob/master/SINGLE-TO-MULTIPLE.md).
 
-Along with the configuration files, you will find an Installation guide describing where to unpack them and how to set the platform variables.
+**Upgrading from v1?** If you already run Pryv.io 1.x and want to move its user data into a fresh v2 install, use the [`dev-migrate-v1-v2`](https://github.com/pryv/dev-migrate-v1-v2) toolkit — it exports from a v1 MongoDB and writes a v2-compatible backup that `bin/backup.js --restore` can import. See the toolkit's README for the current source/target matrix (MongoDB v1 source → MongoDB v2 target is supported; PostgreSQL v2 target is not yet).
 
 
 ## Obtain an SSL certificate
 
-You will need to obtain a wildcard SSL certificate for *.DOMAIN to enable encryption to the platform's API. For this, you can either obtain one from your hosting provider, or generate one [using Let's Encrypt](/customer-resources/ssl-certificate/).
+What type of certificate you need depends on the topology — see the [SSL certificate guide](/customer-resources/ssl-certificate/). Briefly:
 
-If you are using an infrastructure with appliances that perform the SSL termination, you can simply adapt the NGINX configuration files to listen on port 80 and not perform encryption.
+- Single-core: a plain cert for `your-domain.com`.
+- Multi-core with embedded DNS: a **wildcard** cert for `*.mc.example.com`.
+- Multi-core DNSless: per-core plain certs.
 
-
-## Validate your platform installation
-
-Now that your Pryv.io platform is configured and running, you can run the validation procedure from the [Pryv.io platform validation guide](/customer-resources/platform-validation).
-
-It will walk you through the validation steps of your platform and contains a troubleshooting part in case of issue.
+You can let the core terminate TLS (`http.ssl.keyFile` / `http.ssl.certFile`) or put a reverse proxy in front; INSTALL covers both.
 
 
-## Set up the platform health monitoring
+## Validate the installation
 
-You can monitor its status by setting up regular healthcheck API calls to the Pryv.io API.
-
-The procedure for the platform health monitoring is described in the [Pryv.io Healthchecks guide](/customer-resources/healthchecks).
+Run the [platform validation guide](/customer-resources/platform-validation/) — a short checklist covering process status, registration round-trip, DNS resolution (multi-core), base storage reachability and HFS.
 
 
-## Customize authentication, registration and reset password apps
+## Set up health monitoring
 
-In order to perform the [authentication procedure](/reference/#authenticate-your-app), a web page is necessary. We deliver Pryv.io platforms with a web app for this as well as for other functions such as registration and password reset. You can find the code repository on [github.com/pryv/app-web-auth3](https://github.com/pryv/app-web-auth3).
+Wire the endpoints from the [healthchecks guide](/customer-resources/healthchecks/) into your monitoring system. In multi-core, run the checks against each core.
 
-In order to customize your own, we suggest that you fork this repository and host the web app on your environment. The easiest way to begin is to fork it on GitHub and host it using GitHub-pages.
 
-To use your own page, you will have to update the following platform variables:
+## Customize authentication / registration / password-reset pages
 
-- TRUSTED_AUTH_URLS
-- TRUSTED_APPS
-- PASSWORD_RESET_URL
-- DEFAULT_AUTH_URL (optional)
+The default auth web app is [`pryv/app-web-auth3`](https://github.com/pryv/app-web-auth3). To customize:
 
-You will then need to provide your web page's URL in the [Auth request](/reference/#auth-request) `authUrl` parameter, or if you want to make it default, change the `DEFAULT_AUTH_URL` in the platform variables.
+1. Fork the repo and host your fork (GitHub Pages or your own server).
+2. Override these keys in your config (exact YAML shape — see INSTALL / the default config):
+   - `auth.trustedApps` — allow your fork's origin(s) to act as a trusted app.
+   - `services.register.authUrl` — default URL used by the auth redirect flow.
+   - `services.register.passwordResetUrl` — where users land when clicking a reset link.
+3. If you still want to serve the auth pages under `https://${DOMAIN}/access/`, point that path in your reverse proxy at your fork (see [FAQ — customize registration pages](/faq-infra/#customize-registration-login-password-reset-pages)).
 
-Or if you wish to proxy your custom app-web-auth3 app through the `https://sw.DOMAIN/access/...` URL, you will only need to change the `APP_WEB_AUTH_URL` instead of all other changes.
-
-### GH pages
-
-Make sure to implement the [following change](https://github.com/pryv/app-web-auth3/blob/master/README.md#fork-repository-for-github-pages) on your fork.
-
-If you are hosting it on GitHub pages, you will need to adapt the platform variables as following:
-
-```yaml
-  TRUSTED_APPS: "*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://YOUR-GITHUB-ACCOUNT.github.io*"
-  TRUSTED_AUTH_URLS:
-    - "https://sw.DOMAIN/access/access.html"
-    - "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
-  PASSWORD_RESET_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/reset-password.html"
-```
-
-If you wish to make it default, set:
-
-```yaml
-  DEFAULT_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/access/access.html"
-```
-
-or if you wish to proxy it through `https://sw.DOMAIN/access/`, **only** set:
-
-```yaml
-  APP_WEB_AUTH_URL: "https://YOUR-GITHUB-ACCOUNT.github.io/app-web-auth3/"
-```
-
-### Your own server
-
-If you are hosting it on your own server, you will need to adapt the platform variables as following:
-
-```yaml
-  TRUSTED_APPS: "*@https://*.DOMAIN*, *@https://pryv.github.io*, *@https://YOUR-SERVER-DOMAIN*"
-  TRUSTED_AUTH_URLS:
-    - "https://sw.DOMAIN/access/access.html"
-    - "https://YOUR-SERVER-URL/access/access.html"
-  PASSWORD_RESET_URL: "https://YOUR-SERVER-URL/access/reset-password.html"
-```
-
-If you wish to make it default, set:
-
-```yaml
-  DEFAULT_AUTH_URL: "https://YOUR-SERVER-URL/access/access.html"
-```
-
-or if you wish to proxy it through `https://sw.DOMAIN/access/`, **only** set:
-
-```yaml
-  APP_WEB_AUTH_URL: "https://YOUR-SERVER-URL/"
-```
+Make sure to apply the [fork change for GitHub Pages](https://github.com/pryv/app-web-auth3/blob/master/README.md#fork-repository-for-github-pages).
 
 
 ## Set up email sending
 
-Pryv.io allows to send emails in two situations:
-
-- Account creation,
-- Password reset requests.
-
-You might want to install and configure the sending of emails in these situations. You can do so by either using your SMTP server, or Sendmail.
-
-In both cases, you will need to customize settings in the "Email configuration" section of the platform parameters file.
-
-You can also customize the email templates in the configuration files.
-
-More details are provided in the [email configuration guide](/customer-resources/emails-setup/).
+Pryv.io can send transactional emails for account creation and password reset. Configure either SMTP or the [service-mail](https://github.com/pryv/service-mail) microservice — details in the [email configuration guide](/customer-resources/emails-setup/).
 
 
 ## Define your data model
 
-As your Pryv.io platform is fully operational, you can start collecting data.
-
-To do so, you need to design the data model your app(s) will use using Pryv's data structures: **streams** and **events**.
-
-You can have a look at our [Data modelling guide](/guides/data-modelling/) which describes the Pryv.io data structure and walks you through different use cases for your data model. 
-
-We advise you to build your own file based on this template to describe your own data structure (streams, events, permissions) depending on your use case.
-
-We can also help you with the design and validation of your data model.
+With the platform running, design the streams/events structure your apps will use. Start with the [data modelling guide](/guides/data-modelling/).
 
 
-## Customize event types validation
+## Customize event-type validation
 
-Your Pryv.io platform performs content validation for the types definition that you provide it. Events with undefined types are allowed but their content is not validated.  
-
-See the [Event Types](/event-types/) page for more information.
-
-You can host your definitions page on a public URL which will be loaded at the platform boot. You can define this URL in the platform parameters as following:
+The core validates event content against published type definitions. Point `service.eventTypes` (in the override YAML) at the definitions JSON:
 
 ```yaml
-EVENT_TYPES_URL: "https://pryv.github.io/event-types/flat.json"
+service:
+  eventTypes: https://pryv.github.io/event-types/flat.json
 ```
+
+Host your own file and set the URL here to extend or constrain the type catalog. See [Event Types](/event-types/) for the format.
 
 
 ## Other documents
 
-More resources can be found in our [customer resources page](/customer-resources/#guides-and-documents), or in the [FAQ](/faq-infra/).
+More resources are on the [customer resources index](/customer-resources/) and the [FAQ](/faq-infra/).

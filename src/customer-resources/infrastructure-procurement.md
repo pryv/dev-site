@@ -6,227 +6,220 @@ customer: true
 withTOC: true
 ---
 
-> **Note (v2):** This guide was written for the v1 multi-service topology (separate register, core, static-web machines). In v2, Pryv.io runs as a single binary and Docker image — a single machine is sufficient for most deployments. Multi-core scaling uses horizontal replication of the same binary. The sizing guidelines below remain useful for capacity planning but the role-per-machine model no longer applies.
+This document is for system administrators provisioning virtual machines and other web resources to run a Pryv.io platform. It guides you through deciding which topology you need, which virtual machines to procure, firewalling, OS compatibility and related operational concerns.
 
-In this document we address system administrators or equivalent that need to provision virtual machines and other web resources to run a Pryv.io platform.  
-It will guide you through the process of deciding which platform setup you require, what virtual machines to provision to host your Pryv.io platform, firewalling settings, OS compatibility and other operational concerns.
+> **Since Pryv.io v2 (2026)** the platform runs as a **single binary** (`bin/master.js`) packaged as a **single Docker image** (`pryvio/open-pryv.io`). There is no longer a separate `register`, `core`, `hfs`, `preview`, `static-web` or `dns` service to procure — one machine runs everything. Scaling out is done by adding more instances of the same binary and joining them through an embedded [rqlite](https://rqlite.io/) cluster.
 
 
 ## Table of contents <!-- omit in toc -->
 
-1. [Platform setup](#platform-setup)
-   1. [Single-node mode](#single-node-mode)
-   2. [Cluster with a single core](#cluster-with-a-single-core)
-   3. [Cluster with partitioning for load](#cluster-with-partitioning-for-load)
-   4. [Cluster with partitioning for geographical compliance](#cluster-with-partitioning-for-geographical-compliance)
-2. [Business Requirements](#business-requirements)
+1. [Topology](#topology)
+   1. [Single-core (most deployments)](#single-core-most-deployments)
+   2. [Multi-core for load](#multi-core-for-load)
+   3. [Multi-core for geographical compliance](#multi-core-for-geographical-compliance)
+2. [Business requirements](#business-requirements)
    1. [Granularity](#granularity)
-   2. [Data Production](#data-production)
-   3. [Data Consumption](#data-consumption)
-3. [Core number considerations](#core-number-considerations)
+   2. [Data production](#data-production)
+   3. [Data consumption](#data-consumption)
+3. [Sizing a core](#sizing-a-core)
 4. [System requirements](#system-requirements)
    1. [Operating systems](#operating-systems)
    2. [Docker](#docker)
-   3. [Single Node](#single-node)
-   4. [Static-web](#static-web)
-   5. [Register](#register)
-   6. [Core](#core)
-5. [Operational Concerns](#operational-concerns)
-   1. [System Hardening](#system-hardening)
+   3. [Per-core machine](#per-core-machine)
+   4. [Database host (optional — external PostgreSQL / MongoDB)](#database-host-optional--external-postgresql--mongodb)
+5. [Network and firewall](#network-and-firewall)
+6. [Operational concerns](#operational-concerns)
+   1. [System hardening](#system-hardening)
    2. [Backups](#backups)
-   3. [Node Monitoring](#node-monitoring)
-6. [Previous version](#previous-version)
+   3. [Node monitoring](#node-monitoring)
+7. [Previous versions of this document](#previous-versions-of-this-document)
 
 
-## Platform setup
+## Topology
 
-A Pryv.io platform is composed of 3 roles: register, core and static-web.
+A Pryv.io v2 deployment is a set of **cores**. Every core is the same binary — there are no role-specific machines. Cores coordinate through an embedded rqlite cluster that holds the platform DB (user→core mapping, registration tokens, invitations, active-core list).
 
-- The **register** component contains the DNS indicating the core machine for a user account.
-- The **core** service stores user data.
-- The **static-web** is used to proxy web applications over the same domain and holds default authentication and administration applications.
-
-Pryv.io can be deployed in various ways, depending on requirements of your business case. This ranges from a starting phase where all components live on one virtual machine in a single location, to a deployment spanning many machines across the globe. The present document guides the implementor through the different stages of his project.
-
-### Single-node mode
+### Single-core (most deployments)
 
 ![single-node](/assets/images/infrastructure/single-node-new.svg)
 
-The diagram above shows deployment of Pryv.io on a single node, all services running on the same VM.
+One VM runs `bin/master.js`, which in turn runs:
 
-### Cluster with a single core
+- **N API workers** sharing port 3000 (REST + Socket.IO + registration)
+- **M HFS workers** sharing port 4000 (high-frequency series)
+- **0 or 1 Previews worker** on port 3001 (image previews)
+- An **embedded rqlited** process for the platform DB
+- Either **MongoDB** or **PostgreSQL** for user data (can be on the same VM or external)
 
-![cluster-single-core](/assets/images/infrastructure/single-core.svg)
+This mode uses `dnsLess.isActive: true` — the platform is reached at a single `publicUrl`. No wildcard DNS or embedded DNS server is needed.
 
-Here we install all roles on separate machines. This variant is useful for when you intend to quickly scale the number of users as shown in the following diagrams.
+See [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md).
 
-### Cluster with partitioning for load
+### Multi-core for load
 
 ![cluster-load](/assets/images/infrastructure/cluster.svg)
 
-When partitioning for load, multiple *core* servers will receive user accounts in a round-robin fashion. Any number of users can coexist on a *core*, up to the extreme of 1 user per machine. Please refer to the [Core number considerations](#core-number-considerations) section for how to compute the amount of cores you will need for your particular load. 
+Multiple cores share the same domain (`mc.example.com`). Each core hosts a subset of users and advertises its identity through rqlite. New registrations are assigned to the core with the fewest users; client SDKs discover the user's home core via `/reg/cores?username={user}` and then talk to that core directly.
 
-When partitioning for load, we recommend the creation of one or more follower nodes for *register* roles. This avoids creating a single point of failure.
+DNS is either served by each core's **embedded DNS** (wildcard `*.mc.example.com`) or by an **external DNS provider** (DNSless multi-core). Rqlite peers discover each other through an `lsc.{domain}` DNS A record.
 
-### Cluster with partitioning for geographical compliance
+See [single-node to multi-core upgrade](/customer-resources/single-node-to-cluster/) and the upstream [SINGLE-TO-MULTIPLE.md](https://github.com/pryv/open-pryv.io/blob/master/SINGLE-TO-MULTIPLE.md).
+
+### Multi-core for geographical compliance
 
 ![cluster-compliance-zones](/assets/images/infrastructure/cluster-compliance-zones-new.svg)
 
-The diagram above shows a Pryv.io system designed to partition data into multiple compliance zones. In practice, these will often correspond to countries (legislations) or smaller entities that handle data (and data privacy) differently.
+Cores can be placed in different jurisdictions to keep user data where local law requires it. Users registered in a given zone stay on the cores of that zone. The granularity of distribution is always **one user account** — a compliance zone can contain as few as one user.
 
-Being able to store data in different locations might even be the reason you're using Pryv.io. In systems where Pryv.io coexists with other server components, it is important to apply the same logic to all the components - e.g. an SMTP server through which sensitive data transits would have to be deployed in multiple versions across compliance zones as well. Pryv offers consulting on the various legal and technical aspects of preserving user privacy and protecting data.
-
-Keep in mind that the granularity of distribution in this kind of scenario is always the user account. In extreme cases a compliance zone might contain data for a single user only.
+If Pryv.io coexists with other server components (e.g. SMTP), apply the same partitioning logic to those components too.
 
 
-## Business Requirements
+## Business requirements
 
-The size of any deployment will be determined by the business requirements that the Pryv.io infrastructure needs to meet. In this section, we aim to show what factors are relevant for designing a Pryv.io infrastructure. 
+The size of a deployment is driven by business requirements. The tables below list the factors that matter for Pryv.io.
 
 ### Granularity
 
-Pryv.io's fundamental entity is the user; data is kept vertically and not spread out. For this reason, the guidelines in this section will ask for requirements to be specified per user. 
+Pryv.io's fundamental entity is the user; data is kept vertically and not spread out. Requirements below are therefore specified **per user**.
 
-### Data Production
+### Data production
 
-| Metric                                   | Your Values Here |
-| ---------------------------------------- | ---------------- |
-| Expected Write Requests Per Second (max rqps) |                  |
-| Attachment Writes (max MB/s)             |                  |
-| Volume (data points per day)             |                  |
-| Volume (MB per day)                      |                  |
-| Retention of data (years)                |                  |
+| Metric                                            | Your values here |
+| ------------------------------------------------- | ---------------- |
+| Expected write requests per second (max rqps)     |                  |
+| Attachment writes (max MB/s)                      |                  |
+| Volume (data points per day)                      |                  |
+| Volume (MB per day)                               |                  |
+| Retention of data (years)                         |                  |
 
-The above table sums up the factors that influence the expected write load per user for your cluster. The first two metrics will influence the number of users that can be cohosted on a single core; the last two metrics will give you an estimation of disk space consumed per day per user. 
+The first two metrics influence the number of users that can be co-hosted on a single core; the last two give you an estimation of disk space consumed per day per user.
 
-### Data Consumption
+### Data consumption
 
-| Metric                                   | Your Values Here |
-| ---------------------------------------- | ---------------- |
-| Expected Read Requests Per Second (max rqps) |                  |
-| Number of Points retrieved per Request (scalar) |                  |
-| Attachment Reads (max rqps)                  |                  |
-| Volume (data points per day)             |                  |
-| Volume (MB per day)                      |                  |
+| Metric                                            | Your values here |
+| ------------------------------------------------- | ---------------- |
+| Expected read requests per second (max rqps)      |                  |
+| Number of points retrieved per request (scalar)   |                  |
+| Attachment reads (max rqps)                       |                  |
+| Volume (data points per day)                      |                  |
+| Volume (MB per day)                               |                  |
 
-This table should help you to quantify the load generated by reading data back per user. 
+This table quantifies the load generated by reading data back per user.
 
 
-## Core number considerations
+## Sizing a core
 
-This section aims to guide you through the sizing of your virtual machines, using the key metrics you compiled in the last section.
+Use the key metrics from the previous section to decide how many cores you need. Inside each compliance zone (or for the whole platform if there's only one), derive the number of cores from the following maximum values for a single core:
 
-Once a system gets bigger than a single node (see above), at least 3 machines will be required: one for the *static-web* role, one for *register* and one for *core*.
+| Metric                                 | Max performance of a single core                                                       |
+| -------------------------------------- | -------------------------------------------------------------------------------------- |
+| Write requests per second              | 2000 rqps                                                                              |
+| Attachment writes                      | Depends heavily on network path — roughly speed of underlying storage / 2              |
+| Data points per day                    | Sustained write increases total data points per user, which uses more disk space.      |
+| Volume (MB per day)                    | See above.                                                                             |
+| Expected read requests per second      | 2000 rqps — latency has a long-tail distribution depending on your query.              |
+| Number of points retrieved per request | Big (> 10 000 points) result sets should use paging.                                   |
+| Attachment reads                       | 600 rqps                                                                               |
 
-If your system is distributed among multiple compliance zones, you will need at least one core per such zone. Inside of every compliance zone, the number of cores should be derived from the following maximum values for a single core: 
+Consider load distribution across your user base. For a heterogeneous user base, add safety margins to the above numbers.
 
-| Metric                                 | Max Performance of a Single Core                             |
-| -------------------------------------- | ------------------------------------------------------------ |
-| Write Requests Per Second              | 2000 requests per second                                     |
-| Attachment Writes                      | Depends heavily on network path<br />roughly speed of underlying storage system / 2 |
-| Data Points Per Day                    | Sustained write increases total data points per user, which will use more disk space. |
-| Volume (MB per day)                    | See above.                                                   |
-| Expected Read Requests Per Second      | 2000 requests per second<br />Latency has a long tail distribution, depending on your query. |
-| Number of Points retrieved per Request | Big (>10000 points) result sets should use paging.<br />See Read Requests per Second. |
-| Attachment Reads                       | 600 requests per second                                      |
-
-Additionally, you should consider load distribution across your user base. Depending on homogeneity, you might add safety margins to the above numbers to allow for inter-user differences.  
-
-Users will be assigned to the core that has the least amount of users in the same compliance zone. This results in a round-robin behaviour for a stable set of servers. In the presence of user deletion or when adding servers to an existing cluster, this will skew the distribution of users towards machines that have less users than the others.
+New users are assigned to the core with the fewest users in the same compliance zone — this produces round-robin behaviour for a stable set of cores. User deletions or newly added cores skew the distribution toward the less-loaded cores until balance is restored.
 
 
 ## System requirements
 
-The previous section should have allowed you to calculate how many cores to deploy in each compliance zone. The purpose of this section is to give you specifications for each machine in the three roles.
-
 ### Operating systems
 
-Linux:
+Linux — any distribution supported by your chosen container runtime or Node.js 22. Tested on:
 
-- Ubuntu 16.04, 18.04, 20.04, 22.04
+- Ubuntu 20.04, 22.04, 24.04
+- Debian 11, 12
 
 ### Docker
 
-Docker versions:
+If running from the `pryvio/open-pryv.io` image:
 
-- Docker v19 or later
-- Docker-compose 1.21 or later
+- Docker v20.10 or later
+- `docker compose` v2 (optional — the core only needs a single container)
 
-### Single Node
+Native (non-Docker) installs need Node.js 22.x.
 
-| Aspect                | Minimal Requirement              |
-| --------------------- | -------------------------------- |
-| RAM                   | 4 GB                             |
-| CPU Cores             | 2                                |
-| Pryv.io services size | 30 GB                            |
-| Data size             | Depending on storage needs       |
-| Service ports         | tcp/443, udp/53                  |
+### Per-core machine
 
-### Static-web
+| Aspect                  | Minimal requirement                                                    |
+| ----------------------- | ---------------------------------------------------------------------- |
+| RAM                     | 4 GB (8 GB recommended; add ~200 MB per extra API/HFS worker)          |
+| CPU cores               | 2 (4+ under load or with image previews)                               |
+| Pryv.io binary + image  | 2 GB (Docker image unpacked)                                           |
+| Data size               | Depending on storage needs (see [Sizing a core](#sizing-a-core))       |
+| Service ports           | See [Network and firewall](#network-and-firewall)                      |
 
-| Aspect               | Minimal Requirement  |
-| -------------------- | -------------------- |
-| RAM                  | 512 MB               |
-| CPU Cores            | 1                    |
-| Pryv.io services size | 10 GB               |
-| Data size             | not needed          |
-| Service ports        | tcp/443              |
+Load sensitivity:
 
-### Register
+| Load situation           | Resource needs                                                               |
+| ------------------------ | ---------------------------------------------------------------------------- |
+| Large data per user      | Data disk space — increase per data-usage predictions                        |
+| High requests per second | CPU cores — increase to 4+; raise `cluster.apiWorkers`                       |
+| High-frequency series    | Raise `cluster.hfsWorkers`; ensure port 4000 reachable from your proxy       |
+| Image uploads / previews | CPU + RAM — GraphicsMagick + sharp are CPU-bound; enable `previewsWorker`    |
 
-| Aspect               | Minimal Requirement  |
-| -------------------- | -------------------- |
-| RAM                  | 2 GB                  |
-| CPU Cores            | 1                    |
-| Pryv.io services size | 20 GB               |
-| Data size             | 15 GB                 |
-| Service ports        | tcp/443, udp/53      |
+### Database host (optional — external PostgreSQL / MongoDB)
 
-If you foresee a big number of user accounts (> 100'000), please increase the data disk space.
+When running the base storage engine on a separate machine:
 
-### Core
+| Aspect                  | Minimal requirement                                                    |
+| ----------------------- | ---------------------------------------------------------------------- |
+| RAM                     | 4 GB                                                                   |
+| CPU cores               | 2                                                                      |
+| Data size               | Scales with users × retention — plan from the [Data production](#data-production) table |
+| Service port            | tcp/5432 (PostgreSQL) or tcp/27017 (MongoDB) — reachable from the core |
 
-| Aspect               | Minimal Requirement       |
-| -------------------- | ------------------------- |
-| RAM                  | 4 GB                       |
-| CPU Cores            | 2                         |
-| Pryv.io services size | 30 GB               |
-| Data size             | Depending on storage needs |
-| Service ports        | tcp/443                   |
-
-Here's a matrix that shows how various load situations affect the resource needs of your *core* server(s):
-
-| Load Situation               | Resource Needs                                               |
-| ---------------------------- | ------------------------------------------------------------ |
-| Large data per user          | Data Disk Space: Increase per data usage predictions         |
-| High Requests Per Second     | CPU Cores: Increase to at least 4                            |
-| Image uploads                | CPU Cores: Increase to at least 4. RAM: Increase depending on needs |
+If using embedded MongoDB or PostgreSQL on the same VM as the core, add the database's resource needs to the core requirements above.
 
 
-## Operational Concerns
+## Network and firewall
 
-This section will introduce additional operational concerns not covered by your Pryv.io base installation. We recommend implementing measures to address these topics in order to guarantee safe operation and traceability of issues. 
+Inbound — from clients:
 
-### System Hardening
+| Port     | Protocol | When                                                                   |
+| -------- | -------- | ---------------------------------------------------------------------- |
+| 443      | tcp      | HTTPS (built-in SSL or behind your reverse proxy)                      |
+| 53       | udp      | Only in multi-core deployments using the embedded DNS server           |
 
-We recommend you to follow a system hardening guide for the operating system of your choice. This should include installing firewalls, denying SSH access using passwords and other measures that form best practices. 
+Inter-core (multi-core only):
 
-Administrators accessing a regulated system must themselves conform to the regulations and have received adequate training. 
+| Port     | Protocol | Purpose                                                                |
+| -------- | -------- | ---------------------------------------------------------------------- |
+| 4002     | tcp      | rqlite Raft consensus — must be reachable between all cores            |
+| 4001     | tcp      | rqlite HTTP (usually only bound to localhost)                          |
+
+Outbound — from the core:
+
+- tcp/443 for fetching event-type/assets definitions (configurable or pinnable), OAuth callbacks and `service-mail` (if used).
+
+
+## Operational concerns
+
+### System hardening
+
+Follow a system-hardening guide for your chosen OS: firewall defaults, no password SSH, automatic security updates, non-root service user, etc. Administrators of a regulated system must themselves conform to the applicable regulations and have received adequate training.
 
 ### Backups
 
-See the [backup guide](/customer-resources/backup/). Making a copy of private user data is regulated by law. Please make sure you know the ramifications of making backup copies. 
+See the [backup guide](/customer-resources/backup/). Making a copy of private user data is regulated by law — make sure you understand the implications before rolling out backups.
 
-### Node Monitoring
+### Node monitoring
 
-Make sure you monitor key performance metrics of your Pryv nodes and keep a history of these metrics for later viewing. This helps in tracking down performance issues and is considered a best practice. Your metrics should include: 
+Monitor key performance metrics on every core and keep historical data for incident analysis. At minimum:
 
 * Load, CPU (system, user, iowait, idle, load1, load5, load15)
-* Disk (space left on devices, iops read and write)
+* Disk (space left on devices, read/write iops)
 * RAM (swapping activity, reserved, free)
-* Network Interfaces (Packets, Bytes, Errors)
+* Network interfaces (packets, bytes, errors)
+
+Application-level: the core exposes standard Node.js process metrics via its logs, and each of its HTTP ports (3000, 4000) responds to basic liveness checks — see the [healthchecks guide](/customer-resources/healthchecks/).
 
 
-## Previous version
+## Previous versions of this document
 
-The previous version of this document, named "Deployment design guide" is still available [here](/assets/docs/deployment_design_guide_v6.pdf).
+The v1 "Deployment design guide" is still available as [PDF](/assets/docs/deployment_design_guide_v6.pdf) for reference.

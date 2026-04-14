@@ -1,14 +1,22 @@
 ---
 id: register-migration
-title: 'Pryv.io register migration'
+title: 'Pryv.io register migration (v1 only)'
 layout: default.pug
 customer: true
 withTOC: true
 ---
 
-> **Deprecated (v2)** — In Pryv.io v2, registration is built into the core binary. There is no separate register service to migrate. For v2 deployments, follow the [core migration](/customer-resources/core-migration/) guide instead. This page is preserved for v1 operators only.
+> **⚠️ This page applies to Pryv.io v1 only.**
+>
+> In Pryv.io v2 the register service no longer exists — registration, DNS and the admin endpoints are all built into the single core binary. There is nothing separate to migrate.
+>
+> - To move a v2 core to a new machine, follow the [core migration](/customer-resources/core-migration/) guide.
+> - To scale out a v2 single-node install, follow the [single-node to multi-core upgrade](/customer-resources/single-node-to-cluster/) guide.
+> - To **upgrade an existing v1 deployment to v2** (exporting v1 user data and importing it into a fresh v2 install), use the [`dev-migrate-v1-v2`](https://github.com/pryv/dev-migrate-v1-v2) toolkit.
+>
+> The procedure below is preserved as a historical reference for operators still running the v1 (pre-2026) multi-service topology.
 
-This guide describes how to migrate the register role of Pryv.io to a new machine.
+This guide describes how to migrate the register role of Pryv.io v1 to a new machine.
 
 The register migration procedure only takes into account the master registers. If you need to migrate a slave, simply deploy a new one and replication will take care of the data migration.  
 

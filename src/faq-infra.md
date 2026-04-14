@@ -5,7 +5,9 @@ layout: default.pug
 withTOC: true
 ---
 
-In this FAQ we answer common questions related to Pryv.io platform. You can contact us on [Github Discussion](https://github.com/orgs/pryv/discussions) if your question is not listed here.
+In this FAQ we answer common questions related to the Pryv.io platform. You can contact us on [Github Discussion](https://github.com/orgs/pryv/discussions) if your question is not listed here.
+
+> **Pryv.io v2** — Since v2 (2026) Pryv.io ships as a single binary (`pryvio/open-pryv.io` Docker image, or `node bin/master.js`). Registration, DNS and the admin endpoints are all built into the core — there is no separate `register`, `core`, `hfs`, `preview` or `dns` container. Where a procedure below still references the v1 multi-container layout (`pryvio_*` containers, `run-pryv`, `${PRYV_CONF_ROOT}` scripts) it is kept for operators still on v1; the v2 equivalent is noted inline. For v2 installs see [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md).
 
 
 ## Table of contents <!-- omit in toc -->
@@ -53,27 +55,29 @@ The last option will probably the easiest to implement. It offers good protectio
 
 ### Self-managed top-domain
 
-The DNS running on the register must resolve all requests for the domain. Entries in the top-domain will look like:
+This only applies to **multi-core** deployments that run the embedded DNS (i.e. `dnsLess.isActive: false`). Single-node v2 installs use `dnsLess` mode and do not need any of this.
+
+The embedded DNS served by each core must resolve all requests for the domain. Entries in the top-domain will look like:
 
 ```
-ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
-ns2-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_2}
+ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_CORE_1}
+ns2-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_CORE_2}
 
 ${DOMAIN}	TTL_SECONDS IN NS ns1-${DOMAIN}
 ${DOMAIN}	TTL_SECONDS IN NS ns2-${DOMAIN}
 ```
 
-On single node or PoC installations, you will have only one register, both Type A entries for the machine will point to the same IP address:
+On single-node or PoC installations of a multi-core platform, you will have only one core; both Type A entries point to the same IP address:
 
 ```
-ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
-ns2-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_REGISTER_MACHINE_1}
+ns1-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_CORE_1}
+ns2-${DOMAIN} TTL_SECONDS IN A ${IP_ADDRESS_CORE_1}
 
 ${DOMAIN}	TTL_SECONDS IN NS ns1-${DOMAIN}
 ${DOMAIN}	TTL_SECONDS IN NS ns2-${DOMAIN}
 ```
 
-You can verify that the register is set to resolve DNS queries for your domain using: `dig NS ${DOMAIN}`. The answer section must include:
+You can verify that the core is set to resolve DNS queries for your domain using: `dig NS ${DOMAIN}`. The answer section must include:
 
 ```
 ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns1-${DOMAIN}.${TOP_DOMAIN}
@@ -83,71 +87,79 @@ ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns2-${DOMAIN}.${TOP_DOMAIN}
 
 ## Customize registration, login, password-reset pages
 
-We deliver the platform with default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-auth3.
+We provide default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-auth3.
 
-To customize it, fork the repository, make stub commit on the `gh-pages` branch to activate the [GitHub Pages](https://pages.github.com/).
-Modify the NGINX configuration in `pryv/nginx/site.conf`. Change line:
+To customize it, fork the repository and activate [GitHub Pages](https://pages.github.com/) on the `gh-pages` branch (an empty commit is enough to kick the build off).
 
-```
-proxy_pass        https://pryv.github.io/app-web-auth3/;
-```
+You then need to point the `/access/` path of your Pryv.io deployment at your fork:
 
-to:
+- **v2** — this is handled by your own reverse proxy. Add an `/access/` location to the NGINX config shown in [INSTALL — Running behind nginx](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#running--behind-nginx):
 
-```
-proxy_pass        https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth3/;
-```
+  ```nginx
+  location /access/ {
+    proxy_pass https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth3/;
+  }
+  if ($request_uri !~* "^/access/static/.*$") {
+    rewrite ^/access/.*$ /access/index.html;
+  }
+  ```
 
-and add the following in the sw.${DOMAIN} server scope:
+- **v1** — edit the bundled NGINX config at `pryv/nginx/site.conf`. Change:
 
-```
-if ($request_uri !~* "^/access/static/.*$") {
-	rewrite ^.*$ /access/index.html;
-}
-```
+  ```
+  proxy_pass        https://pryv.github.io/app-web-auth3/;
+  ```
+
+  to:
+
+  ```
+  proxy_pass        https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth3/;
+  ```
+
+  and add the following in the `sw.${DOMAIN}` server scope:
+
+  ```
+  if ($request_uri !~* "^/access/static/.*$") {
+    rewrite ^.*$ /access/index.html;
+  }
+  ```
 
 The following pages will show the changes that you apply to this repository:
 
-- Registration: https://sw.${DOMAIN}/access/register.html
-- Reset password: https://sw.${DOMAIN}/access/reset-password.html
-- Consent authorization: https://sw.${DOMAIN}/access/access.html
+- Registration: https://${DOMAIN}/access/register.html
+- Reset password: https://${DOMAIN}/access/reset-password.html
+- Consent authorization: https://${DOMAIN}/access/access.html
 
 
 ## Host apps, resources on the same domain and reuse the SSL certificate
 
-The built-in NGINX proxy can be configured to serve apps from different sources such as GitHub pages under the same domain, thus allowing to reuse the SSL certificate.
+You can reuse the platform's SSL certificate by hosting additional apps behind the same reverse proxy as Pryv.io.
 
-Apps can be served on any path from the hostname https://sw.${DOMAIN}/ such as https://sw.${DOMAIN}/MY_APP/.
+- **v2** — add `location` blocks to your own NGINX (or other reverse proxy). See [INSTALL — Running behind nginx](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#running--behind-nginx) for the base configuration, then insert:
 
-This is done by adding the following `location` clause in the `pryv/nginx/conf/site.conf` file:
+  ```nginx
+  location /MY_APP/ {
+    proxy_pass         MY_APP_URL_WITH_PROTOCOL;
+    proxy_set_header   X-Real-IP $remote_addr;
+    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_buffering    off;
+  }
+  ```
 
-```
-server {
- 	listen               443;
- 	server_name          sw.DOMAIN;
-
-  //...
-
-	location /MY_APP/ {
-    	proxy_pass            MY_APP_URL_WITH_PROTOCOL;
-    	proxy_set_header      X-Real-IP $remote_addr;
-    	proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
-    	proxy_buffering       off;
-  	}
-}
-```
+- **v1** — the built-in NGINX proxy can be configured to serve apps under `https://sw.${DOMAIN}/MY_APP/` by adding the same `location` clause in `pryv/nginx/conf/site.conf`.
 
 ## System administrators
 
-### Port 53 is already in use (by Docker's embedded DNS)
+### Port 53 is already in use (v1 only)
 
-On some installations, the DNS container cannot be started because docker-compose attempts to bind on the same network interface and port as Docker's embedded DNS.  
-To fix this, you must specify the external network interface IP address (which may differ from the machine's public IP address, for example on AWS) in the docker-compose port mapping section of the DNS service as following:
+On v1 installs, the DNS container could fail to bind port 53 when Docker's embedded DNS was using the same interface. The fix was to pin the DNS service to an explicit external-interface IP in docker-compose:
 
 ```yaml
 ports:
 	- "EXTERNAL_INTERFACE_IP_ADDRESS:53:5353/udp"
 ```
+
+In **v2**, the embedded DNS server runs in-process inside the core (when `dnsLess.isActive: false` / multi-core). The DNS port is taken by the core process itself; conflicts with Docker's embedded DNS no longer apply.
 
 ### `docker login` X11 error
 
@@ -171,26 +183,31 @@ By default, our containers write logs into `stdout`, the reason for a failure ca
 
 ### Permission denied error
 
-During deployment and update, it is possible that some folders have incorrect permissions, preventing the Pryv.io process to read configuration and data files.  
-The corresponding error can be found in the container logs using:
-
-```
-docker logs -f --tail 50 pryvio_${CONTAINER_NAME}
-```
-
-It should have a message similar to:
+During deployment and update, it is possible that some folders have incorrect permissions, preventing the Pryv.io process from reading configuration and data files. The error looks like:
 
 ```
 Error: EACCES: permission denied
 ```
 
-This can be fixed by running the provided `ensure-permissions` script. If necessary, reboot the Pryv.io services as well.
+- **v2**: inspect the container with `docker logs -f --tail 50 <container-name>` (the default is `pryvio_open_pryv_io`). Ensure that the host paths mounted into the container (typically `data/users`, `data/previews`, `data/rqlite-data` — see [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md)) are owned by the UID the container runs as.
+- **v1**: logs live under `pryvio_${CONTAINER_NAME}`; run the provided `ensure-permissions` script on the host and reboot services.
 
 ### How do I reset data on my Pryv.io platform?
 
 This step will erase all data from your platform. Perform this at your own risk and make sure that you know what you are doing.
 
-To erase all data on the platform, you need to delete the contents of the data folders and reboot the services.
+**v2** — stop the core, remove the data directories that back your configured storage engines, then restart. With the defaults from [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md):
+
+```bash
+# stop the core (Docker or systemd, depending on your deployment)
+rm -rf data/users/*          # SQLite DBs + per-user files (audit, index, account)
+rm -rf data/previews/*       # image previews
+rm -rf data/rqlite-data/*    # platform DB (rqlite Raft + snapshot)
+# if using external MongoDB / PostgreSQL: drop and recreate the database there
+# then restart the core
+```
+
+**v1**:
 
 ```bash
 cd ${PRYV_CONF_ROOT}
@@ -207,16 +224,24 @@ App-web is hosted on GitHub pages and can be used for your Pryv.io platform as d
 
 ### Can I use my own SSL termination with Pryv.io?
 
-Yes, you need to provide the following changes to your NGINX configuration.
+Yes.
 
-In the `nginx/conf/nginx.conf` file, comment out the following lines by adding a `#` at their beginning as following:
+**v2** — the core has three modes, all covered in [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md):
+
+1. **Built-in HTTPS**: let the core terminate TLS by setting `http.ssl.keyFile` / `http.ssl.certFile` in the override config.
+2. **Behind your own reverse proxy (recommended for production)**: leave `http.ssl` unset, run the core on plain HTTP, and terminate TLS in your NGINX/Caddy/ALB. A ready-to-use NGINX snippet for all three ports (API 3000, HFS 4000) is in [INSTALL — Running behind nginx](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#running--behind-nginx).
+3. **backloop.dev** for dev/test.
+
+**v1** — edit the NGINX config shipped with the stack:
+
+In the `nginx/conf/nginx.conf` file, comment out the following lines by adding a `#` at their beginning:
 
 ```nginx
 #ssl_certificate      /app/conf/secret/DOMAIN-bundle.crt;
 #ssl_certificate_key  /app/conf/secret/DOMAIN-key.pem;
 ```
 
-In the `nginx/conf/site-443.conf` file, change the `listen` directive from `443 ssl` to `80` for each `server` block as following:
+In the `nginx/conf/site-443.conf` file, change the `listen` directive from `443 ssl` to `80` for each `server` block:
 
 ```nginx
 server {
@@ -227,9 +252,11 @@ server {
 
 ### My security policy requires that all outgoing traffic goes through a proxy, will Pryv.io work?
 
-Yes, you need to provide the following changes to your deployment configuration.
+Yes.
 
-In your `docker-compose.yml` (or equivalent), add the environment variables `http_proxy` and `https_proxy` to the reverse proxy service:
+**v2** — set `http_proxy` / `https_proxy` in the environment of the core process (or pass them through your Docker orchestrator / systemd unit). There are no per-role helper scripts to edit; the single `bin/master.js` process and its workers inherit the environment.
+
+**v1** — add `http_proxy` / `https_proxy` to the reverse-proxy service in `docker-compose.yml`:
 
 ```yaml
 reverse_proxy:
@@ -241,11 +268,9 @@ reverse_proxy:
     - https_proxy
 ```
 
-In the `run-config-leader`, `run-config-follower` and `run-pryv` scripts, add the following lines at the beginning, right under the shebang `#!/usr/bin/env bash`:
+and export them at the top of the `run-config-leader`, `run-config-follower`, `run-pryv` and `restart-*` scripts:
 
 ```bash
 export http_proxy=${YOUR-PROXY-HOSTNAME-WITH-PORT}
 export https_proxy=${YOUR-PROXY-HOSTNAME-WITH-PORT}
 ```
-
-Do the same for the `restart-` scripts.

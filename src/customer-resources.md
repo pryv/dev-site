@@ -12,9 +12,20 @@ Since v2, Open Pryv.io is distributed as a single repository and Docker image �
 
 Related components:
 - [open-pryv.io](https://github.com/pryv/open-pryv.io): Main API server (core + register + mail + MFA + HFS + previews)
-- [service-config-leader](https://github.com/pryv/service-config-leader): Configuration management centralization
-- [service-config-follower](https://github.com/pryv/service-config-follower): Subscribe to config-leader
-- [service-ssl-certificate](https://github.com/pryv/service-ssl-certificate): Let's Encrypt automated certificate request
+- [dev-migrate-v1-v2](https://github.com/pryv/dev-migrate-v1-v2): Toolkit to migrate user data from Open Pryv.io 1.x to v2
+- [service-config-leader](https://github.com/pryv/service-config-leader): Configuration management centralization (v1)
+- [service-config-follower](https://github.com/pryv/service-config-follower): Subscribe to config-leader (v1)
+- [service-ssl-certificate](https://github.com/pryv/service-ssl-certificate): Let's Encrypt automated certificate request (v1)
+
+## Upgrading from v1
+
+If you already run Open Pryv.io 1.x and want to move your users to v2:
+
+1. Install a fresh v2 core following the [platform setup guide](/customer-resources/pryv.io-setup/).
+2. Use [`dev-migrate-v1-v2`](https://github.com/pryv/dev-migrate-v1-v2) to export your v1 MongoDB into a v2-compatible backup directory.
+3. Import that backup into the v2 install with `node bin/backup.js --restore /path/to/backup` — see the [backup guide](/customer-resources/backup/).
+
+See the toolkit's README for the current source/target support matrix.
 
 
 ## Documents
@@ -76,9 +87,9 @@ Related components:
 
   This document describes how to migrate a Pryv.io core service to a different machine.
 
-- Register migration: [HTML](/customer-resources/register-migration/)
+- Register migration (v1 only): [HTML](/customer-resources/register-migration/)
 
-  This document describes how to migrate a Pryv.io register service to a different machine.
+  Historical reference for migrating a v1 register service. In v2 the register role is built into the core binary — use [core migration](/customer-resources/core-migration/) instead.
 
 - Single-node to Cluster upgrade: [HTML](/customer-resources/single-node-to-cluster/)
 

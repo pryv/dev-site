@@ -6,216 +6,177 @@ customer: true
 withTOC: true
 ---
 
-<!--
-|         |                       |
-| ------- | --------------------- |
-| Author  | Ilia Kebets 	      |
-| Reviewer | Guillaume Bassand (v1,2), Anastasia Bouzdine (v3) |
-| Date    | 28.04.2020            |
-| Version | 4                     |
--->
+This guide describes how to validate that a Pryv.io platform is up and running after install or after an upgrade.
 
-> **Note (v2):** This guide was written for the v1 multi-service topology (separate register, core, static-web roles). In v2, Pryv.io runs as a single binary — validation is simpler. The general principles still apply but role-specific steps should be adapted to the unified deployment.
-
-This procedure describes the steps to validate that a Pryv.io platform is up and running. You can directly jump to the [Checklist section](#checklist) to proceed to a quick check-up of your Pryv.io platform.
-Troubleshooting steps can be found at the end of this document in case of validation failure.
+> **Since v2 (2026)** Pryv.io is a single binary serving registration, core API, HFS and — in multi-core mode — DNS. Validation is therefore one short checklist instead of four (DNS + register + core + NGINX). In multi-core mode, run the checklist against every core.
 
 
 ## Table of contents <!-- omit in toc -->
 
 1. [Variables](#variables)
 2. [Tools](#tools)
-   1. [DNS checks:](#dns-checks)
-   2. [HTTP checks:](#http-checks)
 3. [Checklist](#checklist)
-   1. [DNS is set as domain name server](#dns-is-set-as-domain-name-server)
-   2. [DNS](#dns)
-   3. [Core](#core)
-   4. [Register](#register)
+   1. [1. Process is up](#1-process-is-up)
+   2. [2. Public URL responds](#2-public-url-responds)
+   3. [3. Registration / rqlite reachable](#3-registration--rqlite-reachable)
+   4. [4. DNS (multi-core only)](#4-dns-multi-core-only)
+   5. [5. Base storage (PostgreSQL / MongoDB) reachable](#5-base-storage-postgresql--mongodb-reachable)
+   6. [6. (Optional) HFS port reachable](#6-optional-hfs-port-reachable)
 4. [Troubleshoot](#troubleshoot)
-   1. [File permissions](#file-permissions)
-   2. [DNS issues](#dns-issues)
-      1. [Redis database unreachable](#redis-database-unreachable)
-      2. [Configuration error](#configuration-error)
-      3. [Port is unreachable from the Internet](#port-is-unreachable-from-the-internet)
-   3. [Core issues](#core-issues)
-      1. [Configuration error](#configuration-error-1)
-      2. [Waiting on database connection](#waiting-on-database-connection)
-   4. [NGINX issues](#nginx-issues)
-      1. [Configuration error](#configuration-error-2)
-   5. [Register issues](#register-issues)
-      1. [Configuration error](#configuration-error-3)
-      2. [Redis database unreachable](#redis-database-unreachable-1)
+   1. [Core does not start](#core-does-not-start)
+   2. [502 / 504 from the reverse proxy](#502--504-from-the-reverse-proxy)
+   3. [rqlite cluster split-brain or not converging](#rqlite-cluster-split-brain-or-not-converging)
+   4. [DNS does not resolve user subdomains](#dns-does-not-resolve-user-subdomains)
+   5. [Base storage connection fails](#base-storage-connection-fails)
+   6. [Permission denied on data directories](#permission-denied-on-data-directories)
 
 
 ## Variables
 
-As this guide is platform-agnostic, we will use variables `${VARIABLE_NAME}` which must be replaced in the commands.
+Replace these placeholders:
 
-In particular, the following variables should be replaced :
-- the **domain name**, which will be called `${DOMAIN}`,
-- the **configuration root folder** `${PRYV_CONF_ROOT}`, corresponding to the folder on the machine containing the Pryv.io configuration files,
-- the **container name**. Pryv.io components are containerized with Docker, so when doing certain actions on them, we address the containers by their name `${APP_CONTAINER_NAME}`. To find the name of a container, use `docker ps -a` to display all containers,
-- the **core machine hostname** `${CORE_MACHINE_HOSTNAME}`, corresponding to the machine running the Pryv.io core service. On default configurations, we define the first one as `co1.${DOMAIN}`.
+- `${DOMAIN}` — the public domain (path-based in `dnsLess`, subdomain base in multi-core).
+- `${PUBLIC_URL}` — the full public URL of the core (`dnsLess.publicUrl` or `https://core-a.${DOMAIN}`).
+- `${CORE_HOST}` — hostname the core runs on (SSH target for log inspection).
+- `${DATA_DIR}` — data root from your config (see [INSTALL — Data directories](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#data-directories)).
 
 
 ## Tools
 
-Depending on your skill set, this can be done using CLI tools or a web interface.
-
-### DNS checks:
-
-- dig version 9.12.3+
-
-### HTTP checks:
-
-- cURL version 7.54.0+
-- Chrome web browser version 71+
+- `curl` v7.54+
+- `dig` v9.12+ (multi-core only)
+- SSH access to each core machine
 
 
 ## Checklist
 
-### DNS is set as domain name server
+### 1. Process is up
 
-Run the following command:
+- Docker: `docker ps` should list `pryvio_open_pryv_io` (or your container name) in an `Up` state.
+- systemd: `systemctl status pryv-core` should show `active (running)`.
+- Logs should end with the API/HFS workers signalling readiness — no restart loop.
 
+### 2. Public URL responds
+
+```bash
+curl -i ${PUBLIC_URL}/reg/service/info
 ```
+
+**Expected:** HTTP 200 with a JSON body listing `api`, `register`, `access`, `name`, `version`.
+
+**Common failures:**
+- `Could not resolve host` → DNS or hosts-file not pointing at the core.
+- `Connection refused` → the core or the reverse proxy is not listening on 443.
+- `502 Bad Gateway` → the reverse proxy can't reach the core on port 3000.
+
+### 3. Registration / rqlite reachable
+
+Forces a round-trip through the rqlite platform DB:
+
+```bash
+curl -i ${PUBLIC_URL}/reg/testuser/check_username
+```
+
+**Expected:** HTTP 200 with a JSON body telling you whether `testuser` is reserved.
+
+If this returns 500, inspect the core logs for rqlited errors — see the [rqlite troubleshooting](#rqlite-cluster-split-brain-or-not-converging) section.
+
+### 4. DNS (multi-core only)
+
+Skip in `dnsLess` mode.
+
+Verify that your domain's nameservers point to the cores:
+
+```bash
 dig NS +trace +nodnssec ${DOMAIN}
 ```
 
-The **2 last blocks** should display hostnames that resolve to the machine running your Pryv.io DNS such as:  
+The last hop should return NS records that resolve to your core IPs. Then confirm a user subdomain resolves (use any registered username, or create one first):
 
-```
-${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns1-pryv.${YOUR-DOMAIN}.
-${YOUR-DOMAIN}.		SOME_TTL_VALUE	IN	NS	dns2-pryv.${YOUR-DOMAIN}.
-```
-
-The last block should be followed by a line indicating that it is coming from your Pryv.io DNS such as:
-
-```
-;; Received 123 bytes from ${YOUR-DNS-IP-ADDRESS}#53(dns1-pryv.${YOUR-DOMAIN}) in 15 ms
+```bash
+dig A someuser.${DOMAIN}
 ```
 
-- If there are no blocks containing your machine's hostname, the name servers for the Pryv.io domain name `${DOMAIN}` are not defined or misconfigured. Verify with your domain provider that the name servers are set correctly.
-- If there is a single block displaying your machine's hostname, then your Pryv.io DNS is not running. See [DNS issues section](#dns-issues).
+**Expected:** an `ANSWER SECTION` with an A record for one of the cores.
 
-### DNS
+### 5. Base storage (PostgreSQL / MongoDB) reachable
 
-Run the following command:  
+The core logs a fatal error and exits if it cannot connect to its base storage on startup — step 1 catches this. To double-check the connection independently:
 
+- PostgreSQL: `psql -h <host> -U <user> -d pryv_db -c '\dt'` from the core machine.
+- MongoDB: `mongosh --host <host> --eval 'db.stats()' pryv-node` from the core machine.
+
+### 6. (Optional) HFS port reachable
+
+Only if your deployment uses HFS (high-frequency series):
+
+```bash
+curl -i -X OPTIONS ${PUBLIC_URL}/someuser/events/abc/series
 ```
-dig reg.${DOMAIN}
-```
 
-The `ANSWER` section should exist and list a hostname such as:  
-
-~~~~~~~~
-;; ANSWER :
-reg.${DOMAIN}.  SOME_TTL_NUMBER  IN  A  ${REGISTER_MACHINE_IP_ADDRESS}
-~~~~~~~~
-
-If there is no `ANSWER` section, this means that the DNS is not running or is unreachable. See [DNS section](#dns-issues).
-
-### Core
-
-Run `curl -i https://${CORE_MACHINE_HOSTNAME}/status` or open [https://${CORE_MACHINE_HOSTNAME}/status](https://${CORE_MACHINE_HOSTNAME}/status).  
-
-The hostname of the first core should be `co1.${DOMAIN}` by default (`co2.${DOMAIN}` and so on for the other ones in case of cluster deployment).
-
-- HTTP Status 200: OK
-- HTTP Status 502: core service is not running, see [core issues section](#core-issues)
-- `connection refused` error: core's NGINX is not running, see [NGINX section](#nginx-issues)
-- `could not resolve host` error: DNS is not running, see [DNS section](#dns-issues)
-
-### Register
-
-Run `curl -i https://reg.${DOMAIN}/wactiv/check_username` or open [https://reg.${DOMAIN}/wactiv/check_username](https://reg.${DOMAIN}/wactiv/check_username). For DNS-less, use `curl -i https://${HOSTNAME}/reg/wactiv/check_username` or open [https://${HOSTNAME}/reg/wactiv/check_username](https://${HOSTNAME}/reg/wactiv/check_username).
-
-HTTP status:  
-- 200: OK  
-- 500, 502: Register service is not running, see [register issues section](#register-issues)  
+**Expected:** a 2xx or a documented 4xx from the HFS stack. A 502/504 means the reverse proxy can't reach port 4000.
 
 
 ## Troubleshoot
 
-### File permissions
+### Core does not start
 
-If you encounter permission issues on data and log files, those handy scripts make sure they are set correctly:
+Inspect the logs:
 
-- On a single node setup: `./ensure-permissions`; after that run `${PRYV_CONF_ROOT}/restart-pryv` to ensure Redis picks up possible changes
-- On a cluster setup:
-  - On register: `./ensure-permissions-reg-master`; after that run `${PRYV_CONF_ROOT}/restart-pryv` to ensure Redis picks up possible changes
-  - On core: `./ensure-permissions-core`
+```bash
+docker logs -f --tail 200 pryvio_open_pryv_io
+# or
+journalctl -u pryv-core -f
+```
 
-### DNS issues
+Common causes:
 
-1. SSH to the machine
-2. Access the DNS container logs on the register machine: `docker logs -f --tail 50 ${DNS_CONTAINER_NAME}`.  
+- Malformed override YAML (`invalid config ...`). Run with `DEBUG=1` to get the full stack.
+- Missing required `auth.adminAccessKey` / `auth.filesReadTokenSecret` / `service.*` keys — see [INSTALL — Minimal production config](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#minimal-production-config).
+- Port in use — usually another core or a stale process holding 3000/4000/4001/4002.
+- `rqlited` binary missing — reinstall the image or re-run `just setup-dev-env`.
 
-#### Redis database unreachable
+Export the tail of the log if you need to escalate:
 
-The logs contain the following error `Error: Redis connection to redis:6379 failed - getaddrinfo ENOTFOUND redis redis:6379`.  
-See the Redis logs: `tail -f ${PRYV_CONF_ROOT}/reg-master/redis/log/redis.log`  
-Fix issue if possible, otherwise send the last 100 lines of the log file to your Pryv tech contact. Run `tail -n 100 ${PRYV_CONF_ROOT}/reg-master/redis/log/redis.log > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
+```bash
+docker logs --tail 200 pryvio_open_pryv_io > $(date -I)-pryv-core.log
+```
 
-#### Configuration error
+### 502 / 504 from the reverse proxy
 
-If the service keeps rebooting with an error message, fix configuration if possible.  
-Otherwise, send the last 100 lines of the DNS log file to your Pryv tech contact. Run `docker logs --tail 100 ${DNS_CONTAINER_NAME} > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
+- Confirm the core is actually listening on 3000/4000: `ss -tlnp | grep -E '3000|4000'`.
+- If the proxy is on a different host, check the firewall between them.
+- For HFS specifically, ensure `proxy_set_header Host 127.0.0.1:4000;` is set — the HFS subdomain-to-path middleware breaks if a real domain is forwarded ([INSTALL note](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#important-nginx-notes)).
 
-#### Port is unreachable from the Internet
+### rqlite cluster split-brain or not converging
 
-If there are no errors in the logs, the machine might simply not be reachable from the Internet on port UDP/53.
+Only in multi-core mode. Symptoms: `/reg/*` returns 500, registrations fail, `/system/admin/cores` times out.
 
-1. SSH to the register machine
-2. Make a DNS request: `dig @localhost reg.${DOMAIN}`
+- Every core must run rqlited on the same Raft port (default 4002) and the port must be open between cores.
+- The `lsc.${DOMAIN}` A record must list **every** core's IP — rqlited uses it for peer discovery.
+- Inspect rqlite's local status: `curl http://localhost:4001/status` on each core. The `raft` block should agree on a single leader.
+- Full troubleshooting: [rqlite.io documentation](https://rqlite.io/docs/).
 
-If the request yields an answer, your firewall settings might be set wrong. You must allow INGRESS UDP/53 as defined in the **Infrastructure procurement guide** from the [Customer Resources page](/customer-resources/#guides-and-documents).
+### DNS does not resolve user subdomains
 
+Only in multi-core mode with embedded DNS (`dns.active: true`).
 
-### Core issues
+- Check that the core process binds port 53 (`ss -ulnp | grep :53`). If Docker's embedded DNS or `systemd-resolved` is holding the port, free it or bind the core's DNS to a specific interface.
+- Query the core directly, bypassing recursive resolvers: `dig @<core-ip> someuser.${DOMAIN}`.
+- If the direct query works but public resolvers don't, the domain's NS records at the registrar are wrong.
 
-1. SSH to core machine
-2. Read logs & fix issue if possible: `docker logs -f --tail 50 ${CORE_CONTAINER_NAME}`
-3. Reboot if necessary: `docker stop ${CORE_CONTAINER_NAME} && ./run-core`
-4. Send container log to your Pryv tech contact. Run `docker logs --tail 100 ${CORE_CONTAINER_NAME} > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
+### Base storage connection fails
 
-#### Configuration error
+- Credentials: re-read `storages.engines.postgresql.*` (or `mongodb.*`) in your override YAML.
+- Network: from the core host, `nc -vz <db-host> 5432` (or `27017`).
+- Permissions: PostgreSQL's `pg_hba.conf` must allow the core's IP; MongoDB's auth DB must contain the user.
 
-If the service keeps rebooting with an error message, fix configuration if possible.  
-Otherwise, send the last 100 lines of the container log to your Pryv tech contact. Run `docker logs --tail 100 ${CORE_CONTAINER_NAME} > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
+### Permission denied on data directories
 
-#### Waiting on database connection
+The core process must own (or at least be able to write to) `${DATA_DIR}/users`, `${DATA_DIR}/previews` and `${DATA_DIR}/rqlite-data`. Typical fix:
 
-If the service is waiting on the database to be available for connection: `[database] Cannot connect to mongodb://mongodb:27017/pryv-node, retrying in a sec`  
-check MongoDB status: `tail -f ${PRYV_CONF_ROOT}/core/mongodb/log/mongodb.log`  
-- Booting: just wait 1-15min depending on the size of your database  
-- Error: read logs, fix error if possible & reboot it if needed: `docker stop ${MONGODB_CONTAINER_NAME} && ./run-core`  
-- Send MongoDB container log to your Pryv tech contact. Run `tail -n 100 ${PRYV_CONF_ROOT}/core/mongodb/log/mongodb.log > ${DATE}-${ISSUE_NAME}.log` to generate the log file.  
+```bash
+sudo chown -R <pryv-user>:<pryv-user> ${DATA_DIR}
+```
 
-### NGINX issues
-
-1. SSH to core/register machine
-2. Read logs & fix issue if possible: `docker logs ${NGINX_CONTAINER_NAME}`
-3. Reboot if necessary: `docker stop ${NGINX_CONTAINER_NAME} && ./run-core`
-4. Send error log to your Pryv tech contact. Run `docker logs --tail 100 ${NGINX_CONTAINER_NAME} > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
-
-#### Configuration error
-
-If the log file has a line such as: `2019/01/28 12:44:07 [emerg] ERROR MESSAGE ...`, fix issue if possible.  
-Otherwise, send error log to your Pryv tech contact. Run `docker logs --tail 100 ${NGINX_CONTAINER_NAME} > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
-
-### Register issues
-
-1. SSH to the register machine
-2. Read logs & fix issue if possible: `docker logs -f --tail 50 ${REGISTER_CONTAINER_NAME}`  
-3. Reboot if necessary: `docker stop ${REGISTER_CONTAINER_NAME} && ./run-reg-master`  
-4. Send error log to your Pryv tech contact. Run `docker logs --tail 100 ${REGISTER_CONTAINER_NAME} > ${DATE}-${ISSUE_NAME}.log` to generate the log file.
-
-#### Configuration error
-
-Service keeps rebooting with an error message - fix configuration if possible and reboot the service.
-
-#### Redis database unreachable
-
-See [this section under DNS](#redis-database-unreachable).
+For Docker: the default image runs as root, so permissions are usually only an issue when host-mounted volumes were pre-created by another user.

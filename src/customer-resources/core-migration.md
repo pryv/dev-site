@@ -6,270 +6,217 @@ customer: true
 withTOC: true
 ---
 
-> **Note (v2):** This guide was written for the v1 topology where core, HFS, preview, and MFA ran as separate containers with separate NGINX upstreams. In v2, all services run from a single binary and Docker image. The data migration steps (MongoDB, InfluxDB, user files) still apply, but the NGINX configuration is simplified to a single upstream.
+This guide describes how to migrate a Pryv.io **core** to a new machine — that is, moving the running core binary, its configuration and its persistent data to a fresh host while keeping the same public URL.
 
-This guide describes how to migrate the core role of Pryv.io to a new machine.
+> **Since v2 (2026)** Pryv.io runs as a **single binary** (`bin/master.js`) in a **single Docker image** (`pryvio/open-pryv.io`). Moving a core is therefore a single-service migration: copy the config, copy the data directories (plus your database dump), start the core on the new host, and either point DNS or proxy traffic from the old host while DNS propagates. There is no longer a separate `register`, `hfs`, `preview` or `mfa` container to coordinate.
 
-We will copy the data from the old core to the new one, then set the old core to proxy to the new one so we can use it during the DNS propagation phase.
+The strategy:
+
+1. Install the core on the **dest** machine
+2. Copy config and data from **source** to **dest**
+3. Bring the core up on **dest**
+4. Either update DNS to point to **dest**, or keep **source** alive as an NGINX proxy to **dest** during DNS propagation
+5. Stop **source** once traffic has drained
 
 
 ## Table of contents <!-- omit in toc -->
 
-1. [*(Optional)* Create user(s) with specific data on source for post-migration verification](#optional-create-users-with-specific-data-on-source-for-post-migration-verification)
-2. [Setup *dest* machine](#setup-dest-machine)
+1. [(Optional) Create a verification user on source](#optional-create-a-verification-user-on-source)
+2. [Set up the dest machine](#set-up-the-dest-machine)
 3. [Transfer data](#transfer-data)
-   1. [Transfer config data and fetch docker images](#transfer-config-data-and-fetch-docker-images)
-   2. [Transfer user data from *source* to *dest*](#transfer-user-data-from-source-to-dest)
-4. [Launch services on *dest*](#launch-services-on-dest)
-5. [Set NGINX redirection for core on *source*](#set-nginx-redirection-for-core-on-source)
-6. [Reload NGINX on *source*](#reload-nginx-on-source)
-7. [Verify](#verify)
-8. [Update core server IP address on register](#update-core-server-ip-address-on-register)
+   1. [Transfer configuration](#transfer-configuration)
+   2. [Dump and transfer the database](#dump-and-transfer-the-database)
+   3. [Transfer file-system data](#transfer-file-system-data)
+4. [Launch the core on dest](#launch-the-core-on-dest)
+5. [Cut over](#cut-over)
+   1. [Option A — update DNS and stop source](#option-a--update-dns-and-stop-source)
+   2. [Option B — proxy from source to dest during DNS propagation](#option-b--proxy-from-source-to-dest-during-dns-propagation)
+6. [Verify](#verify)
+7. [Multi-core deployments — update the PlatformDB entry](#multi-core-deployments--update-the-platformdb-entry)
 
 
-## *(Optional)* Create user(s) with specific data on source for post-migration verification
+## (Optional) Create a verification user on source
 
-Generate a few events and streams by hand for a naked eye comparison for data transferred after the migration.  
+Create a test user with a few streams and events on the **source** core before the migration. After the cutover, log in as that user on **dest** and check that the data is intact — a quick naked-eye check complements the automated verification steps later.
 
 
-## Setup *dest* machine
+## Set up the dest machine
 
-We assume that you have installed `docker` and `docker-compose` on the *dest* machine and have authenticated yourself with our private Docker repository.
+On **dest**, install the same core version as **source**:
+
+- Either pull the Docker image (same tag as on source: `docker pull pryvio/open-pryv.io:<tag>`)
+- Or clone the same commit and run `just setup-dev-env && just install` (native install)
+
+Also install the database you use (PostgreSQL or MongoDB), unless you are running the database on a separate host that will remain unchanged.
+
+Set up an SSH key pair for rsync:
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "migration@remote"
+# private key stays on source at ${PATH_TO_PRIVATE_KEY}
+# public key goes into ~/.ssh/authorized_keys on dest
+```
 
 
 ## Transfer data
 
-We will be transfering data using rsync, therefore, we setup a pair of keys for this:  
+### Transfer configuration
 
-1. Create an SSH key pair using the following command:  
+Copy the override YAML(s) used on **source**. Their path depends on how you run the core. Typical locations:
 
-   ```bash
-   ssh-keygen -t rsa -b 4096 -C "migration@remote"
-   ```
+- Docker deploy: the mounted config volume (e.g. `/etc/pryv/override.yml`)
+- Native deploy: the file passed via `--config` to `bin/master.js`
+- Dokku deploy: the app config stored under `/home/dokku/<app>/`
 
-2. Copy the private one to `${PATH_TO_PRIVATE_KEY}` in *source*  
+```bash
+# on source
+rsync --verbose --copy-links --archive --compress \
+    -e "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+    /etc/pryv/ \
+    ${USERNAME}@${DEST_MACHINE}:/etc/pryv/
+```
 
-3. Add the public one in `~/.ssh/authorized_keys` on *dest*  
+If the machine's IP, private network or database host changes as part of the migration, edit the override YAML on **dest** accordingly (for example `storages.engines.postgresql.host` or `core.ip`).
 
+### Dump and transfer the database
 
-### Transfer config data and fetch docker images
+Stop the core on **source** before dumping, so the dump is consistent and no writes come in during the transfer:
 
-4. Transfer config data: on *source*, run:  
+```bash
+# Docker: docker stop pryvio_open_pryv_io
+# Systemd: systemctl stop pryv-core
+```
 
-   ```bash
-   time rsync --verbose --copy-links \
-       --archive --compress -e \
-     "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-       ${PRYV_CONF_ROOT}/config-follower \
-       ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/config-follower/
-   ```
+**PostgreSQL** (recommended):
 
-   (You may have to go via your home user directory on *dest* first if permission issues arise.)  
+```bash
+# on source (or on your PG host)
+pg_dump -U postgres -Fc pryv_db > /tmp/pryv_db.dump
+rsync -e "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+    /tmp/pryv_db.dump \
+    ${USERNAME}@${DEST_MACHINE}:/tmp/pryv_db.dump
 
-5. Fetch docker images on *dest* by running:  
+# on dest (restore into an empty database)
+createdb -U postgres pryv_db
+pg_restore -U postgres -d pryv_db /tmp/pryv_db.dump
+```
 
-   ```bash
-   ${PRYV_CONF_ROOT}/run-config-follower
-   ${PRYV_CONF_ROOT}/run-pryv
-   ```
+**MongoDB**:
 
-6. Shutdown Pryv services prior to transferring user data:  
+```bash
+# on source
+mongodump --db=pryv-node --out=/tmp/mongodump
+rsync --archive --compress \
+    -e "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+    /tmp/mongodump/ \
+    ${USERNAME}@${DEST_MACHINE}:/tmp/mongodump/
 
-   ```bash
-   ${PRYV_CONF_ROOT}/stop-pryv
-   ```
+# on dest
+mongorestore /tmp/mongodump/
+```
 
+**InfluxDB** (optional — only if you use InfluxDB for high-frequency series; PostgreSQL is fine too and moves with the PG dump above):
 
-### Transfer user data from *source* to *dest*
+```bash
+# on source
+influxd backup -portable /tmp/influx-backup
 
-7. Shutdown NGINX on *source* to prevent new information from arriving: `docker stop pryvio_nginx`  
+# on dest (after rsync)
+influxd restore -portable /tmp/influx-backup
+```
 
-8. On *source*, create a dump of the MongoDB database:  
+### Transfer file-system data
 
-   ```bash
-   docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongodump -d pryv-node -o /app/backup/
-   ```
-   
-   The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/mongodb/backup/`  
-   
-9. Transfer Mongo data: on *source*, run:  
+Per-user SQLite DBs, attachments, previews and the rqlite platform DB all live under the core's `data/` directory (see [INSTALL — Data directories](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#data-directories)). Transfer the whole tree:
 
-   ```bash
-   time rsync --verbose --copy-links \
-        --archive --compress -e \
-     "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-        ${PRYV_CONF_ROOT}/pryv/mongodb/backup \
-        ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/mongodb/backup/ 
-   ```
-   
-   (You may have to go via your home user directory on *dest* first if permission issues arise.)  
+```bash
+# on source — adjust paths to match your filesystem and sqlite.path config
+rsync --verbose --copy-links --archive --compress \
+    -e "ssh -i ${PATH_TO_PRIVATE_KEY}" \
+    /var/lib/pryv/data/ \
+    ${USERNAME}@${DEST_MACHINE}:/var/lib/pryv/data/
+```
 
-10. On *source*, create a dump of the InfluxDB database:  
-
-    ```bash
-    docker exec -t pryvio_influxdb /usr/bin/influxd backup -portable /pryv/backup/
-    ```
-    
-    The backup folder will be located at: `${PRYV_CONF_ROOT}/pryv/influxdb/backup/`  
-
-11. Transfer InfluxDB data: on *source*, run:  
-
-    ```bash
-    time rsync --verbose --copy-links \
-         --archive --compress -e \
-      "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-         ${PRYV_CONF_ROOT}/pryv/influxdb/backup \
-         ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/influxdb/backup/ 
-    ```
-    
-    (Same comment as previous step about permissions.)  
-
-12. Transfer other user data: on *source*, run:  
-
-    ```bash
-    time rsync --verbose --copy-links \
-         --archive --compress -e \
-      "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-         ${PRYV_CONF_ROOT}/pryv/core/data \
-         ${USERNAME}@${DEST_MACHINE}:${PRYV_CONF_ROOT}/pryv/core/data/
-    ```
-    
-    (Same comment as previous step about permissions.)  
-
-13. On *dest*, run `./ensure-permissions-core` script to help with enforcing correct permissions on data and log folders  
-
-If you wish to reactivate service on the *source* machine, simply reboot the stopped services: `${PRYV_CONF_ROOT}/run-pryv`  
+Ensure file ownership on **dest** matches the UID the core runs as (root for the stock Docker image; the `pryv` user for native installs).
 
 
-## Launch services on *dest*
+## Launch the core on dest
 
-1. Launch services: run `${PRYV_CONF_ROOT}/run-pryv`  
+Start the core:
 
-2. Restore MongoDB files, run:  
+```bash
+# Docker
+docker start pryvio_open_pryv_io
 
-   ```bash
-   docker exec -t pryvio_mongodb /app/bin/mongodb/bin/mongorestore /app/backup/
-   ```
-   
-3. Restore the InDuxDB files:  
+# Native / systemd
+systemctl start pryv-core
+```
 
-   ```bash
-   docker exec -t pryvio_influxdb /usr/bin/influxd restore -portable /pryv/backup/
-   ```
+Watch the logs for a clean startup — `master.js` should report its workers ready, rqlited up, and HTTP listeners bound:
 
-## Set NGINX redirection for core on *source*
+```bash
+docker logs -f pryvio_open_pryv_io
+# or
+journalctl -u pryv-core -f
+```
 
-Since the DNS changes will take some time to come into effect, the NGINX process on *source* will be set to proxy to the *dest* machine.  
-The following steps describe the configuration changes to make NGINX proxy calls to the *dest* core. It is advised to comment out the old setting inline using `#` in order to rollback easily in case of need.
-
-- In `${PRYV_CONF_ROOT}/pryv/nginx/conf/site-443.conf`, Replace the following:
-
-  ```nginx
-  upstream core_server {
-    server core:3000 max_fails=3 fail_timeout=30s;
-    server core:3001 max_fails=3 fail_timeout=30s;
-    server core:3002 max_fails=3 fail_timeout=30s;
-    server core:3003 max_fails=3 fail_timeout=30s;
-    server core:3004 max_fails=3 fail_timeout=30s;
-    server core:3005 max_fails=3 fail_timeout=30s;
-  }
-
-  upstream websocket_server {
-    ip_hash;
-    server core:3000 max_fails=3 fail_timeout=30s;
-    server core:3001 max_fails=3 fail_timeout=30s;
-    server core:3002 max_fails=3 fail_timeout=30s;
-    server core:3003 max_fails=3 fail_timeout=30s;
-    server core:3004 max_fails=3 fail_timeout=30s;
-    server core:3005 max_fails=3 fail_timeout=30s;
-  }
-
-  upstream hfs_server {
-    server hfs:3000 max_fails=3 fail_timeout=30s;
-    server hfs:3001 max_fails=3 fail_timeout=30s;
-    server hfs:3002 max_fails=3 fail_timeout=30s;
-    server hfs:3003 max_fails=3 fail_timeout=30s;
-    server hfs:3004 max_fails=3 fail_timeout=30s;
-    server hfs:3005 max_fails=3 fail_timeout=30s;
-  }
-
-  upstream preview_server {
-    server preview:9000 max_fails=3 fail_timeout=30s;
-  }
-
-  upstream mfa_server {
-    server mfa:7000 max_fails=3 fail_timeout=30s;
-  }
-  ```
-
-  with
-
-  ```nginx
-  upstream core_server {
-    server ${DEST_CORE_IP_ADDRESS}:443;
-  }
-
-  upstream websocket_server {
-    server ${DEST_CORE_IP_ADDRESS}:443;
-  }
-
-  upstream hfs_server {
-    server ${DEST_CORE_IP_ADDRESS}:443;
-  }
-
-  upstream preview_server {
-    server ${DEST_CORE_IP_ADDRESS}:443;
-  }
-
-  upstream mfa_server {
-    server ${DEST_CORE_IP_ADDRESS}:443;
-  }
-  ```
-
-- In the same file, change the proxy protocol from `http` to `https`:
-
-  - Change: `http://core_server` to `https://core_server`
-  - Change: `http://websocket_server` to `http://websocket_server`
-  - Change: `http://hfs_server` to `https://hfs_server`
-  - Change: `http://preview_server` to `https://preview_server`
-  - Change: `http://mfa_server` to `https://mfa_server`
+Do **not** start the core on **dest** while **source** is still serving traffic with the same database — both cores writing to the same base storage will corrupt data.
 
 
-## Reload NGINX on *source*
+## Cut over
 
-Run `${PRYV_CONF_ROOT}/run-pryv`
+### Option A — update DNS and stop source
 
-As we are currently using docker-compose to specify the mounted volumes (containing the NGINX config), we just boot all services, even if they won't be used as NGINX is proxying to the *dest* machine.
+Simplest path when you can schedule a short outage:
+
+1. Keep **source** stopped after the dump.
+2. Start the core on **dest**.
+3. Update the DNS A record for the public domain to the new IP.
+4. Wait for propagation. Clients that still hit the old IP while DNS is stale will fail; this is the outage window.
+
+### Option B — proxy from source to dest during DNS propagation
+
+Zero-downtime variant: keep **source**'s reverse proxy alive and point it at **dest** until DNS propagates, then retire **source**.
+
+In v2 the core exposes just two HTTP upstreams — API on port 3000 and HFS on port 4000 (see [INSTALL — Running behind nginx](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#running--behind-nginx)). Replace the `api_backend` / `hfs_backend` upstreams in **source**'s NGINX:
+
+```nginx
+# on source — was pointing at localhost
+upstream api_backend { server 127.0.0.1:3000; }
+upstream hfs_backend { server 127.0.0.1:4000; }
+
+# becomes (TLS-terminated by dest, plain https upstream)
+upstream api_backend { server ${DEST_CORE_IP}:443; }
+upstream hfs_backend { server ${DEST_CORE_IP}:443; }
+```
+
+and change every `proxy_pass http://api_backend` / `http://hfs_backend` to `https://api_backend` / `https://hfs_backend`.
+
+Reload NGINX on **source**. All traffic now flows `client → source NGINX → dest`. When DNS has propagated (monitor **source**'s access log until it goes idle), stop NGINX on **source** and decommission the host.
 
 
 ## Verify
 
-Log onto an account and verify that the data has been moved. You can monitor the services logs (`doker logs ${CONTAINER_NAME}`, which can be found using `docker ps`) to ensure that data is accessed on the new machine.
+Once traffic is landing on **dest**:
+
+- Log in as the verification user from the pre-migration step and spot-check recent events.
+- Watch the core logs to confirm that API calls arrive on **dest** and not on **source**.
+- Hit the basic endpoints described in the [healthchecks guide](/customer-resources/healthchecks/).
 
 
-## Update core server IP address on register
+## Multi-core deployments — update the PlatformDB entry
 
-SSH to the reg-master machine and edit **manually** (don't use the admin panel) the following parameters:
+In **v2 multi-core** mode each core self-registers into the rqlite PlatformDB on startup with its `core.id`, `core.ip`, `core.available` and (for DNSless multi-core) `core.url`. Restarting the moved core on **dest** automatically re-advertises the new IP/URL — **there is no register machine or admin panel to edit**.
 
-In `${PRYV_CONF_ROOT}/config-leader/conf/platform.yml`:
+Two things to check after the move:
 
-```yaml
-vars:
-  MACHINES_AND_PLATFORM_SETTINGS:
-    name: "Machines and platform settings"
-    settings:
-      # ...
-      HOSTINGS_AND_CORES:
-        description: "Defines the distribution of cores among the hostings providers"
-        value:
-          hosting1: # find the hosting that you have migrated
-            co1: 
-              ip: CHANGE_ME # change its IP address to the new one
-```
+1. **`core.id` is unchanged** — the ID identifies this core's user partition in the platform. Keep it the same on **dest** so existing user→core mappings stay valid.
+2. **Other cores can reach the new host** — the Raft port (default 4002) must be open between all cores. From another core:
 
-Then reboot config-follower and the pryv-services on all register machines:
+   ```bash
+   curl -s https://core-x.mc.example.com/system/admin/cores -H 'Authorization: <admin-key>'
+   ```
 
-```bash
-${PRYV_CONF_ROOT}/restart-config-follower
-${PRYV_CONF_ROOT}/restart-pryv
-```
+   The moved core should appear in the list with its new IP.
+
+If you run **v1** and still need to update the old register machine's `HOSTINGS_AND_CORES` entry, see the [v1 register migration reference](/customer-resources/register-migration/) for the legacy procedure.
