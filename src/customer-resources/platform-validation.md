@@ -22,6 +22,7 @@ This guide describes how to validate that a Pryv.io platform is up and running a
    4. [4. DNS (multi-core only)](#4-dns-multi-core-only)
    5. [5. Base storage (PostgreSQL / MongoDB) reachable](#5-base-storage-postgresql--mongodb-reachable)
    6. [6. (Optional) HFS port reachable](#6-optional-hfs-port-reachable)
+   7. [7. mTLS handshake on Raft (multi-core only)](#7-mtls-handshake-on-raft-multi-core-only)
 4. [Troubleshoot](#troubleshoot)
    1. [Core does not start](#core-does-not-start)
    2. [502 / 504 from the reverse proxy](#502--504-from-the-reverse-proxy)
@@ -115,6 +116,25 @@ curl -i -X OPTIONS ${PUBLIC_URL}/someuser/events/abc/series
 ```
 
 **Expected:** a 2xx or a documented 4xx from the HFS stack. A 502/504 means the reverse proxy can't reach port 4000.
+
+### 7. mTLS handshake on Raft (multi-core only)
+
+Skip in single-core mode and in multi-core deployments that opted out of mTLS (`storages.engines.rqlite.tls: null`).
+
+For deployments configured by the bootstrap CLI, the cluster CA cert is at `/etc/pryv/tls/ca.crt` on every core, and rqlite's HTTP API speaks the same cert chain. Verify a peer's cert chains to the bundled CA:
+
+```bash
+# On core-a, against core-b's rqlite HTTP port (default 4001).
+# Replace <core-b-host> with what core-b's node cert SAN advertises (its
+# hostname or IP).
+curl --cacert /etc/pryv/tls/ca.crt \
+     --resolve <core-b-host>:4001:<core-b-ip> \
+     https://<core-b-host>:4001/status
+```
+
+**Expected:** an HTTP 200 with rqlited's status JSON. A TLS handshake failure (`certificate verify failed`, `unknown CA`) means either the CA cert on this host is wrong, the peer is not actually using the cluster CA, or `verifyClient: true` is rejecting your client cert (in which case add `--cert /etc/pryv/tls/node.crt --key /etc/pryv/tls/node.key`).
+
+If `dig`/`curl` lookups don't resolve `<core-b-host>` from this machine, use `--resolve` (as shown) to short-circuit DNS.
 
 
 ## Troubleshoot

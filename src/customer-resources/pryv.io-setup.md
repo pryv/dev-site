@@ -58,13 +58,11 @@ dns1.mc.example.com  3600  IN  A   <core-a-ip>
 dns2.mc.example.com  3600  IN  A   <core-b-ip>
 mc                   3600  IN  NS  dns1.mc.example.com.
 mc                   3600  IN  NS  dns2.mc.example.com.
-
-# A record used by rqlite peer discovery — must list every core:
-lsc.mc.example.com   60    IN  A   <core-a-ip>
-lsc.mc.example.com   60    IN  A   <core-b-ip>
 ```
 
-If you have a single machine in this mode, use the same IP for both `dns1` and `dns2` entries and the single `lsc` A record.
+You do **not** publish `lsc.mc.example.com` or per-core (`{core-id}.mc.example.com`) records by hand — the `bin/bootstrap.js` CLI on the existing core writes them into PlatformDB and the embedded DNS server serves them. See [single-node to cluster](/customer-resources/single-node-to-cluster/) for the procedure.
+
+If you have a single machine in this mode, use the same IP for both `dns1` and `dns2` entries.
 
 ### Multi-core with externally-managed DNS
 
@@ -79,7 +77,7 @@ See [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md). The 
 2. Write a minimal `override-config.yml` — the template is in [INSTALL — Minimal production config](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#minimal-production-config).
 3. Start `bin/master.js` (or the Docker image) with `NODE_ENV=production` and your override file.
 
-For multi-core, the upgrade path from an existing single-core install is documented in [single-node to cluster](/customer-resources/single-node-to-cluster/) and upstream in [SINGLE-TO-MULTIPLE.md](https://github.com/pryv/open-pryv.io/blob/master/SINGLE-TO-MULTIPLE.md).
+For multi-core, the upgrade path from an existing single-core install is documented in [single-node to cluster](/customer-resources/single-node-to-cluster/) and upstream in [SINGLE-TO-MULTIPLE.md](https://github.com/pryv/open-pryv.io/blob/master/SINGLE-TO-MULTIPLE.md). Adding each new core is one CLI invocation on the existing core (`bin/bootstrap.js new-core ...`) followed by booting the new core in `--bootstrap` mode — the CLI handles cluster CA, mTLS material, platform-secret transfer, DNS publishing and pre-registration in PlatformDB.
 
 **Upgrading from v1?** If you already run Pryv.io 1.x and want to move its user data into a fresh v2 install, use the [`dev-migrate-v1-v2`](https://github.com/pryv/dev-migrate-v1-v2) toolkit — it exports from a v1 MongoDB and writes a v2-compatible backup that `bin/backup.js --restore` can import. See the toolkit's README for the current source/target matrix (MongoDB v1 source → MongoDB v2 target is supported; PostgreSQL v2 target is not yet).
 

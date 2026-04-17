@@ -36,6 +36,8 @@ Prerequisite: you have [obtained a domain name](/customer-resources/pryv.io-setu
 
 A wildcard certificate requires the **DNS-01** ACME challenge.
 
+> **Public-facing TLS vs cluster CA.** This page is about the **public-facing** SSL cert that clients (apps, browsers, SDKs) see when they hit `https://{username}.{domain}/`. In multi-core deployments, the `bin/bootstrap.js` CLI also creates a **separate, internal cluster CA** (`/etc/pryv/ca/`) used only for mutually-authenticated TLS on the rqlite Raft channel between cores. The two are independent: you still need a publicly-trusted cert for the API. The cluster CA is self-signed by design — it never sees the public internet — and is managed entirely by the bootstrap CLI. See [single-node to cluster — Cluster security at a glance](/customer-resources/single-node-to-cluster/#cluster-security-at-a-glance).
+
 
 ## Where the certificate plugs in
 
