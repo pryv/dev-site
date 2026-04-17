@@ -16,14 +16,11 @@ Prerequisite: you have [obtained a domain name](/customer-resources/pryv.io-setu
 ## Table of contents <!-- omit in toc -->
 
 1. [Which certificate do I need?](#which-certificate-do-i-need)
-2. [Where the certificate plugs in](#where-the-certificate-plugs-in)
-   1. [Built-in HTTPS (core terminates TLS)](#built-in-https-core-terminates-tls)
-   2. [Behind your own reverse proxy](#behind-your-own-reverse-proxy)
-3. [Issuing a certificate with Let's Encrypt / certbot](#issuing-a-certificate-with-lets-encrypt--certbot)
-   1. [HTTP-01 challenge (single-core, public host)](#http-01-challenge-single-core-public-host)
-   2. [DNS-01 challenge (required for wildcards)](#dns-01-challenge-required-for-wildcards)
-4. [Renewal](#renewal)
-5. [v1 procedure (legacy)](#v1-procedure-legacy)
+2. [Choose an issuance strategy](#choose-an-issuance-strategy)
+3. [Strategy A — built-in auto-renewal (recommended)](#strategy-a--built-in-auto-renewal-recommended)
+4. [Strategy B — reverse proxy handles ACME](#strategy-b--reverse-proxy-handles-acme)
+5. [Strategy C — manual certbot + file paths](#strategy-c--manual-certbot--file-paths)
+6. [v1 procedure (legacy)](#v1-procedure-legacy)
 
 
 ## Which certificate do I need?
@@ -39,32 +36,90 @@ A wildcard certificate requires the **DNS-01** ACME challenge.
 > **Public-facing TLS vs cluster CA.** This page is about the **public-facing** SSL cert that clients (apps, browsers, SDKs) see when they hit `https://{username}.{domain}/`. In multi-core deployments, the `bin/bootstrap.js` CLI also creates a **separate, internal cluster CA** (`/etc/pryv/ca/`) used only for mutually-authenticated TLS on the rqlite Raft channel between cores. The two are independent: you still need a publicly-trusted cert for the API. The cluster CA is self-signed by design — it never sees the public internet — and is managed entirely by the bootstrap CLI. See [single-node to cluster — Cluster security at a glance](/customer-resources/single-node-to-cluster/#cluster-security-at-a-glance).
 
 
-## Where the certificate plugs in
+## Choose an issuance strategy
 
-### Built-in HTTPS (core terminates TLS)
+Three practical paths, in order of operational effort (lowest first):
 
-Set the paths in your override YAML — the core will load them directly:
+| Strategy | When | Operator work |
+|---|---|---|
+| **A — built-in auto-renewal** | You want the simplest setup; the core can reach Let's Encrypt itself; there's no reverse proxy already handling ACME. | One-time config block, then nothing. |
+| **B — reverse proxy handles ACME** | You already run Caddy / Traefik / nginx-proxy-manager / similar with built-in ACME. | Unchanged — keep doing that. |
+| **C — manual certbot + file paths** | You need offline-style installs, custom CAs, or another bespoke issuance path. | Issue + copy on each renewal, or wire a certbot cron. |
+
+Strategies A and B are mutually exclusive (you'd run two ACME clients racing for the same hostname). Strategy C works alongside either — it's what the core falls back to when `letsEncrypt.enabled: false`.
+
+
+## Strategy A — built-in auto-renewal (recommended)
+
+Opt-in via the `letsEncrypt` config block. The core runs the ACME flow itself, renews well before expiry, replicates the cert to every node in a multi-core deployment via PlatformDB, and hot-swaps the running HTTPS server's TLS context (`https.Server.setSecureContext`) so there's no restart.
+
+Minimum config on a single-core host:
 
 ```yaml
 http:
   ip: 0.0.0.0
   port: 443
   ssl:
-    keyFile: /etc/ssl/pryv/privkey.pem
-    certFile: /etc/ssl/pryv/fullchain.pem
-    caFile:  /etc/ssl/pryv/chain.pem        # optional, add the issuer chain if your CA is not in the OS trust store
+    keyFile: var-pryv/tls/your-domain.com/privkey.pem
+    certFile: var-pryv/tls/your-domain.com/fullchain.pem
+dnsLess:
+  isActive: true
+  publicUrl: https://your-domain.com
+letsEncrypt:
+  enabled: true
+  email: ops@your-domain.com
+  atRestKey: '<base64 of 32 random bytes>'
+  certRenewer: true
 ```
 
-Restart `bin/master.js` to pick up a renewed certificate (future versions may hot-reload — not yet guaranteed).
+Generate the `atRestKey` once:
 
-### Behind your own reverse proxy
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
 
-Terminate TLS in your proxy and forward plain HTTP to the core on port 3000 (API) and port 4000 (HFS). A sample NGINX block is in [INSTALL — Running behind nginx](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#running--behind-nginx). The proxy is also the right place to host your auto-renewal (certbot hook, Caddy's built-in ACME, Traefik, etc.).
+Multi-core: every core must have the **same** `atRestKey` in its override YAML; `certRenewer: true` is set on exactly **one** core — typically the cluster CA holder (the node that ran `bin/bootstrap.js new-core` for the others). The renewer does the ACME work; every other core polls PlatformDB and materialises the rotated cert to disk on its next tick. See [single-node to cluster](/customer-resources/single-node-to-cluster/) for the multi-core walkthrough.
+
+Hostnames + challenge type are **derived from topology**:
+
+| Topology config       | Hostnames covered     | ACME challenge |
+| --------------------- | --------------------- | -------------- |
+| `dnsLess.publicUrl`   | the host in that URL  | HTTP-01        |
+| `core.url`            | the host in that URL  | HTTP-01        |
+| `dns.domain`          | `*.{domain}` + apex   | DNS-01         |
+
+There is intentionally no `letsEncrypt.hostnames` field — the two could drift. If none of the three are set, the core refuses to start the letsEncrypt block with a loud error; fix your topology config.
+
+**DNS-01 with the embedded DNS server** (multi-core wildcard case) has been validated end-to-end against Let's Encrypt staging. The core publishes the `_acme-challenge` TXT record through rqlite → every core's embedded DNS server → LE's 5+ geo-distributed validators.
+
+**Reverse-proxy reload hook** — optional. If you terminate TLS in nginx / Caddy / HAProxy instead of the core, point the core at those same cert paths and give it a script to nudge the proxy on rotation:
+
+```yaml
+letsEncrypt:
+  enabled: true
+  # ...
+  onRotateScript: /etc/pryv/hooks/reload-nginx.sh
+```
+
+```bash
+# /etc/pryv/hooks/reload-nginx.sh
+#!/usr/bin/env bash
+nginx -t && nginx -s reload
+```
+
+Env vars passed: `PRYV_CERT_HOSTNAME`, `PRYV_CERT_PATH`, `PRYV_CERT_KEYPATH`. Non-zero exit is logged and moved past — no retry, no rollback.
+
+**Admin visibility** — `GET /system/admin/certs` (admin-key protected) returns hostname / issuedAt / expiresAt / daysUntilExpiry for every cert the cluster is managing.
 
 
-## Issuing a certificate with Let's Encrypt / certbot
+## Strategy B — reverse proxy handles ACME
 
-Install certbot from [the project instructions](https://certbot.eff.org/instructions).
+Terminate TLS in your proxy (Caddy has native ACME; Traefik / nginx-proxy-manager offer plugins) and forward plain HTTP to the core on port 3000 (API) and port 4000 (HFS). Sample nginx block: [INSTALL — Running behind nginx](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#running--behind-nginx). Leave `letsEncrypt.enabled: false` on the core. The proxy handles everything; the core doesn't even see a certificate.
+
+
+## Strategy C — manual certbot + file paths
+
+Only needed for offline-style installs, custom CAs, or other bespoke issuance paths. Install certbot from [the project instructions](https://certbot.eff.org/instructions).
 
 ### HTTP-01 challenge (single-core, public host)
 
@@ -94,8 +149,7 @@ When the right value comes back, continue the certbot prompt.
 
 For a non-interactive pipeline, certbot has DNS plugins for common providers (Route 53, Cloudflare, OVH, …) — see [certbot plugins](https://eff-certbot.readthedocs.io/en/stable/using.html#dns-plugins). An API-driven plugin is the only practical way to run fully-automated wildcard renewal.
 
-
-## Renewal
+### Renewal in Strategy C
 
 - **certbot** auto-registers a systemd timer/cron job (`certbot renew`) that runs twice a day. Reload the core (or your reverse proxy) after each successful renewal:
 
@@ -105,7 +159,7 @@ For a non-interactive pipeline, certbot has DNS plugins for common providers (Ro
   systemctl reload nginx          # or: systemctl restart pryv-core
   ```
 
-- **Reverse-proxy-managed certificates** (Caddy, Traefik, nginx-proxy-manager, …) take care of renewal transparently — nothing to do on the Pryv.io side.
+- With Strategy A you get the same outcome (auto-renew + reload) without running certbot at all.
 
 
 ## v1 procedure (legacy)
