@@ -211,6 +211,15 @@ The master process:
 
 The ack response includes a snapshot of the cluster's cores so you can sanity-check what you've joined before the master proceeds with normal startup.
 
+### Common pitfalls when bringing up a fresh cluster on a freshly-delegated domain
+
+Most single-to-multi-core runs on an **existing** zone with a **valid wildcard cert** are uneventful. The gotchas below tend to bite the operator once, when the cluster is being brought up on a **new** domain before DNS delegation has reached the registrar and before Let's Encrypt has issued the new wildcard:
+
+1. **Bootstrap ack fails TLS verification.** The ack POST uses HTTPS with the cluster CA pinned. If the existing core is serving a public CA (Let's Encrypt) cert for its `dns.domain` instead of a cluster-CA-signed cert, the new core will refuse to connect. The clean way around this is to run the existing core on **plain HTTP** during the bootstrap window: set `core.url: http://<existing-core-ip>` and `http.port: 80`, remove `http.ssl`, restart, issue the bundle (its `ackUrl` is now `http://…`), run `--bootstrap` on the new core, then revert to 443/HTTPS and restart.
+2. **`rqlited` can't start because `lsc.{domain}` is NXDOMAIN.** Master spawns `rqlited` with `-disco-mode dns -disco-config {"name":"lsc.<dns.domain>",...}`. On a zone that is not yet delegated at the registrar, that lookup fails and rqlite never bootstraps — the master times out after 30 s with "rqlited did not become ready". Add an `/etc/hosts` entry on each core pointing `lsc.<domain>` at the first core's IP. It can be removed as soon as the NS change has propagated and `dig lsc.<domain>` resolves publicly.
+3. **`bootstrap-tokens.json` permission trap.** `bin/bootstrap.js new-core` must run as the same user that runs `bin/master.js`, **not** as root. The default token store is `/var/lib/pryv/bootstrap-tokens.json` and the default CA dir is `/etc/pryv/ca`. If you ran bootstrap with `sudo` on a first-time install, chown those paths to the master's user (`chown -R pryv: /var/lib/pryv /etc/pryv`) — otherwise the ack endpoint returns HTTP 500 with `EACCES` when it tries to consume the token. (Alternatively, override `cluster.ca.path` and `cluster.tokens.path` to locations under the master's home directory.)
+4. **`pkill -f "node bin/master"` self-match over SSH.** When you run a remote kill command inside `ssh host bash -c '…'`, the remote `bash -c` cmdline contains the pattern text and pkill kills the shell itself mid-script. Use `killall <binary>` (matches on binary name only) or put the kill in a script file on the remote.
+
 
 ## Step 6 — Verify cross-core operation
 
