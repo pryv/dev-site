@@ -107,6 +107,10 @@ See the toolkit's README for the current source/target support matrix.
 
   This document describes how to enable and configure multi-factor authentication on top of the Pryv.io login.
 
+- Observability (APM): [HTML](/customer-resources/observability/)
+
+  This document describes the optional New Relic integration — how to enable, rotate keys, tune log levels and disable cluster-wide or per-core.
+
 
 ## Contact and support
 
