@@ -6,173 +6,243 @@ customer: true
 withTOC: true
 ---
 
-This guide describes how to add DNS records in your Pryv.io associated domain DNS zone.  
+This guide describes how to declare DNS records that Pryv.io's embedded DNS server will answer for your associated domain.
+
+> **Since v2 (2026)** DNS is served by the core binary's **embedded DNS server** (module `components/dns-server/`), not by a dedicated container. There are **two places** records can come from:
+>
+> - **Static entries** — declared in YAML (`dns.staticEntries` + `dns.records.root` in `override-config.yml`) and reloaded on restart. Authoritative: they shadow anything runtime.
+> - **Runtime entries** — stored in PlatformDB (rqlite, cluster-wide) and picked up by the DNS server on its periodic refresh. Written by the ACME orchestrator (transient `_acme-challenge.*` TXT records) and by operators via the `bin/dns-records.js` CLI or the `POST /reg/records` / `DELETE /reg/records/:subdomain` admin endpoints.
+>
+> There is no longer a `service-config-leader` / admin-panel GUI — the unified config file is the source of truth for static records, and the CLI / admin API are the source of truth for runtime records.
 
 
 ## Table of contents <!-- omit in toc -->
 
-1. [Usage](#usage)
-   1. [Settings location](#settings-location)
-   2. [Key format](#key-format)
-2. [A Record](#a-record)
-   1. [Root](#root)
-3. [CNAME Record](#cname-record)
-4. [TXT Record](#txt-record)
-   1. [Root TXT](#root-txt)
-5. [SPF Record](#spf-record)
-6. [MX Record](#mx-record)
-7. [Previous version](#previous-version)
+1. [When do I need this?](#when-do-i-need-this)
+2. [Topology prerequisites](#topology-prerequisites)
+3. [Static records (YAML)](#static-records-yaml)
+   1. [Static subdomains — `dns.staticEntries`](#static-subdomains--dnsstaticentries)
+   2. [Root records — `dns.records.root`](#root-records--dnsrecordsroot)
+   3. [Reserved subdomains](#reserved-subdomains)
+4. [Runtime records (PlatformDB)](#runtime-records-platformdb)
+   1. [`bin/dns-records.js` CLI](#bindns-recordsjs-cli)
+   2. [Admin HTTP endpoints](#admin-http-endpoints)
+5. [Record type reference](#record-type-reference)
+   1. [A / AAAA](#a--aaaa)
+   2. [CNAME](#cname)
+   3. [TXT](#txt)
+   4. [SPF](#spf)
+   5. [MX](#mx)
+   6. [NS / CAA / SOA](#ns--caa--soa)
+6. [v1 procedure (legacy)](#v1-procedure-legacy)
 
 
-## Usage
+## When do I need this?
 
-This document is useful for you if you wish to do one of the following with the Pryv.io associated domain:  
+This page is for operators whose Pryv.io deployment runs in **DNS-active** mode — i.e. the embedded DNS server answers for the domain (`dns.active: true`). It is **not** needed if your deployment runs in **DNSless** mode (`dnsLess.isActive: true`) or if you delegate DNS to a third party (Route 53, Cloudflare, Gandi, Infomaniak…).
 
-- Define hostnames or aliases in the domain such as my_service.${DOMAIN}, as it is done for the pryv.me Register: reg.pryv.me  
-- Send emails from some-name.${DOMAIN}, such as noreply@pryv.me  
-- Perform a DNS validation for a SSL certificate  
+Typical reasons to add records:
 
-Technically, this document describes how to add DNS records of type:  
-
-- A  
-- CNAME  
-- TXT  
-- SPF  
-
-### Settings location
-
-These settings can either be changed through the admin panel or through the `config-leader/conf/platform.yml` file under `DNS_SETTINGS`:
-
-```yaml
-DNS_SETTINGS:
-  name: "DNS settings"
-  settings:
-    ...
-```
-
-As YAML is not error-resilient, make sure that you do not leave formatting errors during editing, otherwise the configuration will not be applied.  
-Using the admin panel, you will be provided with an error when applying the update. When editing the `platform.yml` file directly, you will find an error in the *config-leader* logs when followers will fetch their confiuration.
-
-### Key format
-
-All DNS lookups are made in **lower case**, so make sure that the keys that you define for A, CNAME and TXT records are set in lower case.  
-This requires to manually lower casing keys such as the ones provided for DNS validation.  
+- Publish operator-owned subdomains (`sw.${DOMAIN}`, `mail.${DOMAIN}`, `my-service.${DOMAIN}`).
+- Publish root-level records (`A`, `MX`, `TXT`, `CAA`, `NS`, `SOA`).
+- Satisfy DNS-based validation challenges (ACME DNS-01 — in v2 the built-in ACME orchestrator handles this automatically; you only write TXT records manually if you run ACME externally).
 
 
-## A Record
+## Topology prerequisites
 
-To associate the `123.123.123.123` IP address to the hostname `my-service.${DOMAIN}`, enter:
+Before any record is served, the core must be configured to run the embedded DNS server:
 
 ```yaml
-DNS_SETTINGS:
-  ...
-  settings:
-    DNS_CUSTOM_ENTRIES:
-      ...
-      value:
-        my-service:
-          ip: "123.123.123.123"
+dns:
+  domain: example.com     # your primary domain — do not include a leading dot
+  active: true            # start the embedded DNS server
+  port: 53                # in prod, bind DNS to 53 (docker typically maps host 53/udp → container 53/udp)
+  ip: '0.0.0.0'           # bind address
+  defaultTTL: 300         # seconds
 ```
 
-### Root
+In multi-core, the DNS server on each core reads from the same PlatformDB and returns consistent answers cluster-wide.
 
-You can also define a TYPE A record for your root domain `${DOMAIN}`, such as [pryv.me](http://pryv.me).
+
+## Static records (YAML)
+
+### Static subdomains — `dns.staticEntries`
+
+`dns.staticEntries` is a map from subdomain → record type(s). Each entry replaces the subdomain-level answer served by the DNS server — runtime records in PlatformDB for the same subdomain are shadowed (a drift warning is logged on startup if both exist).
 
 ```yaml
-DNS_SETTINGS:
-  ...
-  settings:
-    DNS_ROOT_DOMAIN_A_RECORD: 
-      description: "DNS A record for ${DOMAIN} (The IP adress serving an eventual web page accessible by: http://{DOMAIN})"
-      value: "123.123.123.123"
+dns:
+  staticEntries:
+    sw:
+      a: ['192.0.2.10', '192.0.2.11']           # two cores behind a round-robin
+    mail:
+      a: ['192.0.2.10']
+    www:
+      cname: 'my-site.example.com'
+    txt-demo:
+      txt: ['hello from pryv']
 ```
 
+### Root records — `dns.records.root`
 
-## CNAME Record
-
-To associate a CNAME alias pointing to `my-site.my-domain.com` from `www.${DOMAIN}`, enter:  
+Root-level records (apex / `@`) for the zone live under `dns.records.root`:
 
 ```yaml
-DNS_SETTINGS:
-  ...
-  settings:
-    DNS_CUSTOM_ENTRIES:
-      ...
-      value:
-        my-service:
-          alias:
-            name: "my-site.my-domain.com"
+dns:
+  records:
+    root:
+      a: ['192.0.2.10', '192.0.2.11']
+      aaaa: []
+      ns: ['ns1.example.com', 'ns2.example.com']
+      mx:
+        - { name: 'mail.example.com', priority: 10, ttl: 3600 }
+        - { name: 'mail-fallback.example.com', priority: 50, ttl: 3600 }
+      txt: ['v=spf1 include:_mailcust.example.com ?all']
+      caa: ['0 issue "letsencrypt.org"']
+      soa: null                                   # null = auto-generated
 ```
 
+### Reserved subdomains
 
-## TXT Record
+`reg`, `access`, and `mfa` are **reserved** by the distribution. Every core answers those routes itself, so the embedded DNS resolves them to all available cores' IPs automatically. Do not list them in `staticEntries` — any entry is ignored in favour of the auto-resolution.
 
-To associate the strings `"hi there"` and `"my-dns-challenge"` to the TXT records of `challenge.${DOMAIN}`, enter:
+
+## Runtime records (PlatformDB)
+
+Runtime records live in the cluster-wide PlatformDB (rqlite) and are served by every core's DNS server. They are the right place for:
+
+- **Transient validation records** — the built-in ACME orchestrator writes `_acme-challenge.<hostname>` TXT records here automatically during DNS-01 challenges.
+- **Operator-owned dynamic entries** that you want to add or remove without restarting the core.
+
+### `bin/dns-records.js` CLI
+
+Run from the core's repository root. The CLI talks to PlatformDB directly and works whether `master` is running or not — the DNS server picks up changes on its next periodic refresh (30 s by default).
+
+```bash
+node bin/dns-records.js list                      # list all runtime records
+node bin/dns-records.js load records.yaml         # upsert records from YAML
+node bin/dns-records.js load records.yaml --dry-run
+node bin/dns-records.js load records.yaml --replace  # wipe existing then load
+node bin/dns-records.js delete <subdomain>        # remove a subdomain
+node bin/dns-records.js export [file.yaml]        # dump current records as YAML
+```
+
+YAML shape for `load`:
 
 ```yaml
-DNS_SETTINGS:
-  ...
-  settings:
-    DNS_CUSTOM_ENTRIES:
-      ...
-      value:
-        challenge:
-          description:
-            - "hi there"
-            - "my-dns-challenge"
+records:
+  - subdomain: _acme-challenge
+    records:
+      txt: ['validation-token-from-acme-client']
+  - subdomain: www
+    records:
+      a: ['192.0.2.10']
 ```
 
-### Root TXT
+### Admin HTTP endpoints
 
-In order to set a TXT record at the root of your domain hostname, such as `"root-dns-challenge"`, enter under `DNS_ROOT_TXT_ARRAY`:
+Token-authenticated routes on `reg/records` (auth via `auth.adminAccessKey`):
+
+- `POST /reg/records` — create or replace a subdomain's records (payload mirrors one entry of the YAML above).
+- `DELETE /reg/records/:subdomain` — remove a subdomain.
+
+These are the surfaces used by integrations that manage DNS programmatically (e.g. an external ACME client pushing TXT challenges).
+
+
+## Record type reference
+
+### A / AAAA
+
+IPv4 / IPv6 host records. Lists.
 
 ```yaml
-DNS_SETTINGS:
-  ...
-  settings:
-    DNS_ROOT_TXT_ARRAY:
-      description: "DNS TXT records for @ value for ${DOMAIN}. Ex.: [\"_globalsign-domain-verification=n3PT\",\"v=spf1 include:_mailcust.gandi.net ?all\"]"
-      value:
-        - "hi there"
-        - "my-dns-challenge"
+# static
+dns:
+  staticEntries:
+    my-service:
+      a: ['192.0.2.10']
+      aaaa: ['2001:db8::10']
 ```
 
+### CNAME
 
-## SPF Record
-
-SPF records are simply TXT records located at the root of the domain. They are defined as following:
+Alias. Single string.
 
 ```yaml
-DNS_SETTINGS:
-  ...
-  settings:
-    DNS_ROOT_TXT_ARRAY:
-      ...
-      value:
-        - "${SPF_RECORD}"
+dns:
+  staticEntries:
+    www:
+      cname: 'my-site.example.com'
 ```
 
+### TXT
 
-## MX Record
-
-You can enter an array of MX Records, providing the `name`, `priority` and `ttl` (Time To Live) values for each of these as following:
+Array of strings. One entry = one TXT RR; multiple entries = multiple TXT RRs for the same name.
 
 ```yaml
-DNS_SETTINGS:
-  ...
-  settings:
-    DNS_MX_RECORDS:
-      ...
-      value:
-        - name: my.mail.com
-          priority: 10
-          ttl: 10800
-        - name: my.other.mail.org
-          priority: 50
-          ttl: 10800
+dns:
+  staticEntries:
+    challenge:
+      txt: ['hi there', 'my-dns-challenge']
 ```
 
+### SPF
 
-## Previous version
+SPF records are just TXT records at the root — place them under `dns.records.root.txt`:
 
-The previous guide for DNS configuration is still available [here](/assets/docs/20190501-dns-config-v3.pdf).
+```yaml
+dns:
+  records:
+    root:
+      txt: ['v=spf1 include:_mailcust.example.com ?all']
+```
+
+### MX
+
+Array of objects with `name`, `priority`, optional `ttl`:
+
+```yaml
+dns:
+  records:
+    root:
+      mx:
+        - { name: 'mail.example.com',          priority: 10, ttl: 10800 }
+        - { name: 'mail-fallback.example.com', priority: 50, ttl: 10800 }
+```
+
+### NS / CAA / SOA
+
+`dns.records.root.{ns, caa, soa}` — `ns` and `caa` are arrays of strings, `soa` is either `null` (auto-generated) or a string in standard SOA record format.
+
+
+## v1 procedure (legacy)
+
+Operators still running Pryv.io v1 used `service-config-leader` to edit `config-leader/conf/platform.yml` under `DNS_SETTINGS`. That mechanism **does not exist in v2** — the table below maps each v1 variable to its v2 equivalent for convenience when migrating:
+
+| v1 `platform.yml` variable | v2 equivalent |
+|---|---|
+| `DNS_SETTINGS.settings.DNS_CUSTOM_ENTRIES.value.<sub>.ip` | `dns.staticEntries.<sub>.a[]` |
+| `DNS_SETTINGS.settings.DNS_CUSTOM_ENTRIES.value.<sub>.alias.name` | `dns.staticEntries.<sub>.cname` |
+| `DNS_SETTINGS.settings.DNS_CUSTOM_ENTRIES.value.<sub>.description` | `dns.staticEntries.<sub>.txt[]` |
+| `DNS_SETTINGS.settings.DNS_ROOT_DOMAIN_A_RECORD.value` | `dns.records.root.a[]` |
+| `DNS_SETTINGS.settings.DNS_ROOT_TXT_ARRAY.value` | `dns.records.root.txt[]` |
+| `DNS_SETTINGS.settings.DNS_MX_RECORDS.value[]` | `dns.records.root.mx[]` |
+
+### Older v1 (`dns.json`)
+
+Pryv.io v1 deployments older than the `service-config-leader` switch stored DNS records as JSON in `pryv/dns/conf/dns.json` (single-node) or `reg-master/dns/conf/dns.json` and `reg-slave/dns/conf/dns.json` (cluster). All keys lived under a top-level `dns` property. v2 equivalent:
+
+| v1 `dns.json` key | v2 equivalent |
+|---|---|
+| `dns.staticDataInDomain.<sub>.ip` | `dns.staticEntries.<sub>.a[]` |
+| `dns.staticDataInDomain.<sub>.alias.name` | `dns.staticEntries.<sub>.cname` (string) |
+| `dns.staticDataInDomain.<sub>.description` (string **or** array) | `dns.staticEntries.<sub>.txt[]` |
+| `dns.domain_A` | `dns.records.root.a[]` |
+| `dns.rootTXT.description[]` | `dns.records.root.txt[]` |
+| `dns.mail[]` (`{name, ip, ttl, priority}`) | `dns.records.root.mx[]` (`{name, priority, ttl}`) — `ip` is no longer carried; resolve the MX target's A/AAAA via its own zone entry |
+
+Notes when porting:
+
+- **Lower-case keys.** The v1 server lower-cased subdomains; v2's YAML keys must already be lower-case (no implicit normalisation).
+- **JSON → YAML.** v1's JSON was edit-fragile (a stray comma stopped the DNS server from booting). The v2 YAML loader is more permissive but still validated on startup; bad shape fails fast with a logged error from `components/dns-server/`.
+- **SPF.** v1 documented SPF as a `rootTXT` entry, which is correct in v2 too — place the `v=spf1 …` string in `dns.records.root.txt[]`.

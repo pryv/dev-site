@@ -15,7 +15,7 @@ v2 supports two delivery paths. Pick one at `services.email.method` in `override
 | `in-process` (recommended) | The api-server worker that handled registration / reset-password | PlatformDB (rqlite, cluster-wide) | Single- and multi-core v2 deployments. No extra process, one less localhost hop, templates editable via CLI + admin API. |
 | `microservice` (legacy) | A separate `service-mail` process on each core bound to `127.0.0.1:9000` | Disk files under `templates/` on the `service-mail` box | Existing deployments still running the standalone `pryv/service-mail` process. |
 
-Everything below assumes v2 (`open-pryv.io`). If you are still on v1 `service-core` / `service-register`, consult the [v1 archive](/assets/docs/20190508-pryv.io-emails-v4.pdf).
+Everything below assumes v2 (`open-pryv.io`). v1 deployments configured the same two delivery paths under `services.email.method: mandrill | microservice` in `core/core/conf/core.json`, with templates in a separate `pryv/mail` Docker container or via Mandrill's hosted templates — that surface is no longer used in v2.
 
 
 ## Table of contents <!-- omit in toc -->

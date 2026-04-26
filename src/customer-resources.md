@@ -13,9 +13,6 @@ Since v2, Open Pryv.io is distributed as a single repository and Docker image �
 Related components:
 - [open-pryv.io](https://github.com/pryv/open-pryv.io): Main API server (core + register + mail + MFA + HFS + previews)
 - [dev-migrate-v1-v2](https://github.com/pryv/dev-migrate-v1-v2): Toolkit to migrate user data from Open Pryv.io 1.x to v2
-- [service-config-leader](https://github.com/pryv/service-config-leader): Configuration management centralization (v1)
-- [service-config-follower](https://github.com/pryv/service-config-follower): Subscribe to config-leader (v1)
-- [service-ssl-certificate](https://github.com/pryv/service-ssl-certificate): Let's Encrypt automated certificate request (v1)
 
 ## Upgrading from v1
 
@@ -26,6 +23,13 @@ If you already run Open Pryv.io 1.x and want to move your users to v2:
 3. Import that backup into the v2 install with `node bin/backup.js --restore /path/to/backup` — see the [backup guide](/customer-resources/backup/).
 
 See the toolkit's README for the current source/target support matrix.
+
+The following repositories powered the v1 multi-container topology and are kept online as historical references only — v2 deployments should not use them:
+
+- [service-config-leader](https://github.com/pryv/service-config-leader) / [service-config-follower](https://github.com/pryv/service-config-follower): centralized configuration management (replaced in v2 by `override-config.yml` merged onto `config/default-config.yml` at startup).
+- [service-ssl-certificate](https://github.com/pryv/service-ssl-certificate): Let's Encrypt automation (replaced in v2 by the built-in `letsEncrypt.*` config block — see [SSL certificate](/customer-resources/ssl-certificate/)).
+
+If you are migrating a v1 register service, the historical [register migration guide](/customer-resources/register-migration/) is still online — but in v2 the register role is built into the core binary, so use [core migration](/customer-resources/core-migration/) instead.
 
 
 ## Documents
@@ -87,17 +91,13 @@ See the toolkit's README for the current source/target support matrix.
 
   This document describes how to migrate a Pryv.io core service to a different machine.
 
-- Register migration (v1 only): [HTML](/customer-resources/register-migration/)
-
-  Historical reference for migrating a v1 register service. In v2 the register role is built into the core binary — use [core migration](/customer-resources/core-migration/) instead.
-
 - Single-node to Cluster upgrade: [HTML](/customer-resources/single-node-to-cluster/)
 
   This document describes how to upgrade a Pryv.io single-node installation to a cluster one.
 
-- (deprecated) User deletion: [PDF](/assets/docs/20190919-pryv.io-delete-user-v1.pdf)
+- User deletion
 
-  This document presents a tool which allows to delete Pryv.io users. From Pryv.io 1.6, user deletion is available through the [admin API](/reference-admin/#delete-user)
+  In v2 (`open-pryv.io`), user deletion is an in-process API call: `DELETE /users/:username` (method id `auth.delete`). It removes the user's events, streams, attachments, high-frequency series and audit log in one operation. Authenticate either with the user's own personal token or with the platform `adminAccessKey`. See the [system API reference](/reference-system/#delete-user). The v1 `pryv-cli delete-user` Docker tool is not used in v2 — there is no separate CLI container.
 
 - How to backup: [HTML](/customer-resources/backup/)
 

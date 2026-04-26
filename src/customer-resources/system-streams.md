@@ -6,7 +6,9 @@ customer: true
 withTOC: true
 ---
 
-This document explains how to setup system streams.
+This document explains how to set up system streams.
+
+> **Since v2 (2026)** system streams are configured in the unified config file under `custom.systemStreams.account` / `custom.systemStreams.other` (plain YAML). There is no `ACCOUNT_SYSTEM_STREAMS` / `OTHER_SYSTEM_STREAMS` JSON-encoded string, no admin-panel *Advanced API settings* tab, and no `BACKWARD_COMPATIBILITY_SYSTEM_STREAMS_PREFIX` switch — v2 uses the `:_system:` / `:system:` prefix scheme exclusively. The module implementing the runtime behaviour lives at [`components/business/src/system-streams/`](https://github.com/pryv/open-pryv.io/tree/master/components/business/src/system-streams).
 
 
 ## Table of contents <!-- omit in toc -->
@@ -20,146 +22,167 @@ This document explains how to setup system streams.
    6. [Event type](#event-type)
    7. [Visibility](#visibility)
 2. [Configuration](#configuration)
-   1. [Modification](#modification)
-   2. [Platform settings](#platform-settings)
-3. [Backward compatibility](#backward-compatibility)
+   1. [Schema](#schema)
+   2. [Baked-in account streams](#baked-in-account-streams)
+   3. [Adding custom account streams](#adding-custom-account-streams)
+   4. [Adding custom *other* streams](#adding-custom-other-streams)
+   5. [Modification caveats](#modification-caveats)
+3. [Backward compatibility (historical)](#backward-compatibility-historical)
 
 
 ## About system streams
 
-System streams are a predefined set of streams. They are loaded in memory by Pryv.io and not stored in the database.  
-The base system streams contain the structure to store user account data, which can be extended in the platform configuration with custom streams to include additional unique or indexed fields (more on that later in this document).
+System streams are a predefined set of streams. They are loaded in memory by Pryv.io from the config file at startup and are not stored in the database.
 
-System streams can be recognized by their id prefixed by `:_system:` or `:system:`. In versions prior to 1.7 it was `.` (dot), See [backward compatiblity](#backward-compatibility) if you need to migrate your platform.
+The base set contains the structure for storing user account data. You can extend it in the unified config with custom streams to add unique or indexed fields.
 
-In version 1.9.0 username system stream  `username` has been removed. Username is now exposed by [access-info](/reference/#access-info)
+System stream IDs are prefixed with `:_system:` (baked-in defaults) or `:system:` (operator-defined custom). In versions prior to 1.7 the prefix was `.` (dot). See [Backward compatibility](#backward-compatibility-historical) below.
 
-The base system streams are the following:
+The baked-in account tree in v2 is:
 
 ```
-|_account
-  |_language
-  |_storageUsed
-    |_dbDocuments
-    |_attachedFiles
-|_helpers
-  |_active
-  |_unique
+:_system:account
+  ├─ :_system:language          (indexed)
+  ├─ :_system:appId              (indexed, required at registration, hidden)
+  ├─ :_system:invitationToken    (indexed, hidden)
+  ├─ :_system:referer            (indexed, hidden)
+  └─ :_system:storageUsed
+       ├─ :_system:dbDocuments   (read-only)
+       └─ :_system:attachedFiles (read-only)
 ```
 
-They are prefixed with `:_system:`. Custom system streams that you define for your platform are prefixed with `:system:`.
+Custom streams that you define for your platform are prefixed with `:system:`. The most common custom addition is `email` (shown below); it is **not** baked-in because some Pryv.io platforms intentionally omit email for account anonymity.
 
-Please note that we have removed email from the default account, as some Pryv.io platforms don't include email for account anonymity. It can be added through custom streams in the platform configuration and is present by default in the template configuration we provide.
+There are two sets of custom streams:
 
-There are 2 sets of custom streams that you may define: "account" and "other" ones. *Account* custom streams are children of the **account** stream and may have additionnal properties such as **unicity**, **indexation** and **requiredness at registration**. *Other* streams are located at the root of the streams and cannot benefit from constraints as account ones do.
-
-Here are the settings that you can configure for these system streams outside of their structure:
+- **Account** custom streams are children of the `:_system:account` stream. They may carry additional properties (unicity, indexation, requiredness at registration, format, event type, visibility).
+- **Other** custom streams sit at the root of the stream tree and cannot carry those per-account constraints.
 
 ### Unicity
 
-You can define fields whose unicity constraint will be ensured platform-wide. These are often used for properties such as email or insurance number. Only available for account.
+You can define fields whose uniqueness constraint will be enforced platform-wide — typically email or insurance number. Only available for *account* streams.
 
 ### Indexed
 
-Some account properties can be marked as indexed, meaning they will be available through the system API to fetch accross all accounts: [GET /users](/reference-system/#get-users). Only available for account.
+Account properties can be marked as indexed, making them queryable through the [admin GET /users](/reference-system/#get-users) system API across all accounts. Only available for *account* streams.
 
 ### Editability
 
-Values of the system streams are stored in the [Events data structure](/reference/#event), you can define whether this event is editable or read-only after account registration. Only available for account.
+Values of system streams are stored as events in the [Events data structure](/reference/#event). You can declare whether the event is editable or read-only after account registration. Only available for *account* streams.
 
 ### Requiredness at registration
 
-Some values can be required during the registration process. Only available for account.
+Some values can be required during the registration flow. Only available for *account* streams.
 
 ### Format
 
-You can an enforce a property format for these values using a regular expression. Only available for account.
+You can enforce a value format using a regular expression. Only available for *account* streams.
 
 ### Event type
 
-You can define the `type` of the events that will be used to store the values. Only available for account.
+You can choose the `type` (e.g. `email/string`, `phone/string`) of the events used to store the values. Only available for *account* streams.
 
 ### Visibility
 
-You can make some values stored at registration and indexed, but not to appear Pryv.io API outside of the administration API. Only available for account.
+You can store values at registration and index them, but keep them out of the public Pryv.io API (only exposed through the admin API). Only available for *account* streams.
 
 
 ## Configuration
 
-By default, your platform configuration will contain the single email account system stream which will appear as following:
+### Schema
 
-```json
-[
-    {
-        "id": "email",
-        "name": "Email",
-        "type": "email/string",
-        "isUnique": true,
-        "isIndexed": true,
-        "isEditable": true,
-        "isRequiredInValidation": true,
-        "isShown": true
-    }
-]
+Each entry in `custom.systemStreams.account` or `custom.systemStreams.other` is validated against the following shape on startup:
+
+| Field | Type | Default | Notes |
+|---|---|---|---|
+| `id` | string | — | required; `:system:` prefix auto-applied |
+| `name` | string | — | required |
+| `type` | string | — | required; matches `/^[a-z0-9-]+\/[a-z0-9-]+$/` |
+| `isUnique` | boolean | `false` | account-only |
+| `isIndexed` | boolean | `false` | account-only |
+| `isEditable` | boolean | `true` | account-only |
+| `isRequiredInValidation` | boolean | `false` | account-only |
+| `regexValidation` | string | `null` | account-only |
+| `isShown` | boolean | `true` | account-only |
+| `default` | any | — | default value assigned on account creation |
+| `children` | array | `[]` | nested streams |
+
+Validation failures log an error and fail core startup — catch them early by running `node bin/master.js --config <your-override>.yml` once after any edit.
+
+### Baked-in account streams
+
+These are always present and cannot be removed via `custom.systemStreams.account`:
+
+```yaml
+# Implicit — see config/plugins/systemStreams/index.js for the authoritative list
+:_system:account:
+  - language       (isIndexed, default 'en')
+  - appId          (isIndexed, isRequiredInValidation, isShown: false, isEditable: false)
+  - invitationToken(isIndexed, isShown: false, isEditable: false)
+  - referer        (isIndexed, isShown: false, isEditable: false)
+  - storageUsed:
+      - dbDocuments  (isEditable: false)
+      - attachedFiles(isEditable: false)
 ```
 
-Regarding *other* streams, it will be empty by default:
+### Adding custom account streams
 
-```json
-[]
+Put your additions under `custom.systemStreams.account` in `override-config.yml`. The default shipped config contains the `email` stream as a reference — duplicate its shape for your own fields.
+
+```yaml
+custom:
+  systemStreams:
+    account:
+      - id: email
+        name: Email
+        type: email/string
+        isUnique: true
+        isIndexed: true
+        isShown: true
+        isEditable: true
+        isRequiredInValidation: true
+      - id: insuranceNumber
+        name: Insurance Number
+        type: identifier/string
+        isUnique: true
+        isIndexed: true
+        isShown: false             # hidden from public API, surfaced via admin API
+        isEditable: false
+        isRequiredInValidation: true
+        regexValidation: '^[A-Z0-9]{10}$'
 ```
 
-Here is the detailed list of parameters:
+At runtime the IDs are accessed as `:system:email`, `:system:insuranceNumber`, etc.
 
-- **id**: the `id` of the stream
-    * string
-    * required
-- **name**: the `name` of the stream
-    * string
-    * required
-- **type**: the `type` of the events that will be stored in the stream
-    * string
-    * required
-- **isUnique**: Whether the field must be unique platform-wide
-    * boolean
-    * optional, default false
-- **isIndexed**: Whether the field is accessible through the [system administration GET users call](/reference-system/#get-users)
-    * boolean
-    * optional, default false
-- **isEditable**: Whether you can modify the events
-    * boolean
-    * optional, default true
-- **isRequiredInValidation**: Whether the field must exist in the [user registration call](/reference-system/#create-user)
-    * boolean
-    * optional, default false
-- **regexValidation**: The `regex string` that would be used for the field validation in the [user registration](/reference-system/#create-user)
-    * string
-    * optional, default null
-- **isShown**: Whether the stream and its events will be returned by [streams](/reference/#streams), [events](/reference/#events) or [account](/reference/#account-management) methods
-    * boolean
-    * optional, default true
+### Adding custom *other* streams
 
-### Modification
+Streams you need at the root of the tree (not under `:_system:account`) go under `custom.systemStreams.other`. They only support the core schema (no unicity / indexation / requiredness / visibility constraints).
 
-Unicity and index properties won't affect existing data if added after the launch of the platform. As the values recorded previously will not be synchronized in the register database.
-
-Preferably these values should be modified with care, because fields like isUnique or isIndexed are not be updated accross the platform following a configuration change. They will be set for new user accounts, or through [event updates](/reference/#update-events) for existing ones.  
-If you remove system streams that have events, these events will become unreachable.
-
-### Platform settings
-
-You can find these settings in the platform configuration under the **Advanced API settings** tab, in the `ACCOUNT_SYSTEM_STREAMS` and `OTHER_SYSTEM_STREAMS` variables:
-
-```json
-"[{\"isIndexed\": true,\"isUnique\": true,\"isShown\": true,\"isEditable\": true,\"type\": \"email/string\",\"name\": \"Email\",\"id\": \"email\",\"isRequiredInValidation\": true}]"
+```yaml
+custom:
+  systemStreams:
+    other:
+      - id: clientApp
+        name: Client apps
+        type: identifier/string
 ```
 
+By default this list is empty.
 
-## Backward compatibility
+### Modification caveats
 
-Pryv.io 1.7 changes the system streams ids from `.` (dot) to `:_system:` and `:system:`. However, this change might break some customer applications that depended on the old syntax.  
+Unicity and indexation only affect accounts **created after** the change — values recorded on pre-existing accounts are not retroactively synchronized into the platform DB. Flip these fields with care:
 
-To prevent this, we have introduced a platform setting so your Pryv.io platform accepts and returns system stream ids with the old `.` (dot) prefix.  
-You can find the backward compatibility setting in the platform configuration under the **Advanced API settings** tab, in the `BACKWARD_COMPATIBILITY_SYSTEM_STREAMS_PREFIX` variable.
+- `isUnique` / `isIndexed`: apply to new accounts, and to existing accounts only when the field gets updated through [`events.update`](/reference/#update-events).
+- Removing a stream that already has events: the events become unreachable through the Pryv.io API. Prefer hiding (`isShown: false`) to deleting.
 
-In order to migrate your front-end applications at your pace, you can make API calls with the `disable-backward-compatibility-prefix: true` header to use the new prefix format.
+All core restarts re-load the unified config, so changes to `custom.systemStreams.*` take effect on the next `node bin/master.js` boot — in multi-core, restart each core in turn.
+
+
+## Backward compatibility (historical)
+
+Pryv.io 1.7 changed the system-stream ID prefix from `.` (dot) to `:_system:` / `:system:`. Up to v1.9.x a platform setting (`BACKWARD_COMPATIBILITY_SYSTEM_STREAMS_PREFIX`) accepted and returned IDs with the legacy dot prefix to ease client migration.
+
+**In v2 that compatibility switch has been removed.** Clients must use the `:_system:` / `:system:` prefix exclusively. Operators upgrading v1 data to v2 via the [`dev-migrate-v1-v2`](https://github.com/pryv/dev-migrate-v1-v2) toolkit have the migration applied transparently during the restore; applications still emitting dot-prefixed IDs must be updated before cutover.
+
+In v1.9.0 the `username` system stream was also removed — the username is now exposed through [access-info](/reference/#access-info).

@@ -59,7 +59,21 @@ module.exports = function (context, callback) {
 
 ### How to set up the custom auth step
 
-You can add the custom auth step using the admin panel, available on `https://adm.DOMAIN`.
+> **Since v2 (2026)** the custom auth step is wired up directly through the unified config file — there is no admin-panel GUI in v2.
+
+Drop your `customAuthStepFn.js` (an example body is given in [What is the custom auth step](#what-is-the-custom-auth-step) above) somewhere on each core, then set the two `customExtensions.*` keys in `override-config.yml`:
+
+```yaml
+customExtensions:
+  defaultFolder: /etc/pryv/extensions   # absolute path; folder must exist on every core
+  customAuthStepFn: customAuthStepFn.js # filename only, resolved against defaultFolder
+```
+
+Restart the core (`systemctl restart open-pryv` or your operator's equivalent) for the function to be loaded. Each core in a multi-core cluster needs the same file at the same path — keep them in sync via your configuration-management tool.
+
+#### v1 procedure (legacy)
+
+Pryv.io v1 exposed a web admin panel at `https://adm.${DOMAIN}` where the custom auth step file was uploaded through the GUI. v1 is no longer maintained — operators on the v1 line still have the panel for as long as their deployment lives, but new platforms run v2 and edit `override-config.yml` directly.
 
 ## Authenticate data access with Pryv.io
 

@@ -222,6 +222,18 @@ Monitor key performance metrics on every core and keep historical data for incid
 Application-level: the core exposes standard Node.js process metrics via its logs, and each of its HTTP ports (3000, 4000) responds to basic liveness checks — see the [healthchecks guide](/customer-resources/healthchecks/).
 
 
-## Previous versions of this document
+## v1 procedure (legacy)
 
-The v1 "Deployment design guide" is still available as [PDF](/assets/docs/deployment_design_guide_v6.pdf) for reference.
+Pryv.io v1 used a three-role topology — a `web` machine (NGINX), a two-node `registry` (config-leader + config-follower) and one or more `core` machines, partitioned by username and optionally spread across privacy zones. High availability relied on Pacemaker/Heartbeat. None of those roles exist in v2: the `core` binary handles registration in-process, and the operator's reverse proxy replaces the `web` role.
+
+The per-core sizing orders of magnitude from the v1 design guide are still useful as v2 baselines, since the inner workers (api / hfs / previews) remain the bottleneck:
+
+| Resource | Limit per core |
+|---|---|
+| Read/write requests | ~2000 rqps each |
+| Image-preview requests | ~100 rqps |
+| Attachment reads | ~600 rqps |
+| Attachment writes | ≈ storage throughput / 2 |
+| Users per core | < 10000 |
+
+Minimum starting point per core: **4 GB RAM, 2 CPU, 15 GB data disk** (raise data disk in line with retained events + attachments).
