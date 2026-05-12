@@ -14,6 +14,7 @@ First v2 preview — major consolidation and new features.
 **Consolidated runtime**
 - Registration, MFA, high-frequency series and previews are now served by a single binary (`bin/master.js`), replacing the previous per-service Docker images (`pryvio/core`, `pryvio/hfs`, `pryvio/preview`, `service-register`, `service-mfa`).
 - Cluster mode: configurable N API workers + M HFS workers + optional previews worker under one master process.
+- High-frequency series endpoints (`/{user}/events/{id}/series`, `/{user}/series/batch`) are reachable on the same public port as the rest of the API — an in-process dispatcher routes them to the HFS worker on `:4000`. Set `cluster.hfsWorkers: 1` (or more) to enable HFS; no external reverse proxy required. For high-throughput installs, front the cluster with nginx (reference vhost: [`docs/nginx-ingress-sample.conf`](https://github.com/pryv/open-pryv.io/blob/master/docs/nginx-ingress-sample.conf)). SDKs read `features.noHF` on `/service/info` to know whether HFS is served — auto-derived from `cluster.hfsWorkers`.
 
 **Multi-factor authentication** (ported from the former Enterprise version)
 - New API: `mfa.activate`, `mfa.confirm`, `mfa.challenge`, `mfa.verify`, `mfa.deactivate`, `mfa.recover`.

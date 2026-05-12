@@ -228,9 +228,11 @@ Yes.
 
 **v2** — the core has three modes, all covered in [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md):
 
-1. **Built-in HTTPS**: let the core terminate TLS by setting `http.ssl.keyFile` / `http.ssl.certFile` in the override config.
-2. **Behind your own reverse proxy (recommended for production)**: leave `http.ssl` unset, run the core on plain HTTP, and terminate TLS in your NGINX/Caddy/ALB. A ready-to-use NGINX snippet for all three ports (API 3000, HFS 4000) is in [INSTALL — Running behind nginx](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#running--behind-nginx).
+1. **Built-in HTTPS** (the quick / out-of-the-box path): let the core terminate TLS by setting `http.ssl.keyFile` / `http.ssl.certFile` in the override config, or use the `letsEncrypt.*` block for managed ACME. High-frequency series traffic is also routed in-process from the public port to the HFS worker on `:4000` — set `cluster.hfsWorkers: 1` (or more) to enable HFS; no extra ingress required.
+2. **Behind your own reverse proxy (recommended for high-throughput / production)**: leave `http.ssl` unset, run the core on plain HTTP (`http.port: 3000`), and terminate TLS in your nginx / Caddy / ALB. nginx is more efficient than the in-process dispatcher and unlocks edge features (rate-limiting, header munging, static assets). A ready-to-use nginx vhost — including the HFS path rules and Socket.IO WebSocket upgrade — is at [`docs/nginx-ingress-sample.conf`](https://github.com/pryv/open-pryv.io/blob/master/docs/nginx-ingress-sample.conf).
 3. **backloop.dev** for dev/test.
+
+For HFS specifically, SDKs read `features.noHF` on `/service/info` to decide whether the deployment serves HF — this is auto-derived from `cluster.hfsWorkers` (set to `true` when `hfsWorkers === 0`), so SDKs short-circuit cleanly on no-HF deployments instead of failing opaquely. Operators can hand-override with `service.features.noHF: true|false` in the override config.
 
 **v1** — edit the NGINX config shipped with the stack:
 
