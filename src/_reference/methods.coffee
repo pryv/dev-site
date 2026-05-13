@@ -1372,11 +1372,14 @@ module.exports = exports =
       id: "accesses.get"
       type: "method"
       title: "Get accesses"
+      v2Tag: true
       http: "GET /accesses"
       description: """
                    Gets accesses that were created by your access token, unless you're using a personal token then it returns all accesses.
                    Only returns accesses that are active when making the request. To include accesses that have expired or were deleted, use
                    the `includeExpired` or `includeDeletions` parameters respectively.
+
+                   In v2 the returned `id`, `createdBy`, and `modifiedBy` fields use the composite reference format `<base>:<serial>` for accesses that have been updated at least once. Never-updated accesses still serialise as bare cuid (`<base>`) for full backwards-compatibility. Parse with `pryv.utils.parseAccessRef(ref)` if you need to extract the version.
                    """
       params:
         properties: [
@@ -1427,12 +1430,87 @@ module.exports = exports =
 
     ,
 
+      id: "accesses.getOne"
+      type: "method"
+      title: "Get one access"
+      v2Tag: true
+      http: "GET /accesses/{id}"
+      description: """
+                   Returns the access identified by `{id}`. The id can be either:
+
+                   - **bare** `<base>` — returns the current head row.
+                   - **composite** `<base>:<serial>` matching the current head's serial — returns the current head row.
+                   - **composite** `<base>:<serial>` referring to an *older* serial — returns the historical snapshot from that version, alongside a `current` hint pointing at the live head's composite id. Mirrors GitHub's `GET /repos/X/Y/commits/<sha>` behaviour for ref-by-version.
+                   - any other id (unknown base, or a serial that never existed) — `404 unknown-resource`.
+
+                   Pass `?includeHistory=true` to also return the full chronological history of the access (oldest first) in a `history` array. Default `false` — the singular case covers the typical "audit this access" use case without the list-side overhead.
+
+                   App callers can only fetch their own access (self) or shared accesses they directly manage; other access ids return `404 unknown-resource` to avoid info leakage.
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The access id to fetch. Bare cuid on never-updated accesses, composite `<base>:<serial>` once versioned.
+                       """
+        ,
+          key: "includeHistory"
+          type: "boolean"
+          optional: true
+          description: """
+                       If `true`, include the chronological history of the access. Defaults to `false`.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "access"
+          type: "[access](##{dataStructure.getDocId("access")})"
+          description: """
+                       The requested access (current head, or historical snapshot when the id targets an older serial).
+                       """
+        ,
+          key: "current"
+          type: "string"
+          optional: true
+          description: """
+                       Set when the request targeted an older serial — the composite id `<base>:<serial>` of the current head.
+                       """
+        ,
+          key: "history"
+          type: "array of [accesses](##{dataStructure.getDocId("access")})"
+          optional: true
+          description: """
+                       Set when `includeHistory=true` — the chronological history of the access (oldest first). Each entry uses the composite id of the frozen version.
+                       """
+        ]
+      errors: [
+        key: "unknown-resource"
+        http: "404"
+        description: """
+                     The access does not exist, was soft-deleted, or the caller cannot see it (app caller visibility rule).
+                     """
+      ]
+      examples: [
+        params: { id: examples.accesses.shared.id }
+        result:
+          access: examples.accesses.shared
+      ]
+
+    ,
+
       id: "accesses.create"
       type: "method"
       title: "Create access"
+      v2Tag: true
       http: "POST /accesses"
       description: """
                    Creates a new access. You can only create accesses whose permissions are a subset of those granted to your own access token.
+
+                   **v2 behaviour change** (Pryv.io ≥ 2.0.0-pre.X): when an `app` access creates a `shared` access scoped under it, the new shared's `expires` (resolved from `expireAfter` if provided) cannot exceed the managing app's `expires`. Violations return `invalid-operation` with `data: { parentExpires, requestedExpires }`. Personal-issued accesses are not subject to this check (personal accesses typically have no `expires`).
                    """
       params:
         description: """
@@ -1462,13 +1540,103 @@ module.exports = exports =
 
     ,
 
+      id: "accesses.update"
+      type: "method"
+      title: "Update access"
+      v2Tag: true
+      http: "PUT /accesses/{id}"
+      description: """
+                   Updates the access identified by `{id}`. Each successful update mutates the head row, snapshots the prior state into history, and bumps the access's `serial`. The returned access carries the new wire-format composite id `<base>:<serial>` (or bare `<base>` when never updated).
+
+                   **Mutable fields** (whitelist): `name`, `deviceName`, `permissions`, `expireAfter` / `expires`, `clientData`. Anything else returns `invalid-parameters-format`.
+
+                   **Caller-vs-target matrix**:
+                   - `personal` accesses are immutable (no caller can update them).
+                   - An `app` access can update only the `shared` accesses it directly manages.
+                   - `shared` accesses cannot update anything.
+                   - No self-update via this method (self-revoke stays available via `accesses.delete`).
+
+                   **Chain rules enforced on update**:
+                   - A managed `shared`'s new `permissions` must remain a subset of its managing `app`'s permissions.
+                   - Narrowing an `app`'s permissions (or `expires`) is strict-rejected if any managed `shared` would now sit outside the new scope or outlive the new expiry. The error includes `data.offendingChildren: [ids]` so the caller can resolve children first and retry.
+                   - A managed `shared`'s `expires` cannot exceed its managing `app`'s `expires` (parent with `expires: null` imposes no cap).
+
+                   **Composite-id conflict**: the `{id}` must match the current head's `serial`. A stale composite returns `409 stale-resource` with `data: { provided, currentSerial }`; refetch the access via [Get one access](##{_getDocId("accesses", "accesses.getOne")}) and retry with the current head id. Bare `<base>` is only valid on a never-updated access.
+
+                   On success, the server emits an `accessesChanged` socket.io event (coarse-grained) and an `accessUpdated` event with payload `{ type: 'access-updated', accessId, serial }` (fine-grained).
+                   """
+      params:
+        properties: [
+          key: "id"
+          type: "[identifier](##{dataStructure.getDocId("identifier")})"
+          http:
+            text: "set in request path"
+          description: """
+                       The access id (bare or composite) to update.
+                       """
+        ,
+          key: "update"
+          type: "object"
+          http:
+            text: "request body"
+          description: """
+                       Subset of mutable fields (`name`, `deviceName`, `permissions`, `expireAfter`, `expires: null`, `clientData`). Sent as the HTTP request body — the server wraps it into `params.update`.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "access"
+          type: "[access](##{dataStructure.getDocId("access")})"
+          description: """
+                       The updated head, with new composite `id` and bumped `serial`.
+                       """
+        ]
+      errors: [
+        key: "stale-resource"
+        http: "409"
+        description: """
+                     The provided composite `{id}` does not match the current head's serial. Refetch via `accesses.getOne` and retry.
+                     """
+      ,
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     Chain rule violation. `data.offendingChildren` lists shared accesses that would be orphaned by a narrowing; `data.parentExpires` / `data.requestedExpires` are set for expiry-chain rejections.
+                     """
+      ,
+        key: "forbidden"
+        http: "403"
+        description: """
+                     Caller is not allowed to update the target (personal access, self-update, app-trying-to-update-a-non-managed-access, or shared caller).
+                     """
+      ,
+        key: "unknown-resource"
+        http: "404"
+        description: """
+                     Access not found or soft-deleted.
+                     """
+      ]
+      examples: [
+        params:
+          id: examples.accesses.shared.id
+          update: { name: "Renamed shared" }
+        result:
+          access: examples.accesses.shared
+      ]
+
+    ,
+
       id: "accesses.delete"
       type: "method"
       title: "Delete access"
+      v2Tag: true
       http: "DELETE /accesses/{id}"
       description: """
                    Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.
                    All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
+
+                   **v2 behaviour change** (Pryv.io ≥ 2.0.0-pre.X): the `{id}` is composite-aware — pass the composite `<base>:<serial>` you last observed via [Get accesses](##{_getDocId("accesses", "accesses.get")}) or [Get one access](##{_getDocId("accesses", "accesses.getOne")}). A stale composite returns `409 stale-resource` with `data: { provided, currentSerial }`; refetch and retry. Bare `<base>` is only valid on a never-updated access.
                    """
       params:
         properties: [

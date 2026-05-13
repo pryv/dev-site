@@ -39,6 +39,14 @@ First v2 preview — major consolidation and new features.
 **Upgrading from v1**
 - Toolkit at [`dev-migrate-v1-v2`](https://github.com/pryv/dev-migrate-v1-v2): exports v1 user data (MongoDB) and produces a v2-compatible backup directory that `bin/backup.js --restore` can import.
 
+**Access versioning** (Plan 66)
+- `accesses.update` is **back** (was removed in early v2). `PUT /accesses/{id}` mutates the head, snapshots the prior state into history, and bumps the access's `serial`. Mutable fields: `name`, `deviceName`, `permissions`, `expireAfter` / `expires`, `clientData`. See [Update access](/reference/#accesses.update).
+- New `GET /accesses/{id}` ([Get one access](/reference/#accesses.getOne)) accepting either bare `<base>` or composite `<base>:<serial>` ids. Composite with an older serial returns the historical snapshot + a `current` hint. Pass `?includeHistory=true` for the full version history.
+- Composite-id wire format: `access.id` / `access.createdBy` / `access.modifiedBy` now serialise as `<base>:<serial>` once an access has been updated at least once. Never-updated accesses still serialise as bare cuid — fully backwards-compatible. Use [`pryv.utils.parseAccessRef`](https://github.com/pryv/lib-js/blob/master/components/pryv/src/utils.js) (lib-js ≥ 3.1.0) to extract `{ base, serial }`.
+- Composite-id conflict: `accesses.update` and `accesses.delete` require the caller's `{id}` to match the current head's serial. A stale composite returns **`409 stale-resource`** with `data: { provided, currentSerial }`; refetch and retry.
+- New socket.io event `accessUpdated` fired after every successful `accesses.update`, alongside the existing coarse-grained `accessesChanged`. Payload: `{ type: 'access-updated', accessId: '<base>:<serial>', serial }`.
+- Chain rules: shared-access permissions must remain a subset of their managing app; narrowing a parent rejects with `offendingChildren` if any managed child would be orphaned. Expiry chain enforced on both `accesses.update` AND retrofitted on `accesses.create` (**breaking** if you previously created shared accesses with longer expiry than the parent app).
+
 **Known gaps in 2.0.0-pre**
 - **OAuth2 authorization-code flow** (RFC 6749 `/oauth2/authorize`, `/oauth2/token`, client registration, refresh tokens, PKCE) is **not** in this preview. Clients that need OAuth2-style authorization must continue using the existing `/reg/access` polling flow (now core-affinity aware in multi-core deployments).
 

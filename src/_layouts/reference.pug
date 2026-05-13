@@ -17,6 +17,11 @@ mixin adminTag(adminTag)
     span(onclick="location='/reference-system/#admin'").admin-tag
       span.label(title="Admin Only") A
 
+mixin v2Tag(v2Tag)
+  if v2Tag
+    span(onclick="location='/change-log/'").v2-tag
+      span.label(title="Added or changed in v2") v2
+
 mixin result(result)
   if result
     +h4(result.title || 'Result')
@@ -119,6 +124,7 @@ mixin section(section, parentDocId, level, parent)
           if isMethod
             +trustedTag(section.trustedTag || (parent && parent.trustedOnly))
             +adminTag(section.adminTag || (parent && parent.adminOnly))
+            +v2Tag(section.v2Tag || section.v2Only || (parent && parent.v2Only))
             +methodId(section.id)
             +http(section.http, section.httpOnly, section.server)
           if section.trustedOnly

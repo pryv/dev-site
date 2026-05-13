@@ -439,9 +439,20 @@ module.exports = exports =
                 <pre><code>POST <span class='api-user'></span>/auth/login HTTP/1.1
                Host: <span class='api-host'>{username}.pryv.me</span>
                Authorization: Basic {Base64 encoded token}
-               Referer: https://sw.{domain}</code></pre>
+               Referer: https://sw.{domain}/something</code></pre>
                """
     ]
+  ,
+
+    id: "v2-badge"
+    title: "v2 additions and changes"
+    description: """
+                 API methods added or whose semantics changed in **Pryv.io v2** (open-pryv.io ≥ 2.0.0-pre.X) are tagged with <span class="v2-tag"><span title="Added or changed in v2" class="label">v2</span></span>
+
+                 v2 is backwards-compatible by default: existing v1 clients continue to work against a v2 server, and v1 servers ignore v2-only request parameters they don't recognise. The badge highlights the surfaces where behaviour or shape changed between major versions, so SDK authors and integrators can scope their compatibility work.
+
+                 See the [change log](/change-log/) for the full per-release breakdown.
+                 """
   ,
 
     id: "authenticate-your-app"
