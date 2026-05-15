@@ -366,6 +366,12 @@ As you can see from the example above, each permission specifies a `streamId`, t
 
 A more exhaustive explanation of the concept of "Access" and the different "levels" of permissions can be found in the [API reference](/reference/#access).
 
+### Cross-account access (between two end users)
+
+The example above creates an access **on a single user's account**, intended for an app the user trusts. When you need consent and data flow **between two end-user accounts** — e.g. patient ↔ doctor, study participant ↔ collector, possibly across different Pryv.io platforms — use the **Cross-account Messaging & Consent** (CMC) flow instead. CMC handles the federated handshake, mints both accesses (data-grant + back-channel), and ships chat / system-notification primitives on top of the access pair.
+
+See the [Cross-account messaging (CMC) guide](/guides/cross-account-messaging/) for the full workflow.
+
 
 ## What is next?
 
