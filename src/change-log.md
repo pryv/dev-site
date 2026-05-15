@@ -47,6 +47,16 @@ First v2 preview — major consolidation and new features.
 - New socket.io event `accessUpdated` fired after every successful `accesses.update`, alongside the existing coarse-grained `accessesChanged`. Payload: `{ type: 'access-updated', accessId: '<base>:<serial>', serial }`.
 - Chain rules: shared-access permissions must remain a subset of their managing app; narrowing a parent rejects with `offendingChildren` if any managed child would be orphaned. Expiry chain enforced on both `accesses.update` AND retrofitted on `accesses.create` (**breaking** if you previously created shared accesses with longer expiry than the parent app).
 
+**Cross-account Messaging & Consent (CMC plugin)**
+- New `:_cmc:` reserved stream-id namespace + nine `cmc/*` event types power direct cross-platform / cross-core consent + chat + system-channel flows between two Pryv.io accounts — without shared CA, federation auth, or a central registry. The peer's `apiEndpoint` (with its existing access token) is the entire auth surface.
+- Per-app scoping: data lives under `:_cmc:apps:<app-code>:[<user-path>:]chats:<counterparty-slug>` and `:_cmc:apps:<app-code>:[<user-path>:]collectors:<counterparty-slug>` so an access can be scoped at app-level (`:_cmc:apps:<app>:*`) or per-request (`:_cmc:apps:<app>:<request-slug>:*`) via natural prefix matching.
+- One-shot capability-URL handoff for cross-platform acceptance; bidirectional shared accesses post-acceptance.
+- Server-stamped `content.from` on inbox writes (unforgeable counterparty identity).
+- Auto `accesses.update` post-hook delivers `cmc/system-scope-update-v1` to the peer whenever a CMC-tagged access has its permissions changed.
+- Outbound retry queue persists pending retries as events in `:_cmc:_internal:retries` with exponential backoff; no new storage primitive.
+- Backwards-compat: nothing legacy changes; deployments that don't use CMC see the namespace as inert. No migration required.
+- Client SDK: [`pryv.cmc`](https://github.com/pryv/lib-js/tree/feature/cmc/components/pryv/src/cmc.js) helper module ships in `pryv` lib-js ≥ 3.2.0-pre.1 — slug + stream-id builders + parsers so app code constructs canonical paths without depending on the server-internal modules. Design docs: [`components/cmc/README.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/README.md), [`IMPLEMENTERS-GUIDE.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/IMPLEMENTERS-GUIDE.md), [`INTERNALS.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/INTERNALS.md).
+
 **Known gaps in 2.0.0-pre**
 - **OAuth2 authorization-code flow** (RFC 6749 `/oauth2/authorize`, `/oauth2/token`, client registration, refresh tokens, PKCE) is **not** in this preview. Clients that need OAuth2-style authorization must continue using the existing `/reg/access` polling flow (now core-affinity aware in multi-core deployments).
 
