@@ -57,6 +57,9 @@ First v2 preview — major consolidation and new features.
 - Backwards-compat: nothing legacy changes; deployments that don't use CMC see the namespace as inert. No migration required.
 - Client SDK: [`pryv.cmc`](https://github.com/pryv/lib-js/tree/feature/cmc/components/pryv/src/cmc.js) helper module ships in `pryv` lib-js ≥ 3.2.0-pre.1 — slug + stream-id builders + parsers so app code constructs canonical paths without depending on the server-internal modules. Design docs: [`components/cmc/README.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/README.md), [`IMPLEMENTERS-GUIDE.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/IMPLEMENTERS-GUIDE.md), [`INTERNALS.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/INTERNALS.md).
 
+**Fixes**
+- **Password-reset email** (2.0.0-pre.3): the `account.requestPasswordReset` mail now reliably embeds the platform's password-reset URL even when that config value is populated by an override or extra-config plugin. Previously, in some boot orderings the captured config slice missed the value and the Pug template rendered a relative `?resetToken=…` href that Outlook/Apple Mail QuickLook silently dropped. New template substitution `#{RESET_LINK}` provides the pre-composed full URL — existing templates using `#{RESET_URL}?resetToken=#{RESET_TOKEN}` keep working unchanged.
+
 **Known gaps in 2.0.0-pre**
 - **OAuth2 authorization-code flow** (RFC 6749 `/oauth2/authorize`, `/oauth2/token`, client registration, refresh tokens, PKCE) is **not** in this preview. Clients that need OAuth2-style authorization must continue using the existing `/reg/access` polling flow (now core-affinity aware in multi-core deployments).
 
