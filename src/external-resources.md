@@ -16,6 +16,7 @@ This page lists official libraries, as well as example code for you to develop y
 Optional add-ons:
 - **JS lib Socket.IO add-on** ➔ [npm](https://www.npmjs.com/package/@pryv/socket.io)
 - **JS lib Monitor add-on** ➔ [npm](https://www.npmjs.com/package/@pryv/monitor)
+- **JS lib CMC (Cross-account Messaging & Consent) add-on** ➔ [npm](https://www.npmjs.com/package/@pryv/cmc) — client-side helpers (slug builders, lifecycle wrappers, errorIds catalogue) for the CMC plugin shipped in Open Pryv.io v2. See the [CMC guide](/guides/cross-account-messaging/).
 
 ### Example web apps
 ➔ [GitHub](https://github.com/pryv/example-apps-web)

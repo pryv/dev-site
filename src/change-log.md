@@ -3,6 +3,30 @@ id: change-log
 title: API change log
 layout: default.pug
 ---
+## 2.0.0-pre.4
+
+Cross-account Messaging & Consent (CMC) plugin — Phase 2 + Phase 4 hardening on the open-pryv.io server, paired with lib-js `pryv@3.4.0` + `@pryv/cmc@1.1.0` + `@pryv/monitor@3.4.0` + `@pryv/socket.io@3.4.0` (lockstep).
+
+**Plugin completeness**
+- **Capability TTL configurable per-invite.** `cmc.createInvite({ ..., expiresAt })` (or `content.request.expiresAt` on a raw `consent/request-cmc`) now controls the capability's lifetime. Plugin bounds the value to `[60s, 30d]` at mint time; out-of-range rejects with `cmc-capability-ttl-out-of-range`. Default unchanged at 7 days when omitted.
+- **Features gating binding at send time.** `content.request.features.{chat, systemMessaging}` is enforced on BOTH sides — `cmc.sendChat` / `cmc.sendSystemAlert` against a relationship whose negotiated feature flag is `false` rejects with `cmc-chat-disabled` / `cmc-system-messaging-disabled`. Default-permit on omission (matches the offer-side default). `consent/scope-request-cmc` and `consent/scope-update-cmc` remain protocol-level and permitted regardless.
+- **Doctor-side `revokeRelationship({ inviteEventId })` is now reliable.** Previously the inbox-mirror dropped `inviteEventId`; the plugin now stamps it from the capability access's `clientData.cmc.requestEventId` so the SDK's convenience lookup matches. The `{ accessId, scopeStreamId }` power-user form keeps working.
+- **`requestEventId` populated on real-deploy capability accesses.** Pre-fix the mint hook ran pre-persist when `event.id` was null; new post-create hook stamps the real id after persistence. Affects Phase 1.1 inviteEventId-mirror flow end-to-end.
+
+**Security hardening (route-level guards)**
+- **`clientData.cmc.*` forge-prevention.** `accesses.create` / `accesses.update` reject any user-supplied `clientData.cmc.*` with `cmc-clientdata-cmc-forbidden`. That namespace is plugin-owned end-to-end (role, appCode, counterparty, capability, requestEventId, features); allowing user-set values would let an app forge a counterparty role and bypass the handshake. The CMC plugin's own internal calls reach storage via `mall.accesses` directly so the handshake is unaffected.
+- **Reserved-root immutability.** `streams.delete` rejects deletion of the five reserved CMC parents (`:_cmc:`, `:_cmc:inbox`, `:_cmc:apps`, `:_cmc:_internal`, `:_cmc:_internal:retries`) + `:_cmc:_internal:*` + plugin-managed `chats`/`collectors` segments with `cmc-reserved-stream-undeletable` — even from a personal token. Without this guard a `DELETE :_cmc:` would silently break every active relationship on the account. User-creatable `:_cmc:apps:<app>:<sub>` streams remain deletable.
+- **`content.from` stamping extended.** `inboxWriteHook` already stamped from-field on `:_cmc:inbox` writes; the new counterparty-from stamping hook extends the same protection to per-app `chats:*` / `collectors:*` writes by counterparty-marked accesses. A peer cannot forge `content.from` on `message/chat-cmc`, `notification/alert-cmc`, `notification/ack-cmc`, `consent/scope-request-cmc`, or `consent/scope-update-cmc`.
+- **`:_cmc:_internal:*` defense-in-depth filter.** New read-hooks on `events.get` (strips internal-stream ids from `params.streams`), `events.getOne` (returns 404 if event has internal streamId), and `streams.get` (prunes the internal subtree from the response tree). Today the internal subtree has no app-visible permissions so explicit queries return empty anyway; this guards against future regressions in the permission system.
+
+**Tests / contract**
+- **7 new error ids** on `cmc.errorIds` mirror the server-side additions: `CAPABILITY_TTL_OUT_OF_RANGE`, `HANDLER_MISSING_CAPABILITY_ID`, `CHAT_DISABLED`, `SYSTEM_MESSAGING_DISABLED`, `CLIENTDATA_CMC_FORBIDDEN`, `RESERVED_STREAM_UNDELETABLE`, `COUNTERPARTY_IDENTITY_MISSING`. New `[CMCXEC]` J9 catalogue-match test pins all 7 against the server strings.
+- **J3–J10 wire-shape contract tests** added to `@pryv/cmc/test/cmc.test.js` (`listInvites` uses `streams` not `streamIds`, `listAcceptedRelationships` counterparty mapping precedence, `waitForAccept` `sinceTime` filter, `acceptInvite` `scopeStreamId` requirement + `dataGrantAccessId` resolution).
+
+**Upgrade**
+- `npm install pryv@3.4.0 @pryv/cmc@1.1.0` — `@pryv/monitor` + `@pryv/socket.io` follow via transitive resolution. No source-level breaking change; existing apps on `pryv@3.3.x` + `@pryv/cmc@1.0.x` keep working.
+- Server deployments: `docker pull pryvio/open-pryv.io:2.0.0-pre.4` (Dokku/Docker), or `git pull origin master && npm install --ignore-scripts && npm rebuild && sudo systemctl restart pryv-master.service` (raw deploys).
+
 ## 2.0.0-pre
 
 First v2 preview — major consolidation and new features.
@@ -55,7 +79,7 @@ First v2 preview — major consolidation and new features.
 - Auto `accesses.update` post-hook delivers `cmc/system-scope-update-v1` to the peer whenever a CMC-tagged access has its permissions changed.
 - Outbound retry queue persists pending retries as events in `:_cmc:_internal:retries` with exponential backoff; no new storage primitive.
 - Backwards-compat: nothing legacy changes; deployments that don't use CMC see the namespace as inert. No migration required.
-- Client SDK: [`pryv.cmc`](https://github.com/pryv/lib-js/tree/feature/cmc/components/pryv/src/cmc.js) helper module ships in `pryv` lib-js ≥ 3.2.0-pre.1 — slug + stream-id builders + parsers so app code constructs canonical paths without depending on the server-internal modules. Design docs: [`components/cmc/README.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/README.md), [`IMPLEMENTERS-GUIDE.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/IMPLEMENTERS-GUIDE.md), [`INTERNALS.md`](https://github.com/pryv/open-pryv.io/blob/feature/cmc/components/cmc/INTERNALS.md).
+- Client SDK: [`@pryv/cmc`](https://www.npmjs.com/package/@pryv/cmc) (lib-js sibling package, `npm install @pryv/cmc`) ships slug + stream-id builders, lifecycle wrappers (`createInvite`, `acceptInvite`, `sendChat`, `sendSystemAlert`, `revokeRelationship`, `waitForAccept`, `listAcceptedRelationships`, `readOffer`), and a frozen `errorIds` catalogue mirroring the server-side `CmcErrorIds`. Source: [`lib-js/components/pryv-cmc/`](https://github.com/pryv/lib-js/tree/master/components/pryv-cmc). Design docs: [`components/cmc/README.md`](https://github.com/pryv/open-pryv.io/blob/master/components/cmc/README.md), [`IMPLEMENTERS-GUIDE.md`](https://github.com/pryv/open-pryv.io/blob/master/components/cmc/IMPLEMENTERS-GUIDE.md), [`INTERNALS.md`](https://github.com/pryv/open-pryv.io/blob/master/components/cmc/INTERNALS.md).
 
 **Fixes**
 - **Password-reset email** (2.0.0-pre.3): the `account.requestPasswordReset` mail now reliably embeds the platform's password-reset URL even when that config value is populated by an override or extra-config plugin. Previously, in some boot orderings the captured config slice missed the value and the Pug template rendered a relative `?resetToken=…` href that Outlook/Apple Mail QuickLook silently dropped. New template substitution `#{RESET_LINK}` provides the pre-composed full URL — existing templates using `#{RESET_URL}?resetToken=#{RESET_TOKEN}` keep working unchanged.
