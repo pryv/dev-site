@@ -6,71 +6,54 @@ customer: true
 withTOC: true
 ---
 
-## Table of contents <!-- omit in toc -->
-<!-- no toc -->
-1. [Why a developer should care](#why-a-developer-should-care)
-2. [Glossary](#glossary)
-3. [Pryv's architecture is privacy-by-design](#pryvs-architecture-is-privacy-by-design)
-4. [The data model: subject + context segregation](#the-data-model-subject--context-segregation)
-5. [Privacy-by-default UI pattern](#privacy-by-default-ui-pattern)
-6. [Twelve platform defaults that satisfy Art.25(2)](#twelve-platform-defaults-that-satisfy-art252)
-7. [Still in the implementer's hands](#still-in-the-implementers-hands)
-8. [Privacy-enhancing technologies](#privacy-enhancing-technologies)
-9. [References](#references)
+In this guide we address developers building data-collecting applications who want to understand how Pryv.io supports privacy by design and privacy by default.
+It describes Pryv.io's architectural choices, the platform defaults that protect personal data out of the box, and what remains in the developer's hands.
+
+## Table of contents
+
+1. [Introduction](#introduction)
+2. [Why a developer should care](#why-a-developer-should-care)
+3. [Glossary](#glossary)
+4. [Privacy by design in Pryv.io](#privacy-by-design-in-pryv-io)
+    1. [The standard pattern and its limits](#the-standard-pattern-and-its-limits)
+    2. [Pryv.io's architecture](#pryv-io-s-architecture)
+    3. [Data model: subject and context segregation](#data-model-subject-and-context-segregation)
+5. [Privacy by default in Pryv.io](#privacy-by-default-in-pryv-io)
+    1. [The opt-in pattern](#the-opt-in-pattern)
+    2. [Twelve platform defaults](#twelve-platform-defaults)
+6. [What stays in the developer's hands](#what-stays-in-the-developer-s-hands)
+7. [Privacy-enhancing technologies](#privacy-enhancing-technologies)
+8. [References](#references)
+
+## Introduction
+
+The new [FADP](https://www.fedlex.admin.ch/eli/cc/2022/491/en) and [GDPR](https://gdpr.eu) require all organizations to be able to answer, on demand, a list of data-subject questions: *send me a copy of all my data*, *tell me who has accessed my data*, *prove that you have my consent*, *let me modify who can access my data*, *delete my personal data*.
+
+These obligations land on developers and IT engineering, not just on legal teams. The platform you build on either makes these answers easy to produce — or it doesn't.
+
+Pryv.io was designed from the start so that **the platform answers most of these questions for you, by construction**. This guide walks through what that means in practice: the architecture that makes privacy structural rather than an afterthought, the data model that gives you granular consent for free, and the platform defaults that protect personal data the moment your app goes live.
 
 ## Why a developer should care
 
-Personal data has shifted from a **data asset** to a **data
-debt**. Organisations collected vast amounts of personal data
-over the past decade; regulations and user expectations have
-caught up; established data-governance practices became
-outdated. The FADP (Swiss Federal Act on Data Protection) and
-the GDPR require any organisation handling personal data to be
-able to answer, on demand:
+In the past decades, organizations moved from treating personal data as a **data asset** to recognizing it as a **data debt**. Vast amounts of personal data were collected; regulations and user expectations caught up; established data-governance practices became outdated.
 
-- *"Send me a copy of all my records, including personal data."*
-- *"Tell me what data you have about me."*
-- *"Tell me who has or had access to my data. When. What for."*
-- *"Prove that you have my consent to collect it."*
-- *"I want to modify who can access my data at any time."*
-- *"Delete all or part of my personal data, including in backups."*
-
-These obligations land on developers and IT engineering, not
-just on legal and compliance teams. And **developers are not
-lawyers**. The platform you build on either makes these answers
-easy to produce — or it doesn't.
-
-Pryv.io was designed from the ground up so that **the platform
-answers most of these questions for you, by construction**. This
-guide walks through what that means in practice.
+Developers building today inherit that debt unless the substrate they use clears it for them. Designing for privacy from the beginning — privacy by design — is much cheaper than retrofitting it later. And shipping privacy-protective defaults — privacy by default — raises the level of trust with your users, which translates into better sign-up rates, better retention, and more willingness to share data.
 
 ## Glossary
 
 - **Data Subject**: the individual the personal data relates to.
-- **Data Controller**: the organisation that determines the
-  purposes and means of processing personal data.
-- **Data Processor**: the organisation that processes personal
-  data on behalf of the data controller.
-- **Processing register** (Art.30): a record of general
-  information on the type of personal data you process and to
-  what end.
-- **Subcontractor agreement** (Art.28): defines the conditions
-  under which a data processor undertakes to carry out personal
-  data processing on behalf of a data controller.
+- **Data Controller**: the organization that determines the purposes and means of processing personal data.
+- **Data Processor**: the organization that processes personal data on behalf of the Data Controller.
+- **Processing register** (Art.30): a record of general information on the type of personal data you process and to what end.
+- **Subcontractor agreement** (Art.28): defines the conditions under which a Data Processor undertakes to carry out personal data processing on behalf of a Data Controller.
 
-The official text of the regulations is the authoritative
-source — see [GDPR.eu](https://gdpr.eu) and the
-[Swiss Federal Act on Data Protection](https://www.fedlex.admin.ch/eli/cc/2022/491/en).
+## Privacy by design in Pryv.io
 
-## Pryv's architecture is privacy-by-design
+Privacy by design means proactively considering privacy throughout the data lifecycle, starting from the very first design phase. Article 25(1) of the GDPR requires controllers to integrate data-protection principles at the time the means for processing are determined — not as a later add-on.
 
-GDPR Art.25(1) requires controllers to **integrate
-data-protection principles** at the time the means for
-processing are determined. Most platforms retrofit privacy
-controls onto an existing architecture; Pryv's architecture is
-built around them from the start.
+### The standard pattern and its limits
 
-### The standard pattern (privacy anti-pattern)
+Most platforms put access control next to the data, like this:
 
 ```
 Processes ──direct access──► Personal Data
@@ -79,14 +62,15 @@ Processes ──direct access──► Personal Data
          Audit / Logs (after-the-fact, manual)
 ```
 
-- Processes have direct access to personal data.
-- Per-resource access is not tracked — audit is procedural and
-  retroactive.
-- The process registry is maintained manually; it drifts;
-  when an auditor asks "show me your Art.30 register" the
-  operator runs a spreadsheet exercise.
+The consequences:
 
-### Pryv's privacy-by-design pattern
+- Processes have **direct** access to personal data.
+- Per-resource access is **not tracked** — audit is procedural and retroactive.
+- The process registry is maintained **manually**; it drifts; when an auditor asks "show me your Art.30 register" you run a spreadsheet exercise.
+
+### Pryv.io's architecture
+
+Pryv.io puts Access Control on its own layer, between every process and any personal data:
 
 ```
        Data Governance
@@ -98,215 +82,122 @@ Processes ─►Access Control ─►Personal Data
    Audit / Logs per-Data-Subject (invariant, automatic)
 ```
 
-- Access Control is a **separate layer** that every process
-  call traverses. No process talks directly to storage; every
-  request resolves through an Access object (a token granting
-  specific permissions on specific streams).
-- Governance is applied **per-process AND per-data-subject** —
-  every access on every subject's account carries its own
-  permission scope, its own audit trail, its own version
-  chain.
-- The **process registry is self-documented**: `GET /accesses`
-  + the audit log together IS the Art.30 records-of-processing
-  register, derivable on demand. No spreadsheet exercise.
+- Access Control is a **separate enforcement layer**. No process talks directly to storage; every request resolves through an Access object (a token granting specific permissions on specific streams).
+- Governance is applied **per-process AND per-data-subject** — every access on every subject's account carries its own permission scope, its own audit trail, and its own version chain.
+- The **process registry is self-documented**: `GET /accesses` plus the audit log together IS your Art.30 records-of-processing register, derivable on demand. No spreadsheet exercise.
 
-This isn't a recommended deployment pattern — it's what the
-platform ships.
+This isn't a recommended deployment pattern. It's what the platform ships.
 
-## The data model: subject + context segregation
+### Data model: subject and context segregation
 
-### Standard relational model (privacy anti-pattern)
+The standard relational model — one schema organized for processing purposes (customer table, account table, service-record table) — has three privacy problems:
 
-```
-[Customer] ─► [Account] ─► [Service-Record]
-    │              │              │
-    ▼              ▼              ▼
-   PII          billing          health
-```
-
-- One schema organised for **processing purposes** (customer
-  table, account table, service-record table).
-- Not related to the **data subject's understanding** — "which
-  rows in the customer table are mine?" doesn't have a clean
-  answer.
+- It is not related to the data subject's understanding ("which rows in the customer table are mine?" doesn't have a clean answer).
 - Access enforcement is difficult to track per-record.
-- Consent text becomes a wall-of-text privacy policy that very
-  few users read.
+- Consent text becomes a wall-of-text privacy policy that very few users read.
 
-### Pryv's streams + events model
-
-Data is segregated by **data subject AND context**:
+Pryv.io segregates data by **data subject AND context** instead:
 
 - Every event belongs to one subject's account.
-- Events are organised in **streams** representing context —
-  `health/vitals/temperature`, `health/sleep`, `diary/notes`,
-  `nutrition/meals`, etc.
-- Each access permission targets a specific stream (or subtree)
-  — `{ streamId: "health", level: "read" }` grants read access
-  to everything under `health/*` and nothing else.
-- The subject sees explicit grants when accepting an
-  application:
+- Events are organized in **streams** representing context — `health/vitals/temperature`, `health/sleep`, `diary/notes`, `nutrition/meals`, etc.
+- Each access permission targets a specific stream (or subtree): `{ streamId: "health", level: "read" }` grants read access to everything under `health/*` and nothing else.
 
-> *App "Personal Log Book" requests:*
-> *— Edit "Nutrition"*
-> *— Edit "Diary"*
-> *— Read "Advices"*
->
-> [Accept] [Refuse]
+The subject sees explicit grants when accepting an application:
+
+```
+App "Personal Log Book" requests:
+ - Edit "Nutrition"
+ - Edit "Diary"
+ - Read "Advices"
+
+[Accept]  [Refuse]
+```
 
 instead of a wall of legalese.
 
 This segregation is the structural substrate for:
 
-- **Granular consent** (Art.7) — each requested permission is
-  separately presentable + acceptable.
-- **Data minimisation** (Art.5(1)(c)) — the application reads
-  exactly what its grant covers, nothing else.
-- **Portability** (Art.20) — per-stream-subtree export is a
-  natural operation.
-- **Erasure** (Art.17) — per-stream-subtree deletion is too.
-- **Adapt data collection** per subject without schema
-  migration — adding a new context = adding a new stream.
+- **Granular consent** ([Art.7](https://gdpr.eu/article-7-how-to-get-consent-to-collect-personal-data/)) — each requested permission is separately presentable and acceptable.
+- **Data minimisation** (Art.5(1)(c)) — the application reads exactly what its grant covers, nothing else.
+- **Portability** ([Art.20](https://gdpr.eu/article-20-right-to-data-portability/)) — per-stream-subtree export is a natural operation.
+- **Erasure** ([Art.17](https://gdpr.eu/article-17-right-to-be-forgotten/)) — per-stream-subtree deletion is too.
 
-And the data is still usable by machines — events carry a
-structured `type: class/format` JSON Schema; analytics + ML
-pipelines consume them just like any tabular store.
+And your data stays usable by machines — events carry a structured `type: class/format` JSON Schema, so analytics and ML pipelines consume them like any tabular store.
 
-## Privacy-by-default UI pattern
+For a deeper walkthrough of the data model, see the [Data modelling](/guides/data-modelling.html) guide.
 
-GDPR Art.25(2) requires that **by default, only personal data
-necessary for each specific purpose are processed**.
+## Privacy by default in Pryv.io
 
-### Standard "by continuing" pattern (anti-pattern)
+Privacy by default means **automatically protecting personal data without any action from the data subject**. Article 25(2) of the GDPR puts it this way: by default, only personal data necessary for each specific purpose are processed.
 
-> *"This site uses cookies to provide you with an optimal
-> browsing experience. By continuing to visit this site, you
-> agree to the use of these cookies."*
+### The opt-in pattern
 
-Privacy is **opt-out**: the user must navigate to preferences
-to **deactivate** processing they didn't actively choose.
+Most cookie banners ship the privacy anti-pattern:
 
-### Privacy-by-default pattern (what Pryv enables)
+> *"This site uses cookies to provide you with an optimal browsing experience. By continuing to visit this site, you agree to the use of these cookies."*
 
-> *"By default, non-necessary cookies are deactivated. You can
-> help us improving our website by activating analytics
-> cookies."*
+Privacy is opt-out: the user must navigate to preferences to **deactivate** processing they didn't actively choose.
+
+Privacy by default flips this:
+
+> *"By default, non-necessary cookies are deactivated. You can help us improving our website by activating analytics cookies."*
 >
 > [ACTIVATE] [CONTINUE]
 
-Privacy is **opt-in**: the user must explicitly **activate**
-the processing categories they want to enable. The reference
-auth flow shipped with Pryv — `app-web-auth3` — implements
-this pattern by default:
+Privacy is opt-in: the user must explicitly **activate** the processing categories they want to enable.
 
-- The auth screen surfaces the requested permissions
-  explicitly, per stream + per level (read / write /
-  contribute / manage).
-- Accept and Refuse buttons are visually balanced.
-- The granted permissions are stored on the access — auditable
-  + revocable at any time via `DELETE /accesses/:id`.
+The reference auth flow shipped with Pryv.io — [app-web-auth3](https://github.com/pryv/app-web-auth3) — implements this pattern by default. The auth screen surfaces the requested permissions explicitly, per stream and per level (read / write / contribute / manage); Accept and Refuse buttons are visually balanced; the granted permissions are stored on the access and remain revocable at any time via `DELETE /accesses/:id`.
 
-The auth UI primitive doesn't support the anti-pattern; you
-can't accidentally ship a "by continuing you agree" flow even
-if you wanted to. Privacy-by-default **raises the level of
-trust** with your users, which translates into material
-business advantage — more sign-ups, better retention, more
-willingness to share data.
+The auth UI primitive doesn't support the anti-pattern — you can't accidentally ship a "by continuing you agree" flow even if you wanted to.
 
-## Twelve platform defaults that satisfy Art.25(2)
+See the [Consent implementation](/guides/consent.html) guide for the detailed walkthrough.
 
-When an auditor asks "show me what's privacy-protective by
-default", point at this catalogue:
+### Twelve platform defaults
 
-1. **Default-deny on permissions.** Every access starts with
-   empty `permissions: []`. The implementer EXPLICITLY grants
-   scope; nothing is read by default.
-2. **Audit-on by default.** The audit primitive is invariant —
-   no config flag turns it off. Every API call against every
-   subject's account is captured at write time.
-3. **TLS enforced.** Let's Encrypt integration makes HTTPS the
-   default. HTTP-only is a deliberate dev-mode opt-in.
-4. **Hosting region pinned per user.** Once a subject is
-   assigned to a core (`user-core` mapping in PlatformDB), all
-   their event data lives on that core exclusively. Residency
-   is architectural, not configurable per event.
-5. **Stream-permission granularity.** Permissions are per-
-   stream-subtree. There's no "public" permission tier;
-   sensitive data can't be accidentally exposed to a "world-
-   readable" surface that doesn't exist.
-6. **Data-minimal audit.** The audit log captures method +
-   access reference + URL query + integrity hash; **never the
-   request body**. Audit storage is safe to retain at long
-   horizons because it contains no event content.
-7. **Schema validation at ingest.** Every event is validated
-   against the declared event type's JSON Schema (`ajv-draft-
-   04`) on `create` AND `update`. Out-of-shape or out-of-range
-   payloads are rejected with HTTP 400.
-8. **Zero mandatory subprocessors.** Default deployment talks
-   to zero third-party services beyond your chosen cloud
-   provider. SMTP, SMS, observability, Let's Encrypt — every
-   integration is opt-in.
-9. **Audit-minimal logger.** Every log call passes through a
-   credential-redaction layer that strips `auth=...` tokens
-   and `password` / `passwordHash` fields. Verified by the
-   `[BIH1-6]` test set. Credentials don't leak via logs to
-   external aggregators.
-10. **Cross-account sharing requires explicit subject
-    consent.** Pryv's CMC primitive requires the subject to
-    write a `consent/accept-cmc` event before any cross-
-    account data flow begins.
-11. **Operator secrets encrypted at rest.** Let's Encrypt
-    account keys, observability license keys, SMTP credentials
-    (when migrated to PlatformDB) are AES-256-GCM encrypted
-    with HKDF-derived keys.
-12. **Withdrawal API exists by default.** `DELETE /accesses/:id`
-    is always available; a subject holding their personal
-    token can revoke any access without third-party
-    participation.
+When an auditor asks "show me what's privacy-protective by default", point at this catalogue:
 
-## Still in the implementer's hands
+- **Default-deny on permissions.** Every access starts with empty `permissions: []`. You explicitly grant scope; nothing is read by default.
+- **Audit-on by default.** The audit primitive is invariant — no config flag turns it off. Every API call against every subject's account is captured at write time.
+- **TLS enforced.** Let's Encrypt integration makes HTTPS the default. HTTP-only is a deliberate dev-mode opt-in.
+- **Hosting region pinned per user.** Once a subject is assigned to a core, all their event data lives on that core exclusively. Residency is architectural, not configurable per event.
+- **Stream-permission granularity.** Permissions are per-stream-subtree. There is no "public" tier — sensitive data can't be accidentally exposed to a world-readable surface that doesn't exist.
+- **Data-minimal audit.** The audit log captures method + access reference + URL query + integrity hash. It **never** captures the request body. Audit storage is safe to retain at long horizons because it contains no event content.
+- **Schema validation at ingest.** Every event is validated against the declared event type's JSON Schema (`ajv-draft-04`) on `create` AND `update`. Out-of-shape or out-of-range payloads are rejected with HTTP 400.
+- **Zero mandatory subprocessors.** Default deployment talks to zero third-party services beyond your chosen cloud provider. SMTP, SMS, observability, Let's Encrypt — every integration is opt-in.
+- **Credentials never leak via logs.** Every log call passes through a redaction layer that strips `auth=...` tokens and `password` / `passwordHash` fields. Credentials don't leak to external aggregators.
+- **Cross-account sharing requires explicit subject consent.** Pryv.io's [CMC primitive](/guides/cross-account-messaging.html) requires the subject to write a `consent/accept-cmc` event before any cross-account data flow begins.
+- **Operator secrets encrypted at rest.** Let's Encrypt account keys, observability license keys, SMTP credentials are AES-256-GCM encrypted with HKDF-derived keys.
+- **Withdrawal API exists by default.** `DELETE /accesses/:id` is always available. A subject holding their personal token can revoke any access without third-party participation.
 
-The defaults above are **structural** — Pryv enforces them.
-But Art.25(2) also has axes the platform can't decide for you:
+## What stays in the developer's hands
 
-- Are app tokens minted with the **smallest possible scope**?
-  Pryv lets you grant any scope; choosing the smallest is your
-  editorial discipline.
-- Is your subject's **notice-of-collection presented by
-  default**? The consent text + the access's `clientData`
-  conventions ([Consent implementation guide](consent.html))
-  give you the durable, audit-traceable record; what the
-  notice SAYS is yours to write.
-- Is **data retention set to the shortest necessary period**?
-  Pryv doesn't enforce retention; your operational pruning
-  pipeline does.
-- Is your custom auth UI using the **opt-in pattern** rather
-  than the "by continuing you agree" anti-pattern? If you
-  rebrand `app-web-auth3`, the default pattern is opt-in;
-  custom UI is your responsibility to align.
+The defaults above are structural — Pryv.io enforces them. But Art.25(2) also has axes the platform can't decide for you:
+
+- Are app tokens minted with the **smallest possible scope**? Pryv.io lets you grant any scope; choosing the smallest is your editorial discipline.
+- Is your subject's **notice-of-collection presented by default**? The consent text plus the access's `clientData` conventions (see the [Consent implementation](/guides/consent.html) guide) give you the durable, audit-traceable record; what the notice **says** is yours to write.
+- Is **data retention set to the shortest necessary period**? Pryv.io doesn't enforce retention; your operational pruning pipeline does.
+- Is your custom auth UI using the **opt-in pattern** rather than the "by continuing you agree" anti-pattern? If you rebrand `app-web-auth3`, the default pattern is opt-in; custom UI is your responsibility to align.
 
 ## Privacy-enhancing technologies
 
-Cryptography-based PETs you can layer on Pryv's substrate:
+Cryptography-based PETs that you can layer on top of Pryv.io's substrate:
 
-| Technology | What it enables | Status on Pryv |
-|---|---|---|
-| **Pseudonymisation** | PII fields replaced by artificial identifiers before analysis / sharing. | Partial — accesses + streams provide structural pseudonymisation; `auth.randomAlias` (planned) will add a native randomised-alias primitive. |
-| **Proxy re-encryption** | Data is encrypted per segment with the data subject's public keys; the backend re-crypts for accredited recipients on demand. Defends against full-dataset breach. | Planned; proof of concept at [github.com/perki/test-proxy-re-encrypt](https://github.com/perki/test-proxy-re-encrypt). |
-| **Multiparty computation / Federated learning** | Multiple parties compute over their private inputs without revealing them. | Out-of-scope at platform layer; implementer-side analytics layer. |
-| **Homomorphic encryption** | Computations performed on encrypted data without decrypting. | Out-of-scope at platform layer; implementer-side layer. |
-| **Differential privacy** | Adds calibrated noise to statistical releases so individual data points cannot be re-identified. | Out-of-scope at platform layer; implementer-side analytics layer. |
+- **Pseudonymisation** — personal-data fields replaced by artificial identifiers before analysis or sharing. The access + stream model already provides structural pseudonymisation; a randomised-alias primitive is on the roadmap.
+- **Proxy re-encryption** — data is encrypted per segment with the data subject's public keys; the backend re-crypts for accredited recipients on demand. Defends against full-dataset breach because the attacker needs the secret keys of accredited recipients. A working proof of concept is available at [github.com/perki/test-proxy-re-encrypt](https://github.com/perki/test-proxy-re-encrypt).
+- **Multiparty computation** (federated learning, mining data without revealing sensitive information) — multiple parties compute a function over their private inputs without revealing them.
+- **Homomorphic encryption** — computations performed on encrypted data without decrypting it.
+- **Differential privacy** — calibrated noise added to statistical releases so that individual data points cannot be re-identified.
 
-The choice of which PETs to layer on is yours — Pryv's
-architecture doesn't preclude any of them.
+Pryv.io's architecture doesn't preclude any of these — they sit on top of the platform substrate. The choice of which PETs to add is yours.
 
 ## References
 
-- [GDPR full text — gdpr.eu](https://gdpr.eu)
-- [Swiss Federal Act on Data Protection — fedlex.admin.ch](https://www.fedlex.admin.ch/eli/cc/2022/491/en)
-- [Article 25 — Data protection by design and by default](https://gdpr.eu/article-25-data-protection-by-design)
+- [GDPR full text](https://gdpr.eu) — official EU regulation.
+- [Article 25 — Data protection by design and by default](https://gdpr.eu/article-25-data-protection-by-design).
+- [Swiss Federal Act on Data Protection (FADP)](https://www.fedlex.admin.ch/eli/cc/2022/491/en).
 - [Consent implementation with Pryv.io](/guides/consent.html) — companion guide.
-- [Audit logs in Pryv.io](/guides/audit-logs.html) — companion guide.
-- [Cross-account messaging with Pryv.io](/guides/cross-account-messaging.html) — CMC consent flow.
+- [Audit logs](/guides/audit-logs.html) — companion guide.
+- [Cross-account messaging (CMC)](/guides/cross-account-messaging.html) — CMC consent flow.
+- [Data modelling](/guides/data-modelling.html) — streams + events deep dive.
 - [App guidelines](/guides/app-guidelines.html) — implementer-facing patterns.
-- [Article 29 Working Party Opinion 05/2014 on Anonymisation Techniques](https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf) — distinguishes pseudonymisation from anonymisation; relevant for the PET catalogue.
+- [app-web-auth3 on GitHub](https://github.com/pryv/app-web-auth3) — the reference auth web app.
