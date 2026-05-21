@@ -57,8 +57,11 @@ mixin testsets(testsets, level)
           th Test
       tbody
         each setTitle in Object.keys(testsets)
+          - var suiteCodes = (setTitle.match(/\[([A-Z][A-Z0-9]+)\]/g) || []).map(function (s) { return s.slice(1, -1); })
           tr
             td(colspan=3)
+              each code in suiteCodes
+                span(id=code)
               b
                | !{helpers.capitalize(setTitle)}
           +tests(testsets[setTitle].tests)
