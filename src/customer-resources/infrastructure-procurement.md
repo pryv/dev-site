@@ -197,7 +197,8 @@ Cores added via `bin/bootstrap.js new-core` ship with `storages.engines.rqlite.t
 
 Outbound — from the core:
 
-- tcp/443 for fetching event-type/assets definitions (configurable or pinnable), OAuth callbacks and `service-mail` (if used).
+- tcp/443 for fetching event-type/assets definitions (configurable or pinnable), OAuth callbacks, and SMTP (TLS) if you enable email sending. Legacy deployments running the standalone `pryv/service-mail` process also need outbound `:443` to reach it.
+- tcp/587 or tcp/465 for SMTP (when `services.email.method: in-process`, the v2-recommended path), depending on whether your relay uses STARTTLS or implicit TLS.
 
 
 ## Operational concerns

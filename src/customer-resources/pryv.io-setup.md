@@ -73,9 +73,11 @@ Use this when DNS is managed by an external provider (Cloudflare, Route 53, an i
 
 See [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md). The short story:
 
-1. `docker pull pryvio/open-pryv.io` (or clone the repo and `just setup-dev-env && just install` for a native install).
-2. Write a minimal `override-config.yml` — the template is in [INSTALL — Minimal production config](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#minimal-production-config).
-3. Start `bin/master.js` (or the Docker image) with `NODE_ENV=production` and your override file.
+1. **Choose a base storage engine.** PostgreSQL 14+ (recommended) or MongoDB 4.2+. The Docker image bundles `rqlited` (platform DB) and SQLite (audit + per-user account/index), but **not** PostgreSQL/MongoDB — those are external dependencies. For Docker installs, run the database as a sidecar container on a shared network; for native installs, point the config at your existing instance.
+2. `docker pull pryvio/open-pryv.io` (or clone the repo and `just setup-dev-env && just install` for a native install).
+3. Write a minimal `override-config.yml` — start from the template in [INSTALL — Minimal production config](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#minimal-production-config). **Use literal paths**, not `${ENV_VAR}` placeholders — env-var expansion in config is not supported and the core will refuse to start if it sees any unresolved `${...}` value. Required `storages.engines.*` keys: the chosen base engine block (`postgresql` or `mongodb`), plus `filesystem.{attachmentsDirPath,previewsDirPath}`, `sqlite.path`, and `rqlite.{url,raftPort,dataDir}`. All are required at boot.
+4. Start `bin/master.js` (or the Docker image) with `NODE_ENV=production` and your override file.
+5. **Smoke-test it:** `curl https://your-domain.com/reg/service/info` should return a JSON descriptor including your configured `name` and `serial`. If the response is correct, proceed to [validate the installation](#validate-the-installation).
 
 For multi-core, the upgrade path from an existing single-core install is documented in [single-node to cluster](/customer-resources/single-node-to-cluster/) and upstream in [SINGLE-TO-MULTIPLE.md](https://github.com/pryv/open-pryv.io/blob/master/SINGLE-TO-MULTIPLE.md). Adding each new core is one CLI invocation on the existing core (`bin/bootstrap.js new-core ...`) followed by booting the new core in `--bootstrap` mode — the CLI handles cluster CA, mTLS material, platform-secret transfer, DNS publishing and pre-registration in PlatformDB.
 
@@ -119,7 +121,7 @@ Make sure to apply the [fork change for GitHub Pages](https://github.com/pryv/ap
 
 ## Set up email sending
 
-Pryv.io can send transactional emails for account creation and password reset. Configure either SMTP or the [service-mail](https://github.com/pryv/service-mail) microservice — details in the [email configuration guide](/customer-resources/emails-setup/).
+Pryv.io can send transactional emails for account creation and password reset. v2 supports two delivery paths: **`in-process`** (recommended — runs inside the api-server worker, no extra process, templates in PlatformDB) and **`microservice`** (legacy `pryv/service-mail` for existing deployments). Pick one via `services.email.method` and configure SMTP, sender identity and templates per the [email configuration guide](/customer-resources/emails-setup/).
 
 
 ## Define your data model
