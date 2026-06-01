@@ -47,7 +47,7 @@ On **dest**, install the same core version as **source**:
 - Either pull the Docker image (same tag as on source: `docker pull pryvio/open-pryv.io:<tag>`)
 - Or clone the same commit and run `just setup-dev-env && just install` (native install)
 
-Also install the database you use (PostgreSQL or MongoDB), unless you are running the database on a separate host that will remain unchanged.
+Also install the base storage backend you use — PostgreSQL on the dest host (or skip if the database lives on a separate host that will remain unchanged) — or, for SQLite deployments, ensure the dest data directory is in place; the per-user files arrive via the file-system transfer below.
 
 Set up an SSH key pair for rsync:
 
@@ -101,21 +101,9 @@ createdb -U postgres pryv_db
 pg_restore -U postgres -d pryv_db /tmp/pryv_db.dump
 ```
 
-**MongoDB**:
+**SQLite**: there is no DB-level dump step — the per-user files travel with the file-system transfer below ([Transfer file-system data](#transfer-file-system-data)).
 
-```bash
-# on source
-mongodump --db=pryv-node --out=/tmp/mongodump
-rsync --archive --compress \
-    -e "ssh -i ${PATH_TO_PRIVATE_KEY}" \
-    /tmp/mongodump/ \
-    ${USERNAME}@${DEST_MACHINE}:/tmp/mongodump/
-
-# on dest
-mongorestore /tmp/mongodump/
-```
-
-**InfluxDB** (optional — only if you use InfluxDB for high-frequency series; PostgreSQL is fine too and moves with the PG dump above):
+**InfluxDB** (optional — only if you use InfluxDB for high-frequency series; PostgreSQL or SQLite is fine too and moves with the steps above):
 
 ```bash
 # on source

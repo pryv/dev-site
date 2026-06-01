@@ -122,7 +122,7 @@ curl -i "${REG_URL}/healthmetrics01/check_username"
 
 ### 3. Core API + base storage reachable
 
-Uses authentication, base storage (PostgreSQL / MongoDB) and event retrieval:
+Uses authentication, base storage (PostgreSQL or SQLite) and event retrieval:
 
 ```bash
 curl -i -H 'Authorization: ${ACCESS_TOKEN}' \

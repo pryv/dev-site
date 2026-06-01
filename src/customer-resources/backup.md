@@ -21,7 +21,7 @@ This guide describes how to back up a Pryv.io platform and how to restore from a
    5. [What's in the backup](#whats-in-the-backup)
 2. [Alternative: raw database + filesystem dumps](#alternative-raw-database--filesystem-dumps)
    1. [What to back up](#what-to-back-up)
-   2. [Dump PostgreSQL / MongoDB](#dump-postgresql--mongodb)
+   2. [Dump the base storage](#dump-the-base-storage)
    3. [Restore raw dumps](#restore-raw-dumps)
 3. [Important notice on consistency](#important-notice-on-consistency)
 
@@ -93,54 +93,70 @@ Use this path when you need full block-level or native-DB snapshots — for exam
 
 ### What to back up
 
-1. **Base storage database** — PostgreSQL (recommended) or MongoDB — holds events, streams, accesses.
-2. **Per-user filesystem data** — the `data/users/` tree holds SQLite DBs (audit, user index, per-user account) and attachment files. See [INSTALL — Data directories](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#data-directories).
-3. **Series engine data** — if using InfluxDB for HFS, back up InfluxDB. If using PostgreSQL for HFS, it is already covered by step 1.
+What needs to be backed up depends on which engines you've selected for each storage type. The reference picks are documented in [INSTALL — Storage engines](https://github.com/pryv/open-pryv.io/blob/master/README-DBs.md); the items below cover all currently-supported combinations.
+
+1. **Base storage** — events, streams, accesses, profiles, webhooks. Depends on `storages.base.engine`:
+   - **PostgreSQL** (default): one shared database (`pryv-node` by default), keyed by `user_id`. Snapshot via `pg_dump`.
+   - **SQLite**: per-user files under `data/users/<sharded>/<userId>/baseStorage-<version>.sqlite`. Snapshot via filesystem tool — see step 2.
+2. **Per-user filesystem data** — the `data/users/` tree holds **all** per-user SQLite databases (user index, per-user account, audit, and the SQLite baseStorage / seriesStorage files when those engines are SQLite) **plus** attachment files. See [INSTALL — Data directories](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#data-directories). For SQLite-100% deployments this is the entire per-user dataset.
+3. **Series engine data** — depends on `storages.series.engine`:
+   - **PostgreSQL** (default): already covered by step 1.
+   - **SQLite**: per-user `series-<version>.sqlite` already covered by step 2.
+   - **InfluxDB** (opt-in): back up InfluxDB separately (see below).
 4. **Previews** (`data/previews/`) — optional; previews can be regenerated from attachments.
 5. **Platform DB** (`data/rqlite-data/`) — rqlite Raft log and snapshot. In single-core mode a snapshot is enough; in multi-core mode this is rebuilt from peer state when a core is reinstalled, so snapshotting is optional.
 6. **Your override YAML(s)** — the override-config file(s) passed to `bin/master.js`.
 
 Stop the core (or the specific user's activity) before dumping to avoid half-written events between step 1 and step 2.
 
-### Dump PostgreSQL / MongoDB
+### Dump the base storage
 
-**PostgreSQL**:
-
-```bash
-pg_dump -U postgres -Fc pryv_db > /backups/pryv-$(date +%Y%m%d).dump
-```
-
-**MongoDB**:
+**PostgreSQL** (default base engine, default series engine):
 
 ```bash
-mongodump --db=pryv-node --out=/backups/pryv-mongodump-$(date +%Y%m%d)
+pg_dump -U postgres -Fc pryv-node > /backups/pryv-$(date +%Y%m%d).dump
 ```
 
-**InfluxDB** (only if used):
+**SQLite** (base / series, per-user files): nothing extra — the `data/users/` tree captured in step 2 already includes every per-user `baseStorage-*.sqlite` and `series-*.sqlite` file.
+
+**InfluxDB** (only if `storages.series.engine: influxdb`):
 
 ```bash
 influxd backup -portable /backups/pryv-influx-$(date +%Y%m%d)
 ```
 
-Back up `data/users/` alongside the DB dump with any filesystem tool (`rsync`, `tar`, volume snapshot, etc.).
+Back up `data/users/` alongside any DB dump with any filesystem tool (`rsync`, `tar`, volume snapshot, etc.):
+
+```bash
+tar -C /app/data -czf /backups/pryv-users-$(date +%Y%m%d).tar.gz users/
+```
 
 ### Restore raw dumps
 
-Restore into an install of the **same core version** with an empty database and empty `data/users/`:
+Restore into an install of the **same core version** with an empty database / data directory.
+
+**PostgreSQL**:
 
 ```bash
-# PostgreSQL
-createdb -U postgres pryv_db
-pg_restore -U postgres -d pryv_db /backups/pryv-20260414.dump
+createdb -U postgres pryv-node
+pg_restore -U postgres -d pryv-node /backups/pryv-20260414.dump
+```
 
-# MongoDB
-mongorestore /backups/pryv-mongodump-20260414
+**SQLite**: the per-user files are restored as part of the `data/users/` step below — nothing else.
 
-# InfluxDB (if used)
+**InfluxDB** (only if used):
+
+```bash
 influxd restore -portable /backups/pryv-influx-20260414
 ```
 
-Then restore the `data/users/` tree in place, start the core, and check the [healthchecks](/customer-resources/healthchecks/).
+Then restore the `data/users/` tree in place:
+
+```bash
+tar -C /app/data -xzf /backups/pryv-users-20260414.tar.gz
+```
+
+Start the core, and check the [healthchecks](/customer-resources/healthchecks/).
 
 
 ## Important notice on consistency

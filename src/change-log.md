@@ -3,6 +3,16 @@ id: change-log
 title: API change log
 layout: default.pug
 ---
+## Upcoming (post 2.0.0-pre.4)
+
+**Storage — MongoDB removed, SQLite reaches full parity**
+
+- **BREAKING**: MongoDB is no longer a supported `storages.base.engine`. `storages.base.engine: mongodb` and all `storages.engines.mongodb.*` config keys are gone — startup fails with a clear plugin-loader error if `mongodb` is configured. `STORAGE_ENGINE=mongodb` test harness override is gone. The `mongodb` npm dependency was dropped and the `storages/engines/mongodb/` plugin directory deleted.
+- **SQLite is now a complete alternative to PostgreSQL.** Beyond `baseStorage`, `dataStore`, and `auditStorage` (already supported), SQLite now also implements `seriesStorage` — a fully-SQLite deployment carries high-frequency series without needing PostgreSQL or InfluxDB. The per-user series file lives at `<userLocalDirectory>/<userId>/series-<version>.sqlite`, sibling to `baseStorage-<version>.sqlite`. GDPR Art.17 deletion stays a clean `unlink(<userId>)`.
+- **PostgreSQL stays the default**; pick SQLite for single-host / per-user-file / strict-Art.17 deployments and PostgreSQL for shared-table / cross-user-analytics deployments. Neither is a "low-volume only" choice.
+- **InfluxDB** is now framed consistently as the **opt-in** alternative for high-throughput HF series — PostgreSQL and SQLite both cover series natively for the majority of workloads.
+- **Migration path for existing MongoDB deployments**: the engine-agnostic `bin/backup.js` tool exports a JSONL bundle from a MongoDB-backed deployment of the previous build that `bin/backup.js --restore` ingests into a PostgreSQL or SQLite v2 install. Same path that powers V1→V2 migration. Bundles include accounts, streams, events, accesses, profiles, webhooks, and attachments.
+
 ## 2.0.0-pre.4
 
 Cross-account Messaging & Consent (CMC) plugin — Phase 2 + Phase 4 hardening on the open-pryv.io server, paired with lib-js `pryv@3.4.0` + `@pryv/cmc@1.1.0` + `@pryv/monitor@3.4.0` + `@pryv/socket.io@3.4.0` (lockstep).

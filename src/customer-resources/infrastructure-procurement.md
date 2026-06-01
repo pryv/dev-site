@@ -26,7 +26,7 @@ This document is for system administrators provisioning virtual machines and oth
    1. [Operating systems](#operating-systems)
    2. [Docker](#docker)
    3. [Per-core machine](#per-core-machine)
-   4. [Database host (optional — external PostgreSQL / MongoDB)](#database-host-optional--external-postgresql--mongodb)
+   4. [Database host (optional — external PostgreSQL)](#database-host-optional--external-postgresql)
 5. [Network and firewall](#network-and-firewall)
 6. [Operational concerns](#operational-concerns)
    1. [System hardening](#system-hardening)
@@ -49,7 +49,7 @@ One VM runs `bin/master.js`, which in turn runs:
 - **M HFS workers** sharing port 4000 (high-frequency series)
 - **0 or 1 Previews worker** on port 3001 (image previews)
 - An **embedded rqlited** process for the platform DB
-- Either **MongoDB** or **PostgreSQL** for user data (can be on the same VM or external)
+- A base storage for user data — **PostgreSQL** (can be on the same VM or external) or **SQLite** (per-user files on the core's filesystem, no extra service)
 
 This mode uses `dnsLess.isActive: true` — the platform is reached at a single `publicUrl`. No wildcard DNS or embedded DNS server is needed.
 
@@ -130,7 +130,7 @@ New users are assigned to the core with the fewest users in the same compliance 
 
 ### Operating systems
 
-Linux — any distribution supported by your chosen container runtime or Node.js 22. Tested on:
+Linux — any distribution supported by your chosen container runtime or Node.js 24. Tested on:
 
 - Ubuntu 20.04, 22.04, 24.04
 - Debian 11, 12
@@ -142,7 +142,7 @@ If running from the `pryvio/open-pryv.io` image:
 - Docker v20.10 or later
 - `docker compose` v2 (optional — the core only needs a single container)
 
-Native (non-Docker) installs need Node.js 22.x.
+Native (non-Docker) installs need Node.js 24.x.
 
 ### Per-core machine
 
@@ -163,18 +163,18 @@ Load sensitivity:
 | High-frequency series    | Raise `cluster.hfsWorkers`; ensure port 4000 reachable from your proxy       |
 | Image uploads / previews | CPU + RAM — GraphicsMagick + sharp are CPU-bound; enable `previewsWorker`    |
 
-### Database host (optional — external PostgreSQL / MongoDB)
+### Database host (optional — external PostgreSQL)
 
-When running the base storage engine on a separate machine:
+Only relevant when the base storage engine is PostgreSQL and you want to run it on a separate machine from the core. SQLite deployments need no extra host — the per-user files live on the core's data disk.
 
 | Aspect                  | Minimal requirement                                                    |
 | ----------------------- | ---------------------------------------------------------------------- |
 | RAM                     | 4 GB                                                                   |
 | CPU cores               | 2                                                                      |
 | Data size               | Scales with users × retention — plan from the [Data production](#data-production) table |
-| Service port            | tcp/5432 (PostgreSQL) or tcp/27017 (MongoDB) — reachable from the core |
+| Service port            | tcp/5432 (PostgreSQL) — reachable from the core                        |
 
-If using embedded MongoDB or PostgreSQL on the same VM as the core, add the database's resource needs to the core requirements above.
+If running PostgreSQL on the same VM as the core (or running an all-SQLite deployment), add the database's resource needs to the core requirements above.
 
 
 ## Network and firewall

@@ -40,7 +40,7 @@ This guide describes how to upgrade a running single-core Pryv.io deployment to 
 - A running single-core Pryv.io v2 install with real users and data.
 - DNS control for the target shared domain (you need to publish wildcard A records and an `lsc.{domain}` A record; or, in DNSless mode, NS+A records only).
 - At least one more machine or Dokku app for the second core.
-- A base-storage database (PostgreSQL or MongoDB) for the second core — separate from the first core's.
+- A base-storage backend for the second core, separate from the first core's — PostgreSQL on the second host, or a fresh per-user SQLite tree on its filesystem. The engine choice should match the first core's `storages.base.engine`.
 - The wildcard (or per-core) SSL certificate covering the new domain.
 - `openssl` available on the existing core (used by the bootstrap CLI to mint the cluster CA on first run — already a system dep on any Pryv.io host).
 
@@ -51,7 +51,7 @@ This guide describes how to upgrade a running single-core Pryv.io deployment to 
 | ------------------- | ------------------------------ | --------------------------------------------------------------------- |
 | Cores               | 1 (single node)                | 2+ (one existing + one or more new)                                   |
 | Platform DB         | rqlite (single, embedded)      | rqlite (clustered, embedded on every core, joined via DNS discovery)  |
-| Base storage        | 1 (PostgreSQL or MongoDB)      | 1 per core — cores never share the base DB                            |
+| Base storage        | 1 (PostgreSQL or SQLite)       | 1 per core — cores never share the base DB                            |
 | User routing        | All users on one instance      | Each core hosts a subset; discovery via `/reg/cores?username=`        |
 | Public URL          | `https://api.example.com` (dnsLess) or single domain | `{username}.mc.example.com` or per-core URLs (DNSless)  |
 | Raft channel        | local only (loopback)          | mutually-authenticated TLS between cores                              |

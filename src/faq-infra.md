@@ -44,7 +44,7 @@ We have run Pryv.io on the following public clouds: AWS, Microsoft Azure, Gandi.
 
 You must take into account the legislation covering the people whose data will be stored in the Pryv.io platform, such as US HIPAA, EU GDPR, Swiss DPA. This often includes requirements on the geographic location where the data is stored.
 
-### How do you address encryption of the data at rest? As medical records will be stored in MongoDB, are you using DB encryption or some other application specific encryption?
+### How do you address encryption of the data at rest? Are you using DB encryption or some other application-specific encryption?
 
 Pryv offers three options here:
 
@@ -203,7 +203,8 @@ This step will erase all data from your platform. Perform this at your own risk 
 rm -rf data/users/*          # SQLite DBs + per-user files (audit, index, account)
 rm -rf data/previews/*       # image previews
 rm -rf data/rqlite-data/*    # platform DB (rqlite Raft + snapshot)
-# if using external MongoDB / PostgreSQL: drop and recreate the database there
+# if using an external PostgreSQL: drop and recreate the database there
+# (SQLite mode has no external DB — the rm above already covered every per-user file)
 # then restart the core
 ```
 

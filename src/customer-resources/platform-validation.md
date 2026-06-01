@@ -20,7 +20,7 @@ This guide describes how to validate that a Pryv.io platform is up and running a
    2. [2. Public URL responds](#2-public-url-responds)
    3. [3. Registration / rqlite reachable](#3-registration--rqlite-reachable)
    4. [4. DNS (multi-core only)](#4-dns-multi-core-only)
-   5. [5. Base storage (PostgreSQL / MongoDB) reachable](#5-base-storage-postgresql--mongodb-reachable)
+   5. [5. Base storage (PostgreSQL or SQLite) reachable](#5-base-storage-postgresql-or-sqlite-reachable)
    6. [6. (Optional) HFS port reachable](#6-optional-hfs-port-reachable)
    7. [7. mTLS handshake on Raft (multi-core only)](#7-mtls-handshake-on-raft-multi-core-only)
 4. [Troubleshoot](#troubleshoot)
@@ -100,12 +100,12 @@ dig A someuser.${DOMAIN}
 
 **Expected:** an `ANSWER SECTION` with an A record for one of the cores.
 
-### 5. Base storage (PostgreSQL / MongoDB) reachable
+### 5. Base storage (PostgreSQL or SQLite) reachable
 
-The core logs a fatal error and exits if it cannot connect to its base storage on startup — step 1 catches this. To double-check the connection independently:
+The core logs a fatal error and exits if it cannot connect to / open its base storage on startup — step 1 catches this. To double-check the storage independently:
 
-- PostgreSQL: `psql -h <host> -U <user> -d pryv_db -c '\dt'` from the core machine.
-- MongoDB: `mongosh --host <host> --eval 'db.stats()' pryv-node` from the core machine.
+- **PostgreSQL**: `psql -h <host> -U <user> -d pryv-node -c '\dt'` from the core machine.
+- **SQLite**: `ls -1 ${DATA_DIR}/users/` from the core machine — the shard tree should be writable by the core process and (after any user has registered) contain at least one `<userId>/baseStorage-*.sqlite` file. `sqlite3 <one-such-file> '.schema'` confirms the file is a valid SQLite DB.
 
 ### 6. (Optional) HFS port reachable
 
@@ -187,9 +187,9 @@ Only in multi-core mode with embedded DNS (`dns.active: true`).
 
 ### Base storage connection fails
 
-- Credentials: re-read `storages.engines.postgresql.*` (or `mongodb.*`) in your override YAML.
-- Network: from the core host, `nc -vz <db-host> 5432` (or `27017`).
-- Permissions: PostgreSQL's `pg_hba.conf` must allow the core's IP; MongoDB's auth DB must contain the user.
+- Credentials: re-read `storages.engines.postgresql.*` in your override YAML (SQLite has no credentials — just a `sqlite.path` directory).
+- Network (PostgreSQL only): from the core host, `nc -vz <db-host> 5432`.
+- Permissions: PostgreSQL's `pg_hba.conf` must allow the core's IP. For SQLite, the core process must own (or have RW access to) the configured `sqlite.path` tree.
 
 ### Permission denied on data directories
 
