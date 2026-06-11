@@ -192,6 +192,10 @@ Error: EACCES: permission denied
 - **v2**: inspect the container with `docker logs -f --tail 50 <container-name>` (the default is `pryvio_open_pryv_io`). Ensure that the host paths mounted into the container (typically `data/users`, `data/previews`, `data/rqlite-data` — see [INSTALL](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md)) are owned by the UID the container runs as.
 - **v1**: logs live under `pryvio_${CONTAINER_NAME}`; run the provided `ensure-permissions` script on the host and reboot services.
 
+### Can I run the core with no persistent disk at all ("diskless")?
+
+Yes — single-core **dnsLess** deployments in full PostgreSQL mode can keep every durable byte off the app host: set `storages.platform.engine: postgresql` (platform data joins the user data in PostgreSQL; no rqlite process runs) and `storages.file.engine: s3` (event attachments on any S3-compatible object store — AWS S3, MinIO, Ceph RGW). The remaining configured paths are caches that can live on tmpfs, so the app container runs with a read-only root filesystem. The install wizard offers both options when you pick dnsLess + postgresql, and `bin/config-to-env.js` can convert the generated config into an env file for fully config-file-free `docker run --env-file` deployments. Multi-core platforms keep rqlite (Raft replication); `bin/migrate-platform.js` moves platform data between the two engines when a deployment changes shape. See [INSTALL — Diskless](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#diskless-postgresql--s3--nothing-to-persist-on-the-app-host).
+
 ### How do I reset data on my Pryv.io platform?
 
 This step will erase all data from your platform. Perform this at your own risk and make sure that you know what you are doing.

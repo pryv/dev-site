@@ -3,6 +3,17 @@ id: change-log
 title: API change log
 layout: default.pug
 ---
+## 2.0.0-rc.2
+
+Diskless deployment shape for single-core dnsLess installs in full PostgreSQL mode — no persistent filesystem needed on the app host:
+
+- `storages.platform.engine: postgresql` stores platform data (registrations index, DNS records, TLS certificates, invitation tokens, …) in PostgreSQL; no rqlited process runs. Single-core only — multi-core keeps rqlite; boot-time validation enforces the topology.
+- New `s3` fileStorage engine: event attachments on any S3-compatible object store (`storages.file.engine: s3` + `storages.engines.s3.*`).
+- New `bin/migrate-platform.js` moves platform data between rqlite and PostgreSQL in either direction (adopt diskless, or go multi-core later).
+- New `bin/config-to-env.js` (+ `config-to-env` docker subcommand) converts a config file into an env file for pure-ENV `docker run --env-file` deployments.
+- The install wizard offers the diskless options for dnsLess + postgresql runs and documents them as commented blocks otherwise; it now also generates a `config-to-env.sh` launcher.
+- Account deletion erases attachments through the fileStorage engine, so S3-stored attachments are removed too.
+
 ## 2.0.0-pre.4
 
 Cross-account Messaging & Consent (CMC) plugin — Phase 2 + Phase 4 hardening on the open-pryv.io server, paired with lib-js `pryv@3.4.0` + `@pryv/cmc@1.1.0` + `@pryv/monitor@3.4.0` + `@pryv/socket.io@3.4.0` (lockstep).
