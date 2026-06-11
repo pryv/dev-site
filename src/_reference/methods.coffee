@@ -512,6 +512,20 @@ module.exports = exports =
                        If set, only events of any of the listed types will be returned.
                        """
         ,
+          key: "content"
+          type: "array of [content query](##{dataStructure.getDocId("content-query")}) conditions"
+          optional: true
+          description: """
+                       If set, only events whose `content` matches all the conditions will be returned. See [content query](##{dataStructure.getDocId("content-query")}) for the condition syntax, supported operators and availability. Server support is advertised by `features.contentQueries` in [service info](#service-info).
+                       """
+        ,
+          key: "clientData"
+          type: "array of [content query](##{dataStructure.getDocId("content-query")}) conditions"
+          optional: true
+          description: """
+                       Same as `content`, applied to the events' `clientData`. Conditions from both parameters must all match.
+                       """
+        ,
           key: "running"
           type: "boolean"
           optional: true

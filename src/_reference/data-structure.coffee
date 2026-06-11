@@ -849,6 +849,55 @@ module.exports = exports =
 
   ,
 
+    id: "content-query"
+    title: "Content query"
+    description: """
+                 The `content` and `clientData` parameters of [events.get](#get-events) each accept an **array of conditions** on the corresponding event field. All conditions (across both parameters) must match (AND); they combine freely with the other query parameters (`streams`, `types`, time bounds, paging).
+
+                 **Condition syntax:**
+
+                 Each condition is an object with a `path` and exactly **one** operator:
+
+                 ```json
+                 [
+                   { "path": "drug.codes.atc", "in": ["G03DA04", "B01AC06"] },
+                   { "path": "taken", "eq": true }
+                 ]
+                 ```
+
+                 - **path**: dot-separated segments addressing a value inside the field (segments match `[a-zA-Z0-9_:-]+`, so colon-namespaced `clientData` keys are queryable), or the reserved **`$`** addressing the field's root value (for scalar content, e.g. `{"path": "$", "gte": 12}`). No array indices or wildcards.
+                 - **eq** / **neq**: equals / exists-and-differs (string, number or boolean; `null` is not allowed — use `exists`)
+                 - **in**: equals any of the listed values (array of strings, numbers or booleans)
+                 - **exists**: `true` — a value is present at the path; `false` — no value at the path
+                 - **gt**, **gte**, **lt**, **lte**: numeric comparison (non-numeric values never match)
+                 - **prefix**: string value starts with the given prefix (covers hierarchical code classes, e.g. ATC `"G03DA"`)
+
+                 **Matching is strict on JSON types**: `{"eq": true}` matches JSON `true` only — never `1` nor `"true"`; numbers never match numeric strings. A missing path never matches any operator (use `{"exists": false}` to select absence). Only current event versions are considered.
+
+                 **Availability and performance:**
+
+                 Content queries work on every supporting deployment without any setup (engines scan). Operators can declare frequently-queried paths in the platform-wide `storages.contentIndexes` configuration to create acceleration indexes — declaration changes are reconciled at startup and never affect results, only speed.
+
+                 Support is advertised by `features.contentQueries: true` in [service info](#service-info); older servers reject the parameters with a `400` error. Custom data stores declare their (possibly partial) support per field and operator; the declaration is visible to clients in the `clientData` of the store's root stream under `pryv-datastore:supports`, and unsupported conditions are rejected with an `invalid-operation` error rather than returning unfiltered results.
+
+                 **Cross-references between events (convention):**
+
+                 To reference source events (e.g. events derived from a document), set outbound references under the **`related`** key of the referencing event's `clientData`, mapping each referenced event id to a free-form relation label:
+
+                 ```json
+                 { "clientData": { "related": { "ck...sourceEventId": "derived-from" } } }
+                 ```
+
+                 The reverse direction ("all events created from this one") is an ordinary content query: `[{"path": "related.ck...sourceEventId", "exists": true}]` on `clientData`. This is a documented convention, not a schema: events carry only the references their author asserted, and event integrity is unaffected.
+
+                 **Format:**
+
+                 Like the streams query, the conditions array must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as a query parameter in a `GET /events` HTTP call, and as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.
+                 """
+    examples: []
+
+  ,
+
     id: "identifier"
     title: "Item identifier"
     description: """
