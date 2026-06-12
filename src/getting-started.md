@@ -46,7 +46,7 @@ Note that the email is optional for the account creation, but is required to res
 
 Once this is done, you will receive a welcome email from the **Pryv Lab** with your account details.
 
-You can sign in to your Pryv.io account on the following link: [https://sw.pryv.me/access/access.html](https://sw.pryv.me/access/access.html).
+You can sign in to your Pryv.io account on the following link: [https://pryv.github.io/app-web-auth3/access/access.html?pryvServiceInfoUrl=https://reg.pryv.me/service/info](https://pryv.github.io/app-web-auth3/access/access.html?pryvServiceInfoUrl=https://reg.pryv.me/service/info).
 
 <p align="center">
 <img src="/assets/images/getting-started/sign-in.png" alt="sign-in" style="zoom:40%;" />

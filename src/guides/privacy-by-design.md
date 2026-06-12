@@ -124,7 +124,7 @@ This segregation is the structural substrate for:
 
 And your data stays usable by machines — events carry a structured `type: class/format` JSON Schema, so analytics and ML pipelines consume them like any tabular store.
 
-For a deeper walkthrough of the data model, see the [Data modelling](/guides/data-modelling.html) guide.
+For a deeper walkthrough of the data model, see the [Data modelling](/guides/data-modelling/) guide.
 
 ## Privacy by default in Pryv.io
 
@@ -150,7 +150,7 @@ The reference auth flow shipped with Pryv.io — [app-web-auth3](https://github.
 
 The auth UI primitive doesn't support the anti-pattern — you can't accidentally ship a "by continuing you agree" flow even if you wanted to.
 
-See the [Consent implementation](/guides/consent.html) guide for the detailed walkthrough.
+See the [Consent implementation](/guides/consent/) guide for the detailed walkthrough.
 
 ### Twelve platform defaults
 
@@ -165,7 +165,7 @@ When an auditor asks "show me what's privacy-protective by default", point at th
 - **Schema validation at ingest.** Every event is validated against the declared event type's JSON Schema (`ajv-draft-04`) on `create` AND `update`. Out-of-shape or out-of-range payloads are rejected with HTTP 400.
 - **Zero mandatory subprocessors.** Default deployment talks to zero third-party services beyond your chosen cloud provider. SMTP, SMS, observability, Let's Encrypt — every integration is opt-in.
 - **Credentials never leak via logs.** Every log call passes through a redaction layer that strips `auth=...` tokens and `password` / `passwordHash` fields. Credentials don't leak to external aggregators.
-- **Cross-account sharing requires explicit subject consent.** Pryv.io's [CMC primitive](/guides/cross-account-messaging.html) requires the subject to write a `consent/accept-cmc` event before any cross-account data flow begins.
+- **Cross-account sharing requires explicit subject consent.** Pryv.io's [CMC primitive](/guides/cross-account-messaging/) requires the subject to write a `consent/accept-cmc` event before any cross-account data flow begins.
 - **Operator secrets encrypted at rest.** Let's Encrypt account keys, observability license keys, SMTP credentials are AES-256-GCM encrypted with HKDF-derived keys.
 - **Withdrawal API exists by default.** `DELETE /accesses/:id` is always available. A subject holding their personal token can revoke any access without third-party participation.
 
@@ -174,7 +174,7 @@ When an auditor asks "show me what's privacy-protective by default", point at th
 The defaults above are structural — Pryv.io enforces them. But Art.25(2) also has axes the platform can't decide for you:
 
 - Are app tokens minted with the **smallest possible scope**? Pryv.io lets you grant any scope; choosing the smallest is your editorial discipline.
-- Is your subject's **notice-of-collection presented by default**? The consent text plus the access's `clientData` conventions (see the [Consent implementation](/guides/consent.html) guide) give you the durable, audit-traceable record; what the notice **says** is yours to write.
+- Is your subject's **notice-of-collection presented by default**? The consent text plus the access's `clientData` conventions (see the [Consent implementation](/guides/consent/) guide) give you the durable, audit-traceable record; what the notice **says** is yours to write.
 - Is **data retention set to the shortest necessary period**? Pryv.io doesn't enforce retention; your operational pruning pipeline does.
 - Is your custom auth UI using the **opt-in pattern** rather than the "by continuing you agree" anti-pattern? If you rebrand `app-web-auth3`, the default pattern is opt-in; custom UI is your responsibility to align.
 
@@ -195,9 +195,9 @@ Pryv.io's architecture doesn't preclude any of these — they sit on top of the 
 - [GDPR full text](https://gdpr.eu) — official EU regulation.
 - [Article 25 — Data protection by design and by default](https://gdpr.eu/article-25-data-protection-by-design).
 - [Swiss Federal Act on Data Protection (FADP)](https://www.fedlex.admin.ch/eli/cc/2022/491/en).
-- [Consent implementation with Pryv.io](/guides/consent.html) — companion guide.
-- [Audit logs](/guides/audit-logs.html) — companion guide.
-- [Cross-account messaging (CMC)](/guides/cross-account-messaging.html) — CMC consent flow.
-- [Data modelling](/guides/data-modelling.html) — streams + events deep dive.
-- [App guidelines](/guides/app-guidelines.html) — implementer-facing patterns.
+- [Consent implementation with Pryv.io](/guides/consent/) — companion guide.
+- [Audit logs](/guides/audit-logs/) — companion guide.
+- [Cross-account messaging (CMC)](/guides/cross-account-messaging/) — CMC consent flow.
+- [Data modelling](/guides/data-modelling/) — streams + events deep dive.
+- [App guidelines](/guides/app-guidelines/) — implementer-facing patterns.
 - [app-web-auth3 on GitHub](https://github.com/pryv/app-web-auth3) — the reference auth web app.
