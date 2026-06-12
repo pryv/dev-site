@@ -104,6 +104,8 @@ You then need to point the `/access/` path of your Pryv.io deployment at your fo
   }
   ```
 
+  Then set `access.defaultAuthUrl` in your platform configuration to the deployed consent page (e.g. `https://${DOMAIN}/access/access.html`) so that auth requests return the right `authUrl`.
+
 - **v1** — edit the bundled NGINX config at `pryv/nginx/site.conf`. Change:
 
   ```

@@ -199,7 +199,7 @@ Bob is now ready to discover what Alice really likes...
 
 ### Data privacy requirements and legislation
 
-For more information about how the GDPR requirements affect Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/).
+For more information about how the GDPR requirements affect Swiss companies, you can read our article ["GDPR, Swiss DPA & ePrivacy – what Swiss companies should know"](https://web.archive.org/web/20200813020815/https://www.pryv.com/2019/11/20/gdpr-swiss-dpa-e-privacy/) (archived copy).
 
 ### Personal data scope
 

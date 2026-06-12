@@ -696,8 +696,7 @@ module.exports = exports =
                  """
         result:
           status: 'NEED_SIGNIN'
-          url: 'https://sw.pryv.me/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&domain=pryv.me&registerURL=https%3A%2F%2Freg.pryv.me&poll=https%3A%2F%2Freg.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4',
-          authUrl: 'https://sw.pryv.me/access/access.html?poll=https://access.pryv.me/access/6CInm4R2TLaoqtl4'
+          authUrl: 'https://pryv.github.io/app-web-auth3/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&poll=https%3A%2F%2Faccess.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4&poll_rate_ms=1000&serviceInfo=https%3A%2F%2Freg.pryv.me%2Fservice%2Finfo'
           key: '6CInm4R2TLaoqtl4'
           poll: 'https://access.pryv.me/access/6CInm4R2TLaoqtl4',
           poll_rate_ms: 1000,

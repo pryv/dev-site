@@ -66,7 +66,7 @@ curl -i -X POST -H 'Content-Type: application/json' \
 
 If you enabled registration invitation tokens (`services.register.invitationTokens`), add `"invitationtoken":"..."` to the body.
 
-Alternatively, use the built-in web app at `https://${DOMAIN}/access/register.html` (or wherever you mounted `app-web-auth3`).
+Alternatively, use the registration page of your deployed auth web app ([app-web-auth3](https://github.com/pryv/app-web-auth3)) — e.g. `https://${DOMAIN}/access/register.html` if you proxy `/access/` to it as shown in the [pages customization FAQ](/faq-infra/#customize-registration-login-password-reset-pages); the base URL is whatever you set `access.defaultAuthUrl` to.
 
 ### Obtain a non-expirable access token
 
