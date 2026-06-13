@@ -553,8 +553,9 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       Specify a custom url for the authentication process.
-                       The authUrl's beginning must match with one of the trusted URLs set in the Register's configuration.
+                       Custom authentication-page URL for this request (your own auth UI instead of the platform's default page).
+                       Honored only when it matches one of the operator-configured `access.trustedAuthUrls` entries: same protocol and host, and the path must equal the entry's path or extend it on a `/` segment boundary.
+                       A non-matching `authUrl` (or any `authUrl` when the platform configures no trusted entries) fails the request with `invalid-parameters` (HTTP 400) — it is never silently ignored.
                        """
         ,
           key: "serviceInfo"
