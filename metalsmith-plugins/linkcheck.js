@@ -10,10 +10,28 @@ const async = require('async');
 const _ = require('underscore');
 const cheerio = require('cheerio');
 const jsonfile = require('jsonfile');
-let request = require('request');
 const resolvePathname = require('resolve-pathname');
 
-request = request.defaults({ jar: request.jar() });
+// Minimal `request`-compatible shim over native fetch (Node 18+). linkcheck
+// only ever calls `.head`/`.get(url|options, cb)` and reads
+// `response.statusCode`, so a tiny adapter lets us drop the abandoned
+// `request` package (SSRF + form-data/tough-cookie/qs advisories — all
+// build-time only) without touching the link-walking logic below.
+function fetchCheck (method, urlOrOptions, cb) {
+  const opts = typeof urlOrOptions === 'string' ? { uri: urlOrOptions } : (urlOrOptions || {});
+  const url = opts.uri || opts.url;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), opts.timeout || 15000);
+  fetch(url, { method, headers: opts.headers, redirect: 'follow', signal: controller.signal })
+    .then((res) => { clearTimeout(timer); cb(null, { statusCode: res.status }, null); })
+    .catch((err) => { clearTimeout(timer); cb(err, null, null); });
+}
+const request = {
+  head: (u, cb) => fetchCheck('HEAD', u, cb),
+  get: (u, cb) => fetchCheck('GET', u, cb),
+  defaults: () => request,
+  jar: () => ({})
+};
 jsonfile.spaces = 4;
 
 const externalPattern = /^(https?|ftp|file|data):/;
