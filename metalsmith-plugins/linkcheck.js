@@ -4,6 +4,8 @@
  * Not published back to the community because it's a quickfix and we don't want further responsibilities.
  */
 
+/* global fetch, AbortController */
+
 const path = require('path');
 const fs = require('fs');
 const async = require('async');
