@@ -3,6 +3,10 @@ id: change-log
 title: API change log
 layout: default.pug
 ---
+## 2.0.0-rc.3
+
+- **BREAKING — the deprecated `GET /audit/logs` route has been removed.** Query audit logs through the [Events API](/reference/#get-events) as described in the [Audit logs guide](/guides/audit-logs/): call `events.get` with the audit streams in the `streams` parameter (`:_audit:` for all, `:_audit:access-{access-id}` for one access, `:_audit:action-{method-id}` for one action). Returned items are standard audit events (`audit-log/pryv-api` / `audit-log/pryv-api-error`). No official SDK used the route.
+
 ## 2.0.0-rc.2
 
 Diskless deployment shape for single-core dnsLess installs in full PostgreSQL mode — no persistent filesystem needed on the app host:
@@ -150,7 +154,7 @@ Changes:
 
 - Audit has been re-implemented, offering improved performance:
   - See the [Audit logs guide](/guides/audit-logs/) for API usage
-  - Audit logs are now available through the [Events API](/reference/#get-events), deprecating the [previous route](/reference/#get-audit-logs) and its [data structure](/reference/#audit-log)
+  - Audit logs are now available through the [Events API](/reference/#get-events), deprecating the previous `GET /audit/logs` route and its data structure
 - System streams have been modified. Their prefix changes from `.` (dot) to `:_system:` & `:system:`. See the [System streams page](/customer-resources/system-streams/) for details.
 - Tags have been removed from Events. In Pryv.io platforms that contained them, they are migrated to streams, See `BACKWARD_COMPATIBILITY_TAGS` platform parameter in your platform configuration. The tags functionality is ensured by [Streams queries](/reference/#streams-query) for the [events.get](/reference/#get-events) API method.
 - Permission levels are computed differently: If a child stream has a different permission than a parent, its level is indeed applied on the child (instead of the higher permission taking precendence as was done before).
