@@ -59,7 +59,7 @@ GET /events?streams=[":_audit:accesses",":_audit:actions"]&modifiedSince=T&inclu
 
 The output filename `audit_logs.json` and content shape are stable across v0.4.0+ — third-party consumers that keyed on the file path continue to work.
 
-This route is forward-compatible with the upcoming removal of the dedicated `/audit/logs` route from open-pryv.io. Older backup-tool versions that call the dedicated route directly will silently produce empty `audit_logs.json` files once the removal lands; **upgrade subject-side tooling to v0.6.0+ before that happens.**
+The dedicated `/audit/logs` route was **removed** from open-pryv.io on 2026-06-15 (commit `19d1c11f`). Older backup-tool versions that call this route directly are now production-broken for the audit-log section of the bundle against any deployment running that build. **v0.6.0 is the minimum required subject-side backup tool version** — older versions silently produce empty `audit_logs.json` files (or hit 404s).
 
 ## Operator security note
 
