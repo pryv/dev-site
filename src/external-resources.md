@@ -68,7 +68,15 @@ Handles the [MFA flow](https://pryv.github.io/reference/#multi-factor-authentica
 
 Based on the [JavaScript library](https://github.com/pryv/lib-js).
 
-### Example "blue button" service
-➔ [GitHub](https://github.com/pryv/example-service-bluebutton)
+### Subject account backup — CLI + library + sample web app
+➔ CLI + library: [pryv-account-backup](https://github.com/pryv/pryv-account-backup)
+➔ Sample web app: [pryv-account-backup-webapp](https://github.com/pryv/pryv-account-backup-webapp)
 
-Service & web app for users to download all their data.
+A subject-facing tool for downloading every read-side resource of a Pryv account (account / streams / accesses + history / profile / audit log / events / attachments / HFS series / webhooks) as a portable JSON + binary disclosure bundle. Two flavors share the same library code:
+
+- The **CLI** (`npm start`) is the canonical flavor; produces a folder of JSON + binary files plus a per-file sha256 integrity manifest for third-party auditors.
+- The **sample web app** is operator-hosted so non-technical subjects can self-serve via a "Start backup" button; produces the same coverage as the CLI minus the auditor-facing manifest, emitted as a series of subject-portable ZIP files.
+
+Subjects also get a portable `sync-state.json` they keep alongside the backup; re-supplying it on the next visit drives cross-session incremental, so subsequent runs only fetch what's changed.
+
+The previous-generation [`pryv/example-service-bluebutton`](https://github.com/pryv/example-service-bluebutton) is archived; new deployments use the pair above.
