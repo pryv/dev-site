@@ -12,7 +12,7 @@ This guide describes the **subject-facing** backup tools — what an operator po
 
 Both flavors use the same underlying library and produce a portable account dump suitable for handing to the subject:
 
-- **CLI** — [`pryv-account-backup`](https://github.com/pryv/pryv-account-backup). Subjects (or implementers acting on a subject's behalf) clone the repo, `npm install`, run `npm start`. Useful for technical subjects, scripted batch exports, and any environment where binary data matters (attachments, HFS series, webhook configurations, sha256 integrity manifest).
+- **CLI** — [`pryv-account-backup`](https://github.com/pryv/pryv-account-backup). Subjects (or implementers acting on a subject's behalf) clone the repo, `npm install`, run `npm start`. Useful for technical subjects, scripted batch exports, and the auditor-facing per-file sha256 integrity manifest.
 - **Web app** — [`pryv-account-backup-webapp`](https://github.com/pryv/pryv-account-backup-webapp). Static site you deploy on your domain. Subjects log in via a web form, click **Start backup**, download a series of ZIP files. Minimum-friction for non-technical subjects; covers the read-side text resources.
 
 Both flavors are git-clone-distributed — neither is on the npm registry. Pin to a tagged release via `github:pryv/<repo>#<tag>` in your fork's `package.json`.
@@ -33,21 +33,24 @@ Per-user backup output (CLI writes to a folder; webapp writes to a series of ZIP
 | Events (initial run) | ✅ | ✅ | `events-YYYY-MM.json` — one per UTC month in the discovered range |
 | Events (incremental run) | ✅ | ✅ | `events-incremental-<TS>.json` — only events `modified > T` |
 | Per-access version history (opt-in) | ✅ | ✅ | `accesses-history/<accessId>.json` per access |
-| Attachments (opt-in) | ✅ | ❌ | `attachments/<eventId>_<filename>` — binary streams; webapp omits to keep the bundle subject-portable |
-| High-frequency series data | ✅ | ❌ | `hf-data/<eventId>.json` per `series:*` event |
-| Webhooks per access | ✅ | ❌ | `webhooks.json` aggregated by `accessId` |
-| sha256 integrity manifest | ✅ | ❌ | `manifest.json` — tamper-evidence for third-party auditors |
+| Attachments (opt-in) | ✅ | ✅ | `attachments/<eventId>_<fileName>` — binary streams piped chunk-by-chunk through the `StorageWriter` (CLI + webapp since v0.7.0) |
+| High-frequency series data (opt-out) | ✅ | ✅ | `hf-data/<eventId>.json` per `series:*` event (CLI + webapp since v0.7.0) |
+| Webhooks per access (opt-out) | ✅ | ✅ | `webhooks.json` aggregated by `accessId` (CLI + webapp since v0.7.0); expired (401/403) tokens skipped silently and non-fatally |
+| Portable sync state | ✅ | ✅ | `sync-state.json` — kv-only snapshot (`lastRunAt` + per-resource `lastModifiedSince` + tool/format version). CLI auto-reads on the next run; webapp accepts it as an upload on the login screen for cross-browser / cross-device incremental |
+| sha256 integrity manifest | ✅ | ❌ | `manifest.json` — tamper-evidence for third-party auditors; webapp omits by design (the ZIP is signed by the operator's TLS already) |
 
-The webapp's coverage is the read-side text resources + their incremental story. If the subject's account uses attachments, HFS series, or has webhooks, point them at the CLI; otherwise the webapp is the more ergonomic path.
+Both flavors now cover every read-side resource. The only artefact the webapp does not produce is the per-file sha256 integrity manifest — auditor-facing, available only on the CLI side. For subjects whose disclosure is going to a third-party auditor that wants tamper-evidence, route them at the CLI.
 
 ## Incremental backup
 
 Both flavors persist a small state object after each successful run:
 
-- CLI: `.state.json` sentinel in the backup directory.
+- CLI: `.sync-state.json` (hidden operational store) sentinel in the backup directory; auto-migrates from a pre-v0.7.0 `.state.json` on first read.
 - Web app: `localStorage` keyed by the subject's apiEndpoint.
 
-On the next run, the tool fetches only events + audit rows with `modified > T` where `T` is the previous `runStartedAt`. Small resources (accesses, streams, profile, webhooks) are full-re-fetched each run because their payloads are small. Binary outputs (attachments, HFS, webapp ZIPs) skip on file-presence.
+Both also write a **portable `sync-state.json`** (no leading dot) at run-end — CLI lands it next to the JSON resources; webapp embeds it inside the final ZIP. The subject keeps it alongside the backup; on the next run the file drives cross-session / cross-device incremental. The webapp's pre-login state panel offers an upload picker for the file (along with a per-saved-state Reset action), so a subject who switches browser / clears site data / runs from a different device still gets a true incremental backup.
+
+On the next run, the tool fetches only events + audit rows with `modified > T` where `T` is the previous `runStartedAt`. Small resources (accesses, streams, profile) are full-re-fetched each run because their payloads are small; refs for attachments / HFS series / webhooks are populated by tee-parsing the events + accesses streams, drained by the per-method modules, and pruned at run-end (their work is per-run, not carried across runs).
 
 ## Audit log handling
 
@@ -97,7 +100,7 @@ npm install
 npm start
 ```
 
-The CLI prompts for service-info URL, username, password, trashed-data inclusion, attachments inclusion, events chunk size, per-access version history inclusion. The output lands in `./backup/<apiEndpoint>/`. Restore via `npm run restore <path-to-backup-directory>` (marked experimental — audit / webhooks / accesses are deliberately not replayed).
+The CLI prompts for service-info URL, username, password, trashed-data inclusion, attachments inclusion, events chunk size, per-access version history inclusion. The output lands in `./backup/<apiEndpoint>/`, with a portable `sync-state.json` next to the JSON resources. Restore via `npm run restore <path-to-backup-directory>` (marked experimental — audit / webhooks / accesses are deliberately not replayed).
 
 ## Related
 
