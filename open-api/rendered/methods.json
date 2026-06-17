@@ -78,8 +78,8 @@
                 "appId": "my-app-id"
               },
               "result": {
-                "apiEndpoint": "https://cla71mn110002pr0f2ff5dc5l@chuangzi.pryv.me/",
-                "token": "cla71mn110002pr0f2ff5dc5l",
+                "apiEndpoint": "https://cmqi926mu0002ysko2px8gnyd@chuangzi.pryv.me/",
+                "token": "cmqi926mu0002ysko2px8gnyd",
                 "preferredLanguage": "zh"
               }
             }
@@ -108,7 +108,6 @@
       "id": "mfa",
       "title": "Multi-factor authentication",
       "trustedOnly": true,
-      "entrepriseOnly": true,
       "description": "Methods for handling multi-factor authentication (MFA) on top of the usual [Login method](#methods-auth-auth-login).",
       "sections": [
         {
@@ -285,7 +284,7 @@
                 "code": "1234"
               },
               "result": {
-                "token": "cla71mn110002pr0f2ff5dc5l"
+                "token": "cmqi926mu0002ysko2px8gnyd"
               }
             }
           ]
@@ -368,7 +367,7 @@
       "type": "method",
       "title": "Call batch",
       "http": "POST /",
-      "description": "Sends a batch of API methods calls in one go (e.g. for to syncing offline changes when resuming connectivity).",
+      "description": "Sends a batch of API methods calls in one go (e.g. for syncing offline changes when resuming connectivity).",
       "params": {
         "description": "Array of method call objects, each defined as follows:",
         "properties": [
@@ -441,15 +440,15 @@
                   "name": "Heart",
                   "parentId": "health",
                   "children": [],
-                  "created": 1667841268.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667841268.516,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781711560.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781711560.494,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge"
                 }
               },
               {
                 "event": {
-                  "id": "cla71mn1g000tpr0fhvv9fht9",
+                  "id": "cmqi926ni000tysko6v0a0s2v",
                   "time": 1385046854.282,
                   "streamIds": [
                     "heart"
@@ -459,10 +458,10 @@
                   "type": "frequency/bpm",
                   "content": 90,
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1667841268.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667841268.516,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781711560.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781711560.494,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge"
                 }
               }
             ]
@@ -512,6 +511,18 @@
                 "type": "array of strings",
                 "optional": true,
                 "description": "If set, only events of any of the listed types will be returned."
+              },
+              {
+                "key": "content",
+                "type": "array of [content query](#data-structure-content-query) conditions",
+                "optional": true,
+                "description": "If set, only events whose `content` matches all the conditions will be returned. See [content query](#data-structure-content-query) for the condition syntax, supported operators and availability. Server support is advertised by `features.contentQueries` in [service info](#service-info)."
+              },
+              {
+                "key": "clientData",
+                "type": "array of [content query](#data-structure-content-query) conditions",
+                "optional": true,
+                "description": "Same as `content`, applied to the events' `clientData`. Conditions from both parameters must all match."
               },
               {
                 "key": "running",
@@ -580,8 +591,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "cla71mn1g000zpr0f381udhqc",
-                    "time": 1667837668.516,
+                    "id": "cmqi926ni000zysko1mikhccr",
+                    "time": 1781707960.494,
                     "streamIds": [
                       "diary"
                     ],
@@ -591,23 +602,23 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "cla71mn1g0010pr0fd3pb6g5k",
+                        "id": "cmqi926ni0010ysko39d099pd",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "cla71mn1g0011pr0fggjeh6p4-Eg3SFSWjFDrRlWKQzSnHizzi0Gr",
+                        "readToken": "cmqi926ni0011ysko0et55sfo-ufYmjc0B0cke5FZFiqxbxGoAUOg",
                         "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
                       }
                     ],
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667837668.516,
-                    "createdBy": "cla71mn120004pr0fc98x26dc",
-                    "modified": 1667837668.516,
-                    "modifiedBy": "cla71mn120004pr0fc98x26dc"
+                    "created": 1781707960.494,
+                    "createdBy": "cmqi926mu0004ysko8ond23ig",
+                    "modified": 1781707960.494,
+                    "modifiedBy": "cmqi926mu0004ysko8ond23ig"
                   },
                   {
-                    "id": "cla71mn1g000opr0fabsv8eof",
-                    "time": 1667841268.516,
+                    "id": "cmqi926ni000oysko9cg2aqp8",
+                    "time": 1781711560.494,
                     "streamIds": [
                       "jogging"
                     ],
@@ -616,13 +627,13 @@
                     "type": "activity/plain",
                     "content": null,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667841268.516,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667841268.516,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry"
+                    "created": 1781711560.494,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781711560.494,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge"
                   },
                   {
-                    "id": "cla71mn1g0012pr0f5x4o8nw2",
+                    "id": "cmqi926ni0012ysko7sc0bq4f",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -635,10 +646,10 @@
                       "longitude": -73.998672
                     },
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667834068.516,
-                    "createdBy": "cla71mn110000pr0f1i0ofptn",
-                    "modified": 1667834068.516,
-                    "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                    "created": 1781704360.494,
+                    "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                    "modified": 1781704360.494,
+                    "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                   }
                 ]
               }
@@ -649,8 +660,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "cla71mn1g0013pr0f6dfnfxk0",
-                    "time": 1667837668.516,
+                    "id": "cmqi926ni0013yskoa2gm3zjt",
+                    "time": 1781707960.494,
                     "streamIds": [
                       "running",
                       "health"
@@ -660,14 +671,14 @@
                     "type": "activity/plain",
                     "content": null,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667837668.516,
-                    "createdBy": "cla71mn120004pr0fc98x26dc",
-                    "modified": 1667837668.516,
-                    "modifiedBy": "cla71mn120004pr0fc98x26dc"
+                    "created": 1781707960.494,
+                    "createdBy": "cmqi926mu0004ysko8ond23ig",
+                    "modified": 1781707960.494,
+                    "modifiedBy": "cmqi926mu0004ysko8ond23ig"
                   },
                   {
-                    "id": "cla71mn1g0014pr0fgv906kun",
-                    "time": 1667830468.516,
+                    "id": "cmqi926ni0014yskogxc22yyz",
+                    "time": 1781700760.494,
                     "streamIds": [
                       "vegetables",
                       "health"
@@ -677,10 +688,10 @@
                     "type": "mass/kg",
                     "content": 350,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667830468.516,
-                    "createdBy": "cla71mn120004pr0fc98x26dc",
-                    "modified": 1667830468.516,
-                    "modifiedBy": "cla71mn120004pr0fc98x26dc"
+                    "created": 1781700760.494,
+                    "createdBy": "cmqi926mu0004ysko8ond23ig",
+                    "modified": 1781700760.494,
+                    "modifiedBy": "cmqi926mu0004ysko8ond23ig"
                   }
                 ]
               }
@@ -691,8 +702,8 @@
               "result": {
                 "events": [
                   {
-                    "id": "cla71mn1g000zpr0f381udhqc",
-                    "time": 1667837668.516,
+                    "id": "cmqi926ni000zysko1mikhccr",
+                    "time": 1781707960.494,
                     "streamIds": [
                       "diary"
                     ],
@@ -702,23 +713,23 @@
                     "content": null,
                     "attachments": [
                       {
-                        "id": "cla71mn1g0010pr0fd3pb6g5k",
+                        "id": "cmqi926ni0010ysko39d099pd",
                         "fileName": "photo.jpg",
                         "type": "image/jpeg",
                         "size": 2561,
-                        "readToken": "cla71mn1g0011pr0fggjeh6p4-Eg3SFSWjFDrRlWKQzSnHizzi0Gr",
+                        "readToken": "cmqi926ni0011ysko0et55sfo-ufYmjc0B0cke5FZFiqxbxGoAUOg",
                         "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
                       }
                     ],
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667837668.516,
-                    "createdBy": "cla71mn120004pr0fc98x26dc",
-                    "modified": 1667837668.516,
-                    "modifiedBy": "cla71mn120004pr0fc98x26dc"
+                    "created": 1781707960.494,
+                    "createdBy": "cmqi926mu0004ysko8ond23ig",
+                    "modified": 1781707960.494,
+                    "modifiedBy": "cmqi926mu0004ysko8ond23ig"
                   },
                   {
-                    "id": "cla71mn1g000vpr0f1dludi0p",
-                    "time": 1667837668.516,
+                    "id": "cmqi926ni000vyskobeqo5wog",
+                    "time": 1781707960.494,
                     "streamIds": [
                       "diary"
                     ],
@@ -727,13 +738,13 @@
                     "type": "note/text",
                     "content": "道可道非常道。。。",
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667837668.516,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667877268.516,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry"
+                    "created": 1781707960.494,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781747560.494,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge"
                   },
                   {
-                    "id": "cla71mn1g0012pr0f5x4o8nw2",
+                    "id": "cmqi926ni0012ysko7sc0bq4f",
                     "time": 1350373077.359,
                     "streamIds": [
                       "diary"
@@ -746,14 +757,14 @@
                       "longitude": -73.998672
                     },
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667834068.516,
-                    "createdBy": "cla71mn110000pr0f1i0ofptn",
-                    "modified": 1667834068.516,
-                    "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                    "created": 1781704360.494,
+                    "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                    "modified": 1781704360.494,
+                    "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                   },
                   {
-                    "id": "cla71mn1g000upr0f07625op7",
-                    "time": 1667841268.516,
+                    "id": "cmqi926ni000uyskohqt6f01c",
+                    "time": 1781711560.494,
                     "streamIds": [
                       "weight"
                     ],
@@ -762,22 +773,22 @@
                     "type": "mass/kg",
                     "content": 90,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667841268.516,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667841268.516,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry"
+                    "created": 1781711560.494,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781711560.494,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge"
                   }
                 ]
               }
             },
             {
               "title": "cURL with deletions",
-              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1667754868.519\"\"\n```",
+              "params": "```bash\ncurl -i \"https://${token}@${username}.pryv.me/events?includeDeletions=true&modifiedSince=1781625160.497\"\"\n```",
               "result": {
                 "events": [
                   {
-                    "id": "cla71mn1g000upr0f07625op7",
-                    "time": 1667841268.516,
+                    "id": "cmqi926ni000uyskohqt6f01c",
+                    "time": 1781711560.494,
                     "streamIds": [
                       "weight"
                     ],
@@ -786,24 +797,24 @@
                     "type": "mass/kg",
                     "content": 90,
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667841268.516,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667841268.516,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry"
+                    "created": 1781711560.494,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781711560.494,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge"
                   }
                 ],
                 "eventDeletions": [
                   {
-                    "id": "cla71mn1h001cpr0f08091wzj",
-                    "deleted": 1667837668.517
+                    "id": "cmqi926ni001cyskocuznbyks",
+                    "deleted": 1781707960.494
                   },
                   {
-                    "id": "cla71mn1h001dpr0f0p622ohw",
-                    "deleted": 1667805268.517
+                    "id": "cmqi926ni001dysko8ww99vzx",
+                    "deleted": 1781675560.495
                   },
                   {
-                    "id": "cla71mn1h001epr0f6llqfu0w",
-                    "deleted": 1667769268.517
+                    "id": "cmqi926nj001eysko72wc73ul",
+                    "deleted": 1781639560.495
                   }
                 ]
               }
@@ -850,8 +861,8 @@
               },
               "result": {
                 "event": {
-                  "id": "cla71mn1g000wpr0fhlsd4y9a",
-                  "time": 1667837668.516,
+                  "id": "cmqi926ni000wyskoh6ni6vbu",
+                  "time": 1781707960.494,
                   "streamIds": [
                     "diary"
                   ],
@@ -860,15 +871,15 @@
                   "type": "note/text",
                   "content": "Hi, I am the latest version of this event",
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1667837668.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667848468.516,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781707960.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781718760.494,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge"
                 },
                 "history": [
                   {
-                    "id": "cla71mn1g000xpr0ff9s1e8g1",
-                    "time": 1667837668.516,
+                    "id": "cmqi926ni000xyskoazi1e5l0",
+                    "time": 1781707960.494,
                     "streamIds": [
                       "diary"
                     ],
@@ -877,14 +888,14 @@
                     "type": "note/text",
                     "content": "Hi, I am the first modification",
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667837668.516,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667844868.516,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry"
+                    "created": 1781707960.494,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781715160.494,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge"
                   },
                   {
-                    "id": "cla71mn1g000ypr0f873hgp07",
-                    "time": 1667837668.516,
+                    "id": "cmqi926ni000yysko3i6dh3yd",
+                    "time": 1781707960.494,
                     "streamIds": [
                       "diary"
                     ],
@@ -893,10 +904,10 @@
                     "type": "note/text",
                     "content": "Hi, I was the initial event",
                     "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                    "created": 1667837668.516,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667841268.516,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry"
+                    "created": 1781707960.494,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781711560.494,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge"
                   }
                 ]
               }
@@ -941,8 +952,8 @@
               },
               "result": {
                 "event": {
-                  "id": "cla71mn1g000upr0f07625op7",
-                  "time": 1667841268.516,
+                  "id": "cmqi926ni000uyskohqt6f01c",
+                  "time": 1781711560.494,
                   "streamIds": [
                     "weight"
                   ],
@@ -951,10 +962,10 @@
                   "type": "mass/kg",
                   "content": 90,
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1667841268.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667841268.516,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781711560.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781711560.494,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge"
                 }
               }
             },
@@ -963,8 +974,8 @@
               "content": "```bash\ncurl -i -F 'event={\"streamIds\":[\"diary\"],\"type\":\"picture/attached\"}'  -F \"file=@photo.jpg\" \"https://${token}@${username}.pryv.me/events\"\n```",
               "result": {
                 "event": {
-                  "id": "cla71mn1g000zpr0f381udhqc",
-                  "time": 1667837668.516,
+                  "id": "cmqi926ni000zysko1mikhccr",
+                  "time": 1781707960.494,
                   "streamIds": [
                     "diary"
                   ],
@@ -974,19 +985,19 @@
                   "content": null,
                   "attachments": [
                     {
-                      "id": "cla71mn1g0010pr0fd3pb6g5k",
+                      "id": "cmqi926ni0010ysko39d099pd",
                       "fileName": "photo.jpg",
                       "type": "image/jpeg",
                       "size": 2561,
-                      "readToken": "cla71mn1g0011pr0fggjeh6p4-Eg3SFSWjFDrRlWKQzSnHizzi0Gr",
+                      "readToken": "cmqi926ni0011ysko0et55sfo-ufYmjc0B0cke5FZFiqxbxGoAUOg",
                       "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
                     }
                   ],
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1667837668.516,
-                  "createdBy": "cla71mn120004pr0fc98x26dc",
-                  "modified": 1667837668.516,
-                  "modifiedBy": "cla71mn120004pr0fc98x26dc"
+                  "created": 1781707960.494,
+                  "createdBy": "cmqi926mu0004ysko8ond23ig",
+                  "modified": 1781707960.494,
+                  "modifiedBy": "cmqi926mu0004ysko8ond23ig"
                 }
               }
             }
@@ -1047,8 +1058,8 @@
                     "position"
                   ],
                   "streamId": "position",
-                  "modified": 1667841268.52,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1781711560.497,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge",
                   "time": 1350373077.359,
                   "tags": [],
                   "type": "position/wgs84",
@@ -1057,8 +1068,8 @@
                     "longitude": -73.998672
                   },
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1667834068.516,
-                  "createdBy": "cla71mn110000pr0f1i0ofptn"
+                  "created": 1781704360.494,
+                  "createdBy": "cmqi926mu0000yskobqlnfrn1"
                 }
               }
             }
@@ -1084,34 +1095,34 @@
           "examples": [
             {
               "title": "cURL",
-              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/cla71mn1g000qpr0f9rwaa9x4\"\"\n```",
+              "content": "```bash\ncurl -i -F \"file=@travel-expense.jpg\" \"https://${token}@${username}.pryv.me/events/cmqi926ni000qyskodyw578r0\"\"\n```",
               "result": {
                 "event": {
-                  "id": "cla71mn1g000qpr0f9rwaa9x4",
-                  "time": 1667841268.516,
+                  "id": "cmqi926ni000qyskodyw578r0",
+                  "time": 1781711560.494,
                   "duration": null,
                   "streamIds": [
-                    "cla71mn1g000epr0f33rq9x8l"
+                    "cmqi926ni000eysko1urladgg"
                   ],
-                  "streamId": "cla71mn1g000epr0f33rq9x8l",
+                  "streamId": "cmqi926ni000eysko1urladgg",
                   "tags": [],
                   "type": "activity/plain",
                   "content": null,
                   "attachments": [
                     {
-                      "id": "cla71mn1g000rpr0f8rt38ogt",
+                      "id": "cmqi926ni000rysko23kc840f",
                       "fileName": "travel-expense.jpg",
                       "type": "image/jpeg",
                       "size": 1111,
-                      "readToken": "cla71mn1g000spr0ffjx14ova-M2iocxQpqUdpnIOT63PuiZfRvAv",
+                      "readToken": "cmqi926ni000sysko98c4dovc-9ldrLeai38UgZbTnRI4xEcZIWNb",
                       "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
                     }
                   ],
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1667841268.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667841268.516,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781711560.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781711560.494,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge"
                 }
               }
             }
@@ -1180,26 +1191,26 @@
           "examples": [
             {
               "params": {
-                "id": "cla71mn1g000qpr0f9rwaa9x4",
-                "fileId": "cla71mn1g000rpr0f8rt38ogt"
+                "id": "cmqi926ni000qyskodyw578r0",
+                "fileId": "cmqi926ni000rysko23kc840f"
               },
               "result": {
                 "event": {
-                  "id": "cla71mn1g000qpr0f9rwaa9x4",
-                  "time": 1667841268.516,
+                  "id": "cmqi926ni000qyskodyw578r0",
+                  "time": 1781711560.494,
                   "duration": null,
                   "streamIds": [
-                    "cla71mn1g000epr0f33rq9x8l"
+                    "cmqi926ni000eysko1urladgg"
                   ],
-                  "streamId": "cla71mn1g000epr0f33rq9x8l",
+                  "streamId": "cmqi926ni000eysko1urladgg",
                   "tags": [],
                   "type": "activity/plain",
                   "content": null,
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1667841268.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667841268.516,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781711560.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781711560.494,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge"
                 }
               }
             }
@@ -1251,15 +1262,15 @@
             {
               "title": "Trashing",
               "params": {
-                "id": "cla71mn1g000vpr0f1dludi0p"
+                "id": "cmqi926ni000vyskobeqo5wog"
               },
               "result": {
                 "event": {
                   "trashed": true,
-                  "modified": 1667841268.52,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry",
-                  "id": "cla71mn1g000vpr0f1dludi0p",
-                  "time": 1667837668.516,
+                  "modified": 1781711560.497,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge",
+                  "id": "cmqi926ni000vyskobeqo5wog",
+                  "time": 1781707960.494,
                   "streamIds": [
                     "diary"
                   ],
@@ -1268,19 +1279,19 @@
                   "type": "note/text",
                   "content": "道可道非常道。。。",
                   "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-                  "created": 1667837668.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781707960.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge"
                 }
               }
             },
             {
               "title": "Deleting",
               "params": {
-                "id": "cla71mn1g000vpr0f1dludi0p"
+                "id": "cmqi926ni000vyskobeqo5wog"
               },
               "result": {
                 "eventDeletion": {
-                  "id": "cla71mn1g000vpr0f1dludi0p"
+                  "id": "cmqi926ni000vyskobeqo5wog"
                 }
               }
             }
@@ -1291,7 +1302,6 @@
     {
       "id": "hfs",
       "title": "HF events",
-      "entrepriseOnly": true,
       "description": "Methods to manipulate high-frequency data through HF events and [HF series](#data-structure-high-frequency-series).",
       "sections": [
         {
@@ -1336,8 +1346,8 @@
               },
               "result": {
                 "event": {
-                  "id": "cla71mn1g0015pr0f481n897l",
-                  "time": 1667841268.516,
+                  "id": "cmqi926ni0015yskodpf8f390",
+                  "time": 1781711560.494,
                   "streamIds": [
                     "position"
                   ],
@@ -1362,10 +1372,10 @@
                       "longitude"
                     ]
                   },
-                  "created": 1667841268.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667841268.516,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781711560.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781711560.494,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge"
                 }
               }
             }
@@ -1561,7 +1571,7 @@
                 "format": "seriesBatch",
                 "data": [
                   {
-                    "eventId": "cla71mn1g0016pr0f21d438m5",
+                    "eventId": "cmqi926ni0016yskocwkucgtb",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1585,7 +1595,7 @@
                     }
                   },
                   {
-                    "eventId": "cla71mn1g0017pr0fb7tu9tcw",
+                    "eventId": "cmqi926ni0017ysko3dzt498n",
                     "data": {
                       "format": "flatJSON",
                       "fields": [
@@ -1667,12 +1677,6 @@
                 "description": "The id of the parent stream from which to retrieve streams. Default: `null` (returns all accessible streams from the root level)."
               },
               {
-                "key": "id",
-                "type": "[identifier](#data-structure-identifier)",
-                "optional": true,
-                "description": "The id of the stream to retrieve. Default: `null` (returns all accessible streams from the root level)."
-              },
-              {
                 "key": "state",
                 "type": "`default`|`all`",
                 "optional": true,
@@ -1711,76 +1715,76 @@
               "result": {
                 "streams": [
                   {
-                    "id": "cla71mn1g000dpr0f2385caep",
+                    "id": "cmqi926ni000dysko7n351lap",
                     "name": "Noble Works Co.",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "cla71mn1g000fpr0f8f5caqct",
+                        "id": "cmqi926ni000fyskogbpz8xjd",
                         "name": "Last Be First",
-                        "parentId": "cla71mn1g000dpr0f2385caep",
+                        "parentId": "cmqi926ni000dysko7n351lap",
                         "children": [],
-                        "created": 1604727386.3865309,
-                        "createdBy": "cla71mn110000pr0f1i0ofptn",
-                        "modified": 1604727400.7133877,
-                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                        "created": 1718597679.9683967,
+                        "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                        "modified": 1718597805.8951442,
+                        "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                       },
                       {
-                        "id": "cla71mn1g000gpr0fc2gj7hx2",
+                        "id": "cmqi926ni000gyskogu069hnp",
                         "name": "Big Tree",
-                        "parentId": "cla71mn1g000dpr0f2385caep",
+                        "parentId": "cmqi926ni000dysko7n351lap",
                         "children": [],
-                        "created": 1604727386.3865309,
-                        "createdBy": "cla71mn110000pr0f1i0ofptn",
-                        "modified": 1604727470.7840247,
-                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                        "created": 1718597679.9683967,
+                        "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                        "modified": 1718597900.6847253,
+                        "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                       },
                       {
-                        "id": "cla71mn1g000hpr0fchw772x2",
+                        "id": "cmqi926ni000hysko8bpz5whq",
                         "name": "Inner Light",
-                        "parentId": "cla71mn1g000dpr0f2385caep",
+                        "parentId": "cmqi926ni000dysko7n351lap",
                         "children": [],
-                        "created": 1604727386.3865309,
-                        "createdBy": "cla71mn110000pr0f1i0ofptn",
-                        "modified": 1604727652.8235917,
-                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                        "created": 1718597679.9683967,
+                        "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                        "modified": 1718597896.0425856,
+                        "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                       }
                     ],
-                    "created": 1604727378.544908,
-                    "createdBy": "cla71mn110000pr0f1i0ofptn",
-                    "modified": 1604727596.3537292,
-                    "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                    "created": 1718597673.323495,
+                    "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                    "modified": 1718597872.992948,
+                    "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                   },
                   {
-                    "id": "cla71mn1g000epr0f33rq9x8l",
+                    "id": "cmqi926ni000eysko1urladgg",
                     "name": "Freelancing",
                     "parentId": "work",
                     "children": [
                       {
-                        "id": "cla71mn1g000ipr0fdt247f5x",
+                        "id": "cmqi926ni000iyskofz801r0b",
                         "name": "Funky Veggies",
-                        "parentId": "cla71mn1g000epr0f33rq9x8l",
+                        "parentId": "cmqi926ni000eysko1urladgg",
                         "children": [],
-                        "created": 1604727398.7325797,
-                        "createdBy": "cla71mn110000pr0f1i0ofptn",
-                        "modified": 1604727407.374359,
-                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                        "created": 1718597688.174094,
+                        "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                        "modified": 1718597955.697362,
+                        "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                       },
                       {
-                        "id": "cla71mn1g000jpr0ffj4f3x8x",
+                        "id": "cmqi926ni000jyskodwzq662l",
                         "name": "Jojo Lapin & sons",
-                        "parentId": "cla71mn1g000epr0f33rq9x8l",
+                        "parentId": "cmqi926ni000eysko1urladgg",
                         "children": [],
-                        "created": 1604727398.7325797,
-                        "createdBy": "cla71mn110000pr0f1i0ofptn",
-                        "modified": 1604727409.6642864,
-                        "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                        "created": 1718597688.174094,
+                        "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                        "modified": 1718597939.9498909,
+                        "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                       }
                     ],
-                    "created": 1604727378.544908,
-                    "createdBy": "cla71mn110000pr0f1i0ofptn",
-                    "modified": 1604727469.1290112,
-                    "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                    "created": 1718597673.323495,
+                    "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                    "modified": 1718598016.2826512,
+                    "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                   }
                 ]
               }
@@ -1832,10 +1836,10 @@
                   "name": "White cells",
                   "parentId": "blood",
                   "children": [],
-                  "created": 1667841268.516,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667841268.516,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry"
+                  "created": 1781711560.494,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781711560.494,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge"
                 }
               }
             }
@@ -1896,12 +1900,12 @@
               "result": {
                 "stream": {
                   "name": "Slothing",
-                  "modified": 1667841268.52,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1781711560.497,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge",
                   "id": "sport",
                   "parentId": null,
-                  "created": 1604727364.516,
-                  "createdBy": "cla71mn110000pr0f1i0ofptn"
+                  "created": 1718597656.494,
+                  "createdBy": "cmqi926mu0000yskobqlnfrn1"
                 }
               }
             }
@@ -1963,14 +1967,14 @@
               "result": {
                 "stream": {
                   "trashed": true,
-                  "modified": 1667841268.52,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry",
+                  "modified": 1781711560.497,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge",
                   "id": "weight",
                   "name": "Weight",
                   "parentId": "health",
                   "children": [],
-                  "created": 1604727366.702853,
-                  "createdBy": "cla71mn110000pr0f1i0ofptn"
+                  "created": 1718597668.8928475,
+                  "createdBy": "cmqi926mu0000yskobqlnfrn1"
                 }
               }
             },
@@ -1998,8 +2002,9 @@
           "id": "accesses.get",
           "type": "method",
           "title": "Get accesses",
+          "v2Tag": true,
           "http": "GET /accesses",
-          "description": "Gets accesses that were created by your access token, unless you're using a personal token then it returns all accesses.\nOnly returns accesses that are active when making the request. To include accesses that have expired or were deleted, use\nthe `includeExpired` or `includeDeletions` parameters respectively.",
+          "description": "Gets accesses that were created by your access token, unless you're using a personal token then it returns all accesses.\nOnly returns accesses that are active when making the request. To include accesses that have expired or were deleted, use\nthe `includeExpired` or `includeDeletions` parameters respectively.\n\nIn v2 the returned `id`, `createdBy`, and `modifiedBy` fields use the composite reference format `<base>:<serial>` for accesses that have been updated at least once. Never-updated accesses still serialise as bare cuid (`<base>`) for full backwards-compatibility. Parse with `pryv.utils.parseAccessRef(ref)` if you need to extract the version.",
           "params": {
             "properties": [
               {
@@ -2037,8 +2042,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "cla71mn120004pr0fc98x26dc",
-                    "token": "cla71mn120005pr0f8abuguja",
+                    "id": "cmqi926mu0004ysko8ond23ig",
+                    "token": "cmqi926mu0005ysko5u91cqrv",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -2048,11 +2053,11 @@
                       }
                     ],
                     "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-                    "created": 1667798068.502,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667798068.502,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry",
-                    "apiEndpoint": "https://cla71mn120005pr0f8abuguja@user1.pryv.me/"
+                    "created": 1781668360.47,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781668360.47,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge",
+                    "apiEndpoint": "https://cmqi926mu0005ysko5u91cqrv@user1.pryv.me/"
                   }
                 ]
               }
@@ -2063,8 +2068,8 @@
               "result": {
                 "accesses": [
                   {
-                    "id": "cla71mn120004pr0fc98x26dc",
-                    "token": "cla71mn120005pr0f8abuguja",
+                    "id": "cmqi926mu0004ysko8ond23ig",
+                    "token": "cmqi926mu0005ysko5u91cqrv",
                     "type": "shared",
                     "name": "Arthur",
                     "permissions": [
@@ -2074,17 +2079,17 @@
                       }
                     ],
                     "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-                    "created": 1667798068.502,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667798068.502,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry",
-                    "apiEndpoint": "https://cla71mn120005pr0f8abuguja@user1.pryv.me/"
+                    "created": 1781668360.47,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781668360.47,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge",
+                    "apiEndpoint": "https://cmqi926mu0005ysko5u91cqrv@user1.pryv.me/"
                   }
                 ],
                 "accessDeletions": [
                   {
-                    "id": "cla71mn120008pr0f20le97yf",
-                    "token": "cla71mn120009pr0fhiis5rt3",
+                    "id": "cmqi926mu0008yskog4zzendv",
+                    "token": "cmqi926mu0009ysko8w738b9h",
                     "type": "shared",
                     "name": "Health parameters survey",
                     "permissions": [
@@ -2094,14 +2099,96 @@
                       }
                     ],
                     "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-                    "created": 1667841148.502,
-                    "createdBy": "cla71mn110001pr0f63n86rry",
-                    "modified": 1667841148.502,
-                    "modifiedBy": "cla71mn110001pr0f63n86rry",
-                    "deleted": 1667841208.502,
-                    "apiEndpoint": "https://cla71mn120009pr0fhiis5rt3@user1.pryv.me/"
+                    "created": 1781711440.47,
+                    "createdBy": "cmqi926mu0001ysko251q20ge",
+                    "modified": 1781711440.47,
+                    "modifiedBy": "cmqi926mu0001ysko251q20ge",
+                    "deleted": 1781711500.47,
+                    "apiEndpoint": "https://cmqi926mu0009ysko8w738b9h@user1.pryv.me/"
                   }
                 ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "accesses.getOne",
+          "type": "method",
+          "title": "Get one access",
+          "v2Tag": true,
+          "http": "GET /accesses/{id}",
+          "description": "Returns the access identified by `{id}`. The id can be either:\n\n- **bare** `<base>` — returns the current head row.\n- **composite** `<base>:<serial>` matching the current head's serial — returns the current head row.\n- **composite** `<base>:<serial>` referring to an *older* serial — returns the historical snapshot from that version, alongside a `current` hint pointing at the live head's composite id. Mirrors GitHub's `GET /repos/X/Y/commits/<sha>` behaviour for ref-by-version.\n- any other id (unknown base, or a serial that never existed) — `404 unknown-resource`.\n\nPass `?includeHistory=true` to also return the full chronological history of the access (oldest first) in a `history` array. Default `false` — the singular case covers the typical \"audit this access\" use case without the list-side overhead.\n\nApp callers can only fetch their own access (self) or shared accesses they directly manage; other access ids return `404 unknown-resource` to avoid info leakage.",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The access id to fetch. Bare cuid on never-updated accesses, composite `<base>:<serial>` once versioned."
+              },
+              {
+                "key": "includeHistory",
+                "type": "boolean",
+                "optional": true,
+                "description": "If `true`, include the chronological history of the access. Defaults to `false`."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "access",
+                "type": "[access](#data-structure-access)",
+                "description": "The requested access (current head, or historical snapshot when the id targets an older serial)."
+              },
+              {
+                "key": "current",
+                "type": "string",
+                "optional": true,
+                "description": "Set when the request targeted an older serial — the composite id `<base>:<serial>` of the current head."
+              },
+              {
+                "key": "history",
+                "type": "array of [accesses](#data-structure-access)",
+                "optional": true,
+                "description": "Set when `includeHistory=true` — the chronological history of the access (oldest first). Each entry uses the composite id of the frozen version."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "unknown-resource",
+              "http": "404",
+              "description": "The access does not exist, was soft-deleted, or the caller cannot see it (app caller visibility rule)."
+            }
+          ],
+          "examples": [
+            {
+              "params": {
+                "id": "cmqi926mu0004ysko8ond23ig"
+              },
+              "result": {
+                "access": {
+                  "id": "cmqi926mu0004ysko8ond23ig",
+                  "token": "cmqi926mu0005ysko5u91cqrv",
+                  "type": "shared",
+                  "name": "Arthur",
+                  "permissions": [
+                    {
+                      "streamId": "family",
+                      "level": "contribute"
+                    }
+                  ],
+                  "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
+                  "created": 1781668360.47,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781668360.47,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge",
+                  "apiEndpoint": "https://cmqi926mu0005ysko5u91cqrv@user1.pryv.me/"
+                }
               }
             }
           ]
@@ -2110,8 +2197,9 @@
           "id": "accesses.create",
           "type": "method",
           "title": "Create access",
+          "v2Tag": true,
           "http": "POST /accesses",
-          "description": "Creates a new access. You can only create accesses whose permissions are a subset of those granted to your own access token.",
+          "description": "Creates a new access. You can only create accesses whose permissions are a subset of those granted to your own access token.\n\n**v2 behaviour change** (Pryv.io ≥ 2.0.0-pre.X): when an `app` access creates a `shared` access scoped under it, the new shared's `expires` (resolved from `expireAfter` if provided) cannot exceed the managing app's `expires`. Violations return `invalid-operation` with `data: { parentExpires, requestedExpires }`. Personal-issued accesses are not subject to this check (personal accesses typically have no `expires`).",
           "params": {
             "description": "An object with the new access's data: see [access](#data-structure-access)."
           },
@@ -2145,8 +2233,8 @@
               },
               "result": {
                 "access": {
-                  "id": "cla71mn120006pr0f4nia4h04",
-                  "token": "cla71mn120007pr0ffs289hj5",
+                  "id": "cmqi926mu0006yskogzep6eun",
+                  "token": "cmqi926mu0007yskoaif11cpe",
                   "type": "shared",
                   "name": "For colleagues",
                   "permissions": [
@@ -2156,11 +2244,101 @@
                     }
                   ],
                   "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-                  "created": 1667841268.502,
-                  "createdBy": "cla71mn110001pr0f63n86rry",
-                  "modified": 1667841268.502,
-                  "modifiedBy": "cla71mn110001pr0f63n86rry",
-                  "apiEndpoint": "https://cla71mn120007pr0ffs289hj5@user1.pryv.me/"
+                  "created": 1781711560.47,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781711560.47,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge",
+                  "apiEndpoint": "https://cmqi926mu0007yskoaif11cpe@user1.pryv.me/"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "accesses.update",
+          "type": "method",
+          "title": "Update access",
+          "v2Tag": true,
+          "http": "PUT /accesses/{id}",
+          "description": "Updates the access identified by `{id}`. Each successful update mutates the head row, snapshots the prior state into history, and bumps the access's `serial`. The returned access carries the new wire-format composite id `<base>:<serial>` (or bare `<base>` when never updated).\n\n**Mutable fields** (whitelist): `name`, `deviceName`, `permissions`, `expireAfter` / `expires`, `clientData`. Anything else returns `invalid-parameters-format`.\n\n**Caller-vs-target matrix**:\n- `personal` accesses are immutable (no caller can update them).\n- An `app` access can update only the `shared` accesses it directly manages.\n- `shared` accesses cannot update anything.\n- No self-update via this method (self-revoke stays available via `accesses.delete`).\n\n**Chain rules enforced on update**:\n- A managed `shared`'s new `permissions` must remain a subset of its managing `app`'s permissions.\n- Narrowing an `app`'s permissions (or `expires`) is strict-rejected if any managed `shared` would now sit outside the new scope or outlive the new expiry. The error includes `data.offendingChildren: [ids]` so the caller can resolve children first and retry.\n- A managed `shared`'s `expires` cannot exceed its managing `app`'s `expires` (parent with `expires: null` imposes no cap).\n\n**Composite-id conflict**: the `{id}` must match the current head's `serial`. A stale composite returns `409 stale-resource` with `data: { provided, currentSerial }`; refetch the access via [Get one access](#methods-accesses-accesses-getOne) and retry with the current head id. Bare `<base>` is only valid on a never-updated access.\n\nOn success, the server emits an `accessesChanged` socket.io event (coarse-grained) and an `accessUpdated` event with payload `{ type: 'access-updated', accessId, serial }` (fine-grained).",
+          "params": {
+            "properties": [
+              {
+                "key": "id",
+                "type": "[identifier](#data-structure-identifier)",
+                "http": {
+                  "text": "set in request path"
+                },
+                "description": "The access id (bare or composite) to update."
+              },
+              {
+                "key": "update",
+                "type": "object",
+                "http": {
+                  "text": "request body"
+                },
+                "description": "Subset of mutable fields (`name`, `deviceName`, `permissions`, `expireAfter`, `expires: null`, `clientData`). Sent as the HTTP request body — the server wraps it into `params.update`."
+              }
+            ]
+          },
+          "result": {
+            "http": "200 OK",
+            "properties": [
+              {
+                "key": "access",
+                "type": "[access](#data-structure-access)",
+                "description": "The updated head, with new composite `id` and bumped `serial`."
+              }
+            ]
+          },
+          "errors": [
+            {
+              "key": "stale-resource",
+              "http": "409",
+              "description": "The provided composite `{id}` does not match the current head's serial. Refetch via `accesses.getOne` and retry."
+            },
+            {
+              "key": "invalid-operation",
+              "http": "400",
+              "description": "Chain rule violation. `data.offendingChildren` lists shared accesses that would be orphaned by a narrowing; `data.parentExpires` / `data.requestedExpires` are set for expiry-chain rejections."
+            },
+            {
+              "key": "forbidden",
+              "http": "403",
+              "description": "Caller is not allowed to update the target (personal access, self-update, app-trying-to-update-a-non-managed-access, or shared caller)."
+            },
+            {
+              "key": "unknown-resource",
+              "http": "404",
+              "description": "Access not found or soft-deleted."
+            }
+          ],
+          "examples": [
+            {
+              "params": {
+                "id": "cmqi926mu0004ysko8ond23ig",
+                "update": {
+                  "name": "Renamed shared"
+                }
+              },
+              "result": {
+                "access": {
+                  "id": "cmqi926mu0004ysko8ond23ig",
+                  "token": "cmqi926mu0005ysko5u91cqrv",
+                  "type": "shared",
+                  "name": "Arthur",
+                  "permissions": [
+                    {
+                      "streamId": "family",
+                      "level": "contribute"
+                    }
+                  ],
+                  "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
+                  "created": 1781668360.47,
+                  "createdBy": "cmqi926mu0001ysko251q20ge",
+                  "modified": 1781668360.47,
+                  "modifiedBy": "cmqi926mu0001ysko251q20ge",
+                  "apiEndpoint": "https://cmqi926mu0005ysko5u91cqrv@user1.pryv.me/"
                 }
               }
             }
@@ -2170,8 +2348,9 @@
           "id": "accesses.delete",
           "type": "method",
           "title": "Delete access",
+          "v2Tag": true,
           "http": "DELETE /accesses/{id}",
-          "description": "Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.\nAll accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.",
+          "description": "Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.\nAll accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.\n\n**v2 behaviour change** (Pryv.io ≥ 2.0.0-pre.X): the `{id}` is composite-aware — pass the composite `<base>:<serial>` you last observed via [Get accesses](#methods-accesses-accesses-get) or [Get one access](#methods-accesses-accesses-getOne). A stale composite returns `409 stale-resource` with `data: { provided, currentSerial }`; refetch and retry. Bare `<base>` is only valid on a never-updated access.",
           "params": {
             "properties": [
               {
@@ -2203,18 +2382,18 @@
           "examples": [
             {
               "params": {
-                "id": "cla71mn110001pr0f63n86rry"
+                "id": "cmqi926mu0001ysko251q20ge"
               },
               "result": {
                 "accessDeletion": {
-                  "id": "cla71mn110001pr0f63n86rry"
+                  "id": "cmqi926mu0001ysko251q20ge"
                 },
                 "relatedDeletions": [
                   {
-                    "id": "cla71mn1k001rpr0fh5b82vz1"
+                    "id": "cmqi926nl001mysko9domfyez"
                   },
                   {
-                    "id": "cla71mn1k001spr0f65ur61am"
+                    "id": "cmqi926nl001nyskoaurd58g5"
                   }
                 ]
               }
@@ -2298,8 +2477,8 @@
         {
           "params": {},
           "result": {
-            "id": "cla71mn12000apr0fb27van1f",
-            "token": "cla71mn12000bpr0fgyk86039",
+            "id": "cmqi926mu000ayskobqdw4pdc",
+            "token": "cmqi926mu000byskoa1t9ci6j",
             "type": "app",
             "name": "Current access",
             "deviceName": "My awesome device",
@@ -2312,16 +2491,16 @@
             "user": {
               "username": "jackslater"
             },
-            "lastUsed": 1667840968.502,
-            "expires": 1667841148.502,
-            "deleted": 1667841208.502,
+            "lastUsed": 1781711260.47,
+            "expires": 1781711440.47,
+            "deleted": 1781711500.47,
             "clientData": {
               "consent": "My custom consent message."
             },
-            "created": 1667841148.502,
-            "createdBy": "cla71mn110001pr0f63n86rry",
-            "modified": 1667841148.502,
-            "modifiedBy": "cla71mn110001pr0f63n86rry",
+            "created": 1781711440.47,
+            "createdBy": "cmqi926mu0001ysko251q20ge",
+            "modified": 1781711440.47,
+            "modifiedBy": "cmqi926mu0001ysko251q20ge",
             "calls": {
               "getAccessInfo": 12,
               "profile:get": 5,
@@ -2329,153 +2508,14 @@
               "streams:get": 11,
               "accesses:get": 6
             },
-            "apiEndpoint": "https://cla71mn12000bpr0fgyk86039@user1.pryv.me/"
+            "apiEndpoint": "https://cmqi926mu000byskoa1t9ci6j@user1.pryv.me/"
           }
-        }
-      ]
-    },
-    {
-      "id": "audit",
-      "title": "Audit",
-      "description": "Methods to retrieve [Audit logs](#data-structure-audit-log).",
-      "sections": [
-        {
-          "id": "audit.get",
-          "type": "method",
-          "title": "Get audit logs",
-          "http": "GET /audit/logs",
-          "httpOnly": true,
-          "description": "**(DEPRECATED)** Please use the [Get events method](#get-events) instead.\n\nFetches accessible audit logs.\nBy default, only returns logs that involve the access corresponding to the provided authorization token (self-auditing).",
-          "params": {
-            "properties": [
-              {
-                "key": "accessId",
-                "type": "[identifier](#data-structure-identifier)",
-                "optional": true,
-                "description": "The id of a specific access to audit.\nWhen specified, it fetches the audit logs that involve the matching access instead of the one used to authorize this call.\nIt has to correspond to a sub-access (expired and deleted included) in regards to the provided authorization token."
-              },
-              {
-                "key": "fromTime",
-                "type": "[timestamp](#data-structure-timestamp)",
-                "optional": true,
-                "description": "The start time of the timeframe you want to retrieve audit logs for.\nTimestamps are considered with a day precision."
-              },
-              {
-                "key": "toTime",
-                "type": "[timestamp](#data-structure-timestamp)",
-                "optional": true,
-                "description": "The end time of the timeframe you want to retrieve audit logs for.\nTimestamps are considered with a day precision."
-              },
-              {
-                "key": "status",
-                "type": "number",
-                "optional": true,
-                "description": "Filters audit logs by HTTP response status, a 3-digits number.\nIt is possible to provide only the first digit,\nin which case the two unspecified digits will be wildcarded.\nFor example, `status=4` will return all logs with status between 400 and 499."
-              },
-              {
-                "key": "ip",
-                "type": "string",
-                "optional": true,
-                "description": "Filters audit logs by client IP address present in the `forwardedFor` property."
-              },
-              {
-                "key": "httpVerb",
-                "type": "string",
-                "optional": true,
-                "description": "Filters audit logs by HTTP verb present in the `action` property."
-              },
-              {
-                "key": "resource",
-                "type": "string",
-                "optional": true,
-                "description": "Filters audit logs by API resource present in the `action` property."
-              },
-              {
-                "key": "errorId",
-                "type": "string",
-                "optional": true,
-                "description": "Filters audit logs by error id."
-              }
-            ]
-          },
-          "result": {
-            "http": "200 OK",
-            "properties": [
-              {
-                "key": "auditLogs",
-                "type": "array of [Audit logs](#data-structure-audit-log)",
-                "description": "The accessible audit logs."
-              }
-            ]
-          },
-          "errors": [
-            {
-              "key": "forbidden",
-              "http": "403",
-              "description": "Authorization token is not authorized to audit the given access.\n\nWhen providing a specific access id, if the result of [Get Accesses](#methods-accesses-accesses-get)\nusing the provided Authorization token does not contain the given access, then it is not auditable."
-            }
-          ],
-          "examples": [
-            {
-              "params": {
-                "accessId": "cla71mn1h001mpr0f3cbudteg",
-                "fromTime": 1561000000,
-                "toTime": 1562000000,
-                "status": 403,
-                "ip": "172.18.0.7",
-                "httpVerb": "GET",
-                "resource": "/events",
-                "errorId": "forbidden"
-              },
-              "result": {
-                "auditLogs": [
-                  {
-                    "id": "cla71mn1h001opr0f41zd7g5p",
-                    "type": "audit/core",
-                    "time": 1561988300,
-                    "forwardedFor": "172.18.0.7",
-                    "action": "GET /events",
-                    "query": "streamId=diary",
-                    "accessId": "cla71mn1h001mpr0f3cbudteg",
-                    "status": 403,
-                    "errorMessage": "Access session has expired.",
-                    "errorId": "forbidden"
-                  },
-                  {
-                    "id": "cla71mn1h001ppr0fg47ifg8k",
-                    "type": "audit/core",
-                    "time": 1561988900,
-                    "forwardedFor": "172.18.0.7",
-                    "action": "GET /events",
-                    "query": "streamId=diary",
-                    "accessId": "cla71mn1h001mpr0f3cbudteg",
-                    "status": 403,
-                    "errorMessage": "Access session has expired.",
-                    "errorId": "forbidden"
-                  },
-                  {
-                    "id": "cla71mn1h001qpr0f9ferabuc",
-                    "type": "audit/core",
-                    "time": 1561989200,
-                    "forwardedFor": "172.18.0.7",
-                    "action": "GET /events",
-                    "query": "streamId=work",
-                    "accessId": "cla71mn1h001mpr0f3cbudteg",
-                    "status": 403,
-                    "errorMessage": "Access session has expired.",
-                    "errorId": "forbidden"
-                  }
-                ]
-              }
-            }
-          ]
         }
       ]
     },
     {
       "id": "webhooks",
       "title": "Webhooks",
-      "entrepriseOnly": true,
       "description": "Methods to retrieve and manipulate [webhooks](#data-structure-webhook). These methods are only allowed for app and personal accesses.",
       "sections": [
         {
@@ -2503,8 +2543,8 @@
               "result": {
                 "webhooks": [
                   {
-                    "id": "cla71mn1h001hpr0fd9brfjpj",
-                    "accessId": "cla71mn1h001fpr0fctyx65en",
+                    "id": "cmqi926nj001hysko1ucd9x4t",
+                    "accessId": "cmqi926nj001fyskohb843ucf",
                     "url": "https://notifications.service.com/pryv",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2514,26 +2554,26 @@
                     "failCount": 0,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1667837668.517
+                      "timestamp": 1781707960.495
                     },
                     "runs": [
                       {
                         "status": 200,
-                        "timestamp": 1667837668.517
+                        "timestamp": 1781707960.495
                       },
                       {
                         "status": 200,
-                        "timestamp": 1667834068.517
+                        "timestamp": 1781704360.495
                       }
                     ],
-                    "created": 1667754868.517,
-                    "createdBy": "cla71mn1h001fpr0fctyx65en",
-                    "modified": 1667754868.517,
-                    "modifiedBy": "cla71mn1h001fpr0fctyx65en"
+                    "created": 1781625160.495,
+                    "createdBy": "cmqi926nj001fyskohb843ucf",
+                    "modified": 1781625160.495,
+                    "modifiedBy": "cmqi926nj001fyskohb843ucf"
                   },
                   {
-                    "id": "cla71mn1h001jpr0ff0700ol1",
-                    "accessId": "cla71mn1h001fpr0fctyx65en",
+                    "id": "cmqi926nj001jyskoh61oc0wz",
+                    "accessId": "cmqi926nj001fyskohb843ucf",
                     "url": "https://notifications.pryv.me/webhooks",
                     "minIntervalMs": 5000,
                     "maxRetries": 5,
@@ -2543,46 +2583,46 @@
                     "failCount": 2,
                     "lastRun": {
                       "status": 200,
-                      "timestamp": 1667841263.517
+                      "timestamp": 1781711555.495
                     },
                     "runs": [
                       {
                         "status": 500,
-                        "timestamp": 1667841263.517
+                        "timestamp": 1781711555.495
                       },
                       {
                         "status": 500,
-                        "timestamp": 1667841258.517
+                        "timestamp": 1781711550.495
                       },
                       {
                         "status": 200,
-                        "timestamp": 1667840668.517
+                        "timestamp": 1781710960.495
                       },
                       {
                         "status": 200,
-                        "timestamp": 1667840068.517
+                        "timestamp": 1781710360.495
                       },
                       {
                         "status": 200,
-                        "timestamp": 1667839468.517
+                        "timestamp": 1781709760.495
                       },
                       {
                         "status": 200,
-                        "timestamp": 1667838868.517
+                        "timestamp": 1781709160.495
                       },
                       {
                         "status": 200,
-                        "timestamp": 1667838268.517
+                        "timestamp": 1781708560.495
                       },
                       {
                         "status": 200,
-                        "timestamp": 1667837668.517
+                        "timestamp": 1781707960.495
                       }
                     ],
-                    "created": 1667668468.517,
-                    "createdBy": "cla71mn1h001fpr0fctyx65en",
-                    "modified": 1667668468.517,
-                    "modifiedBy": "cla71mn1h001fpr0fctyx65en"
+                    "created": 1781538760.495,
+                    "createdBy": "cmqi926nj001fyskohb843ucf",
+                    "modified": 1781538760.495,
+                    "modifiedBy": "cmqi926nj001fyskohb843ucf"
                   }
                 ]
               }
@@ -2622,8 +2662,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "cla71mn1h001hpr0fd9brfjpj",
-                  "accessId": "cla71mn1h001fpr0fctyx65en",
+                  "id": "cmqi926nj001hysko1ucd9x4t",
+                  "accessId": "cmqi926nj001fyskohb843ucf",
                   "url": "https://notifications.service.com/pryv",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2633,22 +2673,22 @@
                   "failCount": 0,
                   "lastRun": {
                     "status": 200,
-                    "timestamp": 1667837668.517
+                    "timestamp": 1781707960.495
                   },
                   "runs": [
                     {
                       "status": 200,
-                      "timestamp": 1667837668.517
+                      "timestamp": 1781707960.495
                     },
                     {
                       "status": 200,
-                      "timestamp": 1667834068.517
+                      "timestamp": 1781704360.495
                     }
                   ],
-                  "created": 1667754868.517,
-                  "createdBy": "cla71mn1h001fpr0fctyx65en",
-                  "modified": 1667754868.517,
-                  "modifiedBy": "cla71mn1h001fpr0fctyx65en"
+                  "created": 1781625160.495,
+                  "createdBy": "cmqi926nj001fyskohb843ucf",
+                  "modified": 1781625160.495,
+                  "modifiedBy": "cmqi926nj001fyskohb843ucf"
                 }
               }
             }
@@ -2676,13 +2716,72 @@
           "errors": [],
           "examples": [
             {
+              "title": "A simple webhook",
               "params": {
-                "url": "https://sievey.io/webhooks"
+                "url": "https://notifications.service.com/pryv"
               },
               "result": {
                 "webhook": {
-                  "id": "cla71mn1h001kpr0f447tabbx",
-                  "accessId": "cla71mn1h001gpr0f78yv3c8c",
+                  "id": "cmqi926nj001hysko1ucd9x4t",
+                  "accessId": "cmqi926nj001fyskohb843ucf",
+                  "url": "https://notifications.service.com/pryv",
+                  "minIntervalMs": 5000,
+                  "maxRetries": 5,
+                  "currentRetries": 0,
+                  "state": "active",
+                  "runCount": 2,
+                  "failCount": 0,
+                  "lastRun": {
+                    "status": 200,
+                    "timestamp": 1781707960.495
+                  },
+                  "runs": [
+                    {
+                      "status": 200,
+                      "timestamp": 1781707960.495
+                    },
+                    {
+                      "status": 200,
+                      "timestamp": 1781704360.495
+                    }
+                  ],
+                  "created": 1781625160.495,
+                  "createdBy": "cmqi926nj001fyskohb843ucf",
+                  "modified": 1781625160.495,
+                  "modifiedBy": "cmqi926nj001fyskohb843ucf"
+                }
+              }
+            },
+            {
+              "title": "A scoped webhook (notified only of matching changes)",
+              "params": {
+                "url": "https://sievey.io/webhooks",
+                "scopes": {
+                  "newReadings": {
+                    "kind": "events",
+                    "query": {
+                      "streams": [
+                        "measurements"
+                      ],
+                      "types": [
+                        "mass/kg"
+                      ]
+                    }
+                  },
+                  "structure": {
+                    "kind": "streams",
+                    "query": {
+                      "streams": [
+                        "measurements"
+                      ]
+                    }
+                  }
+                }
+              },
+              "result": {
+                "webhook": {
+                  "id": "cmqi926nj001kyskodzx0dvxd",
+                  "accessId": "cmqi926nj001gysko975ob2pz",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2692,10 +2791,31 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1667841263.517,
-                  "createdBy": "cla71mn1h001gpr0f78yv3c8c",
-                  "modified": 1667841263.517,
-                  "modifiedBy": "cla71mn1h001gpr0f78yv3c8c"
+                  "scopes": {
+                    "newReadings": {
+                      "kind": "events",
+                      "query": {
+                        "streams": [
+                          "measurements"
+                        ],
+                        "types": [
+                          "mass/kg"
+                        ]
+                      }
+                    },
+                    "structure": {
+                      "kind": "streams",
+                      "query": {
+                        "streams": [
+                          "measurements"
+                        ]
+                      }
+                    }
+                  },
+                  "created": 1781711555.495,
+                  "createdBy": "cmqi926nj001gysko975ob2pz",
+                  "modified": 1781711555.495,
+                  "modifiedBy": "cmqi926nj001gysko975ob2pz"
                 }
               }
             }
@@ -2752,8 +2872,8 @@
               },
               "result": {
                 "webhook": {
-                  "id": "cla71mn1h001ipr0f7emu2na1",
-                  "accessId": "cla71mn1h001fpr0fctyx65en",
+                  "id": "cmqi926nj001iyskobcuo7zgl",
+                  "accessId": "cmqi926nj001fyskohb843ucf",
                   "url": "https://notifications.pryv.me/myusername/ui3HDAw43",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2763,28 +2883,28 @@
                   "failCount": 5,
                   "lastRun": {
                     "status": 404,
-                    "timestamp": 1667841253.517
+                    "timestamp": 1781711545.495
                   },
                   "runs": [
                     {
                       "status": 404,
-                      "timestamp": 1667841253.517
+                      "timestamp": 1781711545.495
                     },
                     {
                       "status": 404,
-                      "timestamp": 1667841213.517
+                      "timestamp": 1781711505.495
                     },
                     {
                       "status": 404,
-                      "timestamp": 1667841193.517
+                      "timestamp": 1781711485.495
                     },
                     {
                       "status": 404,
-                      "timestamp": 1667841183.517
+                      "timestamp": 1781711475.495
                     },
                     {
                       "status": 404,
-                      "timestamp": 1667841178.517
+                      "timestamp": 1781711470.495
                     }
                   ]
                 }
@@ -2823,11 +2943,11 @@
           "examples": [
             {
               "params": {
-                "id": "cla71mn1h001kpr0f447tabbx"
+                "id": "cmqi926nj001kyskodzx0dvxd"
               },
               "result": {
                 "webhookDeletion": {
-                  "id": "cla71mn1h001kpr0f447tabbx"
+                  "id": "cmqi926nj001kyskodzx0dvxd"
                 }
               }
             }
@@ -2866,8 +2986,8 @@
               "params": {},
               "result": {
                 "webhook": {
-                  "id": "cla71mn1h001kpr0f447tabbx",
-                  "accessId": "cla71mn1h001gpr0f78yv3c8c",
+                  "id": "cmqi926nj001kyskodzx0dvxd",
+                  "accessId": "cmqi926nj001gysko975ob2pz",
                   "url": "https://sievey.io/webhooks",
                   "minIntervalMs": 5000,
                   "maxRetries": 5,
@@ -2877,10 +2997,31 @@
                   "failCount": 0,
                   "lastRun": {},
                   "runs": [],
-                  "created": 1667841263.517,
-                  "createdBy": "cla71mn1h001gpr0f78yv3c8c",
-                  "modified": 1667841263.517,
-                  "modifiedBy": "cla71mn1h001gpr0f78yv3c8c"
+                  "scopes": {
+                    "newReadings": {
+                      "kind": "events",
+                      "query": {
+                        "streams": [
+                          "measurements"
+                        ],
+                        "types": [
+                          "mass/kg"
+                        ]
+                      }
+                    },
+                    "structure": {
+                      "kind": "streams",
+                      "query": {
+                        "streams": [
+                          "measurements"
+                        ]
+                      }
+                    }
+                  },
+                  "created": 1781711555.495,
+                  "createdBy": "cmqi926nj001gysko975ob2pz",
+                  "modified": 1781711555.495,
+                  "modifiedBy": "cmqi926nj001gysko975ob2pz"
                 }
               }
             }

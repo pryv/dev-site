@@ -148,8 +148,8 @@
         {
           "title": "A picture",
           "content": {
-            "id": "cla71mn1g000zpr0f381udhqc",
-            "time": 1667837668.516,
+            "id": "cmqi926ni000zysko1mikhccr",
+            "time": 1781707960.494,
             "streamIds": [
               "diary"
             ],
@@ -159,26 +159,26 @@
             "content": null,
             "attachments": [
               {
-                "id": "cla71mn1g0010pr0fd3pb6g5k",
+                "id": "cmqi926ni0010ysko39d099pd",
                 "fileName": "photo.jpg",
                 "type": "image/jpeg",
                 "size": 2561,
-                "readToken": "cla71mn1g0011pr0fggjeh6p4-Eg3SFSWjFDrRlWKQzSnHizzi0Gr",
+                "readToken": "cmqi926ni0011ysko0et55sfo-ufYmjc0B0cke5FZFiqxbxGoAUOg",
                 "integrity": "sha256-JhFVUp+6GmF4xApi6dZrNroSrunAWl4R0ocXi8bjF1U="
               }
             ],
             "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-            "created": 1667837668.516,
-            "createdBy": "cla71mn120004pr0fc98x26dc",
-            "modified": 1667837668.516,
-            "modifiedBy": "cla71mn120004pr0fc98x26dc"
+            "created": 1781707960.494,
+            "createdBy": "cmqi926mu0004ysko8ond23ig",
+            "modified": 1781707960.494,
+            "modifiedBy": "cmqi926mu0004ysko8ond23ig"
           }
         },
         {
           "title": "An activity",
           "content": {
-            "id": "cla71mn1g000opr0fabsv8eof",
-            "time": 1667841268.516,
+            "id": "cmqi926ni000oysko9cg2aqp8",
+            "time": 1781711560.494,
             "streamIds": [
               "jogging"
             ],
@@ -187,16 +187,16 @@
             "type": "activity/plain",
             "content": null,
             "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-            "created": 1667841268.516,
-            "createdBy": "cla71mn110001pr0f63n86rry",
-            "modified": 1667841268.516,
-            "modifiedBy": "cla71mn110001pr0f63n86rry"
+            "created": 1781711560.494,
+            "createdBy": "cmqi926mu0001ysko251q20ge",
+            "modified": 1781711560.494,
+            "modifiedBy": "cmqi926mu0001ysko251q20ge"
           }
         },
         {
           "title": "A position",
           "content": {
-            "id": "cla71mn1g0012pr0f5x4o8nw2",
+            "id": "cmqi926ni0012ysko7sc0bq4f",
             "time": 1350373077.359,
             "streamIds": [
               "diary"
@@ -209,10 +209,10 @@
               "longitude": -73.998672
             },
             "integrity": "EVENT:0:sha256-ieAsdy44tr0o/9aFEdbzVTRVzzZEVYDUDLSfTMQsHUU=",
-            "created": 1667834068.516,
-            "createdBy": "cla71mn110000pr0f1i0ofptn",
-            "modified": 1667834068.516,
-            "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+            "created": 1781704360.494,
+            "createdBy": "cmqi926mu0000yskobqlnfrn1",
+            "modified": 1781704360.494,
+            "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
           }
         }
       ]
@@ -298,26 +298,26 @@
                   "name": "Jogging",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1604727368.0204506,
-                  "createdBy": "cla71mn110000pr0f1i0ofptn",
-                  "modified": 1604727566.11949,
-                  "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                  "created": 1718597677.9623675,
+                  "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                  "modified": 1718597854.5987942,
+                  "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                 },
                 {
                   "id": "bicycling",
                   "name": "Bicycling",
                   "parentId": "sport",
                   "children": [],
-                  "created": 1604727368.0204506,
-                  "createdBy": "cla71mn110000pr0f1i0ofptn",
-                  "modified": 1604727679.2881103,
-                  "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                  "created": 1718597677.9623675,
+                  "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                  "modified": 1718597687.5104618,
+                  "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                 }
               ],
-              "created": 1604727364.516,
-              "createdBy": "cla71mn110000pr0f1i0ofptn",
-              "modified": 1604727429.0074303,
-              "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+              "created": 1718597656.494,
+              "createdBy": "cmqi926mu0000yskobqlnfrn1",
+              "modified": 1718597911.8737607,
+              "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
             },
             {
               "id": "work",
@@ -325,82 +325,82 @@
               "parentId": null,
               "children": [
                 {
-                  "id": "cla71mn1g000dpr0f2385caep",
+                  "id": "cmqi926ni000dysko7n351lap",
                   "name": "Noble Works Co.",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "cla71mn1g000fpr0f8f5caqct",
+                      "id": "cmqi926ni000fyskogbpz8xjd",
                       "name": "Last Be First",
-                      "parentId": "cla71mn1g000dpr0f2385caep",
+                      "parentId": "cmqi926ni000dysko7n351lap",
                       "children": [],
-                      "created": 1604727386.3865309,
-                      "createdBy": "cla71mn110000pr0f1i0ofptn",
-                      "modified": 1604727400.7133877,
-                      "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                      "created": 1718597679.9683967,
+                      "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                      "modified": 1718597805.8951442,
+                      "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                     },
                     {
-                      "id": "cla71mn1g000gpr0fc2gj7hx2",
+                      "id": "cmqi926ni000gyskogu069hnp",
                       "name": "Big Tree",
-                      "parentId": "cla71mn1g000dpr0f2385caep",
+                      "parentId": "cmqi926ni000dysko7n351lap",
                       "children": [],
-                      "created": 1604727386.3865309,
-                      "createdBy": "cla71mn110000pr0f1i0ofptn",
-                      "modified": 1604727470.7840247,
-                      "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                      "created": 1718597679.9683967,
+                      "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                      "modified": 1718597900.6847253,
+                      "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                     },
                     {
-                      "id": "cla71mn1g000hpr0fchw772x2",
+                      "id": "cmqi926ni000hysko8bpz5whq",
                       "name": "Inner Light",
-                      "parentId": "cla71mn1g000dpr0f2385caep",
+                      "parentId": "cmqi926ni000dysko7n351lap",
                       "children": [],
-                      "created": 1604727386.3865309,
-                      "createdBy": "cla71mn110000pr0f1i0ofptn",
-                      "modified": 1604727652.8235917,
-                      "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                      "created": 1718597679.9683967,
+                      "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                      "modified": 1718597896.0425856,
+                      "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                     }
                   ],
-                  "created": 1604727378.544908,
-                  "createdBy": "cla71mn110000pr0f1i0ofptn",
-                  "modified": 1604727596.3537292,
-                  "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                  "created": 1718597673.323495,
+                  "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                  "modified": 1718597872.992948,
+                  "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                 },
                 {
-                  "id": "cla71mn1g000epr0f33rq9x8l",
+                  "id": "cmqi926ni000eysko1urladgg",
                   "name": "Freelancing",
                   "parentId": "work",
                   "children": [
                     {
-                      "id": "cla71mn1g000ipr0fdt247f5x",
+                      "id": "cmqi926ni000iyskofz801r0b",
                       "name": "Funky Veggies",
-                      "parentId": "cla71mn1g000epr0f33rq9x8l",
+                      "parentId": "cmqi926ni000eysko1urladgg",
                       "children": [],
-                      "created": 1604727398.7325797,
-                      "createdBy": "cla71mn110000pr0f1i0ofptn",
-                      "modified": 1604727407.374359,
-                      "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                      "created": 1718597688.174094,
+                      "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                      "modified": 1718597955.697362,
+                      "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                     },
                     {
-                      "id": "cla71mn1g000jpr0ffj4f3x8x",
+                      "id": "cmqi926ni000jyskodwzq662l",
                       "name": "Jojo Lapin & sons",
-                      "parentId": "cla71mn1g000epr0f33rq9x8l",
+                      "parentId": "cmqi926ni000eysko1urladgg",
                       "children": [],
-                      "created": 1604727398.7325797,
-                      "createdBy": "cla71mn110000pr0f1i0ofptn",
-                      "modified": 1604727409.6642864,
-                      "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                      "created": 1718597688.174094,
+                      "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                      "modified": 1718597939.9498909,
+                      "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                     }
                   ],
-                  "created": 1604727378.544908,
-                  "createdBy": "cla71mn110000pr0f1i0ofptn",
-                  "modified": 1604727469.1290112,
-                  "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+                  "created": 1718597673.323495,
+                  "createdBy": "cmqi926mu0000yskobqlnfrn1",
+                  "modified": 1718598016.2826512,
+                  "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
                 }
               ],
-              "created": 1604727364.516,
-              "createdBy": "cla71mn110000pr0f1i0ofptn",
-              "modified": 1604727508.4242828,
-              "modifiedBy": "cla71mn110000pr0f1i0ofptn"
+              "created": 1718597656.494,
+              "createdBy": "cmqi926mu0000yskobqlnfrn1",
+              "modified": 1718597925.7669985,
+              "modifiedBy": "cmqi926mu0000yskobqlnfrn1"
             }
           ]
         }
@@ -557,8 +557,8 @@
         {
           "title": "An app access",
           "content": {
-            "id": "cla71mn110001pr0f63n86rry",
-            "token": "cla71mn120003pr0f3o0zcst0",
+            "id": "cmqi926mu0001ysko251q20ge",
+            "token": "cmqi926mu0003ysko4l8ogpfq",
             "type": "app",
             "name": "my-app-id",
             "permissions": [
@@ -568,17 +568,17 @@
               }
             ],
             "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-            "created": 1667754868.502,
-            "createdBy": "cla71mn110000pr0f1i0ofptn",
-            "modified": 1667754868.502,
-            "modifiedBy": "cla71mn110000pr0f1i0ofptn",
-            "apiEndpoint": "https://cla71mn120003pr0f3o0zcst0@user1.pryv.me/"
+            "created": 1781625160.47,
+            "createdBy": "cmqi926mu0000yskobqlnfrn1",
+            "modified": 1781625160.47,
+            "modifiedBy": "cmqi926mu0000yskobqlnfrn1",
+            "apiEndpoint": "https://cmqi926mu0003ysko4l8ogpfq@user1.pryv.me/"
           }
         },
         {
           "title": "An app access with create-only and forbidden selfRevoke permissions",
           "content": {
-            "id": "cla71mn12000cpr0f4car9gmo",
+            "id": "cmqi926mu000cyskoayvv7yjk",
             "token": "mailbox",
             "type": "shared",
             "name": "publicly available token",
@@ -593,10 +593,10 @@
               }
             ],
             "integrity": "ACCESS:0:sha256-PHrsNNRauGOQV7YUeCo/HP21EugCbYkv/laykaWw9RE=",
-            "created": 1667754868.502,
-            "createdBy": "cla71mn110000pr0f1i0ofptn",
-            "modified": 1667754868.502,
-            "modifiedBy": "cla71mn110000pr0f1i0ofptn",
+            "created": 1781625160.47,
+            "createdBy": "cmqi926mu0000yskobqlnfrn1",
+            "modified": 1781625160.47,
+            "modifiedBy": "cmqi926mu0000yskobqlnfrn1",
             "apiEndpoint": "https://mailbox@user1.pryv.me/"
           }
         }
@@ -677,92 +677,6 @@
         }
       ],
       "examples": []
-    },
-    {
-      "id": "audit-log",
-      "title": "Audit log",
-      "description": "**(DEPRECATED)** Audit logs are available as events of type [log/user-api and log/user-api-error](/event-types/#log) through the [Get events method](#get-events).\n\nAudit logs keep track of details about the actions performed by clients against Pryv.io accounts through the Pryv.io API.\nThese logs can be fetched by presenting an authorization token, allowing to audit the actions that involved a given token.",
-      "properties": [
-        {
-          "key": "id",
-          "type": "[identifier](#data-structure-identifier)",
-          "readOnly": true,
-          "description": "The identifier for the action that generated this log."
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "readOnly": true,
-          "description": "The type of log."
-        },
-        {
-          "key": "time",
-          "type": "[timestamp](#data-structure-timestamp)",
-          "readOnly": true,
-          "description": "The time the API call was executed."
-        },
-        {
-          "key": "forwardedFor",
-          "type": "string",
-          "readOnly": true,
-          "description": "The IP address of the client who performed the audited action."
-        },
-        {
-          "key": "action",
-          "type": "string",
-          "readOnly": true,
-          "description": "The audited action, typically an API method call, composed by the HTTP verb and the API resource."
-        },
-        {
-          "key": "query",
-          "type": "string",
-          "readOnly": true,
-          "description": "The query string that accompanied the audited action, if any."
-        },
-        {
-          "key": "accessId",
-          "type": "string",
-          "readOnly": true,
-          "description": "The identifier for the access used to perform the audited action."
-        },
-        {
-          "key": "status",
-          "type": "number",
-          "readOnly": true,
-          "description": "The HTTP response status resulting from the audited action."
-        },
-        {
-          "key": "errorMessage",
-          "type": "string",
-          "readOnly": true,
-          "optional": true,
-          "description": "The error message resulting from the audited action, if any."
-        },
-        {
-          "key": "errorId",
-          "type": "string",
-          "readOnly": true,
-          "optional": true,
-          "description": "The identifier for the error resulting from the audited action, if any."
-        }
-      ],
-      "examples": [
-        {
-          "title": "A single audit log",
-          "content": {
-            "id": "cla71mn1h001opr0f41zd7g5p",
-            "type": "audit/core",
-            "time": 1561988300,
-            "forwardedFor": "172.18.0.7",
-            "action": "GET /events",
-            "query": "streamId=diary",
-            "accessId": "cla71mn1h001mpr0f3cbudteg",
-            "status": 403,
-            "errorMessage": "Access session has expired.",
-            "errorId": "forbidden"
-          }
-        }
-      ]
     },
     {
       "id": "high-frequency-series",
@@ -928,6 +842,12 @@
           "description": "Array of Run objects in inverse chronological order (newest first) which allows to monitor a webhook's health. Its length is set by the platform admin."
         },
         {
+          "key": "scopes",
+          "type": "object",
+          "optional": true,
+          "description": "Optional map of **named scopes** that restrict the webhook to specific changes. When omitted, the webhook fires on every change in the account (default, unfiltered behaviour).\n\nEach entry is keyed by a name you choose and has the shape `{ kind, query }`:\n\n- `kind` — one of `events` (default), `streams` or `accesses`.\n- `query` — a filter shaped like the parameters of the matching read method: an [events.get](#get-events) query for `events` (`streams`, `types`, `content`, `clientData`), a `{ streams }` query for `streams`, or an accesses filter for `accesses`.\n\nA scoped webhook receives notifications **only** for changes matching one of its scopes. Instead of the coarse `eventsChanged` / `streamsChanged` messages, the [data changes payload](#with-webhooks) then carries the **matched scope keys** — so your endpoint knows *which* subscription fired without inspecting the data:\n\n```json\n{\n  \"scopes\": {\n    \"newReadings\": { \"kind\": \"events\", \"query\": { \"streams\": [\"measurements\"], \"types\": [\"mass/kg\"] } },\n    \"structure\":   { \"kind\": \"streams\", \"query\": { \"streams\": [\"measurements\"] } }\n  }\n}\n```\n\n`scopes` is alterable: include it in an [update webhook](#methods-webhooks-webhooks-update) call to change the subscriptions of an existing webhook."
+        },
+        {
           "key": "created",
           "type": "[timestamp](#data-structure-timestamp)",
           "readOnly": true,
@@ -956,8 +876,8 @@
         {
           "title": "A simple Webhook",
           "content": {
-            "id": "cla71mn1h001hpr0fd9brfjpj",
-            "accessId": "cla71mn1h001fpr0fctyx65en",
+            "id": "cmqi926nj001hysko1ucd9x4t",
+            "accessId": "cmqi926nj001fyskohb843ucf",
             "url": "https://notifications.service.com/pryv",
             "minIntervalMs": 5000,
             "maxRetries": 5,
@@ -967,22 +887,22 @@
             "failCount": 0,
             "lastRun": {
               "status": 200,
-              "timestamp": 1667837668.517
+              "timestamp": 1781707960.495
             },
             "runs": [
               {
                 "status": 200,
-                "timestamp": 1667837668.517
+                "timestamp": 1781707960.495
               },
               {
                 "status": 200,
-                "timestamp": 1667834068.517
+                "timestamp": 1781704360.495
               }
             ],
-            "created": 1667754868.517,
-            "createdBy": "cla71mn1h001fpr0fctyx65en",
-            "modified": 1667754868.517,
-            "modifiedBy": "cla71mn1h001fpr0fctyx65en"
+            "created": 1781625160.495,
+            "createdBy": "cmqi926nj001fyskohb843ucf",
+            "modified": 1781625160.495,
+            "modifiedBy": "cmqi926nj001fyskohb843ucf"
           }
         }
       ]
@@ -1046,6 +966,12 @@
       "id": "streams-query",
       "title": "streams query",
       "description": "The `streams` parameter for [events.get](#get-events) query accepts an **array** of streamIds or a **streams query** for more complex requests.\n\n**Syntax:**\n\nThe streams query must have at least one `any` property, with an optional `not`:\n\n```json\n{ \"any\": [\"streamA\", \"streamB\"], \"all\": [\"streamC\"], \"not\": [\"streamD\"] }\n```\n\n- **any**: any streamId must match\n- **all**: all streamIds must match\n- **not**: none of the streamIds must match\n\nThe returned events will be those matching all of the provided criteria.\n\n**Example:**\n\nTo select all the events that are in `activity` or `nutrition`, tagged in `health`, but not in `private`:\n\n```json\n{\n  \"any\": [\"activity\", \"nutrition\"],\n  \"all\": [\"health\"],\n  \"not\": [\"private\"]\n}\n```\n\n**Format:**\n\nThe JSON object representing the query must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as query parameter in a `GET /events` HTTP call.\nIt can be sent as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.",
+      "examples": []
+    },
+    {
+      "id": "content-query",
+      "title": "Content query",
+      "description": "The `content` and `clientData` parameters of [events.get](#get-events) each accept an **array of conditions** on the corresponding event field. All conditions (across both parameters) must match (AND); they combine freely with the other query parameters (`streams`, `types`, time bounds, paging).\n\n**Condition syntax:**\n\nEach condition is an object with a `path` and exactly **one** operator:\n\n```json\n[\n  { \"path\": \"drug.codes.atc\", \"in\": [\"G03DA04\", \"B01AC06\"] },\n  { \"path\": \"taken\", \"eq\": true }\n]\n```\n\n- **path**: dot-separated segments addressing a value inside the field (segments match `[a-zA-Z0-9_:-]+`, so colon-namespaced `clientData` keys are queryable), or the reserved **`$`** addressing the field's root value (for scalar content, e.g. `{\"path\": \"$\", \"gte\": 12}`). No array indices or wildcards.\n- **eq** / **neq**: equals / exists-and-differs (string, number or boolean; `null` is not allowed — use `exists`)\n- **in**: equals any of the listed values (array of strings, numbers or booleans)\n- **exists**: `true` — a value is present at the path; `false` — no value at the path\n- **gt**, **gte**, **lt**, **lte**: numeric comparison (non-numeric values never match)\n- **prefix**: string value starts with the given prefix (covers hierarchical code classes, e.g. ATC `\"G03DA\"`)\n\n**Matching is strict on JSON types**: `{\"eq\": true}` matches JSON `true` only — never `1` nor `\"true\"`; numbers never match numeric strings. A missing path never matches any operator (use `{\"exists\": false}` to select absence). Only current event versions are considered.\n\n**Availability and performance:**\n\nContent queries work on every supporting deployment without any setup (engines scan). Operators can declare frequently-queried paths in the platform-wide `storages.contentIndexes` configuration to create acceleration indexes — declaration changes are reconciled at startup and never affect results, only speed.\n\nSupport is advertised by `features.contentQueries: true` in [service info](#service-info); older servers reject the parameters with a `400` error. Custom data stores declare their (possibly partial) support per field and operator; the declaration is visible to clients in the `clientData` of the store's root stream under `pryv-datastore:supports`, and unsupported conditions are rejected with an `invalid-operation` error rather than returning unfiltered results.\n\n**Cross-references between events (convention):**\n\nTo reference source events (e.g. events derived from a document), set outbound references under the **`related`** key of the referencing event's `clientData`, mapping each referenced event id to a free-form relation label:\n\n```json\n{ \"clientData\": { \"related\": { \"ck...sourceEventId\": \"derived-from\" } } }\n```\n\nThe reverse direction (\"all events created from this one\") is an ordinary content query: `[{\"path\": \"related.ck...sourceEventId\", \"exists\": true}]` on `clientData`. This is a documented convention, not a schema: events carry only the references their author asserted, and event integrity is unaffected.\n\n**Format:**\n\nLike the streams query, the conditions array must be sent [stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when passed as a query parameter in a `GET /events` HTTP call, and as-is for [batch](#call-batch) and [socket.io](#call-with-websockets) calls.",
       "examples": []
     },
     {

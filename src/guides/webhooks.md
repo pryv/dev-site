@@ -205,6 +205,36 @@ In case you are dealing with possibly frequent data changes, you might encounter
 
 The `minIntervalMs` parameter can be configured by the Pryv.io platform administrator.
 
+### Scoped notifications
+
+By default a webhook fires on **every** change in the account. If your service only cares about some of the data, you can attach one or more named **scopes** when creating the webhook (and change them later via [webhooks.update](/reference/#methods-webhooks-webhooks-update)).
+
+Each scope is `{ kind, query }`:
+
+- `kind` — `events` (default), `streams` or `accesses`.
+- `query` — a filter shaped like the parameters of the matching read method. For `events` this is an [events.get](/reference/#get-events) query (`streams`, `types`, `content`, `clientData`); for `streams` a `{ streams }` query; for `accesses` an accesses filter.
+
+```json
+{
+  "url": "https://notifications.service.com/pryv",
+  "scopes": {
+    "newReadings": { "kind": "events", "query": { "streams": ["measurements"], "types": ["mass/kg"] } },
+    "structure":   { "kind": "streams", "query": { "streams": ["measurements"] } }
+  }
+}
+```
+
+A scoped webhook is notified **only** of changes matching one of its scopes, and the `messages` array of the request payload then carries the matched **scope keys** instead of the coarse `eventsChanged` / `streamsChanged` values — so your endpoint knows exactly which subscription fired:
+
+```json
+{
+  "messages": ["newReadings"],
+  "meta": { "apiVersion": "...", "serial": "...", "serverTime": 1234567890.123 }
+}
+```
+
+The same scoping mechanism is available over the Socket.io transport — see [scoped subscriptions](/reference/#scoped-subscriptions-websockets) in the API reference.
+
 ### Retries
 
 In case of failure to send an HTTP POST request, such as a response status outside the 200-299 range  or timeout, the webhook will retry the request at exponentially increasing intervals.

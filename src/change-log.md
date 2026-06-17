@@ -7,6 +7,12 @@ layout: default.pug
 
 - **BREAKING — the deprecated `GET /audit/logs` route has been removed.** Query audit logs through the [Events API](/reference/#get-events) as described in the [Audit logs guide](/guides/audit-logs/): call `events.get` with the audit streams in the `streams` parameter (`:_audit:` for all, `:_audit:access-{access-id}` for one access, `:_audit:action-{method-id}` for one action). Returned items are standard audit events (`audit-log/pryv-api` / `audit-log/pryv-api-error`). No official SDK used the route.
 
+Scoped real-time notifications for both notification transports — be notified only of the changes you care about, paired with lib-js `pryv@3.7.0` + `@pryv/socket.io@3.7.0` + `@pryv/monitor@3.7.0` (lockstep).
+
+- **Webhooks** gained an optional [`scopes`](/reference/#webhook) field: a map of named scopes, each `{ kind, query }` where `kind` is `events` (default), `streams` or `accesses` and `query` is shaped like the matching read method's parameters (an [events.get](/reference/#get-events) query for `events`). A scoped webhook fires only on matching changes and its [data changes payload](/reference/#subscribe-to-changes) carries the matched **scope keys** instead of the coarse `eventsChanged` / `streamsChanged` messages. `scopes` is alterable via [webhooks.update](/reference/#update-webhook). Unfiltered webhooks are unchanged.
+- **Websockets** gained `subscribe` / `unsubscribe` / `getSubscriptions` messages and a unified [`notificationsChanged`](/reference/#scoped-subscriptions-websockets) message. A connection holding at least one scope opts out of the coarse broadcasts and receives `notificationsChanged({ keys })` with the matched scope keys. Back-compatible: servers without the feature reject `subscribe`, and the SDK falls back to the coarse messages.
+- **`@pryv/monitor`** transparently registers a scope derived from its `eventsGetScope` and uses `notificationsChanged` when the server supports it, falling back to coarse signals otherwise — no API change for monitor consumers.
+
 ## 2.0.0-rc.2
 
 Diskless deployment shape for single-core dnsLess installs in full PostgreSQL mode — no persistent filesystem needed on the app host:

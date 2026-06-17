@@ -1866,7 +1866,13 @@ module.exports = exports =
         ]
       errors: []
       examples: [
-        params: _.pick(examples.webhooks.new, "url")
+        title: "A simple webhook"
+        params: _.pick(examples.webhooks.simple, "url")
+        result:
+          webhook: examples.webhooks.simple
+      ,
+        title: "A scoped webhook (notified only of matching changes)"
+        params: _.pick(examples.webhooks.new, "url", "scopes")
         result:
           webhook: examples.webhooks.new
       ]
