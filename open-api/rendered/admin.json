@@ -5,7 +5,7 @@
     {
       "id": "basics",
       "title": "Basics",
-      "description": "This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.\nThis service is only available with an [**Entreprise version**](https://pryv.github.io/concepts/#entreprise-version--open-pryvio).",
+      "description": "This document describes Pryv.io's **administration** API, allowing to configure the platform parameters and manage platform users.",
       "sections": [
         {
           "id": "admin-service",
