@@ -196,6 +196,8 @@ module.exports = exports =
                   Messages do not include the content of the changes, but they describe what type of resource has been changed (created, updated or deleted).
                   They inform the server that it needs to fetch new or updated data through the API by doing a HTTP GET request with a valid access token.
                   The `systemBoot` message is executed when the notifications system is started in order to query possibly missed data changes.
+
+                  Both transports can be narrowed to **named scopes** so you are notified only of matching changes — see [scoped subscriptions](#scoped-subscriptions-websockets) for websockets and the [webhook](#webhook) `scopes` field for webhooks. A scoped subscription replaces the coarse messages above with the matched scope keys.
                   """
     sections: [
       id: "with-websockets"
@@ -214,10 +216,46 @@ module.exports = exports =
                   """
       ]
     ,
+      id: "scoped-subscriptions"
+      title: "Scoped subscriptions (websockets)"
+      description: """
+                  By default a websocket connection receives the coarse `eventsChanged` / `streamsChanged` / `accessesChanged` messages above for **every** change in the account. You can instead register one or more **named scopes** so the server wakes you only when a *matching* change occurs.
+
+                  Manage scopes by emitting these messages (each takes a callback that receives an acknowledgement):
+
+                  - `subscribe` — register scopes. Payload is a single `{ key, kind, query }` or a bulk `{ scopes: { key: { kind, query } } }`. `kind` is one of `events` (default), `streams` or `accesses`; `query` is shaped like the parameters of the matching read method (an [events.get](#get-events) query for `events`, `{ streams }` for `streams`, an accesses filter for `accesses`). Acknowledged with `{ ok: true, keys: [...] }`.
+                  - `unsubscribe` — remove scopes. Payload is `{ key }`, `{ keys: [...] }` or `{ all: true }`. Acknowledged with `{ ok: true, keys: [...] }`.
+                  - `getSubscriptions` — list the active scopes. Acknowledged with `{ scopes: { key: { kind, query } } }`.
+
+                  As soon as a connection holds at least one scope, it **opts out** of the coarse broadcasts and instead receives a single `notificationsChanged` message whose payload is `{ keys: [...] }` — the matched scope keys. Older servers that don't support scoped subscriptions reject `subscribe` (treating it as an unknown method); clients should fall back to the coarse messages in that case.
+                  """
+      examples: [
+        title: "Subscribe to a scoped events stream (Javascript)"
+        content: """
+                  ```javascript
+                  socket.emit('subscribe', {
+                    scopes: {
+                      newReadings: { kind: 'events', query: { streams: ['measurements'], types: ['mass/kg'] } },
+                      structure:   { kind: 'streams', query: { streams: ['measurements'] } }
+                    }
+                  }, function (ack) {
+                    // ack === { ok: true, keys: ['newReadings', 'structure'] }
+                  });
+
+                  socket.on('notificationsChanged', function (payload) {
+                    // payload.keys lists which scopes matched, e.g. ['newReadings']
+                    // retrieve the latest matching data and act accordingly
+                  });
+                  ```
+                  """
+      ]
+    ,
       id: "with-webhooks"
       title: "With webhooks"
       description: """
                   Get notified of data changes in a web service using [webhooks](#webhook).
+
+                  An unfiltered webhook reports the coarse change types (`eventsChanged`, `streamsChanged`, …). A [scoped webhook](#webhook) (one created with a `scopes` map) instead reports the **matched scope keys** in the same `messages` array — see the second example below.
                   """
       examples: [
         title: "Webhooks data changes payload"
@@ -227,6 +265,23 @@ module.exports = exports =
                   "messages": [
                     "eventsChanged",
                     "streamsChanged"
+                  ],
+                  "meta": {
+                    "apiVersion": "1.4.11",
+                    "serial": "20190802",
+                    "serverTime": #{timestamp.now()}
+                  }
+                }
+                ```
+                """
+      ,
+        title: "Scoped webhook data changes payload"
+        content: """
+                The `messages` array carries the matched scope keys (here a webhook created with scopes `newReadings` and `structure`):
+                ```json
+                {
+                  "messages": [
+                    "newReadings"
                   ],
                   "meta": {
                     "apiVersion": "1.4.11",

@@ -112,6 +112,16 @@ module.exports = exports =
     failCount: 0
     lastRun: {}
     runs: []
+    scopes:
+      newReadings:
+        kind: 'events'
+        query:
+          streams: ['measurements']
+          types: ['mass/kg']
+      structure:
+        kind: 'streams'
+        query:
+          streams: ['measurements']
     created: timestamp.now('-5s')
     createdBy: secondId
     modified: timestamp.now('-5s')

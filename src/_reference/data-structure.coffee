@@ -635,6 +635,31 @@ module.exports = exports =
       description: """
                    Array of Run objects in inverse chronological order (newest first) which allows to monitor a webhook's health. Its length is set by the platform admin.
                    """
+    ,
+      key: "scopes"
+      type: "object"
+      optional: true
+      description: """
+                   Optional map of **named scopes** that restrict the webhook to specific changes. When omitted, the webhook fires on every change in the account (default, unfiltered behaviour).
+
+                   Each entry is keyed by a name you choose and has the shape `{ kind, query }`:
+
+                   - `kind` — one of `events` (default), `streams` or `accesses`.
+                   - `query` — a filter shaped like the parameters of the matching read method: an [events.get](#get-events) query for `events` (`streams`, `types`, `content`, `clientData`), a `{ streams }` query for `streams`, or an accesses filter for `accesses`.
+
+                   A scoped webhook receives notifications **only** for changes matching one of its scopes. Instead of the coarse `eventsChanged` / `streamsChanged` messages, the [data changes payload](#with-webhooks) then carries the **matched scope keys** — so your endpoint knows *which* subscription fired without inspecting the data:
+
+                   ```json
+                   {
+                     "scopes": {
+                       "newReadings": { "kind": "events", "query": { "streams": ["measurements"], "types": ["mass/kg"] } },
+                       "structure":   { "kind": "streams", "query": { "streams": ["measurements"] } }
+                     }
+                   }
+                   ```
+
+                   `scopes` is alterable: include it in an [update webhook](#methods-webhooks-webhooks-update) call to change the subscriptions of an existing webhook.
+                   """
     ].concat(changeTrackingProperties("webhook"))
     examples: [
       title: "A simple Webhook"
