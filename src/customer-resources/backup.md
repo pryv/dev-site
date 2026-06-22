@@ -8,7 +8,7 @@ withTOC: true
 
 This guide describes how the **operator** backs up a Pryv.io platform and restores from a backup — the disaster-recovery / migration story. For the **subject-facing** backup tools (what to point a data subject at when they file a DSAR / portability request), see [Subject Account Backup](./subject-account-backup).
 
-> **Since v2 (2026)** Pryv.io ships a built-in backup/restore tool, `bin/backup.js`. Prefer it over raw database dumps — it understands Pryv.io's data model, backs up per user, supports incremental runs and can verify integrity on restore. Raw database/filesystem dumps are still documented below as a disaster-recovery alternative for operators who need them (offline DB snapshots, block-level volume backups, etc.).
+> **Since v2 (2026)** Pryv.io ships a built-in backup/restore tool, `bin/backup.js`. Prefer it over raw database dumps — it understands Pryv.io's data model, backs up per user, supports incremental runs, can verify integrity on restore, and can **encrypt its output on demand** so no plaintext personal/health data touches the backup media. For any backup that leaves the host (off-site, outsourced, or third-party storage) you should [encrypt it](#encrypting-the-backup). Raw database/filesystem dumps are still documented below as a disaster-recovery alternative for operators who need them (offline DB snapshots, block-level volume backups, etc.).
 
 
 ## Table of contents <!-- omit in toc -->
@@ -17,11 +17,12 @@ This guide describes how the **operator** backs up a Pryv.io platform and restor
    1. [Full backup](#full-backup)
    2. [Incremental backup](#incremental-backup)
    3. [Backup a single user](#backup-a-single-user)
-   4. [Restore](#restore)
-   5. [What's in the backup](#whats-in-the-backup)
+   4. [Encrypting the backup](#encrypting-the-backup)
+   5. [Restore](#restore)
+   6. [What's in the backup](#whats-in-the-backup)
 2. [Alternative: raw database + filesystem dumps](#alternative-raw-database--filesystem-dumps)
    1. [What to back up](#what-to-back-up)
-   2. [Dump PostgreSQL / MongoDB](#dump-postgresql--mongodb)
+   2. [Dump PostgreSQL](#dump-postgresql)
    3. [Restore raw dumps](#restore-raw-dumps)
 3. [Important notice on consistency](#important-notice-on-consistency)
 
@@ -37,6 +38,14 @@ NODE_ENV=production node bin/backup.js --output /backups/pryv-$(date +%Y%m%d)
 ```
 
 The backup is a directory containing gzipped chunk files and a `manifest.json`. Default chunk size is 50 MB compressed — tune with `--max-chunk-size`.
+
+For any backup that leaves the host, add encryption — the recommended form encrypts to a recipient public key so the backup host holds no decryption secret:
+
+```bash
+NODE_ENV=production node bin/backup.js --output /backups/pryv-$(date +%Y%m%d) --recipient-pubkey recipient.pub.pem
+```
+
+See [Encrypting the backup](#encrypting-the-backup) for the key setup and the passphrase alternative.
 
 ### Incremental backup
 
@@ -54,6 +63,33 @@ If the directory does not yet contain a manifest, the tool falls back to a full 
 node bin/backup.js --output /backups/alice --user <userId>
 ```
 
+### Encrypting the backup
+
+Backups can be **encrypted on demand** so that no plaintext personal/health data ever touches the destination disk — the bytes written to the backup media are ciphertext only. This is **opt-in**: without the flags below, the backup is plaintext as described above.
+
+There are two key models. Encryption composes with everything else (`--incremental`, `--max-chunk-size`, `--user`, `--no-compress`).
+
+**Recipient public key (recommended).** A fresh random data key encrypts the backup and is itself wrapped with a recipient **RSA public key**. The machine producing the backup never holds a secret that can decrypt its own output — only the holder of the matching private key can restore it. This is the strongest posture when the backup is shipped to outsourced or third-party storage.
+
+```bash
+# one-time: generate a recipient keypair, keep the private key offline/secure
+openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:3072 -out recipient.key.pem
+openssl pkey -in recipient.key.pem -pubout -out recipient.pub.pem
+
+# backup, encrypting to the public key
+node bin/backup.js --output /backups/pryv-$(date +%Y%m%d) --recipient-pubkey recipient.pub.pem
+```
+
+**Passphrase.** Simpler, but the same machine can decrypt its own backups. The data key is derived from a passphrase; pass it via `--encrypt-passphrase` or, to keep it out of the process list, the `PRYV_BACKUP_PASSPHRASE` environment variable.
+
+```bash
+PRYV_BACKUP_PASSPHRASE='…' node bin/backup.js --output /backups/pryv-$(date +%Y%m%d)
+```
+
+An encrypted backup carries a small cleartext `encryption.json` at its root (crypto headers + the wrapped key only — never user data) plus a self-contained `decrypt-backup.mjs` and `RESTORE-README.md`, so the key holder can decrypt it with only Node.js installed, even on a machine without Pryv.io.
+
+> **Disaster recovery:** if the key (or passphrase) is lost, the backup is unrecoverable — that is the point. Manage the recipient private key / passphrase like any other root secret, and keep it separate from the backup media.
+
 ### Restore
 
 Into an **empty** install (recommended):
@@ -67,6 +103,11 @@ Into an install that already has conflicting users, pick one:
 - `--overwrite` — clear the target user's data first and reimport.
 - `--skip-conflicts` — leave conflicting users alone; only import the rest.
 
+Restore auto-detects an encrypted backup (from its `encryption.json`) and asks for the matching secret:
+
+- `--private-key recipient.key.pem` (plus `--private-key-passphrase` if the key file is itself passphrase-protected) for a backup made with `--recipient-pubkey`.
+- `--decrypt-passphrase '…'` (or `PRYV_BACKUP_PASSPHRASE`) for a backup made with a passphrase.
+
 Useful restore flags:
 
 - `--verify-integrity` — after restore, verify event/access integrity hashes and roll back any user whose hashes don't match.
@@ -79,7 +120,7 @@ Useful restore flags:
 
 - account info (system-stream events, emails, etc.)
 - streams and events (including integrity hashes)
-- accesses, followed-slices
+- accesses
 - attachments (file blobs)
 - high-frequency series
 - audit records (if audit is active)
@@ -93,7 +134,7 @@ Use this path when you need full block-level or native-DB snapshots — for exam
 
 ### What to back up
 
-1. **Base storage database** — PostgreSQL (recommended) or MongoDB — holds events, streams, accesses.
+1. **Base storage database** — PostgreSQL — holds events, streams, accesses. (If using the SQLite base-storage engine instead, its per-user files live under `data/users/`, covered by step 2.)
 2. **Per-user filesystem data** — the `data/users/` tree holds SQLite DBs (audit, user index, per-user account) and attachment files. See [INSTALL — Data directories](https://github.com/pryv/open-pryv.io/blob/master/INSTALL.md#data-directories).
 3. **Series engine data** — if using InfluxDB for HFS, back up InfluxDB. If using PostgreSQL for HFS, it is already covered by step 1.
 4. **Previews** (`data/previews/`) — optional; previews can be regenerated from attachments.
@@ -102,18 +143,10 @@ Use this path when you need full block-level or native-DB snapshots — for exam
 
 Stop the core (or the specific user's activity) before dumping to avoid half-written events between step 1 and step 2.
 
-### Dump PostgreSQL / MongoDB
-
-**PostgreSQL**:
+### Dump PostgreSQL
 
 ```bash
 pg_dump -U postgres -Fc pryv_db > /backups/pryv-$(date +%Y%m%d).dump
-```
-
-**MongoDB**:
-
-```bash
-mongodump --db=pryv-node --out=/backups/pryv-mongodump-$(date +%Y%m%d)
 ```
 
 **InfluxDB** (only if used):
@@ -132,9 +165,6 @@ Restore into an install of the **same core version** with an empty database and 
 # PostgreSQL
 createdb -U postgres pryv_db
 pg_restore -U postgres -d pryv_db /backups/pryv-20260414.dump
-
-# MongoDB
-mongorestore /backups/pryv-mongodump-20260414
 
 # InfluxDB (if used)
 influxd restore -portable /backups/pryv-influx-20260414
