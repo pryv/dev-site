@@ -5,7 +5,7 @@ Source content for pryv.github.io (API reference, recommendations, guides, etc.)
 
 ## Installation
 
-Prerequisites: [Node.js](https://nodejs.org/en/download/) 16, [just](https://github.com/casey/just#installation)
+Prerequisites: [Node.js](https://nodejs.org/en/download/) 24, [just](https://github.com/casey/just#installation)
 
 Then:
 1. `just setup` to install node modules and setup `dist/` as well as repository copies of `open-pryv.io` and `test-results` (see `scripts/setup` for details)
