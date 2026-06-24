@@ -298,9 +298,9 @@ Full surface + JSDoc: [`@pryv/cmc/src/index.js`](https://github.com/pryv/lib-js/
 
 ## Accept hand-off (app without a personal token)
 
-`acceptInvite` posts the consent/accept-cmc trigger directly. Since Pryv.io gates that trigger (plus `consent/scope-update-cmc` and `consent/revoke-cmc`) to **personal tokens only**, apps that hold only an app- or shared-access token can't accept directly: they delegate to the Pryv auth pages.
+`acceptInvite` posts the consent/accept-cmc trigger directly. Since Pryv.io gates that trigger AND `consent/scope-update-cmc` to **personal tokens only**, apps that hold only an app- or shared-access token can't accept or scope-update directly: they delegate to the Pryv auth pages. (Revoke uses a different gate — see below.)
 
-`@pryv/cmc` ≥ 3.8 ships two helpers:
+`@pryv/cmc` ≥ 3.9 ships hand-off helpers for accept + scope-update:
 
 ```js
 // URL-only — caller drives navigation (custom popup, mobile deep-link, etc.).
@@ -331,7 +331,21 @@ await cmc.requestAccept({
 
 The `/cmc-accept` page renders the offer details (requester identity, requested permissions, consent message), prompts the user to sign in with their Pryv credentials, writes the consent/accept-cmc trigger with the fresh personal token, and returns the data-grant apiEndpoint to your app via popup `postMessage` (default) or `returnUrl` redirect.
 
-Sibling helpers for `consent/scope-update-cmc` / `consent/revoke-cmc` hand-off (`requestScopeUpdate` / `requestRevoke`) are planned but not yet shipped; until they land, apps that need to revoke or update scope without a personal token should re-authenticate the user via the standard `/auth` flow and call `events.create` directly.
+Same shape for scope-update:
+
+```js
+const result = await cmc.requestScopeUpdate({
+  authUrl: 'https://access.pryv.me/access/v3/cmc-scope-update',
+  pryvApi,
+  scopeRequestEventId: 'evt-scope-req-abc123',         // from the collector's proposal on YOUR account
+  // scopeStreamId is optional — defaults to the scope-request event's home stream
+});
+// result = { ok: true, updateEventId, action: 'accept' | 'refuse' }
+```
+
+`pryv.cmc.requestScopeUpdateUrl(opts)` builds the URL only for caller-driven navigation. Same `mode: 'popup' | 'redirect'` + `returnUrl` semantics as `requestAccept`.
+
+**Revoke does NOT need a hand-off.** `consent/revoke-cmc` is access-permission-gated server-side (via `AccessLogic.canDeleteAccess` — the standard rule `accesses.delete` uses), which honours the `selfRevoke` feature permission on the target. Apps holding the relationship's data-grant access can self-revoke directly via `cmc.revokeAcceptance(...)` / `cmc.revokeRelationship(...)` from any token class. Unauthorised attempts fail with `error.data.id === 'cmc-revoke-forbidden'`.
 
 ## Further reading
 
