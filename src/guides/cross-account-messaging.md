@@ -127,6 +127,8 @@ The plugin stamps `content.capabilityUrl` on the trigger event within millisecon
 
 **3. Bob accepts via the capability URL:**
 
+> Bob's `bobConn` must be authenticated with a **personal** access token. Pryv.io rejects `consent/accept-cmc` writes from app- or shared-access tokens (`400 invalid-operation` + `error.data.id === 'cmc-accept-requires-personal-token'`) because the trigger event is treated as the user's authoritative consent — the personal-token requirement enforces user-presence at the moment of acceptance. Apps that hold only an app/shared token use the [accept hand-off](#accept-hand-off-app-without-a-personal-token) below; the lib helper opens an auth page where Bob signs in and the trigger is written with the fresh personal token.
+
 ```js
 await bobConn.api([{ method: 'events.create', params: {
   streamIds: [':_cmc:apps:my-study'],   // Bob's local app-scope stream
@@ -293,6 +295,43 @@ cmc.errorIds.COUNTERPARTY_IDENTITY_MISSING;   // 'cmc-counterparty-identity-miss
 ```
 
 Full surface + JSDoc: [`@pryv/cmc/src/index.js`](https://github.com/pryv/lib-js/blob/master/components/pryv-cmc/src/index.js). Mirror of the server-side `CmcErrorIds` lives at [`components/cmc/src/errorIds.ts`](https://github.com/pryv/open-pryv.io/blob/master/components/cmc/src/errorIds.ts).
+
+## Accept hand-off (app without a personal token)
+
+`acceptInvite` posts the consent/accept-cmc trigger directly. Since Pryv.io gates that trigger (plus `consent/scope-update-cmc` and `consent/revoke-cmc`) to **personal tokens only**, apps that hold only an app- or shared-access token can't accept directly: they delegate to the Pryv auth pages.
+
+`@pryv/cmc` ≥ 3.8 ships two helpers:
+
+```js
+// URL-only — caller drives navigation (custom popup, mobile deep-link, etc.).
+const url = cmc.requestAcceptUrl({
+  authUrl: 'https://access.pryv.me/access/v3/cmc-accept', // /cmc-accept route on the auth pages
+  pryvApi: 'https://reg.pryv.me/',                         // accepter's Pryv API base
+  capabilityUrl,                                            // from the requester's invite (out-of-band)
+  scopeStreamId: ':_cmc:apps:my-study',                    // accepter's own :_cmc:apps:* stream
+  // returnUrl: 'https://your-app.example.com/accepted'    // switches to redirect mode
+});
+
+// Popup + postMessage (browser-only).
+const result = await cmc.requestAccept({
+  authUrl, pryvApi, capabilityUrl,
+  scopeStreamId: ':_cmc:apps:my-study'
+});
+// result = { ok: true, dataGrantApiEndpoint, acceptEventId }
+// Rejects with CmcError on popup-closed / popup-blocked / timeout / server failure.
+
+// Redirect mode (full-page navigation; the auth page redirects back via location.assign).
+await cmc.requestAccept({
+  authUrl, pryvApi, capabilityUrl,
+  scopeStreamId: ':_cmc:apps:my-study',
+  returnUrl: 'https://your-app.example.com/accepted'
+  // → location.assign('https://your-app.example.com/accepted?cmcAcceptResult=<json>')
+});
+```
+
+The `/cmc-accept` page renders the offer details (requester identity, requested permissions, consent message), prompts the user to sign in with their Pryv credentials, writes the consent/accept-cmc trigger with the fresh personal token, and returns the data-grant apiEndpoint to your app via popup `postMessage` (default) or `returnUrl` redirect.
+
+Sibling helpers for `consent/scope-update-cmc` / `consent/revoke-cmc` hand-off (`requestScopeUpdate` / `requestRevoke`) are planned but not yet shipped; until they land, apps that need to revoke or update scope without a personal token should re-authenticate the user via the standard `/auth` flow and call `events.create` directly.
 
 ## Further reading
 
