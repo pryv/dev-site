@@ -20,7 +20,7 @@ Running `just` with no argument displays the available commands (defined in `jus
 - `just watch` watches `src/` and rebuilds on changes
 - `just clean` cleans up `dist/` (not done by build/watch)
 - `just publish` builds and publishes the website
-- `just serve` to run the site locally on [https://l.rec.la:4443/](https://l.rec.la:4443/)
+- `just serve` to run the site locally on [https://l.backloop.dev:4443/](https://l.backloop.dev:4443/)
 
 **Note:** data types are sourced from repo [pryv/data-types](https://github.com/pryv/data-types) on `just retrieve-types` and `just publish` into `src/event-types/_source`.
 

@@ -57,9 +57,9 @@ publish: retrieve-types retrieve-tests clean build
     git commit -m "Updated generated files"
     git push
 
-# Start a `rec.la` web server on `dist/`
+# Start a `backloop.dev` web server on `dist/`
 serve:
-    rec.la ./dist
+    backloop.dev ./dist 4443
 
 # Run code linting
 lint *params:

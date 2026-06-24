@@ -3,7 +3,7 @@
   "https://$%7BCORE_MACHINE_HOSTNAME%7D/status",
   "https://reg.$%7BDOMAIN%7D/wactiv/check_username",
   "https://$%7BHOSTNAME%7D/reg/wactiv/check_username",
-  "https://my-computer.rec.la:4443/www/access/register.html",
+  "https://my-computer.backloop.dev:4443/www/access/register.html",
   "https://support.pryv.com/hc/en-us/articles/360017196459-Consent-management-with-Pryv-io",
   "https://support.pryv.com/hc/en-us/articles/360014131139",
   "https://support.pryv.com/hc/en-us/articles/360015645339-Develop-iOS-applications-with-our-Swift-library",
