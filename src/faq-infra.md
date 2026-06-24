@@ -44,14 +44,15 @@ We have run Pryv.io on the following public clouds: AWS, Microsoft Azure, Gandi.
 
 You must take into account the legislation covering the people whose data will be stored in the Pryv.io platform, such as US HIPAA, EU GDPR, Swiss DPA. This often includes requirements on the geographic location where the data is stored.
 
-### How do you address encryption of the data at rest? As medical records will be stored in MongoDB, are you using DB encryption or some other application specific encryption?
+### How do you address encryption of the data at rest?
 
-Pryv offers three options here:
+Pryv offers several options, from turnkey to fully self-managed:
 
-- Application-level end-to-end encryption: your application(s) that will access Pryv.io encrypt the data before sending it and can decrypt it after reading it back. Pryv.io provides a data type to include metadata concerning the encryption used by your application. See: <http://pryv.github.io/event-types/#encrypted>
-- Disk encryption: Linux has a solid story of disk encryption. If stored on such a disk, Pryv data is encrypted at rest as well.
+- **Turnkey encrypted image variant** (recommended starting point): the published `pryvio/open-pryv.io-encrypted` image layers an encrypted volume inside the container, so all of Pryv.io's data directories (events, attachments, series, audit, platform DB) sit on ciphertext at rest. It is off by default and you opt in with one switch; the base `pryvio/open-pryv.io` image is unchanged. Pluggable backends (LUKS / gocryptfs) and key sources (environment, file, a cloud KMS such as AWS KMS, or TPM/Tang via Clevis). See the [`container-encrypted-volume`](https://github.com/pryv/container-encrypted-volume) project and the Open Pryv.io `INSTALL.md` "Encryption at rest" section.
+- **Host / cloud disk encryption**: Linux has a solid disk-encryption story (LUKS, cloud-provider disk encryption, PostgreSQL TDE for an external database). If Pryv.io's data lives on such a volume, it is encrypted at rest. This stays fully under your infrastructure control.
+- **Application-level end-to-end encryption**: your application(s) encrypt the data before sending it and decrypt it after reading it back, so the server never sees plaintext. Pryv.io provides a data type to carry the encryption metadata. See: <http://pryv.github.io/event-types/#encrypted>
 
-The last option will probably the easiest to implement. It offers good protection against disks being stolen from the datacenter, while not increasing overall system complexity by much.
+The first two protect against stolen / decommissioned disks, off-host backups, and snapshots (the scope of HIPAA §164.312(a)(2)(iv) and GDPR Art.32). They do not protect a running host — for that, or for a server-blind model, use application-level end-to-end encryption. Platform *secrets* (TLS / ACME keys) are always encrypted at rest regardless.
 
 ### Self-managed top-domain
 
