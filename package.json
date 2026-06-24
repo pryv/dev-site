@@ -37,7 +37,7 @@
     "metalsmith-pug": "^3.0.1",
     "metalsmith-stylus": "^3.0.0",
     "metalsmith-watch": "^1.0.3",
-    "pryv-style": "git://github.com/pryv/style.git",
+    "pryv-style": "git+https://github.com/pryv/style.git",
     "backloop.dev": "^3.0.3",
     "resolve-pathname": "^2.2.0",
     "semistandard": "^16.0.1",
