@@ -1530,13 +1530,21 @@ module.exports = exports =
         description: """
                      An object with the new access's data: see [access](##{dataStructure.getDocId("access")}).
                      """
+        properties: [
+          key: "randomAlias"
+          type: "boolean"
+          optional: true
+          description: """
+                       When `true`, the access is issued a platform-unique, routable alias (`r-` followed by 8 characters) that replaces the username in the returned `apiEndpoint` and in the access-info response. The real username never appears for this access, so accesses handed to different parties cannot be cross-matched back to one account. The resolved value is returned as the access's `alias`.
+                       """
+        ]
       result:
         http: "201 Created"
         properties: [
           key: "access"
           type: "[access](##{dataStructure.getDocId("access")})"
           description: """
-                       The created access.
+                       The created access. When `randomAlias` was set, its `alias` holds the issued alias and `apiEndpoint` is built from the alias.
                        """
         ]
       errors: [
@@ -2417,6 +2425,110 @@ module.exports = exports =
           oldPassword: examples.users.one.password
           newPassword: "//\\_.:o0o:._//\\"
         result: {}
+      ]
+
+    ,
+      id: "account.changeUsername"
+      type: "method"
+      title: "Change username"
+      v2Tag: true
+      http: "POST /account/change-username"
+      description: """
+                   Changes the user's username. Requires a personal access token.
+
+                   Accesses already issued under the previous username keep working: the old name is retained as a routable alias, and the access-info response for those accesses reports the new (current) username. The number of changes a user may perform is capped by the operator (default 2); see Username changes to read the remaining allowance.
+                   """
+      params:
+        properties: [
+          key: "newUsername"
+          type: "string"
+          description: """
+                       The new username. Must be available (not used by any account or alias) and not reserved.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "account"
+          type: "[account](##{dataStructure.getDocId("account")})"
+          description: """
+                       The updated account, carrying the new username.
+                       """
+        ,
+          key: "usernameChangesRemaining"
+          type: "number"
+          description: """
+                       How many further username changes the user may perform.
+                       """
+        ]
+      errors: [
+        key: "invalid-operation"
+        http: "400"
+        description: """
+                     The new username equals the current one, is reserved, or the per-user change limit has been reached (`data: { usernameChangesUsed, usernameChangesLimit }`).
+                     """
+      ,
+        key: "item-already-exists"
+        http: "409"
+        description: """
+                     The requested username is already taken by another account or alias.
+                     """
+      ,
+        key: "forbidden"
+        http: "403"
+        description: """
+                     The request was not made with a personal access token.
+                     """
+      ]
+      examples: [
+        params:
+          newUsername: "ada-lovelace"
+        result:
+          account:
+            username: "ada-lovelace"
+            email: "ada@pryv.io"
+            language: "en"
+          usernameChangesRemaining: 1
+      ]
+
+    ,
+      id: "account.usernameChanges"
+      type: "method"
+      title: "Username changes"
+      v2Tag: true
+      http: "GET /account/username-changes"
+      description: """
+                   Returns how many username changes the user has performed, the operator-configured limit, and how many remain. Requires a personal access token.
+                   """
+      params:
+        properties: []
+      result:
+        http: "200 OK"
+        properties: [
+          key: "usernameChangesUsed"
+          type: "number"
+          description: """
+                       How many username changes have already been performed.
+                       """
+        ,
+          key: "usernameChangesLimit"
+          type: "number"
+          description: """
+                       The maximum number of changes allowed (operator setting, default 2).
+                       """
+        ,
+          key: "usernameChangesRemaining"
+          type: "number"
+          description: """
+                       How many further changes the user may perform.
+                       """
+        ]
+      examples: [
+        params: {}
+        result:
+          usernameChangesUsed: 1
+          usernameChangesLimit: 2
+          usernameChangesRemaining: 1
       ]
 
     ,
