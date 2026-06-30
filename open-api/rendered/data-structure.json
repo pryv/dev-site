@@ -429,7 +429,14 @@
           "key": "apiEndpoint",
           "type": "string",
           "readOnly": true,
-          "description": "The API endpoint with the access' authorization token. See [app guidelines](/guides/app-guidelines/)."
+          "description": "The API endpoint with the access' authorization token. See [app guidelines](/guides/app-guidelines/). When the access has an `alias`, the endpoint is built from the alias instead of the username."
+        },
+        {
+          "key": "alias",
+          "type": "string",
+          "readOnly": true,
+          "optional": true,
+          "description": "A platform-unique, routable de-identifying name (`r-` followed by 8 characters) substituted for the username in this access's `apiEndpoint` and in the access-info response. Set by passing `randomAlias: true` when creating the access; released when the access is deleted."
         },
         {
           "key": "type",
