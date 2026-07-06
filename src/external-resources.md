@@ -27,7 +27,7 @@ Implementing use cases such as:
 - Collecting and consuming high-frequency data
 
 ### Auth web app
-➔ [GitHub](https://github.com/pryv/app-web-auth3)
+➔ [GitHub](https://github.com/pryv/app-web-user-account)
 
 Handling registration, [auth requests](https://pryv.github.io/reference/#authenticate-your-app), password reset and email change
 

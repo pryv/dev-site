@@ -44,7 +44,7 @@ Below are the step-by-step instructions on how to request consent from your user
 
 - **2** Structure your data into streams and events following our [data modelling guide](https://pryv.github.io/guides/data-modelling/).
 
-- **3** You are now ready to authenticate your app and request consent from your users. We have created a sample web application available [on Github](https://github.com/pryv/app-web-auth3) to register and authenticate your app users in a GDPR-compliant way by requesting their consent. You can test it [here](https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).
+- **3** You are now ready to authenticate your app and request consent from your users. We have created a sample web application available [on Github](https://github.com/pryv/app-web-user-account) to register and authenticate your app users in a GDPR-compliant way by requesting their consent. You can test it [here](https://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info).
 
 You will need to customize a few parameters to adapt it to your needs and ensure that you collect data from your users in the right way. In the [auth request](https://pryv.github.io/reference/#auth-request) that the app will perform, the parameter `clientData` will be the one containing the consent information:
 

@@ -88,7 +88,7 @@ ${DOMAIN}		${TTL_SECONDS}	IN		NS		ns2-${DOMAIN}.${TOP_DOMAIN}
 
 ## Customize registration, login, password-reset pages
 
-We provide default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-auth3.
+We provide default web apps for registration, login, password-reset and auth request. The code is available on https://github.com/pryv/app-web-user-account (formerly app-web-auth3).
 
 To customize it, fork the repository and activate [GitHub Pages](https://pages.github.com/) on the `gh-pages` branch (an empty commit is enough to kick the build off).
 
@@ -98,25 +98,25 @@ You then need to point the `/access/` path of your Pryv.io deployment at your fo
 
   ```nginx
   location /access/ {
-    proxy_pass https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth3/;
+    proxy_pass https://${CUSTOMER_ACCOUNT}.github.io/app-web-user-account/;
   }
   if ($request_uri !~* "^/access/static/.*$") {
     rewrite ^/access/.*$ /access/index.html;
   }
   ```
 
-  Then set `access.defaultAuthUrl` in your platform configuration to the deployed consent page (e.g. `https://${DOMAIN}/access/access.html`) so that auth requests return the right `authUrl`.
+  Then set `access.defaultAuthUrl` in your platform configuration to the deployed consent page (e.g. `https://${DOMAIN}/access/auth`) so that auth requests return the right `authUrl`.
 
 - **v1** — edit the bundled NGINX config at `pryv/nginx/site.conf`. Change:
 
   ```
-  proxy_pass        https://pryv.github.io/app-web-auth3/;
+  proxy_pass        https://pryv.github.io/app-web-user-account/;
   ```
 
   to:
 
   ```
-  proxy_pass        https://${CUSTOMER_ACCOUNT}.github.io/app-web-auth3/;
+  proxy_pass        https://${CUSTOMER_ACCOUNT}.github.io/app-web-user-account/;
   ```
 
   and add the following in the `sw.${DOMAIN}` server scope:

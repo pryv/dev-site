@@ -111,9 +111,9 @@ Our new [Data modelling guide](/guides/data-modelling/) is out, illustrating mul
 
 ## 05.08.2020 - "Change password" page
 
-The additional `/change-password.html` page has been published among our [template web pages](https://github.com/pryv/app-web-auth3) to register, authenticate and password modification for your app users.
+The additional `/change-password.html` page has been published among our [template web pages](https://github.com/pryv/app-web-user-account) to register, authenticate and password modification for your app users.
 
-You can discover the authentication process for your Open Pryv.io platform in our [video tutorial](https://youtu.be/MfGTAgXr2WI). and fork our [Github repository](https://github.com/pryv/app-web-auth3/fork) to customize it.
+You can discover the authentication process for your Open Pryv.io platform in our [video tutorial](https://youtu.be/MfGTAgXr2WI). and fork our [Github repository](https://github.com/pryv/app-web-user-account/fork) to customize it.
 
 ## 31.07.2020 - Develop your iOS applications with Pryv.io
 
@@ -131,8 +131,8 @@ Following our [Collect survey data tutorial](https://github.com/pryv/example-app
 
 ## 23.07.2020 - Register and authenticate your users
 
-Learn how to use our [template web pages](https://github.com/pryv/app-web-auth3) to register and authenticate your app users in our new [video tutorial](https://youtu.be/MfGTAgXr2WI).
-Simplify your authorization process for your Open Pryv.io platform by forking our [Github repository](https://github.com/pryv/app-web-auth3/fork).
+Learn how to use our [template web pages](https://github.com/pryv/app-web-user-account) to register and authenticate your app users in our new [video tutorial](https://youtu.be/MfGTAgXr2WI).
+Simplify your authorization process for your Open Pryv.io platform by forking our [Github repository](https://github.com/pryv/app-web-user-account/fork).
 
 ## 15.07.2020 - Dockerized Open Pryv.io
 

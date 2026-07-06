@@ -472,7 +472,7 @@ module.exports = exports =
                  Only Apps that need to use a Personal token are be registered as "Trusted Apps".
 
                  These are usually:
-                  1. The web app for the Authentication and Consent process such as [app-web-auth3](https://github.com/pryv/app-web-auth3)
+                  1. The web app for the Authentication and Consent process such as [app-web-user-account](https://github.com/pryv/app-web-user-account)
                   2. An admin panel for the end-user to manage Access Tokens and Profile.
 
                  Trusted app api methods are tagged with <span class="trusted-tag"><span title="Trusted Apps Only" class="label">T</span></span>
@@ -752,7 +752,7 @@ module.exports = exports =
                  """
         result:
           status: 'NEED_SIGNIN'
-          authUrl: 'https://pryv.github.io/app-web-auth3/access/access.html?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&poll=https%3A%2F%2Faccess.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4&poll_rate_ms=1000&serviceInfo=https%3A%2F%2Freg.pryv.me%2Fservice%2Finfo'
+          authUrl: 'https://pryv.github.io/app-web-user-account/auth?lang=fr&key=6CInm4R2TLaoqtl4&requestingAppId=test-app-id&poll=https%3A%2F%2Faccess.pryv.me%2Faccess%2F6CInm4R2TLaoqtl4&poll_rate_ms=1000&serviceInfo=https%3A%2F%2Freg.pryv.me%2Fservice%2Finfo'
           key: '6CInm4R2TLaoqtl4'
           poll: 'https://access.pryv.me/access/6CInm4R2TLaoqtl4',
           poll_rate_ms: 1000,

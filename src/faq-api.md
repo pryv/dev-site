@@ -163,7 +163,7 @@ This is useful for email authentication or if the user has lost his password.
 
 You can check how to authenticate your app [here](/reference/#authenticate-your-app).
 
-We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-auth3).
+We deliver our Pryv.io platform with "default" web apps for registration, login, password-reset and auth request. The code is available [here](https://github.com/pryv/app-web-user-account) (formerly app-web-auth3).
 
 We advise our customers to customize it, and we provide some [guidelines](/customer-resources/pryv.io-setup/#customize-authentication-registration-and-reset-password-apps) for the customization.
 

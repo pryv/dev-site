@@ -107,7 +107,7 @@ Wire the endpoints from the [healthchecks guide](/customer-resources/healthcheck
 
 ## Customize authentication / registration / password-reset pages
 
-The default auth web app is [`pryv/app-web-auth3`](https://github.com/pryv/app-web-auth3). To customize:
+The default auth web app is [`pryv/app-web-user-account`](https://github.com/pryv/app-web-user-account) (formerly `app-web-auth3`). To customize:
 
 1. Fork the repo and host your fork (GitHub Pages or your own server).
 2. Override these keys in your config (exact YAML shape — see INSTALL / the default config):
@@ -116,7 +116,7 @@ The default auth web app is [`pryv/app-web-auth3`](https://github.com/pryv/app-w
    - `services.register.passwordResetUrl` — where users land when clicking a reset link.
 3. If you still want to serve the auth pages under `https://${DOMAIN}/access/`, point that path in your reverse proxy at your fork (see [FAQ — customize registration pages](/faq-infra/#customize-registration-login-password-reset-pages)).
 
-Make sure to apply the [fork change for GitHub Pages](https://github.com/pryv/app-web-auth3/blob/master/README.md#fork-repository-for-github-pages).
+Make sure to apply the [fork change for GitHub Pages](https://github.com/pryv/app-web-user-account/blob/master/README.md#fork-repository-for-github-pages).
 
 
 ## Set up email sending

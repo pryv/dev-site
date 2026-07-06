@@ -146,7 +146,7 @@ Privacy by default flips this:
 
 Privacy is opt-in: the user must explicitly **activate** the processing categories they want to enable.
 
-The reference auth flow shipped with Pryv.io — [app-web-auth3](https://github.com/pryv/app-web-auth3) — implements this pattern by default. The auth screen surfaces the requested permissions explicitly, per stream and per level (read / write / contribute / manage); Accept and Refuse buttons are visually balanced; the granted permissions are stored on the access and remain revocable at any time via `DELETE /accesses/:id`.
+The reference auth flow shipped with Pryv.io — [app-web-user-account](https://github.com/pryv/app-web-user-account) (formerly app-web-auth3) — implements this pattern by default. The auth screen surfaces the requested permissions explicitly, per stream and per level (read / write / contribute / manage); Accept and Refuse buttons are visually balanced; the granted permissions are stored on the access and remain revocable at any time via `DELETE /accesses/:id`.
 
 The auth UI primitive doesn't support the anti-pattern — you can't accidentally ship a "by continuing you agree" flow even if you wanted to.
 
@@ -176,7 +176,7 @@ The defaults above are structural — Pryv.io enforces them. But Art.25(2) also 
 - Are app tokens minted with the **smallest possible scope**? Pryv.io lets you grant any scope; choosing the smallest is your editorial discipline.
 - Is your subject's **notice-of-collection presented by default**? The consent text plus the access's `clientData` conventions (see the [Consent implementation](/guides/consent/) guide) give you the durable, audit-traceable record; what the notice **says** is yours to write.
 - Is **data retention set to the shortest necessary period**? Pryv.io doesn't enforce retention; your operational pruning pipeline does.
-- Is your custom auth UI using the **opt-in pattern** rather than the "by continuing you agree" anti-pattern? If you rebrand `app-web-auth3`, the default pattern is opt-in; custom UI is your responsibility to align.
+- Is your custom auth UI using the **opt-in pattern** rather than the "by continuing you agree" anti-pattern? If you rebrand `app-web-user-account`, the default pattern is opt-in; custom UI is your responsibility to align.
 
 ## Privacy-enhancing technologies
 
@@ -200,4 +200,4 @@ Pryv.io's architecture doesn't preclude any of these — they sit on top of the 
 - [Cross-account messaging (CMC)](/guides/cross-account-messaging/) — CMC consent flow.
 - [Data modelling](/guides/data-modelling/) — streams + events deep dive.
 - [App guidelines](/guides/app-guidelines/) — implementer-facing patterns.
-- [app-web-auth3 on GitHub](https://github.com/pryv/app-web-auth3) — the reference auth web app.
+- [app-web-user-account on GitHub](https://github.com/pryv/app-web-user-account) — the reference auth web app.
