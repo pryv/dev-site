@@ -6,7 +6,7 @@ customer: true
 withTOC: true
 ---
 
-This guide describes the **subject-facing** backup tools — what an operator points a data subject at when they file a right-of-access (GDPR Art.15), portability (Art.20), or equivalent (CCPA §1798.110, PIPEDA Principle 4.9, Swiss nLPD Art.25, HIPAA-privacy §164.524) disclosure request. These are distinct from the operator-side disaster-recovery [`bin/backup.js`](./backup) tool — that runs server-side with raw storage access for the operator's own backups, while the subject-facing tools run against the public API as the subject themself.
+This guide describes the **subject-facing** backup tools — what an operator points a data subject at when they file a right-of-access (GDPR Art.15), portability (Art.20), or equivalent (CCPA §1798.110, PIPEDA Principle 4.9, Swiss nLPD Art.25, HIPAA-privacy §164.524) disclosure request. These are distinct from the operator-side disaster-recovery [`bin/backup.js`](/customer-resources/backup/) tool — that runs server-side with raw storage access for the operator's own backups, while the subject-facing tools run against the public API as the subject themself.
 
 ## Two flavors, one library
 
@@ -104,7 +104,7 @@ The CLI prompts for service-info URL, username, password, trashed-data inclusion
 
 ## Related
 
-- Operator-side disaster-recovery backup: [`bin/backup.js`](./backup).
+- Operator-side disaster-recovery backup: [`bin/backup.js`](/customer-resources/backup/).
 - Library + CLI source: [`pryv-account-backup`](https://github.com/pryv/pryv-account-backup) + its `AGENTS.md`.
 - Sample web app: [`pryv-account-backup-webapp`](https://github.com/pryv/pryv-account-backup-webapp) + its `AGENTS.md`.
 - Previous-generation operator-hosted backup service (archived): [`pryv/example-service-bluebutton`](https://github.com/pryv/example-service-bluebutton). Superseded by the webapp.
