@@ -107,6 +107,10 @@ If you are migrating a v1 register service, the historical [register migration g
 
   This document describes how to enable and configure multi-factor authentication on top of the Pryv.io login.
 
+- OAuth2 app authorization: [HTML](/customer-resources/auth-oauth2/)
+
+  This document describes the OAuth2 authorization-code flow (RFC 6749 + PKCE), when to choose it over the Pryv-native access-request polling flow, and how multi-core clients follow the `apiEndpoint` token-response extension.
+
 - Observability (APM): [HTML](/customer-resources/observability/)
 
   This document describes the optional New Relic integration — how to enable, rotate keys, tune log levels and disable cluster-wide or per-core.

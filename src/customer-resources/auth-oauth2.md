@@ -1,0 +1,143 @@
+---
+id: OAuth2 app authorization
+title: 'Pryv.io OAuth2 app authorization'
+layout: default.pug
+customer: true
+withTOC: true
+---
+
+This document is for **app developers** choosing how their application obtains access to a Pryv.io user account, and for **platform operators** deciding whether to enable the OAuth2 layer. Pryv.io v2 supports two app-authorization flows side by side:
+
+- the **Pryv-native access-request polling flow** (`/reg/access` — see [Authenticate your app](/reference/#authenticate-your-app)), and
+- a standard **OAuth2 authorization-code flow** (RFC 6749 + PKCE / RFC 7636) served by the core itself.
+
+Neither flow is deprecated. Pick per app using the decision matrix below.
+
+## Table of contents <!-- omit in toc -->
+
+1. [Which flow should my app use?](#which-flow-should-my-app-use)
+2. [The OAuth2 flow at a glance](#the-oauth2-flow-at-a-glance)
+3. [Endpoints and discovery](#endpoints-and-discovery)
+4. [Scopes](#scopes)
+5. [Multi-core deployments: the `apiEndpoint` extension](#multi-core-deployments-the-apiendpoint-extension)
+6. [Token lifetimes and refresh](#token-lifetimes-and-refresh)
+7. [Client registration](#client-registration)
+8. [Using lib-js](#using-lib-js)
+9. [Related documents](#related-documents)
+
+## Which flow should my app use?
+
+| Your situation | Recommended flow |
+|---|---|
+| Self-hosted webapp with its own login UI, tightly integrated with one Pryv.io platform | **Access-request polling** (`/reg/access`) — no client registration needed, works with the stock auth pages |
+| SaaS product serving many users, possibly across platforms | **OAuth2** — standard redirect flow, refresh tokens, revocable app accounts |
+| Third-party SDK / integration built on a generic OAuth2 client library | **OAuth2** — any RFC 6749-compliant library works against the discovery document |
+| Device or CLI without a browser | **Access-request polling** (display the URL / QR, poll for approval) |
+| Server-to-server access under an application identity (no end user in the loop) | **OAuth2 `client_credentials`** grant |
+
+Both flows end in the same thing: a Pryv.io **app access** whose token authenticates API calls. The difference is how the token is obtained and how its lifetime is managed.
+
+## The OAuth2 flow at a glance
+
+1. Your app redirects the user's browser to `GET /oauth2/authorize` with `client_id`, `redirect_uri`, `scope`, `state`, and a PKCE `code_challenge` (S256 — mandatory for public clients).
+2. The user signs in and reviews the consent screen (scope checkboxes; the user may downgrade the requested scope).
+3. The browser is redirected back to your registered `redirect_uri` with an authorization `code`.
+4. Your app exchanges the code at `POST /oauth2/token` (with the PKCE `code_verifier`) and receives the token response.
+5. API calls carry the access token as `Authorization: Bearer <token>`.
+
+The token response is the standard RFC 6749 §5.1 JSON plus a Pryv extension field:
+
+```json
+{
+  "access_token": "...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "...",
+  "scope": "pryv:read pryv:write",
+  "apiEndpoint": "https://{token}@{host}/{path}/"
+}
+```
+
+## Endpoints and discovery
+
+Each deployment publishes an RFC 8414 discovery document at:
+
+```
+GET https://<deployment-base>/.well-known/oauth-authorization-server
+```
+
+It advertises `authorization_endpoint`, `token_endpoint`, `scopes_supported`, `code_challenge_methods_supported` (`["S256"]`) and the supported grant types. Point any generic OAuth2 client library at this document instead of hardcoding endpoint URLs.
+
+## Scopes
+
+The built-in `pryv` scope namespace offers three coarse scopes:
+
+| Scope | Grants |
+|---|---|
+| `pryv:read` | read access to the user's data |
+| `pryv:write` | create/update data |
+| `pryv:manage` | manage streams and accesses |
+
+Scopes are space-separated in the `scope` parameter (e.g. `scope=pryv:read pryv:write`). The user can untick scopes on the consent screen — always read the effective `scope` from the token response rather than assuming the requested one was granted.
+
+## Multi-core deployments: the `apiEndpoint` extension
+
+On a multi-core platform, each user's data lives on one specific core. The `/oauth2/*` endpoints are available on every core, but **API calls must target the user's own core**.
+
+- **Clients SHOULD read the `apiEndpoint` field from the token response** and use it as the base for all subsequent API calls. It already points at the right core (and embeds the token in Pryv's standard [API endpoint format](/reference/#api-endpoint)).
+- **Vanilla RFC 6749 clients** that ignore `apiEndpoint` and call an arbitrary core will receive **HTTP `421 Misdirected Request`** with an error body containing `coreUrl` — the base URL of the user's core. Retry the same request against `coreUrl`.
+
+```json
+{
+  "error": {
+    "id": "wrong-core",
+    "message": "User \"alice\" is hosted on a different core. Retry the request against the URL in `coreUrl`.",
+    "coreUrl": "https://core-b.example.com"
+  }
+}
+```
+
+[lib-js](https://github.com/pryv/lib-js) handles this automatically.
+
+## Token lifetimes and refresh
+
+Unlike Pryv-native app tokens (long-lived until revoked or expired via `expireAfter`), OAuth2 access tokens are **short-lived** (1 hour by default) and come with a **refresh token** (30-day sliding window, 90-day absolute cap, by default — operators can tune all three). Refresh with:
+
+```
+POST /oauth2/token
+grant_type=refresh_token&refresh_token=...&client_id=...
+```
+
+Each refresh rotates the refresh token; the response carries a new access token, a new refresh token and the `apiEndpoint`. See [access tokens](/concepts/#accesses) for how this relates to the general access model.
+
+## Client registration
+
+App accounts are **curated**: an operator registers your application on the platform (dynamic client registration is not offered). To get a `client_id`, redirect URIs and — for confidential clients — a `client_secret`, contact the operator of the platform you are integrating with. Redirect URIs are matched **exactly** (RFC 8252; loopback `http://127.0.0.1` / `http://[::1]` redirect URIs may vary port).
+
+Operators: registration and rotation are done with the `bin/oauth-client.js` CLI — see the [OAuth2 operator guide](https://github.com/pryv/open-pryv.io/blob/master/docs/oauth2.md).
+
+## Using lib-js
+
+The [`pryv` JavaScript library](https://github.com/pryv/lib-js) ships an `OAuth2Client` that wraps the whole browser flow — discovery, PKCE, redirect, callback handling, refresh — and returns a ready `pryv.Connection`:
+
+```javascript
+const client = new pryv.OAuth2Client({
+  authorizationServer: 'https://demo.datasafe.dev',
+  clientId: 'my-app',
+  redirectUri: 'https://my-app.example.com/callback',
+  scope: 'pryv:read pryv:write'
+});
+// on your login page:
+await client.redirectToAuthorize();
+// on your callback page:
+const connection = await client.handleCallback();
+const info = await connection.get('access-info');
+```
+
+See the [lib-js README](https://github.com/pryv/lib-js#oauth2) for details.
+
+## Related documents
+
+- [Authenticate your app (access-request polling)](/reference/#authenticate-your-app)
+- [API concepts — accesses](/concepts/#accesses)
+- [OAuth2 operator guide (open-pryv.io)](https://github.com/pryv/open-pryv.io/blob/master/docs/oauth2.md)
