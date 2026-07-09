@@ -40,7 +40,7 @@ Both flows end in the same thing: a Pryv.io **app access** whose token authentic
 ## The OAuth2 flow at a glance
 
 1. Your app redirects the user's browser to `GET /oauth2/authorize` with `client_id`, `redirect_uri`, `scope`, `state`, and a PKCE `code_challenge` (S256 — mandatory for every authorization-code request, public and confidential clients alike). Generate `state` as an unguessable random value and remember it for step 3.
-2. The user signs in and reviews the consent screen (scope checkboxes; the user may downgrade the requested scope).
+2. The user signs in and reviews the consent screen, which lists every permission your consent offer asks for (see [Scopes](#scopes)); the user may untick individual permissions — you receive only the kept subset.
 3. The browser is redirected back to your registered `redirect_uri` with an authorization `code` and your `state`. **Verify the returned `state` matches the value you sent** before proceeding — this is your CSRF protection. The response also carries `iss` (RFC 9207); if your library supports it, confirm it equals the discovery document's issuer to guard against mix-up attacks.
 4. Your app exchanges the code at `POST /oauth2/token` (with the PKCE `code_verifier`) and receives the token response.
 5. API calls carry the access token as `Authorization: Bearer <token>`.
@@ -53,7 +53,7 @@ The token response is the standard RFC 6749 §5.1 JSON plus a Pryv extension fie
   "token_type": "Bearer",
   "expires_in": 3600,
   "refresh_token": "...",
-  "scope": "pryv:read pryv:write",
+  "scope": "cmc:study-A",
   "apiEndpoint": "https://{token}@{host}/{path}/"
 }
 ```
@@ -70,15 +70,14 @@ It advertises `authorization_endpoint`, `token_endpoint`, `scopes_supported`, `c
 
 ## Scopes
 
-The built-in `pryv` scope namespace offers three coarse scopes:
+There are no coarse wildcard scopes: every grant is an explicit, granular permission set — the same expressiveness as a native `accesses.create` permissions array, including per-stream levels (`read`, `contribute`, `manage`, `create-only`) and feature permissions such as `{"feature": "selfRevoke", "setting": "forbidden"}`.
 
-| Scope | Grants |
-|---|---|
-| `pryv:read` | read access to the user's data |
-| `pryv:write` | create/update data |
-| `pryv:manage` | manage streams and accesses |
+The `scope` parameter carries exactly **one consent-offer reference**: `scope=cmc:<offer-name>`. The offer is a cross-account consent request your app account publishes once (with the permission list and the consent texts shown to the user); the platform operator registers it on your OAuth client under `<offer-name>`. At authorization time the server resolves the offer, the consent screen displays each permission individually, and the user may untick entries — the minted access carries **exactly the kept subset**.
 
-Scopes are space-separated in the `scope` parameter (e.g. `scope=pryv:read pryv:write`). The user can untick scopes on the consent screen — always read the effective `scope` from the token response rather than assuming the requested one was granted.
+Two consequences worth designing for:
+
+- **The grant is a durable consent on the user's account.** The user can revoke it (or narrow it) at any time from their account tooling; revocation makes your next token refresh fail with `invalid_grant` (re-run the authorization flow), and narrowing propagates to the next refreshed access.
+- **Always read the effective grant, not the requested one** — call `GET /access-info` with the access token to see the exact permissions you hold.
 
 ## Multi-core deployments: the `apiEndpoint` extension
 
@@ -125,7 +124,7 @@ const client = new pryv.OAuth2Client({
   authorizationServer: 'https://demo.datasafe.dev',
   clientId: 'my-app',
   redirectUri: 'https://my-app.example.com/callback',
-  scope: 'pryv:read pryv:write'
+  scope: 'cmc:study-A' // your registered consent-offer reference
 });
 // on your login page:
 await client.redirectToAuthorize();
