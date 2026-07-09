@@ -39,9 +39,9 @@ Both flows end in the same thing: a Pryv.io **app access** whose token authentic
 
 ## The OAuth2 flow at a glance
 
-1. Your app redirects the user's browser to `GET /oauth2/authorize` with `client_id`, `redirect_uri`, `scope`, `state`, and a PKCE `code_challenge` (S256 — mandatory for public clients).
+1. Your app redirects the user's browser to `GET /oauth2/authorize` with `client_id`, `redirect_uri`, `scope`, `state`, and a PKCE `code_challenge` (S256 — mandatory for every authorization-code request, public and confidential clients alike). Generate `state` as an unguessable random value and remember it for step 3.
 2. The user signs in and reviews the consent screen (scope checkboxes; the user may downgrade the requested scope).
-3. The browser is redirected back to your registered `redirect_uri` with an authorization `code`.
+3. The browser is redirected back to your registered `redirect_uri` with an authorization `code` and your `state`. **Verify the returned `state` matches the value you sent** before proceeding — this is your CSRF protection. The response also carries `iss` (RFC 9207); if your library supports it, confirm it equals the discovery document's issuer to guard against mix-up attacks.
 4. Your app exchanges the code at `POST /oauth2/token` (with the PKCE `code_verifier`) and receives the token response.
 5. API calls carry the access token as `Authorization: Bearer <token>`.
 
@@ -129,8 +129,8 @@ const client = new pryv.OAuth2Client({
 });
 // on your login page:
 await client.redirectToAuthorize();
-// on your callback page:
-const connection = await client.handleCallback();
+// on your callback page (pass the callback query string):
+const connection = await client.handleCallback(window.location.search);
 const info = await connection.get('access-info');
 ```
 
