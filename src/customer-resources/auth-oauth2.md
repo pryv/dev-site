@@ -78,7 +78,7 @@ The `scope` parameter carries exactly **one consent-offer reference**: `scope=cm
 
 Two consequences worth designing for:
 
-- **The grant is a durable consent on the user's account.** The user can revoke it (or narrow it) at any time from their account tooling; revocation makes your next token refresh fail with `invalid_grant` (re-run the authorization flow), and narrowing propagates to the next refreshed access.
+- **The grant is a durable consent on the user's account.** The user can revoke it (or narrow it) at any time from their account tooling; revocation makes your next token refresh fail with `invalid_grant` (re-run the authorization flow), and narrowing propagates to the next refreshed access. Revocation targets the durable consent (the data-grant): deleting it breaks the refresh chain, but a session access token already minted stays valid until its own short expiry (≤ 1 hour by default), so account tooling and UIs should revoke the data-grant rather than rely on any single access token expiring.
 - **Always read the effective grant, not the requested one** — call `GET /access-info` with the access token to see the exact permissions you hold.
 
 ## Multi-core deployments: the `apiEndpoint` extension
