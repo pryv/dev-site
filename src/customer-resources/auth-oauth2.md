@@ -72,7 +72,9 @@ It advertises `authorization_endpoint`, `token_endpoint`, `scopes_supported`, `c
 
 There are no coarse wildcard scopes: every grant is an explicit, granular permission set — the same expressiveness as a native `accesses.create` permissions array, including per-stream levels (`read`, `contribute`, `manage`, `create-only`) and feature permissions such as `{"feature": "selfRevoke", "setting": "forbidden"}`.
 
-The `scope` parameter carries exactly **one consent-offer reference**: `scope=cmc:<offer-name>`. The offer is a cross-account consent request your app account publishes once (with the permission list and the consent texts shown to the user); the platform operator registers it on your OAuth client under `<offer-name>`. At authorization time the server resolves the offer, the consent screen displays each permission individually, and the user may untick entries — the minted access carries **exactly the kept subset**.
+The `scope` parameter carries exactly **one consent-offer reference**: `scope=cmc:<offer-name>`. The offer is a cross-account consent request your app account publishes once (with the permission list and the consent texts shown to the user); the platform operator registers it on your OAuth client under `<offer-name>`. At authorization time the server resolves the offer and the consent screen displays each permission.
+
+**All-or-nothing by default.** Unless the offer sets `allowUserChoice: true`, the consent is take-it-or-leave-it: the user accepts the whole permission set or denies (no cherry-picking). Set `allowUserChoice: true` in your offer to let the user untick individual permissions — and flag any entry your app cannot run without as `mandatory: true` so it stays locked (the user's only way to withhold it is to deny the whole request). The minted access always carries **exactly the granted subset**, so always read the effective grant (see below) rather than assuming the full offer.
 
 Two consequences worth designing for:
 
