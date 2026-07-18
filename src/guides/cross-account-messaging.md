@@ -48,6 +48,32 @@ The handshake creates **two paired accesses**:
 
 Together these two accesses form a **CMC consent**. Either party may revoke at any time.
 
+### Delegable data-grants (`shared` vs `app`)
+
+By default the data-grant is a Pryv `shared` access, which **cannot** call the
+`accesses.*` methods. If the approved requester needs to **re-delegate**
+least-privilege, individually-named access to the services acting on its behalf
+(e.g. an orchestrator that hands each downstream participant its own scoped,
+audited access), the request can opt into an **`app`** data-grant by setting
+`request.accessType: "app"` on the offer (default `"shared"`):
+
+```jsonc
+{ "type": "consent/request-cmc",
+  "content": {
+    "request": {
+      "title": {"en": "…"}, "description": {"en": "…"}, "consent": {"en": "…"},
+      "permissions": [ { "streamId": "body", "level": "manage" } ],
+      "accessType": "app"       // default "shared" — "app" makes the grant delegable
+    } } }
+```
+
+An `app` data-grant can `accesses.create` **sub-accesses whose permissions are a
+subset of the grant**, so the requester can issue a distinct, named access per
+downstream actor (writes attribute to that named access in the owner's audit
+trail). A `shared` grant stays non-delegable. Requires open-pryv.io ≥
+`2.0.0-rc.9`. With the `@pryv/cmc` helper, pass `accessType` to `createInvite`
+(see [Lib-js helpers](#lib-js-helpers)).
+
 ## Streams reserved by the plugin
 
 The plugin auto-provisions a small reserved namespace on every account on first CMC use:
@@ -255,6 +281,9 @@ const { inviteEventId, capabilityUrl } = await cmc.createInvite(conn, {
   displayName: 'My study',
   requestedPermissions: [{ streamId: 'fertility', level: 'read' }],
   mode: 'single-use',
+  // Optional: 'app' issues a delegable data-grant (the requester can then
+  // accesses.create scoped sub-accesses); omit for the default 'shared'.
+  // accessType: 'app',
   // Optional per-invite TTL override — server bounds to [60s, 30d];
   // omit for the 7-day default. Out-of-range rejects with
   // cmc-capability-ttl-out-of-range.
