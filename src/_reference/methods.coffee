@@ -2016,6 +2016,205 @@ module.exports = exports =
 
   ,
 
+    id: "shared-secrets"
+    title: "Shared secrets"
+    description: """
+                 Hand a secret to a third party by a one-time random **key** instead of
+                 embedding the credential (typically an apiEndpoint carrying an access
+                 token) in a URL, where it would persist in browser history, `Referer`
+                 headers and server access logs.
+
+                 A key is redeemable **exactly once** and expires after a mandatory TTL.
+                 The server stores only the `SHA-256` of the key, so the clear key exists
+                 only in the creation response and cannot be recovered afterwards; the
+                 secret is scrubbed as soon as the key is redeemed or the item expires.
+                 The redemption call needs no credentials — the key itself is the
+                 credential — so the key always travels in the **request body**, never in
+                 the URL.
+
+                 Shared secrets are stored as events under a reserved per-access stream
+                 and can be listed with a standard [events.get](##{_getDocId("events", "events.get")})
+                 naming that stream explicitly; they never appear in a wildcard query.
+                 An access can be barred from creating them with the `secretSharing`
+                 feature permission.
+                 """
+    sections: [
+
+      id: "sharedSecrets.create"
+      type: "method"
+      title: "Create shared secret"
+      http: "POST /shared-secrets"
+      description: """
+                   Stores a secret and returns a one-time key for it. The `key` is
+                   returned **once** and is not recoverable afterwards. Requires an
+                   access whose `secretSharing` feature permission is not `forbidden`.
+                   """
+      params:
+        properties: [
+          key: "ttl"
+          type: "number"
+          description: """
+                       Seconds the key stays redeemable. Required, must be greater than 0
+                       and not exceed the configured maximum (30 days by default).
+                       """
+        ,
+          key: "title"
+          type: "string"
+          description: """
+                       A label shown to the account owner.
+                       """
+        ,
+          key: "onConsumed"
+          type: "object"
+          description: """
+                       `{ message, returnUrl }` returned to whoever presents the key once
+                       it is no longer available. `message` is required; the optional
+                       `returnUrl` must be an `http(s)` URL (it is followed by an
+                       unauthenticated third party).
+                       """
+        ,
+          key: "secret"
+          type: "object"
+          description: """
+                       The payload to hand over — any non-null JSON value. Its serialized
+                       size must not exceed the configured maximum (4096 bytes by default).
+                       """
+        ,
+          key: "signature"
+          optional: true
+          type: "object"
+          description: """
+                       Optional proof required to redeem. `{ type: "secret", value }`
+                       compares a passphrase shared out-of-band; `{ type: "hmac-sha256",
+                       value }` verifies an HMAC the redeemer computes from a verifier
+                       secret that never reaches the server. A wrong proof discards the
+                       secret; a missing one is refused without discarding it.
+                       """
+        ,
+          key: "keyHash"
+          optional: true
+          type: "string"
+          description: """
+                       Hex `SHA-256` of a random half you generate yourself (at least 192
+                       bits of entropy), for binding an `hmac-sha256` signature to the key
+                       before the item exists. When supplied, the response carries no
+                       `key`: compose it yourself as `{id}.{yourRandomHalf}`. Omit it to
+                       let the server mint and return the key.
+                       """
+        ]
+      result:
+        http: "201 Created"
+        properties: [
+          key: "sharedSecret"
+          type: "object"
+          description: """
+                       `{ id, key, status, title, expires }`. `key` is present only when
+                       the server minted it (i.e. `keyHash` was not supplied) and is
+                       returned this one time only.
+                       """
+        ]
+      errors: [
+        key: "invalid-parameters-format"
+        http: "400"
+        description: """
+                     A required field is missing or malformed — including a non-positive or
+                     too-long `ttl`, an oversized `secret`, a non-`http(s)` `returnUrl`, or
+                     an unknown `signature` type.
+                     """
+      ,
+        key: "forbidden"
+        http: "403"
+        description: """
+                     The access is barred from creating shared secrets by a
+                     `secretSharing: forbidden` feature permission.
+                     """
+      ]
+
+    ,
+
+      id: "sharedSecrets.retrieve"
+      type: "method"
+      title: "Redeem shared secret"
+      http: "POST /shared-secrets/retrieve"
+      description: """
+                   Redeems a key for its secret. **Unauthenticated** — the key is the
+                   credential — so no access token is required. Succeeds exactly once;
+                   every later attempt returns the creator's `onConsumed` message. Unknown
+                   or malformed keys receive a single uniform refusal that does not reveal
+                   whether a given item exists.
+                   """
+      params:
+        properties: [
+          key: "key"
+          type: "string"
+          description: """
+                       The one-time key, as returned by (or composed from) the create call.
+                       """
+        ,
+          key: "signature"
+          optional: true
+          type: "object"
+          description: """
+                       `{ type, payload }` proof, required only if the secret was created
+                       with a signature. For `secret`, `payload` is the passphrase; for
+                       `hmac-sha256`, `payload` is `HMAC-SHA256(verifierSecret, keyMaterial)`.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "secret"
+          type: "object"
+          description: """
+                       The stored secret payload.
+                       """
+        ]
+      errors: [
+        key: "forbidden"
+        http: "403"
+        description: """
+                     The secret is no longer available (already redeemed, expired, or
+                     discarded), or the signature proof was wrong. The response carries the
+                     creator's `message` and optional `returnUrl`.
+                     """
+      ]
+
+    ,
+
+      id: "sharedSecrets.getOne"
+      type: "method"
+      title: "Get shared secret status"
+      http: "POST /shared-secrets/status"
+      description: """
+                   Returns the status and metadata of a shared secret **without consuming
+                   it**. Available to the access that created the secret or to a personal
+                   token. Never returns the secret payload. An item past its TTL is
+                   reported as expired even before it is redeemed.
+                   """
+      params:
+        properties: [
+          key: "key"
+          type: "string"
+          description: """
+                       The one-time key.
+                       """
+        ]
+      result:
+        http: "200 OK"
+        properties: [
+          key: "sharedSecret"
+          type: "object"
+          description: """
+                       `{ id, title, status, statusHistory, onConsumed, expires }`, plus
+                       `expired: true` when the TTL has passed. Never includes the secret.
+                       """
+        ]
+      errors: []
+
+    ]
+
+  ,
+
     id: "followed-slices"
     title: "Followed slices"
     trustedOnly: true
