@@ -181,7 +181,10 @@ Scope every query to your own app (`WHERE appName = '<your appName>'`) if the ac
 
 ```sql
 -- 1. Are my cores reporting, under their FQDNs?
-SELECT count(*) FROM Transaction FACET host SINCE 10 minutes ago
+--    Facet on host.displayName, not host: `host` is the machine's own
+--    hostname (an EC2 instance name, for example), while displayName is the
+--    core FQDN this platform reports.
+SELECT count(*) FROM Transaction FACET host.displayName SINCE 10 minutes ago
 
 -- 2. Are transaction names route-shaped rather than raw paths?
 --    Expected: names like WebTransaction/Expressjs/GET//:username/events
