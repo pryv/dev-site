@@ -46,8 +46,8 @@ If a reviewer, a DPO or a customer asks "what does your monitoring vendor see?",
 - Transaction names in **route-pattern form**, for example `GET /:username/events/:id`. Never the filled-in values, and an unmatched request is recorded as `(not found)` rather than as its raw path.
 - HTTP status codes, durations, throughput and error counts.
 - The core's own FQDN as the reporting host.
-- Datastore call timings and external call timings, with obfuscated paths.
-- The `User-Agent`, `Accept`, `Content-Type` and `Content-Length` request headers.
+- Datastore call timings, and external call timings with the **path fully masked**.
+- The `Accept`, `Content-Type` and `Content-Length` request headers, which describe the shape of a request rather than who made it.
 
 **Not sent**
 
@@ -56,12 +56,14 @@ If a reviewer, a DPO or a customer asks "what does your monitoring vendor see?",
 - **The `Host` and `Referer` headers.** In a DNS-ful deployment `Host` carries the username as a subdomain.
 - **Request bodies**, so no event content or account data.
 - **`Authorization`, `Cookie`, `Proxy-Authorization`, `Set-Cookie` and `X-*` headers**, so no tokens.
+- **The `User-Agent` header.** It identifies nobody on its own, but it contributes to fingerprinting, so it is excluded too.
 - **SQL statement text.**
+- **Error message text.** Messages on captured errors are redacted by the agent, because the platform's own validation errors can quote client-supplied values (an unknown-referenced-streams error names the stream ids it rejected, for example) and an extension can put anything in a message. Error class, stack location, route and timing still reach you.
 - **Application log messages**, unless you opt in: see [Application logs](#application-logs).
 
-**Outbound path names are obfuscated.** Attribute exclusion cannot reach the *name* of an external call segment, and those names embed the outbound path. Leading path segments and record-shaped identifiers are masked there, so `/alice/events/c1a2b3...` appears as `*/events/*`.
+**Outbound paths are masked entirely.** Attribute exclusion cannot reach the *name* of an external call segment, and those names embed the outbound path, so the whole path is replaced: `/alice/events/c1a2b3.../report-jane-doe.pdf` becomes `*`. An earlier version masked only recognisable identifier shapes (leading segment, record-style ids, query strings) and leaked the rest, including attachment filenames, user-chosen stream ids, and webhook path segments. Enumerating every shape a caller might use is not winnable, so nothing in a path is treated as safe. **What this costs you:** external calls no longer break down per route in the provider UI. Your own routes are unaffected, since transaction names are route patterns.
 
-**One residual worth knowing.** Error *messages* raised by application code are forwarded as part of an error report, and they are not identifier-scrubbed. If your own extensions put a username or a record id into an error message, that string reaches the provider. Nothing in the platform's own error messages is known to do so.
+**The residual, stated plainly: outbound HOST names.** Path masking does not touch hosts, and no agent setting changes that. Calls the core makes are visible by host, which for internal traffic means your own core FQDNs, and for **webhooks means the endpoint hostname the app registered**. If a webhook host is itself identifying, that host reaches the provider. There is no client-side lever for it: the options are not to enable observability on deployments where webhook hostnames are sensitive, or to accept it.
 
 **Correlating back.** Because URLs are not sent, a slow or failing transaction in the provider's UI shows the route, host, status and timing, but not the exact request. Match it against your own audit log by timestamp, route and core: that log stays on your infrastructure, under your control.
 
