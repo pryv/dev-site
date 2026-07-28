@@ -1452,12 +1452,12 @@ module.exports = exports =
       description: """
                    Returns the access identified by `{id}`. The id can be either:
 
-                   - **bare** `<base>` — returns the current head row.
-                   - **composite** `<base>:<serial>` matching the current head's serial — returns the current head row.
-                   - **composite** `<base>:<serial>` referring to an *older* serial — returns the historical snapshot from that version, alongside a `current` hint pointing at the live head's composite id. Mirrors GitHub's `GET /repos/X/Y/commits/<sha>` behaviour for ref-by-version.
-                   - any other id (unknown base, or a serial that never existed) — `404 unknown-resource`.
+                   - **bare** `<base>`, returns the current head row.
+                   - **composite** `<base>:<serial>` matching the current head's serial, returns the current head row.
+                   - **composite** `<base>:<serial>` referring to an *older* serial, returns the historical snapshot from that version, alongside a `current` hint pointing at the live head's composite id. Mirrors GitHub's `GET /repos/X/Y/commits/<sha>` behaviour for ref-by-version.
+                   - any other id (unknown base, or a serial that never existed), `404 unknown-resource`.
 
-                   Pass `?includeHistory=true` to also return the full chronological history of the access (oldest first) in a `history` array. Default `false` — the singular case covers the typical "audit this access" use case without the list-side overhead.
+                   Pass `?includeHistory=true` to also return the full chronological history of the access (oldest first) in a `history` array. Default `false`, the singular case covers the typical "audit this access" use case without the list-side overhead.
 
                    App callers can only fetch their own access (self) or shared accesses they directly manage; other access ids return `404 unknown-resource` to avoid info leakage.
                    """
@@ -1491,14 +1491,14 @@ module.exports = exports =
           type: "string"
           optional: true
           description: """
-                       Set when the request targeted an older serial — the composite id `<base>:<serial>` of the current head.
+                       Set when the request targeted an older serial, the composite id `<base>:<serial>` of the current head.
                        """
         ,
           key: "history"
           type: "array of [accesses](##{dataStructure.getDocId("access")})"
           optional: true
           description: """
-                       Set when `includeHistory=true` — the chronological history of the access (oldest first). Each entry uses the composite id of the frozen version.
+                       Set when `includeHistory=true`, the chronological history of the access (oldest first). Each entry uses the composite id of the frozen version.
                        """
         ]
       errors: [
@@ -1602,7 +1602,7 @@ module.exports = exports =
           http:
             text: "request body"
           description: """
-                       Subset of mutable fields (`name`, `deviceName`, `permissions`, `expireAfter`, `expires: null`, `clientData`). Sent as the HTTP request body — the server wraps it into `params.update`.
+                       Subset of mutable fields (`name`, `deviceName`, `permissions`, `expireAfter`, `expires: null`, `clientData`). Sent as the HTTP request body, the server wraps it into `params.update`.
                        """
         ]
       result:
@@ -1658,7 +1658,7 @@ module.exports = exports =
                    Deletes the specified access. Personal accesses can delete any access. App accesses can delete shared accesses they created. Deleting an app access deletes the shared ones it created.
                    All accesses can also perform a self-delete unless a forbidden `selfRevoke` permission has been set.
 
-                   **v2 behaviour change** (Pryv.io ≥ 2.0.0-pre.X): the `{id}` is composite-aware — pass the composite `<base>:<serial>` you last observed via [Get accesses](##{_getDocId("accesses", "accesses.get")}) or [Get one access](##{_getDocId("accesses", "accesses.getOne")}). A stale composite returns `409 stale-resource` with `data: { provided, currentSerial }`; refetch and retry. Bare `<base>` is only valid on a never-updated access.
+                   **v2 behaviour change** (Pryv.io ≥ 2.0.0-pre.X): the `{id}` is composite-aware, pass the composite `<base>:<serial>` you last observed via [Get accesses](##{_getDocId("accesses", "accesses.get")}) or [Get one access](##{_getDocId("accesses", "accesses.getOne")}). A stale composite returns `409 stale-resource` with `data: { provided, currentSerial }`; refetch and retry. Bare `<base>` is only valid on a never-updated access.
                    """
       params:
         properties: [
