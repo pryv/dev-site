@@ -2025,11 +2025,19 @@ module.exports = exports =
                  headers and server access logs.
 
                  A key is redeemable **exactly once** and expires after a mandatory TTL.
-                 The server stores only the `SHA-256` of the key, so the clear key exists
-                 only in the creation response and cannot be recovered afterwards; the
-                 secret is scrubbed as soon as the key is redeemed or the item expires.
-                 The redemption call needs no credentials — the key itself is the
-                 credential — so the key always travels in the **request body**, never in
+                 The server stores only the `SHA-256` of the key's random half, so the
+                 clear key exists only in the creation response and cannot be recovered
+                 afterwards.
+
+                 The secret is scrubbed the moment the item stops being pending: when the
+                 key is redeemed, when the item is discarded, or on the first retrieval
+                 attempt made after the TTL has passed. Expiry is enforced on access, not
+                 by a background sweeper, so an item that expires and is never touched
+                 again keeps its stored payload until something reaches it or it is
+                 removed with [events.delete](##{_getDocId("events", "events.delete")}).
+
+                 The redemption call needs no credentials (the key itself is the
+                 credential), so the key always travels in the **request body**, never in
                  the URL.
 
                  Shared secrets are stored as events under a reserved per-access stream
@@ -2037,6 +2045,9 @@ module.exports = exports =
                  naming that stream explicitly; they never appear in a wildcard query.
                  An access can be barred from creating them with the `secretSharing`
                  feature permission.
+
+                 The feature is optional: on a platform where the operator has disabled
+                 it, all three methods below answer `451 unavailable-method`.
                  """
     sections: [
 
@@ -2076,7 +2087,7 @@ module.exports = exports =
           key: "secret"
           type: "object"
           description: """
-                       The payload to hand over — any non-null JSON value. Its serialized
+                       The payload to hand over: any non-null JSON value. Its serialized
                        size must not exceed the configured maximum (4096 bytes by default).
                        """
         ,
@@ -2087,8 +2098,13 @@ module.exports = exports =
                        Optional proof required to redeem. `{ type: "secret", value }`
                        compares a passphrase shared out-of-band; `{ type: "hmac-sha256",
                        value }` verifies an HMAC the redeemer computes from a verifier
-                       secret that never reaches the server. A wrong proof discards the
-                       secret; a missing one is refused without discarding it.
+                       secret that never reaches the server. For `hmac-sha256`, `value`
+                       must be the lowercase-hex `HMAC-SHA256(verifierSecret, randomHalf)`
+                       where `randomHalf` is the part of the key after the dot: the server
+                       compares the redeemer's proof against this stored string
+                       byte-for-byte, so both sides must derive it the same way. A wrong
+                       proof discards the secret; a missing one is refused without
+                       discarding it.
                        """
         ,
           key: "keyHash"
@@ -2100,6 +2116,13 @@ module.exports = exports =
                        before the item exists. When supplied, the response carries no
                        `key`: compose it yourself as `{id}.{yourRandomHalf}`. Omit it to
                        let the server mint and return the key.
+
+                       The random half must be 32 to 128 characters from the base64url
+                       alphabet (`A-Za-z0-9_-`); lowercase hex qualifies. Creation only
+                       checks the hash, so a half that breaks this rule (standard base64
+                       padding, for instance) is accepted here and then fails every
+                       redemption with the uniform refusal, leaving a secret that can
+                       never be reached.
                        """
         ]
       result:
@@ -2108,16 +2131,17 @@ module.exports = exports =
           key: "sharedSecret"
           type: "object"
           description: """
-                       `{ id, key, status, title, expires }`. `key` is present only when
-                       the server minted it (i.e. `keyHash` was not supplied) and is
-                       returned this one time only.
+                       `{ id, key, status, title, statusHistory, onConsumed, expires }`,
+                       plus `signatureType` when a signature was set. `key` is present
+                       only when the server minted it (i.e. `keyHash` was not supplied)
+                       and is returned this one time only.
                        """
         ]
       errors: [
         key: "invalid-parameters-format"
         http: "400"
         description: """
-                     A required field is missing or malformed — including a non-positive or
+                     A required field is missing or malformed, including a non-positive or
                      too-long `ttl`, an oversized `secret`, a non-`http(s)` `returnUrl`, or
                      an unknown `signature` type.
                      """
@@ -2137,8 +2161,8 @@ module.exports = exports =
       title: "Redeem shared secret"
       http: "POST /shared-secrets/retrieve"
       description: """
-                   Redeems a key for its secret. **Unauthenticated** — the key is the
-                   credential — so no access token is required. Succeeds exactly once;
+                   Redeems a key for its secret. **Unauthenticated** (the key is the
+                   credential), so no access token is required. Succeeds exactly once;
                    every later attempt returns the creator's `onConsumed` message. Unknown
                    or malformed keys receive a single uniform refusal that does not reveal
                    whether a given item exists.
@@ -2157,7 +2181,17 @@ module.exports = exports =
           description: """
                        `{ type, payload }` proof, required only if the secret was created
                        with a signature. For `secret`, `payload` is the passphrase; for
-                       `hmac-sha256`, `payload` is `HMAC-SHA256(verifierSecret, keyMaterial)`.
+                       `hmac-sha256`, `payload` is the lowercase-hex
+                       `HMAC-SHA256(verifierSecret, randomHalf)`, computed over the part
+                       of the key after the dot.
+
+                       **A wrong proof discards the secret permanently**; nobody can
+                       redeem it afterwards. A *missing* proof is refused without
+                       discarding anything, so a client that knows a proof is needed may
+                       retry. There is no way to tell from the response that a proof is
+                       required: the refusal is byte-identical to the one for an
+                       already-consumed item, so the redeemer must learn it from the
+                       creator.
                        """
         ]
       result:
@@ -2170,6 +2204,15 @@ module.exports = exports =
                        """
         ]
       errors: [
+        key: "unknown-resource"
+        http: "404"
+        description: """
+                     The uniform refusal: the key is malformed, names nothing, or does not
+                     match the stored hash. It is deliberately the same answer in every
+                     case, so it cannot be used to learn whether an item exists, and it
+                     never consumes or discards anything.
+                     """
+      ,
         key: "forbidden"
         http: "403"
         description: """
@@ -2206,10 +2249,22 @@ module.exports = exports =
           type: "object"
           description: """
                        `{ id, title, status, statusHistory, onConsumed, expires }`, plus
-                       `expired: true` when the TTL has passed. Never includes the secret.
+                       `signatureType` when a signature was set and `expired: true` when
+                       the TTL has passed (the reported `status` is then `discarded`,
+                       though the stored item is left untouched). Never includes the
+                       secret.
                        """
         ]
-      errors: []
+      errors: [
+        key: "unknown-resource"
+        http: "404"
+        description: """
+                     The key is malformed, names nothing, does not match the stored hash,
+                     or the caller is neither the access that created the secret nor a
+                     personal token. All four give the same answer, so status cannot be
+                     used to probe a key.
+                     """
+      ]
 
     ]
 

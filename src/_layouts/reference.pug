@@ -148,7 +148,7 @@ mixin section(section, parentDocId, level, parent)
               +result(result)
           else
             +result(section.result)
-        if section.errors
+        if section.errors && section.errors.length
           +h4('Specific errors')
           +properties(section.errors)
       +examples(section.examples, section)
