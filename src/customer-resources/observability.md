@@ -107,7 +107,7 @@ node bin/observability.js set-app-name 'open-pryv.io (example.com)'
 node bin/observability.js enable
 ```
 
-`set-endpoint` refuses a non-HTTPS destination unless it is `localhost` or `127.0.0.1`, which keeps a local collector convenient without allowing plaintext egress.
+Plain `http://` is accepted when the collector is host-local: loopback, private (RFC1918) or link-local space, so a collector running as a sidecar container reached on the bridge gateway (`http://172.17.0.1:4318`, say) needs no certificate for a hop that never crosses a network. Cleartext to any routable address is refused, and the same rule is applied by the emitter at startup, not only by this command, so writing the value straight into PlatformDB or exporting it in the environment cannot get plaintext telemetry onto the wire.
 
 Check the effective configuration at any time — credential values are never echoed:
 
