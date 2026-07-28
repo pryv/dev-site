@@ -1,254 +1,176 @@
 ---
 id: observability
-title: 'Observability (APM)'
+title: 'Observability'
 layout: default.pug
 customer: true
 withTOC: true
 ---
 
-Open Pryv.io v2 ships an **optional** observability layer that forwards HTTP transactions, datastore calls, and error reports to a third-party Application Performance Monitoring (APM) provider. It is **off by default**; when enabled it activates a provider-agnostic instrumentation façade with a single concrete provider today: **New Relic**.
+Open Pryv.io v2 ships an **optional** observability layer that reports per-method usage metrics and server-side error reports to a monitoring backend of your choice, over **OTLP/HTTP**. It is **off by default**.
 
-The façade is designed so additional providers (Datadog, OpenTelemetry, Sentry…) can be dropped in later without changes to core business code; new providers land as separate plans.
+No third-party monitoring agent runs inside the process, and nothing is auto-instrumented. Telemetry is **constructed by the platform from a fixed allow-list** and then sent. That distinction is the whole design: what can leave your deployment is a property of the platform's source code, not of an external agent's defaults, so it does not change when a dependency is upgraded.
 
-> **Data handling note.** Enabling observability means the operator has decided it is acceptable to ship performance metadata to the provider's cloud. What is and is not forwarded is listed under [What the provider receives](#what-the-provider-receives), and the short version is that route shape and timings are sent while identifiers are not. Read that section before enabling this on a deployment holding personal data: you own the decision, and it is a processing arrangement with a third party.
+> **Data handling note.** Enabling observability means performance metadata leaves your deployment for wherever you point it. The emitted surface is enumerated below and is deliberately anonymous, but you own the decision and — unless you point it at a collector you host yourself — it is a processing arrangement with a third party. Read [What is sent](#what-is-sent) before enabling this on a deployment holding personal data.
 
 ## Table of contents <!-- omit in toc -->
 
 1. [Overview](#overview)
-2. [What the provider receives](#what-the-provider-receives)
-3. [Enabling New Relic on a cluster](#enabling-new-relic-on-a-cluster)
-4. [Application logs](#application-logs)
-5. [High-security mode (optional)](#high-security-mode-optional)
-6. [Log-level tuning](#log-level-tuning)
-7. [Hostname labelling](#hostname-labelling)
-8. [Rotating the license key](#rotating-the-license-key)
-9. [Disabling](#disabling)
-10. [Validation queries (NRQL)](#validation-queries-nrql)
+2. [What is sent](#what-is-sent)
+3. [What cannot be sent](#what-cannot-be-sent)
+4. [How anonymous is it, exactly](#how-anonymous-is-it-exactly)
+5. [Choosing a backend](#choosing-a-backend)
+6. [Enabling it](#enabling-it)
+7. [The reporting interval](#the-reporting-interval)
+8. [Verifying what your backend holds](#verifying-what-your-backend-holds)
+9. [Rotating credentials](#rotating-credentials)
+10. [Disabling](#disabling)
 11. [Caveats](#caveats)
-12. [Adding a new provider later](#adding-a-new-provider-later)
 
 ## Overview
 
-- **Opt-in**: a cluster with no observability config has no APM code paths loaded and no runtime cost.
-- **Cluster-wide config**: license key + app name + log level live in the cluster's PlatformDB. Rotating the key is a single write; no per-core YAML edit + rsync required.
-- **Secrets at rest**: the license key is AES-256-GCM encrypted in PlatformDB, with a key derived (via HKDF-SHA256) from `auth.adminAccessKey` and a per-key purpose label.
-- **Identifiers are not forwarded**: request URLs, query and route parameters, request bodies, and the `Authorization`, `Cookie`, `Host` and `Referer` headers are all excluded, and outbound paths in span names are obfuscated. See [What the provider receives](#what-the-provider-receives). This is hard-coded, not a setting you can loosen without editing source.
-- **High-security mode**: available but **off by default**, because it is an irreversible account-side setting and the agent refuses to connect when the client and account disagree. The exclusions above do not depend on it. See [High-security mode](#high-security-mode-optional).
-- **Application log forwarding**: **off by default**. Log messages are not scrubbed for identifiers, so they are not sent unless you opt in. See [Application logs](#application-logs).
-- **Hostname reporting**: transactions report under the core's FQDN (parsed from `core.url`) — the same label operators see in `/reg/hostings`, the LE cert SAN, and the core's dashboards.
+A single emitter inside the core builds every datapoint from a compile-time vocabulary, validates it, aggregates it in memory, and posts it to your OTLP endpoint on a timer. Anything that does not match the vocabulary is dropped and counted, never sent.
 
-## What the provider receives
+Configuration is cluster-wide, stored in PlatformDB, and managed with `bin/observability.js`. Credentials are encrypted at rest. Changes require a rolling restart of your cores: workers receive the resolved configuration from the master process when they start.
 
-If a reviewer, a DPO or a customer asks "what does your monitoring vendor see?", this is the answer. The authoritative source is the agent configuration shipped at `components/business/src/observability/providers/newrelic/`, and its values are pinned by tests so they cannot be loosened unnoticed.
+## What is sent
 
-**Sent**
+This is the complete list. There is no "and other diagnostic data".
 
-- Transaction names in **route-pattern form**, for example `GET /:username/events/:id`. Never the filled-in values, and an unmatched request is recorded as `(not found)` rather than as its raw path.
-- HTTP status codes, durations, throughput and error counts.
-- The core's own FQDN as the reporting host.
-- Datastore call timings, and external call timings with the **path fully masked**.
-- The `Accept`, `Content-Type` and `Content-Length` request headers, which describe the shape of a request rather than who made it.
+**Metrics**, aggregated per reporting interval:
 
-**Not sent**
+| Metric | Labels |
+|---|---|
+| `api.method.calls` | `method.id`, `status.class` |
+| `api.method.duration` (histogram, ms) | `method.id`, `status.class` |
+| `api.method.errors` | `method.id`, `error.code` |
+| `telemetry.dropped` | `reason` |
 
-- **Request URLs**, in any attribute (`request.uri`, `http.url`) or trace field. On this API a path carries the username, event ids and attachment ids.
-- **Query and route parameters.** This matters twice over: a route parameter would otherwise carry the username as an attribute in its own right, and a credential passed as `?auth=` or `?readToken=` would otherwise be re-emitted as a span attribute when a request is forwarded between cores.
-- **The `Host` and `Referer` headers.** In a DNS-ful deployment `Host` carries the username as a subdomain.
-- **Request bodies**, so no event content or account data.
-- **`Authorization`, `Cookie`, `Proxy-Authorization`, `Set-Cookie` and `X-*` headers**, so no tokens.
-- **The `User-Agent` header.** It identifies nobody on its own, but it contributes to fingerprinting, so it is excluded too.
-- **SQL statement text.**
-- **Error message text.** Messages on captured errors are redacted by the agent, because the platform's own validation errors can quote client-supplied values (an unknown-referenced-streams error names the stream ids it rejected, for example) and an extension can put anything in a message. Error class, stack location, route and timing still reach you.
-- **Application log messages**, unless you opt in: see [Application logs](#application-logs).
+- `method.id` is an API method identifier taken from the core's own method registry (for example `events.get`, `auth.login`). It is re-checked against that registry before every emission, so a value that is not a registered method id cannot be sent.
+- `status.class` is one of `2xx`, `3xx`, `4xx`, `5xx`.
+- `error.code` is one of the API's documented error ids (for example `invalid-access-token`), or `unknown`.
+- `telemetry.dropped` counts datapoints the emitter refused. A non-zero value means something tried to emit outside the vocabulary and was stopped; it is worth alerting on.
 
-**Outbound paths are masked entirely.** Attribute exclusion cannot reach the *name* of an external call segment, and those names embed the outbound path, so the whole path is replaced: `/alice/events/c1a2b3.../report-jane-doe.pdf` becomes `*`. An earlier version masked only recognisable identifier shapes (leading segment, record-style ids, query strings) and leaked the rest, including attachment filenames, user-chosen stream ids, and webhook path segments. Enumerating every shape a caller might use is not winnable, so nothing in a path is treated as safe. **What this costs you:** external calls no longer break down per route in the provider UI. Your own routes are unaffected, since transaction names are route patterns.
+**Process identity**, attached to every batch: service name (the label you set), service version, the **machine hostname**, and a worker index.
 
-**The residual, stated plainly: outbound HOST names.** Path masking does not touch hosts, and no agent setting changes that. Calls the core makes are visible by host, which for internal traffic means your own core FQDNs, and for **webhooks means the endpoint hostname the app registered**. If a webhook host is itself identifying, that host reaches the provider. There is no client-side lever for it: the options are not to enable observability on deployments where webhook hostnames are sensitive, or to accept it.
+**Error reports**, for server-side faults only (5xx, unexpected and unclassifiable errors; client mistakes such as a rejected token are counted, not reported):
 
-**Correlating back.** Because URLs are not sent, a slow or failing transaction in the provider's UI shows the route, host, status and timing, but not the exact request. Match it against your own audit log by timestamp, route and core: that log stays on your infrastructure, under your control.
+- the error code, and a **hard-coded message** looked up from the platform's own message catalogue by that code;
+- the error class name (for example `Error`, `APIError`);
+- the API method it occurred in;
+- a **stack trace rebuilt from repository-relative frames**, plus a count of how many times that identical fault occurred in the interval.
 
-## Enabling New Relic on a cluster
+## What cannot be sent
 
-Prerequisites:
+Request URLs, query parameters, route parameters, request and response bodies, HTTP headers of any kind, usernames, stream / event / attachment identifiers, application log records, and **error message text**.
 
-- A New Relic **Ingest – License** key (40-char hex). Get it at **Administration → API keys → Ingest License** in the New Relic web console.
-- `auth.adminAccessKey` must be set and identical across every core in the cluster (operator-sync secret; same requirement as `letsEncrypt.atRestKey`).
+None of these has a key in the emitted vocabulary, so no code path can emit them.
 
-On any core in the cluster, set the license key and enable the provider:
+Error messages are excluded permanently and on purpose. Messages routinely interpolate whatever failed — `ENOENT: ... open '/var-pryv/users/<id>/...'`, "user &lt;email&gt; not found", validation errors quoting the submitted value. The error *code* travels; the message stays in your own logs, where identifying data belongs.
+
+Stack frames are rebuilt rather than filtered. Each frame is decomposed into a function name and a source location, both checked against an allow-list, then reassembled. A frame that is not a repository-relative location or a Node internal is replaced by `at <external>`, so paths from outside the installation — a global module directory, an operator's own plugin folder, a home directory — are never emitted even in part.
+
+## How anonymous is it, exactly
+
+The claim is: **anonymous by construction, with a residual correlation risk at very low traffic volumes.** We state it that way rather than as an unqualified guarantee, because the qualification is real.
+
+Two design choices carry it beyond simply omitting identifiers:
+
+- **Error reports are aggregated by fault and stamped at the reporting interval**, not at the instant of failure. A precise timestamp is a re-identification handle even when the content is clean: "this method failed at 14:32:07.123 on this instance" singles out one action to anyone holding a second timestamped signal — your own audit log, for instance. The deliberate cost is that sub-interval ordering and exact error times are not available from telemetry.
+- **The instance identifier is the machine hostname**, never derived from your service URL or DNS domain. In DNS-based deployments user-facing hosts are `<username>.<domain>`, so a URL-derived hostname would have attached a username to every datapoint.
+
+**The residual**: on a very low-traffic instance, "one error in this interval" can still correlate to the only active user. That follows from traffic volume rather than from what is emitted, so no schema change removes it. Widening [the reporting interval](#the-reporting-interval) reduces it.
+
+If your deployment cannot accept even that, point the endpoint at a collector inside your own infrastructure — then no third party is involved at all.
+
+## Choosing a backend
+
+Any service that ingests OTLP/HTTP works: New Relic, Grafana, Datadog, Honeycomb, Elastic, or an OpenTelemetry Collector you run yourself. The platform sends the same payload to all of them, so the data-protection posture does not vary by vendor.
+
+A backend that only speaks gRPC or a proprietary protocol can be reached by putting an OpenTelemetry Collector in front of it. Running that collector inside your own trust boundary is also the recommended pattern when you want monitoring without a third-party processor.
+
+## Enabling it
+
+From any core, with PlatformDB reachable:
 
 ```bash
-node bin/observability.js newrelic set-license-key <LICENSE_KEY>
-node bin/observability.js enable newrelic
+# 1. where telemetry goes (the standard OTLP paths /v1/metrics and
+#    /v1/logs are appended to this base URL)
+node bin/observability.js set-endpoint https://otlp.eu01.nr-data.net
+
+# 2. whatever auth header that backend expects, stored encrypted at rest
+node bin/observability.js set-header api-key YOUR-KEY-HERE
+
+# 3. a label to tell your deployments apart in the backend's UI
+node bin/observability.js set-app-name 'open-pryv.io (example.com)'
+
+# 4. turn it on, then rolling-restart every core
+node bin/observability.js enable
 ```
 
-Then perform a rolling restart of every core (one at a time, wait until healthy before restarting the next). The agent loads the license key once per process at `require()` time, so an in-place config change on a running core is a no-op until that core restarts.
+`set-endpoint` refuses a non-HTTPS destination unless it is `localhost` or `127.0.0.1`, which keeps a local collector convenient without allowing plaintext egress.
 
-Verify:
+Check the effective configuration at any time — credential values are never echoed:
 
 ```bash
 node bin/observability.js show
 ```
 
-```
-enabled:          true
-provider:         newrelic
-appName:          open-pryv.io (pryv.me)
-logLevel:         error
-hostname:         core-use1.pryv.me
-newrelic licenseKey set: yes
-newrelic highSecurity:   false
-```
+`show` also prints the emitted surface, so an operator can answer "what does my backend see?" without reading source.
 
-`show` also prints a summary of what is and is not sent to the provider, so you can answer that question from a shell without reading source.
+> Keep the app name free of anything identifying. It is the one label you choose rather than the platform, it is validated only for shape, and it is attached to every batch.
 
-## Application logs
-
-The provider's agent auto-instruments the logging library and can forward log **records, including their message text**. That is a different channel from the attribute filtering described above: attribute exclusion does not apply to a log message, and the platform's own log redaction covers credential-shaped values, not identifiers such as usernames or record ids.
-
-Because of that, **log forwarding ships off**. Set it on the service process, not in the platform database, since the agent reads it at start-up:
+## The reporting interval
 
 ```bash
-# in the unit file / process environment, then restart the core
-NEW_RELIC_APPLICATION_LOGGING_FORWARDING_ENABLED=true
+node bin/observability.js set-interval 600     # seconds; 60-3600, default 300
 ```
 
-Turn it on only if you accept that whatever your log lines contain will reach the provider. Log-derived *metrics* (counts per level) remain enabled either way, because they carry no message content.
+This is a **privacy control**, not only a tuning knob. It sets the granularity at which activity is observable, and it is the only lever on the low-traffic residual described above. Longer intervals weaken correlation and slow alerting; shorter intervals do the reverse. Values outside 60-3600 are clamped.
 
-## High-security mode (optional)
+## Verifying what your backend holds
 
-The provider offers a High Security Mode that enforces restrictions agent-side. It is **off by default here**, and the scrubbing described above does not depend on it.
+Do not take this page's word for it. After enabling and restarting, ask the backend to enumerate what it actually received, and scope the query to a time window that starts after your restart — older data will otherwise answer for the previous configuration.
 
-Two reasons for the default. First, it is an **account-side** setting: if the client enables it while the account has not, the agent refuses to connect and reports nothing at all, which is a silent monitoring outage. Second, enabling it on the account is **irreversible without provider support**.
+With New Relic, for example:
 
-If your account has it and you want it:
+```sql
+-- every metric name the account holds for this deployment
+SELECT uniques(metricName) FROM Metric
+WHERE service.name = 'open-pryv.io (example.com)' SINCE '<restart time>'
+
+-- every attribute key present on those metrics
+SELECT keyset() FROM Metric
+WHERE service.name = 'open-pryv.io (example.com)' SINCE '<restart time>'
+```
+
+Enumerate rather than spot-check for absence: a query for a specific identifier returning zero proves only that you guessed the identifier's shape correctly, whereas listing every key present proves the surface. The result should contain only the metric names and label keys listed under [What is sent](#what-is-sent).
+
+Watch `telemetry.dropped` as well. It should normally be zero or near it; a rising count means datapoints are being refused, and the `reason` label says why.
+
+## Rotating credentials
 
 ```bash
-# 1. enable High Security Mode on the New Relic ACCOUNT first
-# 2. then, on any core:
-node bin/observability.js newrelic set-high-security true
-# 3. rolling restart every core
+node bin/observability.js set-header api-key NEW-KEY      # overwrite
+node bin/observability.js clear-headers                   # remove all
 ```
 
-Be aware it also strips exception messages, disables custom events and custom attributes, forces query obfuscation, and disables application log forwarding.
-
-## Log-level tuning
-
-Default is **error-only**: only `logger.error()` calls reach the provider. `info` / `warn` / `debug` are captured by the usual boiler file + console logs.
-
-Raise verbosity during active debugging:
-
-```bash
-node bin/observability.js set-log-level warn    # errors + warnings
-node bin/observability.js set-log-level info    # errors + warnings + info
-```
-
-Followed by a rolling restart. Higher log levels cost more New Relic events and ship lower-signal chatter; revert to `error` when the incident is closed.
-
-## Hostname labelling
-
-Transactions, infrastructure rows and external segments are labelled with the core's FQDN, taken from `new URL(core.url).hostname`. For a typical multi-core deployment that means New Relic shows:
-
-- `core-use1.pryv.me`
-- `core-euc1.pryv.me`
-
-…matching the values operators already see in `/reg/hostings` and in LE certs. No separate "APM host name" field to curate.
-
-Single-core / DNSless deployments fall back to `single.<dns.domain>` when `core.url` is not set.
-
-## Rotating the license key
-
-```bash
-node bin/observability.js newrelic set-license-key <NEW_KEY>
-```
-
-Then a rolling restart of every core. The key is stored AES-256-GCM encrypted in PlatformDB; the CLI's `show` command never echoes it.
+Then rolling-restart every core. Headers are stored AES-256-GCM encrypted at rest, with key material derived from the platform admin key.
 
 ## Disabling
 
-Two ways:
-
-1. **Cluster-wide, via PlatformDB (recommended)**:
-   ```bash
-   node bin/observability.js disable
-   ```
-   Then rolling restart.
-
-2. **Local kill-switch (emergency)**: set `observability.enabled: false` in that core's `override-config.yml`. The local override always wins over PlatformDB — useful when one core is misbehaving and you need to silence it immediately without touching cluster state. Restart the affected core only.
-
-## Validation queries (NRQL)
-
-Paste these in the New Relic web console after enabling. The first group proves telemetry is arriving; the second proves the scrubbing works, and is worth keeping as a periodic check.
-
-Scope every query to your own app (`WHERE appName = '<your appName>'`) if the account also receives data from other deployments, and bound it with `SINCE '<time you deployed>'` if the account still holds older data collected under a looser configuration. Otherwise a zero can be a false pass.
-
-```sql
--- 1. Are my cores reporting, under their FQDNs?
---    Facet on host.displayName, not host: `host` is the machine's own
---    hostname (an EC2 instance name, for example), while displayName is the
---    core FQDN this platform reports.
-SELECT count(*) FROM Transaction FACET host.displayName SINCE 10 minutes ago
-
--- 2. Are transaction names route-shaped rather than raw paths?
---    Expected: names like WebTransaction/Expressjs/GET//:username/events
---    and "(not found)" for unmatched requests. No usernames or ids.
-SELECT uniques(name) FROM Transaction SINCE 1 hour ago LIMIT MAX
-
--- 3. External call latency (cross-core forwards, rqlite, ACME, ...)
-SELECT average(duration) FROM Span WHERE span.kind = 'client' FACET name SINCE 1 hour ago
+```bash
+node bin/observability.js disable
 ```
 
-Scrubbing checks. **Every one of these must return 0.** A non-zero result means the deployment is sending more than this page describes, and is worth investigating before it accumulates:
-
-```sql
--- No credentials, ever
-SELECT count(*) FROM Transaction WHERE request.headers.authorization IS NOT NULL SINCE 1 hour ago
-
--- No request URLs, on transactions, errors or spans
-SELECT count(*) FROM Transaction WHERE request.uri IS NOT NULL SINCE 1 hour ago
-SELECT count(*) FROM TransactionError WHERE request.uri IS NOT NULL SINCE 1 hour ago
-SELECT count(*) FROM Span WHERE http.url IS NOT NULL OR request.uri IS NOT NULL SINCE 1 hour ago
-
--- No identifying headers
-SELECT count(*) FROM Transaction WHERE request.headers.host IS NOT NULL OR request.headers.referer IS NOT NULL SINCE 1 hour ago
-
--- No application log records, unless you opted in
-SELECT count(*) FROM Log SINCE 1 hour ago
-```
-
-A stronger check, if you have a test account on the deployment: exercise it, then search for its username across every event type. Expect 0.
-
-```sql
-SELECT count(*) FROM Transaction, TransactionError, Span, Log
-WHERE name LIKE '%<test-username>%' OR request.uri LIKE '%<test-username>%'
-   OR http.url LIKE '%<test-username>%' OR message LIKE '%<test-username>%'
-SINCE 1 hour ago
-```
-
-An attribute inventory is also useful, since it shows what the provider holds rather than what you expected it to hold:
-
-```sql
-SELECT keyset() FROM Transaction SINCE 1 hour ago
-SELECT keyset() FROM Span SINCE 1 hour ago
-```
-
-Expect no key named `request.uri` or `http.url`, none beginning `request.parameters.`, and no `request.headers.host` or `request.headers.referer`.
+Then rolling-restart. For an immediate local kill switch that does not depend on PlatformDB, set `observability.enabled: false` in a core's own configuration — a local `false` always wins, on that core, at its next start.
 
 ## Caveats
 
-- **Agent startup cost**: enabling observability adds ~150–300 ms to each Node process's boot. In `NODE_ENV=test` the boot shim bypasses the agent entirely so test suites are unaffected.
-- **Optional dependency**: the `newrelic` package is listed under `optionalDependencies` — installs that can't fetch it still succeed; observability simply refuses to activate.
-- **No zero-downtime key rotation**: the agent reads the license key once at `require()` time. Rolling restart is required for rotation.
-- **License scope**: the image does not bundle any New Relic license key. Operators bring their own.
-- **Third-party processing**: understand your jurisdiction's requirements before shipping performance metadata to New Relic's US or EU cloud. GDPR / HIPAA operators should double-check, and should read [What the provider receives](#what-the-provider-receives) rather than assuming either the best or the worst.
-- **Ingested telemetry cannot be deleted on demand**: the provider has no self-service purge. Data expires with your account's retention window, and earlier removal requires a support request. Worth knowing before enabling this on a deployment holding personal data, because a misconfiguration cannot be taken back.
-- **Custom adapters own their own filtering**: the façade does not enforce these exclusions across providers. Everything on this page describes the New Relic adapter. If you write or install another adapter, the equivalence check is yours.
-
-## Adding a new provider later
-
-The façade at `components/business/src/observability/` exposes a fixed method set: `isActive()`, `setTransactionName()`, `recordError()`, `recordCustomEvent()`, `startBackgroundTransaction()`.
-
-A new provider is a sibling directory under `components/business/src/observability/providers/<id>/` exporting:
-- `boot.js` — `require()`s the vendor agent and calls `observability.init(adapter)`.
-- `adapter.js` — object implementing the five façade methods, delegating to the agent.
-
-The boot shim at `bin/_observability-boot.js` dispatches based on `PRYV_OBSERVABILITY_PROVIDER`. No change to business code, CLI base, or PlatformDB shape is required when adding a provider.
+- **Changes need a rolling restart.** Workers receive the resolved configuration at fork time; there is no live reconfiguration.
+- **Coverage is the API method surface.** Requests are measured where the core dispatches API methods, which covers HTTP and socket calls alike. Background work (certificate renewal, webhook delivery, mail) is not instrumented yet.
+- **Metrics are delta-reported per interval**, so a backend configured to expect cumulative values will need its usual OTLP delta handling.
+- **Aggregation trades detail for privacy**, by decision. If you need the exact sequence of an incident, the source is your own logs, not this telemetry.
+- **A failing backend never affects the API.** Send failures are counted and logged locally; buffers are bounded and drop rather than grow.
+- **Third-party processing.** Understand your jurisdiction's requirements before shipping metadata to a vendor cloud, and prefer a self-hosted collector if you would rather not add a processor at all.
+- **Ingested telemetry usually cannot be deleted on demand.** Most vendors have no self-service purge; data expires with the account's retention window. Worth knowing before enabling, because a misconfiguration cannot be taken back.
+- **Earlier versions behaved differently.** Releases before this one used an in-process vendor agent, and a configuration defect meant that agent ran on its own defaults: request URLs, the `Host` header, route parameters carrying the username, and forwarded application log records all reached the vendor. If you enabled observability on an earlier version, assume that was the case for as long as it was on, and check what your account holds.

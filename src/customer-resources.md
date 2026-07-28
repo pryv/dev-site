@@ -111,9 +111,9 @@ If you are migrating a v1 register service, the historical [register migration g
 
   This document describes the OAuth2 authorization-code flow (RFC 6749 + PKCE), when to choose it over the Pryv-native access-request polling flow, and how multi-core clients follow the `apiEndpoint` token-response extension.
 
-- Observability (APM): [HTML](/customer-resources/observability/)
+- Observability: [HTML](/customer-resources/observability/)
 
-  This document describes the optional New Relic integration — how to enable, rotate keys, tune log levels and disable cluster-wide or per-core.
+  This document describes the optional telemetry layer — what it emits and what it cannot emit, how to point it at any OTLP backend (including a collector you host yourself), and how to enable, tune the reporting interval, rotate credentials and disable it.
 
 
 ## Contact and support
