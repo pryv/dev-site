@@ -8,7 +8,7 @@ withTOC: true
 
 This document describes how to configure Multi-Factor Authentication (MFA) for the Pryv.io [auth.login](/reference/#login-user) API method.
 
-> **Since v2 (2026)** MFA is built into the core binary (merged from the standalone `service-mfa` process). There is no separate MFA container, no `platform.yml`, no admin-panel tab — the configuration lives under `services.mfa.*` in `override-config.yml`, applied on core restart. MFA is **disabled by default**.
+> **Since v2 (2026)** MFA is built into the core binary (merged from the standalone `service-mfa` process). There is no separate MFA container, no `platform.yml`, no admin-panel tab — the configuration lives under `services.mfa.*` in `override-config.yml`, applied on core restart. MFA (authenticator-app TOTP) is **enabled by default** and works out of the box with no configuration; set `services.mfa.active: false` to disable it. Nothing is forced on users (login only challenges accounts that have enrolled).
 
 > **Multi-method (2026-09).** MFA now supports two methods: an **authenticator app (TOTP, RFC 6238)** and **SMS** (or any HTTP message provider). When you enable MFA, **TOTP is the default method** and runs entirely in-process — no external service required. SMS still works exactly as before. The modern config shape is `services.mfa.active` + `services.mfa.defaultMethod` + `services.mfa.methods.{totp,sms}` (see [Configuration](#configuration)); the legacy single-valued `services.mfa.mode` is still honoured (it is shimmed onto `methods.sms`), so existing SMS deployments need no change. With the in-process TOTP factor a deployment can claim NIST SP 800-63B **AAL2** without a third-party service.
 
@@ -147,7 +147,7 @@ services:
       ttlSeconds: 1800
 ```
 
-With `mode: disabled` (the default) the MFA API methods return a "not enabled" error — backwards-compatible for deployments that don't need two-factor authentication.
+With `services.mfa.active: false` the MFA API methods return a "not enabled" error — for deployments that don't want two-factor authentication at all. (The legacy `mode: disabled` reaches the same off state.)
 
 ### Endpoint shape
 
