@@ -8,14 +8,17 @@ withTOC: true
 
 This document describes how to configure Multi-Factor Authentication (MFA) for the Pryv.io [auth.login](/reference/#login-user) API method.
 
-> **Since v2 (2026)** MFA is built into the core binary (merged from the standalone `service-mfa` process). There is no separate MFA container, no `platform.yml`, no admin-panel tab — the configuration lives under `services.mfa.*` in `override-config.yml`, applied on core restart. MFA is **disabled by default**; set `services.mfa.mode` to `single` or `challenge-verify` to enable it.
+> **Since v2 (2026)** MFA is built into the core binary (merged from the standalone `service-mfa` process). There is no separate MFA container, no `platform.yml`, no admin-panel tab — the configuration lives under `services.mfa.*` in `override-config.yml`, applied on core restart. MFA is **disabled by default**.
+
+> **Multi-method (2026-09).** MFA now supports two methods: an **authenticator app (TOTP, RFC 6238)** and **SMS** (or any HTTP message provider). When you enable MFA, **TOTP is the default method** and runs entirely in-process — no external service required. SMS still works exactly as before. The modern config shape is `services.mfa.active` + `services.mfa.defaultMethod` + `services.mfa.methods.{totp,sms}` (see [Configuration](#configuration)); the legacy single-valued `services.mfa.mode` is still honoured (it is shimmed onto `methods.sms`), so existing SMS deployments need no change. With the in-process TOTP factor a deployment can claim NIST SP 800-63B **AAL2** without a third-party service.
 
 The prerequisite for this is to have:
 
-- a running Pryv.io v2+ instance
-- an external communication service to send messages over another channel, such as email or SMS.
+- a running Pryv.io v2+ instance;
+- for **TOTP**: nothing else — codes are generated on the user's device (Google Authenticator, 1Password, etc.) and verified in-process;
+- for **SMS**: an external communication service to send messages over another channel (SMS or email).
 
-Depending on your communication service capabilities, you will either use the **single** or the **challenge-verify** mode.
+The `mfa.*` API flow (activate → confirm → login → challenge → verify) is the same for both methods; only the enrolment payload and what is verified differ. For SMS, depending on your provider's capabilities you use the **single** or **challenge-verify** mode.
 
 
 ## Table of contents <!-- omit in toc -->
@@ -76,9 +79,44 @@ In **challenge-verify** mode, Pryv.io makes an HTTP request to your communicatio
 The templates are set in `override-config.yml` under `services.mfa.sms.endpoints.*`.
 
 
+## Authenticator app (TOTP)
+
+TOTP (RFC 6238) is the **default method** when MFA is enabled and needs **no external service**: Pryv.io generates the shared secret, the user scans it into an authenticator app, and codes are verified in-process.
+
+Enable it and make it the default:
+
+```yaml
+services:
+  mfa:
+    active: true
+    defaultMethod: totp
+    methods:
+      totp:
+        active: true
+        issuer: ''          # otpauth issuer label shown in the app; '' => your dns.domain
+        digits: 6
+        periodSeconds: 30
+        driftSteps: 1       # accept codes +/- N 30s steps around now
+        # At-rest key for the stored TOTP secrets (AES-256-GCM). Leave empty to
+        # derive it from auth.adminAccessKey (rotating that key invalidates
+        # enrolments); set a dedicated base64 32-byte key for independent rotation.
+        secretsKey: ''
+      sms:
+        active: false       # optionally offer SMS as well (see below)
+    sessions:
+      ttlSeconds: 1800
+```
+
+**Flow.** Call [activate MFA](/reference/#activate-mfa) with a personal token and `{ "method": "totp" }`. The response carries the `mfaToken` plus an `otpauthUri` (render it as a QR code) and the Base32 `secret` (for manual entry). The user adds it to their authenticator app and you [confirm activation](/reference/#confirm-mfa-activation) with the first 6-digit code; you receive the `recoveryCodes`. At [login](/reference/#login-with-mfa) the response includes `mfaMethod: "totp"` next to the `mfaToken` so your UI prompts for an app code; [verify](/reference/#verify-mfa-challenge) it. There is no challenge to send for TOTP (the code is on the user's device), so [trigger MFA challenge](/reference/#trigger-mfa-challenge) is a no-op that just echoes the method.
+
+**Security notes.** TOTP secrets are stored encrypted at rest; a used code cannot be replayed; repeated wrong codes invalidate the pending MFA session; enrolment fails closed if no `secretsKey`/`adminAccessKey` is available. Server clocks should be NTP-synchronised (the `driftSteps` window absorbs small skew).
+
+
 ## Configuration
 
 ### Enabling MFA
+
+> This section covers **SMS**. For the default authenticator-app method see [Authenticator app (TOTP)](#authenticator-app-totp) above. To offer SMS under the modern config model, set `services.mfa.methods.sms.active: true` with `methods.sms.mode` + `methods.sms.endpoints` (the legacy top-level `services.mfa.mode` + `services.mfa.sms.endpoints` shown below is still honoured via a shim).
 
 Pick a mode — `single` or `challenge-verify` — and fill in the matching endpoint:
 
