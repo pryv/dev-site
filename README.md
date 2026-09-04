@@ -1,5 +1,11 @@
 # Pryv API (developers) website
 
+> ⚠️ **This repository is deprecated and archived.**
+> The Pryv developer documentation site (https://pryv.github.io/) has been rebuilt on
+> Astro/Starlight and is now maintained in **[pryv/dev-site2](https://github.com/pryv/dev-site2)**.
+> This Metalsmith-based source is kept for historical reference only; do not build or
+> publish from it. All new documentation work happens in `dev-site2`.
+
 Source content for pryv.github.io (API reference, recommendations, guides, etc.)
 
 
